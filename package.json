@@ -1,0 +1,5 @@
+{
+    "name": "react-util",
+    "main": "index.ts",
+    "private": true
+}

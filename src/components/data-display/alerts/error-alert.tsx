@@ -1,0 +1,33 @@
+import React from "react";
+import Alert from "./alert";
+import AlertTitle from "./alert-title";
+import Dev from "@react-client/components/layout/dev/dev";
+
+export type ErrorAltertProps = {
+    active?: boolean;
+    title?: string | false;
+    className?: string;
+    style?: React.CSSProperties;
+    margin?: boolean;
+    fullWidth?: boolean;
+    id?: string;
+    /** Wird im dev mode angezeigt */
+    err?: Error;
+    hideErr?: boolean;
+} & ({ message: string | undefined } | { children: string });
+
+export default function ErrorAlert(props: ErrorAltertProps) {
+    if (props.active === false) return null;
+
+    return (
+        <Alert fullWidth={props.fullWidth} margin={props.margin} severity="error" className={props.className} style={props.style}>
+            {props.title && <AlertTitle>{props.title}</AlertTitle>}
+            {(props as any).message || (props as any).children}
+            <Dev hidden={props.hideErr || !props.err}>
+                {" "}
+                -Dev- {props.id ? `"${props.id}" ` : ""}
+                {props.err?.stack}
+            </Dev>
+        </Alert>
+    );
+}
