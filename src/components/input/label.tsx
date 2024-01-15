@@ -1,6 +1,6 @@
 // * SSR
 
-import { collapse } from "@client-util/style-util";
+import { collapse } from "@client-util/helpers";
 import clsx from "clsx";
 
 interface LabelProps {

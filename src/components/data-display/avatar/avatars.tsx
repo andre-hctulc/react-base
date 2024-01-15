@@ -2,10 +2,10 @@ import clsx from "clsx";
 import React from "react";
 import Skeleton from "../loading/skeleton";
 import { PropsOf } from "@react-client/util";
-import { collapse } from "@client-util/style-util";
 import Avatar from "./avatar";
 import { firstBool, range } from "@client-util/iterables";
 import { DynamicSize, XSize } from "@react-client/types";
+import { collapse } from "@client-util/helpers";
 
 type ForwardedAvataProps = Pick<PropsOf<typeof Avatar>, "size">;
 

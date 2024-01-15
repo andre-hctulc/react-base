@@ -5,7 +5,7 @@ import DialogHeader from "@react-client/components/dialogs/dialog/dialog-header"
 import DialogTitle from "@react-client/components/dialogs/dialog/dialog-title";
 import Input from "@react-client/components/input/base/input";
 import Button from "@react-client/components/input/buttons/button";
-import { getSize } from "@client-util/style-util";
+import { getSize } from "@react-client/util";
 
 export default function InsertImageDialog(props: { open: boolean; onClose: () => void }) {
     return (

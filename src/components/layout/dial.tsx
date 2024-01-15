@@ -1,9 +1,10 @@
 "use client";
 
+import { collapse } from "@client-util/helpers";
 import { round } from "@client-util/math";
-import {  alignClass, collapse } from "@client-util/style-util";
 import { CubicBezierControllPoints, cubicBezier } from "@client-util/timing";
 import { Size } from "@react-client/types";
+import { alignClass } from "@react-client/util";
 import clsx from "clsx";
 import React from "react";
 

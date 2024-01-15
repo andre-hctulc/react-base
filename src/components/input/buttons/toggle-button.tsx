@@ -1,7 +1,7 @@
 "use client";
 
+import { collapse } from "@client-util/helpers";
 import Styled from "@react-client/components/others/styled";
-import { collapse } from "@client-util/style-util";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 

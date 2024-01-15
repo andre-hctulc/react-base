@@ -3,8 +3,8 @@
 import clsx from "clsx";
 import React from "react";
 import Styled from "@react-client/components/others/styled";
-import { collapse } from "@client-util/style-util";
 import { DynamicSize } from "@react-client/types";
+import { collapse } from "@client-util/helpers";
 
 interface IconButtonProps {
     children: React.ReactElement;

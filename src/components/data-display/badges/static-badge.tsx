@@ -2,9 +2,9 @@
 
 import React from "react";
 import clsx from "clsx";
-import {  collapse } from "@client-util/style-util";
 import { ThemeColor } from "@react-client/types";
 import { themeColor } from "@react-client/util";
+import { collapse } from "@client-util/helpers";
 
 interface StaticBadgeProps {
     className?: string;

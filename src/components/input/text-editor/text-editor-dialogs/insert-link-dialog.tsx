@@ -1,5 +1,4 @@
 import DialogButton from "@react-client/components/dialogs/dialog/dialog-button";
-import { checkName } from "@util/validate";
 import { checkUrl } from "@client-util/strings";
 import Dialog from "@react-client/components/dialogs/dialog/dialog";
 import DialogTitle from "@react-client/components/dialogs/dialog/dialog-title";
@@ -10,7 +9,7 @@ import DialogHeader from "@react-client/components/dialogs/dialog/dialog-header"
 
 type InsertLinkFormFata = { link: string; label: string };
 
-const validate: FormValidator<InsertLinkFormFata> = { label: label => checkName(label), link: link => (link && checkUrl(link) ? true : "Ungültiger Link") };
+const validate: FormValidator<InsertLinkFormFata> = { label: label => !!label, link: link => (link && checkUrl(link) ? true : "Ungültiger Link") };
 
 export default function InsertLinkDialog(props: { open: boolean; onCreate?: (data: InsertLinkFormFata) => void; onClose: () => void }) {
     const { formProps, ok, okData, hint } = useFormData<InsertLinkFormFata>();

@@ -1,6 +1,6 @@
 "use client";
 
-import { rgbStrToHex } from "@client-util/style-util";
+import { rgbStrToHex } from "@react-client/util";
 import clsx from "clsx";
 import React from "react";
 

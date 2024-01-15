@@ -1,7 +1,7 @@
 // * SSR
 
+import { collapse } from "@client-util/helpers";
 import { randomNumber } from "@client-util/random";
-import { collapse } from "@client-util/style-util";
 import clsx from "clsx";
 import React from "react";
 
