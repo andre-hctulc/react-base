@@ -2,11 +2,11 @@
 
 import XCircleOutlineIcon from "@react-client/components/icons/collection/x-circle-outline";
 import Styled from "@react-client/components/others/styled";
-import { collapse } from "@client-util/style-util";
 import clsx from "clsx";
 import React from "react";
 import { themeColor } from "@react-client/util";
 import { Size, ThemeColor } from "@react-client/types";
+import { collapse } from "@client-util/helpers";
 
 interface ChipProps {
     className?: string;

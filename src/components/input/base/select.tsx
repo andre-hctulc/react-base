@@ -3,7 +3,7 @@
 import Popover from "@react-client/components/dialogs/popover/popover";
 import clsx from "clsx";
 import React from "react";
-import { useJSForm } from "../form/js-form";
+import { useFormInput } from "../form/js-form";
 import HelperText from "@react-client/components/text/helper-text";
 import Label from "../label";
 import { getInputSizeClasses } from "@client-util/input-helpers";
@@ -12,10 +12,11 @@ import ChevronDownIcon from "@react-client/components/icons/collection/chevron-d
 import { iterableToMap } from "@client-util/iterables";
 import { PropsOf } from "@react-client/util";
 import Typography from "@react-client/components/text/typography";
-import { InputLikeProps, inputLikeProps } from "./input";
+import { InputLikeProps } from "./input";
 import List from "@react-client/components/data-display/list/list";
 import ListItem from "@react-client/components/data-display/list/list-item";
 import { Size } from "@react-client/types";
+import FormControl from "../form/form-control";
 
 export type SelectOption<T = string> = {
     value: T;
@@ -49,12 +50,11 @@ export default function Select<T = string>(props: SelectProps<T>) {
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const anchor = React.useRef<HTMLDivElement>(null);
     const [open, setOpen] = React.useState(false);
-    const form = useJSForm();
-    const { helperText, error, readOnly, required, disabled, defaultValue } = inputLikeProps(props, form);
+    const { readOnly, disabled, error } = useFormInput(props);
     const [activeOption, setActiveOption] = React.useState<SelectOption<T> | undefined>(() => {
         let value: any;
         if (props.value !== undefined) value = props.value;
-        else if (defaultValue !== undefined) value = defaultValue;
+        else if (props.defaultValue !== undefined) value = props.defaultValue;
         else value = undefined;
         return valueOptionMap.get(value);
     });
@@ -73,22 +73,12 @@ export default function Select<T = string>(props: SelectProps<T>) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value]);
 
-    React.useEffect(() => {
-        if (props.name) form?.change(props.name, activeOption?.value);
-
-        return () => {
-            if (props.name) form?.change(props.name, undefined);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.name]);
-
     function changeValue(value: T | undefined) {
         if (disabled || readOnly) return;
 
         const option = valueOptionMap.get(value as any);
 
         props.onChange?.(value, option);
-        if (props.name) form?.change(props.name, value);
         if (!isControlled) setActiveOption(option);
 
         setOpen(false);
@@ -108,11 +98,12 @@ export default function Select<T = string>(props: SelectProps<T>) {
 
     return (
         <div className={clsx("flex flex-col flex-shrink-0 min", props.fullWidth && "w-full", props.className)} style={props.style}>
+            <FormControl required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="json" value={activeOption?.value} />
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} required={required} hint={form?.hint} requiredError={error}>
+                <Label variant={props.dense ? "caption" : "form_control"} required={props.required} error={error}>
                     {props.label}
                 </Label>
-            )}
+            )}{" "}
             <Stack
                 style={{ outlineWidth: 2 }}
                 direction="row"
@@ -145,7 +136,9 @@ export default function Select<T = string>(props: SelectProps<T>) {
                 </div>
                 <ChevronDownIcon color={readOnly || disabled ? "disabled" : "text_secondary"} className="ml-1 self-center flex-shrink-0" />
             </Stack>
-            {helperText && <HelperText error={error}>{helperText}</HelperText>}
+            <HelperText error={error} errorMessage={props.errorMessage}>
+                {props.helperText}
+            </HelperText>
             <Popover
                 buffer={0}
                 matchAnchorMinWidth

@@ -7,9 +7,9 @@ import IconButton from "./buttons/icon-button";
 import HelperText from "../text/helper-text";
 import PlusIcon from "@react-client/components/icons/collection/plus";
 import XIcon from "@react-client/components/icons/collection/x";
-import { useJSForm } from "./form/js-form";
+import { useFormInput } from "./form/js-form";
 import { getEventValue } from "@client-util/input-helpers";
-import { InputLikeProps, inputLikeProps } from "./base/input";
+import { InputLikeProps } from "./base/input";
 
 export type InputListColDef<T extends object> = Omit<DataGridColDef<T>, "render"> & {
     required?: boolean;
@@ -32,9 +32,8 @@ interface InputListProps<T extends object> extends InputLikeProps<T[]> {
 const addColAndRemoveColWidth = 43;
 
 export default function InputList<T extends object = any>(props: InputListProps<T>) {
-    const form = useJSForm();
-    const { helperText, error, readOnly, required, defaultValue } = inputLikeProps(props, form);
-    const [value, setValue] = React.useState<T[]>(defaultValue || []);
+    const { error, readOnly, disabled } = useFormInput(props);
+    const [value, setValue] = React.useState<T[]>(props.defaultValue || []);
     const [currentRow, setCurrentRow] = React.useState<Partial<T>>(props.defaultRow);
     const inited = React.useRef(false);
     const currentRowIsValid = React.useMemo(() => {
@@ -97,17 +96,6 @@ export default function InputList<T extends object = any>(props: InputListProps<
     }, [props.cols, currentRowIsValid, currentRow, value, readOnly]);
     const rows: any[] = [...value, currentRow];
 
-    React.useEffect(() => {
-        if (!inited.current) {
-            inited.current = true;
-            return;
-        }
-
-        props.onChange?.(value);
-        if (props.name) form?.change(props.name, value);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value]);
-
     function editCurrentRow(name: string, value: any) {
         const copy = { ...currentRow };
         (copy as any)[name] = value;
@@ -131,7 +119,7 @@ export default function InputList<T extends object = any>(props: InputListProps<
     return (
         <div className={clsx("flex flex-col overflow-hidden", props.className)}>
             {props.label && (
-                <Label requiredError={error} required={required}>
+                <Label error={error} required={props.required}>
                     {props.label}
                 </Label>
             )}
@@ -143,7 +131,9 @@ export default function InputList<T extends object = any>(props: InputListProps<
                 rows={rows}
                 className={clsx("", props.slotProps?.dataGrid?.className)}
             />
-            {helperText && <HelperText error={error}>{helperText}</HelperText>}
+            <HelperText error={error} errorMessage={props.errorMessage}>
+                {props.helperText}
+            </HelperText>
         </div>
     );
 }

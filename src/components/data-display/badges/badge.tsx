@@ -4,8 +4,8 @@ import type { PropsOf } from "@react-client/util";
 import React from "react";
 import StaticBadge from "./static-badge";
 import clsx from "clsx";
-import {  collapse } from "@client-util/style-util";
 import { ThemeColor } from "@react-client/types";
+import { collapse } from "@client-util/helpers";
 
 interface BadgeProps {
     children: React.ReactElement;

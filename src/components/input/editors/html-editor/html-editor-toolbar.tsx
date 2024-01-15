@@ -5,7 +5,7 @@ import Divider from "@react-client/components/layout/divider";
 import LinkIcon from "@react-client/components/icons/collection/link";
 import BoldIcon from "@react-client/components/icons/collection/bold";
 import UnderlineIcon from "@react-client/components/icons/collection/underline";
-import { PropsOf } from "@react-client/util";
+import { PropsOf, rgbStrToHex } from "@react-client/util";
 import ItalicIcon from "@react-client/components/icons/collection/italic";
 import AlignLeftIcon from "@react-client/components/icons/collection/align-left";
 import AlignCenterIcon from "@react-client/components/icons/collection/align-center";
@@ -18,7 +18,6 @@ import InsertLinkDialog from "../insert-link-dialog";
 import InsertImageDialog from "../insert-image-dialog";
 import FontSizeSelect from "@react-client/components/input/editors/font-size-select";
 import ColorSelect from "@react-client/components/input/editors/color-select";
-import { rgbStrToHex } from "@client-util/style-util";
 import Toolbar from "@react-client/components/layout/containers/toolbar";
 
 const HTMLEditorToolbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((props, ref) => {

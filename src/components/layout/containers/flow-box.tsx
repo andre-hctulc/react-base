@@ -2,7 +2,7 @@
 
 import React from "react";
 import clsx from "clsx";
-import { alignClass, justifyClass } from "@client-util/style-util";
+import { alignClass, justifyClass } from "@react-client/util";
 
 interface FlowBoxProps {
     className?: string;

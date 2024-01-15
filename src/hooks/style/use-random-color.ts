@@ -1,4 +1,4 @@
-import { randomColor } from "@client-util/style-util.js";
+import { randomColor } from "@react-client/util";
 import React from "react";
 
 export default function useRandomColor() {

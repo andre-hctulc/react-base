@@ -1,6 +1,6 @@
 // * SSR
 
-import { collapse, collapseOrVanish } from "@client-util/style-util";
+import { collapse, collapseOrVanish } from "@client-util/helpers";
 import clsx from "clsx";
 import React from "react";
 

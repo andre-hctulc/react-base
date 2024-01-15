@@ -1,11 +1,11 @@
 // * SSR
 
-import {  getSize } from "@client-util/style-util";
 import clsx from "clsx";
 import Skeleton from "../loading/skeleton";
 import React from "react";
 import Image from "next/image";
 import { DynamicSize } from "@react-client/types";
+import { getSize } from "@react-client/util";
 
 interface AvatarProps {
     className?: string;
