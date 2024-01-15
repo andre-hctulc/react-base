@@ -3,7 +3,7 @@
 import Typography from "@react-client/components/text/typography";
 import clsx from "clsx";
 import LongText from "@react-client/components/text/long-text";
-import JSForm, { FormValidator, useFormData } from "./js-form";
+import JSForm, { FormValidator, useFormController } from "./js-form";
 import Input from "../base/input";
 import React from "react";
 
@@ -37,16 +37,12 @@ interface SummaryProps<T extends object = any> {
 }
 
 export default function Summary<T extends object = any>(props: SummaryProps<T>) {
-    const classes = clsx("flex flex-col space-y-2 flex-shrink-0", props.className);
-    const { formProps, data, okData } = useFormData(props.data);
-    // const formClasses = clsx("space-y-2");
-
     return (
-        <div className={classes}>
-            <JSForm validate={props.validate} tag="div" className={"space-y-2 min-w-0"} {...formProps}>
+        <div className={clsx("flex flex-col space-y-2 flex-shrink-0", props.className)} style={props.style}>
+            <div className="flex flex-col space-y-2 min-w-0">
                 {Object.keys(props.factory).map(key => {
-                    const value: any = (data as any)[key];
-                    const field = props.factory[key as keyof typeof props.factory]?.(value, data);
+                    const value: any = (props.data as any)[key];
+                    const field = props.factory[key as keyof typeof props.factory]?.(value,props.data);
 
                     if (!field) return null;
 
@@ -83,7 +79,7 @@ export default function Summary<T extends object = any>(props: SummaryProps<T>) 
                         </div>
                     );
                 })}
-            </JSForm>
+            </div>
         </div>
     );
 }

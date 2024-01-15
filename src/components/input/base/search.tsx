@@ -2,20 +2,21 @@
 
 import Popover from "@react-client/components/dialogs/popover/popover";
 import React from "react";
-import { useJSForm } from "../form/js-form";
+import { useFormInput } from "../form/js-form";
 import Stack from "@react-client/components/layout/containers/stack";
 import HelperText from "@react-client/components/text/helper-text";
 import { PropsOf } from "@react-client/util";
 import clsx from "clsx";
-import { InputLikeProps, inputLikeProps } from "./input";
+import { InputLikeProps } from "./input";
 import Label from "../label";
 import { getInputSizeClasses } from "@client-util/input-helpers";
 import ShortText from "@react-client/components/text/short-text";
 import { SelectOption } from "./select";
 import List from "@react-client/components/data-display/list/list";
-import { firstString } from "@client-util/iterables";
+import { first, firstString } from "@client-util/iterables";
 import Loading from "@react-client/components/data-display/loading/loading";
 import { Size } from "@react-client/types";
+import FormControl from "../form/form-control";
 
 interface SearchProps<T = string> extends InputLikeProps<T> {
     className?: string;
@@ -40,28 +41,18 @@ interface SearchProps<T = string> extends InputLikeProps<T> {
 
 export default function Search<T = string>(props: SearchProps<T>) {
     const [open, setOpen] = React.useState(false);
-    const form = useJSForm();
-    const { helperText, error, readOnly, required, disabled, defaultValue } = inputLikeProps(props, form);
+    const { readOnly, disabled, error } = useFormInput(props);
     const inp = React.useRef<HTMLSpanElement>(null);
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const [inpValue, setInpValue] = React.useState<string>(inp.current?.textContent || "");
     const isControlled = props.value !== undefined;
-    const [value, setValue] = React.useState<T | undefined>(isControlled ? props.value : defaultValue);
+    const [value, setValue] = React.useState<T | undefined>(() => first(props.value, props.defaultValue) as T);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const customCurrent = (() => (value && props.renderCurrent ? props.renderCurrent(value) : undefined))();
     const current = (() => {
         if (customCurrent) return customCurrent;
         else if (!value && !inpValue) return <ShortText disabled>{props.placeholder || "Leer"}</ShortText>;
     })();
-
-    React.useEffect(() => {
-        if (props.name) form?.change(props.name, value);
-
-        return () => {
-            if (props.name) form?.change(props.name, undefined);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value]);
 
     React.useEffect(() => {
         if (isControlled) setValue(props.value);
@@ -81,36 +72,9 @@ export default function Search<T = string>(props: SearchProps<T>) {
 
     return (
         <Stack className={clsx("relative", props.className)} style={props.style}>
-            <Popover
-                buffer={0}
-                cardShadow
-                noCardPadding
-                matchAnchorWidth
-                position={{ vertical: "bottom", horizontal: "left" }}
-                anchor={inp.current}
-                open={open}
-                onClose={() => _setOpen(false)}
-                {...props.slotProps?.popover}
-                slotProps={{
-                    card: {
-                        className: clsx("!bg-bg", props.slotProps?.popover?.slotProps?.card?.className),
-                        ...props.slotProps?.popover?.slotProps?.card,
-                    },
-                    ...props.slotProps?.popover?.slotProps,
-                }}
-            >
-                {props.loading ? (
-                    <Loading py />
-                ) : (
-                    <List
-                        onActivateOption={(e, opt) => changeValue(opt.value)}
-                        options={props.options}
-                        emptyText={firstString(props.emptyText, "Keine Ergebnisse gefunden")}
-                    />
-                )}
-            </Popover>
+            <FormControl required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="string" value={value} />
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} requiredError={error} required={required} hint={form?.hint}>
+                <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
                     {props.label}
                 </Label>
             )}
@@ -153,7 +117,37 @@ export default function Search<T = string>(props: SearchProps<T>) {
                 // z index 40 wie der von popover, damit input clicks nicht das popover schließen
                 style={{ zIndex: open ? 60 : undefined, ...props.slotProps?.input?.style }}
             />
-            {helperText && <HelperText error={error}>{helperText}</HelperText>}
+            <HelperText error={error} errorMessage={props.errorMessage}>
+                {props.helperText}
+            </HelperText>
+            <Popover
+                buffer={0}
+                cardShadow
+                noCardPadding
+                matchAnchorWidth
+                position={{ vertical: "bottom", horizontal: "left" }}
+                anchor={inp.current}
+                open={open}
+                onClose={() => _setOpen(false)}
+                {...props.slotProps?.popover}
+                slotProps={{
+                    card: {
+                        className: clsx("!bg-bg", props.slotProps?.popover?.slotProps?.card?.className),
+                        ...props.slotProps?.popover?.slotProps?.card,
+                    },
+                    ...props.slotProps?.popover?.slotProps,
+                }}
+            >
+                {props.loading ? (
+                    <Loading py />
+                ) : (
+                    <List
+                        onActivateOption={(e, opt) => changeValue(opt.value)}
+                        options={props.options}
+                        emptyText={firstString(props.emptyText, "Keine Ergebnisse gefunden")}
+                    />
+                )}
+            </Popover>
         </Stack>
     );
 }

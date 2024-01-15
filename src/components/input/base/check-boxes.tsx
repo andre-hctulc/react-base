@@ -6,12 +6,13 @@ import React from "react";
 import clsx from "clsx";
 import Label from "../label";
 import HelperText from "@react-client/components/text/helper-text";
-import { useJSForm } from "../form/js-form";
-import { InputLikeProps, inputLikeProps } from "./input";
+import { useFormInput } from "../form/js-form";
+import { InputLikeProps } from "./input";
+import FormControl from "../form/form-control";
 
 export type CheckBoxesOptions = { label: React.ReactNode; value: string }[];
 
-interface CheckBoxesProps extends Omit<InputLikeProps<string[]>, "required" | "noBorder"> {
+interface CheckBoxesProps extends Omit<InputLikeProps<string[]>, "noBorder"> {
     options: CheckBoxesOptions;
     onChange?: (values: string[], all: boolean) => void;
     className?: string;
@@ -32,49 +33,38 @@ CheckBoxes.allValues = [] as any[];
 /** Benutze `CheckBoxes.allValues` als `defaultValue`, um alle Optionen standardmäßig zu aktivieren. */
 export default function CheckBoxes(props: CheckBoxesProps) {
     const allValues = () => props.options.map(option => option.value);
-    const form = useJSForm();
-    const { helperText, error, readOnly, disabled, defaultValue } = inputLikeProps(props, form);
-    const [values, setValues] = React.useState<string[]>(() => {
+    const { error, readOnly, disabled } = useFormInput(props);
+    const [value, setValue] = React.useState<string[]>(() => {
         if (props.defaultValue === CheckBoxes.allValues) return allValues();
         else if (props.defaultValue) return props.defaultValue;
         else if (props.value) return props.value;
-        else if (props.name && defaultValue) return defaultValue;
         else return [];
     });
+    const valueSet = React.useMemo(() => new Set(value), [value]);
     const isControlled = props.value !== undefined;
 
     React.useEffect(() => {
-        if (props.value !== undefined) setValues(props.value);
+        if (props.value !== undefined) setValue(props.value);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value]);
 
-    React.useEffect(() => {
-        if (props.name) form?.change(props.name, values);
-
-        return () => {
-            if (props.name) form?.change(props.name, undefined);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.name]);
-
-    function toggleValue(value: string, checked: boolean) {
+    function toggleValue(v: string, checked: boolean) {
         let newValues: string[] | undefined;
 
         if (props.radio) {
-            if (values.length && values[0] === value) newValues = [];
-            else newValues = [value];
+            if (v.length && v[0] === v) newValues = [];
+            else newValues = [v];
         } else {
             if (!checked) {
-                if (values.includes(value)) newValues = values.filter(_value => _value !== value);
+                if (v.includes(v)) newValues = value.filter(_value => _value !== v);
             } else {
-                if (!values.includes(value)) newValues = [...values, value];
+                if (!v.includes(v)) newValues = [...v, v];
             }
         }
 
         if (newValues) {
-            if (!isControlled) setValues(newValues);
+            if (!isControlled) setValue(newValues);
             props.onChange?.(newValues, newValues.length === props.options.length);
-            if (props.name) form?.change(props.name, newValues);
         }
     }
 
@@ -84,6 +74,7 @@ export default function CheckBoxes(props: CheckBoxesProps) {
             className={clsx("flex flex-col min-w-0 unstyled-list min-h-0", !props.unstyled && "bg-bg rounded p-1.5", props.className, props.slotProps?.root?.className)}
             style={{ ...props.slotProps?.root?.style, ...props.style }}
         >
+            <FormControl required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="json" value={value} />
             {props.label && <Label variant={props.dense ? "caption" : "form_control"}>{props.label}</Label>}
             <ol className="flex-grow min-h-0 flex flex-col">
                 {props.options.map(option => {
@@ -95,7 +86,7 @@ export default function CheckBoxes(props: CheckBoxesProps) {
                                 {...props.slotProps?.checkBoxes}
                                 readOnly={readOnly}
                                 type="checkbox"
-                                checked={values.includes(option.value)}
+                                checked={valueSet.has(option.value)}
                                 disabled={disabled}
                                 onChange={e => {
                                     toggleValue(option.value, e.currentTarget.checked);
@@ -106,7 +97,9 @@ export default function CheckBoxes(props: CheckBoxesProps) {
                     );
                 })}
             </ol>
-            {helperText && <HelperText error={error}>{helperText}</HelperText>}
+            <HelperText errorMessage={props.errorMessage} error={error}>
+                {props.helperText}
+            </HelperText>
         </div>
     );
 }

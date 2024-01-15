@@ -1,6 +1,6 @@
 "use client";
 
-import { firstNotUndefined } from "@client-util/iterables";
+import { first } from "@client-util/iterables";
 import { ParentComponentProps } from "@react-client/util";
 import React from "react";
 
@@ -30,6 +30,6 @@ export default function Delayed(props: DelayedProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.in]);
 
-    if (delayed) return firstNotUndefined(props.delay, null);
+    if (delayed) return first(props.delay, null);
     else return props.children;
 }

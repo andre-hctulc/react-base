@@ -1,144 +1,208 @@
 "use client";
 
+import { setRef } from "@react-client/util";
 import clsx from "clsx";
 import React from "react";
+import type { InputLikeProps } from "../base/input";
+import { firstBool } from "@client-util/iterables";
+import useId from "@react-client/hooks/others/use-id";
 
-const JSFormContext = React.createContext<JSFormContext<any> | null>(null);
+const JSFormContext = React.createContext<JSFormContext | null>(null);
 
-type InputProps = { readOnly?: boolean; disabled?: boolean; required?: boolean };
-type FormInputState = { error: boolean; errorMessage: string | undefined; defaultValue: any };
+type InputLike = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
-export type FormValidator<D extends {}> = { [K in keyof D]?: (value: D[K] | undefined, values: Partial<D>) => boolean | string };
-
-export type JSFormContext<D extends Record<string, any>> = {
-    value: Partial<D>;
-    change: <K extends keyof D>(name: K, value: undefined | D[K]) => void;
-    get: <K extends keyof D>(name: K) => D[K] | undefined;
-    defaultValue: Partial<D>;
-    validated?: { [K in keyof D]?: boolean | string };
-    ok: boolean;
-    getInputState: (name: string | undefined) => FormInputState | null;
+export type JSFormContext<D extends Record<string, any> = any> = {
     hint: boolean;
-    inputProps: InputProps;
+    parsedData: D | null;
+    readOnly: boolean;
+    diabled: boolean;
+    valid: boolean;
+    form: HTMLFormElement | null;
+    /** JS-Validator */
+    validate: FormValidator<D> | null;
 };
 
-interface ForwardedJSFormProps {
-    onChange: (data: any, ok: boolean) => void;
-    hint: boolean;
+export function useFormController<D extends Record<string, any> = any>(options?: { defaultValid?: true }) {
+    const id = useId();
+    const [data, setData] = React.useState<Partial<D>>({});
+    const [valid, setValid] = React.useState<boolean>(firstBool(options?.defaultValid, true));
+    const [form, setForm] = React.useState<HTMLFormElement | null>(null);
+    const formProps: Partial<JSFormProps> = {
+        onChange: (e, { parsedData, valid }) => {
+            setData(parsedData);
+            setValid(valid);
+            setForm(e.currentTarget);
+        },
+        id,
+    };
+    return { formProps, data, valid, form, id: id };
 }
+
+export function useFormInput(
+    props: Pick<InputLikeProps, "readOnly" | "name" | "disabled" | "errorMessage" | "error">,
+    ref?: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+) {
+    const context = React.useContext(JSFormContext);
+    // Wird als dependency in `valid` verwendet, um den neuen Wert zu validieren
+    const jsValidateValue = props.name && context?.validate && context ? context.parsedData[props.name] : undefined;
+    const valid = React.useMemo(() => {
+        if (props.name && context) {
+            const val = context.validate?.[props.name];
+            if (val) {
+                const value = context.parsedData[props.name];
+                return !!ref?.checkValidity() && val(value, context.parsedData);
+            } else return !!ref?.checkValidity();
+        }
+        return !!ref?.checkValidity();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.name, ref, jsValidateValue]);
+    if (!props.name || !context) return { readOnly: !!props.readOnly, disabled: !!props.disabled, error: !!props.error };
+    const error = !!props.errorMessage && (props.error || context.hint || !valid);
+    return { error, readOnly: firstBool(props.readOnly, context.readOnly), disabled: firstBool(props.disabled, context.diabled) };
+}
+
 export function useJSForm() {
     const context = React.useContext(JSFormContext);
     return context;
 }
 
-export function useFormData<D extends {}>(
-    defaultValue?: D,
-    defaultOk?: boolean
-): { data: Partial<D>; formProps: ForwardedJSFormProps; hint: () => void; clear: () => void } & ({ ok: true; okData: D } | { ok: false; okData: null }) {
-    const [data, setData] = React.useState<Partial<D>>(defaultValue || {});
-    const [ok, setOk] = React.useState(typeof defaultOk === "boolean" ? defaultOk : false);
-    const [hinting, setHinting] = React.useState(false);
+export type FormValidator<D extends {}> = { [K in keyof D]?: (value: D[K] | undefined, values: Partial<D>) => boolean };
 
-    function onChange(data: any, ok: boolean) {
-        setData(data);
-        setOk(ok);
-    }
+export const formControlTypeAttrName = "data-inptype";
 
-    function hint() {
-        setHinting(true);
-    }
-
-    function clear() {
-        setHinting(false);
-    }
-
-    return { data, ok, formProps: { onChange, hint: hinting }, okData: ok ? (data as any) : null, hint, clear };
-}
-
-interface JSFormProps<D extends {}> {
-    defaultValue?: Partial<D>;
-    onChange?: (value: Partial<D>, ok: boolean) => void;
+interface JSFormProps<D extends {} = any> {
     className?: string;
     style?: React.CSSProperties;
     children?: React.ReactNode;
+    /**
+     * JS-Validator
+     *
+     * Falls nicht validiert werden konnte wird keine `action` ausgeführt!
+     * */
     validate?: FormValidator<D>;
-    hint?: boolean;
     spacing?: boolean;
-    inputProps?: InputProps;
-    /** @default "form" */
-    tag?: string;
+    onInvalid?: (e: React.FormEvent<HTMLFormElement> | null) => void;
+    onChange?: (e: React.FormEvent<HTMLFormElement>, formState: { valid: boolean; parsedData: Partial<D> }) => void;
+    action?: ((formData: FormData, parsedData: D) => void) | undefined;
+    readOnly?: boolean;
+    disabled?: boolean;
+    id?: string;
+    noHints?: boolean;
 }
 
-function checkData(data: any, validate: FormValidator<any>): { ok: boolean; validated: any } {
-    let validations: any = {};
-    let ok = true;
+const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
+    const form = React.useRef<HTMLFormElement>(null);
+    const [parsedData, setParsedData] = React.useState<Record<string, any>>({});
+    const [valid, setValid] = React.useState<boolean>(false);
+    const [hint, setHint] = React.useState(false);
 
-    for (const name in validate) {
-        const val = validate[name];
-        if (!val) continue;
-        const validated = val(data[name], data);
-        ok = ok && (validated === undefined || validated === true);
-        validations[name] = validated;
+    // value + ok initialisieren
+    React.useEffect(() => {
+        if (form.current) {
+            const state = getState(form.current, null);
+            setParsedData(state.parsedData);
+            setValid(state.valid);
+        }
+        // TODO wenn disabled oder readOnly submit button disabled dynamisch?
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    function getState(form: HTMLFormElement, target: Element | null) {
+        let val = valid;
+        let parsed = parsedData;
+
+        // Falls von Input-Element getriggert, dann Daten anpassen!
+        if (target && target.matches("input textarea select") && !!target.getAttribute("name")) {
+            val = form.checkValidity();
+            parsed = { ...parsedData };
+
+            const inp: InputLike = target as any;
+            const name = inp.getAttribute("name")!;
+
+            if (inp.hasAttribute(formControlTypeAttrName)) {
+                const isJson = inp.getAttribute(formControlTypeAttrName) === "json";
+
+                if (isJson) {
+                    try {
+                        parsed[name] = inp.value ? JSON.stringify(inp.value) : undefined;
+                    } catch (err) {}
+                } else parsed[name] = inp.value;
+            } else parsed[name] = inp.value;
+        }
+
+        for (const name in props.validate) {
+            try {
+                const result = props.validate[name]?.(name, parsed);
+                if (!result) {
+                    val = false;
+                    continue;
+                }
+            } catch (err) {}
+        }
+
+        // JS validate
+        if (props.validate && val) {
+            for (const name in props.validate) {
+                try {
+                    const result = props.validate[name]?.(name, parsed);
+                    if (!result) {
+                        val = false;
+                        continue;
+                    }
+                } catch (err) {}
+            }
+        }
+
+        return { valid: val, parsedData: parsed };
     }
 
-    return { ok, validated: validations };
-}
-
-const JSForm = React.forwardRef<HTMLFormElement, JSFormProps<any>>((props, ref) => {
-    // ref benutzen, da status nicht immer aktuell
-    const valueRef = React.useRef<any>(props.defaultValue || {});
-    const [value, setValue] = React.useState<any>(valueRef.current);
-    const classes = clsx("flex flex-col", props.spacing && "space-y-3", props.className);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const { ok, validated } = React.useMemo(() => checkData(value, props.validate || {}), [value]);
-    const Comp: any = props.tag || "form";
-
-    function change(key: string, newValue: any) {
-        if (newValue === undefined && !Object.hasOwn(valueRef.current, key)) return;
-
-        if (newValue === undefined) delete valueRef.current[key];
-        else valueRef.current[key] = newValue;
-
-        const newValues = { ...valueRef.current };
-        const { ok } = checkData(newValues, props.validate || {});
-
-        props.onChange?.(newValues, ok);
-        setValue(newValues);
-    }
-
-    function get(key: string): any {
-        return value[key];
-    }
-
-    function getInputState(name: string | undefined): FormInputState | null {
-        if (!name) return null;
-        const val = validated[name];
-        const state: FormInputState = {
-            error: val === false || typeof val === "string",
-            // Error nur anzeeigen falss hint true ist (Wird )
-            errorMessage: props.hint ? (typeof val === "string" ? val : undefined) : undefined,
-            defaultValue: props.defaultValue?.[name],
-        };
-        return state;
+    function handleInvalid(e: React.FormEvent<HTMLFormElement> | null) {
+        props.onInvalid?.(e);
+        setHint(true);
     }
 
     return (
         <JSFormContext.Provider
             value={{
-                hint: !!props.hint,
-                value,
-                ok,
-                change: change as any,
-                validated,
-                get: get as any,
-                defaultValue: props.defaultValue as any,
-                getInputState,
-                inputProps: props.inputProps || {},
+                hint: hint && !props.noHints,
+                readOnly: !!props.readOnly,
+                valid,
+                diabled: !!props.disabled,
+                parsedData,
+                form: form.current,
+                validate: props.validate || null,
             }}
         >
-            <Comp ref={ref} className={classes} style={props.style}>
+            <form
+                id={props.id}
+                ref={formElement => {
+                    setRef(ref, formElement as any);
+                    setRef(form, formElement);
+                }}
+                onInvalid={e => {
+                    handleInvalid(e);
+                }}
+                onChange={e => {
+                    const formState = getState(e.currentTarget, e.target as Element);
+                    setParsedData(formState.parsedData);
+                    setValid(formState.valid);
+                    props.onChange?.(e, formState);
+                }}
+                action={formData => {
+                    if (!form.current) return;
+                    const { parsedData, valid } = getState(form.current, null);
+                    if (valid) {
+                        setHint(false);
+                        props.action?.(formData, parsedData);
+                    } else {
+                        handleInvalid(null);
+                    }
+                }}
+                className={clsx("flex flex-col", props.spacing && "space-y-3", props.className)}
+                style={props.style}
+            >
                 {props.children}
-            </Comp>
+            </form>
         </JSFormContext.Provider>
     );
 });

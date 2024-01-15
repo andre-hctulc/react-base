@@ -23,17 +23,20 @@ const StaticBadge = React.forwardRef<HTMLSpanElement, StaticBadgeProps>((props, 
     })();
     const variant = props.variant || "text";
     const variantClasses = collapse(variant, { text: "px-1 text-[16px] rounded", icon: "p-1.5 rounded", small: "p-[3.5px] text-sm rounded-sm" });
-    const classes = clsx(
-        "inline-flex align-middle justify-center font-medium text-13",
-        props.children === undefined && "p-[2px]",
-        contrastText,
-        bg,
-        variantClasses,
-        props.className
-    );
 
     return (
-        <span ref={ref} style={props.style} className={classes}>
+        <span
+            ref={ref}
+            style={props.style}
+            className={clsx(
+                "inline-flex align-middle justify-center font-medium text-13",
+                props.children === undefined && "p-[2px]",
+                contrastText,
+                bg,
+                variantClasses,
+                props.className
+            )}
+        >
             {content}
         </span>
     );

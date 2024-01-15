@@ -5,26 +5,27 @@ import clsx from "clsx";
 import Button from "@react-client/components/input/buttons/button";
 
 interface DialogButtonProps {
-    valid?: boolean;
+    disabled?: boolean;
     onInvalidClick?: () => void;
     onClick?: () => void;
     children: string;
     className?: string;
     style?: React.CSSProperties;
+    form?: string;
 }
 
 export default function DialogButton(props: DialogButtonProps) {
     return (
         <Toolbar padding="large" justify="end" className={clsx("mt-1", props.className)} style={props.style}>
             <Button
+                form={props.form}
                 size="medium"
                 style={{ width: 140 }}
                 variant="contained"
                 onClick={e => {
                     e.stopPropagation();
-                    if (props.valid !== false) props.onClick?.();
-                    else props.onInvalidClick?.();
                 }}
+                disabled={props.disabled}
             >
                 {props.children}
             </Button>

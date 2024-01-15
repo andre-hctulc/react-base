@@ -8,7 +8,7 @@ import useMutableSearchParams from "@react-client/hooks/navigation/use-mutable-s
 import { defaultFilterParser, defaultFilterStringifier } from "./filter-utility";
 import ToggleButton from "../buttons/toggle-button";
 import Fade from "@react-client/components/transitions/fade";
-import JSForm, { useFormData } from "../form/js-form";
+import JSForm, { useFormController } from "../form/js-form";
 import { SearchParam } from "@client-util/nav";
 
 const openCacheKey = (key: string) => `filter-${key}:open`;
@@ -33,7 +33,7 @@ export default function Filter<F extends {}>(props: FilterProps<F>) {
     const defaultValue = typeof props.defaultValue === "string" ? defaultFilterParser(props.defaultValue) : props.defaultValue;
     const classes = clsx("flex items-start justify-end space-x-4 pointer-events-auto ", props.className);
     const [searchParams, setSearchParam] = useMutableSearchParams();
-    const { formProps, data } = useFormData(defaultValue);
+    const { formProps, data } = useFormController(defaultValue);
 
     React.useEffect(() => {
         props.onChange?.(data);

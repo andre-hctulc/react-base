@@ -8,10 +8,10 @@ import IconButton from "../buttons/icon-button";
 import Typography from "@react-client/components/text/typography";
 import HelperText from "@react-client/components/text/helper-text";
 import { forDateLikeInput, getInputSizeClasses } from "@client-util/input-helpers";
-import { useJSForm } from "../form/js-form";
+import { useFormInput } from "../form/js-form";
 import Label from "../label";
 import Stack from "@react-client/components/layout/containers/stack";
-import { InputLikeProps, inputLikeProps } from "./input";
+import { InputLikeProps } from "./input";
 import { Size } from "@react-client/types";
 
 export type TimeRange = [Date | null, Date | null];
@@ -26,9 +26,9 @@ export interface TimeRangeInputProps extends InputLikeProps<TimeRange> {
 }
 
 export default function TimeRangeInput(props: TimeRangeInputProps) {
-    const form = useJSForm();
-    const { helperText, error, readOnly, required, disabled, defaultValue } = inputLikeProps(props, form);
-    const [value, setValue] = React.useState<TimeRange>(defaultValue || [null, null]);
+    const { readOnly, disabled, error } = useFormInput(props);
+    const [value, setValue] = React.useState<TimeRange>(props.value || props.defaultValue || [null, null]);
+    const formValue = React.useMemo(() => JSON.stringify(value), [value]);
     const [from, to] = value;
     const iconButtonProps: Omit<PropsOf<typeof IconButton>, "children"> = {};
     const inpType = props.time ? "datetime-local" : "date";
@@ -47,19 +47,12 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
         props.onChange?.(newValue);
     }
 
-    React.useEffect(() => {
-        if (props.name) form?.change(props.name, defaultValue);
-
-        return () => {
-            if (props.name) form?.change(props.name, undefined);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.name]);
-
     return (
         <div className={clsx("flex flex-col", props.className)} style={props.style}>
+            {/* Form Control */}
+            {props.name && <input type="hidden" value={formValue} required={props.required} disabled={disabled} readOnly={readOnly} name={props.name} />}
             {props.label && (
-                <Label requiredError={error} required={required} hint={form?.hint}>
+                <Label required={props.required} error={error}>
                     {props.label}
                 </Label>
             )}
@@ -73,7 +66,7 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
                     max={toStr}
                     disabled={disabled}
                     readOnly={readOnly}
-                    required={required}
+                    required={props.required}
                 />
                 <IconButton {...iconButtonProps} onClick={() => changeValue(null, undefined)}>
                     <RestartIcon />
@@ -88,13 +81,15 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
                         changeValue(undefined, e.target.valueAsDate);
                     }}
                     min={fromStr}
-                    required={required}
+                    required={props.required}
                 />
                 <IconButton {...iconButtonProps} onClick={() => changeValue(undefined, null)}>
                     <RestartIcon />
                 </IconButton>
             </Stack>
-            {helperText && <HelperText error={error}>{helperText}</HelperText>}
+            <HelperText errorMessage={props.errorMessage} error={error}>
+                {props.helperText}
+            </HelperText>
         </div>
     );
 }
