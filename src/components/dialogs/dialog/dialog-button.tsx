@@ -13,7 +13,10 @@ interface DialogButtonProps {
     className?: string;
     style?: React.CSSProperties;
     form?: string;
+<<<<<<< HEAD
     type?: PropsOf<typeof Button>["type"];
+=======
+>>>>>>> abd05394c9687a6f2887a9309c5cf1c2d979c911
 }
 
 export default function DialogButton(props: DialogButtonProps) {
@@ -28,7 +31,10 @@ export default function DialogButton(props: DialogButtonProps) {
                     e.stopPropagation();
                 }}
                 disabled={props.disabled}
+<<<<<<< HEAD
                 type={props.type}
+=======
+>>>>>>> abd05394c9687a6f2887a9309c5cf1c2d979c911
             >
                 {props.children}
             </Button>
