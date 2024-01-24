@@ -19,6 +19,7 @@ export interface DialogProps {
     maxSize?: DialogDim;
 }
 
+/** _Breite_ oder [_Breite_, _Höhe_] */
 export type DialogDim = number | string | null | [number | string, number | string];
 
 export const DialogSize = {

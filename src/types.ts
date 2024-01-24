@@ -1,3 +1,4 @@
+// TODO fs, chat etc entfernen (Diese kann man mit interface merging erweitern? (Declaration Merging))
 export type ThemeColor = "mode" | "primary" | "secondary" | "error" | "warning" | "info" | "success" | "accent" | "new" | "chat" | "fs" | "note" | "task" | "active";
 
 export type Size = "small" | "medium" | "large";

@@ -1,6 +1,6 @@
 // * SSR
 
-import { collapse, collapseOrVanish } from "@client-util/style-util";
+import { collapse, collapseOrVanish } from "@client-util/helpers";
 import clsx from "clsx";
 import React from "react";
 
@@ -47,7 +47,7 @@ const Toolbar = React.forwardRef<HTMLElement, ToolbarProps>((props, ref) => {
             id={props.id}
             ref={ref}
             className={clsx(
-                "pointer-events-auto",
+                "pointer-events-auto overflow-x-auto",
                 variantClasses,
                 spacingClass,
                 paddingClasses,

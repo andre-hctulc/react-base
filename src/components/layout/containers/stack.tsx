@@ -21,6 +21,8 @@ interface StackProps {
     scrollX?: boolean;
     reverse?: boolean;
     draggable?: boolean;
+    width?: number | string;
+    height?: number | string;
     // Events
     onClick?: React.MouseEventHandler;
     onMouseDown?: React.MouseEventHandler;
@@ -56,7 +58,7 @@ const Stack = React.forwardRef<Element, StackProps>((props, ref) => {
             onMouseDown={props.onMouseDown}
             onTouchStart={props.onTouchStart}
             ref={ref}
-            style={props.style}
+            style={{ height: props.height, with: props.width, ...props.style }}
             draggable={props.draggable}
             onDragStart={props.onDragStart}
             onDragOver={props.onDragOver}

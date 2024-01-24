@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { pageBarHeight } from "./page-bar";
 import { PropsOf } from "@react-client/util";
 import React from "react";
-import { collapse } from "@client-util/style-util";
+import { collapse } from "@client-util/helpers";
 
 interface PageHeaderProps {
     noPadding?: boolean;
@@ -38,25 +38,27 @@ const PageHeader = React.forwardRef<HTMLDivElement, PageHeaderProps>((props, ref
         fullWidth: "",
     });
     const mainVariantClasses = collapse(props.width || "small", {
-        small: "w-full xl:w-[1500px]",
-        fullWidth_small: "w-full xl:w-[1500px]",
-        fullWidth_large: "w-full xl:w-[1700px]",
+        small: "w-full max-w-[1500px]",
+        fullWidth_small: "w-full max-w-[1500px]",
+        fullWidth_large: "w-full max-w-[1700px]",
         fullWidth: "w-full",
     });
-    const mainClasses = clsx(mainVariantClasses, props.slotProps?.main?.className);
-    const classes = clsx(
-        "flex w-full",
-        variantClasses,
-        props.sticky && "sticky z-20",
-        props.noPointerEvents && "pointer-events-none",
-        !props.noPadding && "px-4 py-7",
-        props.className,
-        props.shadow && "shadow"
-    );
 
     return (
-        <div ref={ref} className={classes} style={{ top, height: props.height, maxHeight: props.height, ...props.style }}>
-            <div {...props.slotProps?.main} className={mainClasses}>
+        <div
+            ref={ref}
+            className={clsx(
+                "flex w-full",
+                variantClasses,
+                props.sticky && "sticky z-20",
+                props.noPointerEvents && "pointer-events-none",
+                !props.noPadding && "px-4 py-7",
+                props.className,
+                props.shadow && "shadow"
+            )}
+            style={{ top, height: props.height, maxHeight: props.height, ...props.style }}
+        >
+            <div {...props.slotProps?.main} className={clsx(mainVariantClasses, props.slotProps?.main?.className)}>
                 {props.children}
             </div>
         </div>

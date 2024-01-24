@@ -11,11 +11,11 @@ interface InputProps {
     error?: boolean;
 }
 
-interface LiveChangeProps {
+interface LiveChangeProps<T = any> {
     /** @default "blur" */
     trigger?: "blur" | "change";
     children: React.ReactElement<InputProps>;
-    action: (newValue: any) => Promise<string | boolean | void> | string | boolean | void;
+    action: (newValue: T) => Promise<string | boolean | void> | string | boolean | void;
     /** Sollte im regelfall _nicht_ `undefined` sein */
     defaultValue: any;
     preventForwardProps?: (keyof InputProps)[];
@@ -23,7 +23,7 @@ interface LiveChangeProps {
     onSuccess?: (newTitle: string) => void;
 }
 
-export default function LiveChange(props: LiveChangeProps) {
+export default function LiveChange<T = any>(props: LiveChangeProps<T>) {
     const defaultValue = props.defaultValue === undefined ? props.children.props.defaultValue : props.defaultValue;
     const savedValue = React.useRef(defaultValue);
     const trigger = props.trigger || "blur";

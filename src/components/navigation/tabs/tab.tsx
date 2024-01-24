@@ -1,55 +1,57 @@
-"use client";
+// * SSR
 
 import LinkContainer from "@react-client/components/navigation/link-container";
 import clsx from "clsx";
 import Styled from "@react-client/components/others/styled";
 import Chip from "@react-client/components/data-display/chip/chip";
+import { useSearchParams } from "next/navigation";
+import useMutableSearchParams from "@react-client/hooks/navigation/use-mutable-search-params";
 
 interface TabProps {
     icon?: React.ReactElement;
-    href?: string;
     children: string;
     style?: React.CSSProperties;
-    active?: boolean;
     className?: string;
+    /** @default "default" */
     variant?: "chips" | "default";
+    disabled?: boolean;
+    onClick?: React.MouseEventHandler<HTMLElement>;
+    /** Aktiv */
+    href?: string;
+    id?: string | number;
+    active?: boolean;
 }
 
 export default function Tab(props: TabProps) {
     const active = !!props.active;
     const variant = props.variant || "default";
-    const classes = clsx(
-        "cursor-pointer",
-        variant === "chips"
-            ? "Tab_chip rounded-full bg-bg"
-            : [
-                  "items-center hover:bg-action-selected p-1 rounded-tr rounded-tl text-text-secondary text-sm",
-                  active ? "border-b-2 border-primary" : "border-b-2 !border-transparent hover:border-action-hover",
-              ],
-
-        props.className
-    );
-    const chipClasses = variant === "chips" ? clsx(active && "outline-divider outline !bg-bg-paper/40") : "";
-    let children: React.ReactNode;
+    let main: React.ReactNode;
 
     if (variant === "chips") {
-        // chips text co,or hover effect ist in css class Tab_chip
-        children = (
-            <Chip startIcon={props.icon} variant="pale" className={chipClasses}>
+        // chips text color hover effect ist in css class Tab_chip
+        main = (
+            <Chip startIcon={props.icon} variant="pale" className={clsx("Tab_chip", active && "outline-divider outline !bg-bg-paper/40")}>
                 {props.children}
             </Chip>
         );
     } else
-        children = (
-            <>
+        main = (
+            <div
+                className={clsx(
+                    "flex flex-row px-2.5 py-1.5 items-center text-text-secondary text-sm transition",
+                    !props.disabled && "cursor-pointer hover:bg-action-hover",
+                    active ? "border-b-2 border-primary rounded-t" : "rounded border-b-2 border-transparent"
+                )}
+                style={{ transition: "background-color 0.3s ease, border-color 0.1s ease" }}
+            >
                 {props.icon && <Styled className="mr-1.5">{props.icon}</Styled>}
                 {props.children}
-            </>
+            </div>
         );
 
     return (
-        <LinkContainer href={props.href} style={props.style} className={classes}>
-            {children}
+        <LinkContainer onClick={props.onClick} href={props.href} style={props.style} className={props.className}>
+            {main}
         </LinkContainer>
     );
 }

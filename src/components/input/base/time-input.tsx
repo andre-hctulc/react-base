@@ -5,15 +5,15 @@ import type { PropsOf } from "@react-client/util";
 import clsx from "clsx";
 import Label from "../label";
 import React from "react";
-import { useJSForm } from "../form/js-form";
+import { useFormInput } from "../form/js-form";
 import { forDateLikeInput, getInputSizeClasses } from "@client-util/input-helpers";
-import { InputLikeProps, inputLikeProps } from "./input";
+import { InputLikeProps } from "./input";
 import { Size } from "@react-client/types";
 
 export interface InputProps extends InputLikeProps<Date> {
     className?: string;
     style?: React.CSSProperties;
-    onChange?: (date: Date | null) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>, date: Date | null) => void;
     onFocus?: React.FocusEventHandler<HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     slotProps?: { input?: PropsOf<"input">; helperText?: PropsOf<typeof HelperText> };
@@ -40,10 +40,11 @@ function formatDate(date: Date, datetime?: boolean) {
 const TimeInput = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const inpType = props.datetime ? "datetime-local" : "date";
-    const form = useJSForm();
-    const { helperText, error, readOnly, required, disabled, defaultValue } = inputLikeProps(props, form);
+    const { readOnly, disabled, error } = useFormInput(props);
     const min = React.useMemo(() => props.min && formatDate(props.min, !!props.datetime), [props.min, props.datetime]);
     const max = React.useMemo(() => props.max && formatDate(props.max, !!props.datetime), [props.max, props.datetime]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const defaultValue = React.useMemo(() => (props.defaultValue ? formatDate(props.defaultValue) : undefined), []);
 
     const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = e => {
         if (e.key === "Enter") props.onEnterKeyDown?.(e);
@@ -52,21 +53,13 @@ const TimeInput = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
         // e.target.valueAsDate ist null - e.target.valueAsNumber ist date value in Millisekunden
         const newDate = new Date(e.target.valueAsNumber);
-        props.onChange?.(newDate);
-        if (props.name) form?.change?.(props.name, newDate);
+        props.onChange?.(e, newDate);
     };
-
-    React.useEffect(() => {
-        return () => {
-            if (props.name) form?.change(props.name, defaultValue);
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.name]);
 
     return (
         <div className={clsx("flex flex-col flex-shrink-0", props.className)} style={props.style} ref={ref}>
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} requiredError={error} required={required} hint={form?.hint}>
+                <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
                     {props.label}
                 </Label>
             )}
@@ -84,15 +77,13 @@ const TimeInput = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
                 defaultValue={defaultValue}
                 readOnly={readOnly}
                 disabled={disabled}
-                required={required}
+                required={props.required}
                 min={min}
                 max={max}
             />
-            {helperText && (
-                <HelperText error={error} {...props.slotProps?.helperText}>
-                    {helperText}
-                </HelperText>
-            )}
+            <HelperText error={error} errorMessage={props.errorMessage} {...props.slotProps?.helperText}>
+                {props.helperText}
+            </HelperText>
         </div>
     );
 });

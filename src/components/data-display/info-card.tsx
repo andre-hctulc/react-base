@@ -1,8 +1,8 @@
-import {  collapse } from "@client-util/style-util";
 import React from "react";
 import Card from "@react-client/components/layout/containers/cards/card";
 import Typography from "@react-client/components/text/typography";
 import Styled from "@react-client/components/others/styled";
+import { collapse } from "@client-util/helpers";
 
 interface InfoCardProps {
     size?: "small" | "medium" | "large";

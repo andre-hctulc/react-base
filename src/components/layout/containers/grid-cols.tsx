@@ -1,12 +1,12 @@
 // * SSR
 
 import { range } from "@client-util/iterables";
-import { flattenChildren, mapChildren } from "@react-client/util";
+import { flattenChildren } from "@react-client/util";
 import clsx from "clsx";
 import React from "react";
 import Stack from "./stack";
-import {  collapse } from "@client-util/style-util";
 import { Size } from "@react-client/types";
+import { collapse } from "@client-util/helpers";
 
 interface GridColsProps {
     className?: string;

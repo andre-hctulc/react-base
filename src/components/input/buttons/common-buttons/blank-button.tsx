@@ -1,7 +1,7 @@
 import { type PropsOf } from "@react-client/util";
 import Button from "../button";
 import clsx from "clsx";
-import { collapse } from "@client-util/style-util";
+import { collapse } from "@client-util/helpers";
 
 export default function BlankButton(props: Omit<PropsOf<typeof Button>, "color" | "unstyled">) {
     const variant = props.variant || "text";

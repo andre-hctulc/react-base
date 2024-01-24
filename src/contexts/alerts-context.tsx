@@ -6,7 +6,7 @@ import React from "react";
 import { TransitionGroup } from "react-transition-group";
 import { randomId } from "@client-util/strings";
 
-const AlertContext = React.createContext<AlertContext>({} as any);
+const AlertContext = React.createContext<AlertContext | null>(null);
 
 export interface AlertOptions {
     title?: string;
@@ -32,13 +32,14 @@ interface AlertContextProviderProps {
 
 export function useAlerts() {
     const alertsContext = React.useContext(AlertContext);
+    if (!alertsContext) throw new Error("`AlertsContextProvider` required");
     return alertsContext;
 }
 
 const width = 500;
 
 /** Die Alert-Box hat einen z-Index von 2. */
-export default function AlertContextProvider(props: AlertContextProviderProps) {
+export default function AlertsContextProvider(props: AlertContextProviderProps) {
     const [alerts, setAlerts] = React.useState<Record<string, ({ message: React.ReactNode; severity: Severity } & AlertOptions) | undefined>>({});
     const currentAlerts = React.useRef<Record<string, ({ message: React.ReactNode; severity: Severity } & AlertOptions) | undefined>>({});
     const hasAlerts = React.useMemo(() => !!Object.keys(alerts).length, [alerts]);

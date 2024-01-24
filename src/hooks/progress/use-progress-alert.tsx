@@ -1,4 +1,4 @@
-import { useAlerts } from "@react-client/contexts/alert-context";
+import { useAlerts } from "@react-client/contexts/alerts-context";
 import ProgressController, { ProgressListener } from "@client-util/progress-controller";
 import Progress from "@react-client/components/data-display/loading/progress";
 import { PropsOf } from "@react-client/util";

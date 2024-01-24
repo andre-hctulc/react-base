@@ -1,5 +1,7 @@
 // * SSR
 
+import { collapse } from "@client-util/helpers";
+import { Size } from "@react-client/types";
 import clsx from "clsx";
 
 interface PageContentProps {
@@ -14,6 +16,8 @@ interface PageContentProps {
     className?: string;
     large?: boolean;
     scroll?: boolean;
+    /** @default "medium" */
+    size?: Size | "full_width";
 }
 
 /**
@@ -21,21 +25,24 @@ interface PageContentProps {
  * @tag main
  */
 export default function PageContent(props: PageContentProps) {
-    const classes = clsx(
-        "min-w-0 flex flex-col max-w-full w-full xl:self-center",
-        props.large ? "xl:max-w-[1700px]" : "xl:max-w-[1500px]",
-        props.grow && "flex-grow",
-        props.noShrink && "flex-shrink-0",
-        props.scroll && "min-h-0 overflow-y-auto",
-        props.px && "px-5",
-        props.py && "py-5",
-        props.pb && "pb-5",
-        props.pt && "pt-5",
-        props.className
-    );
+    const sizeClass = collapse(props.size || "medium", { small: "xmax-w-[1300px]", medium: "xmax-w-[1500px]", large: "max-w-[1700px]", full_width: "" });
 
     return (
-        <main className={classes} style={props.style}>
+        <main
+            className={clsx(
+                "min-w-0 flex flex-col max-w-full w-full xl:self-center",
+                sizeClass,
+                props.grow && "flex-grow",
+                props.noShrink && "flex-shrink-0",
+                props.scroll && "min-h-0 overflow-y-auto",
+                props.px && "px-5",
+                props.py && "py-5",
+                props.pb && "pb-5",
+                props.pt && "pt-5",
+                props.className
+            )}
+            style={props.style}
+        >
             {props.children}
         </main>
     );

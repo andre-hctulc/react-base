@@ -1,6 +1,6 @@
 // * SSR
 
-import { collapse } from "@client-util/style-util";
+import { collapse } from "@client-util/helpers";
 import Styled from "@react-client/components/others/styled";
 import { ThemeColor } from "@react-client/types";
 import { themeColor } from "@react-client/util";

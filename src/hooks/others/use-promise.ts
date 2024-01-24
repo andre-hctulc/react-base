@@ -1,8 +1,6 @@
 import React from "react";
 
-// TODO React.useTransition hier benutzen?
-
-export default function usePromise<T = any, E = unknown>() {
+export default function usePromise<T = any, E = Error>() {
     const [data, setData] = React.useState<T>();
     const [isPending, setIsPending] = React.useState(false);
     const [resolved, setResolved] = React.useState(false);

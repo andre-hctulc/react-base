@@ -107,7 +107,6 @@ export function justifyClass(align: "center" | "start" | "end") {
     return collapse(align || "center", { end: "justify-end", center: "justify-center", start: "justify-start" });
 }
 
-
 /**
  * @param children
  * @param mapper New children are replaced and props are added. Use `overwriteProps` to replace previous props.
@@ -169,6 +168,11 @@ export function setRef<T = any>(refObjOrFct: React.ForwardedRef<T> | undefined |
     else if (typeof refObjOrFct === "object" && refObjOrFct) refObjOrFct.current = ref;
 }
 
+export function hasChildren(children: React.ReactNode) {
+    if (!children) return false;
+    return React.Children.count(children) !== 0;
+}
+
 // * Props
 
 export type PropsOf<T> = T extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[T] : T extends React.ComponentType<infer P> ? P : never;
@@ -205,6 +209,7 @@ export namespace Next {
     export interface PageProps {
         children?: React.ReactNode;
         searchParams: Record<string, string>;
+        params: Record<string, string>;
     }
 }
 

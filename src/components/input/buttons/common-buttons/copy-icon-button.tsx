@@ -3,7 +3,7 @@
 import React from "react";
 import IconButton from "../icon-button";
 import CopyIcon from "@react-client/components/icons/collection/copy";
-import { useAlerts } from "@react-client/contexts/alert-context";
+import { useAlerts } from "@react-client/contexts/alerts-context";
 import { Size } from "@react-client/types";
 
 interface CopyIconButtonProps {

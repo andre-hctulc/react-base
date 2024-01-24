@@ -82,10 +82,10 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
                 left = anchorRect.x + anchorRect.width / 2 - (cardRect.width || 0) / 2;
                 break;
             case "right":
-                left = ml + anchorRect.width + buffer;
+                left = ml + anchorRect.width - buffer;
                 break;
             case "left":
-                left = ml - buffer;
+                left = ml + buffer;
                 break;
             default:
                 left = 0;

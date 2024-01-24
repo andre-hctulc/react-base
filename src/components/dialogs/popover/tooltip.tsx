@@ -5,7 +5,7 @@ import Popover from "./popover";
 import React from "react";
 import clsx from "clsx";
 import Typography from "@react-client/components/text/typography";
-import { useAlerts } from "@react-client/contexts/alert-context";
+import { useAlerts } from "@react-client/contexts/alerts-context";
 import { firstInt } from "@client-util/iterables";
 
 interface TooltipProps {
@@ -75,12 +75,9 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
         addListener("mouseleave", () => {
             if (openTimeout.current) clearTimeout(openTimeout.current);
 
-            closeTimeout.current = setTimeout(
-                () => {
-                    setOpen(false);
-                },
-                firstInt(props.disappearTimeout, 30)
-            );
+            closeTimeout.current = setTimeout(() => {
+                setOpen(false);
+            }, firstInt(props.disappearTimeout, 30));
         });
 
         return () => {

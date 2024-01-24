@@ -6,7 +6,7 @@ interface DevProps {
     highlight?: boolean;
 }
 
-/** Die children werden nur im dev mode gerendert (`process.env.NODE_ENV === "development"`).  */
+/** Wird nur im _Dev Mode_ gerendert  */
 export default function Dev(props: DevProps) {
     if (!devMode || props.hidden) return null;
     else {

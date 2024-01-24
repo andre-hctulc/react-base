@@ -3,9 +3,9 @@
 import React from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-const BreakpointsContext = React.createContext<BreakpointsContext | null>(null);
+const BreakpointsContext = React.createContext<Breakpoints | null>(null);
 
-interface BreakpointsContext {
+interface Breakpoints {
     minSm: boolean;
     minMd: boolean;
     minLg: boolean;
