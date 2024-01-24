@@ -42,16 +42,13 @@ interface InputProps extends InputLikeProps {
     fullWidth?: boolean;
     className?: string;
     style?: React.CSSProperties;
-    // * Listeners
+    // * Events
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onFocus?: React.FocusEventHandler<HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
     onEnterKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-<<<<<<< HEAD
-    onClick?: () => void;
-=======
->>>>>>> abd05394c9687a6f2887a9309c5cf1c2d979c911
+    onClick?: React.MouseEventHandler<HTMLInputElement>;
 }
 
 /** Input Element für simple inputs, wie text oder Zahlen. */
@@ -59,12 +56,12 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const { readOnly, disabled, error } = useFormInput(props);
 
-    const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = e => {
         if (props.onKeyDown) props.onKeyDown(e);
         else if (e.key === "Enter") props.onEnterKeyDown?.(e);
     };
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
         props.onChange?.(e);
     };
 
@@ -89,10 +86,6 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
                 defaultValue={props.defaultValue}
                 disabled={disabled}
                 readOnly={readOnly}
-<<<<<<< HEAD
-                name={props.name}
-=======
->>>>>>> abd05394c9687a6f2887a9309c5cf1c2d979c911
                 required={props.required}
                 min={props.min}
                 max={props.max}
