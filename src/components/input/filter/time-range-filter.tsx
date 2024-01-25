@@ -1,10 +1,10 @@
 import FilterInput from "@react-client/components/input/filter/filter-input";
 import React from "react";
-import TimeRangeInput, { TimeRange } from "../base/time-range-input";
+import TimeRangeInput, { TimeRange } from "../base/TimeRangeInput/TimeRangeInput";
 import TimeText from "@react-client/components/text/time-text";
 import { compareDates } from "@client-util/compare";
 import Typography from "@react-client/components/text/typography";
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 
 export interface TimeRangeFilterProps {
     onChange?: (range: TimeRange) => void;

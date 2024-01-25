@@ -4,7 +4,7 @@ import React from "react";
 import clsx from "clsx";
 import ShortText from "@react-client/components/text/short-text";
 import { PropsOf, themeColor } from "@react-client/util";
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import { ThemeColor } from "@react-client/types";
 
 export type ProgressBarAppearance = { absolute?: boolean; unit?: string; showMax?: boolean; color?: ThemeColor };

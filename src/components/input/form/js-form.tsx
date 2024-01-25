@@ -3,9 +3,9 @@
 import { setRef } from "@react-client/util";
 import clsx from "clsx";
 import React from "react";
-import type { InputLikeProps } from "../base/input";
+import type { InputLikeProps } from "../base/Input/Input";
 import { firstBool } from "@client-util/iterables";
-import useId from "@react-client/hooks/others/use-id";
+import useId from "@react-client/hooks/others/useId";
 
 const JSFormContext = React.createContext<JSFormContext | null>(null);
 

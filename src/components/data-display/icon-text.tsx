@@ -1,12 +1,12 @@
 // * SSR
 
 import React from "react";
-import Styled from "@react-client/components/others/styled";
+import Styled from "@react-client/components/others/Styled";
 import ShortText from "@react-client/components/text/short-text";
 import { PropsOf } from "@react-client/util";
 import clsx from "clsx";
 import Skeleton from "@react-client/components/data-display/loading/skeleton";
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 
 interface IconTextProps {
     className?: string;

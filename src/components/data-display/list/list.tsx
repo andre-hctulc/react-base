@@ -1,7 +1,7 @@
 // * SSR (Falls `ListProps.options` nicht verwendet wird!)
 
-import type { SelectOption } from "@react-client/components/input/base/select";
-import Stack from "@react-client/components/layout/containers/stack";
+import type { SelectOption } from "@react-client/components/input/base/Select/Select";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import React from "react";
 import ListItem from "./list-item";
 import Placeholder from "@react-client/components/data-display/loading/placeholder";

@@ -1,6 +1,6 @@
 // * SSR
 
-import FlowBox from "@react-client/components/layout/containers/flow-box";
+import FlowBox from "@react-client/components/layout/containers/FlowBox/FlowBox";
 import { PropsOf, mapChildren } from "@react-client/util";
 import React from "react";
 import Labelize from "./labelize";

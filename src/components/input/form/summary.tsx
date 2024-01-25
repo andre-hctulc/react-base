@@ -4,7 +4,7 @@ import Typography from "@react-client/components/text/typography";
 import clsx from "clsx";
 import LongText from "@react-client/components/text/long-text";
 import JSForm, { FormValidator, useFormController } from "./js-form";
-import Input from "../base/input";
+import Input from "../base/Input/Input";
 import React from "react";
 
 export type SummaryFactory<T extends object = any> = {

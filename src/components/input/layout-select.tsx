@@ -2,10 +2,10 @@
 
 import React from "react";
 import ListIcon from "@react-client/components/icons/collection/list";
-import ToggleButtonGroup from "./buttons/toggle-button-group";
-import ToggleButton from "./buttons/toggle-button";
+import ToggleButtonGroup from "./buttons/ToggleButtonGroup/ToggleButtonGroup";
+import ToggleButton from "./buttons/ToggleButton/ToggleButton";
 import GridOutlineIcon from "@react-client/components/icons/collection/grid-outline";
-import useMutableSearchParams from "@react-client/hooks/navigation/use-mutable-search-params";
+import useMutableSearchParams from "@react-client/hooks/navigation/useMutableSearchParams";
 import { SearchParam } from "@client-util/nav";
 
 export type Layout = "list" | "grid";

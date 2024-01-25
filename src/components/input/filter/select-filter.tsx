@@ -1,6 +1,6 @@
 import React from "react";
 import FilterInput from "./filter-input";
-import Select, { SelectOption } from "../base/select";
+import Select, { SelectOption } from "../base/Select/Select";
 
 export interface SelectFilterProps {
     label: string;

@@ -3,13 +3,13 @@ import { PropsOf } from "@react-client/util";
 import clsx from "clsx";
 import React from "react";
 import Label from "./label";
-import IconButton from "./buttons/icon-button";
+import IconButton from "./buttons/IconButton/IconButton";
 import HelperText from "../text/helper-text";
 import PlusIcon from "@react-client/components/icons/collection/plus";
 import XIcon from "@react-client/components/icons/collection/x";
 import { useFormInput } from "./form/js-form";
 import { getEventValue } from "@client-util/input-helpers";
-import { InputLikeProps } from "./base/input";
+import { InputLikeProps } from "./base/Input/Input";
 
 export type InputListColDef<T extends object> = Omit<DataGridColDef<T>, "render"> & {
     required?: boolean;

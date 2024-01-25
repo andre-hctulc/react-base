@@ -181,9 +181,7 @@ export interface StyledComponentProps {
     className?: string;
     style?: React.CSSProperties;
 }
-export interface ParentComponentProps<T extends React.ReactNode = React.ReactNode> {
-    children?: T;
-}
+export type ParentComponentProps<T extends React.ReactNode = React.ReactNode, R extends boolean = false> = R extends true ? { children: T } : { children?: T };
 
 export interface CommomComponentProps extends StyledComponentProps, ParentComponentProps {}
 

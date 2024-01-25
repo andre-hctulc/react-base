@@ -1,8 +1,8 @@
 import React from "react";
 import Alert from "./alert";
 import AlertTitle from "./alert-title";
-import Dev from "@react-client/components/layout/dev/dev";
-import Button from "@react-client/components/input/buttons/button";
+import Dev from "@react-client/components/layout/dev/Dev";
+import Button from "@react-client/components/input/buttons/Button/Button";
 
 export type ErrorAltertProps = {
     active?: boolean;

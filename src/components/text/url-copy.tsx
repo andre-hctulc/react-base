@@ -1,10 +1,6 @@
-import CopyIconButton from "@react-client/components/input/buttons/common-buttons/copy-icon-button";
-import Divider from "@react-client/components/layout/divider";
 import clsx from "clsx";
-import Link from "next/link";
 import React from "react";
 import ShortText from "./short-text";
-import Copy from "@react-client/components/input/copy";
 
 interface URLCopy {
     className?: string;
@@ -23,7 +19,7 @@ export default function URLCopy(props: URLCopy) {
                 {props.url}
             </ShortText>
             <div className="border-l p-0.5 bg-bg-dark/40">
-                <CopyIconButton successMessage={copySuccessMessage} iconSize={16} size="small" text={props.url} />
+                {/* TODO <IconButton successMessage={copySuccessMessage} iconSize={16} size="small" text={props.url} /> */}
             </div>
         </span>
     );

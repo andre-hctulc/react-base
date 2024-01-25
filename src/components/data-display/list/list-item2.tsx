@@ -1,6 +1,6 @@
 "use client";
 
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 
 export default function ListItem2(props: {
     style?: React.CSSProperties;

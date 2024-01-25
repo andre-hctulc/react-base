@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import Spinner from "./spinner";
-import Delayed from "@react-client/components/others/delayed";
+import Delayed from "@react-client/components/others/Delayed";
 
 interface LoadingProps {
     style?: React.CSSProperties;

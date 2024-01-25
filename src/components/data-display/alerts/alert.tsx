@@ -5,8 +5,8 @@ import ErrorCircleOutlineIcon from "@react-client/components/icons/collection/er
 import InfoCircleOutlineIcon from "@react-client/components/icons/collection/info-circle-outline";
 import WarningOutlineIcon from "@react-client/components/icons/collection/warning-outline";
 import XIcon from "@react-client/components/icons/collection/x";
-import Styled from "@react-client/components/others/styled";
-import IconButton from "@react-client/components/input/buttons/icon-button";
+import Styled from "@react-client/components/others/Styled";
+import IconButton from "@react-client/components/input/buttons/IconButton/IconButton";
 import clsx from "clsx";
 import React from "react";
 

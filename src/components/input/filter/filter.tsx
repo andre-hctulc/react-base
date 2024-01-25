@@ -1,12 +1,12 @@
 "use client";
 
-import useLocalStorage from "@react-client/hooks/storage/use-current-local-storage";
+import useLocalStorage from "@react-client/hooks/storage/useCurrentLocalStorage";
 import clsx from "clsx";
 import React from "react";
 import FilterIcon from "@react-client/components/icons/collection/filter";
-import useMutableSearchParams from "@react-client/hooks/navigation/use-mutable-search-params";
+import useMutableSearchParams from "@react-client/hooks/navigation/useMutableSearchParams";
 import { defaultFilterParser, defaultFilterStringifier } from "./filter-utility";
-import ToggleButton from "../buttons/toggle-button";
+import ToggleButton from "../buttons/ToggleButton/ToggleButton";
 import Fade from "@react-client/components/transitions/fade";
 import JSForm, { useFormController } from "../form/js-form";
 import { SearchParam } from "@client-util/nav";

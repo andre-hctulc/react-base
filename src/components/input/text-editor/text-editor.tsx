@@ -6,7 +6,7 @@ import { GrowV100 } from "@react-client/components/transitions/grow-v";
 import TextEditorToolbar from "./text-editor-toolbar";
 //import { isDescendentOf } from "@client-util/dom";
 import { getEditableSelection } from "./text-editor-util";
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 
 // interface TextEditorContextType {
 //     small: boolean;

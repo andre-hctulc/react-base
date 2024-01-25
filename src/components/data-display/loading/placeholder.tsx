@@ -2,11 +2,11 @@
 
 import clsx from "clsx";
 import React from "react";
-import Button from "@react-client/components/input/buttons/button";
-import Stack from "@react-client/components/layout/containers/stack";
+import Button from "@react-client/components/input/buttons/Button/Button";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import { PropsOf } from "@react-client/util";
 import EmptyText from "../../text/empty-text";
-import Delayed from "@react-client/components/others/delayed";
+import Delayed from "@react-client/components/others/Delayed";
 
 interface PlaceholderProps {
     /** Falls _string_, dann wird Dieser als Inhalt für ein `EmptyText` verwendet, ansonsten bleibt `children` unverändert.  */

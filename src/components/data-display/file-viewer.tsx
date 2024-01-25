@@ -1,4 +1,4 @@
-import useBlobUrl from "@react-client/hooks/others/use-blob-url";
+import useBlobUrl from "@react-client/hooks/others/useBlobUrl";
 import { FileExtension, fileExtension, fileNameMatchesMimeType, imageFileExtensions, jsonFileExtensions } from "@client-util/web-fs";
 import clsx from "clsx";
 import React from "react";

@@ -3,7 +3,7 @@
 import React from "react";
 import Typography from "./typography";
 import { PropsOf } from "@react-client/util";
-import Styled from "@react-client/components/others/styled";
+import Styled from "@react-client/components/others/Styled";
 import clsx from "clsx";
 import { collapse } from "@client-util/helpers";
 

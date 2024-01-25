@@ -1,7 +1,7 @@
 // * SSR
 
 import XCircleOutlineIcon from "@react-client/components/icons/collection/x-circle-outline";
-import Styled from "@react-client/components/others/styled";
+import Styled from "@react-client/components/others/Styled";
 import clsx from "clsx";
 import React from "react";
 import { themeColor } from "@react-client/util";

@@ -6,7 +6,7 @@ import { useOnClickOutside } from "usehooks-ts";
 import { PropsOf } from "@react-client/util";
 import { GrowV100 } from "@react-client/components/transitions/grow-v";
 import Fade from "@react-client/components/transitions/fade";
-import Interval from "@react-client/components/others/interval";
+import Interval from "@react-client/components/others/Interval";
 
 interface HTMLEditorProps extends EditorProps {
     className?: string;

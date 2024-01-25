@@ -1,8 +1,8 @@
 // * SSR
 
-import Styled from "@react-client/components/others/styled";
-import IconButton from "@react-client/components/input/buttons/icon-button";
-import Stack from "@react-client/components/layout/containers/stack";
+import Styled from "@react-client/components/others/Styled";
+import IconButton from "@react-client/components/input/buttons/IconButton/IconButton";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import ShortText from "@react-client/components/text/short-text";
 import Typography, { TextVariant } from "@react-client/components/text/typography";
 import { PropsOf } from "@react-client/util";

@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "@react-client/components/layout/containers/cards/card";
+import Card from "@react-client/components/layout/containers/cards/Card/Card";
 import Typography from "@react-client/components/text/typography";
-import Styled from "@react-client/components/others/styled";
+import Styled from "@react-client/components/others/Styled";
 import { collapse } from "@client-util/helpers";
 
 interface InfoCardProps {

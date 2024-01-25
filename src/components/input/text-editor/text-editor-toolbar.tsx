@@ -6,7 +6,7 @@ import InsertLinkDialog from "./text-editor-dialogs/insert-link-dialog";
 import InsertImageDialog from "./text-editor-dialogs/insert-image-dialog";
 import FontSizeSelect from "../editors/font-size-select";
 import clsx from "clsx";
-import Divider from "@react-client/components/layout/divider";
+import Divider from "@react-client/components/layout/Divider/Divider";
 import LinkIcon from "@react-client/components/icons/collection/link";
 import BoldIcon from "@react-client/components/icons/collection/bold";
 import UnderlineIcon from "@react-client/components/icons/collection/underline";
@@ -18,7 +18,7 @@ import AlignRightIcon from "@react-client/components/icons/collection/align-righ
 import ListIcon from "@react-client/components/icons/collection/list";
 import OrderdListIcon from "@react-client/components/icons/collection/orderd-list";
 import ImageIcon from "@react-client/components/icons/collection/image";
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 
 const TextEditorToolbar = React.forwardRef<HTMLDivElement, { children?: React.ReactNode }>((props, ref) => {
     const [linkDiaOpen, setLinkDiaOpen] = React.useState(false);
