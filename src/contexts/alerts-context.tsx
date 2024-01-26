@@ -1,3 +1,5 @@
+"use client";
+
 import Alert from "@react-client/components/data-display/alerts/alert";
 import AlertTitle from "@react-client/components/data-display/alerts/alert-title";
 import Fade from "@react-client/components/transitions/fade";

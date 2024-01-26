@@ -16,9 +16,9 @@ import BlankButton from "@react-client/components/input/buttons/BlankButton/Blan
 >>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/dialogs/dialog/DeleteDialog/DeleteDialog.tsx
 
 interface DeleteDialogProps {
-    title?: string;
     open: boolean;
     onClose: () => void;
+    title?: string;
     children?: React.ReactNode;
     deleteButtonText?: string;
     cancelButtonText?: string;

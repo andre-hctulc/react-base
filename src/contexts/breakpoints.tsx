@@ -25,13 +25,15 @@ export function useBreakpoints() {
 
 interface BreakpointsProviderProps {
     children?: React.ReactNode;
+    /** Siehe Implementierung für Default-Werte */
+    values?: { sm: number; md: number; lg: number; xl: number };
 }
 
 export default function BreakpointsProvider(props: BreakpointsProviderProps) {
-    const sm = useMediaQuery("(min-width: 0px)");
-    const md = useMediaQuery("(min-width: 720px)");
-    const lg = useMediaQuery("(min-width: 1300px)");
-    const xl = useMediaQuery("(min-width: 1600px)");
+    const sm = useMediaQuery(`(min-width: ${props.values?.sm || 0}px)`);
+    const md = useMediaQuery(`(min-width: ${props.values?.md || 720}px)`);
+    const lg = useMediaQuery(`(min-width: ${props.values?.lg || 1300}px)`);
+    const xl = useMediaQuery(`(min-width: ${props.values?.xl || 1600}px)`);
     const size = React.useMemo(() => {
         if (xl) return "xl";
         if (lg) return "lg";

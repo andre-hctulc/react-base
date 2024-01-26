@@ -203,7 +203,7 @@ export interface EventProps<T = Element> {
 export namespace Next {
     export interface LayoutProps {
         children?: React.ReactNode;
-        searchParams: Record<string, string>;
+        params: Record<string, string>;
     }
 
     export interface PageProps {
