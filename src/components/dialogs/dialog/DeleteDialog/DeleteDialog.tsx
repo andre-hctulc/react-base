@@ -10,9 +10,9 @@ import DialogHeader from "../DialogHeader/DialogHeader";
 import BlankButton from "@react-client/components/input/buttons/BlankButton/BlankButton";
 
 interface DeleteDialogProps {
-    title?: string;
     open: boolean;
     onClose: () => void;
+    title?: string;
     children?: React.ReactNode;
     deleteButtonText?: string;
     cancelButtonText?: string;

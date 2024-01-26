@@ -1,5 +1,5 @@
 import Chip from "@react-client/components/data-display/chip/chip";
-import VHCenter from "../../../layout/containers/vh-center";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import Styled from "@react-client/components/others/Styled";
 import clsx from "clsx";
 
@@ -10,13 +10,11 @@ interface DrawerHeaderProps {
 }
 
 export default function DrawerHeader(props: DrawerHeaderProps) {
-    const classes = clsx("py-2", props.className);
-
     return (
-        <VHCenter className={classes} style={props.style}>
+        <Stack align="center" justify="center" className={clsx("py-2", props.className)} style={props.style}>
             <Chip alignSelf="center">
                 <Styled size={30}>{props.icon}</Styled>
             </Chip>
-        </VHCenter>
+        </Stack>
     );
 }

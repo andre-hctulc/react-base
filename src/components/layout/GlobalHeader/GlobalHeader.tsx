@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Stack from "../containers/Stack/Stack";
 
-export const globalHeaderHeight = 60;
+const globalHeaderHeight = 60;
 
 interface GlobalHeaderProps {
     children?: React.ReactNode;
@@ -24,3 +24,5 @@ export default function GlobalHeader(props: GlobalHeaderProps) {
         </Stack>
     );
 }
+
+GlobalHeader.height = globalHeaderHeight;
