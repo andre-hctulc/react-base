@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import React from "react";
-import Divider from "@react-client/components/layout/divider";
+import Divider from "@react-client/components/layout/Divider/Divider";
 
 interface StatsProps {
     children?: React.ReactNode;

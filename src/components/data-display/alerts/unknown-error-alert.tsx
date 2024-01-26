@@ -1,4 +1,4 @@
-import Dev from "@react-client/components/layout/dev/dev";
+import Dev from "@react-client/components/layout/dev/Dev";
 import Alert from "./alert";
 import AlertTitle from "./alert-title";
 

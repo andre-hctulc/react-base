@@ -1,5 +1,5 @@
 import React from "react";
-import Icon, { IconProps } from "../icon";
+import Icon, { IconProps } from "../Icon/Icon";
 
 const LinkIcon = React.forwardRef<SVGElement, IconProps>((props, ref) => {
     return (

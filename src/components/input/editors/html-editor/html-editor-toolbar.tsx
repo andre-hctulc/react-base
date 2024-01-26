@@ -1,7 +1,7 @@
 import React, { EventHandler } from "react";
 import { getEditableSelection, getTextFormat, runCommand } from "./html-editor-util";
 import clsx from "clsx";
-import Divider from "@react-client/components/layout/divider";
+import Divider from "@react-client/components/layout/Divider/Divider";
 import LinkIcon from "@react-client/components/icons/collection/link";
 import BoldIcon from "@react-client/components/icons/collection/bold";
 import UnderlineIcon from "@react-client/components/icons/collection/underline";
@@ -18,8 +18,12 @@ import InsertLinkDialog from "../insert-link-dialog";
 import InsertImageDialog from "../insert-image-dialog";
 import FontSizeSelect from "@react-client/components/input/editors/font-size-select";
 import ColorSelect from "@react-client/components/input/editors/color-select";
+<<<<<<< HEAD
 import Toolbar from "@react-client/components/layout/containers/toolbar";
 import { PropsOf } from "@react-client/types";
+=======
+import Toolbar from "@react-client/components/layout/containers/Toolbar/Toolbar";
+>>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 
 const HTMLEditorToolbar = React.forwardRef<HTMLElement, { children?: React.ReactNode }>((props, ref) => {
     const [linkDiaOpen, setLinkDiaOpen] = React.useState(false);

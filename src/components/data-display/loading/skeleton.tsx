@@ -7,7 +7,7 @@ import React from "react";
 
 interface SkeletonProps {
     /** @default "rounded" */
-    variant?: "rounded" | "rect" | "circular" | "rounded_lg";
+    variant?: "rounded" | "rect" | "circular" | "rounded_lg" | "text";
     height?: number | string | [number, number];
     width?: number | string | [number, number];
     minWidth?: number;
@@ -25,26 +25,43 @@ interface SkeletonProps {
      * */
     active?: boolean;
     dark?: boolean;
+    /** @default "div" */
     tag?: string;
     /** @default true */
     forwardRef?: boolean;
+    onClick?: React.MouseEventHandler;
 }
 
 const Skeleton = React.forwardRef<HTMLElement, SkeletonProps>((props, ref) => {
-    const variantClasses = collapse(props.variant || "rounded", { rounded: "rounded", rect: "", circular: "rounded-full", rounded_lg: "rounded-lg" });
+    const variantClasses = collapse(props.variant || "rounded", { rounded: "rounded", text: "rounded", rect: "", circular: "rounded-full", rounded_lg: "rounded-lg" });
     const classes = clsx("Skeleton", props.pulse !== false && "animate-pulse", props.dark ? "bg-bg-dark/60" : "bg-bg-paper", variantClasses, props.className);
-    const minW = Array.isArray(props.width) ? props.width?.[0] : props.width;
-    const maxW = Array.isArray(props.width) ? props.width?.[1] : props.width;
-    const minH = Array.isArray(props.height) ? props.height?.[0] : props.height;
-    const maxH = Array.isArray(props.height) ? props.height?.[1] : props.height;
-    const width = React.useMemo(() => {
-        if (minW === maxW) return maxW;
-        return randomNumber(minW as number, maxW as number);
-    }, [minW, maxW]);
-    const height = React.useMemo(() => {
-        if (minH === maxH) return maxH;
-        return randomNumber(minH as number, maxH as number);
-    }, [minH, maxH]);
+
+    const width = React.useMemo(
+        () => {
+            const minW = Array.isArray(props.width) ? props.width?.[0] : props.width;
+            const maxW = Array.isArray(props.width) ? props.width?.[1] : props.width;
+            if (minW === maxW) return maxW;
+            return randomNumber(minW as number, maxW as number);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        Array.isArray(props.width) ? props.width : [props.width]
+    );
+    const height = React.useMemo(
+        () => {
+            let height: number | string | undefined;
+            const minH = Array.isArray(props.height) ? props.height?.[0] : props.height;
+            const maxH = Array.isArray(props.height) ? props.height?.[1] : props.height;
+            if (minH === maxH) height = maxH;
+            else height = randomNumber(minH as number, maxH as number);
+
+            // Bei Text Skeleton Höhe abziehen, da Texte kleiener (bzgl. der Höhe) erscheinen, als sie es im DOM tatsächlich sind
+            if (props.variant === "text" && height) return `calc(${typeof height === "string" ? height : height + "px"} - 4px)`;
+
+            return height;
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        Array.isArray(props.height) ? props.height : [props.height]
+    );
     const Comp: any = props.tag || "div";
 
     if (props.active === true)
@@ -56,6 +73,7 @@ const Skeleton = React.forwardRef<HTMLElement, SkeletonProps>((props, ref) => {
         <Comp
             ref={ref}
             className={classes}
+            onClick={props.onClick}
             style={{ height, width, minHeight: props.minHeight, minWidth: props.minWidth, maxHeight: props.maxHeight, maxWidth: props.maxWidth, ...props.style }}
         >
             {props.children}

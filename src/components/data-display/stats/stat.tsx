@@ -4,13 +4,13 @@ import ShortText from "@react-client/components/text/short-text";
 import Typography from "@react-client/components/text/typography";
 import clsx from "clsx";
 import LaunchIcon from "@react-client/components/icons/collection/launch";
-import Styled from "@react-client/components/others/styled";
-import IconButton from "@react-client/components/input/buttons/icon-button";
-import LinkContainer from "@react-client/components/navigation/link-container";
+import Styled from "@react-client/components/others/Styled";
+import IconButton from "@react-client/components/input/buttons/IconButton/IconButton";
+import LinkContainer from "@react-client/components/navigation/links/LinkContainer/LinkContainer";
 import Unit from "@react-client/components/text/unit";
 import Avatar from "../avatar/avatar";
 import Skeleton from "../loading/skeleton";
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 
 interface StatProps {
     value: any;

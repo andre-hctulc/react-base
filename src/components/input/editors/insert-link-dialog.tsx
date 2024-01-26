@@ -1,4 +1,4 @@
-import Dialog from "@react-client/components/dialogs/dialog/dialog";
+import Dialog from "@react-client/components/dialogs/dialog/Dialog/Dialog";
 import React from "react";
 
 interface InsertLinkDialogProps {

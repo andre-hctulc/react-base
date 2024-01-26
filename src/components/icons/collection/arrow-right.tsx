@@ -1,4 +1,4 @@
-import Icon, { IconProps } from "../icon";
+import Icon, { IconProps } from "../Icon/Icon";
 
 export default function ArrowRightIcon(props: IconProps) {
     return (

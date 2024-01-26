@@ -2,8 +2,13 @@
 
 import React from "react";
 import Typography from "./typography";
+<<<<<<< HEAD
 import { PropsOf } from "@react-client/types";
 import Styled from "@react-client/components/others/styled";
+=======
+import { PropsOf } from "@react-client/util";
+import Styled from "@react-client/components/others/Styled";
+>>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 import clsx from "clsx";
 import { collapse } from "@client-util/helpers";
 

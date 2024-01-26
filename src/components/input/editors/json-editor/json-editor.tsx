@@ -1,13 +1,12 @@
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import React from "react";
 import JSONFields from "./json-fields";
 import PlusIcon from "@react-client/components/icons/collection/plus";
-import VHCenter from "@react-client/components/layout/containers/vh-center";
 import TrashIcon from "@react-client/components/icons/collection/trash";
-import Select, { SelectOption } from "@react-client/components/input/base/select";
-import IconButton from "@react-client/components/input/buttons/icon-button";
-import Input from "@react-client/components/input/base/input";
-import CheckBox from "@react-client/components/input/base/check-box";
+import Select, { SelectOption } from "@react-client/components/input/base/Select/Select";
+import IconButton from "@react-client/components/input/buttons/IconButton/IconButton";
+import Input from "@react-client/components/input/base/Input/Input";
+import CheckBox from "@react-client/components/input/base/CheckBox/CheckBox";
 
 type JSONFieldType = "object" | "string" | "boolean" | "number";
 type JSONFieldValue = string | number | boolean | object | boolean;
@@ -87,7 +86,7 @@ export default function JSONEditor(props: JSONEditorProps) {
                     <>
                         <span style={{ gridColumn: "span 1" }}>{key}</span>
                         <span style={{ gridColumn: "span 2" }}>{obj[key]}</span>
-                        <VHCenter>
+                        <span className="flex items-center justify-center">
                             <IconButton
                                 size="small"
                                 className="self-center"
@@ -97,7 +96,7 @@ export default function JSONEditor(props: JSONEditorProps) {
                             >
                                 <TrashIcon />
                             </IconButton>
-                        </VHCenter>
+                        </span>
                     </>
                 ))}
 
@@ -141,11 +140,11 @@ export default function JSONEditor(props: JSONEditorProps) {
                         if (value) setCurrentDataType(value as any);
                     }}
                 />
-                <VHCenter>
+                <span className="flex items-center justify-center">
                     <IconButton disabled={!currentValid} variant="contained" size="small" className="self-center" onClick={() => addFieldToObject()}>
                         <PlusIcon />
                     </IconButton>
-                </VHCenter>
+                </span>
             </div>
             <JSONFields object={obj} />
         </Stack>

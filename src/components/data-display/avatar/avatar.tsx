@@ -22,15 +22,20 @@ export const avatarSizeMap = { small: 25, medium: 32, large: 40 };
 
 const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     const size = getSize(avatarSizeMap, props.size || "medium");
-    const classes = clsx(
-        "flex flex-col justify-center items-center rounded-full bg-bg-dark/40 p-1 flex-shrink-0 overflow-hidden transition duration-300",
-        props.className
-    );
 
-    if (props.loading) return <Skeleton ref={ref} className={props.className} style={{ height: size, width: size, ...props.style }} variant="circular" />;
+    if (props.loading)
+        return <Skeleton onClick={props.onClick} ref={ref} className={props.className} style={{ height: size, width: size, ...props.style }} variant="circular" />;
 
     return (
-        <div ref={ref} className={classes} style={{ height: size, width: size, ...props.style }} onClick={props.onClick}>
+        <div
+            ref={ref}
+            className={clsx(
+                "flex flex-col justify-center items-center rounded-full bg-bg-dark/40 p-1 flex-shrink-0 overflow-hidden transition duration-300",
+                props.className
+            )}
+            style={{ height: size, width: size, ...props.style }}
+            onClick={props.onClick}
+        >
             {props.src ? (
                 <Image
                     height={size}

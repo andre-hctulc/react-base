@@ -6,8 +6,8 @@ import React from "react";
 import ShortText from "@react-client/components/text/short-text";
 import { devMode } from "@client-util/const";
 import Placeholder from "@react-client/components/data-display/loading/placeholder";
-import Pagination from "@react-client/components/navigation/pagination";
-import IconButton from "@react-client/components/input/buttons/icon-button";
+import Pagination from "@react-client/components/navigation/Pagination/Pagination";
+import IconButton from "@react-client/components/input/buttons/IconButton/IconButton";
 import XIcon from "@react-client/components/icons/collection/x";
 
 export type CellChangeListener<M = any> = (rowParams: GridRowParams<M>, data: any) => void;

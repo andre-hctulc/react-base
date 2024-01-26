@@ -1,7 +1,7 @@
 import React from "react";
 import ShortText from "@react-client/components/text/short-text";
 import FilterInput from "./filter-input";
-import RadioButtons from "../base/radio-buttons";
+import RadioButtons from "../base/RadioButtons/RadioButtons";
 
 export default function RadioButtonsFilter(props: {
     label: string;

@@ -1,4 +1,4 @@
-import Icon, { IconProps } from "../icon";
+import Icon, { IconProps } from "../Icon/Icon";
 
 export default function PlusCircleIcon(props: IconProps) {
     return (

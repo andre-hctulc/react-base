@@ -168,6 +168,52 @@ export function setRef<T = any>(refObjOrFct: React.ForwardedRef<T> | undefined |
     else if (typeof refObjOrFct === "object" && refObjOrFct) refObjOrFct.current = ref;
 }
 
+<<<<<<< HEAD
+=======
+export function hasChildren(children: React.ReactNode) {
+    if (!children) return false;
+    return React.Children.count(children) !== 0;
+}
+
+// * Props
+
+export type PropsOf<T> = T extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[T] : T extends React.ComponentType<infer P> ? P : never;
+
+export interface StyledComponentProps {
+    className?: string;
+    style?: React.CSSProperties;
+}
+export type ParentComponentProps<T extends React.ReactNode = React.ReactNode, R extends boolean = false> = R extends true ? { children: T } : { children?: T };
+
+export interface CommomComponentProps extends StyledComponentProps, ParentComponentProps {}
+
+export interface EventProps<T = Element> {
+    // Mouse
+    onClick?: React.MouseEvent<T>;
+    onDblClick?: React.MouseEvent<T>;
+    onMouseOver?: React.MouseEvent<T>;
+    onMouseLeave?: React.MouseEvent<T>;
+    // Change
+    onChange?: React.ChangeEvent<T>;
+    // Focus
+    onFocus?: React.FocusEvent<T>;
+    onBlur?: React.FocusEvent<T>;
+}
+
+export namespace Next {
+    export interface LayoutProps {
+        children?: React.ReactNode;
+        searchParams: Record<string, string>;
+    }
+
+    export interface PageProps {
+        children?: React.ReactNode;
+        searchParams: Record<string, string>;
+        params: Record<string, string>;
+    }
+}
+
+>>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 // * Theme
 
 export function themeColor(color: ThemeColor | undefined | null): {

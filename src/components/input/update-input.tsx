@@ -1,6 +1,6 @@
 import React from "react";
-import Input from "./base/input";
-import TextArea from "./base/text-area";
+import Input from "./base/Input/Input";
+import TextArea from "./base/TextArea/TextArea";
 
 export default function UpdateInput(props: {
     onBlurAction: (newValue: string) => PromiseLike<string | boolean | void> | string | boolean | void;

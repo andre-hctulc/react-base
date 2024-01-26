@@ -3,9 +3,15 @@
 import React from "react";
 import clsx from "clsx";
 import ShortText from "@react-client/components/text/short-text";
+<<<<<<< HEAD
 import { themeColor } from "@react-client/util";
 import Stack from "@react-client/components/layout/containers/stack";
 import { PropsOf, ThemeColor } from "@react-client/types";
+=======
+import { PropsOf, themeColor } from "@react-client/util";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
+import { ThemeColor } from "@react-client/types";
+>>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 
 export type ProgressBarAppearance = { absolute?: boolean; unit?: string; showMax?: boolean; color?: ThemeColor };
 

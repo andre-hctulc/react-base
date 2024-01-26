@@ -1,5 +1,5 @@
-import Tooltip from "@react-client/components/dialogs/popover/tooltip";
-import IconButton from "../buttons/icon-button";
+import Tooltip from "@react-client/components/dialogs/popover/Tooltip/Tooltip";
+import IconButton from "../buttons/IconButton/IconButton";
 
 export interface EditorToolProps {
     disabled?: boolean;

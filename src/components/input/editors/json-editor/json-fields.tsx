@@ -1,4 +1,4 @@
-import Stack from "@react-client/components/layout/containers/stack";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import React from "react";
 
 interface JSONFields {

@@ -1,4 +1,4 @@
-import { useAlerts } from "@react-client/contexts/alert-context";
+import { useAlerts } from "@react-client/contexts/alerts-context";
 import { mapChildren } from "@react-client/util";
 import clsx from "clsx";
 import React from "react";

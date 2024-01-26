@@ -1,8 +1,8 @@
 import React from "react";
-import Stack from "@react-client/components/layout/containers/stack";
-import Popover from "@react-client/components/dialogs/popover/popover";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
+import Popover from "@react-client/components/dialogs/popover/Popover/Popover";
 import Typography from "@react-client/components/text/typography";
-import IconButton from "../buttons/icon-button";
+import IconButton from "../buttons/IconButton/IconButton";
 import ChevronDownIcon from "@react-client/components/icons/collection/chevron-down";
 import clsx from "clsx";
 

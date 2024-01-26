@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import IconButton from "../buttons/icon-button";
+import IconButton from "../buttons/IconButton/IconButton";
 import { getEditableSelection, getTextFormat, runCommand } from "./text-editor-util";
-import Styled from "@react-client/components/others/styled";
+import Styled from "@react-client/components/others/Styled";
 
 // TODO tooltip
 

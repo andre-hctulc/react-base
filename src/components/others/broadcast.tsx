@@ -1,7 +1,7 @@
 import React from "react";
 
 type BroadcastProps<T = any> = {
-    props: Partial<T> | ((child: React.ReactElement<Partial<T>, string | React.JSXElementConstructor<Partial<T>>>) => Record<string, any> | null);
+    props: Partial<T> | ((child: React.ReactElement<Partial<T>, string | React.JSXElementConstructor<Partial<T>>>) => T | null);
     children?: React.ReactNode;
     filter?: (child: React.ReactElement<T, string | React.JSXElementConstructor<T>>) => boolean;
 };

@@ -1,13 +1,13 @@
 "use client";
 
-import Drawer from "@react-client/components/dialogs/drawer/drawer";
+import Drawer from "@react-client/components/dialogs/drawer/Drawer/Drawer";
 import dynamic from "next/dynamic";
 import React from "react";
 import Loading from "./loading/loading";
-import useAsset from "@react-client/hooks/others/use-asset";
-import IconButton from "@react-client/components/input/buttons/icon-button";
+import useAsset from "@react-client/hooks/others/useAssets";
+import IconButton from "@react-client/components/input/buttons/IconButton/IconButton";
 import QuestionMarkCircleOutlineIcon from "@react-client/components/icons/collection/question-mark-circle-outline";
-import DrawerHeader from "@react-client/components/dialogs/drawer/drawer-header";
+import DrawerHeader from "@react-client/components/dialogs/drawer/DrawerHeader/DrawerHeader";
 
 interface HelpProps {
     /** Relativer Pfad in _public/help_. Der Pfad sollte also __nicht__ mit '/' beginnen und muss die Datei-Extension enthalten. */
