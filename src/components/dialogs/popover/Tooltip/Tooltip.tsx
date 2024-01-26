@@ -9,7 +9,7 @@ import Popover from "../Popover/Popover";
 >>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/dialogs/popover/Tooltip/Tooltip.tsx
 import React from "react";
 import clsx from "clsx";
-import Typography from "@react-client/components/text/typography";
+import Typography from "@react-client/components/text/Typography/Typography";
 import { firstInt } from "@client-util/iterables";
 import { PropsOf } from "@react-client/types";
 

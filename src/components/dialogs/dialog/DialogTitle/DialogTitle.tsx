@@ -1,6 +1,6 @@
 // * SSR
 
-import ShortText from "@react-client/components/text/short-text";
+import ShortText from "@react-client/components/text/ShortText/ShortText";
 
 interface DialogTitleProps {
     children?: React.ReactNode;

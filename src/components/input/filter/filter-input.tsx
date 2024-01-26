@@ -1,6 +1,6 @@
 "use client";
 
-import ShortText from "@react-client/components/text/short-text";
+import ShortText from "@react-client/components/text/ShortText/ShortText";
 import clsx from "clsx";
 import React from "react";
 import Styled from "@react-client/components/others/Styled";

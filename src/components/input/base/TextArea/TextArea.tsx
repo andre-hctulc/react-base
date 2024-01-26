@@ -1,9 +1,9 @@
 "use client";
 
-import HelperText from "@react-client/components/text/helper-text";
+import HelperText from "@react-client/components/text/HelperText/HelperText";
 import type { PropsOf } from "@react-client/types";
 import clsx from "clsx";
-import Label from "../../label";
+import Label from "../../Label/Label";
 import React from "react";
 <<<<<<< HEAD:src/components/input/base/text-area.tsx
 import { useFormInput } from "../form/js-form";

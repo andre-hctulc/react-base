@@ -1,5 +1,5 @@
 <<<<<<< HEAD:src/components/dialogs/dialog/dialog-title-icon.tsx
-import Styled from "@react-client/components/others/styled";
+import Styled from "@react-client/components/others/Styled";
 import type { PropsOf } from "@react-client/types";
 =======
 import Styled from "@react-client/components/others/Styled";

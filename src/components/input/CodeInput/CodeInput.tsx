@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import React from "react";
 import Button from "../buttons/Button/Button";
-import Typography from "../../text/typography";
+import Typography from "../../text/Typography/Typography";
 
 interface CodeInputProps {
     length: number;

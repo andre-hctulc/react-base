@@ -9,8 +9,8 @@ import type { PropsOf } from "@react-client/types";
 import Label from "../../label";
 import type { PropsOf } from "@react-client/util";
 >>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/input/base/RadioButtons/RadioButtons.tsx
-import HelperText from "@react-client/components/text/helper-text";
-import { useFormInput } from "../../form/js-form";
+import HelperText from "@react-client/components/text/HelperText/HelperText";
+import { useFormInput } from "../../form/JSForm/JSForm";
 import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import { InputLikeProps } from "../Input/Input";
 import { first, firstString } from "@client-util/iterables";

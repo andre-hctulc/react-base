@@ -1,8 +1,8 @@
 // * SSR
 
-import Alert from "@react-client/components/data-display/alerts/alert";
+import Alert from "@react-client/components/data-display/alerts/Alert/Alert";
 import Dev from "./Dev";
-import AlertTitle from "@react-client/components/data-display/alerts/alert-title";
+import AlertTitle from "@react-client/components/data-display/alerts/AlretTitle/AlertTitle";
 
 interface TodoProps {
     className?: string;

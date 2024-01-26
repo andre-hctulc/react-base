@@ -2,7 +2,7 @@
 
 import LinkContainer from "@react-client/components/navigation/links/LinkContainer/LinkContainer";
 import React from "react";
-import Typography from "@react-client/components/text/typography";
+import Typography from "@react-client/components/text/Typography/Typography";
 import clsx from "clsx";
 import ChevronRightIcon from "@react-client/components/icons/collection/chevron-right";
 import useIsSticky from "@react-client/hooks/others/useIsSticky";

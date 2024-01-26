@@ -1,9 +1,9 @@
 import FilterInput from "@react-client/components/input/filter/filter-input";
 import React from "react";
 import TimeRangeInput, { TimeRange } from "../base/TimeRangeInput/TimeRangeInput";
-import TimeText from "@react-client/components/text/time-text";
+import TimeText from "@react-client/components/text/TimeText/TimeText";
 import { compareDates } from "@client-util/compare";
-import Typography from "@react-client/components/text/typography";
+import Typography from "@react-client/components/text/Typography/Typography";
 import Stack from "@react-client/components/layout/containers/Stack/Stack";
 
 export interface TimeRangeFilterProps {

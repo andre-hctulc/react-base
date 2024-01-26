@@ -5,7 +5,7 @@ import Dialog from "@react-client/components/dialogs/dialog/dialog";
 import DialogTitle from "@react-client/components/dialogs/dialog/dialog-title";
 import DialogContent from "@react-client/components/dialogs/dialog/dialog-content";
 import Input from "@react-client/components/input/base/input";
-import JSForm, { FormValidator, useFormObserver } from "@react-client/components/input/form/js-form";
+import JSForm, { FormValidator, useFormObserver } from "@react-client/components/input/form/JSForm/JSForm";
 import DialogHeader from "@react-client/components/dialogs/dialog/dialog-header";
 =======
 import Dialog from "@react-client/components/dialogs/dialog/Dialog/Dialog";

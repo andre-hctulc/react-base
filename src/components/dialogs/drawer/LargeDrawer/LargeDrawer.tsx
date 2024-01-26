@@ -3,8 +3,8 @@ import Stack from "../../../layout/containers/Stack/Stack";
 import Overlay from "../../../layout/overlays/Overlay/Overlay";
 import IconButton from "@react-client/components/input/buttons/IconButton/IconButton";
 import XIcon from "@react-client/components/icons/collection/x";
-import Fade from "@react-client/components/transitions/fade";
-import ShortText from "@react-client/components/text/short-text";
+import Fade from "@react-client/components/transitions/Fade";
+import ShortText from "@react-client/components/text/ShortText/ShortText";
 
 interface LargeDrawerProps {
     open: boolean;

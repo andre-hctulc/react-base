@@ -1,11 +1,11 @@
 "use client";
 
-import HelperText from "@react-client/components/text/helper-text";
+import HelperText from "@react-client/components/text/HelperText/HelperText";
 import { setRef } from "@react-client/util";
 import clsx from "clsx";
-import Label from "../../label";
+import Label from "../../Label/Label";
 import React from "react";
-import { useFormInput } from "../../form/js-form";
+import { useFormInput } from "../../form/JSForm/JSForm";
 import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import { randomId } from "@client-util/strings";
 <<<<<<< HEAD:src/components/input/base/check-box.tsx

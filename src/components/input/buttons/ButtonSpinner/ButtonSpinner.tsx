@@ -1,6 +1,6 @@
 // * SSR
 
-import Spinner from "@react-client/components/data-display/loading/spinner";
+import Spinner from "@react-client/components/data-display/loading/Spinner/Spinner";
 import { PropsOf } from "@react-client/types";
 
 interface ButtonSpinnerProps extends PropsOf<typeof Spinner> {}

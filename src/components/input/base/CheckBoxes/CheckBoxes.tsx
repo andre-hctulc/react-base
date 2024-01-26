@@ -1,14 +1,14 @@
 "use client";
 
-import ShortText from "@react-client/components/text/short-text";
+import ShortText from "@react-client/components/text/ShortText/ShortText";
 import type { PropsOf } from "@react-client/types";
 import React from "react";
 import clsx from "clsx";
-import Label from "../../label";
-import HelperText from "@react-client/components/text/helper-text";
-import { useFormInput } from "../../form/js-form";
+import Label from "../../Label/Label";
+import HelperText from "@react-client/components/text/HelperText/HelperText";
+import { useFormInput } from "../../form/JSForm/JSForm";
 import { InputLikeProps } from "../Input/Input";
-import FormControl from "../../form/form-control";
+import FormControl from "../../form/FormControl/FormControl";
 
 export type CheckBoxesOptions = { label: React.ReactNode; value: string }[];
 

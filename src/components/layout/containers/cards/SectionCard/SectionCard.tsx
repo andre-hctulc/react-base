@@ -1,6 +1,6 @@
 // * SSR
 
-import Typography from "@react-client/components/text/typography";
+import Typography from "@react-client/components/text/Typography/Typography";
 import clsx from "clsx";
 
 interface SectionCardProps {

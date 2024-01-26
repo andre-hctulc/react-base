@@ -4,7 +4,7 @@ import DialogTitle from "../DialogTitle/DialogTitle";
 import DialogContent from "../DialogContent/DialogContent";
 import Button from "@react-client/components/input/buttons/Button/Button";
 import ErrorCircleOutlineIcon from "@react-client/components/icons/collection/error-circle-outline";
-import LongText from "@react-client/components/text/long-text";
+import LongText from "@react-client/components/text/LongText/LongText";
 <<<<<<< HEAD:src/components/dialogs/dialog/delete-dialog.tsx
 import DialogFooter from "./dialog-footer";
 import BlankButton from "@components/common-buttons/blank-button";

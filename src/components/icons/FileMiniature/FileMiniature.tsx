@@ -1,13 +1,13 @@
 // * SSR
 
 import Stack from "@react-client/components/layout/containers/Stack/Stack";
-import ShortText from "@react-client/components/text/short-text";
+import ShortText from "@react-client/components/text/ShortText/ShortText";
 import clsx from "clsx";
 import React from "react";
 <<<<<<< HEAD:src/components/icons/file-miniature.tsx
 import FileEmblem from "./file-emblem";
 import {  setRef } from "@react-client/util";
-import Styled from "@react-client/components/others/styled";
+import Styled from "@react-client/components/others/Styled";
 import { PropsOf } from "@react-client/types";
 =======
 import FileEmblem from "../FileEmblem/FileEmblem";

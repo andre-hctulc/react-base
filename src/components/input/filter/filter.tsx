@@ -7,8 +7,8 @@ import FilterIcon from "@react-client/components/icons/collection/filter";
 import useMutableSearchParams from "@react-client/hooks/navigation/useMutableSearchParams";
 import { defaultFilterParser, defaultFilterStringifier } from "./filter-utility";
 import ToggleButton from "../buttons/ToggleButton/ToggleButton";
-import Fade from "@react-client/components/transitions/fade";
-import JSForm, { useFormObserver } from "../form/js-form";
+import Fade from "@react-client/components/transitions/Fade";
+import JSForm, { useFormObserver } from "../form/JSForm/JSForm";
 import { SearchParam } from "@client-util/nav";
 
 const openCacheKey = (key: string) => `filter-${key}:open`;

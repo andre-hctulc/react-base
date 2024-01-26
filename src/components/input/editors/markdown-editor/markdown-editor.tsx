@@ -5,7 +5,7 @@ import clsx from "clsx";
 import dynamic from "next/dynamic";
 import React from "react";
 
-const Markdown = dynamic(() => import("@react-client/components/data-display/markdown"));
+const Markdown = dynamic(() => import("@react-client/components/data-display/Markdown/Markdown"));
 
 export default function MarkdownEditor(props: {
     className?: string;

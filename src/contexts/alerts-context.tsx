@@ -1,8 +1,8 @@
 "use client";
 
-import Alert from "@react-client/components/data-display/alerts/alert";
-import AlertTitle from "@react-client/components/data-display/alerts/alert-title";
-import Fade from "@react-client/components/transitions/fade";
+import Alert from "@react-client/components/data-display/alerts/Alert/Alert";
+import AlertTitle from "@react-client/components/data-display/alerts/AlretTitle/AlertTitle";
+import Fade from "@react-client/components/transitions/Fade";
 import { devMode } from "@client-util/const";
 import React from "react";
 import { TransitionGroup } from "react-transition-group";

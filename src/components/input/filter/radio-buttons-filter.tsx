@@ -1,5 +1,5 @@
 import React from "react";
-import ShortText from "@react-client/components/text/short-text";
+import ShortText from "@react-client/components/text/ShortText/ShortText";
 import FilterInput from "./filter-input";
 import RadioButtons from "../base/RadioButtons/RadioButtons";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import LoadingOverlay from "@react-client/components/layout/overlays/LoadingOverlay/LoadingOverlay";
 import Dialog, { DialogDim, DialogProps } from "../Dialog/Dialog";
-import Skeleton from "@react-client/components/data-display/loading/skeleton";
+import Skeleton from "@react-client/components/data-display/loading/Skeleton/Skeleton";
 
 interface LoadingDialogProps {
     loading?: boolean;

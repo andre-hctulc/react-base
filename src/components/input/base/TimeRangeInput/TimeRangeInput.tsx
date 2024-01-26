@@ -5,8 +5,8 @@ import React from "react";
 import RestartIcon from "@react-client/components/icons/collection/restart";
 import clsx from "clsx";
 import IconButton from "../../buttons/IconButton/IconButton";
-import Typography from "@react-client/components/text/typography";
-import HelperText from "@react-client/components/text/helper-text";
+import Typography from "@react-client/components/text/Typography/Typography";
+import HelperText from "@react-client/components/text/HelperText/HelperText";
 <<<<<<< HEAD:src/components/input/base/time-range-input.tsx
 import { forDateLikeInput, getInputSizeClasses } from "@react-client/input-helpers";
 import { useFormInput } from "../form/js-form";

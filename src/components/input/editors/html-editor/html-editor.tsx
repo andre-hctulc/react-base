@@ -4,8 +4,8 @@ import HTMLEditorToolbar from "./html-editor-toolbar";
 import { EditorProps } from "../editor-interface";
 import { useOnClickOutside } from "usehooks-ts";
 import { PropsOf } from "@react-client/types";
-import { GrowV100 } from "@react-client/components/transitions/grow-v";
-import Fade from "@react-client/components/transitions/fade";
+import { GrowV100 } from "@react-client/components/transitions/GrowV";
+import Fade from "@react-client/components/transitions/Fade";
 import Interval from "@react-client/components/others/Interval";
 
 interface HTMLEditorProps extends EditorProps {

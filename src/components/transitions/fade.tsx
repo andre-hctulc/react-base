@@ -1,4 +1,4 @@
-import Transition from "./transition";
+import Transition from "./Transition";
 
 interface FadeProps {
     in?: boolean;

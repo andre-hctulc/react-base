@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Overlay from "../Overlay/Overlay";
-import Fade from "@react-client/components/transitions/fade";
-import Spinner from "@react-client/components/data-display/loading/spinner";
+import Fade from "@react-client/components/transitions/Fade";
+import Spinner from "@react-client/components/data-display/loading/Spinner/Spinner";
 
 interface LoadingOverlayProps {
     open: boolean;

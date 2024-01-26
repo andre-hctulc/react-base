@@ -3,8 +3,8 @@
 import LinkContainer from "@react-client/components/navigation/links/LinkContainer/LinkContainer";
 import React from "react";
 import Styled from "@react-client/components/others/Styled";
-import Typography from "@react-client/components/text/typography";
-import ShortText from "@react-client/components/text/short-text";
+import Typography from "@react-client/components/text/Typography/Typography";
+import ShortText from "@react-client/components/text/ShortText/ShortText";
 
 interface ActionListOtemProps {
     href?: string;

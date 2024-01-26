@@ -1,10 +1,10 @@
 import LinkContainer from "@react-client/components/navigation/links/LinkContainer/LinkContainer";
 import React from "react";
-import Loading from "@react-client/components/data-display/loading/loading";
+import Loading from "@react-client/components/data-display/loading/Loading/Loading";
 import Card from "../containers/cards/Card/Card";
 import clsx from "clsx";
 import Button from "@react-client/components/input/buttons/Button/Button";
-import Subtitle from "@react-client/components/text/subtitle";
+import Subtitle from "@react-client/components/text/Subtitle/Subtitle";
 
 interface ActionListProps {
     className?: string;

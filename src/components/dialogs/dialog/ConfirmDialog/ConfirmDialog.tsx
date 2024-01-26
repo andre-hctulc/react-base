@@ -6,7 +6,7 @@ import DialogTitle from "../DialogTitle/DialogTitle";
 import DialogContent from "../DialogContent/DialogContent";
 import Button from "@react-client/components/input/buttons/Button/Button";
 import DialogFooter from "../DialogFooter/DialogFooter";
-import Typography from "@react-client/components/text/typography";
+import Typography from "@react-client/components/text/Typography/Typography";
 import DialogHeader from "../DialogHeader/DialogHeader";
 
 interface ConfirmDialogProps {
