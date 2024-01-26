@@ -1,7 +1,7 @@
 import useElement from "@react-client/hooks/dom/useElement";
 import clsx from "clsx";
-import Card from "../../../layout/containers/cards/Card/Card";
-import Overlay from "../../../layout/overlays/Overlay/Overlay";
+import Card from "../../layout/containers/cards/Card/Card";
+import Overlay from "../../layout/overlays/Overlay/Overlay";
 import React from "react";
 import { setRef } from "@react-client/util";
 import { firstInt } from "@client-util/iterables";

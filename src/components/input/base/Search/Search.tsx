@@ -1,21 +1,11 @@
 "use client";
 
-import Popover from "@react-client/components/dialogs/popover/Popover/Popover";
+import Popover from "@react-client/components/dialogs/Popover/Popover";
 import React from "react";
 import { useFormInput } from "../../form/JSForm/JSForm";
 import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import HelperText from "@react-client/components/text/HelperText/HelperText";
 import { PropsOf } from "@react-client/types";
-import clsx from "clsx";
-<<<<<<< HEAD:src/components/input/base/search.tsx
-import { InputLikeProps } from "./input";
-import Label from "../label";
-import { getInputSizeClasses } from "@react-client/input-helpers";
-=======
-import { InputLikeProps } from "../Input/Input";
-import Label from "../../label";
-import { getInputSizeClasses } from "@client-util/input-helpers";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/input/base/Search/Search.tsx
 import ShortText from "@react-client/components/text/ShortText/ShortText";
 import { SelectOption } from "../Select/Select";
 import List from "@react-client/components/data-display/list/List/List";
@@ -23,6 +13,10 @@ import { first, firstString } from "@client-util/iterables";
 import Loading from "@react-client/components/data-display/loading/Loading/Loading";
 import { Size } from "@react-client/types";
 import FormControl from "../../form/FormControl/FormControl";
+import { getInputSizeClasses } from "@react-client/input-helpers";
+import clsx from "clsx";
+import Label from "../../Label/Label";
+import { InputLikeProps } from "../Input/Input";
 
 interface SearchProps<T = string> extends InputLikeProps<T> {
     className?: string;

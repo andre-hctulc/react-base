@@ -1,17 +1,10 @@
 // * SSR
 
 import React from "react";
-<<<<<<< HEAD:src/components/layout/containers/cards/struct-card.tsx
-import Card from "./card";
-import Toolbar from "../toolbar";
-import Stack from "../stack";
 import { PropsOf } from "@react-client/types";
-=======
 import Card from "../Card/Card";
 import Toolbar from "../../Toolbar/Toolbar";
 import Stack from "../../Stack/Stack";
-import { PropsOf } from "@react-client/util";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/layout/containers/cards/StructCard/StructCard.tsx
 import clsx from "clsx";
 
 interface StructCardProps {

@@ -5,15 +5,9 @@ import DialogContent from "../DialogContent/DialogContent";
 import Button from "@react-client/components/input/buttons/Button/Button";
 import ErrorCircleOutlineIcon from "@react-client/components/icons/collection/error-circle-outline";
 import LongText from "@react-client/components/text/LongText/LongText";
-<<<<<<< HEAD:src/components/dialogs/dialog/delete-dialog.tsx
-import DialogFooter from "./dialog-footer";
-import BlankButton from "@components/common-buttons/blank-button";
-import DialogHeader from "./dialog-header";
-=======
-import DialogFooter from "../DialogFooter/DialogFooter";
 import DialogHeader from "../DialogHeader/DialogHeader";
-import BlankButton from "@react-client/components/input/buttons/BlankButton/BlankButton";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/dialogs/dialog/DeleteDialog/DeleteDialog.tsx
+import DialogFooter from "../DialogFooter/DialogFooter";
+import BlankButton from "@components/common-buttons/blank-button";
 
 interface DeleteDialogProps {
     open: boolean;

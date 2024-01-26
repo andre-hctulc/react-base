@@ -1,19 +1,10 @@
 "use client";
 
-import Popover from "@react-client/components/dialogs/popover/Popover/Popover";
+import Popover from "@react-client/components/dialogs/Popover/Popover";
 import clsx from "clsx";
 import React from "react";
 import { useFormInput } from "../../form/JSForm/JSForm";
 import HelperText from "@react-client/components/text/HelperText/HelperText";
-<<<<<<< HEAD:src/components/input/base/select.tsx
-import Label from "../label";
-import { getInputSizeClasses } from "@react-client/input-helpers";
-import Stack from "@react-client/components/layout/containers/stack";
-=======
-import Label from "../../label";
-import { getInputSizeClasses } from "@client-util/input-helpers";
-import Stack from "@react-client/components/layout/containers/Stack/Stack";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/input/base/Select/Select.tsx
 import ChevronDownIcon from "@react-client/components/icons/collection/chevron-down";
 import { iterableToMap } from "@client-util/iterables";
 import { PropsOf } from "@react-client/types";
@@ -23,6 +14,9 @@ import List from "@react-client/components/data-display/list/List/List";
 import ListItem from "@react-client/components/data-display/list/ListItem/ListItem";
 import { Size } from "@react-client/types";
 import FormControl from "../../form/FormControl/FormControl";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
+import { getInputSizeClasses } from "@react-client/input-helpers";
+import Label from "../../Label/Label";
 
 export type SelectOption<T = string> = {
     value: T;

@@ -1,10 +1,5 @@
-<<<<<<< HEAD:src/components/dialogs/dialog/dialog-title-icon.tsx
 import Styled from "@react-client/components/others/Styled";
-import type { PropsOf } from "@react-client/types";
-=======
-import Styled from "@react-client/components/others/Styled";
-import type { PropsOf } from "@react-client/util";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/dialogs/dialog/DialogTitleIcon/DialogTitleIcon.tsx
+import { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 
 /**

@@ -3,14 +3,8 @@
 import Typography from "@react-client/components/text/Typography/Typography";
 import clsx from "clsx";
 import LongText from "@react-client/components/text/LongText/LongText";
-<<<<<<< HEAD
-import JSForm, { FormValidator, useFormObserver } from "../JSForm/JSForm";
-import Input from "../base/input";
-=======
-import JSForm, { FormValidator, useFormController } from "./js-form";
-import Input from "../base/Input/Input";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 import React from "react";
+import { FormValidator } from "../JSForm/JSForm";
 
 export type SummaryFactory<T extends object = any> = {
     [K in keyof T]-?:

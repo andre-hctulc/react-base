@@ -1,17 +1,12 @@
 "use client";
 
-<<<<<<< HEAD:src/components/dialogs/popover/tooltip.tsx
-import { setRef } from "@react-client/util";
-import Popover from "./popover";
-=======
-import { setRef, PropsOf } from "@react-client/util";
-import Popover from "../Popover/Popover";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/dialogs/popover/Tooltip/Tooltip.tsx
 import React from "react";
 import clsx from "clsx";
 import Typography from "@react-client/components/text/Typography/Typography";
 import { firstInt } from "@client-util/iterables";
 import { PropsOf } from "@react-client/types";
+import { setRef } from "@react-client/util";
+import Popover from "../Popover/Popover";
 
 interface TooltipProps {
     children: React.ReactElement;
@@ -74,9 +69,12 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
         addListener("mouseleave", () => {
             if (openTimeout.current) clearTimeout(openTimeout.current);
 
-            closeTimeout.current = setTimeout(() => {
-                setOpen(false);
-            }, firstInt(props.disappearTimeout, 30));
+            closeTimeout.current = setTimeout(
+                () => {
+                    setOpen(false);
+                },
+                firstInt(props.disappearTimeout, 30)
+            );
         });
 
         return () => {

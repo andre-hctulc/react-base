@@ -3,7 +3,7 @@
 import Toolbar from "@react-client/components/layout/containers/Toolbar/Toolbar";
 import clsx from "clsx";
 import Button from "@react-client/components/input/buttons/Button/Button";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 
 interface DialogButtonProps {
     disabled?: boolean;

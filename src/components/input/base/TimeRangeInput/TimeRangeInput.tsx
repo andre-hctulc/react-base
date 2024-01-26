@@ -1,26 +1,15 @@
-"use client";
-
-import type { PropsOf } from "@react-client/types";
-import React from "react";
 import RestartIcon from "@react-client/components/icons/collection/restart";
-import clsx from "clsx";
-import IconButton from "../../buttons/IconButton/IconButton";
-import Typography from "@react-client/components/text/Typography/Typography";
 import HelperText from "@react-client/components/text/HelperText/HelperText";
-<<<<<<< HEAD:src/components/input/base/time-range-input.tsx
-import { forDateLikeInput, getInputSizeClasses } from "@react-client/input-helpers";
-import { useFormInput } from "../form/js-form";
-import Label from "../label";
-import Stack from "@react-client/components/layout/containers/stack";
-import { InputLikeProps } from "./input";
-=======
-import { forDateLikeInput, getInputSizeClasses } from "@client-util/input-helpers";
-import { useFormInput } from "../../form/js-form";
-import Label from "../../label";
-import Stack from "@react-client/components/layout/containers/Stack/Stack";
+import Typography from "@react-client/components/text/Typography/Typography";
+import { getInputSizeClasses, forDateLikeInput } from "@react-client/input-helpers";
+import { Size, PropsOf } from "@react-client/types";
+import clsx from "clsx";
+import React from "react";
+import Label from "../../Label/Label";
+import IconButton from "../../buttons/IconButton/IconButton";
+import { useFormInput } from "../../form/JSForm/JSForm";
 import { InputLikeProps } from "../Input/Input";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/input/base/TimeRangeInput/TimeRangeInput.tsx
-import { Size } from "@react-client/types";
+import Stack from "@react-client/components/layout/containers/Stack/Stack";
 
 export type TimeRange = [Date | null, Date | null];
 

@@ -5,15 +5,9 @@ import type { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import Label from "../../Label/Label";
 import React from "react";
-<<<<<<< HEAD:src/components/input/base/text-area.tsx
-import { useFormInput } from "../form/js-form";
-import { InputLikeProps } from "./input";
-import { set } from "date-fns";
-import { setRef } from "@react-client/util";
-=======
-import { useFormInput } from "../../form/js-form";
 import { InputLikeProps } from "../Input/Input";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/input/base/TextArea/TextArea.tsx
+import { useFormInput } from "../../form/JSForm/JSForm";
+import { setRef } from "@react-client/util";
 
 export interface TextAreaProps extends InputLikeProps<string> {
     className?: string;

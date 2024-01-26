@@ -1,18 +1,12 @@
 // * SSR
 
-import clsx from "clsx";
-import React from "react";
-<<<<<<< HEAD
-import Button from "@react-client/components/input/buttons/button";
-import Stack from "@react-client/components/layout/containers/stack";
-import { PropsOf } from "@react-client/types";
-=======
 import Button from "@react-client/components/input/buttons/Button/Button";
 import Stack from "@react-client/components/layout/containers/Stack/Stack";
-import { PropsOf } from "@react-client/util";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
-import EmptyText from "../../../text/EmptyText/EmptyText";
 import Delayed from "@react-client/components/others/Delayed";
+import EmptyText from "@react-client/components/text/EmptyText/EmptyText";
+import { PropsOf } from "@react-client/types";
+import clsx from "clsx";
+import React from "react";
 
 interface PlaceholderProps {
     /** Falls _string_, dann wird Dieser als Inhalt für ein `EmptyText` verwendet, ansonsten bleibt `children` unverändert.  */

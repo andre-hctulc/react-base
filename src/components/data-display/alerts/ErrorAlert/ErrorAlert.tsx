@@ -1,8 +1,8 @@
 import React from "react";
 import Alert from "../Alert/Alert";
 import AlertTitle from "../AlretTitle/AlertTitle";
-import Dev from "@react-client/components/layout/dev/Dev";
 import Button from "@react-client/components/input/buttons/Button/Button";
+import Dev from "@react-client/components/others/dev/Dev";
 
 export type ErrorAltertProps = {
     active?: boolean;
@@ -15,16 +15,12 @@ export type ErrorAltertProps = {
     /** Wird im dev mode angezeigt */
     err?: Error;
     hideErr?: boolean;
-<<<<<<< HEAD
-} & ({ message: string | undefined } | { children: React.ReactNode });
-=======
     /**
      * Reset Button Text. Der Button wird nur angezeigt wenn diese Option angegegebn ist
      * */
     reset?: string;
     onReset?: React.MouseEventHandler<HTMLButtonElement>;
-} & ({ message: string | undefined } | { children: string });
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
+} & ({ message: string | undefined } | { children: React.ReactNode });
 
 export default function ErrorAlert(props: ErrorAltertProps) {
     if (props.active === false) return null;

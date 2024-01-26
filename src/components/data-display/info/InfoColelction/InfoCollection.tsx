@@ -1,17 +1,12 @@
 // * SSR
 
-<<<<<<< HEAD
-import FlowBox from "@react-client/components/layout/containers/flow-box";
-import { mapChildren } from "@react-client/util";
-=======
-import FlowBox from "@react-client/components/layout/containers/FlowBox/FlowBox";
-import { PropsOf, mapChildren } from "@react-client/util";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 import React from "react";
 import Labelize from "../Labelize/Labelize";
 import clsx from "clsx";
 import { PropsOf, Size } from "@react-client/types";
 import { collapse } from "@client-util/helpers";
+import { mapChildren } from "@react-client/util";
+import FlowBox from "@react-client/components/layout/containers/FlowBox/FlowBox";
 
 interface LabelsProps {
     className?: string;

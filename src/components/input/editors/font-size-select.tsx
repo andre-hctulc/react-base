@@ -1,6 +1,6 @@
 import React from "react";
 import Stack from "@react-client/components/layout/containers/Stack/Stack";
-import Popover from "@react-client/components/dialogs/popover/Popover/Popover";
+import Popover from "@react-client/components/dialogs/Popover/Popover";
 import Typography from "@react-client/components/text/Typography/Typography";
 import IconButton from "../buttons/IconButton/IconButton";
 import ChevronDownIcon from "@react-client/components/icons/collection/chevron-down";

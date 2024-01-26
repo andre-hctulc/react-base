@@ -5,15 +5,10 @@ import type { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import Label from "../../Label/Label";
 import React from "react";
-<<<<<<< HEAD:src/components/input/base/input.tsx
-import { useFormInput } from "../form/js-form";
-import { getInputSizeClasses } from "@react-client/input-helpers";
-=======
-import { useFormInput } from "../../form/js-form";
-import { getInputSizeClasses } from "@client-util/input-helpers";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/input/base/Input/Input.tsx
 import { Size } from "@react-client/types";
 import { setRef } from "@react-client/util";
+import { getInputSizeClasses } from "@react-client/input-helpers";
+import { useFormInput } from "../../form/JSForm/JSForm";
 
 export interface InputLikeProps<T = any> {
     /** _controlled_ */
@@ -57,7 +52,6 @@ interface InputProps extends InputLikeProps {
     onClick?: React.MouseEventHandler<HTMLInputElement>;
 }
 
-/** Input Element für simple inputs, wie text oder Zahlen. */
 const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const innerRef = React.useRef<HTMLInputElement>(null);
@@ -103,7 +97,6 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
                 name={props.name}
                 className={clsx("max-h-full transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses, props.slotProps?.input?.className)}
                 onClick={props.onClick}
-                name={props.name}
             />
             <HelperText errorMessage={props.errorMessage} error={error} {...props.slotProps?.helperText}>
                 {props.helperText}

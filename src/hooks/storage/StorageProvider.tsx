@@ -3,7 +3,7 @@
 import React from "react";
 
 interface StorageContext {
-    storage: Storage;
+    storage?: Storage;
     prefix?: string;
     jsonReviver?: (key: string, value: any) => any;
 }
@@ -18,7 +18,7 @@ export function useStorage() {
 
 interface StorageContextProviderProps {
     children?: React.ReactNode;
-    storage: Storage;
+    storage?: Storage;
     prefix?: string;
     jsonReviver?: (key: string, value: any) => any;
 }

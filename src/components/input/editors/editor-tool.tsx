@@ -1,4 +1,4 @@
-import Tooltip from "@react-client/components/dialogs/popover/Tooltip/Tooltip";
+import Tooltip from "@react-client/components/dialogs/Tooltip/Tooltip";
 import IconButton from "../buttons/IconButton/IconButton";
 
 export interface EditorToolProps {

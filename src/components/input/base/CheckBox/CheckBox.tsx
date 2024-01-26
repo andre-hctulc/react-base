@@ -8,12 +8,8 @@ import React from "react";
 import { useFormInput } from "../../form/JSForm/JSForm";
 import Stack from "@react-client/components/layout/containers/Stack/Stack";
 import { randomId } from "@client-util/strings";
-<<<<<<< HEAD:src/components/input/base/check-box.tsx
-import { InputLikeProps } from "./input";
-import { PropsOf } from "@react-client/types";
-=======
 import { InputLikeProps } from "../Input/Input";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/input/base/CheckBox/CheckBox.tsx
+import { PropsOf } from "@react-client/types";
 
 export interface CheckBoxProps extends Omit<InputLikeProps<boolean>, "required" | "noBorder"> {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import CopyIconButton from "@components/common-buttons/copy-icon-button";
-import Divider from "@react-client/components/layout/divider";
-=======
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 import clsx from "clsx";
 import React from "react";
 import ShortText from "../ShortText/ShortText";

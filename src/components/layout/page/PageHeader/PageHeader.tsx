@@ -1,15 +1,10 @@
 // * SSR
 
 import clsx from "clsx";
-<<<<<<< HEAD:src/components/layout/page/page-header.tsx
-import { pageBarHeight } from "./page-bar";
-import { PropsOf } from "@react-client/types";
-=======
 import { pageBarHeight } from "../PageBar/PageBar";
-import { PropsOf } from "@react-client/util";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/layout/page/PageHeader/PageHeader.tsx
 import React from "react";
 import { collapse } from "@client-util/helpers";
+import { PropsOf } from "@react-client/types";
 
 interface PageHeaderProps {
     noPadding?: boolean;

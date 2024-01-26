@@ -4,7 +4,7 @@ import ShortText from "@react-client/components/text/ShortText/ShortText";
 import clsx from "clsx";
 import React from "react";
 import Styled from "@react-client/components/others/Styled";
-import Popover from "@react-client/components/dialogs/popover/Popover/Popover";
+import Popover from "@react-client/components/dialogs/Popover/Popover";
 
 export interface FilterInputProps<T = any, E = T> {
     className?: string;

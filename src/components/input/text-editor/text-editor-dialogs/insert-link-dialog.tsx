@@ -1,20 +1,11 @@
 import DialogButton from "@react-client/components/dialogs/dialog/DialogButton/DialogButton";
 import { checkUrl } from "@client-util/strings";
-<<<<<<< HEAD
-import Dialog from "@react-client/components/dialogs/dialog/dialog";
-import DialogTitle from "@react-client/components/dialogs/dialog/dialog-title";
-import DialogContent from "@react-client/components/dialogs/dialog/dialog-content";
-import Input from "@react-client/components/input/base/input";
 import JSForm, { FormValidator, useFormObserver } from "@react-client/components/input/form/JSForm/JSForm";
-import DialogHeader from "@react-client/components/dialogs/dialog/dialog-header";
-=======
 import Dialog from "@react-client/components/dialogs/dialog/Dialog/Dialog";
 import DialogTitle from "@react-client/components/dialogs/dialog/DialogTitle/DialogTitle";
 import DialogContent from "@react-client/components/dialogs/dialog/DialogContent/DialogContent";
 import Input from "@react-client/components/input/base/Input/Input";
-import JSForm, { FormValidator, useFormController } from "@react-client/components/input/form/js-form";
 import DialogHeader from "@react-client/components/dialogs/dialog/DialogHeader/DialogHeader";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 
 type InsertLinkFormFata = { link: string; label: string };
 

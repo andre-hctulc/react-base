@@ -1,21 +1,14 @@
 "use client";
 
 import HelperText from "@react-client/components/text/HelperText/HelperText";
-import type { PropsOf } from "@react-client/types";
+import type { PropsOf, Size } from "@react-client/types";
 import clsx from "clsx";
 import Label from "../../Label/Label";
-import React from "react";
-<<<<<<< HEAD:src/components/input/base/time-input.tsx
-import { useFormInput } from "../form/js-form";
-import { forDateLikeInput, getInputSizeClasses } from "@react-client/input-helpers";
-import { InputLikeProps } from "./input";
-=======
-import { useFormInput } from "../../form/js-form";
-import { forDateLikeInput, getInputSizeClasses } from "@client-util/input-helpers";
-import { InputLikeProps } from "../Input/Input";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c:src/components/input/base/TimeInput/TimeInput.tsx
-import { Size } from "@react-client/types";
 import { setRef } from "@react-client/util";
+import { InputLikeProps } from "../Input/Input";
+import { forDateLikeInput, getInputSizeClasses } from "@react-client/input-helpers";
+import React from "react";
+import { useFormInput } from "../../form/JSForm/JSForm";
 
 export interface InputProps extends InputLikeProps<Date> {
     className?: string;

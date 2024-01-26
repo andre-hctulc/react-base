@@ -2,15 +2,10 @@
 
 import React from "react";
 import Typography from "../Typography/Typography";
-<<<<<<< HEAD
 import { PropsOf } from "@react-client/types";
-import Styled from "@react-client/components/others/Styled";
-=======
-import { PropsOf } from "@react-client/util";
-import Styled from "@react-client/components/others/Styled";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
-import clsx from "clsx";
 import { collapse } from "@client-util/helpers";
+import clsx from "clsx";
+import Styled from "@react-client/components/others/Styled";
 
 interface IconTextProps {
     className?: string;

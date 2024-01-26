@@ -8,13 +8,8 @@ import HelperText from "../../text/HelperText/HelperText";
 import PlusIcon from "@react-client/components/icons/collection/plus";
 import XIcon from "@react-client/components/icons/collection/x";
 import { useFormInput } from "../form/JSForm/JSForm";
-<<<<<<< HEAD
+import { InputLikeProps } from "../base/Input/Input";
 import { getEventValue } from "@react-client/input-helpers";
-import { InputLikeProps } from "./base/input";
-=======
-import { getEventValue } from "@client-util/input-helpers";
-import { InputLikeProps } from "./base/Input/Input";
->>>>>>> 9141326d02a4250083ce3e61d74598fc4dcb439c
 
 export type InputListColDef<T extends object> = Omit<DataGridColDef<T>, "render"> & {
     required?: boolean;
