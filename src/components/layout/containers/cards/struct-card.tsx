@@ -4,7 +4,7 @@ import React from "react";
 import Card from "./card";
 import Toolbar from "../toolbar";
 import Stack from "../stack";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 
 interface StructCardProps {

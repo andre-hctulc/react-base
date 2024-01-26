@@ -7,7 +7,7 @@ import LongText from "@react-client/components/text/long-text";
 import Styled from "@react-client/components/others/styled";
 import clsx from "clsx";
 import Typography from "@react-client/components/text/typography";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import ProgressBar, { ProgressBarAppearance } from "./progress-bar";
 import Stack from "@react-client/components/layout/containers/stack";
 import { ThemeColor } from "@react-client/types";

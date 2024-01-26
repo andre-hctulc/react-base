@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "./typography";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 
 interface EmptyTextProps {
     className?: string;

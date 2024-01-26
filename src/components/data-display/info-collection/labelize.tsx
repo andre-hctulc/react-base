@@ -1,6 +1,6 @@
 import Label from "@react-client/components/input/label";
 import Subtitle from "@react-client/components/text/subtitle";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 
 interface LabelizeProps {

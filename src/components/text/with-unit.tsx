@@ -3,7 +3,7 @@
 import React from "react";
 import Typography from "./typography";
 import clsx from "clsx";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import Skeleton from "@react-client/components/data-display/loading/skeleton";
 import Unit from "./unit";
 

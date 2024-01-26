@@ -1,12 +1,13 @@
 "use client";
 
-import { setRef, mapChildren, PropsOf } from "@react-client/util";
+import { setRef } from "@react-client/util";
 import Popover from "./popover";
 import React from "react";
 import clsx from "clsx";
 import Typography from "@react-client/components/text/typography";
 import { useAlerts } from "@react-client/contexts/alert-context";
 import { firstInt } from "@client-util/iterables";
+import { PropsOf } from "@react-client/types";
 
 interface TooltipProps {
     children: React.ReactElement;

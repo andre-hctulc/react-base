@@ -1,7 +1,7 @@
 "use client";
 
 import { first } from "@client-util/iterables";
-import { ParentComponentProps } from "@react-client/util";
+import { ParentComponentProps } from "@react-client/types";
 import React from "react";
 
 interface DelayedProps extends ParentComponentProps {

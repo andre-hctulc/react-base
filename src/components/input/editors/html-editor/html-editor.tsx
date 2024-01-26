@@ -3,7 +3,7 @@ import React from "react";
 import HTMLEditorToolbar from "./html-editor-toolbar";
 import { EditorProps } from "../editor-interface";
 import { useOnClickOutside } from "usehooks-ts";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import { GrowV100 } from "@react-client/components/transitions/grow-v";
 import Fade from "@react-client/components/transitions/fade";
 import Interval from "@react-client/components/others/interval";

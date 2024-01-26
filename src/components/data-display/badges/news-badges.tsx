@@ -1,4 +1,4 @@
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import Badge from "./badge";
 import StaticBadge from "./static-badge";
 

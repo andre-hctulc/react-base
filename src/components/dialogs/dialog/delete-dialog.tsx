@@ -6,7 +6,7 @@ import Button from "@react-client/components/input/buttons/button";
 import ErrorCircleOutlineIcon from "@react-client/components/icons/collection/error-circle-outline";
 import LongText from "@react-client/components/text/long-text";
 import DialogFooter from "./dialog-footer";
-import BlankButton from "@react-client/components/input/buttons/common-buttons/blank-button";
+import BlankButton from "@components/common-buttons/blank-button";
 import DialogHeader from "./dialog-header";
 
 interface DeleteDialogProps {

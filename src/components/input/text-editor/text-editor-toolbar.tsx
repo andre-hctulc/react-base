@@ -10,7 +10,7 @@ import Divider from "@react-client/components/layout/divider";
 import LinkIcon from "@react-client/components/icons/collection/link";
 import BoldIcon from "@react-client/components/icons/collection/bold";
 import UnderlineIcon from "@react-client/components/icons/collection/underline";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import ItalicIcon from "@react-client/components/icons/collection/italic";
 import AlignLeftIcon from "@react-client/components/icons/collection/align-left";
 import AlignCenterIcon from "@react-client/components/icons/collection/align-center";

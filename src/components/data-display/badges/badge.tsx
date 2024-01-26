@@ -1,6 +1,6 @@
 // * SSR
 
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import React from "react";
 import StaticBadge from "./static-badge";
 import clsx from "clsx";

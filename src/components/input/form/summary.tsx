@@ -3,7 +3,7 @@
 import Typography from "@react-client/components/text/typography";
 import clsx from "clsx";
 import LongText from "@react-client/components/text/long-text";
-import JSForm, { FormValidator, useFormController } from "./js-form";
+import JSForm, { FormValidator, useFormObserver } from "./js-form";
 import Input from "../base/input";
 import React from "react";
 
@@ -42,7 +42,7 @@ export default function Summary<T extends object = any>(props: SummaryProps<T>) 
             <div className="flex flex-col space-y-2 min-w-0">
                 {Object.keys(props.factory).map(key => {
                     const value: any = (props.data as any)[key];
-                    const field = props.factory[key as keyof typeof props.factory]?.(value,props.data);
+                    const field = props.factory[key as keyof typeof props.factory]?.(value, props.data);
 
                     if (!field) return null;
 

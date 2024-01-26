@@ -1,12 +1,14 @@
 "use client";
 
 import HelperText from "@react-client/components/text/helper-text";
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import Label from "../label";
 import React from "react";
 import { useFormInput } from "../form/js-form";
 import { InputLikeProps } from "./input";
+import { set } from "date-fns";
+import { setRef } from "@react-client/util";
 
 export interface TextAreaProps extends InputLikeProps<string> {
     className?: string;
@@ -22,7 +24,8 @@ export interface TextAreaProps extends InputLikeProps<string> {
 
 /** Input Element für simple inputs, wie text oder Zahlen. */
 const TextArea = React.forwardRef<HTMLDivElement, TextAreaProps>((props, ref) => {
-    const { readOnly, error, disabled } = useFormInput(props);
+    const innerRef = React.useRef<HTMLTextAreaElement>(null);
+    const { readOnly, error, disabled } = useFormInput(props, innerRef.current);
 
     const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
         props.onChange?.(e);
@@ -37,7 +40,11 @@ const TextArea = React.forwardRef<HTMLDivElement, TextAreaProps>((props, ref) =>
             )}
             <textarea
                 {...props.slotProps?.textarea}
-                ref={props.inputRef}
+                ref={textarea => {
+                    setRef(innerRef, textarea);
+                    setRef(props.inputRef, textarea);
+                    setRef(ref, textarea as any);
+                }}
                 placeholder={props.placeholder}
                 className={clsx("flex-grow transition duration-90 min-h-0", props.noBorder && "!border-0", props.slotProps?.textarea?.className)}
                 onChange={handleChange}

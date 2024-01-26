@@ -3,8 +3,9 @@ import clsx from "clsx";
 import Card from "../../layout/containers/cards/card";
 import Overlay from "../../layout/overlays/overlay";
 import React from "react";
-import { setRef, type PropsOf } from "@react-client/util";
+import { setRef } from "@react-client/util";
 import { firstInt } from "@client-util/iterables";
+import { PropsOf } from "@react-client/types";
 
 export interface PopoverProps {
     style?: React.CSSProperties;

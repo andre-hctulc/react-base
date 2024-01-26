@@ -5,11 +5,11 @@ import React from "react";
 import { useFormInput } from "../form/js-form";
 import Stack from "@react-client/components/layout/containers/stack";
 import HelperText from "@react-client/components/text/helper-text";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import { InputLikeProps } from "./input";
 import Label from "../label";
-import { getInputSizeClasses } from "@client-util/input-helpers";
+import { getInputSizeClasses } from "@react-client/input-helpers";
 import ShortText from "@react-client/components/text/short-text";
 import { SelectOption } from "./select";
 import List from "@react-client/components/data-display/list/list";
@@ -41,7 +41,8 @@ interface SearchProps<T = string> extends InputLikeProps<T> {
 
 export default function Search<T = string>(props: SearchProps<T>) {
     const [open, setOpen] = React.useState(false);
-    const { readOnly, disabled, error } = useFormInput(props);
+    const innerRef = React.useRef<HTMLInputElement>(null);
+    const { readOnly, disabled, error } = useFormInput(props, innerRef.current);
     const inp = React.useRef<HTMLSpanElement>(null);
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const [inpValue, setInpValue] = React.useState<string>(inp.current?.textContent || "");
@@ -72,7 +73,7 @@ export default function Search<T = string>(props: SearchProps<T>) {
 
     return (
         <Stack className={clsx("relative", props.className)} style={props.style}>
-            <FormControl required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="string" value={value} />
+            <FormControl ref={innerRef} required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="string" value={value} />
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
                     {props.label}

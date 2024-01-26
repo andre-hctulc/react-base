@@ -22,7 +22,7 @@ interface AlertContext {
     info: (message: React.ReactNode, options?: AlertOptions) => void;
     warn: (message: React.ReactNode, options?: AlertOptions) => void;
     /** In den `options` kann mit `err` ein Error angegeben werden, wodurch deiser im dev mode mit dargestellt wird.  */
-    error: (message: React.ReactNode, options?: AlertOptions & { err?: Error }) => void;
+    error: (message: React.ReactNode, options?: AlertOptions & { err?: Error | null }) => void;
     alert: (severity: Severity, message: React.ReactNode, options?: AlertOptions) => void;
 }
 
@@ -68,7 +68,7 @@ export default function AlertContextProvider(props: AlertContextProviderProps) {
         alert("warning", message, options);
     }
 
-    function error(message: React.ReactNode, options?: AlertOptions & { err?: Error }) {
+    function error(message: React.ReactNode, options?: AlertOptions & { err?: Error | null }) {
         let msg = message;
         if (devMode && options?.err && typeof message === "string") msg = `${message} -DEV- ${options.err.stack}`;
         alert("error", msg, options);

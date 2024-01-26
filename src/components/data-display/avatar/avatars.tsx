@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 import Skeleton from "../loading/skeleton";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import Avatar from "./avatar";
 import { firstBool, range } from "@client-util/iterables";
 import { DynamicSize, XSize } from "@react-client/types";

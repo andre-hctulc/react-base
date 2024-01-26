@@ -1,13 +1,13 @@
 "use client";
 
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import React from "react";
 import RestartIcon from "@react-client/components/icons/collection/restart";
 import clsx from "clsx";
 import IconButton from "../buttons/icon-button";
 import Typography from "@react-client/components/text/typography";
 import HelperText from "@react-client/components/text/helper-text";
-import { forDateLikeInput, getInputSizeClasses } from "@client-util/input-helpers";
+import { forDateLikeInput, getInputSizeClasses } from "@react-client/input-helpers";
 import { useFormInput } from "../form/js-form";
 import Label from "../label";
 import Stack from "@react-client/components/layout/containers/stack";
@@ -26,7 +26,7 @@ export interface TimeRangeInputProps extends InputLikeProps<TimeRange> {
 }
 
 export default function TimeRangeInput(props: TimeRangeInputProps) {
-    const { readOnly, disabled, error } = useFormInput(props);
+    const { readOnly, disabled, error } = useFormInput(props, null);
     const [value, setValue] = React.useState<TimeRange>(props.value || props.defaultValue || [null, null]);
     const formValue = React.useMemo(() => JSON.stringify(value), [value]);
     const [from, to] = value;

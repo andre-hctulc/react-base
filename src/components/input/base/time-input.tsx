@@ -1,14 +1,15 @@
 "use client";
 
 import HelperText from "@react-client/components/text/helper-text";
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import Label from "../label";
 import React from "react";
 import { useFormInput } from "../form/js-form";
-import { forDateLikeInput, getInputSizeClasses } from "@client-util/input-helpers";
+import { forDateLikeInput, getInputSizeClasses } from "@react-client/input-helpers";
 import { InputLikeProps } from "./input";
 import { Size } from "@react-client/types";
+import { setRef } from "@react-client/util";
 
 export interface InputProps extends InputLikeProps<Date> {
     className?: string;
@@ -40,7 +41,8 @@ function formatDate(date: Date, datetime?: boolean) {
 const TimeInput = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const inpType = props.datetime ? "datetime-local" : "date";
-    const { readOnly, disabled, error } = useFormInput(props);
+    const innerRef = React.useRef<HTMLInputElement>(null);
+    const { readOnly, disabled, error } = useFormInput(props, innerRef.current);
     const min = React.useMemo(() => props.min && formatDate(props.min, !!props.datetime), [props.min, props.datetime]);
     const max = React.useMemo(() => props.max && formatDate(props.max, !!props.datetime), [props.max, props.datetime]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,7 +67,10 @@ const TimeInput = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
             )}
             <input
                 {...props.slotProps?.input}
-                ref={props.inputRef}
+                ref={inp => {
+                    setRef(innerRef, inp);
+                    setRef(ref, inp as any);
+                }}
                 placeholder={props.placeholder}
                 className={clsx("transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses, props.slotProps?.input?.className)}
                 type={inpType}

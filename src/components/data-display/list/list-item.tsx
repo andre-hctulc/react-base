@@ -5,7 +5,7 @@ import IconButton from "@react-client/components/input/buttons/icon-button";
 import Stack from "@react-client/components/layout/containers/stack";
 import ShortText from "@react-client/components/text/short-text";
 import Typography, { TextVariant } from "@react-client/components/text/typography";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import React from "react";
 import { Size } from "@react-client/types";

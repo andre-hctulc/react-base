@@ -5,8 +5,9 @@ import ShortText from "@react-client/components/text/short-text";
 import clsx from "clsx";
 import React from "react";
 import FileEmblem from "./file-emblem";
-import { PropsOf, setRef } from "@react-client/util";
+import {  setRef } from "@react-client/util";
 import Styled from "@react-client/components/others/styled";
+import { PropsOf } from "@react-client/types";
 
 interface FileMiniatureProps {
     icon?: React.ReactElement;

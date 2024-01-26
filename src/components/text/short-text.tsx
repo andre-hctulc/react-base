@@ -1,4 +1,4 @@
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import Typography from "./typography";
 import clsx from "clsx";
 import React from "react";

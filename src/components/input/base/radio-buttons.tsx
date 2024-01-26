@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import React from "react";
 import Label from "../label";
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import HelperText from "@react-client/components/text/helper-text";
 import { useFormInput } from "../form/js-form";
 import Stack from "@react-client/components/layout/containers/stack";
@@ -24,7 +24,7 @@ interface RadioButtonsProps extends Omit<InputLikeProps<string | number>, "noBor
 }
 
 export default function RadioButtons(props: RadioButtonsProps) {
-    const { readOnly, disabled, error } = useFormInput(props);
+    const { readOnly, disabled, error } = useFormInput(props, null);
     const isControlled = props.value !== undefined;
     const [value, setValue] = React.useState(() => first(props.value, props.defaultValue));
 

@@ -1,7 +1,7 @@
 "use client";
 
 import HelperText from "@react-client/components/text/helper-text";
-import { setRef, type PropsOf } from "@react-client/util";
+import { setRef } from "@react-client/util";
 import clsx from "clsx";
 import Label from "../label";
 import React from "react";
@@ -9,6 +9,7 @@ import { useFormInput } from "../form/js-form";
 import Stack from "@react-client/components/layout/containers/stack";
 import { randomId } from "@client-util/strings";
 import { InputLikeProps } from "./input";
+import { PropsOf } from "@react-client/types";
 
 export interface CheckBoxProps extends Omit<InputLikeProps<boolean>, "required" | "noBorder"> {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -23,7 +24,8 @@ export interface CheckBoxProps extends Omit<InputLikeProps<boolean>, "required" 
 
 const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) => {
     const id = React.useRef(randomId());
-    const { error, readOnly, disabled } = useFormInput(props);
+    const innerRef = React.useRef<HTMLInputElement>(null);
+    const { error, readOnly, disabled } = useFormInput(props, innerRef.current);
 
     return (
         <Stack className={clsx("", props.label && "mt-3", props.className)} minH0 style={props.style}>
@@ -42,6 +44,7 @@ const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) =>
                     type="checkbox"
                     ref={inp => {
                         setRef(props.inputRef, inp as any);
+                        setRef(innerRef, inp);
                     }}
                     className={clsx("transition duration-90", props.label && "mr-3", props.slotProps?.input?.className)}
                     onChange={props.onChange}

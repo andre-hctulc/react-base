@@ -14,7 +14,7 @@ export type ErrorAltertProps = {
     /** Wird im dev mode angezeigt */
     err?: Error;
     hideErr?: boolean;
-} & ({ message: string | undefined } | { children: string });
+} & ({ message: string | undefined } | { children: React.ReactNode });
 
 export default function ErrorAlert(props: ErrorAltertProps) {
     if (props.active === false) return null;

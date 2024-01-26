@@ -3,7 +3,7 @@
 import Card from "@react-client/components/layout/containers/cards/card";
 import Overlay from "@react-client/components/layout/overlays/overlay";
 import Transition from "@react-client/components/transitions/transition";
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import React from "react";
 

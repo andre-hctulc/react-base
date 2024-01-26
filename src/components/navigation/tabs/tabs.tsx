@@ -1,11 +1,12 @@
 "use client";
 
 import Toolbar from "@react-client/components/layout/containers/toolbar";
-import { PropsOf, mapChildren } from "@react-client/util";
+import { mapChildren } from "@react-client/util";
 import React from "react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import type Tab from "./tab";
+import { PropsOf } from "@react-client/types";
 
 interface TabsProps {
     children?: React.ReactNode;

@@ -16,7 +16,7 @@ export const formControlAttr = "data-form_control";
  * Wird in Custom-Input Komponenten verwendet, um kompatibel mit Formularen sein zu können.
  * Es wird ein _input_ gerendet (`type="hidden"`), welches den aktuellen Wert des Custom-Inputs repräsentiert.
  */
-export default function FormControl(props: FormControlProps) {
+const FormControl = React.forwardRef<HTMLInputElement, FormControlProps>((props, ref) => {
     const value = React.useMemo(() => {
         if (!props.name) return "";
         if (props.type === "string") return props.value;
@@ -25,6 +25,19 @@ export default function FormControl(props: FormControlProps) {
     if (!props.name) return null;
     const formAttrs = { [formControlAttr]: true, [formControlTypeAttr]: props.type };
     return (
-        <input value={value} name={props.name} required={props.required} data-inptype={props.type} disabled={props.disabled} readOnly={props.readOnly} {...formAttrs} />
+        <input
+            ref={ref}
+            value={value}
+            name={props.name}
+            required={props.required}
+            data-inptype={props.type}
+            disabled={props.disabled}
+            readOnly={props.readOnly}
+            {...formAttrs}
+        />
     );
-}
+});
+
+FormControl.displayName = "FormControl";
+
+export default FormControl;

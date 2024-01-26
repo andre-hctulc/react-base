@@ -5,7 +5,7 @@ import Dialog from "@react-client/components/dialogs/dialog/dialog";
 import DialogTitle from "@react-client/components/dialogs/dialog/dialog-title";
 import DialogContent from "@react-client/components/dialogs/dialog/dialog-content";
 import Input from "@react-client/components/input/base/input";
-import JSForm, { FormValidator, useFormController } from "@react-client/components/input/form/js-form";
+import JSForm, { FormValidator, useFormObserver } from "@react-client/components/input/form/js-form";
 import DialogHeader from "@react-client/components/dialogs/dialog/dialog-header";
 
 type InsertLinkFormFata = { link: string; label: string };
@@ -13,7 +13,7 @@ type InsertLinkFormFata = { link: string; label: string };
 const validate: FormValidator<InsertLinkFormFata> = { label: label => checkName(label), link: link => !!link && checkUrl(link) };
 
 export default function InsertLinkDialog(props: { open: boolean; onCreate?: (data: InsertLinkFormFata) => void; onClose: () => void }) {
-    const { formProps, valid, id } = useFormController();
+    const { formProps, valid, id } = useFormObserver();
 
     return (
         <Dialog open={props.open} onClose={props.onClose}>

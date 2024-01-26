@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { pageBarHeight } from "./page-bar";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import React from "react";
 import { collapse } from "@client-util/helpers";
 

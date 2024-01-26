@@ -22,7 +22,7 @@ export type JSFormContext<D extends Record<string, any> = any> = {
     validate: FormValidator<D> | null;
 };
 
-export function useFormController<D extends Record<string, any> = any>(options?: { defaultValid?: true }) {
+export function useFormObserver<D extends Record<string, any> = any>(options?: { defaultValid?: true }) {
     const id = useId();
     const [data, setData] = React.useState<Partial<D>>({});
     const [valid, setValid] = React.useState<boolean>(firstBool(options?.defaultValid, true));
@@ -40,7 +40,7 @@ export function useFormController<D extends Record<string, any> = any>(options?:
 
 export function useFormInput(
     props: Pick<InputLikeProps, "readOnly" | "name" | "disabled" | "errorMessage" | "error">,
-    ref?: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    ref: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null,
 ) {
     const context = React.useContext(JSFormContext);
     // Wird als dependency in `valid` verwendet, um den neuen Wert zu validieren
@@ -111,14 +111,15 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
         let val = valid;
         let parsed = parsedData;
 
-        // Falls von Input-Element getriggert, dann Daten anpassen!
-        if (target && target.matches("input textarea select") && !!target.getAttribute("name")) {
+        // Falls von Input-Element getriggert (Etwa `React.FormEvent.target`), dann Daten anpassen!
+        if (target && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName) && !!(target as any).name) {
             val = form.checkValidity();
             parsed = { ...parsedData };
 
             const inp: InputLike = target as any;
-            const name = inp.getAttribute("name")!;
+            const name = inp.name;
 
+            // Siehe `FormControl`
             if (inp.hasAttribute(formControlTypeAttrName)) {
                 const isJson = inp.getAttribute(formControlTypeAttrName) === "json";
 

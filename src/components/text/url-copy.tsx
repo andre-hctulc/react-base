@@ -1,4 +1,4 @@
-import CopyIconButton from "@react-client/components/input/buttons/common-buttons/copy-icon-button";
+import CopyIconButton from "@components/common-buttons/copy-icon-button";
 import Divider from "@react-client/components/layout/divider";
 import clsx from "clsx";
 import Link from "next/link";

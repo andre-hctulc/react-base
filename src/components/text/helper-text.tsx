@@ -2,7 +2,7 @@
 
 import LongText from "@react-client/components/text/long-text";
 import clsx from "clsx";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 
 interface HelperTextProps {
     error?: boolean;

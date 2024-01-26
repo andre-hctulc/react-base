@@ -1,7 +1,7 @@
 "use client";
 
 import ShortText from "@react-client/components/text/short-text";
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import React from "react";
 import clsx from "clsx";
 import Label from "../label";
@@ -33,7 +33,8 @@ CheckBoxes.allValues = [] as any[];
 /** Benutze `CheckBoxes.allValues` als `defaultValue`, um alle Optionen standardmäßig zu aktivieren. */
 export default function CheckBoxes(props: CheckBoxesProps) {
     const allValues = () => props.options.map(option => option.value);
-    const { error, readOnly, disabled } = useFormInput(props);
+    const innerRef = React.useRef<HTMLInputElement>(null);
+    const { error, readOnly, disabled } = useFormInput(props, innerRef.current);
     const [value, setValue] = React.useState<string[]>(() => {
         if (props.defaultValue === CheckBoxes.allValues) return allValues();
         else if (props.defaultValue) return props.defaultValue;
@@ -74,7 +75,7 @@ export default function CheckBoxes(props: CheckBoxesProps) {
             className={clsx("flex flex-col min-w-0 unstyled-list min-h-0", !props.unstyled && "bg-bg rounded p-1.5", props.className, props.slotProps?.root?.className)}
             style={{ ...props.slotProps?.root?.style, ...props.style }}
         >
-            <FormControl required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="json" value={value} />
+            <FormControl ref={innerRef} required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="json" value={value} />
             {props.label && <Label variant={props.dense ? "caption" : "form_control"}>{props.label}</Label>}
             <ol className="flex-grow min-h-0 flex flex-col">
                 {props.options.map(option => {

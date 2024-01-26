@@ -1,7 +1,7 @@
 import { useAlerts } from "@react-client/contexts/alert-context";
 import ProgressController, { ProgressListener } from "@client-util/progress-controller";
 import Progress from "@react-client/components/data-display/loading/progress";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import { firstInt } from "@client-util/iterables";
 

@@ -6,11 +6,11 @@ import React from "react";
 import { useFormInput } from "../form/js-form";
 import HelperText from "@react-client/components/text/helper-text";
 import Label from "../label";
-import { getInputSizeClasses } from "@client-util/input-helpers";
+import { getInputSizeClasses } from "@react-client/input-helpers";
 import Stack from "@react-client/components/layout/containers/stack";
 import ChevronDownIcon from "@react-client/components/icons/collection/chevron-down";
 import { iterableToMap } from "@client-util/iterables";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import Typography from "@react-client/components/text/typography";
 import { InputLikeProps } from "./input";
 import List from "@react-client/components/data-display/list/list";
@@ -50,7 +50,8 @@ export default function Select<T = string>(props: SelectProps<T>) {
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const anchor = React.useRef<HTMLDivElement>(null);
     const [open, setOpen] = React.useState(false);
-    const { readOnly, disabled, error } = useFormInput(props);
+    const innerRef = React.useRef<HTMLInputElement>(null);
+    const { readOnly, disabled, error } = useFormInput(props, innerRef.current);
     const [activeOption, setActiveOption] = React.useState<SelectOption<T> | undefined>(() => {
         let value: any;
         if (props.value !== undefined) value = props.value;
@@ -98,7 +99,7 @@ export default function Select<T = string>(props: SelectProps<T>) {
 
     return (
         <div className={clsx("flex flex-col flex-shrink-0 min", props.fullWidth && "w-full", props.className)} style={props.style}>
-            <FormControl required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="json" value={activeOption?.value} />
+            <FormControl ref={innerRef} required={props.required} name={props.name} disabled={disabled} readOnly={readOnly} type="json" value={activeOption?.value} />
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} required={props.required} error={error}>
                     {props.label}

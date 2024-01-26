@@ -18,6 +18,7 @@ dass sich die deps ändern, bevor sich der status ändert. Dann sind die `deps` 
  * @param deps
  * @param options `options.keepPreviousData = true` kann dazu führen, dass dies `deps` und der _Parsed Value_ asynchron sind
  * @returns _Parsed Value_
+ * @deprecated
  */
 export default function useAsyncMemo<T>(factory: () => T | Promise<T>, deps: React.DependencyList, options?: AsyncMemoOptions<T>): T | undefined {
     const [parsedValue, setParsedValue] = React.useState<{ value: T; stateId: number } | undefined>(

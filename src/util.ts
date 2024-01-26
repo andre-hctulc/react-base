@@ -107,7 +107,6 @@ export function justifyClass(align: "center" | "start" | "end") {
     return collapse(align || "center", { end: "justify-end", center: "justify-center", start: "justify-start" });
 }
 
-
 /**
  * @param children
  * @param mapper New children are replaced and props are added. Use `overwriteProps` to replace previous props.
@@ -167,45 +166,6 @@ export function flattenChildren(children: React.ReactNode, flattenElements?: any
 export function setRef<T = any>(refObjOrFct: React.ForwardedRef<T> | undefined | null, ref: T) {
     if (typeof refObjOrFct === "function") refObjOrFct(ref);
     else if (typeof refObjOrFct === "object" && refObjOrFct) refObjOrFct.current = ref;
-}
-
-// * Props
-
-export type PropsOf<T> = T extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[T] : T extends React.ComponentType<infer P> ? P : never;
-
-export interface StyledComponentProps {
-    className?: string;
-    style?: React.CSSProperties;
-}
-export interface ParentComponentProps<T extends React.ReactNode = React.ReactNode> {
-    children?: T;
-}
-
-export interface CommomComponentProps extends StyledComponentProps, ParentComponentProps {}
-
-export interface EventProps<T = Element> {
-    // Mouse
-    onClick?: React.MouseEvent<T>;
-    onDblClick?: React.MouseEvent<T>;
-    onMouseOver?: React.MouseEvent<T>;
-    onMouseLeave?: React.MouseEvent<T>;
-    // Change
-    onChange?: React.ChangeEvent<T>;
-    // Focus
-    onFocus?: React.FocusEvent<T>;
-    onBlur?: React.FocusEvent<T>;
-}
-
-export namespace Next {
-    export interface LayoutProps {
-        children?: React.ReactNode;
-        searchParams: Record<string, string>;
-    }
-
-    export interface PageProps {
-        children?: React.ReactNode;
-        searchParams: Record<string, string>;
-    }
 }
 
 // * Theme

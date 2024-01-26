@@ -1,13 +1,14 @@
 "use client";
 
 import HelperText from "@react-client/components/text/helper-text";
-import type { PropsOf } from "@react-client/util";
+import type { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import Label from "../label";
 import React from "react";
 import { useFormInput } from "../form/js-form";
-import { getInputSizeClasses } from "@client-util/input-helpers";
+import { getInputSizeClasses } from "@react-client/input-helpers";
 import { Size } from "@react-client/types";
+import { setRef } from "@react-client/util";
 
 export interface InputLikeProps<T = any> {
     /** _controlled_ */
@@ -53,7 +54,8 @@ interface InputProps extends InputLikeProps {
 /** Input Element für simple inputs, wie text oder Zahlen. */
 const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     const sizeClasses = getInputSizeClasses(props.size || "medium");
-    const { readOnly, disabled, error } = useFormInput(props);
+    const innerRef = React.useRef<HTMLInputElement>(null);
+    const { readOnly, disabled, error } = useFormInput(props, innerRef.current);
 
     const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = e => {
         if (props.onKeyDown) props.onKeyDown(e);
@@ -73,7 +75,10 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
             )}
             <input
                 {...props.slotProps?.input}
-                ref={props.inputRef}
+                ref={inp => {
+                    setRef(innerRef, inp);
+                    setRef(ref, inp as any);
+                }}
                 pattern={props.pattern}
                 placeholder={props.placeholder}
                 type={props.type}
@@ -89,6 +94,7 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
                 min={props.min}
                 max={props.max}
                 maxLength={props.maxLength}
+                name={props.name}
                 className={clsx("max-h-full transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses, props.slotProps?.input?.className)}
             />
             <HelperText errorMessage={props.errorMessage} error={error} {...props.slotProps?.helperText}>

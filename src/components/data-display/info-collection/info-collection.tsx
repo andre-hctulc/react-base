@@ -1,11 +1,11 @@
 // * SSR
 
 import FlowBox from "@react-client/components/layout/containers/flow-box";
-import { PropsOf, mapChildren } from "@react-client/util";
+import { mapChildren } from "@react-client/util";
 import React from "react";
 import Labelize from "./labelize";
 import clsx from "clsx";
-import { Size } from "@react-client/types";
+import { PropsOf, Size } from "@react-client/types";
 import { collapse } from "@client-util/helpers";
 
 interface LabelsProps {

@@ -1,5 +1,5 @@
 import DataGrid, { DataGridColDef } from "@react-client/components/data-display/data-grid/data-grid";
-import { PropsOf } from "@react-client/util";
+import { PropsOf } from "@react-client/types";
 import clsx from "clsx";
 import React from "react";
 import Label from "./label";
@@ -8,7 +8,7 @@ import HelperText from "../text/helper-text";
 import PlusIcon from "@react-client/components/icons/collection/plus";
 import XIcon from "@react-client/components/icons/collection/x";
 import { useFormInput } from "./form/js-form";
-import { getEventValue } from "@client-util/input-helpers";
+import { getEventValue } from "@react-client/input-helpers";
 import { InputLikeProps } from "./base/input";
 
 export type InputListColDef<T extends object> = Omit<DataGridColDef<T>, "render"> & {
@@ -32,10 +32,9 @@ interface InputListProps<T extends object> extends InputLikeProps<T[]> {
 const addColAndRemoveColWidth = 43;
 
 export default function InputList<T extends object = any>(props: InputListProps<T>) {
-    const { error, readOnly, disabled } = useFormInput(props);
+    const { error, readOnly, disabled } = useFormInput(props, null);
     const [value, setValue] = React.useState<T[]>(props.defaultValue || []);
     const [currentRow, setCurrentRow] = React.useState<Partial<T>>(props.defaultRow);
-    const inited = React.useRef(false);
     const currentRowIsValid = React.useMemo(() => {
         return props.validateRow ? props.validateRow(currentRow as T) : true;
         // eslint-disable-next-line react-hooks/exhaustive-deps
