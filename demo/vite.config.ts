@@ -12,5 +12,12 @@ export default defineConfig({
         // for resolving sym links in public dir correctly
         preserveSymlinks: true,
     },
-    build: { outDir: "../demo-build" },
+    build: {
+        outDir: "../demo-build",
+    },
+    esbuild: {
+        supported: {
+            "top-level-await": true,
+        },
+    },
 });

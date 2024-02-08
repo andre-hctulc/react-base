@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "tc": "tsc --noEmit",
-        "demo": "npx serve -s ./demo-build",
+        "demo": "npx serve -s ./demo-build -p 3065",
         "build-module-defs": "node --loader ts-node/esm scripts/build-comp-demos.ts"
     },
     "dependencies": {

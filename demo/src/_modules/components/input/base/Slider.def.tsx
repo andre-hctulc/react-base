@@ -1,6 +1,6 @@
 import type { ModuleDef, DemoDef } from "src/types";
 
-const demos: DemoDef[] = (await Promise.all(Object.values(import.meta.glob("./Slider.demo*.tsx", { import: "default" })).map(imp => imp()))) as any;
+const demos: DemoDef[] = Object.values(import.meta.glob("./Slider.demo*.tsx", { import: "default", eager: true }));
 
 const mod: ModuleDef = { name: "Slider.tsx", path: "components/input/base/Slider.tsx", demos: demos || [] };
 

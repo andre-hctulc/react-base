@@ -30,7 +30,7 @@ const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) =>
 
     return (
         <Stack className={clsx("flex-shrink-0", props.className)} ref={ref} minH0 style={props.style}>
-            <div className={clsx("flex min-h-0", props.vertical ? "flex-col-reverse" : "flex-row")} style={props.style}>
+            <div className={clsx("flex min-h-0", props.vertical ? "flex-col-reverse" : "flex-row items-center")} style={props.style}>
                 <input
                     {...props.slotProps?.input}
                     onFocus={props.onFocus}

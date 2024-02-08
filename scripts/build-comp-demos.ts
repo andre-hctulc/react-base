@@ -61,7 +61,7 @@ async function buildModuleDef(filePath: string, relPath: string) {
     const compName = path.basename(filePath);
     const content = `import type { ModuleDef, DemoDef } from "src/types";
 
-const demos: DemoDef[] = (await Promise.all(Object.values(import.meta.glob("./${fileName}.demo*.tsx", { import: "default" })).map(imp => imp()))) as any;
+const demos: DemoDef[] = Object.values(import.meta.glob("./${fileName}.demo*.tsx", { import: "default", eager: true }));
 
 const mod: ModuleDef = { name: "${compName}", path: "${relPath}", demos: demos || [] };
 
