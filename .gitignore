@@ -1,0 +1,8 @@
+.vscode
+**/.DS_Store
+**/*.code-worksapce
+**/node_modules
+**/icons/collection/*
+!**/icons/collection/
+demo/public/*
+!demo/public/

@@ -1,4 +1,4 @@
-import Icon, { IconProps } from "../Icon/Icon";
+import Icon, { IconProps } from "../Icon";
 
 export default function StoreIcon(props: IconProps) {
     return (

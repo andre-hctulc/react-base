@@ -1,5 +1,5 @@
 import React from "react";
-import Icon, { IconProps } from "../Icon/Icon";
+import Icon, { IconProps } from "../Icon";
 
 const GlobeIcon = React.forwardRef<SVGElement, IconProps>((props, ref) => {
     return (
