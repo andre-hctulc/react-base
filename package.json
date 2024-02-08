@@ -1,5 +1,27 @@
 {
-    "name": "react-util",
-    "main": "index.ts",
-    "private": true
+    "name": "react-base",
+    "main": "build/index.ts",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "tc": "tsc --noEmit",
+        "demo": "npx serve -s ./demo-build",
+        "build-module-defs": "node --loader ts-node/esm scripts/build-comp-demos.ts"
+    },
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-transition-group": "^4.4.5",
+        "u": "../util",
+        "usehooks-ts": "^2.12.1"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.51",
+        "@types/react-dom": "^18.2.18",
+        "@vitejs/plugin-react": "^4.2.1",
+        "date-fns": "^3.3.1",
+        "glob": "^10.3.10",
+        "react-markdown": "^9.0.1",
+        "vite": "^5.0.12"
+    }
 }

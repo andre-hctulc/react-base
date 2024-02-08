@@ -6,6 +6,18 @@
  // TODO In Module (.module.scss) für einzelne Komponenten auslagern
 */
 
+// * Defaults
+
+// Borders
+
+* {
+    @apply border-divider outline-divider;
+}
+
+hr {
+    @apply border-divider;
+}
+
 // * Skeleton
 
 .Skeleton > * {
@@ -129,4 +141,12 @@ form > *:first-child > .Label:first-child {
 
 .Avatars > * {
     @apply border border-bg;
+}
+
+// * Inputs
+
+textarea,
+input {
+    @apply border rounded p-2 focus:outline-primary;
+    background-color: transparent;
 }

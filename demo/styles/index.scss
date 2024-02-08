@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "../../components.scss";
+@import "./prism.css";
+
+body {
+    height: 100vh;
+}
+
+#root {
+    height: 100%;
+    overflow-y: auto;
+}
