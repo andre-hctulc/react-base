@@ -1,11 +1,11 @@
-import { StyledComponentProps } from "@/src/types";
+import { StyleProps } from "@/src/types";
 import Select from "@/src/components/input/base/Select";
 import Input from "@/src/components/input/base/Input";
 import Slider from "@/src/components/input/base/Slider";
 import CheckBox from "@/src/components/input/base/CheckBox";
 import { PropDef } from "src/types";
 
-interface PropProps extends StyledComponentProps {
+interface PropProps extends StyleProps {
     desc: PropDef;
 }
 

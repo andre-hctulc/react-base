@@ -1,5 +1,5 @@
 import Typography from "@/src/components/text/Typography";
-import { StyledComponentProps } from "@/src/types";
+import { StyleProps } from "@/src/types";
 import Stack from "@/src/components/layout/Stack";
 import { ModuleDef } from "src/types";
 import ModuleDemo from "./ModuleDemo";
@@ -9,7 +9,7 @@ import React from "react";
 import ChevronUpIcon from "@/src/components/icons/collection/ChevronUp";
 import Placeholder from "@/src/components/data-display/feedback/Placeholder";
 
-interface ModuleProps extends StyledComponentProps {
+interface ModuleProps extends StyleProps {
     mod: ModuleDef;
 }
 

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { PartialPropsOf, StyledComponentProps } from "@/src/types";
+import { PartialPropsOf, StyleProps } from "@/src/types";
 import Stack from "@/src/components/layout/Stack";
 import Search from "@/src/components/input/base/Search";
 import AllIcon from "@/src/components/icons/collection/WalletOutline";
@@ -13,7 +13,7 @@ import { useAlerts } from "@/src/contexts/AlertsProvider";
 import CheckBox from "@/src/components/input/base/CheckBox";
 import Tooltip from "@/src/components/dialogs/popover/Tooltip";
 
-interface AppMenuProps extends StyledComponentProps {}
+interface AppMenuProps extends StyleProps {}
 
 const menuWidth = 250;
 

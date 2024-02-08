@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledComponentProps } from "@/src/types";
+import { StyleProps } from "@/src/types";
 import Props from "./ModuleDemoProps";
 import Toolbar from "@/src/components/layout/Toolbar";
 import Tabs from "@/src/components/navigation/tabs/Tabs";
@@ -8,7 +8,7 @@ import { DemoDef } from "src/types";
 import Code from "../Code";
 import clsx from "clsx";
 
-interface ModuleDemoProps extends StyledComponentProps {
+interface ModuleDemoProps extends StyleProps {
     demo: DemoDef;
     path: string;
 }
@@ -39,7 +39,7 @@ export default function ModuleDemo(props: ModuleDemoProps) {
                         <div className="overflow-y-auto" style={{ maxHeight: 500 }}>
                             <Demo demoProps={p} />
                         </div>
-                            <Props className="border-t" onChange={p => setP(p)} propDefs={props.demo.demoProps || []} />
+                        <Props className="border-t" onChange={p => setP(p)} propDefs={props.demo.demoProps || []} />
                     </>
                 )}
                 {activeTab === "code" && <Code style={{ height: 600 }} className="px-3 py-2" path={codePath} />}

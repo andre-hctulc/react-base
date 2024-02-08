@@ -1,12 +1,12 @@
 import React from "react";
-import { StyledComponentProps } from "@/src/types";
+import { StyleProps } from "@/src/types";
 import useFetchAsset from "./useFetchAsset";
 import Skeleton from "@/src/components/data-display/feedback/Skeleton";
 import Alert from "@/src/components/data-display/alerts/Alert";
 import { highlight, languages } from "prismjs";
 import clsx from "clsx";
 
-interface CodeProps extends StyledComponentProps {
+interface CodeProps extends StyleProps {
     path: string;
 }
 

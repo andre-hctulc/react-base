@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import JSForm from "@/src/components/input/form/JSForm";
-import { StyledComponentProps } from "@/src/types";
+import { StyleProps } from "@/src/types";
 import Prop from "./ModuleDemoProp";
 import { PropDef } from "src/types";
 import Typography from "@/src/components/text/Typography";
 
-interface PropsProps extends StyledComponentProps {
+interface PropsProps extends StyleProps {
     propDefs: PropDef[];
     onChange?: (props: Record<string, any>) => void;
 }

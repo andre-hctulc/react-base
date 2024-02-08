@@ -1,5 +1,5 @@
 import Stack from "@/src/components/layout/Stack";
-import { StyledComponentProps } from "@/src/types";
+import { StyleProps } from "@/src/types";
 import clsx from "clsx";
 import Module from "./module/Module";
 import Typography from "@/src/components/text/Typography";
@@ -7,7 +7,7 @@ import { useAppContext } from "./AppContextProvider";
 import { dirname } from "./helpers";
 import React from "react";
 
-interface DemosProps extends StyledComponentProps {}
+interface DemosProps extends StyleProps {}
 
 export default function Demos(props: DemosProps) {
     const { modules, filter, activeModules } = useAppContext();
