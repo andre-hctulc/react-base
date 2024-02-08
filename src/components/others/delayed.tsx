@@ -2,9 +2,9 @@
 
 import { first } from "u/src/iterables";
 import React from "react";
-import { ParentComponentProps } from "../../types";
+import { ParentProps } from "../../types";
 
-interface DelayedProps extends ParentComponentProps {
+interface DelayedProps extends ParentProps {
     delay: number;
     in?: boolean;
     rederDelay?: React.ReactNode;

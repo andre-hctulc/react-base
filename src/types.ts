@@ -14,14 +14,12 @@ export type XSizeMap<T = number> = { [K in XDynamicSize]: T };
 export type PropsOf<T> = T extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[T] : T extends React.ComponentType<infer P> ? P : never;
 export type PartialPropsOf<T> = Partial<PropsOf<T>>;
 
-export interface StyledComponentProps {
+export interface StyleProps {
     className?: string;
     style?: React.CSSProperties;
 }
 
-export type ParentComponentProps<T extends React.ReactNode = React.ReactNode, R extends boolean = false> = R extends true ? { children: T } : { children?: T };
-
-export interface CommomComponentProps extends StyledComponentProps, ParentComponentProps {}
+export type ParentProps<T extends React.ReactNode = React.ReactNode, R extends boolean = false> = R extends true ? { children: T } : { children?: T };
 
 export interface EventProps<T = Element> {
     // Mouse

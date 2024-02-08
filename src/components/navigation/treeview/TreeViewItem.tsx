@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { LinkComponentProps, ParentComponentProps, StyledComponentProps } from "../../../types";
+import { LinkComponentProps, ParentProps, StyleProps } from "../../../types";
 import ListItem from "../../data-display/list/ListItem";
 import ChevronRightIcon from "../../icons/collection/ChevronRight";
 import TreeView, { TreeViewStruct } from "./TreeView";
 import { hasChildren } from "../../../util";
 import Fade from "../../transitions/Fade";
 
-interface TreeViewItemProps extends StyledComponentProps, ParentComponentProps {
+interface TreeViewItemProps extends StyleProps, ParentProps {
     text: string;
     from?: TreeViewStruct;
     href?: string;

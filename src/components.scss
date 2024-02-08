@@ -1,9 +1,10 @@
-/* 
- Die Klassen sollten genau so heißen wie die Komponenten!
- 
- @apply unterstützt '!' (important) nicht
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
- // TODO In Module (.module.scss) für einzelne Komponenten auslagern
+/* 
+- Classes that target a component should be named with the component name as a prefix or the component name itself.
+- @apply does not support '!' (important)
 */
 
 // * Defaults
@@ -41,7 +42,7 @@ hr {
 // * Markdown
 
 .Markdown {
-    // Die List styles werden von tailwind base entfernt -> in Markdown hinzufügen
+    // These styles are removed by tailwind
 
     ul {
         list-style-type: disc;
@@ -74,13 +75,6 @@ hr {
     @apply bg-bg-paper rounded py-1 px-0.5 border;
     font-size: 12px;
     border-width: 1.5px;
-}
-
-// * Label
-// Erstes label in form soll keinen Abstans nach oben haben
-form > .Label:first-child,
-form > *:first-child > .Label:first-child {
-    @apply mt-0;
 }
 
 // * Live
@@ -123,16 +117,6 @@ form > *:first-child > .Label:first-child {
 
         svg {
             @apply text-info;
-        }
-    }
-}
-
-// * FSSection
-
-.FSSection {
-    > ol {
-        > li {
-            @apply border-b-[0.5px];
         }
     }
 }

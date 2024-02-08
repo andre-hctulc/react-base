@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ParentComponentProps } from "../types";
+import { ParentProps } from "../types";
 
 interface DevContext {
     /** @default process.env.NODE_ENV === "development" */
@@ -24,7 +24,7 @@ export function useDev() {
     return ctx;
 }
 
-interface DevProviderProps extends ParentComponentProps {
+interface DevProviderProps extends ParentProps {
     devMode?: boolean;
 }
 

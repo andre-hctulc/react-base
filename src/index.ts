@@ -1,2 +1,2 @@
-import "../components.scss";
+import "./components.scss";
 export {};
