@@ -1,5 +1,5 @@
-import { collapse } from "u/src/helpers";
 import clsx from "clsx";
+import { collapse } from "../../util";
 
 interface LabelProps {
     htmlFor?: string;

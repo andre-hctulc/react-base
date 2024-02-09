@@ -1,8 +1,8 @@
 import React from "react";
-import { collapse } from "u/src/helpers";
 import Card from "../layout/cards/Card";
 import Styled from "../others/Styled";
 import Typography from "../text/Typography";
+import { collapse } from "../../util";
 
 interface InfoCardProps {
     size?: "small" | "medium" | "large";

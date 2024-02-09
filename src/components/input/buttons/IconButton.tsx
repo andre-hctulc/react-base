@@ -2,9 +2,9 @@
 
 import clsx from "clsx";
 import React from "react";
-import { collapse } from "u/src/helpers";
 import { DynamicSize } from "../../../types";
 import Styled from "../../others/Styled";
+import { collapse } from "../../../util";
 
 interface IconButtonProps {
     children: React.ReactElement;

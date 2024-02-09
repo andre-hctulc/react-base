@@ -1,9 +1,9 @@
 import React from "react";
 import Typography from "./Typography";
-import { collapse } from "u/src/helpers";
 import clsx from "clsx";
 import { PropsOf } from "../../types";
 import Styled from "../others/Styled";
+import { collapse } from "../../util";
 
 interface IconTextProps {
     className?: string;

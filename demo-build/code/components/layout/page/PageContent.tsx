@@ -1,8 +1,8 @@
 
 
-import { collapse } from "u/src/helpers";
 import clsx from "clsx";
 import { Size } from "../../../types";
+import { collapse } from "../../../util";
 
 interface PageContentProps {
     children?: React.ReactNode;

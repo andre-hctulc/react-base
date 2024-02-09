@@ -1,8 +1,8 @@
 "use client";
 
-import { collapse } from "u/src/helpers";
 import clsx from "clsx";
 import Styled from "../../others/Styled";
+import { collapse } from "../../../util";
 
 interface ToggleButtonProps {
     active?: boolean;

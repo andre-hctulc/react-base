@@ -6,9 +6,9 @@ import Card from "../../layout/cards/Card";
 import Overlay from "../../layout/overlays/Overlay";
 import React from "react";
 import { setRef } from "../../../util";
-import { firstInt } from "u/src/iterables";
 import { PropsOf } from "../../../types";
 import { useAlerts } from "../../../contexts/AlertsProvider";
+import { firstInt } from "../../../system";
 
 type PopoverPosition = { horizontal: "left" | "start" | "right" | "end" | "center"; vertical: "top" | "start" | "bottom" | "end" | "center" };
 

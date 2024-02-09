@@ -1,6 +1,6 @@
-import { collapse } from "u/src/helpers";
 import clsx from "clsx";
 import React from "react";
+import { collapse } from "../../util";
 
 export type TextLikeTag = string;
 export type TextVariant = "body1" | "body2" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "caption" | "subtitle1" | "subtitle2";

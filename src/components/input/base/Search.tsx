@@ -3,7 +3,6 @@
 import React from "react";
 import { useFormInput } from "../form/JSForm";
 import { SelectOption } from "./Select";
-import { firstString } from "u/src/iterables";
 import FormControl from "../form/FormControl";
 import clsx from "clsx";
 import Label from "../Label";
@@ -16,6 +15,7 @@ import Stack from "../../layout/Stack";
 import HelperText from "../../text/HelperText";
 import List from "../../data-display/list/List";
 import Typography from "../../text/Typography";
+import { firstString } from "../../../system";
 
 interface SearchProps<T = string> extends InputLikeProps<T> {
     className?: string;

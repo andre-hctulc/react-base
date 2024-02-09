@@ -1,9 +1,9 @@
-import ProgressController, { ProgressListener } from "u/src/progress-controller";
 import clsx from "clsx";
-import { firstInt } from "u/src/iterables";
 import { useAlerts } from "../../contexts/AlertsProvider";
 import { PropsOf } from "../../types";
 import Progress from "../../components/data-display/feedback/Progress";
+import ProgressController, { ProgressListener } from "../../progress-controller";
+import { firstInt } from "../../system";
 
 export type ProgressAlertOptions = {
     controller?: ProgressController;

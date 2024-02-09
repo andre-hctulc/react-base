@@ -4,10 +4,10 @@ A React/Tailwind lib
 
 ## Features
 
--   hooks
--   contexts
--   components
--   base tailind theme
+-   React-hooks
+-   React-contexts
+-   React-components
+-   base tailwind theme
 
 ## Usage
 
@@ -39,12 +39,12 @@ import Tooltip from "@/src/components/layout/Stack";
 import Button from "@/src/components/layout/Button";
 import { StyleProps, ParentProps } from "@/src/types";
 
-interface ButtonProps extends StyleProps, ParentProps {
+interface ButtonWithTooltipProps extends StyleProps, ParentProps {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     tooltip: string;
 }
 
-export default function ButtonWithTooltip(props: StyleProps) {
+export default function ButtonWithTooltip(props: ButtonWithTooltipProps) {
     return (
         <Tooltip content={props.tooltip} enterDelay={300} enterNextDelay={500}>
             <Button className={props.className} style={props.style} onClick={props.onClick} variant="contained">
@@ -65,7 +65,7 @@ The demo provides Component-Previews, Code-Examples and Code-Views of all module
 npm run demo
 ```
 
-The demo is served locally at _http://localhost:3066_
+The demo is served locally at _http://localhost:3065_
 
 ### Build the demo-App
 

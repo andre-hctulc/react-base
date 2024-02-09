@@ -1,8 +1,6 @@
-
-
-import { collapse, collapseOrVanish } from "u/src/helpers";
 import clsx from "clsx";
 import React from "react";
+import { collapse, collapseWeak } from "../../util";
 
 interface ToolbarProps {
     style?: React.CSSProperties;
@@ -35,11 +33,11 @@ const Toolbar = React.forwardRef<HTMLElement, ToolbarProps>((props, ref) => {
         spacing === "none"
             ? null
             : variant === "flow"
-            ? collapseOrVanish(spacing, { medium: "gap-2", small: "gap-[4px]", large: "gap-3.5" })
+            ? collapseWeak(spacing, { medium: "gap-2", small: "gap-[4px]", large: "gap-3.5" })
             : variant === "horizontal"
-            ? collapseOrVanish(spacing, { medium: "space-x-2", small: "space-x-[4px]", large: "space-x-3.5" })
-            : collapseOrVanish(spacing, { medium: "space-y-2", small: "space-y-[4px]", large: "space-y-3.5" });
-    const justifyClass = collapseOrVanish(props.justify, { start: "justify-start", end: "justify-end", center: "justify-center" });
+            ? collapseWeak(spacing, { medium: "space-x-2", small: "space-x-[4px]", large: "space-x-3.5" })
+            : collapseWeak(spacing, { medium: "space-y-2", small: "space-y-[4px]", large: "space-y-3.5" });
+    const justifyClass = collapseWeak(props.justify, { start: "justify-start", end: "justify-end", center: "justify-center" });
     const Comp: any = props.tag || "div";
 
     return (

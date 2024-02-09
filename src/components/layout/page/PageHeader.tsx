@@ -3,8 +3,8 @@
 import clsx from "clsx";
 import { pageBarHeight } from "./PageBar";
 import React from "react";
-import { collapse } from "u/src/helpers";
 import { PropsOf } from "../../../types";
+import { collapse } from "../../../util";
 
 interface PageHeaderProps {
     noPadding?: boolean;

@@ -1,10 +1,8 @@
-import { range } from "u/src/iterables";
 import clsx from "clsx";
 import React from "react";
 import Stack from "./Stack";
-import { collapse } from "u/src/helpers";
 import { Size } from "../../types";
-import { flattenChildren } from "../../util";
+import { collapse, flattenChildren } from "../../util";
 
 interface GridColsProps {
     className?: string;
@@ -49,7 +47,7 @@ export default function GridCols(props: GridColsProps) {
 
     return (
         <div className={classes} style={{ columnGap: colGap, ...props.style, gridTemplateColumns: `repeat(${props.cols}, ${props.colsWidth || "1fr"})` }}>
-            {range(props.cols, i => {
+            {Array.from({ length: props.cols }, (_, i) => {
                 const colContent = props.colsWrapper ? React.cloneElement(props.colsWrapper, { ...props.colsWrapper.props, children: cols[i] }) : cols[i];
 
                 return (

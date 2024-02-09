@@ -1,10 +1,10 @@
 "use client";
 
-import { first } from "u/src/iterables";
 import React from "react";
-import { ParentComponentProps } from "../../types";
+import { ParentProps } from "../../types";
+import { first } from "../../system";
 
-interface DelayedProps extends ParentComponentProps {
+interface DelayedProps extends ParentProps {
     delay: number;
     in?: boolean;
     rederDelay?: React.ReactNode;

@@ -4,12 +4,12 @@ import clsx from "clsx";
 import Label from "../Label";
 import React from "react";
 import { useFormInput } from "../form/JSForm";
-import { randomId } from "u/src/strings";
 import { InputLikeProps } from "./Input";
 import { PropsOf } from "../../../types";
 import { setRef } from "../../../util";
 import Stack from "../../layout/Stack";
 import HelperText from "../../text/HelperText";
+import { randomId } from "../../../system";
 
 export interface CheckBoxProps extends Omit<InputLikeProps<boolean>, "required" | "noBorder"> {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;

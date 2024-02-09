@@ -1,9 +1,8 @@
 
 import clsx from "clsx";
 import React from "react";
-import { collapse } from "u/src/helpers";
 import { ThemeColor, Size } from "../../types";
-import { themeColor } from "../../util";
+import { collapse, themeColor } from "../../util";
 import XCircleOutlineIcon from "../icons/collection/XCircleOutline";
 import Styled from "../others/Styled";
 

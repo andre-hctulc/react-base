@@ -1,8 +1,7 @@
 import React from "react";
 import useId from "./useId";
-import { Falsy } from "u/src/utility-types";
 
-export default function useBlobUrl(file: Blob | Falsy) {
+export default function useBlobUrl(file: Blob | null | undefined) {
     const [blobUrl, setBlobUrl] = React.useState<string | undefined>();
     const id = useId();
 

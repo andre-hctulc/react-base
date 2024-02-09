@@ -1,8 +1,18 @@
 import React from "react";
 import type { SizeMap, ThemeColor, XSizeMap } from "./types";
-import { collapse } from "u/src/helpers";
 
 // * Helpers
+
+/** 🌊 🎯 */
+export function collapse<V extends string, R = any>(value: V, map: { [K in V]: R }): R {
+    return map[value];
+}
+
+/** 🌊 🎯 🥈 */
+export function collapseWeak<V extends string, R = any>(value: V | undefined, map: { [K in V]?: R }): R | undefined {
+    if (value === undefined) return undefined;
+    return map[value];
+}
 
 export function eventProps(props: Record<string, any>) {
     const result: Record<string, any> = {};

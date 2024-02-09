@@ -1,0 +1,7 @@
+import type { ModuleDef, DemoDef } from "src/types";
+
+const demos: DemoDef[] = Object.values(import.meta.glob("./components.demo*.tsx", { import: "default", eager: true }));
+
+const mod: ModuleDef = { name: "components.scss", path: "components.scss", demos: demos || [] };
+
+export default mod;

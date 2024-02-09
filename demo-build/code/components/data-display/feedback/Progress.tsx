@@ -1,6 +1,6 @@
 "use client";
 
-import type { default as ProgressController, ProgressListener, ProgressStep } from "u/src/progress-controller";
+import type { default as ProgressController, ProgressListener, ProgressStep } from "../../../progress-controller";
 import React from "react";
 import clsx from "clsx";
 import ProgressBar, { ProgressBarAppearance } from "./ProgressBar";

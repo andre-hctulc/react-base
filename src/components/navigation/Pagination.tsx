@@ -2,9 +2,7 @@
 
 import clsx from "clsx";
 import IconButton from "../input/buttons/IconButton";
-import { range } from "u/src/iterables";
 import React from "react";
-import { searchParamToPage } from "u/src/nav";
 import useMutableSearchParams from "../../hooks/navigation/useMutableSearchParams";
 import ChevronDoubleLeftIcon from "../icons/collection/ChevronDoubleLeft";
 import ChevronDoubleRightIcon from "../icons/collection/ChevronDoubleRight";
@@ -27,7 +25,7 @@ export default function Pagination(props: PaginationProps) {
     const buttonInActiveClasses = " border-[1.5px] bg-bg-paper text-text-secondary text-accent hover:bg-primary/10 active:bg-primary/40 cursor-pointer";
     const [searchParams, setSearchParam] = useMutableSearchParams();
     const paramName = props.searchParam || "page";
-    const [_, currentPage] = searchParamToPage(searchParams?.get(paramName));
+    const currentPage = Math.max(+(searchParams?.get(paramName) || 0) || 0, 0);
     const pages = React.useMemo<{
         leftCount: number;
         rightCount: number;
@@ -69,7 +67,7 @@ export default function Pagination(props: PaginationProps) {
                     <ChevronLeftIcon />
                 </IconButton>
             </div>
-            {range(pages.leftCount)
+            {Array.from({ length: pages.leftCount }, (_, i) => i)
                 .reverse()
                 .map(page => (
                     <button key={`pages-left-${page}`} className={buttonClasses + buttonInActiveClasses} onClick={() => setPage(page)}>
@@ -77,7 +75,7 @@ export default function Pagination(props: PaginationProps) {
                     </button>
                 ))}
             <span className={buttonClasses + buttonActiveClasses}>{currentPage}</span>
-            {range(pages.rightCount).map(page => (
+            {Array.from({ length: pages.rightCount }, (_, i) => i).map(page => (
                 <button className={buttonClasses + buttonInActiveClasses} key={`pages-right-${page}`} onClick={() => setPage(page)}>
                     {currentPage + page + 1}
                 </button>

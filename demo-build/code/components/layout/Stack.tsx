@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import React from "react";
 import { alignClass, eventProps, justifyClass } from "../../util";
-import { DragEventProps, KeyboardEventProps, MouseEventProps, ParentComponentProps, StyledComponentProps } from "../../types";
+import { DragEventProps, KeyboardEventProps, MouseEventProps, ParentProps, StyleProps } from "../../types";
 
-interface StackProps extends StyledComponentProps, ParentComponentProps, MouseEventProps, KeyboardEventProps, DragEventProps {
+interface StackProps extends StyleProps, ParentProps, MouseEventProps, KeyboardEventProps, DragEventProps {
     direction?: "row" | "col";
     id?: string;
     align?: "start" | "end" | "center";

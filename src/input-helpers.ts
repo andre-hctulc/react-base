@@ -1,5 +1,5 @@
-import { collapse } from "u/src/helpers";
 import { Size } from "./types";
+import { collapse } from "./util";
 
 // * Input type="date|datetime"
 

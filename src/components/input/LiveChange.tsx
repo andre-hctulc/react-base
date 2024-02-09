@@ -1,4 +1,3 @@
-import { eventToValue } from "u/src/dom";
 import React from "react";
 
 interface InputProps {
@@ -21,6 +20,17 @@ interface LiveChangeProps<T = any> {
     preventForwardProps?: (keyof InputProps)[];
     onError?: (error: string | false) => void;
     onSuccess?: (newTitle: string) => void;
+}
+
+export function eventToValue(e: any) {
+    if (e && typeof e === "object") {
+        // e.target.value (e.g. input, TextField...)
+        if (e.hasOwnProperty("target")) return (e as any).target.value;
+        // e.value
+        else if (e.hasOwnProperty("value")) return (e as any).value;
+        // e
+        else return e;
+    } else return e;
 }
 
 export default function LiveChange<T = any>(props: LiveChangeProps<T>) {

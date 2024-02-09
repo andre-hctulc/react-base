@@ -3,9 +3,8 @@
 import clsx from "clsx";
 import React, { useId } from "react";
 import type { InputLikeProps } from "../base/Input";
-import { firstBool } from "u/src/iterables";
-import { setRef } from "../../../util";
-import { collapse } from "u/src/helpers";
+import { collapse, setRef } from "../../../util";
+import { firstBool } from "../../../system";
 
 const JSFormContext = React.createContext<JSFormContext | null>(null);
 

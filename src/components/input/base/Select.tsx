@@ -3,7 +3,6 @@
 import clsx from "clsx";
 import React from "react";
 import { useFormInput } from "../form/JSForm";
-import { iterableToMap } from "u/src/iterables";
 import { InputLikeProps } from "./Input";
 import FormControl from "../form/FormControl";
 import Label from "../Label";
@@ -45,7 +44,7 @@ interface SelectProps<T = string> extends InputLikeProps<T> {
 const maxCardHeight = 400;
 
 export default function Select<T = string>(props: SelectProps<T>) {
-    const valueOptionMap = iterableToMap(props.options, opt => opt.value);
+    const valueOptionMap = new Map(props.options.map(o => [o.value, o]));
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const anchor = React.useRef<HTMLDivElement>(null);
     const [open, setOpen] = React.useState(false);

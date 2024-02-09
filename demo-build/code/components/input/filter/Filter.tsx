@@ -5,7 +5,6 @@ import React from "react";
 import { defaultFilterParser, defaultFilterStringifier } from "./filter-utility";
 import ToggleButton from "../buttons/ToggleButton";
 import JSForm, { useFormObserver } from "../form/JSForm";
-import { SearchParam } from "u/src/nav";
 import { useLocalStorage } from "usehooks-ts";
 import useMutableSearchParams from "../../../hooks/navigation/useMutableSearchParams";
 import Fade from "../../transitions/Fade";
@@ -20,7 +19,7 @@ interface FilterProps<F extends {}> {
     className?: string;
     style?: React.CSSProperties;
     defaultValue: Partial<F> | string;
-    /** Search param name @default "layout" */
+    /** Search param name @default "filter" */
     searchParam?: string;
     search?: boolean;
     defaultOpen?: boolean;
@@ -28,7 +27,7 @@ interface FilterProps<F extends {}> {
 }
 
 export default function Filter<F extends {}>(props: FilterProps<F>) {
-    const searchParamName = props.searchParam || SearchParam.filter;
+    const searchParamName = props.searchParam || "filter";
     const [open, setOpen] = useLocalStorage<boolean>(openCacheKey(props.cacheKey), false);
     const defaultValue = typeof props.defaultValue === "string" ? defaultFilterParser(props.defaultValue) : props.defaultValue;
     const classes = clsx("flex items-start justify-end space-x-4 pointer-events-auto ", props.className);

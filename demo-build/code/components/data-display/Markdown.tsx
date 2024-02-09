@@ -1,8 +1,8 @@
-import { joinPaths } from "u/src/web-fs";
 import clsx from "clsx";
 import ReactMarkdown, { Components } from "react-markdown";
 import Typography from "../text/Typography";
 import React from "react";
+import { joinPaths } from "../../system";
 
 const comps: (data: { imagesBaseDir: string }, components?: Components) => Components = (data, components) => ({
     h1: props => (

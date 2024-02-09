@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import { fileExtension } from "u/src/web-fs";
 import { ImageComponentProps } from "../../types";
 
 interface FileEmblemProps {
@@ -14,8 +13,8 @@ interface FileEmblemProps {
     imageComponent?: React.ComponentType<ImageComponentProps>;
 }
 
-function getFileSrc(fileName: string) {
-    const extension = fileExtension(fileName);
+function getFileSrc(fileName: string) {/x/.exec("")?.[0]
+    const extension = fileName.match(/\.([^.]+)$/)?.[1]?.toLowerCase() || "";
     const baseSrc = "/icons/fs";
 
     switch (extension) {
@@ -36,6 +35,7 @@ function getFileSrc(fileName: string) {
             return `${baseSrc}/${extension}.png`;
         case "jpeg":
             return `${baseSrc}/jpg.png`;
+        case "blank":
         default:
             return `${baseSrc}/blank.png`;
     }

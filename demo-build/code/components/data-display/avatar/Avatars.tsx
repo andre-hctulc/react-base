@@ -2,9 +2,9 @@ import clsx from "clsx";
 import React from "react";
 import Skeleton from "../feedback/Skeleton";
 import Avatar from "./Avatar";
-import { firstBool, range } from "u/src/iterables";
-import { collapse } from "u/src/helpers";
 import { DynamicSize, PropsOf, XSize } from "../../../types";
+import { collapse } from "../../../util";
+import { firstBool } from "../../../system";
 
 type ForwardedAvataProps = Pick<PropsOf<typeof Avatar>, "size">;
 
@@ -43,7 +43,7 @@ export default function Avatars(props: AvatarsProps) {
         <div className={clsx("Avatars flex", spacing, props.justifyEnd && "justify-end", props.className)} style={props.style}>
             {loading && (
                 <Skeleton className="flex" {...props.slotProps?.skeleton}>
-                    {range(typeof props.loadingCount === "number" ? props.loadingCount : 3, i => (
+                    {Array.from({ length: typeof props.loadingCount === "number" ? props.loadingCount : 3 }, i => (
                         <Avatar key={`loading-avatar-${i}`} {...avatarProps}>
                             diff
                         </Avatar>

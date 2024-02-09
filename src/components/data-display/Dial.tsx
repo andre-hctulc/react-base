@@ -1,12 +1,10 @@
 "use client";
 
-import { collapse } from "u/src/helpers";
-import { round } from "u/src/math";
-import { CubicBezierControllPoints, cubicBezier } from "u/src/timing";
+import { CubicBezierControllPoints, cubicBezier } from "../../timing";
 import clsx from "clsx";
 import React from "react";
 import { Size } from "../../types";
-import { alignClass } from "../../util";
+import { alignClass, collapse } from "../../util";
 
 export interface DialItemProps<T extends Element = Element> {
     className?: string;
@@ -91,7 +89,7 @@ export default function Dial(props: DialProps) {
             const sizeAndScale = {
                 height: h === undefined ? undefined : Math.round(h * scale),
                 width: w === undefined ? w : Math.round(w * scale),
-                scale: round(scale, 100),
+                scale: Math.round(scale * 100) / 100,
             };
 
             result.set(dist, sizeAndScale);

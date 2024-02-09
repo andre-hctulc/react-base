@@ -4,11 +4,11 @@ import clsx from "clsx";
 import React from "react";
 import { useFormInput } from "../form/JSForm";
 import { InputLikeProps } from "./Input";
-import { first } from "u/src/iterables";
 import Label from "../Label";
 import { PropsOf } from "../../../types";
 import Stack from "../../layout/Stack";
 import HelperText from "../../text/HelperText";
+import { first } from "../../../system";
 
 export type RadioButtonsOption = { label: string; value: string | number };
 

@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import React from "react";
-import { collapse } from "u/src/helpers";
 import { LinkComponentProps, PropsOf, Size } from "../../../types";
 import IconButton from "../../input/buttons/IconButton";
 import Stack from "../../layout/Stack";
 import Styled from "../../others/Styled";
 import Typography, { TextVariant } from "../../text/Typography";
+import { collapse } from "../../../util";
 
 interface ListItemProps {
     className?: string;

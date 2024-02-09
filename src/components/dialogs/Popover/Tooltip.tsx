@@ -2,11 +2,11 @@
 
 import React from "react";
 import clsx from "clsx";
-import { firstInt } from "u/src/iterables";
 import Popover from "./Popover";
 import { PropsOf } from "../../../types";
 import { setRef } from "../../../util";
 import Typography from "../../text/Typography";
+import { firstInt } from "../../../system";
 
 interface TooltipProps {
     children: React.ReactElement;

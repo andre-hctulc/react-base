@@ -1,9 +1,9 @@
 
 
 import clsx from "clsx";
-import { collapse } from "u/src/helpers";
 import Button from "./Button";
 import { PropsOf } from "../../../types";
+import { collapse } from "../../../util";
 
 export default function BlankButton(props: Omit<PropsOf<typeof Button>, "color" | "unstyled">) {
     const variant = props.variant || "text";

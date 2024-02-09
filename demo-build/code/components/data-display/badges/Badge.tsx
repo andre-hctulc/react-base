@@ -3,8 +3,8 @@
 import React from "react";
 import StaticBadge from "./StaticBadge";
 import clsx from "clsx";
-import { collapse } from "u/src/helpers";
 import { PropsOf, ThemeColor } from "../../../types";
+import { collapse } from "../../../util";
 
 interface BadgeProps {
     children: React.ReactElement;

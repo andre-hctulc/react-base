@@ -1,10 +1,9 @@
 
 
-import { collapse } from "u/src/helpers";
 import clsx from "clsx";
 import React from "react";
 import { ThemeColor } from "../../../types";
-import { themeColor } from "../../../util";
+import { collapse, themeColor } from "../../../util";
 import Styled from "../../others/Styled";
 
 interface ButtonProps {

@@ -1,6 +1,6 @@
 {
     "name": "react-base",
-    "main": "build/index.ts",
+    "main": "src/index.ts",
     "private": true,
     "type": "module",
     "scripts": {
@@ -12,17 +12,17 @@
         "styles-watch": "npx tailwind -c tailwind.config.ts -o ./styles/defaults.css --watch"
     },
     "dependencies": {
+        "clsx": "^2.1.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-transition-group": "^4.4.5",
-        "u": "../util",
         "usehooks-ts": "^2.12.1"
     },
     "devDependencies": {
-        "@types/react": "^18.2.51",
+        "@types/react": "^18.2.55",
         "@types/react-dom": "^18.2.18",
+        "@types/react-transition-group": "^4.4.10",
         "@vitejs/plugin-react": "^4.2.1",
-        "date-fns": "^3.3.1",
         "glob": "^10.3.10",
         "react-markdown": "^9.0.1",
         "tailwindcss": "^3.4.1",
