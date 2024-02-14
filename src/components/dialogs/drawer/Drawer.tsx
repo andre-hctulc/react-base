@@ -3,7 +3,7 @@ import Overlay from "../../layout/overlays/Overlay";
 import { Transition } from "react-transition-group";
 import XIcon from "../../icons/collection/X";
 import IconButton from "../../input/buttons/IconButton";
-import Stack from "../../layout/Stack";
+import Flex from "../../layout/Flex";
 
 interface DrawerProps {
     open: boolean;
@@ -26,15 +26,15 @@ export default function Drawer(props: DrawerProps) {
         <Overlay zIndex={props.zIndex} invisible onClick={() => props.onClose?.()} className={props.className} disablePointerEvents={!props.open}>
             {/* @ts-ignore */}
             <Transition timeout={300} unmountOnExit transitionName="T-Drawer" in={props.open}>
-                <Stack tag="aside" style={{ width, maxWidth: width, pointerEvents: "auto" }} onClick={e => e.stopPropagation()} className={mainClasses}>
-                    <Stack direction="row" align="center" tag="nav">
+                <Flex tag="aside" style={{ width, maxWidth: width, pointerEvents: "auto" }} onClick={e => e.stopPropagation()} className={mainClasses}>
+                    <Flex direction="row" align="center" tag="nav">
                         <IconButton className="-ml-1 -mt-1" onClick={() => props.onClose?.()}>
                             <XIcon />
                         </IconButton>
-                    </Stack>
+                    </Flex>
                     {/* Children nur rendern, wenn drawer auch offen */}
                     {props.open && props.children}
-                </Stack>
+                </Flex>
             </Transition>
         </Overlay>
     );

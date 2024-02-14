@@ -1,5 +1,3 @@
-
-
 import clsx from "clsx";
 import Spinner from "./Spinner";
 import Delayed from "../../others/Delayed";

@@ -1,8 +1,6 @@
-
-
+import clsx from "clsx";
 import React from "react";
 import ErrorAlert from "./ErrorAlert";
-import clsx from "clsx";
 
 interface ErrorsCollectorProps {
     className?: string;

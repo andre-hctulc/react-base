@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { Size } from "../../../types";
-import Stack from "../../layout/Stack";
+import type { Size } from "../../../types";
+import Flex from "../../layout/Flex";
 import Toolbar from "../../layout/Toolbar";
 
 interface DialogFooterProps {
@@ -27,8 +27,8 @@ export default function DialogFooter(props: DialogFooterProps) {
         );
 
     return (
-        <Stack id={props.id} tag={tag} justify={props.justify} style={props.style} className={classes} direction={props.direction}>
+        <Flex id={props.id} tag={tag} justify={props.justify} style={props.style} className={classes} direction={props.direction}>
             {props.children}
-        </Stack>
+        </Flex>
     );
 }

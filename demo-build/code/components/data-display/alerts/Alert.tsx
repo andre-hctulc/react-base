@@ -5,8 +5,8 @@ import CheckCircleOutlineIcon from "../../icons/collection/CheckCircleOutline";
 import InfoCircleOutlineIcon from "../../icons/collection/InfoCircleOutline";
 import WarningOutlineIcon from "../../icons/collection/WarningOutline";
 import XIcon from "../../icons/collection/X";
-import IconButton from "../../input/buttons/IconButton";
 import Styled from "../../others/Styled";
+import IconButton from "../../input/buttons/IconButton";
 
 function getIcon(severity: AlertProps["severity"]) {
     switch (severity) {
@@ -60,7 +60,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
     }
 
     return (
-        <div ref={ref} className={clsx("Alert flex flex-row rounded px-2.5  pr-2", bg, props.className)} style={{ margin: props.margin ? margin : undefined, width }}>
+        <div
+            ref={ref}
+            className={clsx("Alert flex flex-row rounded px-2.5  pr-2", bg, props.className)}
+            style={{ margin: props.margin ? margin : undefined, width, ...props.style }}
+        >
             <Styled className="self-start my-2.5" size={"small"} color={severity}>
                 {icon}
             </Styled>

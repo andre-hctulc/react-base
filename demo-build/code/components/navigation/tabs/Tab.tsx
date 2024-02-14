@@ -1,7 +1,9 @@
 import clsx from "clsx";
+import React from "react";
 import Chip from "../../data-display/Chip";
 import Styled from "../../others/Styled";
 import LinkContainer from "../links/LinkContainer";
+import type { LinkProps } from "../../../types";
 
 interface TabProps {
     icon?: React.ReactElement;
@@ -11,14 +13,15 @@ interface TabProps {
     /** @default "default" */
     variant?: "chips" | "default";
     disabled?: boolean;
-    onClick?: React.MouseEventHandler<HTMLElement>;
+    onClick?: React.MouseEventHandler<Element>;
     /** Aktiv */
     href?: string;
     id?: string | number;
     active?: boolean;
+    renderLink?: React.ReactElement<LinkProps>;
 }
 
-export default function Tab(props: TabProps) {
+const Tab = React.forwardRef<HTMLElement, TabProps>((props, ref) => {
     const active = !!props.active;
     const variant = props.variant || "default";
     let main: React.ReactNode;
@@ -46,8 +49,12 @@ export default function Tab(props: TabProps) {
         );
 
     return (
-        <LinkContainer onClick={props.onClick} href={props.href} style={props.style} className={props.className}>
+        <LinkContainer ref={ref as any} renderLink={props.renderLink} onClick={props.onClick} href={props.href} style={props.style} className={props.className}>
             {main}
         </LinkContainer>
     );
-}
+});
+
+Tab.displayName = "Tab";
+
+export default Tab;

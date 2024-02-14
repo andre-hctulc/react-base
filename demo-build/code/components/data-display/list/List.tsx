@@ -1,8 +1,8 @@
 import React from "react";
-import ListItem from "./ListItem";
-import { SelectOption } from "../../input/base/Select";
-import Stack from "../../layout/Stack";
+import Flex from "../../layout/Flex";
 import Placeholder from "../feedback/Placeholder";
+import ListItem from "./ListItem";
+import type { SelectOption } from "../../input/base/Select";
 
 interface ListProps<T = string> {
     className?: string;
@@ -19,7 +19,7 @@ export default function List<T = string>(props: ListProps<T>) {
     const isEmpty = !props.children && !props.options?.length;
 
     return (
-        <Stack className={props.className} style={props.style} tag="ol">
+        <Flex className={props.className} style={props.style} tag="ol">
             {isEmpty && props.emptyText && (
                 <Placeholder tag="li" py>
                     {props.emptyText}
@@ -47,6 +47,6 @@ export default function List<T = string>(props: ListProps<T>) {
                 );
             })}
             {props.children}
-        </Stack>
+        </Flex>
     );
 }

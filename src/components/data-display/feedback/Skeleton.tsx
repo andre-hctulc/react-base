@@ -1,7 +1,7 @@
-import { randomNumber } from "../../../system";
 import clsx from "clsx";
 import React from "react";
 import { collapse } from "../../../util";
+import { randomNumber } from "../../../system";
 
 interface SkeletonProps {
     /** @default "rounded" */

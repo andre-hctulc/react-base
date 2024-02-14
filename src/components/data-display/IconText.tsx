@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import { PropsOf } from "../../types";
-import Stack from "../layout/Stack";
+import type { PropsOf } from "../../types";
+import Flex from "../layout/Flex";
 import Styled from "../others/Styled";
 import Skeleton from "./feedback/Skeleton";
 import Typography from "../text/Typography";
@@ -59,7 +59,7 @@ export default function IconText(props: IconTextProps) {
         );
 
     return (
-        <Stack
+        <Flex
             direction="row"
             align="center"
             reverse={props.reverse}
@@ -77,6 +77,6 @@ export default function IconText(props: IconTextProps) {
             tag={props.tag}
         >
             {main}
-        </Stack>
+        </Flex>
     );
 }

@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { ParentProps } from "../../types";
-import { first } from "../../system";
+import type { ParentProps } from "../../types";
 
 interface DelayedProps extends ParentProps {
     delay: number;
@@ -30,6 +29,6 @@ export default function Delayed(props: DelayedProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.in]);
 
-    if (delayed) return first(props.delay, null);
+    if (delayed) return props.rederDelay ?? null;
     else return props.children;
 }

@@ -1,4 +1,4 @@
-import AlertsProvider from "@/src/contexts/AlertsProvider";
+import AlertsProvider from "@react-base/src/contexts/AlertsProvider";
 import AppContextProvider from "./AppContextProvider";
 import AppMenu from "./AppMenu";
 import Demos from "./Demos";

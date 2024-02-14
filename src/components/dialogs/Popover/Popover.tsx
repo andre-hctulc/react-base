@@ -7,8 +7,6 @@ import Overlay from "../../layout/overlays/Overlay";
 import React from "react";
 import { setRef } from "../../../util";
 import { PropsOf } from "../../../types";
-import { useAlerts } from "../../../contexts/AlertsProvider";
-import { firstInt } from "../../../system";
 
 type PopoverPosition = { horizontal: "left" | "start" | "right" | "end" | "center"; vertical: "top" | "start" | "bottom" | "end" | "center" };
 
@@ -236,10 +234,11 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
     const [cardRef, setCardRef] = React.useState<Element | null>(null);
     const anchor = useElement(props.anchor);
     const card = useElement(cardRef);
-    const buffer = firstInt(props.buffer, 5);
-    const edgeBuffer = firstInt(props.edgeBuffer, 5);
-    const { info } = useAlerts();
-    const cardStyle = React.useMemo<Pick<React.CSSProperties, "top" | "left" | "height" | "minHeight" | "maxHeight" | "width" | "minWidth" | "maxWidth">>(() => {
+    const buffer = props.buffer ?? 5;
+    const edgeBuffer = props.edgeBuffer ?? 5;
+    const cardStyle = React.useMemo<
+        Pick<React.CSSProperties, "top" | "bottom" | "right" | "left" | "height" | "minHeight" | "maxHeight" | "width" | "minWidth" | "maxWidth">
+    >(() => {
         if (!anchor || !card || !props.open) return {};
         const pos = { horizontal: props.position?.horizontal || "start", vertical: props.position?.vertical || "bottom" };
 
@@ -303,7 +302,11 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
                 style={{
                     ...props.slotProps?.card?.style,
                     ...cardStyle,
-                    //visibility: cardStyle.left === undefined || cardStyle.top === undefined ? "hidden" : undefined,
+                    // hide when position not initialized
+                    visibility:
+                        (cardStyle.left === undefined && cardStyle.right === undefined) || (cardStyle.top === undefined && cardStyle.bottom === undefined)
+                            ? "hidden"
+                            : undefined,
                 }}
                 className={clsx(
                     "absolute pointer-events-auto max-h-full",

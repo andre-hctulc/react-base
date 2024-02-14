@@ -1,8 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 
-import { DemoDef, DemoProps } from "src/types";
-import Button from "@/src/components/input/buttons/Button";
-import { useAlerts } from "@/src/contexts/AlertsProvider";
+import type { DemoDef, DemoProps } from "src/types";
+
+// demo_start
+
+import Button from "@react-base/src/components/input/buttons/Button";
+import { useAlerts } from "@react-base/src/contexts/AlertsProvider";
 
 function ButtonDemo({ demoProps }: DemoProps) {
     const { info } = useAlerts();
@@ -13,6 +16,8 @@ function ButtonDemo({ demoProps }: DemoProps) {
         </Button>
     );
 }
+
+// demo_end
 
 const def: DemoDef = {
     name: "default",

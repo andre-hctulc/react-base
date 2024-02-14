@@ -8,11 +8,10 @@ import ChevronDoubleLeftIcon from "../icons/collection/ChevronDoubleLeft";
 import ChevronDoubleRightIcon from "../icons/collection/ChevronDoubleRight";
 import ChevronLeftIcon from "../icons/collection/ChevronLeft";
 import ChevronRightIcon from "../icons/collection/ChevronRight";
+import type { StyleProps } from "../../types";
 
-interface PaginationProps {
+interface PaginationProps extends StyleProps {
     searchParam?: string;
-    style?: React.CSSProperties;
-    className?: string;
     /** @default 1 */
     max?: number;
     noPb?: boolean;

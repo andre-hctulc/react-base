@@ -3,13 +3,13 @@
 import clsx from "clsx";
 import Label from "../Label";
 import React from "react";
-import { useFormInput } from "../form/JSForm";
-import { InputLikeProps } from "./Input";
-import { PropsOf } from "../../../types";
-import { setRef } from "../../../util";
-import Stack from "../../layout/Stack";
-import HelperText from "../../text/HelperText";
 import { randomId } from "../../../system";
+import type { InputLikeProps } from "./Input";
+import type { PropsOf } from "../../../types";
+import { setRef } from "../../../util";
+import { useFormInput } from "../form/JSForm";
+import Flex from "../../layout/Flex";
+import HelperText from "../../text/HelperText";
 
 export interface CheckBoxProps extends Omit<InputLikeProps<boolean>, "required" | "noBorder"> {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -29,7 +29,7 @@ const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) =>
     const { error, readOnly, disabled } = useFormInput(props, innerRef.current);
 
     return (
-        <Stack className={clsx("flex-shrink-0", props.className)} ref={ref} minH0 style={props.style}>
+        <Flex className={clsx("flex-shrink-0", props.className)} ref={ref} minH0 style={props.style}>
             <div className={clsx("flex min-h-0", props.vertical ? "flex-col-reverse" : "flex-row items-center")} style={props.style}>
                 <input
                     {...props.slotProps?.input}
@@ -65,7 +65,7 @@ const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) =>
             <HelperText errorMessage={props.errorMessage} error={error} {...props.slotProps?.helperText}>
                 {props.helperText}
             </HelperText>
-        </Stack>
+        </Flex>
     );
 });
 

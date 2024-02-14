@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { PropsOf } from "../../../types";
+import type { PropsOf } from "../../../types";
 import Button from "../../input/buttons/Button";
 import Toolbar from "../../layout/Toolbar";
 

@@ -1,9 +1,8 @@
 import clsx from "clsx";
 import { useAlerts } from "../../contexts/AlertsProvider";
-import { PropsOf } from "../../types";
+import type { PropsOf } from "../../types";
 import Progress from "../../components/data-display/feedback/Progress";
-import ProgressController, { ProgressListener } from "../../progress-controller";
-import { firstInt } from "../../system";
+import ProgressController, { ProgressListener } from "../../components/data-display/feedback/ProgressController";
 
 export type ProgressAlertOptions = {
     controller?: ProgressController;
@@ -32,7 +31,7 @@ export default function useProgressAlert(options?: ProgressAlertOptions) {
                 // nach success oder error 30 Sekunden abwarten, dann den alert schließen (also diesn Promise resolven)
                 if (finished) {
                     controller.removeListener(listener);
-                    setTimeout(() => resolve(), firstInt(options?.closeTimeout, 4000));
+                    setTimeout(() => resolve(), options?.closeTimeout ?? 4000);
                 }
             };
             controller.addListener(listener);

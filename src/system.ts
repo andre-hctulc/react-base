@@ -1,23 +1,3 @@
-export function firstBool(...values: (boolean | undefined)[]) {
-    for (const v of values) if (typeof v === "boolean") return v;
-    return false;
-}
-
-export function firstInt(...values: (number | undefined)[]) {
-    for (const v of values) if (typeof v === "number") return v;
-    return -1;
-}
-
-export function firstString(...values: (string | undefined)[]) {
-    for (const v of values) if (typeof v === "string") return v;
-    return "";
-}
-
-export function first(...values: any[]) {
-    for (const v of values) if (v !== undefined) return v;
-    return undefined;
-}
-
 export function randomId() {
     const timestamp = Date.now().toString(36);
     const randomChars = Math.random().toString(36).substring(2, 10);
@@ -34,7 +14,6 @@ export function joinPaths(...parts: (string | undefined | null)[]) {
 export function randomNumber(min: number, max: number) {
     return min + Math.round(Math.random() * (max - min));
 }
-
 
 // export function compareDates(d1: Date | null | undefined, d2: Date | null | undefined) {
 //     if (!d1 && !d2) return true;

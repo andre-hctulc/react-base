@@ -1,8 +1,8 @@
 
 
 import React from "react";
-import IconButton from "./IconButton";
 import clsx from "clsx";
+import IconButton from "./IconButton";
 
 interface ToggleIconButtonProps {
     className?: string;

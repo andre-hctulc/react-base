@@ -1,25 +1,35 @@
 import clsx from "clsx";
-import { PartialPropsOf, StyleProps } from "@/src/types";
-import Stack from "@/src/components/layout/Stack";
-import Search from "@/src/components/input/base/Search";
-import AllIcon from "@/src/components/icons/collection/WalletOutline";
-import FolderIcon from "@/src/components/icons/collection/FolderOutline";
-import FileIcon from "@/src/components/icons/collection/FileOutline";
-import TreeView, { TreeViewStruct } from "@/src/components/navigation/treeview/TreeView";
-import TreeViewItem from "@/src/components/navigation/treeview/TreeViewItem";
+import type { PartialPropsOf, StyleProps } from "@react-base/src/types";
+import Flex from "@react-base/src/components/layout/Flex";
+import Search from "@react-base/src/components/input/base/Search";
+import AllIcon from "@react-base/src/components/icons/collection/WalletOutline";
+import FolderIcon from "@react-base/src/components/icons/collection/FolderOutline";
+import FileIcon from "@react-base/src/components/icons/collection/FileOutline";
+import TreeView, { TreeViewStruct } from "@react-base/src/components/navigation/treeview/TreeView";
+import TreeViewItem from "@react-base/src/components/navigation/treeview/TreeViewItem";
 import React from "react";
 import { useAppContext } from "./AppContextProvider";
-import { useAlerts } from "@/src/contexts/AlertsProvider";
-import CheckBox from "@/src/components/input/base/CheckBox";
-import Tooltip from "@/src/components/dialogs/popover/Tooltip";
+import CheckBox from "@react-base/src/components/input/base/CheckBox";
+import Tooltip from "@react-base/src/components/dialogs/popover/Tooltip";
+import { SelectOption } from "@react-base/src/components/input/base/Select";
+import { ModuleDef } from "./types";
 
 interface AppMenuProps extends StyleProps {}
 
 const menuWidth = 250;
 
 export default function AppMenu(props: AppMenuProps) {
-    const { setFilter, previewsOnly, setPreviewsOnly, moduleNames, modules, dirs } = useAppContext();
-    const { info } = useAlerts();
+    const { setFilter, previewsOnly, setPreviewsOnly, filter, modules, dirs, dirsSet } = useAppContext();
+    const allOptions = React.useMemo<SelectOption[]>(
+        () => [
+            { value: "_all", label: "All", icon: <AllIcon /> },
+            // dirs
+            ...dirs.map(dir => ({ value: dir, label: dir, icon: <FolderIcon /> })),
+            // files
+            ...modules.map(mod => ({ value: mod.name, label: mod.name, icon: <FileIcon /> })),
+        ],
+        [dirs, modules]
+    );
     const menuStruct = React.useMemo<TreeViewStruct>(() => {
         const struct: TreeViewStruct = {};
 
@@ -35,29 +45,34 @@ export default function AppMenu(props: AppMenuProps) {
 
                 if (!subStruct[seg]) {
                     subStruct[seg] = {
-                        props: itemProps(subPath),
+                        props: itemProps(mod, subPath),
                     };
                     subStruct = subStruct[seg].children = {};
                 } else subStruct = subStruct[seg].children || {};
             }
 
-            function itemProps(subPath: string): PartialPropsOf<typeof TreeViewItem> {
-                const isFile = subPath.includes(".");
+            function itemProps(mod: ModuleDef, subPath: string): PartialPropsOf<typeof TreeViewItem> {
+                const isModule = subPath.includes(".");
+                const canActivate = dirsSet.has(subPath) || isModule;
+                const active = filter === subPath || (filter === mod.name && isModule);
 
                 return {
-                    onClick: () => {
-                        if (isFile) setFilter(mod.name);
-                        else setFilter(subPath);
-                    },
+                    onClick: canActivate
+                        ? () => {
+                              if (isModule) setFilter(mod.name);
+                              else setFilter(subPath);
+                          }
+                        : undefined,
+                    active,
                 };
             }
         }
         return struct;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [modules]);
+    }, [modules, dirsSet, filter]);
 
     return (
-        <Stack tag="nav" style={{ width: menuWidth, minWidth: menuWidth, ...props.style }} className={clsx("border-r", props.className)}>
+        <Flex tag="nav" style={{ width: menuWidth, minWidth: menuWidth, ...props.style }} className={clsx("border-r", props.className)}>
             <Tooltip enterDelay={300} enterNextDelay={600} content="Show only modules with previews">
                 <CheckBox className="m-2" value={previewsOnly} onChange={e => setPreviewsOnly(e.currentTarget.checked)} label="Previews only" />
             </Tooltip>
@@ -65,20 +80,18 @@ export default function AppMenu(props: AppMenuProps) {
                 placeholder="/layout/containers, ProgressBar, ..."
                 className="mx-2 mb-2"
                 options={inpValue => {
-                    const root = { value: "", label: "Alle", icon: <AllIcon /> };
-                    if (!inpValue) return [root];
-                    const _v = inpValue.toLowerCase().trim();
-                    const matchedDirs = dirs.filter(dir => dir.toLowerCase().includes(_v));
-                    const matchedModules = Array.from(moduleNames).filter(mod => mod.toLowerCase().includes(_v));
-                    return [
-                        root,
-                        ...matchedDirs.map(dir => ({ value: dir, label: dir, icon: <FolderIcon /> })),
-                        ...matchedModules.map(mod => ({ value: mod, label: mod, icon: <FileIcon /> })),
-                    ];
+                    // only show "All" option
+                    if (!inpValue) return allOptions.length ? [allOptions[0]] : [];
+                    // filtered
+                    else return allOptions.filter(opt => opt.value.toLowerCase().includes(inpValue.toLowerCase())) as SelectOption[];
                 }}
-                onChange={value => setFilter(value)}
+                value={filter}
+                onChange={value => {
+                    setFilter(value);
+                }}
+                defaultOptions={allOptions}
             />
             <TreeView depth={1} from={menuStruct} className="flex-grow min-h-0 overflow-y-auto" />
-        </Stack>
+        </Flex>
     );
 }

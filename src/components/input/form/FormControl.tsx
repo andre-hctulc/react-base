@@ -30,9 +30,9 @@ const FormControl = React.forwardRef<HTMLInputElement, FormControlProps>((props,
     React.useEffect(() => {
         if (!inp.current) return;
         const i = inp.current;
-        formCtx?.change(i, { value: props.value });
+        formCtx?.change(i, props.value);
         return () => {
-            formCtx?.change(i, { value: undefined });
+            formCtx?.change(i, undefined);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value]);

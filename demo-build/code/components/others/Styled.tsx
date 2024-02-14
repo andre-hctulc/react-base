@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { XSize, ThemeColor } from "../../types";
+import type { XSize, ThemeColor } from "../../types";
 
 interface StyledProps {
     className?: string;

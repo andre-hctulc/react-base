@@ -2,16 +2,16 @@
 
 import clsx from "clsx";
 import React from "react";
+import type { Size, PropsOf } from "../../../types";
 import { useFormInput } from "../form/JSForm";
-import { InputLikeProps } from "./Input";
+import type { InputLikeProps } from "./Input";
 import FormControl from "../form/FormControl";
 import Label from "../Label";
 import { getInputSizeClasses } from "../../../input-helpers";
-import { Size, PropsOf } from "../../../types";
 import ListItem from "../../data-display/list/ListItem";
 import Popover from "../../dialogs/popover/Popover";
 import ChevronDownIcon from "../../icons/collection/ChevronDown";
-import Stack from "../../layout/Stack";
+import Flex from "../../layout/Flex";
 import HelperText from "../../text/HelperText";
 import Typography from "../../text/Typography";
 import List from "../../data-display/list/List";
@@ -36,7 +36,7 @@ interface SelectProps<T = string> extends InputLikeProps<T> {
     placeholder?: string;
     /** @default { value: "", label: "Leer" } */
     emptyOption?: { value: T; label: string } | null;
-    slotProps?: { currentWrapper?: Omit<PropsOf<typeof Stack>, "onClick"> };
+    slotProps?: { currentWrapper?: Omit<PropsOf<typeof Flex>, "onClick"> };
     fullWidth?: boolean;
     emptyValue?: T;
 }
@@ -103,7 +103,7 @@ export default function Select<T = string>(props: SelectProps<T>) {
                     {props.label}
                 </Label>
             )}
-            <Stack
+            <Flex
                 style={{ outlineWidth: 2 }}
                 direction="row"
                 minH0
@@ -134,7 +134,7 @@ export default function Select<T = string>(props: SelectProps<T>) {
                     )}
                 </div>
                 <ChevronDownIcon color={readOnly || disabled ? "disabled" : "text_secondary"} className="ml-1 self-center flex-shrink-0" />
-            </Stack>
+            </Flex>
             <HelperText error={error} errorMessage={props.errorMessage}>
                 {props.helperText}
             </HelperText>

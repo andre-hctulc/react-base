@@ -1,5 +1,5 @@
 import React from "react";
-import { ParentProps, PartialPropsOf, StyleProps } from "../../../types";
+import type { ParentProps, PartialPropsOf, StyleProps } from "../../../types";
 import List from "../../data-display/list/List";
 import TreeViewItem from "./TreeViewItem";
 

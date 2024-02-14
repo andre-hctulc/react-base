@@ -1,21 +1,20 @@
 "use client";
 
+import clsx from "clsx";
 import React from "react";
+import type { PropsOf, Size } from "../../../types";
 import { useFormInput } from "../form/JSForm";
 import { SelectOption } from "./Select";
 import FormControl from "../form/FormControl";
-import clsx from "clsx";
 import Label from "../Label";
 import { InputLikeProps } from "./Input";
 import { getInputSizeClasses } from "../../../input-helpers";
-import { PropsOf, Size } from "../../../types";
 import Loading from "../../data-display/feedback/Loading";
 import Popover from "../../dialogs/popover/Popover";
-import Stack from "../../layout/Stack";
+import Flex from "../../layout/Flex";
 import HelperText from "../../text/HelperText";
 import List from "../../data-display/list/List";
 import Typography from "../../text/Typography";
-import { firstString } from "../../../system";
 
 interface SearchProps<T = string> extends InputLikeProps<T> {
     className?: string;
@@ -37,7 +36,7 @@ interface SearchProps<T = string> extends InputLikeProps<T> {
     size?: Size;
     loading?: boolean;
     /**
-     * Is used to determine the options for default values or controlled values, since the options are not neccessarily initilized at that point,
+     * Is used to determine the options for _default values_ or _controlled values_, since the options are not neccessarily initilized at that point,
      * because they are inferred by the input value.
      * */
     defaultOptions?: SelectOption<T>[];
@@ -90,7 +89,7 @@ export default function Search<T = string>(props: SearchProps<T>) {
     }
 
     return (
-        <Stack className={clsx("relative min-w-0", props.className)} style={props.style}>
+        <Flex className={clsx("relative min-w-0", props.className)} style={props.style}>
             <FormControl ref={innerRef} required={props.required} name={props.name} type="string" value={activeOption} />
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
@@ -123,6 +122,7 @@ export default function Search<T = string>(props: SearchProps<T>) {
                 value={inpValue}
                 placeholder={props.placeholder}
                 ref={inp}
+                /* TODO type: "search"? */
                 type={showOpen ? "text" : "hidden"}
                 onFocus={() => _setOpen(true)}
                 onChange={e => setInpValue(e.currentTarget.value)}
@@ -176,9 +176,9 @@ export default function Search<T = string>(props: SearchProps<T>) {
                 {props.loading ? (
                     <Loading py />
                 ) : (
-                    <List onActivateOption={(e, opt) => activateOption(opt)} options={options} emptyText={firstString(props.emptyText, "No results found")} />
+                    <List onActivateOption={(e, opt) => activateOption(opt)} options={options} emptyText={props.emptyText ?? "No results found"} />
                 )}
             </Popover>
-        </Stack>
+        </Flex>
     );
 }

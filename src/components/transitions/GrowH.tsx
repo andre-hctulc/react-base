@@ -13,7 +13,7 @@ function GrowH(props: GrowHProps & { transitionName: string; timeout: number }) 
     return (
         <Transition
             in={!!props.in}
-            unmountOnExit={props.unmountOnExit === undefined ? true : props.unmountOnExit}
+            unmountOnExit={props.unmountOnExit ?? true}
             transitionName={props.transitionName}
             timeout={props.timeout}
         >

@@ -15,7 +15,7 @@
         "jsx": "react-jsx",
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
-        "paths": { "@/*": ["../*"] }
+        "paths": { "@react-base/*": ["../*"] }
     },
     "include": ["src", "prism.js"],
     "exclude": ["public"],

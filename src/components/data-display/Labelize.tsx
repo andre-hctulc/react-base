@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { PropsOf } from "../../types";
+import type { PropsOf } from "../../types";
 import Label from "../input/Label";
 import Subtitle from "../text/Subtitle";
 

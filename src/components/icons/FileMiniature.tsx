@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import React from "react";
-import FileEmblem from "./FileEmblem";
-import { ImageComponentProps, PropsOf } from "../../types";
+import type { ImageComponentProps, PropsOf } from "../../types";
 import { setRef } from "../../util";
-import Styled from "../others/Styled";
-import Stack from "../layout/Stack";
 import Typography from "../text/Typography";
+import FileEmblem from "./FileEmblem";
+import Styled from "../others/Styled";
+import Flex from "../layout/Flex";
 
 interface FileMiniatureProps {
     icon?: React.ReactElement;
@@ -49,7 +49,7 @@ const FileMiniature = React.forwardRef<HTMLDivElement, FileMiniatureProps>((prop
     const anchor = React.useRef<HTMLDivElement>(null);
 
     return (
-        <Stack
+        <Flex
             onClick={props.onClick}
             ref={r => {
                 setRef(anchor, r);
@@ -58,23 +58,23 @@ const FileMiniature = React.forwardRef<HTMLDivElement, FileMiniatureProps>((prop
             className={clsx("rounded flex-shrink-0", props.hoverEffect && "hover:bg-action-hover", props.onClick && "cursor-pointer")}
             style={{ ...props.style, width: size, height: size, maxHeight: size, maxWidth: size }}
         >
-            <Stack align="center" justify="center" grow className="overflow-hidden py-auto">
+            <Flex align="center" justify="center" grow className="overflow-hidden py-auto">
                 <Styled size={iconSize}>{props.icon || <FileEmblem imageComponent={props.imageComponent} fileName={props.fileName} />}</Styled>
-            </Stack>
-            <Stack minW0 minH0 direction="row" align="center" justify="center" style={{ height: textSize, maxHeight: textSize }}>
+            </Flex>
+            <Flex minW0 minH0 direction="row" align="center" justify="center" style={{ height: textSize, maxHeight: textSize }}>
                 <Typography
                     truncate
                     tag="span"
                     variant="body2"
                     {...props.slotProps?.text}
-                    onClick={props.onTextClick}
+                    onClick={props.onTextClick as any}
                     className={clsx("text-sm max-w-full align-middle", longName ? "text-xs" : "text-sm", props.slotProps?.text?.className)}
                 >
                     {props.text || props.fileName}
                 </Typography>
-            </Stack>
+            </Flex>
             {props.children}
-        </Stack>
+        </Flex>
     );
 });
 

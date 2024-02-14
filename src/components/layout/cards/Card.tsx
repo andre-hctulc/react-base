@@ -1,19 +1,13 @@
-
-
 import clsx from "clsx";
 import React from "react";
+import type { DragEventProps, MouseEventProps, ParentProps, StyleProps } from "../../../types";
+import { eventProps } from "../../../util";
 
-export interface CardProps {
+export interface CardProps extends ParentProps, StyleProps, DragEventProps, MouseEventProps {
     /** @default "contained" */
     variant?: "outlined" | "contained";
-    children?: React.ReactNode;
-    className?: string;
     shadow?: boolean;
-    style?: React.CSSProperties;
-    onClick?: React.MouseEventHandler<Element>;
-    onMouseLeave?: React.MouseEventHandler<Element>;
     tag?: string;
-    /** @default variant === "outlined" */
     border?: boolean;
     noPadding?: boolean;
 }
@@ -37,6 +31,8 @@ const Card = React.forwardRef<Element, CardProps>((props, ref) => {
                 props.className
             )}
             style={props.style}
+            {...eventProps(props)}
+            draggable={props.draggable}
         >
             {props.children}
         </Comp>

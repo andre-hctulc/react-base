@@ -2,10 +2,10 @@
 
 import React from "react";
 import clsx from "clsx";
+import type { PropsOf } from "../../../types";
+import { mapChildren } from "../../../util";
 import Tab from "./Tab";
 import useMutableSearchParams from "../../../hooks/navigation/useMutableSearchParams";
-import { PropsOf } from "../../../types";
-import { mapChildren } from "../../../util";
 import Toolbar from "../../layout/Toolbar";
 import useCurrentPathname from "../../../hooks/dom/useCurrentPathname";
 

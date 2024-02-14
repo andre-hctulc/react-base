@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 // import base scss styles
-import "@/src/index";
+import "@react-base/src/index";
 import "../styles/index.scss";
 import App from "./App";
 

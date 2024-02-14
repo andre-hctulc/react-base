@@ -1,10 +1,9 @@
 import clsx from "clsx";
 import React from "react";
+import type { DynamicSize, PropsOf, XSize } from "../../../types";
+import { collapse } from "../../../util";
 import Skeleton from "../feedback/Skeleton";
 import Avatar from "./Avatar";
-import { DynamicSize, PropsOf, XSize } from "../../../types";
-import { collapse } from "../../../util";
-import { firstBool } from "../../../system";
 
 type ForwardedAvataProps = Pick<PropsOf<typeof Avatar>, "size">;
 
@@ -35,7 +34,7 @@ export default function Avatars(props: AvatarsProps) {
         large: "-space-x-7",
         xlarge: "-space-x-12",
     });
-    const loading = firstBool(props.loading, !props.children);
+    const loading = props.loading ?? !props.children;
     const avatarProps: ForwardedAvataProps = { size: props.size };
     const diff = props.max && props.children ? Math.max(0, props.children.length - props.max) : 0;
 

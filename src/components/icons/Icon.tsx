@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
-import { ThemeColor } from "../../types";
-import { themeColor } from "../../util";
+import type { DragEventProps, MouseEventProps, ParentProps, StyleProps, ThemeColor } from "../../types";
+import { eventProps, themeColor } from "../../util";
 
 export type IconSize = number | "small" | "medium" | "large";
 
@@ -22,12 +22,9 @@ const getSizeStyle = (size: IconSize | undefined) => {
     if (typeof size === "number") return { height: size, width: size };
 };
 
-export interface IconProps {
-    className?: string;
-    style?: React.CSSProperties;
+export interface IconProps extends StyleProps, ParentProps<React.ReactElement>, MouseEventProps<SVGElement>, DragEventProps<SVGElement> {
     size?: IconSize;
     color?: ThemeColor | "text_secondary" | "disabled";
-    onClick?: React.MouseEventHandler<SVGSVGElement>;
     disabled?: boolean;
     inline?: boolean;
     /** degrees (0-360) */
@@ -43,20 +40,21 @@ const Icon = React.forwardRef<SVGElement, IconProps & { children: React.ReactEle
             : themeColor(props.color)
         : { text: null };
     const sizeStyle = getSizeStyle(props.size);
-    const classes = clsx(
-        "flex-shrink-0 transition",
-        props.inline && "inline",
-        getSizeClasses(props.size || "small"),
-        props.disabled ? "text-text-disabled" : text,
-        props.className,
-        props.children.props.className
-    );
 
     return React.cloneElement(props.children, {
         ref,
-        className: classes,
+        className: clsx(
+            "flex-shrink-0 transition",
+            props.inline && "inline",
+            getSizeClasses(props.size || "small"),
+            props.disabled ? "text-text-disabled" : text,
+            props.className,
+            props.children.props.className
+        ),
         style: { ...sizeStyle, transform: props.rotate ? `rotate(${props.rotate}deg)` : undefined, ...props.style, ...props.children.props.style },
-        onClick: props.onClick || props.children.props.onClick,
+        // onClick: props.onClick || props.children.props.onClick,
+        draggable: props.draggable,
+        ...eventProps(props),
     });
 });
 

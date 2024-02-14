@@ -1,8 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import Loading from "./feedback/Loading";
 import React from "react";
+import Loading from "./feedback/Loading";
 import XIcon from "../icons/collection/X";
 import IconButton from "../input/buttons/IconButton";
 import Pagination from "../navigation/Pagination";

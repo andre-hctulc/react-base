@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
 import clsx from "clsx";
-import Popover from "./Popover";
-import { PropsOf } from "../../../types";
+import React from "react";
+import type { PropsOf } from "../../../types";
 import { setRef } from "../../../util";
 import Typography from "../../text/Typography";
-import { firstInt } from "../../../system";
+import Popover from "./Popover";
 
 interface TooltipProps {
     children: React.ReactElement;
@@ -18,6 +17,7 @@ interface TooltipProps {
     enterNextDelay?: number;
     slotProps?: { popover?: PropsOf<typeof Popover>["slotProps"]; wrapper?: PropsOf<"div"> };
     disabled?: boolean;
+    position?: PropsOf<typeof Popover>["position"];
     inactive?: boolean;
     childRef?: React.ForwardedRef<Element>;
 }
@@ -32,6 +32,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
             ...props.children.props,
         },
         ref: (element: any) => {
+            // info("Child ref");
             setRef(childRef, element);
             setRef(props.childRef, element);
         },
@@ -39,18 +40,20 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
     const [open, setOpen] = React.useState(false);
     const closeTimeout = React.useRef<NodeJS.Timeout>();
     const openTimeout = React.useRef<NodeJS.Timeout>();
-    const [tipRef, setTipRef] = React.useState<Element | null>(null);
+    // const [tipRef, setTipRef] = React.useState<Element | null>(null);
+    const tipRef = React.useRef<Element | null>();
 
     React.useEffect(() => {
         const child = childRef.current;
 
         if (!child) return;
 
+        const tip = tipRef.current;
         const listeners: [keyof HTMLElementEventMap, (e: any) => void][] = [];
 
         const addListener = (e: keyof HTMLElementEventMap, listener: (e: MouseEvent) => void) => {
             listeners.push([e, listener]);
-            tipRef?.addEventListener(e, listener as any);
+            tip?.addEventListener(e, listener as any);
             child?.addEventListener(e, listener as any);
         };
 
@@ -69,22 +72,18 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
         addListener("mouseleave", () => {
             if (openTimeout.current) clearTimeout(openTimeout.current);
 
-            closeTimeout.current = setTimeout(
-                () => {
-                    setOpen(false);
-                },
-                firstInt(props.disappearTimeout, 30)
-            );
+            closeTimeout.current = setTimeout(() => {
+                setOpen(false);
+            }, props.disappearTimeout ?? 30);
         });
 
         return () => {
             listeners.forEach(([e, listener]) => {
-                tipRef?.removeEventListener(e, listener);
+                tip?.removeEventListener(e, listener);
                 child?.removeEventListener(e, listener);
             });
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [childRef, tipRef]);
+    }, [childRef.current, tipRef.current, props.enterDelay, props.enterNextDelay]);
 
     if (props.inactive) return props.children;
 
@@ -92,25 +91,25 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
         <>
             {child}
             <Popover
-                ref={ref}
+                position={props.position || { vertical: "top", horizontal: "center" }}
+                noCardBg
+                noCardBorder
+                noCardPadding
                 disablePointerEvents
-                position={{ vertical: "top", horizontal: "center" }}
+                open={open && !props.disabled}
+                anchor={childRef.current}
+                ref={ref}
                 slotProps={{
                     ...props.slotProps?.popover,
                     card: {
                         border: false,
                         ...props.slotProps?.popover?.card,
-                        ref: ref => {
-                            setTipRef(ref);
-                            setRef<any>(props.slotProps?.popover?.card?.ref, ref);
+                        ref: card => {
+                            // warn("Card ref");
+                            setRef<any>([tipRef, props.slotProps?.popover?.card?.ref], card);
                         },
                     },
                 }}
-                open={open && !props.disabled}
-                anchor={childRef.current}
-                noCardBg
-                noCardBorder
-                noCardPadding
             >
                 <div
                     {...props.slotProps?.wrapper}

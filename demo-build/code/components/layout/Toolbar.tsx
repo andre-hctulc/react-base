@@ -1,12 +1,10 @@
 import clsx from "clsx";
 import React from "react";
 import { collapse, collapseWeak } from "../../util";
+import type { ParentProps, StyleProps } from "../../types";
 
-interface ToolbarProps {
-    style?: React.CSSProperties;
-    className?: string;
+interface ToolbarProps extends StyleProps, ParentProps {
     id?: string;
-    children?: React.ReactNode;
     tag?: string;
     /** @default "medium" */
     spacing?: "small" | "medium" | "large" | "none";

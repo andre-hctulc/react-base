@@ -1,10 +1,10 @@
 "use client";
 
 import clsx from "clsx";
-import React, { useId } from "react";
-import type { InputLikeProps } from "../base/Input";
+import React from "react";
 import { collapse, setRef } from "../../../util";
-import { firstBool } from "../../../system";
+import type { InputLikeProps } from "../base/Input";
+import useId from "../../../hooks/others/useId";
 
 const JSFormContext = React.createContext<JSFormContext | null>(null);
 
@@ -20,13 +20,13 @@ export type JSFormContext<D extends Record<string, any> = any> = {
     /** JS-Validator */
     validate: FormValidator<D> | null;
     /** This should only be used in `FormControl` */
-    change: (target: HTMLInputElement, value: { value: any }) => void;
+    change: (target: HTMLInputElement, value: any) => void;
 };
 
 export function useFormObserver<D extends Record<string, any> = any>(options?: { defaultValid?: true }) {
     const id = useId();
     const [data, setData] = React.useState<Partial<D>>({});
-    const [valid, setValid] = React.useState<boolean>(firstBool(options?.defaultValid, true));
+    const [valid, setValid] = React.useState<boolean>(options?.defaultValid ?? true);
     const [form, setForm] = React.useState<HTMLFormElement | null>(null);
     const [hint, setHint] = React.useState(false);
     const formProps: Partial<JSFormProps> = {
@@ -61,7 +61,7 @@ export function useFormInput(
     }, [props.name, ref, jsValidateValue]);
     if (!props.name || !context) return { readOnly: !!props.readOnly, disabled: !!props.disabled, error: !!props.error };
     const error = props.error || (context.hint && !valid);
-    return { error, readOnly: firstBool(props.readOnly, context.readOnly), disabled: firstBool(props.disabled, context.diabled) };
+    return { error, readOnly: props.readOnly ?? context.readOnly, disabled: props.disabled ?? context.diabled };
 }
 
 export function useJSForm() {
@@ -89,7 +89,8 @@ interface JSFormProps<D extends {} = any> {
     id?: string;
     hint?: boolean;
     /** @default "col" */
-    flex?: "col" | "row" | "wrap" | "no_flex";
+    flex?: "col" | "row" | "no_flex";
+    flexWrap?: boolean;
     /** @default "none" */
     gap?: "none" | "small" | "medium" | "large";
 }
@@ -100,7 +101,7 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
     const [parsedData, setParsedData] = React.useState<Record<string, any>>({});
     const [valid, setValid] = React.useState<boolean>(false);
     const [forceHint, setForceHint] = React.useState(false);
-    const flex = collapse(props.flex || "col", { col: "flex flex-col", row: "flex flex-row", wrap: "flex flex-wrap", no_flex: "" });
+    const flex = collapse(props.flex || "col", { col: "flex flex-col", row: "flex flex-row", no_flex: "" });
     const gap = collapse(props.gap || "none", { none: "", small: "gap-1.5", medium: "gap-3", large: "gap-5" });
 
     // initialize State
@@ -109,7 +110,7 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    function handleChange(target: Element | null, value?: any, callOnChange?: boolean) {
+    function handleChange(target: Element | null, value?: { value: any }, callOnChange?: boolean) {
         const formState = getState(target, value);
         if (!formState) return;
         setParsedData(formState.data);
@@ -118,7 +119,7 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
         return formState;
     }
 
-    function getState(target: Element | null, value?: any): FormState | null {
+    function getState(target: Element | null, value?: { value: any }): FormState | null {
         const f = form.current;
 
         if (!f) return null;
@@ -127,7 +128,7 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
         let newData = dataRef.current;
 
         // If triggerd by Input-Element set data
-        if (target && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName) && !!(target as any).name) {
+        if (target && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName) && !!(target as any).name && (target as any).type !== "submit") {
             // valid aktualisieren
             val = f.checkValidity();
 
@@ -135,7 +136,29 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
 
             const inp: InputLike = target as any;
             const name = inp.name;
-            const newValue = value ? value.value : inp.type === "checkbox" ? (inp as HTMLInputElement).checked : inp.value;
+            let newValue: any;
+
+            if (value) newValue = value.value;
+            else {
+                if (!(inp instanceof HTMLInputElement)) newValue = inp.value;
+                else {
+                    switch (inp.type) {
+                        case "checkbox":
+                            newValue = (inp as HTMLInputElement).checked;
+                            break;
+                        case "range":
+                        case "number":
+                            newValue = parseInt(inp.value) ?? undefined;
+                            break;
+                        case "file":
+                            newValue = inp.files;
+                            break;
+                        default:
+                            newValue = inp.value;
+                            break;
+                    }
+                }
+            }
 
             dataRef.current[name] = newValue;
             // Update object reference for state change
@@ -172,7 +195,7 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
                 parsedData,
                 form: form.current,
                 validate: props.validate || null,
-                change: (target, value) => handleChange(target, value),
+                change: (target, value) => handleChange(target, { value }),
             }}
         >
             <form
@@ -193,7 +216,7 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
                 onInvalid={props.onInvalid}
                 onChange={e => handleChange((e as any).target || null)}
                 onSubmit={props.onSubmit}
-                className={clsx(flex, gap, props.className)}
+                className={clsx(flex, gap, props.flexWrap && "flex flex-wrap", props.className)}
                 style={props.style}
             >
                 {props.children}

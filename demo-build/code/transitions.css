@@ -1,0 +1,197 @@
+/*
+Das sind react-transition-group (npm) transitions.
+Docs: https://reactcommunity.org/react-transition-group/css-transition
+Transition clsses sllten Name der Art 'T-<transitionName>' haben
+*/
+
+/* Fade */
+
+.T-Fade-enter {
+    opacity: 0;
+}
+
+.T-Fade-enter-active {
+    opacity: 1;
+    transition: opacity 130ms ease-in;
+}
+
+.T-Fade-exit {
+    opacity: 1;
+}
+
+.T-Fade-exit-active {
+    opacity: 0;
+    transition: opacity 130ms ease-in;
+}
+
+/* Dialog */
+
+.T-Dialog-enter {
+    opacity: 0;
+}
+
+.T-Dialog-enter-active {
+    opacity: 1;
+    transition: opacity 180ms ease-in;
+}
+
+.T-Dialog-exit {
+    opacity: 1;
+}
+
+.T-Dialog-exit-active {
+    opacity: 0;
+    transition: opacity 180ms ease-in;
+}
+
+/* Drawer */
+
+.T-Drawer-enter {
+    transform: translateX(100%);
+}
+
+.T-Drawer-enter-active {
+    transform: translateX(0px);
+    transition: transform 300ms ease-in;
+}
+
+.T-Drawer-exit {
+    transform: translateX(0px);
+}
+
+.T-Drawer-exit-active {
+    transform: translateX(100%);
+    transition: transform 300ms ease-in;
+}
+
+/* GrowV100 */
+
+.T-GrowV100-exit {
+    transition: max-height 120ms ease-in;
+    max-height: 100px;
+    overflow-y: hidden;
+}
+
+.T-GrowV100-exit-active {
+    max-height: 0;
+}
+
+.T-GrowV100-enter {
+    transition: max-height 120ms ease-in;
+    max-height: 0px;
+    overflow-y: hidden;
+}
+
+.T-GrowV100-enter-active {
+    max-height: 100px;
+}
+
+/* GrowV50 */
+
+.T-GrowV50-exit {
+    transition: max-height 120ms ease-in;
+    max-height: 50px;
+    overflow-y: hidden;
+}
+
+.T-GrowV50-exit-active {
+    max-height: 0;
+}
+
+.T-GrowV50-enter {
+    transition: max-height 120ms ease-in;
+    max-height: 0px;
+    overflow-y: hidden;
+}
+
+.T-GrowV50-enter-active {
+    max-height: 50px;
+}
+
+/* GrowV200 */
+
+.T-GrowV200-exit {
+    transition: max-height 135ms ease-in;
+    max-height: 200px;
+    overflow-y: hidden;
+}
+
+.T-GrowV200-exit-active {
+    max-height: 0px;
+}
+
+.T-GrowV200-enter {
+    transition: max-height 135ms ease-in;
+    max-height: 0px;
+    overflow-y: hidden;
+}
+
+.T-GrowV200-enter-active {
+    max-height: 200px;
+}
+
+/* GrowV350 */
+
+.T-GrowV350-exit {
+    transition: max-height 155ms ease-in;
+    max-height: 350px;
+    overflow-y: hidden;
+}
+
+.T-GrowV350-exit-active {
+    max-height: 0px;
+}
+
+.T-GrowV350-enter {
+    transition: max-height 155ms ease-in;
+    max-height: 0px;
+    overflow-y: hidden;
+}
+
+.T-GrowV350-enter-active {
+    max-height: 350px;
+}
+
+/* GrowH250 (MainMenu) */
+
+.T-GrowH250-exit {
+    transition: max-width 160ms ease-in;
+    max-width: 250px;
+    overflow-y: hidden;
+}
+
+.T-GrowH250-exit-active {
+    max-width: 0;
+}
+
+.T-GrowH250-enter {
+    transition: max-width 160ms ease-in;
+    max-width: 0px;
+    overflow-y: hidden;
+}
+
+.T-GrowH250-enter-active {
+    max-width: 250px;
+}
+
+/* GrowH500 */
+
+.T-GrowH500-exit {
+    transition: max-width 240ms ease-in;
+    max-width: 500px;
+    overflow-y: hidden;
+}
+
+.T-GrowH500-exit-active {
+    max-width: 0;
+}
+
+.T-GrowH500-enter {
+    transition: max-width 240ms ease-in;
+    max-width: 0px;
+    overflow-y: hidden;
+}
+
+.T-GrowH500-enter-active {
+    max-width: 500px;
+}

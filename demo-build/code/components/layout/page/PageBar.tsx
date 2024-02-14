@@ -2,11 +2,12 @@
 
 import React from "react";
 import clsx from "clsx";
-import Stack from "../Stack";
+import Flex from "../Flex";
 import useIsSticky from "../../../hooks/others/useIsSticky";
 import ChevronRightIcon from "../../icons/collection/ChevronRight";
 import LinkContainer from "../../navigation/links/LinkContainer";
 import Typography from "../../text/Typography";
+import type { LinkProps } from "../../../types";
 
 export const pageBarHeight = 30;
 
@@ -15,9 +16,10 @@ interface PageBarProps {
     location: { label: string; href?: string }[];
     className?: string;
     children?: React.ReactNode;
+    renderLink?: React.ReactElement<LinkProps>;
 }
 
-export default function PageBar(props: PageBarProps) {
+const PageBar = React.forwardRef<HTMLDivElement, PageBarProps>((props, ref) => {
     const isSticky = useIsSticky();
     const classes = clsx(
         "transition duration-120 pl-2 pr-3 bg-bg rounded-br self-start space-x-1 sticky flex-shrink-0 z-20 overflow-x-auto",
@@ -26,7 +28,8 @@ export default function PageBar(props: PageBarProps) {
     );
 
     return (
-        <Stack
+        <Flex
+            ref={ref}
             direction="row"
             align="center"
             className={classes}
@@ -40,7 +43,7 @@ export default function PageBar(props: PageBarProps) {
                 return (
                     <React.Fragment key={i}>
                         <ChevronRightIcon color="text_secondary" size={12} />
-                        <LinkContainer href={part.href}>
+                        <LinkContainer renderLink={props.renderLink} href={part.href}>
                             <Typography tag={"span"} className={textClasses} variant={"body2"}>
                                 {part.label}
                             </Typography>
@@ -49,6 +52,10 @@ export default function PageBar(props: PageBarProps) {
                 );
             })}
             {props.children}
-        </Stack>
+        </Flex>
     );
-}
+});
+
+PageBar.displayName = "PageBar";
+
+export default PageBar;

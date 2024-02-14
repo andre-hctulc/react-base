@@ -32,7 +32,7 @@ export default function DeleteDialog(props: DeleteDialogProps) {
                 <DialogTitle className="!flex-col mb-2">{props.title}</DialogTitle>
             </DialogHeader>
             <DialogContent>
-                <Typography long center secondary className="mb-2">
+                <Typography long textCenter secondary className="mb-2">
                     {props.children}
                 </Typography>
             </DialogContent>

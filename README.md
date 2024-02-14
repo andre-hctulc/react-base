@@ -17,10 +17,10 @@ _tailwind.config.ts_
 
 ```ts
 import type { Config } from "tailwindcss";
-import baseTheme from "@/theme";
+import baseTheme from "@react-base/theme";
 
 const config: Config = {
-    content: ["@/src/**/*", ...],
+    content: ["@react-base/src/**/*", ...],
     theme: { extend: {...}, ...baseTheme },
 };
 
@@ -34,10 +34,10 @@ _Component.tsx_
 ```tsx
 import React from "react";
 // Imports tailwind styles
-import "@/src/index";
-import Tooltip from "@/src/components/layout/Stack";
-import Button from "@/src/components/layout/Button";
-import { StyleProps, ParentProps } from "@/src/types";
+import "@react-base/src/index";
+import Tooltip from "@react-base/src/components/layout/Stack";
+import Button from "@react-base/src/components/layout/Button";
+import { StyleProps, ParentProps } from "@react-base/src/types";
 
 interface ButtonWithTooltipProps extends StyleProps, ParentProps {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;

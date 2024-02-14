@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { LinkComponentProps, ParentProps, StyleProps } from "../../../types";
+import type { LinkProps, ParentProps, StyleProps } from "../../../types";
 import ListItem from "../../data-display/list/ListItem";
 import ChevronRightIcon from "../../icons/collection/ChevronRight";
 import TreeView, { TreeViewStruct } from "./TreeView";
@@ -13,8 +13,9 @@ interface TreeViewItemProps extends StyleProps, ParentProps {
     from?: TreeViewStruct;
     href?: string;
     onClick?: React.MouseEventHandler;
-    linkComponent?: React.ComponentType<LinkComponentProps>;
+    linkComponent?: React.ComponentType<LinkProps>;
     depth?: number;
+    active?: boolean;
 }
 
 export default function TreeViewItem(props: TreeViewItemProps) {
@@ -33,8 +34,9 @@ export default function TreeViewItem(props: TreeViewItemProps) {
                     e.stopPropagation();
                     props.onClick?.(e);
                 }}
-                hoverEffect
-                icon={_hasChildren ? <ChevronRightIcon onClick={() => setOpen(!open)} className="cursor-pointer" rotate={open ? 90 : 0} /> : null}
+                hoverEffect={!!props.onClick || !!props.href}
+                icon={_hasChildren ? <ChevronRightIcon color="text_secondary" onClick={() => setOpen(!open)} className="cursor-pointer" rotate={open ? 90 : 0} /> : null}
+                active={props.active}
             >
                 {props.text}
             </ListItem>

@@ -1,4 +1,7 @@
+"use client";
+
 import { useDev } from "../../contexts/DevProvider";
+
 
 interface DevProps {
     children?: React.ReactNode;
@@ -6,7 +9,6 @@ interface DevProps {
     highlight?: boolean;
 }
 
-/** Wird nur im _Dev Mode_ gerendert  */
 export default function Dev(props: DevProps) {
     const { devMode } = useDev();
 

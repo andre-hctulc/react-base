@@ -5,10 +5,10 @@ import Label from "../Label";
 import React from "react";
 import { useFormInput } from "../form/JSForm";
 import { getInputSizeClasses } from "../../../input-helpers";
-import { PropsOf, Size } from "../../../types";
+import type { PropsOf, Size } from "../../../types";
 import { setRef } from "../../../util";
 import HelperText from "../../text/HelperText";
-import { InputLikeProps } from "./Input";
+import type { InputLikeProps } from "./Input";
 
 interface SliderProps extends InputLikeProps {
     slotProps?: { input?: PropsOf<"input">; helperText?: PropsOf<typeof HelperText> };

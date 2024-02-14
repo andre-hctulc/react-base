@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ThemeColor, DynamicSize } from "../../../types";
+import type { ThemeColor, DynamicSize } from "../../../types";
 import SpinnerIcon from "../../icons/collection/Spinner";
 
 interface SpinnerProps {

@@ -2,11 +2,11 @@
 
 import React from "react";
 import clsx from "clsx";
+import type { InputLikeProps } from "./Input";
+import type { PropsOf } from "../../../types";
 import Label from "../Label";
 import { useFormInput } from "../form/JSForm";
-import { InputLikeProps } from "./Input";
 import FormControl from "../form/FormControl";
-import { PropsOf } from "../../../types";
 import HelperText from "../../text/HelperText";
 import Typography from "../../text/Typography";
 

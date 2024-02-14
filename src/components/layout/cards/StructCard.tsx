@@ -1,9 +1,9 @@
 import React from "react";
 import Card from "./Card";
 import Toolbar from "../Toolbar";
-import Stack from "../Stack";
+import Flex from "../Flex";
 import clsx from "clsx";
-import { PropsOf } from "../../../types";
+import type { PropsOf } from "../../../types";
 
 interface StructCardProps {
     className?: string;
@@ -13,7 +13,7 @@ interface StructCardProps {
     tools?: React.ReactNode;
     heading?: React.ReactNode;
     onClick?: React.MouseEventHandler;
-    slotProps?: { header?: PropsOf<typeof Stack>; toolbar?: PropsOf<typeof Toolbar> };
+    slotProps?: { header?: PropsOf<typeof Flex>; toolbar?: PropsOf<typeof Toolbar> };
     slots?: { header?: React.ReactNode; toolbar?: React.ReactNode };
 }
 
@@ -22,7 +22,7 @@ const StructCard = React.forwardRef<Element, StructCardProps>((props, ref) => {
         <Card className={props.className} ref={ref} style={props.style} shadow={props.shadow} variant="outlined" noPadding onClick={props.onClick}>
             {props.slots?.header === undefined
                 ? props.heading && (
-                      <Stack
+                      <Flex
                           tag="header"
                           direction="row"
                           align="center"
@@ -31,7 +31,7 @@ const StructCard = React.forwardRef<Element, StructCardProps>((props, ref) => {
                           className={clsx("border-b-[0.5px]", props.slotProps?.header?.className)}
                       >
                           {props.heading}
-                      </Stack>
+                      </Flex>
                   )
                 : props.slots?.header}
             <section className="flex flex-col flex-grow">{props.children}</section>

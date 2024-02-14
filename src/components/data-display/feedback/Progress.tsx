@@ -1,11 +1,11 @@
 "use client";
 
-import type { default as ProgressController, ProgressListener, ProgressStep } from "../../../progress-controller";
 import React from "react";
 import clsx from "clsx";
+import type { default as ProgressController, ProgressListener, ProgressStep } from "./ProgressController";
 import ProgressBar, { ProgressBarAppearance } from "./ProgressBar";
-import { ThemeColor, PropsOf } from "../../../types";
-import Stack from "../../layout/Stack";
+import type { ThemeColor, PropsOf } from "../../../types";
+import Flex from "../../layout/Flex";
 import Styled from "../../others/Styled";
 import Typography from "../../text/Typography";
 
@@ -25,7 +25,7 @@ interface ProgressProps<D = any> extends ProgressBarAppearance {
     style?: React.CSSProperties;
     /** @default 100 */
     color?: ThemeColor;
-    slotProps?: { label?: PropsOf<typeof Typography>; header?: PropsOf<typeof Stack>; progressText?: PropsOf<typeof Typography> };
+    slotProps?: { label?: PropsOf<typeof Typography>; header?: PropsOf<typeof Flex>; progressText?: PropsOf<typeof Typography> };
     steps?: { [stepId: string]: ProgressBarAppearance };
 }
 
@@ -66,12 +66,12 @@ export default function Progress<D = any>(props: ProgressProps<D>) {
     return (
         <div className={clsx("flex flex-col space-y-2 min-w-0 flex-grow", props.className)} style={props.style}>
             {props.label && (
-                <Stack direction="row" align="center" {...props.slotProps?.header} className={clsx("space-x-1.5", props.slotProps?.header?.className)}>
+                <Flex direction="row" align="center" {...props.slotProps?.header} className={clsx("space-x-1.5", props.slotProps?.header?.className)}>
                     {props.icon && <Styled disabled>{props.icon}</Styled>}
                     <Typography truncate variant="body2" secondary {...props.slotProps?.label} className={clsx(props.slotProps?.label?.className)}>
                         {props.label}
                     </Typography>
-                </Stack>
+                </Flex>
             )}
             {step && <Typography variant="caption" secondary>{`${step.label} (${step.index + 1}/${totalSteps})`}</Typography>}
             <ProgressBar

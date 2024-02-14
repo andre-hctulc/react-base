@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import Typography from "./Typography";
 import clsx from "clsx";
@@ -25,7 +23,7 @@ export default function HighlightText(props: HighlightTextProps) {
     );
 
     return (
-        <Typography onClick={props.onClick} center={props.center === undefined ? true : props.center} tag="span" className={classes} style={props.style}>
+        <Typography onClick={props.onClick} textCenter={props.center === undefined ? true : props.center} tag="span" className={classes} style={props.style}>
             {props.children}
         </Typography>
     );

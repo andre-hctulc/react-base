@@ -1,8 +1,6 @@
-
-
 import clsx from "clsx";
-import Skeleton from "../feedback/Skeleton";
 import React from "react";
+import Skeleton from "../feedback/Skeleton";
 import { DynamicSize, ImageComponentProps } from "../../../types";
 import { getSize } from "../../../util";
 

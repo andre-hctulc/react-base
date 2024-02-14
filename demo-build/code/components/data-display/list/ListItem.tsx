@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import React from "react";
-import { LinkComponentProps, PropsOf, Size } from "../../../types";
+import type { LinkProps, PropsOf, Size } from "../../../types";
+import { collapse } from "../../../util";
 import IconButton from "../../input/buttons/IconButton";
-import Stack from "../../layout/Stack";
+import Flex from "../../layout/Flex";
 import Styled from "../../others/Styled";
 import Typography, { TextVariant } from "../../text/Typography";
-import { collapse } from "../../../util";
 
 interface ListItemProps {
     className?: string;
@@ -25,18 +25,26 @@ interface ListItemProps {
     actionIcon?: React.ReactElement;
     href?: string;
     iconSize?: number;
-    linkComponent?: React.ComponentType<LinkComponentProps>;
+    linkComponent?: React.ComponentType<LinkProps>;
+    active?: boolean;
 }
 
 const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
-    const [textVariant, height, iconSize] = collapse<Size, [TextVariant, number, number]>(props.size || "medium", {
-        small: ["body2", 32, 16],
-        medium: ["body2", 36, 18],
-        large: ["body2", 40, 23],
-    });
+    const [textVariant, height, iconSize] =
+        collapse<Size, [TextVariant, number, number]>(props.size || "medium", {
+            small: ["body2", 32, 16],
+            medium: ["body2", 36, 18],
+            large: ["body2", 40, 23],
+        }) || [];
     const text =
         typeof props.children === "string" ? (
-            <Typography tag="span" truncate variant={textVariant} {...props.slotProps?.text}>
+            <Typography
+                tag="span"
+                truncate
+                variant={textVariant}
+                {...props.slotProps?.text}
+                className={clsx(props.active && "text-info", props.slotProps?.text?.className)}
+            >
                 {props.children}
             </Typography>
         ) : (
@@ -45,7 +53,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
     const Link: any = props.linkComponent || "a";
 
     return (
-        <Stack
+        <Flex
             onClick={props.onClick}
             direction="row"
             align="center"
@@ -75,7 +83,7 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
                     {props.actionIcon}
                 </IconButton>
             )}
-        </Stack>
+        </Flex>
     );
 });
 

@@ -12,8 +12,9 @@ interface AppContext {
     modules: ModuleDef[];
     moduleNames: string[];
     moduleNamesSet: Set<string>;
-    activeModules: Set<string>;
+    activeModules: ModuleDef[];
     dirs: string[];
+    dirsSet: Set<string>;
     previewsOnly: boolean;
     setPreviewsOnly: (previewsOnly: boolean) => void;
 }
@@ -29,33 +30,34 @@ export function useAppContext() {
 export default function AppContextProvider(props: { children: React.ReactNode }) {
     const [previewsOnly, setPreviewsOnly] = useLocalStorage("only-with-previews", false);
     const [filter, setFilter] = useLocalStorage("active-modules", "");
-    const sortedModules = React.useMemo(() => modules.filter(mod => !previewsOnly || !!mod.demos.length).sort((a, b) => a.path.localeCompare(b.path)), [previewsOnly]);
-    const moduleNames = React.useMemo(() => sortedModules.map(d => d.name), [sortedModules]);
+    const filteredModules = React.useMemo(() => modules.filter(mod => !previewsOnly || !!mod.demos.length), [previewsOnly]);
+    const moduleNames = React.useMemo(() => filteredModules.map(d => d.name), [filteredModules]);
     const moduleNamesSet = React.useMemo(() => new Set(moduleNames), [moduleNames]);
     const dirs = React.useMemo(
         () =>
-            Array.from(new Set(sortedModules.map(d => dirname(d.path))))
+            Array.from(new Set(filteredModules.map(d => dirname(d.path))))
                 .filter(dir => dir !== ".")
                 .sort(),
-        [sortedModules]
+        [filteredModules]
     );
+    const dirsSet = React.useMemo(() => new Set(dirs), [dirs]);
     const activeModules = React.useMemo(() => {
         let compsArr: string[];
         if (!filter) compsArr = moduleNames;
-        const fil = filter.toLowerCase();
-        compsArr = sortedModules.filter(mod => mod.path.toLowerCase().startsWith(fil) || mod.name.toLowerCase() === fil).map(mod => mod.name);
-        return new Set(compsArr);
-    }, [filter, moduleNames, sortedModules]);
+        const fil = !filter || filter === "_all" ? "" : filter.toLowerCase();
+        return filteredModules.filter(mod => mod.path.toLowerCase().startsWith(fil) || mod.name.toLowerCase() === fil);
+    }, [filter, moduleNames, filteredModules]);
 
     return (
         <AppContext.Provider
             value={{
                 dirs,
+                dirsSet,
                 previewsOnly,
                 setPreviewsOnly,
                 filter,
                 setFilter,
-                modules: sortedModules,
+                modules: filteredModules,
                 moduleNames: moduleNames,
                 moduleNamesSet,
                 activeModules: activeModules,

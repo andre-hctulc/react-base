@@ -1,9 +1,9 @@
 "use client";
 
-import { CubicBezierControllPoints, cubicBezier } from "../../timing";
 import clsx from "clsx";
 import React from "react";
-import { Size } from "../../types";
+import { CubicBezierControllPoints, cubicBezier } from "../../timing";
+import type { Size } from "../../types";
 import { alignClass, collapse } from "../../util";
 
 export interface DialItemProps<T extends Element = Element> {
@@ -142,7 +142,7 @@ export default function Dial(props: DialProps) {
         small: ["space-x-2", "space-y-2"],
         medium: ["space-x-4", "space-y-4"],
         large: ["space-x-6", "space-y-6"],
-    });
+    }) ||[];
     const align = alignClass(props.align || "center");
     const Comp: any = props.tag || "div";
     // Listen düren nur li-Elemente enthalten

@@ -1,9 +1,9 @@
 "use client";
 
 import clsx from "clsx";
-import Label from "../Label";
 import React from "react";
-import { InputLikeProps } from "./Input";
+import Label from "../Label";
+import type{ InputLikeProps } from "./Input";
 import { useFormInput } from "../form/JSForm";
 import { PropsOf } from "../../../types";
 import { setRef } from "../../../util";

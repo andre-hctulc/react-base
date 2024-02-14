@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "./Typography";
 import clsx from "clsx";
 import Unit from "./Unit";
-import { PropsOf } from "../../types";
+import type { PropsOf } from "../../types";
 import Skeleton from "../data-display/feedback/Skeleton";
 
 interface WithUnitProps {

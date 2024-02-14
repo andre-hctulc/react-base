@@ -1,19 +1,24 @@
 /* eslint-disable react-refresh/only-export-components */
 
-import { DemoDef, DemoProps } from "src/types";
-import BellAlert from "@/src/components/icons/collection/BellAlert";
-import { useAlerts } from "@/src/contexts/AlertsProvider";
-import IconButton from "@/src/components/input/buttons/IconButton";
+import type { DemoDef, DemoProps } from "src/types";
+
+// demo_start
+
+import IconButton from "@react-base/src/components/input/buttons/IconButton";
+import BellAlertIcon from "@react-base/src/components/icons/collection/BellAlert";
+import { useAlerts } from "@react-base/src/contexts/AlertsProvider";
 
 function IconButtonDemo({ demoProps }: DemoProps) {
-    const { info } = useAlerts();
+    const { success } = useAlerts();
 
     return (
-        <IconButton variant={demoProps?.variant} size={demoProps?.size} onClick={() => info("IconButton clicked")} className="m-4" {...demoProps}>
-            <BellAlert />
+        <IconButton variant={demoProps?.variant} size={demoProps?.size} onClick={() => success("IconButton clicked")} className="m-4" {...demoProps}>
+            <BellAlertIcon />
         </IconButton>
     );
 }
+
+// demo_end
 
 const def: DemoDef = {
     name: "default",

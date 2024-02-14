@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { ImageComponentProps } from "../../types";
+import type { ImageComponentProps } from "../../types";
 
 interface FileEmblemProps {
     fileName: string;

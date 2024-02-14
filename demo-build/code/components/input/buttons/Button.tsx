@@ -1,16 +1,10 @@
-
-
 import clsx from "clsx";
 import React from "react";
-import { ThemeColor } from "../../../types";
-import { collapse, themeColor } from "../../../util";
+import { collapse, eventProps, themeColor } from "../../../util";
 import Styled from "../../others/Styled";
+import type { DragEventProps, MouseEventProps, ParentProps, StyleProps, ThemeColor } from "../../../types";
 
-interface ButtonProps {
-    children?: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+interface ButtonProps extends StyleProps, ParentProps, MouseEventProps<HTMLButtonElement>, DragEventProps<HTMLButtonElement> {
     /** @default "text" */
     variant?: "text" | "outlined" | "contained";
     size?: "small" | "medium" | "large";
@@ -22,8 +16,8 @@ interface ButtonProps {
     color?: ThemeColor | "text_secondary";
     unstyled?: boolean;
     /**
-     * Der Standard-Wert für normale _buttons_ ist "button" oder "submit" für _buttons_ in forms.
-     * Hier ist der Stanmdard-Wert **immer** "button", um unerwartetes Verhalten in Formularen zu vermeiden.
+     * The default value of normal _buttons_ ist "button" or "submit" für _buttons_ in forms.
+     * For this button the default value is **always** "button"
      * @default "button"
      * */
     type?: "button" | "submit" | "reset";
@@ -32,9 +26,8 @@ interface ButtonProps {
     formMethod?: string;
     formTarget?: string;
     formNoValidate?: boolean;
+    draggable?: boolean;
 }
-
-// TODO transition für background etc.
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     const variant = props.variant || "text";
@@ -45,16 +38,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
             ? { bg: "bg-text-secondary", text: "text-text-secondary", border: "border-text-secondary", contrastText: "text-text-contrast" }
             : themeColor(color);
     const size = props.size || "medium";
-    const [height, fontSize, iconSize, px] = collapse(size, {
-        small: [30, 13, 14, "px-2"],
-        medium: [35, 14, 16, "px-3"],
-        large: [40, 15, 18, "px-4"],
-    });
-    const [variantClasses, variantIconClasses] = collapse(variant, {
-        contained: [[bg, contrastText, disabled ? "bg-opacity-80" : "hover:bg-opacity-80 active:bg-opacity-90"], [contrastText]],
-        text: [[text, bg, disabled ? "bg-opacity-0" : "bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20"], [text]],
-        outlined: [["border", [border, bg, text, disabled ? "bg-opacity-5" : "bg-opacity-10 hover:bg-opacity-20 active:bg-opacity-30"]], [text]],
-    });
+    const [height, fontSize, iconSize, px] =
+        collapse(size, {
+            small: [30, 13, 14, "px-2"],
+            medium: [35, 14, 16, "px-3"],
+            large: [40, 15, 18, "px-4"],
+        }) || [];
+    const [variantClasses, variantIconClasses] =
+        collapse(variant, {
+            contained: [[bg, contrastText, disabled ? "bg-opacity-80" : "hover:bg-opacity-80 active:bg-opacity-90"], [contrastText]],
+            text: [[text, bg, disabled ? "bg-opacity-0" : "bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20"], [text]],
+            outlined: [["border", [border, bg, text, disabled ? "bg-opacity-5" : "bg-opacity-10 hover:bg-opacity-20 active:bg-opacity-30"]], [text]],
+        }) || [];
 
     return (
         <button
@@ -72,8 +67,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
                 !props.unstyled && variantClasses,
                 props.className
             )}
-            onClick={props.onClick}
             style={{ height, fontSize, ...props.style }}
+            {...eventProps(props)}
+            draggable={props.draggable}
         >
             {props.start}
             {props.startIcon && (

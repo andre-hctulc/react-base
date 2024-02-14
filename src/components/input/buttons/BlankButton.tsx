@@ -1,17 +1,16 @@
-
-
 import clsx from "clsx";
-import Button from "./Button";
-import { PropsOf } from "../../../types";
+import type { PropsOf } from "../../../types";
 import { collapse } from "../../../util";
+import Button from "./Button";
 
-export default function BlankButton(props: Omit<PropsOf<typeof Button>, "color" | "unstyled">) {
+export default function BlankButton(props: Omit<PropsOf<typeof Button>, "color">) {
     const variant = props.variant || "text";
-    const [variantClasses, variantIconClasses] = collapse(variant, {
-        contained: ["bg-bg-dark/60 hover:bg-bg-dark/80 active:bg-bg-dark text-text", ["text-text-secondary"]],
-        text: ["text-text-secondary hover:bg-action-hover active:bg-action-focus", ["text-text-secondary"]],
-        outlined: ["bg-bg-paper text-text-secondary border border-text-secondary hover:bg-bg-dark/50 active:bg-bg-dark/70", ["text-text-secondary"]],
-    });
+    const [variantClasses, variantIconClasses] =
+        collapse(variant, {
+            contained: ["bg-bg-dark/60 hover:bg-bg-dark/80 active:bg-bg-dark text-text", ["text-text-secondary"]],
+            text: ["text-text-secondary hover:bg-action-hover active:bg-action-focus", ["text-text-secondary"]],
+            outlined: ["bg-bg-paper text-text-secondary border border-text-secondary hover:bg-bg-dark/50 active:bg-bg-dark/70", ["text-text-secondary"]],
+        }) || [];
     const classes = clsx(variantClasses, props.className);
 
     return (

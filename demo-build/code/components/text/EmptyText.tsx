@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "./Typography";
-import { PropsOf } from "../../types";
+import type { PropsOf } from "../../types";
 
 interface EmptyTextProps {
     className?: string;
@@ -20,7 +20,7 @@ const EmptyText = React.forwardRef<HTMLElement, EmptyTextProps>((props, ref) => 
         <Typography
             ref={ref}
             alignCenter={props.alignCenter}
-            center={props.center}
+            textCenter={props.center}
             variant={props.variant || "body2"}
             tag={props.tag || "i"}
             disabled

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Stack from "./Stack";
+import Flex from "./Flex";
 
 const globalHeaderHeight = 60;
 
@@ -13,7 +13,7 @@ export default function GlobalHeader(props: GlobalHeaderProps) {
     const classes = clsx("flex pr-3 flex-row bg-bg flex-shrink-0 top-0 sticky z-20", props.className);
 
     return (
-        <Stack
+        <Flex
             direction="row"
             align="center"
             tag="header"
@@ -21,7 +21,7 @@ export default function GlobalHeader(props: GlobalHeaderProps) {
             style={{ ...props.style, height: globalHeaderHeight, maxHeight: globalHeaderHeight, minHeight: globalHeaderHeight }}
         >
             {props.children}
-        </Stack>
+        </Flex>
     );
 }
 

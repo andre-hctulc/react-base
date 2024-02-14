@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import { ThemeColor } from "../../../types";
+import type { ThemeColor } from "../../../types";
 import { themeColor } from "../../../util";
 
 const defaultSize = 8;

@@ -50,7 +50,7 @@ export type SlotProps<C extends Record<string, any>> = { slotProps?: { [K in key
 
 export type ImageComponentProps = { height?: number; width?: number; style?: React.CSSProperties; alt?: string; src?: string };
 
-export type LinkComponentProps = {
+export type LinkProps = {
     onClick?: React.MouseEventHandler;
     className?: string;
     target?: React.HTMLAttributeAnchorTarget;
@@ -58,7 +58,6 @@ export type LinkComponentProps = {
     style?: React.CSSProperties;
     href: string | undefined;
     children?: React.ReactNode;
-    disabled?: boolean;
 };
 
 // Events
@@ -90,4 +89,5 @@ export interface DragEventProps<T extends Element = Element> {
     onDragOver?: (event: React.DragEvent<T>) => void;
     onDragStart?: (event: React.DragEvent<T>) => void;
     onDrop?: (event: React.DragEvent<T>) => void;
+    draggable?: boolean
 }

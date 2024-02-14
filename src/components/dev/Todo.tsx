@@ -1,4 +1,4 @@
-
+"use client";
 
 import Alert from "../data-display/alerts/Alert";
 import AlertTitle from "../data-display/alerts/AlertTitle";
@@ -6,6 +6,7 @@ import Dev from "./Dev";
 
 interface TodoProps {
     className?: string;
+    style?: React.CSSProperties
     children?: React.ReactNode;
 }
 
@@ -13,8 +14,8 @@ interface TodoProps {
 export default function Todo(props: TodoProps) {
     return (
         <Dev>
-            <Alert className={props.className} severity="info">
-                <AlertTitle>TODO</AlertTitle>
+            <Alert style={props.style} className={props.className} severity="info">
+                <AlertTitle>Todo</AlertTitle>
                 {props.children}
             </Alert>
         </Dev>

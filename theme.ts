@@ -1,8 +1,11 @@
 import type { Config } from "tailwindcss";
 
+type BaseTheme = Omit<Exclude<Config["theme"], undefined>, "extend">;
+
 const warningDefault = "#f97316";
 
-const baseTheme: Omit<Exclude<Config["theme"], undefined>, "extend"> = {
+const baseTheme: BaseTheme = {
+    // Must match with default breakpoints in `BreakpointsProvider`
     screens: {
         sm: "720px",
         md: "1300px",

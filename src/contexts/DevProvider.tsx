@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ParentProps } from "../types";
+import type { ParentProps } from "../types";
 
 interface DevContext {
     /** @default process.env.NODE_ENV === "development" */

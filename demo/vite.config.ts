@@ -6,11 +6,9 @@ import path from "path";
 export default defineConfig({
     plugins: [react()],
     resolve: {
-        alias: {
-            "@": path.resolve(__dirname, ".."),
-        },
         // for resolving sym links in public dir correctly
         preserveSymlinks: true,
+        alias: { "@react-base": path.resolve(__dirname, "..") },
     },
     build: {
         outDir: "../demo-build",
@@ -20,4 +18,5 @@ export default defineConfig({
             "top-level-await": true,
         },
     },
+    // optimizeDeps: { include: ["@react-base"] },
 });

@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React from "react";
-import { PropsOf } from "../../../types";
+import type { PropsOf } from "../../../types";
 import Button from "../../input/buttons/Button";
-import Stack from "../../layout/Stack";
+import Flex from "../../layout/Flex";
 import Delayed from "../../others/Delayed";
 import EmptyText from "../../text/EmptyText";
 
@@ -18,8 +18,8 @@ interface PlaceholderProps {
     padding?: boolean;
     py?: boolean;
     /** @default "center" */
-    align?: PropsOf<typeof Stack>["align"];
-    justify?: PropsOf<typeof Stack>["justify"];
+    align?: PropsOf<typeof Flex>["align"];
+    justify?: PropsOf<typeof Flex>["justify"];
     tag?: string;
     error?: boolean;
     delay?: number;
@@ -27,7 +27,7 @@ interface PlaceholderProps {
 
 export default function Placeholder(props: PlaceholderProps) {
     const ph = (
-        <Stack
+        <Flex
             tag={props.tag}
             align={props.align || "center"}
             justify={props.justify || "center"}
@@ -46,7 +46,7 @@ export default function Placeholder(props: PlaceholderProps) {
                     {props.actionText}
                 </Button>
             )}
-        </Stack>
+        </Flex>
     );
 
     if (props.delay) return <Delayed delay={props.delay}>{ph}</Delayed>;

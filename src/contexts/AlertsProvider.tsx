@@ -2,17 +2,17 @@
 
 import React from "react";
 import { TransitionGroup } from "react-transition-group";
+import { randomId } from "../system";
 import Fade from "../components/transitions/Fade";
 import Alert from "../components/data-display/alerts/Alert";
 import AlertTitle from "../components/data-display/alerts/AlertTitle";
 import { useDev } from "./DevProvider";
-import { randomId } from "../system";
 
 const AlertContext = React.createContext<AlertContext | null>(null);
 
 export interface AlertOptions {
     title?: string;
-    duration?: number | Promise<any>;
+    duration?: number | Promise<unknown>;
     /** @default true */
     closable?: boolean;
 }
@@ -56,31 +56,46 @@ export default function AlertsProvider(props: AlertContextProviderProps) {
         setAlerts(newAlerts);
     }
 
-    function alert(severity: Severity, message: React.ReactNode, options?: AlertOptions) {
-        const id = randomId();
-        setAlerts((currentAlerts.current = { ...alerts, [id]: { ...options, severity, message } }));
+    const alert = React.useCallback(
+        (severity: Severity, message: React.ReactNode, options?: AlertOptions) => {
+            const id = randomId();
+            setAlerts((currentAlerts.current = { ...alerts, [id]: { ...options, severity, message } }));
 
-        if (options?.duration instanceof Promise) options.duration.then(() => close(id));
-        else setTimeout(() => close(id), options?.duration || 4000);
-    }
+            if (options?.duration instanceof Promise) options.duration.then(() => close(id));
+            else setTimeout(() => close(id), options?.duration || 4000);
+        },
+        [alerts]
+    );
 
-    function success(message: React.ReactNode, options?: AlertOptions) {
-        alert("success", message, options);
-    }
+    const success = React.useCallback(
+        (message: React.ReactNode, options?: AlertOptions) => {
+            alert("success", message, options);
+        },
+        [alert]
+    );
 
-    function warn(message: React.ReactNode, options?: AlertOptions) {
-        alert("warning", message, options);
-    }
+    const warn = React.useCallback(
+        (message: React.ReactNode, options?: AlertOptions) => {
+            alert("warning", message, options);
+        },
+        [alert]
+    );
 
-    function error(message: React.ReactNode, options?: AlertOptions & { err?: Error | null }) {
-        let msg = message;
-        if (devMode && options?.err && typeof message === "string") msg = `${message} -DEV- ${options.err.stack}`;
-        alert("error", msg, options);
-    }
+    const error = React.useCallback(
+        (message: React.ReactNode, options?: AlertOptions & { err?: Error | null }) => {
+            let msg = message;
+            if (devMode && options?.err && typeof message === "string") msg = `${message} -DEV- ${options.err.stack}`;
+            alert("error", msg, options);
+        },
+        [alert, devMode]
+    );
 
-    function info(message: React.ReactNode, options?: AlertOptions) {
-        alert("info", message, options);
-    }
+    const info = React.useCallback(
+        (message: React.ReactNode, options?: AlertOptions) => {
+            alert("info", message, options);
+        },
+        [alert]
+    );
 
     return (
         <>
@@ -94,7 +109,6 @@ export default function AlertsProvider(props: AlertContextProviderProps) {
                     }}
                 >
                     {/* <Alert sx={{width: 300, boxShadow: 1}} severity={"success"}>Das ist ein Test</Alert> */}
-                    {/* @ts-ignore */}
                     <TransitionGroup component={null}>
                         {Object.keys(alerts).map(id => {
                             const options = alerts[id];

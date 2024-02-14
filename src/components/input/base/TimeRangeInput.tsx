@@ -5,11 +5,11 @@ import React from "react";
 import Label from "../Label";
 import IconButton from "../buttons/IconButton";
 import { useFormInput } from "../form/JSForm";
-import { InputLikeProps } from "./Input";
+import type { InputLikeProps } from "./Input";
 import { getInputSizeClasses, forDateLikeInput } from "../../../input-helpers";
-import { Size, PropsOf } from "../../../types";
+import type { Size, PropsOf } from "../../../types";
 import RestartIcon from "../../icons/collection/Restart";
-import Stack from "../../layout/Stack";
+import Flex from "../../layout/Flex";
 import HelperText from "../../text/HelperText";
 import Typography from "../../text/Typography";
 
@@ -55,7 +55,7 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
                     {props.label}
                 </Label>
             )}
-            <Stack direction="row" align="center" className="p-1">
+            <Flex direction="row" align="center" className="p-1">
                 <input
                     {...datePickerProps}
                     value={fromStr}
@@ -85,7 +85,7 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
                 <IconButton {...iconButtonProps} onClick={() => changeValue(undefined, null)}>
                     <RestartIcon />
                 </IconButton>
-            </Stack>
+            </Flex>
             <HelperText errorMessage={props.errorMessage} error={error}>
                 {props.helperText}
             </HelperText>

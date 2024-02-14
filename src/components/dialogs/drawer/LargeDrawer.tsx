@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Stack from "../../layout/Stack";
+import Flex from "../../layout/Flex";
 import Overlay from "../../layout/overlays/Overlay";
 import XIcon from "../../icons/collection/X";
 import IconButton from "../../input/buttons/IconButton";
@@ -24,17 +24,23 @@ export default function LargeDrawer(props: LargeDrawerProps) {
     return (
         <Overlay invisible={!props.open} onClick={() => props.onClose?.()} className={classes} disablePointerEvents={!props.open}>
             <Fade in={props.open}>
-                <Stack style={{ maxHeight, maxWidth, pointerEvents: "auto" }} onClick={e => e.stopPropagation()} className={mainClasses}>
-                    <Stack direction="row" align="center" noShrink justify="end">
-                        {typeof props.heading === "string" ? <Typography truncate variant="h3">{props.heading}</Typography> : props.heading}
+                <Flex style={{ maxHeight, maxWidth, pointerEvents: "auto" }} onClick={e => e.stopPropagation()} className={mainClasses}>
+                    <Flex direction="row" align="center" shrink={false} justify="end">
+                        {typeof props.heading === "string" ? (
+                            <Typography truncate variant="h3">
+                                {props.heading}
+                            </Typography>
+                        ) : (
+                            props.heading
+                        )}
                         <div className="flex-grow" />
                         <IconButton className="-ml-1 -mt-1" onClick={() => props.onClose?.()}>
                             <XIcon />
                         </IconButton>
-                    </Stack>
+                    </Flex>
                     {/* Children nur rendern, wenn drawer auch offen */}
                     {props.open && props.children}
-                </Stack>
+                </Flex>
             </Fade>
         </Overlay>
     );

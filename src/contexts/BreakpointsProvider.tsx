@@ -30,19 +30,25 @@ interface BreakpointsProviderProps {
 }
 
 export default function BreakpointsProvider(props: BreakpointsProviderProps) {
-    const sm = useMediaQuery(`(min-width: ${props.values?.sm || 0}px)`);
-    const md = useMediaQuery(`(min-width: ${props.values?.md || 720}px)`);
-    const lg = useMediaQuery(`(min-width: ${props.values?.lg || 1300}px)`);
-    const xl = useMediaQuery(`(min-width: ${props.values?.xl || 1600}px)`);
-    const size = React.useMemo(() => {
-        if (xl) return "xl";
-        if (lg) return "lg";
-        if (md) return "md";
-        return "sm";
-    }, [md, lg, xl]);
+    // base tailwind config
+    // sm: "720px",
+    // md: "1300px",
+    // lg: "1600px",
+    // xl: "2000px",
+    const sm = useMediaQuery(`(max-width: ${props.values?.sm || 720}px)`);
+    const md = useMediaQuery(`(max-width: ${props.values?.md || 1300}px)`);
+    const lg = useMediaQuery(`(max-width: ${props.values?.lg || 1600}px)`);
+    const size = sm ? "sm" : md ? "md" : lg ? "lg" : "xl";
+    const xl = !md && !lg && !sm;
+
+    React.useEffect(() => {
+        const x = md;
+    }, [md]);
 
     return (
-        <BreakpointsContext.Provider value={{ minSm: sm, minMd: md, minLg: lg, minXl: xl, lg: lg && !xl, md: md && !lg, sm: sm && !md, xl: xl, size: size }}>
+        <BreakpointsContext.Provider
+            value={{ sm: sm, md: md && !sm, lg: lg && !md, xl: xl && !lg, minSm: true, minMd: !sm, minLg: !sm && !md, minXl: !sm && !md && !lg, size: size }}
+        >
             {props.children}
         </BreakpointsContext.Provider>
     );

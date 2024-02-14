@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import React from "react";
-import { FormValidator } from "./JSForm";
+import type { FormValidator } from "./JSForm";
 import Typography from "../../text/Typography";
 
 export type SummaryFactory<T extends object = any> = {

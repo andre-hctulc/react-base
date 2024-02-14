@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React from "react";
-import Stack from "./Stack";
-import { Size } from "../../types";
 import { collapse, flattenChildren } from "../../util";
+import Flex from "./Flex";
+import type { Size } from "../../types";
 
 interface GridColsProps {
     className?: string;
@@ -20,12 +20,13 @@ interface GridColsProps {
 }
 
 export default function GridCols(props: GridColsProps) {
-    const [colGap, spaceY] = collapse(props.spacing || "none", {
-        none: [0, ""],
-        small: [10, "space-y-3"],
-        medium: [20, "space-y-7"],
-        large: [30, "space-y-10"],
-    });
+    const [colGap, spaceY] =
+        collapse(props.spacing || "none", {
+            none: [0, ""],
+            small: [10, "space-y-3"],
+            medium: [20, "space-y-7"],
+            large: [30, "space-y-10"],
+        }) || [];
     const colClases = clsx("flex-grow flex-shrink-0", spaceY);
     const classes = clsx("grid", props.className);
     const cols: React.ReactNode[][] = props.content?.map(c => [c]) || [];
@@ -51,9 +52,9 @@ export default function GridCols(props: GridColsProps) {
                 const colContent = props.colsWrapper ? React.cloneElement(props.colsWrapper, { ...props.colsWrapper.props, children: cols[i] }) : cols[i];
 
                 return (
-                    <Stack key={i} className={colClases}>
+                    <Flex key={i} className={colClases}>
                         {colContent}
-                    </Stack>
+                    </Flex>
                 );
             })}
         </div>

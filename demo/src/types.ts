@@ -10,6 +10,7 @@ export type PropDef = {
     range?: [number, number];
     propName: string;
     defaultValue?: any;
+    helperText?: string
 };
 export type DemoDef = { render: React.ComponentType<DemoProps>; demoProps?: PropDef[]; name: string };
 

@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import JSForm from "@/src/components/input/form/JSForm";
-import { StyleProps } from "@/src/types";
+import JSForm from "@react-base/src/components/input/form/JSForm";
+import { StyleProps } from "@react-base/src/types";
 import Prop from "./ModuleDemoProp";
 import { PropDef } from "src/types";
-import Typography from "@/src/components/text/Typography";
+import Typography from "@react-base/src/components/text/Typography";
 
 interface PropsProps extends StyleProps {
     propDefs: PropDef[];
@@ -16,9 +16,10 @@ export default function Props(props: PropsProps) {
             onChange={({ data }) => {
                 props.onChange?.(data);
             }}
-            className={clsx("flex flex-wrap overflow-y-auto p-2", props.className)}
+            className={clsx("overflow-y-auto p-2", props.className)}
             style={{ maxHeight: 200 }}
-            flex="wrap"
+            flexWrap
+            flex="row"
             gap="medium"
         >
             <Typography disabled truncate className="w-full">

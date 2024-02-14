@@ -1,4 +1,4 @@
-import { Size } from "./types";
+import type { Size } from "./types";
 import { collapse } from "./util";
 
 // * Input type="date|datetime"

@@ -1,8 +1,8 @@
-import { StyleProps } from "@/src/types";
-import Select from "@/src/components/input/base/Select";
-import Input from "@/src/components/input/base/Input";
-import Slider from "@/src/components/input/base/Slider";
-import CheckBox from "@/src/components/input/base/CheckBox";
+import { StyleProps } from "@react-base/src/types";
+import Select from "@react-base/src/components/input/base/Select";
+import Input from "@react-base/src/components/input/base/Input";
+import Slider from "@react-base/src/components/input/base/Slider";
+import CheckBox from "@react-base/src/components/input/base/CheckBox";
 import { PropDef } from "src/types";
 
 interface PropProps extends StyleProps {
@@ -10,7 +10,14 @@ interface PropProps extends StyleProps {
 }
 
 export default function Prop({ desc, ...props }: PropProps) {
-    const inpProps = { name: desc.propName, defaultValue: desc.defaultValue, label: desc.propName, style: props.style, className: props.className };
+    const inpProps = {
+        name: desc.propName,
+        helperText: desc.helperText,
+        defaultValue: desc.defaultValue,
+        label: desc.propName,
+        style: props.style,
+        className: props.className,
+    };
 
     let inp: React.ReactElement;
 

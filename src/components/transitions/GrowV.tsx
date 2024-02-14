@@ -11,12 +11,7 @@ interface GrowVProps {
 
 function GrowV(props: GrowVProps & { transitionName: string; timeout: number }) {
     return (
-        <Transition
-            in={!!props.in}
-            unmountOnExit={props.unmountOnExit === undefined ? true : props.unmountOnExit}
-            transitionName={props.transitionName}
-            timeout={props.timeout}
-        >
+        <Transition in={!!props.in} unmountOnExit={props.unmountOnExit ?? true} transitionName={props.transitionName} timeout={props.timeout}>
             {props.children}
         </Transition>
     );

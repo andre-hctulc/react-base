@@ -1,11 +1,11 @@
 "use client";
 
 import clsx from "clsx";
-import Label from "../Label";
 import React from "react";
+import type { PropsOf, Size } from "../../../types";
+import Label from "../Label";
 import { useFormInput } from "../form/JSForm";
 import { getInputSizeClasses } from "../../../input-helpers";
-import { PropsOf, Size } from "../../../types";
 import { setRef } from "../../../util";
 import HelperText from "../../text/HelperText";
 
