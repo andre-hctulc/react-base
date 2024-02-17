@@ -16,7 +16,7 @@ interface ToggleButtonProps {
 
 export default function ToggleButton(props: ToggleButtonProps) {
     // Diese Größen sollten mit denen von `IconButton` übereinstimmen!
-    const [sizeClasses, iconSize] = collapse(props.size || "medium", { small: ["w-6 h-6", 14], medium: ["w-8 h-8", 17], large: ["w-10 h-10", 20] }) || [];
+    const [sizeClasses, iconSize] = collapse(props.size || "medium", { small: ["w-6 h-6", 14], medium: ["w-8 h-8", 17], large: ["w-10 h-10", 20] }, []);
 
     function handleClick(e: any) {
         props.onClick?.(e);

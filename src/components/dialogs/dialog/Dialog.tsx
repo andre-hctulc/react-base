@@ -43,7 +43,6 @@ const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, ref) => {
     const [maxWidth, maxHeight] = getSizeStyle(props.maxSize);
 
     return (
-        // @ts-ignore
         <Transition in={props.open} transitionName="T-Dialog" unmountOnExit timeout={180}>
             <Overlay
                 onClick={props.onClose}

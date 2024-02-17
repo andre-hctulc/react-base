@@ -21,7 +21,6 @@ export default function Transition(props: TransitionProps) {
     const child = React.cloneElement(props.children, { ...props.children.props, ref: ref });
 
     return (
-        // @ts-ignore
         <CSSTransition unmountOnExit={props.unmountOnExit} nodeRef={ref} timeout={props.timeout || 0} in={props.in} classNames={props.transitionName}>
             {child as any}
         </CSSTransition>

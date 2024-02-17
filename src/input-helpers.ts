@@ -61,7 +61,7 @@ export function convertFormData<T extends Record<string, any> = any>(
 
     for (const key in expect) {
         const rawValue = formData.get(key);
-        let exp = expect[key];
+        const exp = expect[key];
 
         if (exp.pattern) {
             try {
@@ -76,6 +76,8 @@ export function convertFormData<T extends Record<string, any> = any>(
         if (rawValue === null && exp.required) return null;
 
         let parsedValue: any;
+        let num: number;
+        let transformed: string;
 
         const parse = (v: any) => {
             try {
@@ -93,20 +95,20 @@ export function convertFormData<T extends Record<string, any> = any>(
                     parsedValue = rawValue;
                     break;
                 case "number":
-                    const value = parseInt(rawValue as any);
-                    if (isNaN(value)) return null;
-                    parsedValue = value;
+                    num = parseInt(rawValue as any);
+                    if (isNaN(num)) return null;
+                    parsedValue = num;
                     break;
                 case "any":
                 case "object":
-                    const parsedJson = parse(rawValue);
-                    if (parsedJson === undefined) return null;
-                    parsedValue = parsedJson;
+                    transformed = parse(rawValue);
+                    if (transformed === undefined) return null;
+                    parsedValue = transformed;
                     break;
                 case "boolean":
                     if (typeof rawValue !== "string") return null;
-                    const normalized = rawValue.toLowerCase();
-                    if (normalized !== "false" && normalized !== "true") return null;
+                    transformed = rawValue.toLowerCase();
+                    if (transformed !== "false" && transformed !== "true") return null;
                     parsedValue = rawValue === "true";
                     break;
                 case "blob":

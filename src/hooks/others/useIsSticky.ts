@@ -14,7 +14,7 @@ export default function useIsSticky(element?: HTMLElement | null) {
 
         if (!mainScroll) return setIsSticky(false);
 
-        const listener: EventListener = (e: Event) => {
+        const listener: EventListener = () => {
             if (element !== undefined) {
                 if (!element) return setIsSticky(false);
                 // HTMLElement.offsetTop ist der Abstand vond er oberen Kante des Elementes zu der oberen kante des Vaters

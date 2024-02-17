@@ -53,6 +53,7 @@ export default function DeleteDialog(props: DeleteDialogProps) {
                         setIsLoading(true);
                         try {
                             await props.onDelete?.();
+                            // eslint-disable-next-line no-empty
                         } catch (err) {}
                         setIsLoading(false);
                         props.onClose?.();

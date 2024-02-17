@@ -54,7 +54,7 @@ export default function CodeInput(props: CodeInputProps) {
                     if (e.currentTarget.nextElementSibling) (e.currentTarget.nextElementSibling as HTMLInputElement).focus();
                     else {
                         e.currentTarget.blur();
-                        for (let value of values) if (!value) return;
+                        for (const value of values) if (!value) return;
                         props.onFinish?.(values.join(""));
                     }
                 }}

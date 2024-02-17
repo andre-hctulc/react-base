@@ -1,7 +1,5 @@
-export function randomId() {
-    const timestamp = Date.now().toString(36);
-    const randomChars = Math.random().toString(36).substring(2, 10);
-    return `${timestamp}-${randomChars}`;
+export function randomId(length = 12) {
+    return [...Array(length)].map(() => (~~(Math.random() * 36)).toString(36)).join("");
 }
 
 export function joinPaths(...parts: (string | undefined | null)[]) {

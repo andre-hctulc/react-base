@@ -22,7 +22,11 @@ interface IconTextProps {
 
 export default function Subtitle(props: IconTextProps) {
     const variant = props.variant || "subtitle1";
-    const [textVariant, iconSize] = collapse(variant, { subtitle1: ["subtitle1", 19], subtitle2: ["subtitle2", 19], subtitle3: ["body1", 17] } as const) || [];
+    const [textVariant, iconSize] = collapse(
+        variant,
+        { subtitle1: ["subtitle1", 19], subtitle2: ["subtitle2", 19], subtitle3: ["body1", 17] } as const,
+        ["subtitle1", 19] as const
+    );
 
     return (
         <Typography

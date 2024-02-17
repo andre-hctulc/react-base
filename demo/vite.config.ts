@@ -18,5 +18,4 @@ export default defineConfig({
             "top-level-await": true,
         },
     },
-    // optimizeDeps: { include: ["@react-base"] },
 });

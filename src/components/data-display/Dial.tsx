@@ -138,11 +138,15 @@ export default function Dial(props: DialProps) {
             ...itemProps,
         });
     });
-    const [spacing, spacingVert] = collapse(props.spacing || "medium", {
-        small: ["space-x-2", "space-y-2"],
-        medium: ["space-x-4", "space-y-4"],
-        large: ["space-x-6", "space-y-6"],
-    }) ||[];
+    const [spacing, spacingVert] = collapse(
+        props.spacing || "medium",
+        {
+            small: ["space-x-2", "space-y-2"],
+            medium: ["space-x-4", "space-y-4"],
+            large: ["space-x-6", "space-y-6"],
+        },
+        []
+    );
     const align = alignClass(props.align || "center");
     const Comp: any = props.tag || "div";
     // Listen düren nur li-Elemente enthalten

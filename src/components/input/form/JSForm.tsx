@@ -69,11 +69,11 @@ export function useJSForm() {
     return context;
 }
 
-export type FormValidator<D extends {}> = { [K in keyof D]?: (value: D[K] | undefined, values: Partial<D>) => boolean };
+export type FormValidator<D extends object> = { [K in keyof D]?: (value: D[K] | undefined, values: Partial<D>) => boolean };
 
 type FormState<D = any> = { valid: boolean; data: Partial<D>; form: HTMLFormElement };
 
-interface JSFormProps<D extends {} = any> {
+interface JSFormProps<D extends object = any> {
     className?: string;
     style?: React.CSSProperties;
     children?: React.ReactNode;
@@ -110,7 +110,7 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    function handleChange(target: Element | null, value?: { value: any }, callOnChange?: boolean) {
+    function handleChange(target: Element | null, value?: { value: any }) {
         const formState = getState(target, value);
         if (!formState) return;
         setParsedData(formState.data);
@@ -174,7 +174,9 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
                         val = false;
                         continue;
                     }
-                } catch (err) {}
+                } catch (err) {
+                    val = false;
+                }
             }
         }
 

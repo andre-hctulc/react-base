@@ -4,10 +4,9 @@ import type { PropsOf } from "../../../types";
 import Button from "../../input/buttons/Button";
 import Flex from "../../layout/Flex";
 import Delayed from "../../others/Delayed";
-import EmptyText from "../../text/EmptyText";
+import EmptyText from "../../../../../../projects/webapp/src/components/text/EmptyText";
 
 interface PlaceholderProps {
-    /** Falls _string_, dann wird Dieser als Inhalt für ein `EmptyText` verwendet, ansonsten bleibt `children` unverändert.  */
     children: React.ReactNode;
     actionText?: string;
     action?: (event: React.MouseEvent) => void;
@@ -21,6 +20,7 @@ interface PlaceholderProps {
     align?: PropsOf<typeof Flex>["align"];
     justify?: PropsOf<typeof Flex>["justify"];
     tag?: string;
+    /** Apply error styles */
     error?: boolean;
     delay?: number;
 }

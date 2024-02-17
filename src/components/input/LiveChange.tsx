@@ -25,9 +25,9 @@ interface LiveChangeProps<T = any> {
 export function eventToValue(e: any) {
     if (e && typeof e === "object") {
         // e.target.value (e.g. input, TextField...)
-        if (e.hasOwnProperty("target")) return (e as any).target.value;
+        if (Object.hasOwn(e, "target")) return (e as any).target.value;
         // e.value
-        else if (e.hasOwnProperty("value")) return (e as any).value;
+        else if (Object.hasOwn(e, "value")) return (e as any).value;
         // e
         else return e;
     } else return e;

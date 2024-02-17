@@ -21,11 +21,14 @@ interface TypographyProps extends StyleProps, ParentProps, DragEventProps, Mouse
     fontWeight?: React.CSSProperties["fontWeight"];
     noMargin?: boolean;
     underline?: boolean;
+    /** @default inline */
+    dispaly?: "inline" | "inline_block" | "block";
 }
 
 const Typography = React.forwardRef<Element, TypographyProps>((props, ref) => {
-    const [variantClasses, tag] =
-        collapse(props.variant || "body1", {
+    const [variantClasses, tag] = collapse(
+        props.variant || "body1",
+        {
             body2: ["text-sm", "p"],
             body1: ["text-base", "p"],
             h1: [["text-[27px] font-bold", !props.noMargin && "my-3"], "h1"],
@@ -37,7 +40,14 @@ const Typography = React.forwardRef<Element, TypographyProps>((props, ref) => {
             caption: ["text-xs", "p"],
             subtitle1: ["text-xl", "h5"],
             subtitle2: ["text-[18.5px]", "h6"],
-        }) || [];
+        },
+        ["text-base", "p"]
+    );
+    const display = collapse(props.dispaly || "inline", {
+        inline: "inline",
+        inline_block: "inline-block",
+        block: "block",
+    });
     const Comp: any = props.tag || tag;
 
     return (
@@ -45,6 +55,7 @@ const Typography = React.forwardRef<Element, TypographyProps>((props, ref) => {
             ref={ref}
             className={clsx(
                 "flex-shrink-0",
+                display,
                 variantClasses,
                 props.underline && "underline",
                 props.secondary && "text-text-secondary",

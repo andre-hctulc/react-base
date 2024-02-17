@@ -20,7 +20,7 @@ interface IconButtonProps {
 
 const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props: IconButtonProps, ref) => {
     // Diese Größen sollten mit denen von `ToggleIconButton` übereinstimmen!
-    const [sizeClasses, iconSize] = collapse(props.size || "medium", { small: ["w-6 h-6", 14], medium: ["w-8 h-8", 17], large: ["w-10 h-10", 20] }) || [];
+    const [sizeClasses, iconSize] = collapse(props.size || "medium", { small: ["w-6 h-6", 14], medium: ["w-8 h-8", 17], large: ["w-10 h-10", 20] }, []);
     const variantClasses = collapse(props.variant || "outlined", {
         outlined: ["", !props.disabled && "hover:bg-bg-dark/40 active:bg-bg-dark/80"],
         contained: ["border bg-bg-paper", !props.disabled && "hover:bg-bg-paper2 active:bg-bg-paper3"],

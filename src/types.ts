@@ -1,5 +1,16 @@
-// TODO fs, chat etc entfernen (Diese kann man mit interface merging erweitern? (Declaration Merging))
-export type ThemeColor = "mode" | "primary" | "secondary" | "error" | "warning" | "info" | "success" | "accent" | "new" | "chat" | "fs" | "note" | "task" | "active";
+// NOTE: declaration merging not possible with union  types
+/** Allows declaration merging  */
+export interface ThemeColorMap {
+    primary: any;
+    secondary: any;
+    error: any;
+    warning: any;
+    info: any;
+    success: any;
+    accent: any;
+}
+
+export type ThemeColor = keyof ThemeColorMap;
 
 export type Size = "small" | "medium" | "large";
 export type XSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
@@ -8,6 +19,15 @@ export type XDynamicSize = "xsmall" | "small" | "medium" | "large" | "xlarge" | 
 
 export type SizeMap<T = number> = { [K in DynamicSize]: T };
 export type XSizeMap<T = number> = { [K in XDynamicSize]: T };
+
+export type ThemeColorDef = {
+    text: string;
+    bg: string;
+    border: string;
+    contrastText: string;
+    bgLight: string;
+    bgSuperLight: string;
+};
 
 // * Props
 
@@ -34,16 +54,14 @@ export interface EventProps<T = Element> {
     onBlur?: React.FocusEvent<T>;
 }
 
-export namespace NextProps {
-    export type LayoutProps<P extends string = never> = {
-        children?: React.ReactNode;
-        searchParams: Record<string, string>;
-    } & Record<P, React.ReactNode>;
+export type NextLayoutProps<P extends string = never> = {
+    children?: React.ReactNode;
+    searchParams: Record<string, string>;
+} & Record<P, React.ReactNode>;
 
-    export interface PageProps {
-        children?: React.ReactNode;
-        searchParams: Record<string, string>;
-    }
+export interface NextPageProps {
+    children?: React.ReactNode;
+    searchParams: Record<string, string>;
 }
 
 export type SlotProps<C extends Record<string, any>> = { slotProps?: { [K in keyof C]?: Partial<PropsOf<C[K]>> } };
@@ -89,5 +107,5 @@ export interface DragEventProps<T extends Element = Element> {
     onDragOver?: (event: React.DragEvent<T>) => void;
     onDragStart?: (event: React.DragEvent<T>) => void;
     onDrop?: (event: React.DragEvent<T>) => void;
-    draggable?: boolean
+    draggable?: boolean;
 }

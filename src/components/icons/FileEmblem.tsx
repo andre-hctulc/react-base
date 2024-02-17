@@ -25,7 +25,6 @@ function getFileSrc(fileName: string) {/x/.exec("")?.[0]
         case "pdf":
         case "zip":
         case "mp3":
-        case "txt":
         case "ts":
         case "json":
         case "jpg":

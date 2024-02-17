@@ -1,10 +1,11 @@
 import React from "react";
-import type { SizeMap, ThemeColor, XSizeMap } from "./types";
+import type { SizeMap, ThemeColor, ThemeColorDef, XSizeMap } from "./types";
 
 // * Helpers
 
 /** 🌊 🎯 */
-export function collapse<V extends string, R = any>(value: V, map: { [K in V]: R }): R {
+export function collapse<V extends string, R = any>(value: V, map: { [K in V]: R }, fallback?: R): R {
+    if (!(value in map) && fallback !== undefined) return fallback as R;
     return map[value];
 }
 
@@ -88,7 +89,7 @@ export function rgbToHex(r: number, g: number, b: number) {
     // Convert decimal to hexadecimal
     const hexR = r.toString(16).padStart(2, "0");
     const hexG = g.toString(16).padStart(2, "0");
-    var hexB = b.toString(16).padStart(2, "0");
+    const hexB = b.toString(16).padStart(2, "0");
 
     // Concatenate the hex values
     const hexColor = "#" + hexR + hexG + hexB;
@@ -190,132 +191,15 @@ export function hasChildren(children: React.ReactNode) {
 
 // * Theme
 
-export function themeColor(color: ThemeColor | undefined | null): {
-    text: string;
-    bg: string;
-    border: string;
-    contrastText: string;
-    bgLight: string;
-    bgSuperLight: string;
-} {
-    switch (color) {
-        case "chat":
-            return {
-                bg: "bg-chat",
-                bgLight: "bg-chat-light",
-                text: "text-chat",
-                border: "border-chat",
-                contrastText: "text-chat-contrast-text",
-                bgSuperLight: "bg-chat-super-light",
-            };
-        case "error":
-            return {
-                bg: "bg-error",
-                bgLight: "bg-error-light",
-                text: "text-error",
-                border: "border-error",
-                contrastText: "text-error-contrast-text",
-                bgSuperLight: "bg-error-super-light",
-            };
-        case "info":
-            return {
-                bg: "bg-info",
-                bgLight: "bg-info-light",
-                text: "text-info",
-                border: "border-info",
-                contrastText: "text-info-contrast-text",
-                bgSuperLight: "bg-info-super-light",
-            };
-        case "fs":
-            return {
-                bg: "bg-fs",
-                bgLight: "bg-fs-light",
-                text: "text-fs",
-                border: "border-fs",
-                contrastText: "text-fs-contrast-text",
-                bgSuperLight: "bg-fs-super-light",
-            };
-        case "task":
-            return {
-                bg: "bg-task",
-                bgLight: "bg-task-light",
-                text: "text-task",
-                border: "border-task",
-                contrastText: "text-task-contrast-text",
-                bgSuperLight: "bg-task-super-light",
-            };
-        case "new":
-            return {
-                bg: "bg-new",
-                bgLight: "bg-new-light",
-                text: "text-new",
-                border: "border-new",
-                contrastText: "text-new-contrast-text",
-                bgSuperLight: "bg-new-super-light",
-            };
-        case "secondary":
-            return {
-                bg: "bg-secondary",
-                bgLight: "bg-secondary-light",
-                text: "text-secondary",
-                border: "border-secondary",
-                contrastText: "text-secondary-contrast-text",
-                bgSuperLight: "bg-secondary-super-light",
-            };
-        case "note":
-            return {
-                bg: "bg-note",
-                bgLight: "bg-note-light",
-                text: "text-note",
-                border: "border-note",
-                contrastText: "text-note-constrast-text",
-                bgSuperLight: "bg-note-super-light",
-            };
-        case "success":
-            return {
-                bg: "bg-success",
-                bgLight: "bg-success-light",
-                text: "text-success",
-                border: "border-success",
-                contrastText: "text-success-contrast-text",
-                bgSuperLight: "bg-success-super-light",
-            };
-        case "warning":
-            return {
-                bg: "bg-warning",
-                bgLight: "bg-warning-light",
-                text: "text-warning",
-                border: "border-warning",
-                contrastText: "text-warning-contrast-text",
-                bgSuperLight: "bg-warning-super-light",
-            };
-        case "accent":
-            return {
-                bg: "bg-accent",
-                bgLight: "bg-accent-light/10",
-                text: "text-accent",
-                border: "border-accent",
-                contrastText: "text-accent-contrast-text",
-                bgSuperLight: "bg-accent-super-light",
-            };
-        case "active":
-            return {
-                bg: "bg-active",
-                bgLight: "bg-active-light",
-                text: "text-active",
-                border: "border-active",
-                contrastText: "text-active-contrast-text",
-                bgSuperLight: "bg-active-super-light",
-            };
-        case "primary":
-        default:
-            return {
-                bg: "bg-primary",
-                bgLight: "bg-primary-light",
-                text: "text-primary",
-                border: "border-primary",
-                contrastText: "text-primary-contrast-text",
-                bgSuperLight: "bg-primary-super-light",
-            };
-    }
+export function themeColor(color: ThemeColor | ThemeColorDef | undefined | null): ThemeColorDef {
+    if (color && typeof color === "object") return color;
+
+    return {
+        bg: `bg-${color}`,
+        bgLight: `bg-${color}-light`,
+        text: `text-${color}`,
+        border: `border-${color}`,
+        contrastText: `text-${color}-contrast-text`,
+        bgSuperLight: `bg-${color}-super-light`,
+    };
 }

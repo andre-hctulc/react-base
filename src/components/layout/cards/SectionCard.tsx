@@ -13,8 +13,13 @@ interface SectionCardProps {
     dangerous?: boolean;
 }
 
+// TODO Split to CardHeader CardContent...
 export default function SectionCard(props: SectionCardProps) {
-    const classes = clsx("flex sm:flex-col md:flex-row border rounded-lg p-2 bg-bg SectionCard", props.dangerous && "border-error/40 bg-error/5", props.className);
+    const classes = clsx(
+        "box-border flex sm:flex-col md:flex-row border rounded-lg p-2 bg-bg SectionCard",
+        props.dangerous && "border-error/40 bg-error/5",
+        props.className
+    );
     const mainClasses = clsx(
         "flex-grow px-1 py-3 min-w-0 flex flex-col justify-center",
         props.alignItems === "end" && "items-end",

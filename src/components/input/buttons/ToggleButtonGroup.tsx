@@ -20,7 +20,7 @@ interface ToggleButtonGroupProps {
  * @returns
  */
 export default function ToggleButtonGroup(props: ToggleButtonGroupProps) {
-    const children = mapChildren(props.children, (child, i) => {
+    const children = mapChildren(props.children, (child) => {
         const buttonValue = child.props.value;
         const active = buttonValue === props.value;
         const onClick = (...args: any) => {

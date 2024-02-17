@@ -41,10 +41,6 @@ export default function BreakpointsProvider(props: BreakpointsProviderProps) {
     const size = sm ? "sm" : md ? "md" : lg ? "lg" : "xl";
     const xl = !md && !lg && !sm;
 
-    React.useEffect(() => {
-        const x = md;
-    }, [md]);
-
     return (
         <BreakpointsContext.Provider
             value={{ sm: sm, md: md && !sm, lg: lg && !md, xl: xl && !lg, minSm: true, minMd: !sm, minLg: !sm && !md, minXl: !sm && !md && !lg, size: size }}

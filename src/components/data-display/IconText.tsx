@@ -1,16 +1,14 @@
 import React from "react";
 import clsx from "clsx";
-import type { PropsOf } from "../../types";
+import type { DragEventProps, KeyboardEventProps, MouseEventProps, ParentProps, PropsOf, StyleProps } from "../../types";
 import Flex from "../layout/Flex";
 import Styled from "../others/Styled";
 import Skeleton from "./feedback/Skeleton";
 import Typography from "../text/Typography";
+import { eventProps } from "../../util";
 
-interface IconTextProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface IconTextProps extends StyleProps, ParentProps, DragEventProps, MouseEventProps, KeyboardEventProps {
     tag?: string;
-    children?: React.ReactNode;
     icon?: React.ReactElement;
     avatar?: React.ReactNode;
     iconSize?: number;
@@ -20,7 +18,6 @@ interface IconTextProps {
     borderB?: boolean;
     contrast?: boolean;
     loading?: boolean;
-    onClick?: React.MouseEventHandler;
     justify?: "end" | "start" | "center";
     textVariant?: PropsOf<typeof Typography>["variant"];
     secondary?: boolean;
@@ -75,6 +72,7 @@ export default function IconText(props: IconTextProps) {
             )}
             style={props.style}
             tag={props.tag}
+            {...eventProps(props)}
         >
             {main}
         </Flex>

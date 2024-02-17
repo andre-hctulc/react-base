@@ -10,7 +10,7 @@ interface ObservedElement extends ResizeObserverEntry {
  * @param element Das Element, das beaobachtet werden soll
  * @returns `ObservedElement`. Achtung: Die `ObservedElement.contentRect.x|y` sind relativ und `ObservedElement.contentRect.width|height` beinhalten hier kein Padding oder Sonstiges! Dafür sollte man `ObservedElement.rect()` verwenden.
  * */
-export default function useElement(element: Element | null | undefined, id?: string): ObservedElement | null {
+export default function useElement(element: Element | null | undefined): ObservedElement | null {
     const [observed, setObserved] = React.useState<ObservedElement | null>(null);
 
     React.useEffect(() => {

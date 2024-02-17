@@ -30,12 +30,15 @@ interface ListItemProps {
 }
 
 const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
-    const [textVariant, height, iconSize] =
-        collapse<Size, [TextVariant, number, number]>(props.size || "medium", {
+    const [textVariant, height, iconSize] = collapse<Size, [TextVariant, number, number]>(
+        props.size || "medium",
+        {
             small: ["body2", 32, 16],
             medium: ["body2", 36, 18],
             large: ["body2", 40, 23],
-        }) || [];
+        },
+        ["body2", 36, 18]
+    );
     const text =
         typeof props.children === "string" ? (
             <Typography

@@ -27,18 +27,24 @@ const Chip = React.forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
     const size = props.size || "medium";
     const { bg, contrastText, text, border, bgLight } = typeof props.color === "object" ? props.color : themeColor(props.color || "accent");
     const alignClass = collapse(props.alignSelf || "none", { start: "self-start", end: "self-end", center: "self-center", none: undefined });
-    const [variantClasses, iconClasses] =
-        collapse(variant, {
+    const [variantClasses, iconClasses] = collapse(
+        variant,
+        {
             contained: [[props.color && "bg-opacity-60", contrastText, bg], [contrastText]],
             outlined: [["border", border, text], [text]],
             pale: [[bgLight, text], [text]],
-        }) || [];
-    const [sizeClasses, iconSize] =
-        collapse(size, {
+        },
+        []
+    );
+    const [sizeClasses, iconSize] = collapse(
+        size,
+        {
             small: [" px-2.5 text-[11px] py-0.5", 12],
             medium: ["py-[4px] px-3.5 text-[13px]", 13],
             large: ["py-1.5 px-3 text-sm", 15],
-        }) || [];
+        },
+        []
+    );
 
     return (
         <span

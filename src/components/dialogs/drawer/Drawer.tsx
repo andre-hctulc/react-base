@@ -24,7 +24,6 @@ export default function Drawer(props: DrawerProps) {
 
     return (
         <Overlay zIndex={props.zIndex} invisible onClick={() => props.onClose?.()} className={props.className} disablePointerEvents={!props.open}>
-            {/* @ts-ignore */}
             <Transition timeout={300} unmountOnExit transitionName="T-Drawer" in={props.open}>
                 <Flex tag="aside" style={{ width, maxWidth: width, pointerEvents: "auto" }} onClick={e => e.stopPropagation()} className={mainClasses}>
                     <Flex direction="row" align="center" tag="nav">

@@ -29,10 +29,11 @@ const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>((props, r
         const perc = (props.progress / props.max) * 100;
         return Math.round(perc * 100) / 100;
     }, [props.progress, props.max]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const progText = React.useMemo(() => (props.progressText ? props.progressText(props.progress, props.max) : undefined), [props.progress, props.max]);
 
     return (
-        <Flex direction="col" className={clsx("space-x-1.5", props.className)} style={props.style}>
+        <Flex ref={ref} direction="col" className={clsx("space-x-1.5", props.className)} style={props.style}>
             <div className="flex-grow">
                 <div
                     className={clsx("transition duration-100 w-full border border-bg-dark rounded-full overflow-hidden", bgSuperLight, props.className)}

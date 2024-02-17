@@ -8,7 +8,7 @@ import Flex from "../../layout/Flex";
 import LinkContainer from "../../navigation/links/LinkContainer";
 import Styled from "../../others/Styled";
 import Typography from "../../text/Typography";
-import Unit from "../../text/Unit";
+import Unit from "../../../../../../projects/webapp/src/components/text/Unit";
 
 interface StatProps {
     value: any;

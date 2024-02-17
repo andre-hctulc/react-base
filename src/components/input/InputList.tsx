@@ -34,7 +34,7 @@ interface InputListProps<T extends object> extends InputLikeProps<T[]> {
 const addColAndRemoveColWidth = 43;
 
 export default function InputList<T extends object = any>(props: InputListProps<T>) {
-    const { error, readOnly, disabled } = useFormInput(props, null);
+    const { error, readOnly } = useFormInput(props, null);
     const [value, setValue] = React.useState<T[]>(props.defaultValue || []);
     const [currentRow, setCurrentRow] = React.useState<Partial<T>>(props.defaultRow);
     const currentRowIsValid = React.useMemo(() => {
@@ -74,7 +74,7 @@ export default function InputList<T extends object = any>(props: InputListProps<
 
         const c: DataGridColDef<any>[] = props.cols.map(col => ({
             ...col,
-            render: ({ row, value, rowId }) => {
+            render: ({ row, value }) => {
                 const editing = row === currentRow;
 
                 return React.cloneElement(col.input, {

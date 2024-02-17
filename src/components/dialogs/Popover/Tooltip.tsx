@@ -43,48 +43,52 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
     // const [tipRef, setTipRef] = React.useState<Element | null>(null);
     const tipRef = React.useRef<Element | null>();
 
-    React.useEffect(() => {
-        const child = childRef.current;
+    React.useEffect(
+        () => {
+            const child = childRef.current;
 
-        if (!child) return;
+            if (!child) return;
 
-        const tip = tipRef.current;
-        const listeners: [keyof HTMLElementEventMap, (e: any) => void][] = [];
+            const tip = tipRef.current;
+            const listeners: [keyof HTMLElementEventMap, (e: any) => void][] = [];
 
-        const addListener = (e: keyof HTMLElementEventMap, listener: (e: MouseEvent) => void) => {
-            listeners.push([e, listener]);
-            tip?.addEventListener(e, listener as any);
-            child?.addEventListener(e, listener as any);
-        };
+            const addListener = (e: keyof HTMLElementEventMap, listener: (e: MouseEvent) => void) => {
+                listeners.push([e, listener]);
+                tip?.addEventListener(e, listener as any);
+                child?.addEventListener(e, listener as any);
+            };
 
-        addListener("mouseenter", () => {
-            if (closeTimeout.current) clearTimeout(closeTimeout.current);
+            addListener("mouseenter", () => {
+                if (closeTimeout.current) clearTimeout(closeTimeout.current);
 
-            const enterDelay = entered.current && typeof props.enterNextDelay === "number" ? props.enterNextDelay : props.enterDelay;
+                const enterDelay = entered.current && typeof props.enterNextDelay === "number" ? props.enterNextDelay : props.enterDelay;
 
-            if (enterDelay) {
-                openTimeout.current = setTimeout(() => {
-                    setOpen((entered.current = true));
-                }, enterDelay);
-            } else setOpen((entered.current = true));
-        });
-
-        addListener("mouseleave", () => {
-            if (openTimeout.current) clearTimeout(openTimeout.current);
-
-            closeTimeout.current = setTimeout(() => {
-                setOpen(false);
-            }, props.disappearTimeout ?? 30);
-        });
-
-        return () => {
-            listeners.forEach(([e, listener]) => {
-                tip?.removeEventListener(e, listener);
-                child?.removeEventListener(e, listener);
+                if (enterDelay) {
+                    openTimeout.current = setTimeout(() => {
+                        setOpen((entered.current = true));
+                    }, enterDelay);
+                } else setOpen((entered.current = true));
             });
-        };
-    }, [childRef.current, tipRef.current, props.enterDelay, props.enterNextDelay]);
 
+            addListener("mouseleave", () => {
+                if (openTimeout.current) clearTimeout(openTimeout.current);
+
+                closeTimeout.current = setTimeout(() => {
+                    setOpen(false);
+                }, props.disappearTimeout ?? 30);
+            });
+
+            return () => {
+                listeners.forEach(([e, listener]) => {
+                    tip?.removeEventListener(e, listener);
+                    child?.removeEventListener(e, listener);
+                });
+            };
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [childRef.current, tipRef.current, props.enterDelay, props.enterNextDelay, props.disappearTimeout]
+    );
+    
     if (props.inactive) return props.children;
 
     return (

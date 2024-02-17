@@ -41,7 +41,15 @@ const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props, ref) 
     }
 
     return (
-        <div onDrop={handleDrop} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDragEnter={handleDragEnter} className={props.className} style={props.style}>
+        <div
+            ref={ref}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDragEnter={handleDragEnter}
+            className={props.className}
+            style={props.style}
+        >
             {props.children}
         </div>
     );

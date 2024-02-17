@@ -22,7 +22,7 @@ const Card = React.forwardRef<Element, CardProps>((props, ref) => {
             onClick={props.onClick}
             ref={ref}
             className={clsx(
-                "flex rounded flex-col overflow-y-auto",
+                "flex box-border rounded flex-col overflow-y-auto",
                 !props.noPadding && "p-2",
                 isContained ? "bg-bg-paper" : "border bg-bg",
                 props.shadow ? "shadow-md" : "shadow-none",

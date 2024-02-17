@@ -22,7 +22,9 @@ const height = 300;
 const width = 300;
 
 export default function DevTools(props: DevToolsProps) {
-    const { devMode } = useDev();
+    const { devMode } = useDev(); 
+    // TODO
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [position, setPosition] = React.useState<Position>(props.position || "top_right");
     const [activeTab, setActiveTab] = React.useState<string | undefined>(() => props.tabs?.[0]?.title);
     // eslint-disable-next-line react-hooks/exhaustive-deps

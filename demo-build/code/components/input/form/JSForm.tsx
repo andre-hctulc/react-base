@@ -69,7 +69,7 @@ export function useJSForm() {
     return context;
 }
 
-export type FormValidator<D extends {}> = { [K in keyof D]?: (value: D[K] | undefined, values: Partial<D>) => boolean };
+export type FormValidator<D extends object> = { [K in keyof D]?: (value: D[K] | undefined, values: Partial<D>) => boolean };
 
 type FormState<D = any> = { valid: boolean; data: Partial<D>; form: HTMLFormElement };
 

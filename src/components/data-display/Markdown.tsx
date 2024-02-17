@@ -51,8 +51,7 @@ const comps: (data: { imagesBaseDir: string }, components?: Components) => Compo
         if (components?.img) {
             if (React.isValidElement(components.img)) return React.cloneElement<any>(components.img, { ...props, src });
             else return components.img as any;
-        } // eslint-disable-next-line @next/next/no-img-element
-        else return <img alt="_" {...props} src={src} />;
+        } else return <img alt="_" {...props} src={src} />;
     },
 });
 
