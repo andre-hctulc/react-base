@@ -8,13 +8,13 @@ import type { InputLikeProps } from "./Input";
 import FormControl from "../form/FormControl";
 import Label from "../Label";
 import { getInputSizeClasses } from "../../../input-helpers";
-import ListItem from "../../data-display/list/ListItem";
+import ListItem from "../../layout/list/ListItem";
 import Popover from "../../dialogs/popover/Popover";
 import ChevronDownIcon from "../../icons/collection/ChevronDown";
 import Flex from "../../layout/Flex";
 import HelperText from "../../text/HelperText";
 import Typography from "../../text/Typography";
-import List from "../../data-display/list/List";
+import List from "../../layout/list/List";
 
 export type SelectOption<T = string> = {
     value: T;
@@ -96,7 +96,7 @@ export default function Select<T = string>(props: SelectProps<T>) {
     }
 
     return (
-        <div className={clsx("flex flex-col flex-shrink-0 min", props.fullWidth && "w-full", props.className)} style={props.style}>
+        <div className={clsx("inline-flex flex-col flex-shrink-0 min", props.fullWidth && "w-full", props.className)} style={props.style}>
             <FormControl ref={innerRef} required={props.required} name={props.name} type="json" value={activeOption?.value} />
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} required={props.required} error={error}>

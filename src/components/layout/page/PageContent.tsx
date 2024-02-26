@@ -1,5 +1,3 @@
-
-
 import clsx from "clsx";
 import { collapse } from "../../../util";
 import type { Size } from "../../../types";

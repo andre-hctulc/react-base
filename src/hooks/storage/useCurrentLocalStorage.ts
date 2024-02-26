@@ -1,26 +1,13 @@
 "use client";
 
-import { useLocalStorage } from "usehooks-ts";
-import { useStorage } from "./StorageProvider";
-import React from "react";
-
-type CurrentLocalStorage<T> = [T, (value: T) => void];
+import useStorage, { CurrentStorage } from "./useStorage";
 
 /** Benutzt `useLocalStorage` in Kontext von `StorageContext` */
 export default function useCurrentLocalStorage<T = string>(
     key: string,
-    initalValue: T,
+    initalValue: T | (() => T),
     options?: { ignorePrefixes?: boolean; prefix?: boolean }
-): CurrentLocalStorage<T> {
-    const storageContext = useStorage();
-    const prefix = React.useMemo(() => {
-        if (options?.ignorePrefixes) return "";
-        let pre = [storageContext.prefix || "", options?.prefix || ""].filter(pre => !!pre).join("-");
-        if (pre) return (pre = pre + "-");
-        else return "";
-    }, [options?.prefix, storageContext.prefix, options?.ignorePrefixes]);
-
-    const [value, setValue] = useLocalStorage<T>(`${prefix}${key}`, initalValue);
-
+): CurrentStorage<T> {
+    const [value, setValue] = useStorage(key, initalValue, { ...options, storage: "localStorage" });
     return [value, setValue];
 }

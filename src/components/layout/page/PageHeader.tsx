@@ -1,5 +1,3 @@
-
-
 import clsx from "clsx";
 import React from "react";
 import type { PropsOf } from "../../../types";

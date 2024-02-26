@@ -72,7 +72,7 @@ export default function CheckBoxes(props: CheckBoxesProps) {
     return (
         <div
             {...props.slotProps?.root}
-            className={clsx("flex flex-col min-w-0 unstyled-list min-h-0", !props.unstyled && "bg-bg rounded p-1.5", props.className, props.slotProps?.root?.className)}
+            className={clsx("inline-flex flex-col min-w-0 unstyled-list min-h-0", !props.unstyled && "bg-bg rounded p-1.5", props.className, props.slotProps?.root?.className)}
             style={{ ...props.slotProps?.root?.style, ...props.style }}
         >
             <FormControl ref={innerRef} required={props.required} name={props.name} type="json" value={value} />

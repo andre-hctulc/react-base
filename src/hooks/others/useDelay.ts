@@ -1,5 +1,5 @@
 import React from "react";
-import { useTimeout } from "usehooks-ts";
+import useTimeout from "../document/useTimeout";
 
 /**
  * @param delay Millisekunden

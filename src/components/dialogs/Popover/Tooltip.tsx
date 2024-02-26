@@ -88,7 +88,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [childRef.current, tipRef.current, props.enterDelay, props.enterNextDelay, props.disappearTimeout]
     );
-    
+
     if (props.inactive) return props.children;
 
     return (
@@ -96,8 +96,9 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
             {child}
             <Popover
                 position={props.position || { vertical: "top", horizontal: "center" }}
-                noCardBg
+                cardBg="transparent"
                 noCardBorder
+                cardShadow="small"
                 noCardPadding
                 disablePointerEvents
                 open={open && !props.disabled}
@@ -108,10 +109,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
                     card: {
                         border: false,
                         ...props.slotProps?.popover?.card,
-                        ref: card => {
-                            // warn("Card ref");
-                            setRef<any>([tipRef, props.slotProps?.popover?.card?.ref], card);
-                        },
+                        ref: card => setRef<any>(card, tipRef, props.slotProps?.popover?.card?.ref),
                     },
                 }}
             >

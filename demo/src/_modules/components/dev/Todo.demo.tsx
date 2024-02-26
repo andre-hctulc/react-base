@@ -6,7 +6,7 @@ import { DemoDef, DemoProps } from "src/types";
 
 import React from "react";
 import Button from "@react-base/src/components/input/buttons/Button";
-import DevProvider from "@react-base/src/contexts/DevProvider";
+import DevProvider from "@react-base/src/components/dev/DevProvider";
 import Todo from "@react-base/src/components/dev/Todo";
 import Flex from "@react-base/src/components/layout/Flex";
 

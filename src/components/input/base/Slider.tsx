@@ -40,7 +40,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     };
 
     return (
-        <div className={clsx("flex flex-col flex-shrink-0", props.fullWidth && "w-full", props.className)} style={props.style} ref={ref}>
+        <div className={clsx("inline-flex flex-col flex-shrink-0", props.fullWidth && "w-full", props.className)} style={props.style} ref={ref}>
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
                     {props.label}
@@ -48,10 +48,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
             )}
             <input
                 {...props.slotProps?.input}
-                ref={inp => {
-                    setRef(innerRef, inp);
-                    setRef(props.inputRef, inp as any);
-                }}
+                ref={inp => setRef(inp, props.inputRef, innerRef)}
                 type={"range"}
                 onChange={handleChange}
                 onFocus={props.onFocus}

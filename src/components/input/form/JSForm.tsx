@@ -211,10 +211,7 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
                         : props.action) as any
                 }
                 id={props.id}
-                ref={formElement => {
-                    setRef(ref, formElement as any);
-                    setRef(form, formElement);
-                }}
+                ref={formElement => setRef<HTMLFormElement | null>(formElement, ref, form)}
                 onInvalid={props.onInvalid}
                 onChange={e => handleChange((e as any).target || null)}
                 onSubmit={props.onSubmit}

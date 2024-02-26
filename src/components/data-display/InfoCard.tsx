@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../layout/cards/Card";
+import Card from "../layout/Card";
 import Styled from "../others/Styled";
 import Typography from "../text/Typography";
 import { collapse } from "../../util";

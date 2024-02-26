@@ -33,7 +33,7 @@ export function colorToNumber(color: string): number {
     return num;
 }
 
-export function getSize<S extends SizeMap | XSizeMap>(sizeMap: S, size: keyof S | number): number {
+export function getSize<S extends SizeMap | XSizeMap>(size: keyof S | number, sizeMap: S): number {
     const result = typeof size === "string" ? (sizeMap as any)[size] : size;
     return result;
 }
@@ -112,8 +112,8 @@ export function rgbStrToHex(rgb: string) {
     return rgbToHex(r, g, b);
 }
 
-export function alignClass(align: "center" | "start" | "end") {
-    return collapse(align || "center", { center: "items-center", start: "items-start", end: "items-end" });
+export function alignClass(align: "center" | "start" | "end" | "none") {
+    return collapse(align || "center", { center: "items-center", start: "items-start", end: "items-end", none: "" });
 }
 
 export function justifyClass(align: "center" | "start" | "end") {
@@ -176,8 +176,7 @@ export function flattenChildren(children: React.ReactNode, flattenElements?: any
 }
 
 /** Sets the value of one or more references */
-export function setRef<T = any>(refs: (React.ForwardedRef<T> | undefined | null)[] | React.ForwardedRef<T> | undefined | null, value: T) {
-    if (!Array.isArray(refs)) refs = [refs];
+export function setRef<T = any>(value: T, ...refs: (React.ForwardedRef<T> | undefined | null)[]) {
     for (const ref of refs) {
         if (typeof ref === "function") ref(value);
         else if (ref && typeof ref === "object") ref.current = value;

@@ -50,7 +50,7 @@ const Chip = React.forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
         <span
             ref={ref}
             className={clsx(
-                "flex flex-row justify-center items-center rounded-[20px] whitespace-nowrap min-w-0 flex-shrink-0 transition-l duration-100",
+                "inline-flex flex-row justify-center items-center rounded-[20px] whitespace-nowrap min-w-0 flex-shrink-0 transition-l duration-100",
                 sizeClasses,
                 alignClass,
                 props.onClick && "cursor-pointer hover:bg-opacity-70 active:bg-opacity-80",

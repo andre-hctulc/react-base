@@ -5,7 +5,7 @@ import type { DemoDef, DemoProps } from "src/types";
 // demo_start
 
 import Button from "@react-base/src/components/input/buttons/Button";
-import { useAlerts } from "@react-base/src/contexts/AlertsProvider";
+import { useAlerts } from "@react-base/src/components/feedback/alerts/AlertsProvider";
 
 function ButtonDemo({ demoProps }: DemoProps) {
     const { info } = useAlerts();

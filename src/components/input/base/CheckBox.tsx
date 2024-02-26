@@ -29,7 +29,7 @@ const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) =>
     const { error, readOnly, disabled } = useFormInput(props, innerRef.current);
 
     return (
-        <Flex className={clsx("flex-shrink-0", props.className)} ref={ref} minH0 style={props.style}>
+        <Flex inline className={clsx("flex-shrink-0", props.className)} ref={ref} minH0 style={props.style}>
             <div className={clsx("flex min-h-0", props.vertical ? "flex-col-reverse" : "flex-row items-center")} style={props.style}>
                 <input
                     {...props.slotProps?.input}
@@ -43,10 +43,7 @@ const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) =>
                     readOnly={readOnly}
                     id={id.current}
                     type="checkbox"
-                    ref={inp => {
-                        setRef(props.inputRef, inp as any);
-                        setRef(innerRef, inp);
-                    }}
+                    ref={inp => setRef<HTMLInputElement | null>(inp, innerRef, props.inputRef)}
                     className={clsx(
                         "transition duration-90",
                         props.vertical && "self-start",

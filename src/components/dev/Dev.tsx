@@ -1,7 +1,6 @@
 "use client";
 
-import { useDev } from "../../contexts/DevProvider";
-
+import { useDev } from "./DevProvider";
 
 interface DevProps {
     children?: React.ReactNode;

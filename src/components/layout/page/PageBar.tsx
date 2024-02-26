@@ -3,9 +3,8 @@
 import React from "react";
 import clsx from "clsx";
 import Flex from "../Flex";
-import useIsSticky from "../../../hooks/others/useIsSticky";
 import ChevronRightIcon from "../../icons/collection/ChevronRight";
-import LinkContainer from "../../navigation/links/LinkContainer";
+import LinkContainer from "../../navigation/LinkContainer";
 import Typography from "../../text/Typography";
 import type { LinkProps } from "../../../types";
 
@@ -20,7 +19,7 @@ interface PageBarProps {
 }
 
 const PageBar = React.forwardRef<HTMLDivElement, PageBarProps>((props, ref) => {
-    const isSticky = useIsSticky();
+    const isSticky = false;
     const classes = clsx(
         "transition duration-120 pl-2 pr-3 bg-bg rounded-br self-start space-x-1 sticky flex-shrink-0 z-20 overflow-x-auto",
         isSticky && "border-b border-r shadow",

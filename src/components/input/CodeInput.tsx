@@ -75,7 +75,7 @@ export default function CodeInput(props: CodeInputProps) {
     }
 
     return (
-        <div className={clsx("flex space-x-2", props.className)}>
+        <div className={clsx("inline-flex space-x-2", props.className)}>
             {props.label && (
                 <Typography variant="body2" secondary className="mb-1">
                     {props.label}

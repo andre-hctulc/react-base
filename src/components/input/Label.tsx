@@ -11,9 +11,6 @@ interface LabelProps {
     variant?: "form_control" | "caption";
 }
 
-/**
- * @css
- */
 export default function Label(props: LabelProps) {
     const variantClasses = collapse(props.variant || "form_control", {
         form_control: [],

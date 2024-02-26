@@ -41,19 +41,7 @@ const FormControl = React.forwardRef<HTMLInputElement, FormControlProps>((props,
 
     const formAttrs = { [formControlAttr]: true, [formControlTypeAttr]: props.type };
 
-    return (
-        <input
-            {...formAttrs}
-            ref={i => {
-                setRef(ref, i as any);
-                setRef(inp, i);
-            }}
-            value={value}
-            name={props.name}
-            required={props.required}
-            type="hidden"
-        />
-    );
+    return <input {...formAttrs} ref={i => setRef<HTMLInputElement | null>(i, inp, ref)} value={value} name={props.name} required={props.required} type="hidden" />;
 });
 
 FormControl.displayName = "FormControl";

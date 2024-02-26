@@ -6,7 +6,7 @@ import type { DemoDef, DemoProps } from "src/types";
 
 import IconButton from "@react-base/src/components/input/buttons/IconButton";
 import BellAlertIcon from "@react-base/src/components/icons/collection/BellAlert";
-import { useAlerts } from "@react-base/src/contexts/AlertsProvider";
+import { useAlerts } from "@react-base/src/components/feedback/alerts/AlertsProvider";
 
 function IconButtonDemo({ demoProps }: DemoProps) {
     const { success } = useAlerts();

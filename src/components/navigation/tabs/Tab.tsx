@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react";
 import Chip from "../../data-display/Chip";
 import Styled from "../../others/Styled";
-import LinkContainer from "../links/LinkContainer";
+import LinkContainer from "../LinkContainer";
 import type { LinkProps } from "../../../types";
 
 interface TabProps {

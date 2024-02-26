@@ -39,7 +39,7 @@ export default function RadioButtons(props: RadioButtonsProps) {
     }
 
     return (
-        <div className={clsx("flex flex-col", props.className)} style={props.style}>
+        <div className={clsx("inline-flex flex-col", props.className)} style={props.style}>
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} {...props.slotProps?.label}>
                     {props.label}

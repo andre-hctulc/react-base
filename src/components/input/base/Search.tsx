@@ -9,11 +9,11 @@ import FormControl from "../form/FormControl";
 import Label from "../Label";
 import { InputLikeProps } from "./Input";
 import { getInputSizeClasses } from "../../../input-helpers";
-import Loading from "../../data-display/feedback/Loading";
+import Loading from "../../feedback/Loading";
 import Popover from "../../dialogs/popover/Popover";
 import Flex from "../../layout/Flex";
 import HelperText from "../../text/HelperText";
-import List from "../../data-display/list/List";
+import List from "../../layout/list/List";
 import Typography from "../../text/Typography";
 
 interface SearchProps<T = string> extends InputLikeProps<T> {
@@ -89,7 +89,7 @@ export default function Search<T = string>(props: SearchProps<T>) {
     }
 
     return (
-        <Flex className={clsx("relative min-w-0", props.className)} style={props.style}>
+        <Flex inline className={clsx("relative min-w-0", props.className)} style={props.style}>
             <FormControl ref={innerRef} required={props.required} name={props.name} type="string" value={activeOption} />
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
@@ -156,7 +156,6 @@ export default function Search<T = string>(props: SearchProps<T>) {
             </HelperText>
             <Popover
                 buffer={0}
-                cardShadow
                 noCardPadding
                 adjustMaxHeight
                 matchAnchorWidth

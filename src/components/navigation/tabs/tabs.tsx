@@ -5,9 +5,9 @@ import clsx from "clsx";
 import type { PropsOf } from "../../../types";
 import { mapChildren } from "../../../util";
 import Tab from "./Tab";
-import useMutableSearchParams from "../../../hooks/navigation/useMutableSearchParams";
+import useMutableSearchParams from "../../../hooks/document/useMutableSearchParams";
 import Toolbar from "../../layout/Toolbar";
-import useCurrentPathname from "../../../hooks/dom/useCurrentPathname";
+import useCurrentPathname from "../../../hooks/document/useCurrentPathname";
 
 interface TabsProps {
     children?: React.ReactNode;

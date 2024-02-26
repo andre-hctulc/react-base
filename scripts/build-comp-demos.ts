@@ -46,7 +46,7 @@ async function buildModuleDefs(dir: string, baseDir: string) {
 
     for (const entry of files) {
         const entryPath = path.join(dir, entry);
-        if (entry.includes("-") || checkDirExclude(entryPath) || excludeFiles.has(entry)) continue;
+        if (checkDirExclude(entryPath) || excludeFiles.has(entry)) continue;
         const stat = fs.statSync(entryPath);
         const relPath = path.join(baseDir, entry);
         if (stat.isDirectory()) await buildModuleDefs(entryPath, relPath);
@@ -74,37 +74,8 @@ export default mod;
 
     if (!fs.existsSync(baseDir)) await fs.promises.mkdir(baseDir, { recursive: true });
 
+    console.log(outPath)
     await fs.promises.writeFile(outPath, content);
-}
-
-/** Creates Assets for the demo (publicDir) including the source code and demos. */
-async function buildAssets() {
-    // - sym link code
-    const codeAssetPath = path.join(publicDir, "code");
-    if (fs.existsSync(codeAssetPath)) await fs.promises.rm(codeAssetPath, { recursive: true });
-    await fs.promises.symlink(inPath, codeAssetPath, "dir");
-
-    // - sym link demos
-
-    const demoFiles = glob(path.join(outDir, "**/*.demo.{tsx,ts}"));
-
-    // remove old demos from public ir
-    const demoPublicDir = path.join(publicDir, "demos");
-    if (fs.existsSync(demoPublicDir)) await fs.promises.rm(demoPublicDir, { recursive: true });
-
-    await Promise.all(
-        demoFiles.map(async file => {
-            const relPath = path.relative(outDir, file);
-            const outPath = path.join(demoPublicDir, relPath);
-            const baseDir = path.dirname(outPath);
-            if (!fs.existsSync(baseDir)) await fs.promises.mkdir(baseDir, { recursive: true });
-            if (fs.existsSync(outPath)) {
-                await fs.promises.unlink(outPath);
-            }
-
-            await fs.promises.symlink(file, outPath, "file");
-        })
-    );
 }
 
 /** Deletes old definitions */
@@ -118,7 +89,6 @@ async function clear() {
 async function main() {
     await clear();
     await buildModuleDefs(inPath, ".");
-    await buildAssets();
 }
 
 main();

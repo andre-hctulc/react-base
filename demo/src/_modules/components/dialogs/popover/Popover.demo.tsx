@@ -7,6 +7,10 @@ import type { DemoDef, DemoProps } from "src/types";
 import Button from "@react-base/src/components/input/buttons/Button";
 import React from "react";
 import Popover from "@react-base/src/components/dialogs/popover/Popover";
+import List from "@react-base/src/components/layout/list/List";
+import ListItem from "@react-base/src/components/layout/list/ListItem";
+import EditIcon from "@react-base/src/components/icons/collection/EditOutline";
+import DeleteIcon from "@react-base/src/components/icons/collection/TrashOutline";
 
 function PopoverDemo({ demoProps }: DemoProps) {
     const [open, setOpen] = React.useState(false);
@@ -17,11 +21,22 @@ function PopoverDemo({ demoProps }: DemoProps) {
             <Popover
                 anchor={anchor.current}
                 open={open}
+                noCardPadding
+                cardBg="default"
+                width={130}
+                cardShadow={demoProps?.cardShadow || "small"}
                 position={{ horizontal: demoProps?.horizontal, vertical: demoProps?.vertical }}
                 onClose={() => setOpen(false)}
                 {...demoProps}
             >
-                Popover Content
+                <List>
+                    <ListItem hoverEffect icon={<EditIcon />}>
+                        Bearbeiten
+                    </ListItem>
+                    <ListItem hoverEffect icon={<DeleteIcon />}>
+                        Löschen
+                    </ListItem>
+                </List>
             </Popover>
             <Button variant="outlined" ref={anchor} onClick={() => setOpen(!open)}>
                 Open{demoProps?.disablePointerEvents && "/Close"} Popover
@@ -43,6 +58,7 @@ const def: DemoDef = {
             listValues: ["left", "start", "right", "end", "center"],
         },
         { propName: "vertical", helperText: "position.vertical", type: "string", listValues: ["top", "start", "bottom", "end", "center"] },
+        { propName: "cardShadow", type: "string", listValues: ["none", "small", "medium", "large"] },
         { propName: "disablePointerEvents", type: "boolean" },
     ],
 };

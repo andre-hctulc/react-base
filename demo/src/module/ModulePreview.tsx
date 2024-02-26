@@ -31,7 +31,7 @@ export default function ModulePreview(props: ModulePreviewProps) {
     const [p, setP] = React.useState<Record<string, any>>({});
     const [activeTab, setActiveTab] = React.useState<"preview" | "code">("preview");
     const Demo = props.demo.render;
-    const codePath = "/demos/" + demoFile(props.path);
+    const codePath = "demo/src/_modules/" + demoFile(props.path);
 
     return (
         <div className={clsx("border rounded", props.className)} style={props.style}>

@@ -7,14 +7,14 @@ import Code from "../Code";
 import Chip from "@react-base/src/components/data-display/Chip";
 import React from "react";
 import ChevronUpIcon from "@react-base/src/components/icons/collection/ChevronUp";
-import Placeholder from "@react-base/src/components/data-display/feedback/Placeholder";
+import Placeholder from "@react-base/src/components/feedback/Placeholder";
 
 interface ModuleProps extends StyleProps {
     mod: ModuleDef;
 }
 
 export default function Module({ mod, ...props }: ModuleProps) {
-    const sourceCode = "/code/" + mod.path;
+    const sourceCode = "src/" + mod.path;
     const [showCode, setShowCode] = React.useState(false);
 
     return (

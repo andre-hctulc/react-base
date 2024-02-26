@@ -1,14 +1,13 @@
 import clsx from "clsx";
 import type { LinkProps } from "../../../types";
 import Avatar from "../avatar/Avatar";
-import Skeleton from "../feedback/Skeleton";
 import LaunchIcon from "../../icons/collection/Launch";
 import IconButton from "../../input/buttons/IconButton";
 import Flex from "../../layout/Flex";
-import LinkContainer from "../../navigation/links/LinkContainer";
+import LinkContainer from "../../navigation/LinkContainer";
 import Styled from "../../others/Styled";
 import Typography from "../../text/Typography";
-import Unit from "../../../../../../projects/webapp/src/components/text/Unit";
+import Skeleton from "../../feedback/Skeleton";
 
 interface StatProps {
     value: any;
@@ -40,7 +39,11 @@ export default function Stat(props: StatProps) {
                     <Skeleton minWidth={25} active={props.value != null}>
                         <span className="flex flex-row items-end">
                             <Typography className="font-bold">{props.value + ""}</Typography>
-                            {props.unit && <Unit className="ml-1">{props.unit}</Unit>}
+                            {props.unit && (
+                                <Typography secondary variant="caption" className="ml-1">
+                                    {props.unit}
+                                </Typography>
+                            )}
                         </span>
                     </Skeleton>
                     {props.href && (

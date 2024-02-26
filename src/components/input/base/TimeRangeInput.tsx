@@ -47,7 +47,7 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
     }
 
     return (
-        <div className={clsx("flex flex-col", props.className)} style={props.style}>
+        <div className={clsx("inline-flex flex-col", props.className)} style={props.style}>
             {/* Form Control */}
             {props.name && <input type="hidden" value={formValue} required={props.required} disabled={disabled} readOnly={readOnly} name={props.name} />}
             {props.label && (

@@ -3,6 +3,7 @@
 import clsx from "clsx";
 import React from "react";
 import { mapChildren } from "../../../util";
+import { Size } from "../../../types";
 
 interface ToggleButtonGroupProps {
     value: string;
@@ -11,6 +12,7 @@ interface ToggleButtonGroupProps {
     className?: string;
     onChange?: (newValue: string) => void;
     noBorder?: boolean;
+    size?: Size;
     noBorderRadius?: boolean;
 }
 
@@ -20,7 +22,7 @@ interface ToggleButtonGroupProps {
  * @returns
  */
 export default function ToggleButtonGroup(props: ToggleButtonGroupProps) {
-    const children = mapChildren(props.children, (child) => {
+    const children = mapChildren(props.children, child => {
         const buttonValue = child.props.value;
         const active = buttonValue === props.value;
         const onClick = (...args: any) => {
@@ -28,13 +30,13 @@ export default function ToggleButtonGroup(props: ToggleButtonGroupProps) {
             props.onChange?.(buttonValue);
         };
 
-        return { props: { ...child.props, active, onClick, noBorder: true } };
+        return { props: { ...child.props, active, size: child.props.size ?? props.size, onClick, noBorder: true } };
     });
 
     return (
         <div
             className={clsx(
-                "ToggleButtonGroup flex flex-row self-start overflow-hidden flex-shrink-0",
+                "ToggleButtonGroup inline-flex flex-row self-start overflow-hidden flex-shrink-0",
                 !props.noBorderRadius && "rounded",
                 !props.noBorder && "border",
                 props.className

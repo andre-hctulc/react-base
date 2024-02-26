@@ -25,17 +25,23 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props: 
         outlined: ["", !props.disabled && "hover:bg-bg-dark/40 active:bg-bg-dark/80"],
         contained: ["border bg-bg-paper", !props.disabled && "hover:bg-bg-paper2 active:bg-bg-paper3"],
     });
-    const classes = clsx(
-        "rounded-lg p-1 aspect-square flex-shrink-0 box-border cusror-pointer",
-        sizeClasses,
-        props.disabled && "!cursor-default",
-        variantClasses,
-        props.className
-    );
 
     return (
-        <button type={props.type || "button"} disabled={props.disabled} ref={ref} className={classes} onClick={props.onClick} style={props.style}>
-            <Styled className="m-auto" disabled={props.disabled} size={props.iconSize || iconSize}>
+        <button
+            type={props.type || "button"}
+            disabled={props.disabled}
+            ref={ref}
+            className={clsx(
+                "IconButton inline-flex items-center justify-center rounded-lg aspect-square flex-shrink-0 box-border",
+                sizeClasses,
+                props.disabled && "!cursor-default",
+                variantClasses,
+                props.className
+            )}
+            onClick={props.onClick}
+            style={props.style}
+        >
+            <Styled disabled={props.disabled} size={props.iconSize || iconSize}>
                 {props.children}
             </Styled>
         </button>

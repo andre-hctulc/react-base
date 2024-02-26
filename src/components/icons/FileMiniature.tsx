@@ -1,26 +1,24 @@
 import clsx from "clsx";
 import React from "react";
-import type { ImageComponentProps, PropsOf } from "../../types";
+import type { ImageComponentProps, PropsOf, StyleProps } from "../../types";
 import { setRef } from "../../util";
 import Typography from "../text/Typography";
-import FileEmblem from "./FileEmblem";
 import Styled from "../others/Styled";
 import Flex from "../layout/Flex";
 
-interface FileMiniatureProps {
-    icon?: React.ReactElement;
-    className?: string;
-    style?: React.CSSProperties;
+interface FileMiniatureProps extends StyleProps {
+    icon: React.ReactElement;
     onClick?: React.MouseEventHandler<Element>;
     onTextClick?: React.MouseEventHandler<HTMLSpanElement>;
     children?: React.ReactNode;
-    /** Wird verwendet, um dsa File Icon zu bestimmen und als `text` */
     fileName: string;
     /** defaults to `fileName` */
     text?: React.ReactNode;
     hoverEffect?: boolean;
     slotProps?: { text?: PropsOf<typeof Typography> };
     imageComponent?: React.ComponentType<ImageComponentProps>;
+    tag?: string;
+    block?: boolean;
 }
 
 const size = 80;
@@ -51,15 +49,18 @@ const FileMiniature = React.forwardRef<HTMLDivElement, FileMiniatureProps>((prop
     return (
         <Flex
             onClick={props.onClick}
-            ref={r => {
-                setRef(anchor, r);
-                setRef<any>(ref, r);
-            }}
-            className={clsx("rounded flex-shrink-0", props.hoverEffect && "hover:bg-action-hover", props.onClick && "cursor-pointer")}
+            ref={r => setRef<HTMLDivElement | null>(r as any, anchor, ref)}
+            tag={props.tag}
+            className={clsx(
+                "rounded flex-shrink-0",
+                props.block ? "block" : "inline-block",
+                props.hoverEffect && "hover:bg-action-hover",
+                props.onClick && "cursor-pointer"
+            )}
             style={{ ...props.style, width: size, height: size, maxHeight: size, maxWidth: size }}
         >
             <Flex align="center" justify="center" grow className="overflow-hidden py-auto">
-                <Styled size={iconSize}>{props.icon || <FileEmblem imageComponent={props.imageComponent} fileName={props.fileName} />}</Styled>
+                <Styled size={iconSize}>{props.icon}</Styled>
             </Flex>
             <Flex minW0 minH0 direction="row" align="center" justify="center" style={{ height: textSize, maxHeight: textSize }}>
                 <Typography

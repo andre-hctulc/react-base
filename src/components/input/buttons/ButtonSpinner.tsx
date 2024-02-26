@@ -1,5 +1,5 @@
 import type { PropsOf } from "../../../types";
-import Spinner from "../../data-display/feedback/Spinner";
+import Spinner from "../../feedback/Spinner";
 
 interface ButtonSpinnerProps extends PropsOf<typeof Spinner> {}
 

@@ -64,6 +64,7 @@ interface MarkdownProps {
     components?: Components;
 }
 
+/** Requires npm's _react-markdown_ */
 export default function Markdown(props: MarkdownProps) {
     return (
         <div className={clsx("Markdown", props.className)} style={props.style}>

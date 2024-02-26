@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import React from "react";
 import Label from "../Label";
-import type{ InputLikeProps } from "./Input";
+import type { InputLikeProps } from "./Input";
 import { useFormInput } from "../form/JSForm";
 import { PropsOf } from "../../../types";
 import { setRef } from "../../../util";
@@ -31,7 +31,7 @@ const TextArea = React.forwardRef<HTMLDivElement, TextAreaProps>((props, ref) =>
     };
 
     return (
-        <div className={clsx("flex flex-col", props.className)} style={props.style} ref={ref}>
+        <div className={clsx("inline-flex flex-col", props.className)} style={props.style} ref={ref}>
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
                     {props.label}
@@ -39,11 +39,7 @@ const TextArea = React.forwardRef<HTMLDivElement, TextAreaProps>((props, ref) =>
             )}
             <textarea
                 {...props.slotProps?.textarea}
-                ref={textarea => {
-                    setRef(innerRef, textarea);
-                    setRef(props.inputRef, textarea);
-                    setRef(ref, textarea as any);
-                }}
+                ref={textarea => setRef(textarea, innerRef, props.inputRef)}
                 placeholder={props.placeholder}
                 className={clsx("flex-grow transition duration-90 min-h-0", props.noBorder && "!border-0", props.slotProps?.textarea?.className)}
                 onChange={handleChange}

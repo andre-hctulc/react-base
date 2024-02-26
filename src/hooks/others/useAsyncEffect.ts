@@ -1,16 +1,16 @@
 import React from "react";
 
-export function useAsyncEffect<T>(effect: () => T | Promise<T>, then: (result: T) => void, deps: React.DependencyList) {
+export function useAsyncEffect<T>(effect: () => Promise<T>, then: (result: T) => void, deps: React.DependencyList, error?: (err: unknown) => void) {
     React.useEffect(() => {
-        const res = effect();
-
         let interrupted = false;
 
-        if (res instanceof Promise) {
-            res.then(result => {
+        effect()
+            .then(result => {
                 if (!interrupted) then(result);
+            })
+            .catch(err => {
+                if (!interrupted) error?.(err);
             });
-        } else then(res);
 
         return () => {
             interrupted = true;

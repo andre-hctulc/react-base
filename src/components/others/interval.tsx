@@ -1,7 +1,7 @@
-import { useInterval } from "usehooks-ts";
+import useInterval from "../../hooks/document/useInterval";
 
 interface IntervalProps {
-    onUpdate: () => void;
+    callback: () => void;
     /** @default 1000 */
     delay?: number;
 }
@@ -9,7 +9,7 @@ interface IntervalProps {
 /** Ermöglicht conditional mounting für Intervalle. */
 export default function Interval(props: IntervalProps) {
     useInterval(() => {
-        props.onUpdate();
+        props.callback();
     }, props.delay || 1000);
     return <></>;
 }

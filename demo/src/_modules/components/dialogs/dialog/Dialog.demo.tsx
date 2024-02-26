@@ -13,7 +13,7 @@ import DialogContent from "@react-base/src/components/dialogs/dialog/DialogConte
 import DialogFooter from "@react-base/src/components/dialogs/dialog/DialogFooter";
 import DialogHeader from "@react-base/src/components/dialogs/dialog/DialogHeader";
 import DocumentOutlineIcon from "@react-base/src/components/icons/collection/DocumentOutline";
-import Alert from "@react-base/src/components/data-display/alerts/Alert";
+import Alert from "@react-base/src/components/feedback/alerts/Alert";
 
 function DialogDemo({ demoProps }: DemoProps) {
     const [open, setOpen] = React.useState(false);

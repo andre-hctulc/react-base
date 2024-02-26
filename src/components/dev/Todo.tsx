@@ -1,12 +1,12 @@
 "use client";
 
-import Alert from "../data-display/alerts/Alert";
-import AlertTitle from "../data-display/alerts/AlertTitle";
+import Alert from "../feedback/alerts/Alert";
+import AlertTitle from "../feedback/alerts/AlertTitle";
 import Dev from "./Dev";
 
 interface TodoProps {
     className?: string;
-    style?: React.CSSProperties
+    style?: React.CSSProperties;
     children?: React.ReactNode;
 }
 

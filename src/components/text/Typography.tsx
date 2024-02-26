@@ -21,8 +21,10 @@ interface TypographyProps extends StyleProps, ParentProps, DragEventProps, Mouse
     fontWeight?: React.CSSProperties["fontWeight"];
     noMargin?: boolean;
     underline?: boolean;
-    /** @default inline */
+    // Siehe https://tailwindcss.com/docs/display
+    /** @default "block" */
     dispaly?: "inline" | "inline_block" | "block";
+    fontSize?: number;
 }
 
 const Typography = React.forwardRef<Element, TypographyProps>((props, ref) => {
@@ -37,13 +39,13 @@ const Typography = React.forwardRef<Element, TypographyProps>((props, ref) => {
             h4: [["text-[19px] font-medium", !props.noMargin && "my-2"], "h4"],
             h5: [["text-[16px] font-medium", !props.noMargin && "my-2"], "h5"],
             h6: [["text-[15px] font-medium", !props.noMargin && "my-2"], "h6"],
-            caption: ["text-xs", "p"],
+            caption: ["text-xs", "p", "inline_block"],
             subtitle1: ["text-xl", "h5"],
             subtitle2: ["text-[18.5px]", "h6"],
         },
-        ["text-base", "p"]
+        ["text-base", "p", "inline_block"]
     );
-    const display = collapse(props.dispaly || "inline", {
+    const display = collapse(props.dispaly || "block", {
         inline: "inline",
         inline_block: "inline-block",
         block: "block",
@@ -69,7 +71,7 @@ const Typography = React.forwardRef<Element, TypographyProps>((props, ref) => {
                 props.long && "break-words overflow-auto scrollbar-hidden whitespace-normal max-w-full",
                 props.className
             )}
-            style={{ fontWeight: props.fontWeight, ...props.style }}
+            style={{ fontWeight: props.fontWeight, fontSize: props.fontSize, ...props.style }}
             {...eventProps(props)}
             draggable={props.draggable}
         >

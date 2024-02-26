@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
-import { collapse, collapseWeak } from "../../util";
-import type { ParentProps, StyleProps } from "../../types";
+import { alignClass, collapse, collapseWeak } from "../../util";
+import type { ParentProps, Size, StyleProps } from "../../types";
 
 interface ToolbarProps extends StyleProps, ParentProps {
     id?: string;
@@ -11,30 +11,26 @@ interface ToolbarProps extends StyleProps, ParentProps {
     justify?: "start" | "end" | "center";
     grow?: boolean;
     /** @default "small" */
-    padding?: "none" | "small" | "large";
+    padding?: "none" | Size;
     borderTop?: boolean;
     borderBottom?: boolean;
     /** @default "horizontal"  */
     variant?: "flow" | "horizontal" | "vertical";
+    /** @default "none" for variant flow, "center" otherwise */
+    align?: "start" | "end" | "center" | "none";
 }
 
 const Toolbar = React.forwardRef<HTMLElement, ToolbarProps>((props, ref) => {
-    const paddingClasses = collapse(props.padding || "small", { none: "", small: "p-1", large: "px-3 py-2" });
+    const paddingClasses = collapse(props.padding || "small", { none: "", small: "p-1", medium: "p-2", large: "p-3" });
     const variant = props.variant || "horizontal";
     const variantClasses = collapse(variant, {
-        horizontal: "items-center flex flex-row overflow-x-auto",
-        vertical: "items-center flex flex-col overflow-y-auto",
+        horizontal: "flex flex-row overflow-x-auto",
+        vertical: "flex flex-col overflow-y-auto",
         flow: "flex flex-wrap",
     });
+    const align = alignClass(props.align || (props.variant === "flow" ? "none" : "center"));
     const spacing = props.spacing || "medium";
-    const spacingClass =
-        spacing === "none"
-            ? null
-            : variant === "flow"
-            ? collapseWeak(spacing, { medium: "gap-2", small: "gap-[4px]", large: "gap-3.5" })
-            : variant === "horizontal"
-            ? collapseWeak(spacing, { medium: "space-x-2", small: "space-x-[4px]", large: "space-x-3.5" })
-            : collapseWeak(spacing, { medium: "space-y-2", small: "space-y-[4px]", large: "space-y-3.5" });
+    const spacingClass = collapseWeak(spacing, { small: "gap-1", medium: "gap-2", large: "gap-3" });
     const justifyClass = collapseWeak(props.justify, { start: "justify-start", end: "justify-end", center: "justify-center" });
     const Comp: any = props.tag || "div";
 
@@ -43,7 +39,8 @@ const Toolbar = React.forwardRef<HTMLElement, ToolbarProps>((props, ref) => {
             id={props.id}
             ref={ref}
             className={clsx(
-                "pointer-events-auto flex-shrink-0",
+                "scrollbar-hidden pointer-events-auto flex-shrink-0",
+                align,
                 variantClasses,
                 spacingClass,
                 paddingClasses,

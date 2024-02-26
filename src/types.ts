@@ -1,3 +1,5 @@
+export type Falsy = null | undefined | "" | 0 | false;
+
 // NOTE: declaration merging not possible with union  types
 /** Allows declaration merging  */
 export interface ThemeColorMap {

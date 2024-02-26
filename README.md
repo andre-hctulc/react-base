@@ -205,4 +205,4 @@ There is 3 text colors and 3 background colors:
 </>
 ```
 
-_For most cases you can use the_ `Typography` _component for text display which handles text color via props_
+_For most cases you can use the_ `Typography` _component for text_

@@ -1,0 +1,17 @@
+@tailwind utilities;
+
+@layer utilities {
+    .scrollbar-hidden {
+        scrollbar-width: none; /* Firefox */
+        overflow: auto; /* Chrome, Safari, and Opera */
+    }
+
+    /* For Firefox */
+    .scrollbar-hidden::-webkit-scrollbar {
+        width: 0.5em;
+    }
+
+    .scrollbar-hidden::-webkit-scrollbar-thumb {
+        background-color: none;
+    }
+}

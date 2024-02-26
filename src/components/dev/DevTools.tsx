@@ -7,7 +7,7 @@ import ExpandIcon from "../icons/collection/Expand";
 import Toolbar from "../layout/Toolbar";
 import Tab from "../navigation/tabs/Tab";
 import Tabs from "../navigation/tabs/tabs";
-import { useDev } from "../../contexts/DevProvider";
+import { useDev } from "./DevProvider";
 
 type Position = "top_left" | "top_right" | "bottom_left" | "bottom_right";
 
@@ -22,7 +22,7 @@ const height = 300;
 const width = 300;
 
 export default function DevTools(props: DevToolsProps) {
-    const { devMode } = useDev(); 
+    const { devMode } = useDev();
     // TODO
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [position, setPosition] = React.useState<Position>(props.position || "top_right");

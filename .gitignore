@@ -2,8 +2,6 @@
 **/.DS_Store
 **/*.code-worksapce
 **/node_modules
-demo/public/*
-!demo/public/
-.eslintrc.c.js
-Todo.md
 demo/src/_modules/**/*.def*.{ts,tsx,css}
+Todo.md
+Dev.md

@@ -1,70 +1,14 @@
 "use client";
 
-import useElement from "../../../hooks/dom/useElement";
+import useElement from "../../../hooks/document/useElement";
 import clsx from "clsx";
-import Card from "../../layout/cards/Card";
+import Card from "../../layout/Card";
 import Overlay from "../../layout/overlays/Overlay";
 import React from "react";
-import { setRef } from "../../../util";
+import { collapse, setRef } from "../../../util";
 import { PropsOf } from "../../../types";
 
 type PopoverPosition = { horizontal: "left" | "start" | "right" | "end" | "center"; vertical: "top" | "start" | "bottom" | "end" | "center" };
-
-export interface PopoverProps {
-    style?: React.CSSProperties;
-    className?: string;
-    children?: React.ReactNode;
-    open: boolean;
-    anchor: Element | undefined | null;
-    slotProps?: { card?: PropsOf<typeof Card> };
-    onClose?: React.MouseEventHandler<HTMLDivElement>;
-    disablePointerEvents?: boolean;
-    /** @default { horizontal: "start", vertical: "bottom" } */
-    position?: Partial<PopoverPosition>;
-    // * Width
-    matchAnchorWidth?: boolean;
-    matchAnchorMinWidth?: boolean;
-    // * Card
-    noCardPadding?: boolean;
-    cardShadow?: boolean;
-    // width
-    width?: number;
-    minWidth?: number;
-    maxWidth?: number;
-    // height
-    height?: number;
-    minHeight?: number;
-    maxHeight?: number;
-    adjustMaxHeight?: boolean;
-    adjustMaxWidth?: boolean;
-    noCardBorder?: boolean;
-    cardVariant?: PropsOf<typeof Card>["variant"];
-    noCardBg?: boolean;
-    cardRef?: React.ForwardedRef<Element>;
-    // * Popover
-    /** @default true */
-    invisible?: boolean;
-    /**
-     * Hat nur einnen Effekt, wenn `invisible=false` ist.
-     * @default true
-     * */
-    blurEffect?: boolean;
-    /** @default true */
-    portal?: boolean;
-    // * Mindestabstände
-    /**
-     * Mindestabstand der `Card` zum `anchor`
-     * @default 5
-     * */
-    buffer?: number;
-    /**
-     * Mindestabstand der `Card` zum Window-Rand
-     * @default 5
-     * */
-    edgeBuffer?: number;
-    /** @default true */
-    flipPosition?: boolean;
-}
 
 type Margins = { mr: number; ml: number; mt: number; mb: number };
 
@@ -229,6 +173,63 @@ function flipPosition(expectedSize: { height: number; width: number }, pos: Popo
             break;
     }
 }
+export interface PopoverProps {
+    style?: React.CSSProperties;
+    className?: string;
+    children?: React.ReactNode;
+    open: boolean;
+    anchor: Element | undefined | null;
+    slotProps?: { card?: PropsOf<typeof Card> };
+    onClose?: React.MouseEventHandler<HTMLDivElement>;
+    disablePointerEvents?: boolean;
+    /** @default { horizontal: "start", vertical: "bottom" } */
+    position?: Partial<PopoverPosition>;
+    // * Width
+    matchAnchorWidth?: boolean;
+    matchAnchorMinWidth?: boolean;
+    // * Card
+    noCardPadding?: boolean;
+    /** @default "md" */
+    cardShadow?: PropsOf<typeof Card>["shadow"];
+    // width
+    width?: number;
+    minWidth?: number;
+    maxWidth?: number;
+    // height
+    height?: number;
+    minHeight?: number;
+    maxHeight?: number;
+    adjustMaxHeight?: boolean;
+    adjustMaxWidth?: boolean;
+    noCardBorder?: boolean;
+    cardVariant?: PropsOf<typeof Card>["variant"];
+    /** @default "paper" */
+    cardBg?: "transparent" | "paper" | "default";
+    cardRef?: React.ForwardedRef<Element>;
+    // * Popover
+    /** @default true */
+    invisible?: boolean;
+    /**
+     * Hat nur einnen Effekt, wenn `invisible=false` ist.
+     * @default true
+     * */
+    blurEffect?: boolean;
+    /** @default true */
+    portal?: boolean;
+    // * Mindestabstände
+    /**
+     * Mindestabstand der `Card` zum `anchor`
+     * @default 5
+     * */
+    buffer?: number;
+    /**
+     * Mindestabstand der `Card` zum Window-Rand
+     * @default 5
+     * */
+    edgeBuffer?: number;
+    /** @default true */
+    flipPosition?: boolean;
+}
 
 const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
     const [cardRef, setCardRef] = React.useState<Element | null>(null);
@@ -236,6 +237,7 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
     const card = useElement(cardRef);
     const buffer = props.buffer ?? 5;
     const edgeBuffer = props.edgeBuffer ?? 5;
+    const bg = collapse(props.cardBg || "paper", { transparent: "!bg-transparent", paper: "", default: "!bg-bg" });
     const cardStyle = React.useMemo<
         Pick<React.CSSProperties, "top" | "bottom" | "right" | "left" | "height" | "minHeight" | "maxHeight" | "width" | "minWidth" | "maxWidth">
     >(() => {
@@ -293,7 +295,7 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
         >
             <Card
                 border={!props.noCardBorder}
-                shadow={props.cardShadow}
+                shadow={props.cardShadow || "medium"}
                 {...props.slotProps?.card}
                 onClick={e => {
                     e.stopPropagation();
@@ -308,17 +310,11 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
                             ? "hidden"
                             : undefined,
                 }}
-                className={clsx(
-                    "absolute pointer-events-auto max-h-full",
-                    props.noCardBg && "!bg-transparent",
-                    props.noCardPadding && "!p-0",
-                    props.slotProps?.card?.className
-                )}
+                className={clsx("absolute pointer-events-auto max-h-full", bg, props.noCardPadding && "!p-0", props.slotProps?.card?.className)}
                 ref={element => {
                     setCardRef(element);
                     //setRef(cardRef, element);
-                    setRef<any>(props.cardRef, element);
-                    setRef<any>(props.slotProps?.card?.ref, element);
+                    setRef<any>(element, props.slotProps?.card?.ref, props.cardRef);
                 }}
                 variant={props.cardVariant || props.slotProps?.card?.variant || "contained"}
             >

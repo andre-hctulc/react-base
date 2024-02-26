@@ -2,13 +2,13 @@
 
 import clsx from "clsx";
 import React from "react";
-import Loading from "./feedback/Loading";
 import XIcon from "../icons/collection/X";
 import IconButton from "../input/buttons/IconButton";
 import Pagination from "../navigation/Pagination";
-import Placeholder from "./feedback/Placeholder";
-import { useDev } from "../../contexts/DevProvider";
+import { useDev } from "../dev/DevProvider";
 import Typography from "../text/Typography";
+import Loading from "../feedback/Loading";
+import Placeholder from "../feedback/Placeholder";
 
 export type CellChangeListener<M = any> = (rowParams: GridRowParams<M>, data: any) => void;
 

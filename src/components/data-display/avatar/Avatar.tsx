@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import React from "react";
-import Skeleton from "../feedback/Skeleton";
-import { DynamicSize, ImageComponentProps } from "../../../types";
+import { ImageComponentProps, XDynamicSize } from "../../../types";
 import { getSize } from "../../../util";
+import Skeleton from "../../feedback/Skeleton";
 
 interface AvatarProps {
     className?: string;
     style?: React.CSSProperties;
-    size?: DynamicSize;
+    size?: XDynamicSize;
     children?: React.ReactNode;
     src?: string;
     onClick?: React.MouseEventHandler<HTMLDivElement>;
@@ -16,10 +16,10 @@ interface AvatarProps {
     imageCompoent?: React.ComponentType<ImageComponentProps>;
 }
 
-export const avatarSizeMap = { small: 25, medium: 32, large: 40 };
+export const avatarSizeMap = { xsmall: 25, small: 32, medium: 42, large: 55, xlarge: 70 };
 
 const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
-    const size = getSize(avatarSizeMap, props.size || "medium");
+    const size = getSize(props.size || "medium", avatarSizeMap);
 
     if (props.loading)
         return <Skeleton onClick={props.onClick} ref={ref} className={props.className} style={{ height: size, width: size, ...props.style }} variant="circular" />;
@@ -30,7 +30,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
         <div
             ref={ref}
             className={clsx(
-                "flex flex-col justify-center items-center rounded-full bg-bg-dark/40 p-1 flex-shrink-0 overflow-hidden transition duration-300",
+                "inline-flex flex-col justify-center items-center rounded-full bg-bg-dark/40 p-1 flex-shrink-0 overflow-hidden transition duration-300",
                 props.className
             )}
             style={{ height: size, width: size, ...props.style }}

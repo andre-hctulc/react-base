@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { LinkProps, ParentProps, StyleProps } from "../../../types";
-import ListItem from "../../data-display/list/ListItem";
+import ListItem from "../../layout/list/ListItem";
 import ChevronRightIcon from "../../icons/collection/ChevronRight";
 import TreeView, { TreeViewStruct } from "./TreeView";
 import { hasChildren } from "../../../util";

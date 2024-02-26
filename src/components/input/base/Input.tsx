@@ -66,7 +66,7 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     };
 
     return (
-        <div className={clsx("flex flex-col flex-shrink-0", props.fullWidth && "w-full", props.className)} style={props.style} ref={ref}>
+        <div className={clsx("inline-flex flex-col flex-shrink-0", props.fullWidth && "w-full", props.className)} style={props.style} ref={ref}>
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
                     {props.label}
@@ -74,10 +74,7 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
             )}
             <input
                 {...props.slotProps?.input}
-                ref={inp => {
-                    setRef(innerRef, inp);
-                    setRef(props.inputRef, inp as any);
-                }}
+                ref={inp => setRef(inp, innerRef, props.inputRef)}
                 pattern={props.pattern}
                 placeholder={props.placeholder}
                 type={props.type}

@@ -25,6 +25,7 @@ interface FlexProps extends StyleProps, ParentProps, MouseEventProps, KeyboardEv
     colGap?: number;
     wrap?: boolean;
     basis?: number;
+    inline?: boolean;
 }
 
 const Flex = React.forwardRef<Element, FlexProps>((props, ref) => {
@@ -36,7 +37,7 @@ const Flex = React.forwardRef<Element, FlexProps>((props, ref) => {
         <Comp
             id={props.id}
             className={clsx(
-                "flex",
+                props.inline ? "inline-flex" : "flex",
                 props.direction === "row" ? (props.reverse ? "flex-row-reverse" : "flex-row") : props.reverse ? "flex-col-reverse" : "flex-col",
                 props.grow && "flex-grow",
                 props.minH0 && "min-h-0",

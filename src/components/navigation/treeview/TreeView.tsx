@@ -1,7 +1,7 @@
 import React from "react";
 import type { ParentProps, PartialPropsOf, StyleProps } from "../../../types";
-import List from "../../data-display/list/List";
 import TreeViewItem from "./TreeViewItem";
+import List from "../../layout/list/List";
 
 export type TreeViewStruct = Record<string, { props?: PartialPropsOf<typeof TreeViewItem>; children?: TreeViewStruct }>;
 

@@ -58,7 +58,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     };
 
     return (
-        <div className={clsx("flex flex-col flex-shrink-0", props.className)} style={props.style} ref={ref}>
+        <div className={clsx("inline-flex flex-col flex-shrink-0", props.className)} style={props.style} ref={ref}>
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
                     {props.label}
@@ -66,10 +66,7 @@ const TimeInput = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
             )}
             <input
                 {...props.slotProps?.input}
-                ref={inp => {
-                    setRef(innerRef, inp);
-                    setRef(ref, inp as any);
-                }}
+                ref={inp => setRef<HTMLInputElement | null>(inp, props.inputRef, innerRef)}
                 placeholder={props.placeholder}
                 className={clsx("transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses, props.slotProps?.input?.className)}
                 type={inpType}
