@@ -1,7 +1,7 @@
 // Comp
 
 export interface DemoProps {
-    demoProps?: Record<string, any>;
+    demoProps: Record<string, any>;
 }
 
 export type PropDef = {

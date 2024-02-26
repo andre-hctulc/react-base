@@ -31,11 +31,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
         props: {
             ...props.children.props,
         },
-        ref: (element: any) => {
-            // info("Child ref");
-            setRef(childRef, element);
-            setRef(props.childRef, element);
-        },
+        ref: (element: any) => setRef(element, childRef, props.childRef),
     });
     const [open, setOpen] = React.useState(false);
     const closeTimeout = React.useRef<NodeJS.Timeout>();

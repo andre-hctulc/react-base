@@ -18,7 +18,7 @@ interface IconButtonProps {
     type?: "submit" | "reset" | "button" | undefined;
 }
 
-const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props: IconButtonProps, ref) => {
+const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
     // Diese Größen sollten mit denen von `ToggleIconButton` übereinstimmen!
     const [sizeClasses, iconSize] = collapse(props.size || "medium", { small: ["w-6 h-6", 14], medium: ["w-8 h-8", 17], large: ["w-10 h-10", 20] }, []);
     const variantClasses = collapse(props.variant || "outlined", {
