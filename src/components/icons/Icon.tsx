@@ -29,13 +29,13 @@ const Icon = React.forwardRef<SVGElement, IconProps & { children: React.ReactEle
     return React.cloneElement(props.children, {
         ref,
         className: clsx(
-            "flex-shrink-0 transition",
+            "flex-shrink-0 transition-all",
             props.block ? "block" : "inline-block",
             props.disabled ? "text-text-disabled" : text,
             props.className,
             props.children.props.className
         ),
-        style: { width: size, height: size, rotate: props.rotate && props.rotate + "deg", ...props.style, ...props.children.props.style },
+        style: { width: size, height: size, rotate: props.rotate !== undefined ? props.rotate + "deg" : undefined, ...props.style, ...props.children.props.style },
         // onClick: props.onClick || props.children.props.onClick,
         draggable: props.draggable,
         ...eventProps(props),
