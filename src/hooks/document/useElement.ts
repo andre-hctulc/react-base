@@ -1,14 +1,11 @@
 import React from "react";
 
 interface ObservedElement extends ResizeObserverEntry {
-    /** Berechnet unteranderem die absolute Position im Viewport. Diese wird nicht observiert! */
     rect: () => DOMRect;
 }
 
 /**
- * Benutzt `ResizeObserver`, um das `element` zu beobachten. Es ändert sich der Return-Wert (`ObservedElement`) immer, wenn das `element` seine Größe ändert.
- * @param element Das Element, das beaobachtet werden soll
- * @returns `ObservedElement`. Achtung: Die `ObservedElement.contentRect.x|y` sind relativ und `ObservedElement.contentRect.width|height` beinhalten hier kein Padding oder Sonstiges! Dafür sollte man `ObservedElement.rect()` verwenden.
+ * Uses `ResizeObserver`, to observe `element`.
  * */
 export default function useElement(element: Element | null | undefined): ObservedElement | null {
     const [observed, setObserved] = React.useState<ObservedElement | null>(null);

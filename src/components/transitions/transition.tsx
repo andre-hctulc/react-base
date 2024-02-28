@@ -2,6 +2,7 @@
 
 import React from "react";
 import { CSSTransition } from "react-transition-group";
+import { setRef } from "../../util";
 
 interface TransitionProps {
     children: React.ReactElement;
@@ -12,13 +13,16 @@ interface TransitionProps {
 }
 
 /**
- * Das child element muss seine ref weitergeben.
- *
- * Der `timeout` sollte in der Regel mit der transition duration in den CSS transition classes übereinstimmen.
+ * The children must forward its ref
  * */
 export default function Transition(props: TransitionProps) {
     const ref = React.useRef(null);
-    const child = React.cloneElement(props.children, { ...props.children.props, ref: ref });
+    const child = React.cloneElement(props.children, {
+        ...props.children.props,
+        ref: (r: any) => {
+            setRef(r, ref, props.children.props.ref);
+        },
+    });
 
     return (
         <CSSTransition unmountOnExit={props.unmountOnExit} nodeRef={ref} timeout={props.timeout || 0} in={props.in} classNames={props.transitionName}>

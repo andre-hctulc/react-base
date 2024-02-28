@@ -20,15 +20,15 @@ _tailwind.config.ts_
 import type { Config } from "tailwindcss";
 import setup from "@react-base/setup";
 
-const config: Config = {
-    content: ["@react-base/src/**/*", ...],
+const config: Config =
+
+export default setup({
+    content: ["path_to_react-base/src/**/*", ...],
     theme: {
         ...
     },
     ...
-};
-
-export default setup(config);
+});
 ```
 
 **2.** Start writing components
