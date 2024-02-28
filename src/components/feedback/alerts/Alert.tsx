@@ -70,7 +70,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
             </Styled>
             <div className="flex flex-grow flex-col pl-3 py-[9px] text-[#00000099] text-sm">{props.children}</div>
             {props.onClose && (
-                <IconButton size="small" onClick={props.onClose} className="ml-2mt-[7.5px]">
+                <IconButton size="small" onClick={props.onClose} className="ml-2 mt-[7.5px]">
                     <XIcon className="text-opacity-50" />
                 </IconButton>
             )}

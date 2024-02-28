@@ -6,12 +6,20 @@ import type { DemoDef, DemoProps } from "src/types";
 
 import Button from "@react-base/src/components/input/buttons/Button";
 import { useAlerts } from "@react-base/src/components/feedback/alerts/AlertsProvider";
+import { themeColors } from "../../../../helpers";
 
 function ButtonDemo({ demoProps }: DemoProps) {
     const { info } = useAlerts();
 
     return (
-        <Button color={demoProps?.color} variant={demoProps?.variant} size={demoProps?.size} onClick={() => info("Button clicked")} className="m-4" {...demoProps}>
+        <Button
+            color={demoProps?.color}
+            variant={demoProps?.variant}
+            size={demoProps?.size}
+            onClick={() => info("Button clicked")}
+            className="m-4"
+            {...demoProps}
+        >
             Click Me!
         </Button>
     );
@@ -25,7 +33,7 @@ const def: DemoDef = {
     demoProps: [
         { propName: "variant", type: "string", listValues: ["contained", "text", "outlined"] },
         { propName: "size", type: "string", listValues: ["small", "medium", "large"] },
-        { propName: "color", type: "string", listValues: ["primary", "error", "success"] },
+        { propName: "color", type: "string", listValues: themeColors },
     ],
 };
 
