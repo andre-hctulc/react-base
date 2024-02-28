@@ -29,7 +29,11 @@ interface SearchProps<T = string> extends InputLikeProps<T> {
     emptyText?: string;
     name?: string;
     placeholder?: string;
-    slotProps?: { input?: Omit<PropsOf<"input">, "onChange" | "onFocus" | "onBlur">; optionWrapper?: PropsOf<"div">; popover?: Partial<PropsOf<typeof Popover>> };
+    slotProps?: {
+        input?: Omit<PropsOf<"input">, "onChange" | "onFocus" | "onBlur">;
+        optionWrapper?: PropsOf<"div">;
+        popover?: Partial<PropsOf<typeof Popover>>;
+    };
     maxLength?: number;
     onOpen?: () => void;
     onClose?: () => void;

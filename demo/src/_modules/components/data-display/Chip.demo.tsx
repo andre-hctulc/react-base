@@ -29,7 +29,7 @@ const def: DemoDef = {
         {
             propName: "variant",
             type: "string",
-            listValues: ["contained", "outlined"],
+            listValues: ["contained", "outlined", "pale"],
         },
     ],
 };

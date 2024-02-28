@@ -150,7 +150,12 @@ export default function Select<T = string>(props: SelectProps<T>) {
             >
                 <List onActivateOption={(e, opt) => changeValue(opt.value)} options={props.options}>
                     {emptyOption && (
-                        <ListItem icon={emptyOption.icon} className={emptyOption.className} hoverEffect onClick={() => changeValue(emptyOption.value)}>
+                        <ListItem
+                            icon={emptyOption.icon}
+                            className={emptyOption.className}
+                            hoverEffect
+                            onClick={() => changeValue(emptyOption.value)}
+                        >
                             {emptyOption.label}
                         </ListItem>
                     )}
