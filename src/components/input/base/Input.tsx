@@ -5,9 +5,40 @@ import React from "react";
 import type { PropsOf, Size } from "../../../types";
 import Label from "../Label";
 import { useFormInput } from "../form/JSForm";
-import { getInputSizeClasses } from "../../../input-helpers";
-import { setRef } from "../../../util";
+import { collapse, setRef } from "../../../util";
 import HelperText from "../../text/HelperText";
+
+// Util
+
+export function getInputSizeClasses(size: Size): string {
+    return collapse(size, { small: "h-7", medium: "h-10", large: "h-12" });
+}
+
+export function getEventValue(e: any) {
+    if (e && typeof e === "object" && Object.hasOwn(e, "target") && Object.hasOwn(e, "currentTarget")) return e.target.value;
+    else return e;
+}
+
+export const InputPattern = {
+    email: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+    url: "^(ftp|http|https):\\/\\/[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+(\\/[^\\s]*)?$",
+    date: "\\d{4}-\\d{2}-\\d{2}",
+    time: "\\d{2}:\\d{2}",
+    datetime: "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}",
+    month: "\\d{4}-\\d{2}",
+    week: "\\d{4}-W\\d{2}",
+    tel: "[0-9\\-\\+\\s\\(\\)]+",
+    number: "[0-9]+",
+    text: "[a-zA-Z0-9]+",
+    /** Name (1-50 chars) */
+    name: "^(?=.{1,50}$).+",
+    /**
+     * Password. Min 8 chars, 1 upper case, 1 lower case, 1 number, 1 special char.
+     */
+    password: "^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\\W).*$",
+};
+
+// Component
 
 export interface InputLikeProps<T = any> {
     /** _controlled_ */
@@ -91,7 +122,12 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
                 max={props.max}
                 maxLength={props.maxLength}
                 name={props.name}
-                className={clsx("max-h-full transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses, props.slotProps?.input?.className)}
+                className={clsx(
+                    "max-h-full transition duration-90 min-h-0",
+                    props.noBorder && "!border-0",
+                    sizeClasses,
+                    props.slotProps?.input?.className
+                )}
                 onClick={props.onClick}
             />
             <HelperText errorMessage={props.errorMessage} error={error} {...props.slotProps?.helperText}>

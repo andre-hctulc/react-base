@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import React from "react";
-import { CubicBezierControllPoints, cubicBezier } from "../../timing";
+import { CubicBezierControllPoints, cubicBezier } from "../../util";
 import type { Size } from "../../types";
 import { alignClass, collapse } from "../../util";
 
@@ -161,7 +161,9 @@ export default function Dial(props: DialProps) {
         >
             {children}
             {/* Dummy Element, um die Höhe der root konstant zu halten. Durch height transition schwankt die Höhe beim ändern des aktiven Elementes */}
-            {!!children?.length && <PlaceholderComp className="!m-0" style={{ height: vert ? undefined : h, width: vert ? w : undefined, visibility: "hidden" }} />}
+            {!!children?.length && (
+                <PlaceholderComp className="!m-0" style={{ height: vert ? undefined : h, width: vert ? w : undefined, visibility: "hidden" }} />
+            )}
         </Comp>
     );
 }

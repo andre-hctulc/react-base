@@ -10,6 +10,85 @@ const JSFormContext = React.createContext<JSFormContext | null>(null);
 
 type InputLike = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
+type FormDataExpectType = "string" | "number" | "boolean" | "object" | "blob" | "blob-array" | "any";
+
+export function convertFormData<T extends Record<string, any> = any>(
+    formData: FormData,
+    expect: Record<keyof T, { pattern?: string; required?: boolean; parse: FormDataExpectType }>
+): T | null {
+    const parsed: any = {};
+
+    for (const key in expect) {
+        const rawValue = formData.get(key);
+        const exp = expect[key];
+
+        if (exp.pattern) {
+            try {
+                const patternRegex = new RegExp(exp.pattern);
+                if (typeof rawValue !== "string" || !patternRegex.test(rawValue)) return null;
+            } catch (err) {
+                return null;
+            }
+        }
+        if (typeof exp !== "object" || !exp.parse) continue;
+
+        if (rawValue === null && exp.required) return null;
+
+        let parsedValue: any;
+        let num: number;
+        let transformed: string;
+
+        const parse = (v: any) => {
+            try {
+                return JSON.parse(v);
+            } catch (err) {
+                return undefined;
+            }
+        };
+
+        if (rawValue === null) parsedValue = undefined;
+        else {
+            switch (exp.parse) {
+                case "string":
+                    if (typeof rawValue !== "string") return null;
+                    parsedValue = rawValue;
+                    break;
+                case "number":
+                    num = parseInt(rawValue as any);
+                    if (isNaN(num)) return null;
+                    parsedValue = num;
+                    break;
+                case "any":
+                case "object":
+                    transformed = parse(rawValue);
+                    if (transformed === undefined) return null;
+                    parsedValue = transformed;
+                    break;
+                case "boolean":
+                    if (typeof rawValue !== "string") return null;
+                    transformed = rawValue.toLowerCase();
+                    if (transformed !== "false" && transformed !== "true") return null;
+                    parsedValue = rawValue === "true";
+                    break;
+                case "blob":
+                    if (!(rawValue instanceof Blob)) return null;
+                    parsedValue = rawValue;
+                    break;
+                case "blob-array":
+                    if (!Array.isArray(rawValue) || rawValue.some(item => !(item instanceof Blob))) return null;
+                    parsedValue = rawValue;
+                    break;
+                default:
+                    return null;
+            }
+        }
+
+        parsed[key] = parsedValue;
+    }
+
+    return parsed;
+}
+
 export type JSFormContext<D extends Record<string, any> = any> = {
     hint: boolean;
     parsedData: D | null;

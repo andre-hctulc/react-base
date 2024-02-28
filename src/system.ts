@@ -12,9 +12,3 @@ export function joinPaths(...parts: (string | undefined | null)[]) {
 export function randomNumber(min: number, max: number) {
     return min + Math.round(Math.random() * (max - min));
 }
-
-// export function compareDates(d1: Date | null | undefined, d2: Date | null | undefined) {
-//     if (!d1 && !d2) return true;
-//     else if (d1 && d2) return isEqualDate(d1, d2);
-//     else return false;
-// }

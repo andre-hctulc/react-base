@@ -4,11 +4,10 @@ import clsx from "clsx";
 import Label from "../Label";
 import React from "react";
 import { useFormInput } from "../form/JSForm";
-import { getInputSizeClasses } from "../../../input-helpers";
 import type { PropsOf, Size } from "../../../types";
 import { setRef } from "../../../util";
 import HelperText from "../../text/HelperText";
-import type { InputLikeProps } from "./Input";
+import { getInputSizeClasses, type InputLikeProps } from "./Input";
 
 interface SliderProps extends InputLikeProps {
     slotProps?: { input?: PropsOf<"input">; helperText?: PropsOf<typeof HelperText> };
@@ -61,7 +60,12 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
                 min={props.min || 0}
                 max={props.max || 100}
                 name={props.name}
-                className={clsx("max-h-full transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses, props.slotProps?.input?.className)}
+                className={clsx(
+                    "max-h-full transition duration-90 min-h-0",
+                    props.noBorder && "!border-0",
+                    sizeClasses,
+                    props.slotProps?.input?.className
+                )}
                 onClick={props.onClick}
             />
             <HelperText errorMessage={props.errorMessage} error={error} {...props.slotProps?.helperText}>

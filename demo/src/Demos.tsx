@@ -14,6 +14,13 @@ export default function Demos(props: DemosProps) {
     const { activeModules } = useAppContext();
     let preDir: string | undefined;
 
+    if (!activeModules.length)
+        return (
+            <Typography secondary italic className="m-auto" textAlign="center">
+                No modules selected
+            </Typography>
+        );
+
     return (
         <Flex style={props.style} className={clsx(props.className, "overflow-y-auto")}>
             {activeModules.map(mod => {

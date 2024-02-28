@@ -5,13 +5,13 @@ import React from "react";
 import Label from "../Label";
 import IconButton from "../buttons/IconButton";
 import { useFormInput } from "../form/JSForm";
-import type { InputLikeProps } from "./Input";
-import { getInputSizeClasses, forDateLikeInput } from "../../../input-helpers";
+import { getInputSizeClasses, type InputLikeProps } from "./Input";
 import type { Size, PropsOf } from "../../../types";
 import RestartIcon from "../../icons/collection/Restart";
 import Flex from "../../layout/Flex";
 import HelperText from "../../text/HelperText";
 import Typography from "../../text/Typography";
+import { forDateLikeInput } from "./TimeInput";
 
 export type TimeRange = [Date | null, Date | null];
 
@@ -32,7 +32,10 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
     const iconButtonProps: Omit<PropsOf<typeof IconButton>, "children"> = {};
     const inpType = props.time ? "datetime-local" : "date";
     const sizeClasses = getInputSizeClasses(props.size || "medium");
-    const datePickerProps: PropsOf<"input"> = { type: inpType, className: clsx("transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses) };
+    const datePickerProps: PropsOf<"input"> = {
+        type: inpType,
+        className: clsx("transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses),
+    };
     const [fromStr, toStr] = React.useMemo(() => [forDateLikeInput(from, inpType), forDateLikeInput(to, inpType)], [from, to, inpType]);
 
     function changeValue(newFrom: Date | null | undefined, newTo: Date | null | undefined) {
@@ -49,7 +52,9 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
     return (
         <div className={clsx("inline-flex flex-col", props.className)} style={props.style}>
             {/* Form Control */}
-            {props.name && <input type="hidden" value={formValue} required={props.required} disabled={disabled} readOnly={readOnly} name={props.name} />}
+            {props.name && (
+                <input type="hidden" value={formValue} required={props.required} disabled={disabled} readOnly={readOnly} name={props.name} />
+            )}
             {props.label && (
                 <Label required={props.required} error={error}>
                     {props.label}
