@@ -8,7 +8,7 @@ A React/Tailwind lib
 -   React contexts
 -   React components
 -   React util/types
--   base tailwind config
+-   Base tailwind config
 
 ## Usage
 
