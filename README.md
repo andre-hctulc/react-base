@@ -21,7 +21,7 @@ import type { Config } from "tailwindcss";
 import setup from "@react-base/setup";
 
 export default setup({
-    content: ["path_to_react-base/src/**/*", ...],
+    content: ["path/to/react-base/src/**/*", ...],
     theme: {
         ...
     },
@@ -65,7 +65,7 @@ _next.config.js_
 ```js
 const nextConfig = {
     ...
-    transpilePackages: ["@react-base", ...],
+    transpilePackages: ["path/to/react-base", ...],
 };
 
 module.exports = nextConfig;
