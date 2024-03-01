@@ -39,7 +39,7 @@ import "@react-base/src/index";
 import Tooltip from "@react-base/src/components/dialogs/popover/Tooltip";
 import Button from "@react-base/src/components/input/buttons/Button";
 import { StyleProps, ParentProps } from "@react-base/src/types";
-import { useAlerts } from "@react-base/src/contexts/AlertsProvider";
+import { useAlerts } from "@react-base/src/components/feedback/alerts/AlertsProvider";
 
 interface ButtonWithTooltipProps extends StyleProps, ParentProps<string> {
     tooltip: string;
