@@ -20,8 +20,6 @@ _tailwind.config.ts_
 import type { Config } from "tailwindcss";
 import setup from "@react-base/setup";
 
-const config: Config =
-
 export default setup({
     content: ["path_to_react-base/src/**/*", ...],
     theme: {
@@ -122,7 +120,7 @@ _tailwind.config.ts_
 import setup from "@react-base/setup";
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+return setup({
     theme: {
         colors: {
             // These values are currently all required for the theme color to be recognized
@@ -135,9 +133,7 @@ const config: Config = {
             },
         },
     },
-};
-
-return setup(config);
+});
 ```
 
 **2.** Declare theme color type
