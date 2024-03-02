@@ -1,5 +1,5 @@
 import React from "react";
-import type { SizeMap, ThemeColor, ThemeColorDef, XSizeMap } from "./types";
+import type { Align, SizeMap, ThemeColor, ThemeColorDef, XSizeMap } from "./types";
 
 // * Helpers
 
@@ -37,6 +37,8 @@ export function getSize<S extends SizeMap | XSizeMap>(size: keyof S | number, si
     const result = typeof size === "string" ? (sizeMap as any)[size] : size;
     return result;
 }
+
+// * Colors
 
 /** Some colors 🌈 */
 export const colors = [
@@ -112,13 +114,21 @@ export function rgbStrToHex(rgb: string) {
     return rgbToHex(r, g, b);
 }
 
-export function alignClass(align: "center" | "start" | "end" | "none") {
+// * CSS Styles
+
+export function alignClass(align: Align) {
     return collapse(align || "center", { center: "items-center", start: "items-start", end: "items-end", none: "" });
 }
 
-export function justifyClass(align: "center" | "start" | "end") {
-    return collapse(align || "center", { end: "justify-end", center: "justify-center", start: "justify-start" });
+export function alignSelfClass(align: Align) {
+    return collapse(align, { start: "self-start", end: "self-end", center: "self-center", none: "" });
 }
+
+export function justifyClass(justify: Align) {
+    return collapse(justify || "center", { end: "justify-end", center: "justify-center", start: "justify-start", none: "" });
+}
+
+// * React
 
 /**
  * @param children
@@ -190,22 +200,46 @@ export function hasChildren(children: React.ReactNode) {
 
 // * Theme
 
-export function themeColor(color: ThemeColor | ThemeColorDef | undefined | null): ThemeColorDef {
-    if (color && typeof color === "object") return color;
+/**
+ * @returns Utility classes for theme colors
+ * */
+export function themeColor<C extends ThemeColor<true>>(
+    color: C
+): ThemeColorDef & Record<`${"hover_" | "active_" | "focus_" | ""}${C extends ThemeColorDef ? keyof C : C}`, string> {
+    let def: ThemeColorDef;
 
-    return {
-        bg: `bg-${color}`,
-        bgLight: `bg-${color}-light`,
-        text: `text-${color}`,
-        border: `border-${color}`,
-        contrastText: `text-${color}-contrast-text`,
-        bgSuperLight: `bg-${color}-super-light`,
-    };
+    if (color && typeof color === "object") def = color;
+    else {
+        def = {
+            bg: `bg-${color}`,
+            bgSuperLight: `bg-${color}-super-light`,
+            bgLight: `bg-${color}-light`,
+            bgDark: `bg-${color}-dark`,
+            text: `text-${color}`,
+            textSuperLight: `text-${color}-super-light`,
+            textLight: `text-${color}-light`,
+            textDark: `text-${color}-dark`,
+            border: `border-${color}`,
+            borderLight: `border-${color}-light`,
+            borderSuperLight: `border-${color}-super-light`,
+            borderDark: `border-${color}-dark`,
+            contrastText: `text-${color}-contrast-text`,
+        };
+    }
+
+    for (const key in def) {
+        (def as any)[`hover_${key}`] = `hover:${(def as any)[key]}`;
+        (def as any)[`active_${key}`] = `active:${(def as any)[key]}`;
+        (def as any)[`focus_${key}`] = `focus:${(def as any)[key]}`;
+    }
+
+    return def as any;
 }
 
 // * Timing
 
 export type CubicBezierControllPoints = [number, number, number, number];
+
 /**
  * [Bézierkurve](https://de.wikipedia.org/wiki/Bézierkurve), [Generator](https://cubic-bezier.com/#.17,.67,.83,.67)
  *
@@ -218,7 +252,7 @@ export type CubicBezierControllPoints = [number, number, number, number];
 export function cubicBezier(t: number, controllPoints?: CubicBezierControllPoints) {
     const [p0, p1, p2, p3] = controllPoints || cubicBezier.easeIn;
 
-    /** Interpolation = Stetige Fkt zu gegebenen Punkten inden */
+    /** Interpolation = estimate values between two points for a given function */
     function bezierInterpolation(t: number, p0: number, p1: number, p2: number, p3: number) {
         return Math.pow(1 - t, 3) * p0 + 3 * Math.pow(1 - t, 2) * t * p1 + 3 * (1 - t) * Math.pow(t, 2) * p2 + Math.pow(t, 3) * p3;
     }

@@ -2,29 +2,34 @@ import _plugin from "tailwindcss/plugin";
 import type { Config } from "tailwindcss";
 import type { SafelistConfig } from "tailwindcss/types/config";
 
-// * Plugin
-
 /** Merges a user config with the base config. */
 export default function setup(config: Config): Config {
+    // Add dynamic created classes from `themeColor` (src/util) to the safelist
+
     const colors = { ...config.theme?.colors, ...baseTheme.colors };
-    const safeList: SafelistConfig[] = [...(config.safelist || [])];
+    const safelist: SafelistConfig[] = [...(config.safelist || [])];
 
     for (const color in colors) {
         const colorDef = colors[color];
         if (isThemeColor(colorDef)) {
-            safeList.push({ pattern: new RegExp(`(bg|text)-${color}.*`) });
+            const pattern = `^(bg|text|border)-${color}(-(light|super-light|dark|contrast-text))?$`;
+            // See src/util/ThemeColorDef
+            safelist.push({ pattern: new RegExp(pattern), variants: ["hover", "focus", "active"] });
         }
     }
 
     return {
         ...config,
+        // Add base theme
         theme: { extend: baseTheme, ...config.theme },
+        // Add plugin
         plugins: [plugin, ...(config.plugins || [])],
-        safelist: safeList,
+        // Add safelist
+        safelist,
     };
 }
 
-// * Helpers
+// Helpers
 
 function isThemeColor(obj: any): obj is { DEFAULT: string; light: string; dark: string; "super-light": string; "contrast-text": string } {
     return (
@@ -38,11 +43,11 @@ function isThemeColor(obj: any): obj is { DEFAULT: string; light: string; dark: 
     );
 }
 
-// * Plugin
+// Plugin
 
 const plugin = _plugin(api => {});
 
-// * Base Theme
+// Base Theme
 
 type BaseTheme = Omit<Exclude<Config["theme"], undefined>, "extend">;
 
@@ -58,9 +63,9 @@ const baseTheme: BaseTheme = {
         // Theme Colors
         primary: {
             DEFAULT: "#6366f1",
-            light: "#818cf8",
+            light: "#a0a9ff",
             dark: "#4f46e5",
-            "super-light": "#b4b0ff",
+            "super-light": "#cecbff",
             "contrast-text": "#f9f9f9",
         },
         secondary: {
@@ -72,14 +77,14 @@ const baseTheme: BaseTheme = {
         },
         accent: {
             DEFAULT: "#3b383d",
-            light: "#5f5e5f",
+            light: "#737373",
             dark: "#232024",
             "contrast-text": "#f9f9f9",
             "super-light": "#c6c6c6",
         },
         info: {
             DEFAULT: "#1976d2",
-            light: "#659dd5",
+            light: "#77a4d1",
             "super-light": "#E5F5FD",
             dark: "#1565c0",
             "contrast-text": "#f9f9f9",
@@ -93,15 +98,15 @@ const baseTheme: BaseTheme = {
         },
         success: {
             DEFAULT: "#48b657",
-            light: "#8bdc8b",
-            "super-light": "#EDF8ED",
+            light: "#95dd95",
+            "super-light": "#e2f9e2",
             dark: "#176e22",
             "contrast-text": "#f9f9f9",
         },
         warning: {
             DEFAULT: "#f97316",
-            light: "#ff9e59",
-            "super-light": "#FFF4E5",
+            light: "#f8af7c",
+            "super-light": "#faecd7",
             dark: "#ea580c",
             "contrast-text": "#000000",
         },
