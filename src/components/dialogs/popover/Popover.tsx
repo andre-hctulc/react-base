@@ -8,6 +8,9 @@ import React from "react";
 import { collapse, setRef } from "../../../util";
 import { PropsOf } from "../../../types";
 
+// TODO bundle functions calc...
+// BUG abstand zum rand wird teilwise falsch bestimmt, durch buffer vorzeichen fehler
+
 type PopoverPosition = { horizontal: "left" | "start" | "right" | "end" | "center"; vertical: "top" | "start" | "bottom" | "end" | "center" };
 
 type Margins = { mr: number; ml: number; mt: number; mb: number };
@@ -306,7 +309,8 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
                     ...cardStyle,
                     // hide when position not initialized
                     visibility:
-                        (cardStyle.left === undefined && cardStyle.right === undefined) || (cardStyle.top === undefined && cardStyle.bottom === undefined)
+                        (cardStyle.left === undefined && cardStyle.right === undefined) ||
+                        (cardStyle.top === undefined && cardStyle.bottom === undefined)
                             ? "hidden"
                             : undefined,
                 }}

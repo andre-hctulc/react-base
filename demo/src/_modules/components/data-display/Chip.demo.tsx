@@ -9,7 +9,7 @@ import Chip from "@react-base/src/components/data-display/Chip";
 
 function ChipDemo({ demoProps }: DemoProps) {
     return (
-        <Chip className="m-5" variant={demoProps?.variant} color={demoProps?.color}>
+        <Chip className="m-5" hoverEffect={demoProps.hoverEffect} variant={demoProps?.variant} color={demoProps?.color}>
             Chip
         </Chip>
     );
@@ -30,6 +30,10 @@ const def: DemoDef = {
             propName: "variant",
             type: "string",
             listValues: ["contained", "outlined", "pale"],
+        },
+        {
+            propName: "hoverEffect",
+            type: "boolean",
         },
     ],
 };

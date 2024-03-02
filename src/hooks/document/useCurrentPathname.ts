@@ -1,6 +1,6 @@
 import React from "react";
 
-const useCurrentPathname = () => {
+export default function useCurrentPathname() {
     const [pathname, setPathname] = React.useState(window.location.pathname);
 
     React.useEffect(() => {
@@ -16,6 +16,4 @@ const useCurrentPathname = () => {
     }, []);
 
     return pathname;
-};
-
-export default useCurrentPathname;
+}

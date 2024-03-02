@@ -16,6 +16,7 @@ export default function useElement(element: Element | null | undefined): Observe
         const resizeObserver = new ResizeObserver(entries => {
             // Man kann mehrere Elemente observen, deswegen entries-Array
             const [entry] = entries;
+            if (!entry) return setObserved(null);
             const o: ObservedElement = { target: entry.target, rect: () => entry.target.getBoundingClientRect() } as any;
             // Die Eigensschaften von `entry: ResizeObserverEntry` sind getter props. Somit sind diese nicht spreadable ({...entry}).
             // Da diese props evtl. Berechnungen durchführen dient ObservedElement als proxy der dann die getter vom entry ausführt, anstatt sie mit = zuzuweisen, was die Berechnungen hier schon triggern würde!

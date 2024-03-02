@@ -12,8 +12,6 @@ export interface ThemeColorMap {
     accent: any;
 }
 
-export type ThemeColor = keyof ThemeColorMap;
-
 export type Size = "small" | "medium" | "large";
 export type XSize = "xsmall" | "small" | "medium" | "large" | "xlarge";
 export type DynamicSize = "small" | "medium" | "large" | number;
@@ -22,14 +20,11 @@ export type XDynamicSize = "xsmall" | "small" | "medium" | "large" | "xlarge" | 
 export type SizeMap<T = number> = { [K in DynamicSize]: T };
 export type XSizeMap<T = number> = { [K in XDynamicSize]: T };
 
-export type ThemeColorDef = {
-    text: string;
-    bg: string;
-    border: string;
-    contrastText: string;
-    bgLight: string;
-    bgSuperLight: string;
-};
+export type Align = "start" | "end" | "center" | "none";
+
+/** Use `<D>`to allow js definitions */
+export type ThemeColor<D extends boolean = false> = D extends true ? keyof ThemeColorMap | ThemeColorDef : keyof ThemeColorMap;
+export type ThemeColorDef = Record<`${"text" | "bg" | "border"}${"Light" | "SuperLight" | "Dark" | ""}` | "contrastText", string>;
 
 // * Props
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const useCurrentSearchParams = () => {
+export default function useCurrentSearchParams() {
     const [searchParams, setSearchParams] = React.useState(() => new URLSearchParams(window.location.search));
 
     React.useEffect(() => {
@@ -16,6 +16,4 @@ const useCurrentSearchParams = () => {
     }, []);
 
     return searchParams;
-};
-
-export default useCurrentSearchParams;
+}
