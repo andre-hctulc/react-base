@@ -2,9 +2,9 @@ import React from "react";
 import { StyleProps } from "@react-base/src/types";
 import useFetchAsset from "./useFetchAsset";
 import Skeleton from "@react-base/src/components/feedback/Skeleton";
-import Alert from "@react-base/src/components/feedback/alerts/Alert";
 import { highlight, languages } from "prismjs";
 import clsx from "clsx";
+import { Alert } from "@react-base/src/components";
 
 interface CodeProps extends StyleProps {
     path: string;

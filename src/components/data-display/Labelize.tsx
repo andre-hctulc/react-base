@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { PropsOf } from "../../types";
-import Label from "../input/Label";
+import Label from "../inputs/Label";
 import Subtitle from "../text/Subtitle";
 
 interface LabelizeProps {

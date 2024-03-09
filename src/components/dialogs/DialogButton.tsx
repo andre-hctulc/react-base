@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import type { PropsOf } from "../../types";
-import Button from "../input/buttons/Button";
+import Button from "../buttons/Button";
 import Toolbar from "../feedback/Toolbar";
 
 interface DialogButtonProps {

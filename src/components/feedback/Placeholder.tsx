@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 import type { PropsOf } from "../../types";
-import Button from "../input/buttons/Button";
+import Button from "../buttons/Button";
 import Flex from "../layout/Flex";
 import Delayed from "../others/Delayed";
 import Typography from "../text/Typography";

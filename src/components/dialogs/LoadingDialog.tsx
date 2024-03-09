@@ -1,6 +1,6 @@
 import React from "react";
 import Dialog, { DialogDim, DialogProps } from "./Dialog";
-import LoadingOverlay from "../layout/overlays/LoadingOverlay";
+import LoadingOverlay from "../feedback/LoadingOverlay";
 
 interface LoadingDialogProps {
     loading?: boolean;

@@ -6,8 +6,8 @@ import FolderIcon from "@react-base/src/components/icons/collection/FolderOutlin
 import FileIcon from "@react-base/src/components/icons/collection/FileOutline";
 import React from "react";
 import { useAppContext } from "./AppContextProvider";
-import { SelectOption } from "@react-base/src/components/input/base/Select";
 import { ModuleDef } from "./types";
+import { SelectOption } from "@react-base/src/components/inputs/Select";
 
 interface AppMenuProps extends StyleProps {}
 

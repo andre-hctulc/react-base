@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react";
 import type { LinkProps, PropsOf, Size } from "../../types";
 import { collapse } from "../../util";
-import IconButton from "../input/buttons/IconButton";
+import IconButton from "../buttons/IconButton";
 import Flex from "./Flex";
 import Styled from "../others/Styled";
 import Typography, { TextVariant } from "../text/Typography";

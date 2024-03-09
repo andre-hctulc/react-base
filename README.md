@@ -37,7 +37,7 @@ _ButtonWithTooltip.tsx_
 ```tsx
 // Imports default styles
 import "@react-base/src/index";
-import { Tooltip, Button } from "@react-base/src/components";
+import { Tooltip, Button } from "@react-base/src/components/buttons";
 import { useAlerts } from "@react-base/src/hooks";
 import { StyleProps, ParentProps } from "@react-base/src/types";
 
@@ -157,7 +157,7 @@ _GreenIcon.tsx_
 
 ```tsx
 import React from "react";
-import { Icon } from "@react-base/src/components";
+import { Icon } from "@react-base/src/components/icons";
 import { StyleProps, ParentProps } from "@react-base/src/types";
 
 export default function GreenIcon(props: StyleProps & ParentProps<React.ReactElement, true>) {
@@ -173,7 +173,7 @@ or
 
 ```tsx
 import clsx from "clsx";
-import { Flex } from "@react-base/src/components";
+import { Flex } from "@react-base/src/components/layout";
 import { ThemeColor, StyleProps, ParentProps } from "@react-base/src/types";
 import { themeColor } from "@react-base/src/util";
 

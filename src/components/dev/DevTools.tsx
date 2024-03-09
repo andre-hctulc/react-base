@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import IconButton from "../input/buttons/IconButton";
+import IconButton from "../buttons/IconButton";
 import XIcon from "../icons/collection/X";
 import ExpandIcon from "../icons/collection/Expand";
 import Toolbar from "../feedback/Toolbar";

@@ -1,7 +1,7 @@
 "use client";
 
-import Alert from "../feedback/alerts/Alert";
-import AlertTitle from "../feedback/alerts/AlertTitle";
+import Alert from "../alerts/Alert";
+import AlertTitle from "../alerts/AlertTitle";
 import Dev from "./Dev";
 
 interface TodoProps {

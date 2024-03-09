@@ -1,8 +1,5 @@
 import { StyleProps } from "@react-base/src/types";
-import Select from "@react-base/src/components/input/base/Select";
-import Input from "@react-base/src/components/input/base/Input";
-import Slider from "@react-base/src/components/input/base/Slider";
-import CheckBox from "@react-base/src/components/input/base/CheckBox";
+import { Select, Input, Slider, CheckBox } from "@react-base/src/components";
 import { PropDef } from "src/types";
 
 interface PropProps extends StyleProps {

@@ -2,7 +2,7 @@ import React from "react";
 import Flex from "./Flex";
 import Placeholder from "../feedback/Placeholder";
 import ListItem from "./ListItem";
-import type { SelectOption } from "../input/base/Select";
+import type { SelectOption } from "../inputs/Select";
 
 interface ListProps<T = string> {
     className?: string;

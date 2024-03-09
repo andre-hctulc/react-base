@@ -1,9 +1,8 @@
 import clsx from "clsx";
-import JSForm from "@react-base/src/components/input/form/JSForm";
+import { JSForm, Typography } from "@react-base/src/components";
 import { StyleProps } from "@react-base/src/types";
 import Prop from "./ModuleDemoProp";
 import { PropDef } from "src/types";
-import Typography from "@react-base/src/components/text/Typography";
 
 interface PropsProps extends StyleProps {
     propDefs: PropDef[];

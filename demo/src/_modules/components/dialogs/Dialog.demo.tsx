@@ -5,9 +5,10 @@ import type { DemoDef, DemoProps } from "src/types";
 // demo_start
 
 import React from "react";
-import Dialog from "@react-base/src/components/dialogs/Dialog";
-import { Button, DialogHeader, DialogTitleIcon, DialogTitle, DialogContent, Alert, DialogFooter } from "@react-base/src/components";
+import { Dialog, DialogHeader, DialogTitleIcon, DialogTitle, DialogContent, DialogFooter } from "@react-base/src/components/dialogs";
 import DocumentOutlineIcon from "@react-base/src/components/icons/collection/DocumentOutline";
+import { Button } from "@react-base/src/components/buttons";
+import { Alert } from "@react-base/src/components/alerts";
 
 function DialogDemo({ demoProps }: DemoProps) {
     const [open, setOpen] = React.useState(false);

@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import React from "react";
 import XIcon from "../icons/collection/X";
-import IconButton from "../input/buttons/IconButton";
+import IconButton from "../buttons/IconButton";
 import Pagination from "../navigation/Pagination";
 import { useDev } from "../dev/DevProvider";
 import Typography from "../text/Typography";
@@ -251,17 +251,26 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
     }
 
     return (
-        <DataGridContext.Provider value={{ addCellChangeListener, editable: !!props.editable, removeCellChangeListener, changeCell, data: props.contextData }}>
+        <DataGridContext.Provider
+            value={{ addCellChangeListener, editable: !!props.editable, removeCellChangeListener, changeCell, data: props.contextData }}
+        >
             <div ref={ref} className={clsx("flex flex-col border rounded min-w-0 min-h-0 overflow-hidden", props.className)} style={props.style}>
                 {!props.loading && (
-                    <div style={{ flexGrow: isEmpty ? 0 : 1 }} className="overflow-y-auto overflow-x-auto flex flex-row flex-grow min-w-0 max-w-full min-h-0">
+                    <div
+                        style={{ flexGrow: isEmpty ? 0 : 1 }}
+                        className="overflow-y-auto overflow-x-auto flex flex-row flex-grow min-w-0 max-w-full min-h-0"
+                    >
                         {cols.map((col, i) => {
                             const isFirstCell = i === 0;
                             const cs = getColStyle(col);
                             const rowHeight = props.rowHeight || 32;
                             const headerRowHeight = props.headerRowHeight || 32;
                             const heightStyle: React.CSSProperties = { height: rowHeight, maxHeight: rowHeight, minHeight: rowHeight };
-                            const headerHeightStyle: React.CSSProperties = { height: headerRowHeight, maxHeight: headerRowHeight, minHeight: headerRowHeight };
+                            const headerHeightStyle: React.CSSProperties = {
+                                height: headerRowHeight,
+                                maxHeight: headerRowHeight,
+                                minHeight: headerRowHeight,
+                            };
 
                             return (
                                 <div
@@ -338,7 +347,9 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                 )}
                 {props.loading && (props.slots?.loading === undefined ? <Loading /> : props.slots.loading)}
                 {isEmpty && (props.slots?.empty === undefined ? <Placeholder py>Keine Daten vorhanden</Placeholder> : props.slots.empty)}
-                {props.pagination && <Pagination className="border-t px-2 !py-2" searchParam={props.pagination.searchParam} max={props.pagination.max}></Pagination>}
+                {props.pagination && (
+                    <Pagination className="border-t px-2 !py-2" searchParam={props.pagination.searchParam} max={props.pagination.max}></Pagination>
+                )}
             </div>
         </DataGridContext.Provider>
     );

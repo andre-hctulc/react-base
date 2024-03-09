@@ -5,7 +5,7 @@ import React from "react";
 import { Transition } from "react-transition-group";
 import type { PropsOf } from "../../types";
 import Card from "../layout/Card";
-import Overlay from "../layout/overlays/Overlay";
+import Overlay from "../layout/Overlay";
 
 export interface DialogProps {
     open: boolean;

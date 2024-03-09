@@ -5,7 +5,7 @@ import { themeColors } from "../../../helpers";
 
 // demo_start
 
-import Chip from "@react-base/src/components/data-display/Chip";
+import { Chip } from "@react-base/src/components/data-display";
 
 function ChipDemo({ demoProps }: DemoProps) {
     return (

@@ -5,7 +5,7 @@ import type { DemoDef, DemoProps } from "src/types";
 // demo_start
 
 import clsx from "clsx";
-import Dial, { DialItemProps } from "@react-base/src/components/layout/Dial";
+import { Dial, DialItemProps } from "@react-base/src/components/layout";
 import { useRange } from "@react-base/src/hooks";
 import { Typography } from "@react-base/src/components";
 

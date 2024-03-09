@@ -3,7 +3,7 @@
 import useElement from "../../hooks/document/useElement";
 import clsx from "clsx";
 import Card from "./Card";
-import Overlay from "./overlays/Overlay";
+import Overlay from "./Overlay";
 import React from "react";
 import { collapse, setRef } from "../../util";
 import { PropsOf } from "../../types";

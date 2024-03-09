@@ -4,8 +4,8 @@ import type { DemoDef, DemoProps } from "src/types";
 
 // demo_start
 
-import IconButton from "@react-base/src/components/input/buttons/IconButton";
-import { Tooltip } from "@react-base/src/components";
+import { Tooltip } from "@react-base/src/components/feedback";
+import { IconButton } from "@react-base/src/components/buttons";
 import UserOutlineIcon from "@react-base/src/components/icons/collection/UserOutline";
 
 function TooltipDemo({ demoProps }: DemoProps) {

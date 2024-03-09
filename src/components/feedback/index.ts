@@ -10,5 +10,4 @@ export { default as Skeleton } from "./Skeleton";
 export { default as Spinner } from "./Spinner";
 export { default as Toolbar } from "./Toolbar";
 export { default as Tooltip } from "./Tooltip";
-
-export * from "./alerts";
+export { default as LoadingOverlay } from "./LoadingOverlay";

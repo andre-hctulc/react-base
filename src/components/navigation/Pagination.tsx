@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import IconButton from "../input/buttons/IconButton";
+import IconButton from "../buttons/IconButton";
 import React from "react";
 import useMutableSearchParams from "../../hooks/document/useMutableSearchParams";
 import ChevronDoubleLeftIcon from "../icons/collection/ChevronDoubleLeft";
@@ -21,7 +21,8 @@ interface PaginationProps extends StyleProps {
 export default function Pagination(props: PaginationProps) {
     const buttonClasses = "rounded-md w-8 h-8 flex items-center justify-center flex-shrink-0 select-none";
     const buttonActiveClasses = " bg-primary text-primary-contrast-text";
-    const buttonInActiveClasses = " border-[1.5px] bg-bg-paper text-text-secondary text-accent hover:bg-primary/10 active:bg-primary/40 cursor-pointer";
+    const buttonInActiveClasses =
+        " border-[1.5px] bg-bg-paper text-text-secondary text-accent hover:bg-primary/10 active:bg-primary/40 cursor-pointer";
     const [searchParams, setSearchParam] = useMutableSearchParams();
     const paramName = props.searchParam || "page";
     const currentPage = Math.max(+(searchParams?.get(paramName) || 0) || 0, 0);
