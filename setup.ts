@@ -11,6 +11,9 @@ export default function setup(config: Config): Config {
 
     for (const color in colors) {
         const colorDef = colors[color];
+
+        // DEBUG if (color === "primary") console.log(colorDef);
+
         if (isThemeColor(colorDef)) {
             const pattern = `^(bg|text|border)-${color}(-(light|super-light|dark|contrast-text))?$`;
             // See src/util/ThemeColorDef
@@ -21,7 +24,7 @@ export default function setup(config: Config): Config {
     return {
         ...config,
         // Add base theme
-        theme: { extend: baseTheme, ...config.theme },
+        theme: { ...config.theme, ...baseTheme },
         // Add plugin
         plugins: [plugin, ...(config.plugins || [])],
         // Add safelist

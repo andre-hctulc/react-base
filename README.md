@@ -23,6 +23,7 @@ import setup from "@react-base/setup";
 export default setup({
     content: ["path/to/react-base/src/**/*", ...],
     theme: {
+        extend: {...},
         ...
     },
     ...
@@ -122,14 +123,17 @@ import type { Config } from "tailwindcss";
 
 return setup({
     theme: {
-        colors: {
-            // These values are currently all required for the theme color to be recognized
-            green: {
-                DEFAULT: "#1d782f",
-                light: "#4b8e58",
-                dark: "#0a5f1b",
-                "super-light": "#8abc94",
-                "contrast-text": "#f9f9f9",
+        extend: {
+            colors: {
+                // You can also overwrite default colors like primary ,error etc. here
+                green: {
+                    // These values are currently all required for the theme color to be recognized
+                    DEFAULT: "#1d782f",
+                    light: "#4b8e58",
+                    dark: "#0a5f1b",
+                    "super-light": "#8abc94",
+                    "contrast-text": "#f9f9f9",
+                },
             },
         },
     },
