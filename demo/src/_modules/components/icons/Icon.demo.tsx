@@ -4,8 +4,8 @@ import { DemoDef, DemoProps } from "src/types";
 
 // demo_start
 
-import Flex from "@react-base/src/components/layout/Flex";
 import Icon from "@react-base/src/components/icons/Icon";
+import { Flex } from "@react-base/src/components";
 
 function IconDemo({ demoProps }: DemoProps) {
     return (

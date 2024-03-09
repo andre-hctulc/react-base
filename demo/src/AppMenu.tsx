@@ -1,16 +1,11 @@
 import clsx from "clsx";
 import type { PartialPropsOf, StyleProps } from "@react-base/src/types";
-import Flex from "@react-base/src/components/layout/Flex";
-import Search from "@react-base/src/components/input/base/Search";
+import { CheckBox, Flex, Search, Tooltip, TreeView, TreeViewItem, TreeViewStruct } from "@react-base/src/components";
 import AllIcon from "@react-base/src/components/icons/collection/WalletOutline";
 import FolderIcon from "@react-base/src/components/icons/collection/FolderOutline";
 import FileIcon from "@react-base/src/components/icons/collection/FileOutline";
-import TreeView, { TreeViewStruct } from "@react-base/src/components/navigation/treeview/TreeView";
-import TreeViewItem from "@react-base/src/components/navigation/treeview/TreeViewItem";
 import React from "react";
 import { useAppContext } from "./AppContextProvider";
-import CheckBox from "@react-base/src/components/input/base/CheckBox";
-import Tooltip from "@react-base/src/components/dialogs/popover/Tooltip";
 import { SelectOption } from "@react-base/src/components/input/base/Select";
 import { ModuleDef } from "./types";
 

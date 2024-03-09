@@ -8,7 +8,7 @@ import Alert from "./Alert";
 import AlertTitle from "./AlertTitle";
 import { useDev } from "../../dev/DevProvider";
 
-const AlertContext = React.createContext<AlertContext | null>(null);
+export const AlertContext = React.createContext<AlertContext | null>(null);
 
 export interface AlertOptions {
     title?: string;
@@ -30,12 +30,6 @@ interface AlertContext {
 
 interface AlertContextProviderProps {
     children?: React.ReactNode;
-}
-
-export function useAlerts() {
-    const alertsContext = React.useContext(AlertContext);
-    if (!alertsContext) throw new Error("`AlertsProvider` required");
-    return alertsContext;
 }
 
 const width = 500;

@@ -1,12 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 
 import type { DemoDef, DemoProps } from "src/types";
+import { themeColors } from "../../../../helpers";
 
 // demo_start
 
-import Button from "@react-base/src/components/input/buttons/Button";
-import { useAlerts } from "@react-base/src/components/feedback/alerts/AlertsProvider";
-import { themeColors } from "../../../../helpers";
+import { Button } from "@react-base/src/components";
+import { useAlerts } from "@react-base/src/hooks";
 
 function ButtonDemo({ demoProps }: DemoProps) {
     const { info } = useAlerts();

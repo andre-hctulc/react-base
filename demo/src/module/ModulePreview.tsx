@@ -1,9 +1,7 @@
 import React from "react";
 import { StyleProps } from "@react-base/src/types";
 import Props from "./ModuleDemoProps";
-import Toolbar from "@react-base/src/components/layout/Toolbar";
-import Tabs from "@react-base/src/components/navigation/tabs/Tabs";
-import Tab from "@react-base/src/components/navigation/tabs/Tab";
+import { Toolbar, Tabs, Tab } from "@react-base/src/components";
 import { DemoDef } from "src/types";
 import Code from "../Code";
 import clsx from "clsx";

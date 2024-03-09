@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { LinkProps } from "../../../types";
-import Avatar from "../avatar/Avatar";
+import Avatar from "../avatars/Avatar";
 import LaunchIcon from "../../icons/collection/Launch";
 import IconButton from "../../input/buttons/IconButton";
 import Flex from "../../layout/Flex";

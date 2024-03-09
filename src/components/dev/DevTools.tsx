@@ -4,9 +4,9 @@ import React from "react";
 import IconButton from "../input/buttons/IconButton";
 import XIcon from "../icons/collection/X";
 import ExpandIcon from "../icons/collection/Expand";
-import Toolbar from "../layout/Toolbar";
-import Tab from "../navigation/tabs/Tab";
-import Tabs from "../navigation/tabs/tabs";
+import Toolbar from "../feedback/Toolbar";
+import Tab from "../navigation/Tab";
+import Tabs from "../navigation/Tabs";
 import { useDev } from "./DevProvider";
 
 type Position = "top_left" | "top_right" | "bottom_left" | "bottom_right";
@@ -48,7 +48,12 @@ export default function DevTools(props: DevToolsProps) {
 
     return (
         <div
-            style={{ height: open ? props.height || height : undefined, width: open ? props.width || width : undefined, zIndex: 999, ...positionStyle }}
+            style={{
+                height: open ? props.height || height : undefined,
+                width: open ? props.width || width : undefined,
+                zIndex: 999,
+                ...positionStyle,
+            }}
             className="shadow-md m-2 fixed flex flex-col bg-bg border rounded"
         >
             {open ? (

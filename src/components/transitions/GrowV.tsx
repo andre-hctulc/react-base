@@ -9,7 +9,7 @@ interface GrowVProps {
     unmountOnExit?: boolean;
 }
 
-function GrowV(props: GrowVProps & { transitionName: string; timeout: number }) {
+export function GrowV(props: GrowVProps & { transitionName: string; timeout: number }) {
     return (
         <Transition in={!!props.in} unmountOnExit={props.unmountOnExit ?? true} transitionName={props.transitionName} timeout={props.timeout}>
             {props.children}

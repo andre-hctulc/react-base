@@ -4,9 +4,9 @@ import { DemoDef, DemoProps } from "src/types";
 
 // demo_start
 
-import Input from "@react-base/src/components/input/base/Input";
 import React from "react";
-import Flex from "@react-base/src/components/layout/Flex";
+import Input from "@react-base/src/components/input/base/Input";
+import { Flex } from "@react-base/src/components";
 
 function InputDemo({ demoProps }: DemoProps) {
     const [value, setValue] = React.useState<string>();

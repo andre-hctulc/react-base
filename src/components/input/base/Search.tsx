@@ -9,10 +9,10 @@ import FormControl from "../form/FormControl";
 import Label from "../Label";
 import { InputLikeProps, getInputSizeClasses } from "./Input";
 import Loading from "../../feedback/Loading";
-import Popover from "../../dialogs/popover/Popover";
+import Popover from "../../layout/Popover";
 import Flex from "../../layout/Flex";
 import HelperText from "../../text/HelperText";
-import List from "../../layout/list/List";
+import List from "../../layout/List";
 import Typography from "../../text/Typography";
 
 interface SearchProps<T = string> extends InputLikeProps<T> {

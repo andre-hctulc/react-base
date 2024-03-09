@@ -4,8 +4,8 @@ import type { DemoDef, DemoProps } from "src/types";
 
 // demo_start
 
-import Avatar from "@react-base/src/components/data-display/avatar/Avatar";
-import Badge from "@react-base/src/components/data-display/badges/Badge";
+import Avatar from "@react-base/src/components/data-display/avatars/Avatar";
+import { Badge } from "@react-base/src/components";
 
 function AvatarDemo({ demoProps }: DemoProps) {
     return (

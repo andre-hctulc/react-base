@@ -9,7 +9,7 @@ interface GrowHProps {
     unmountOnExit?: boolean;
 }
 
-function GrowH(props: GrowHProps & { transitionName: string; timeout: number }) {
+export function GrowH(props: GrowHProps & { transitionName: string; timeout: number }) {
     return (
         <Transition
             in={!!props.in}

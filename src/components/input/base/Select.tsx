@@ -7,13 +7,13 @@ import { useFormInput } from "../form/JSForm";
 import { getInputSizeClasses, type InputLikeProps } from "./Input";
 import FormControl from "../form/FormControl";
 import Label from "../Label";
-import ListItem from "../../layout/list/ListItem";
-import Popover from "../../dialogs/popover/Popover";
+import ListItem from "../../layout/ListItem";
+import Popover from "../../layout/Popover";
 import ChevronDownIcon from "../../icons/collection/ChevronDown";
 import Flex from "../../layout/Flex";
 import HelperText from "../../text/HelperText";
 import Typography from "../../text/Typography";
-import List from "../../layout/list/List";
+import List from "../../layout/List";
 
 export type SelectOption<T = string> = {
     value: T;

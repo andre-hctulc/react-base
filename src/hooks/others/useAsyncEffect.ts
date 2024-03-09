@@ -1,6 +1,14 @@
 import React from "react";
 
-export function useAsyncEffect<T>(effect: () => Promise<T>, then: (result: T) => void, deps: React.DependencyList, error?: (err: unknown) => void) {
+/**
+ * @deprecated
+ */
+export default function useAsyncEffect<T>(
+    effect: () => Promise<T>,
+    then: (result: T) => void,
+    deps: React.DependencyList,
+    error?: (err: unknown) => void
+) {
     React.useEffect(() => {
         let interrupted = false;
 

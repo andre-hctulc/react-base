@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import clsx from "clsx";
 import IconButton from "./IconButton";
 import { Size } from "../../../types";
 import Styled from "../../others/Styled";

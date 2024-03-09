@@ -18,7 +18,7 @@ _tailwind.config.ts_
 
 ```ts
 import type { Config } from "tailwindcss";
-import setup from "@react-base/setup";
+import setup from "@react-base/src/setup";
 
 export default setup({
     content: ["path/to/react-base/src/**/*", ...],
@@ -37,10 +37,9 @@ _ButtonWithTooltip.tsx_
 ```tsx
 // Imports default styles
 import "@react-base/src/index";
-import Tooltip from "@react-base/src/components/dialogs/popover/Tooltip";
-import Button from "@react-base/src/components/input/buttons/Button";
+import { Tooltip, Button } from "@react-base/src/components";
+import { useAlerts } from "@react-base/src/hooks";
 import { StyleProps, ParentProps } from "@react-base/src/types";
-import { useAlerts } from "@react-base/src/components/feedback/alerts/AlertsProvider";
 
 interface ButtonWithTooltipProps extends StyleProps, ParentProps<string> {
     tooltip: string;
@@ -118,7 +117,7 @@ You can use them just like any other tailwind color or in component props (type 
 _tailwind.config.ts_
 
 ```ts
-import setup from "@react-base/setup";
+import setup from "@react-base/src/setup";
 import type { Config } from "tailwindcss";
 
 return setup({
@@ -158,7 +157,7 @@ _GreenIcon.tsx_
 
 ```tsx
 import React from "react";
-import Icon from "@react-base/src/components/icons/Icon";
+import { Icon } from "@react-base/src/components";
 import { StyleProps, ParentProps } from "@react-base/src/types";
 
 export default function GreenIcon(props: StyleProps & ParentProps<React.ReactElement, true>) {
@@ -174,7 +173,7 @@ or
 
 ```tsx
 import clsx from "clsx";
-import Flex from "@react-base/src/components/layout/Flex";
+import { Flex } from "@react-base/src/components";
 import { ThemeColor, StyleProps, ParentProps } from "@react-base/src/types";
 import { themeColor } from "@react-base/src/util";
 

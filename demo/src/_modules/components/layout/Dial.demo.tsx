@@ -4,10 +4,10 @@ import type { DemoDef, DemoProps } from "src/types";
 
 // demo_start
 
-import useRange from "@react-base/src/hooks/iterable/useRange";
-import Dial, { DialItemProps } from "@react-base/src/components/layout/Dial";
 import clsx from "clsx";
-import Typography from "@react-base/src/components/text/Typography";
+import Dial, { DialItemProps } from "@react-base/src/components/layout/Dial";
+import { useRange } from "@react-base/src/hooks";
+import { Typography } from "@react-base/src/components";
 
 function Item(props: DialItemProps & { children?: number }) {
     return (

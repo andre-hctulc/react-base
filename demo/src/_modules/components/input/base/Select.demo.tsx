@@ -5,8 +5,8 @@ import { DemoDef, DemoProps } from "src/types";
 // demo_start
 
 import React from "react";
-import Flex from "@react-base/src/components/layout/Flex";
 import Select, { SelectOption } from "@react-base/src/components/input/base/Select";
+import { Flex } from "@react-base/src/components";
 
 const names = ["New York", "Ottawa", "Katovice"];
 const options: SelectOption[] = names.map(name => ({ label: name, value: name }));

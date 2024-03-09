@@ -1,5 +1,5 @@
 import React from "react";
-import { useStorageContext } from "./StorageProvider";
+import { useStorageContext } from "../../components/others/StorageProvider";
 
 function getStorage(storage: "localStorage" | "sessionStorage" | Storage) {
     if (typeof window === "undefined") return null;
