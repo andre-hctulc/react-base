@@ -26,22 +26,30 @@ const TextArea = React.forwardRef<HTMLDivElement, TextAreaProps>((props, ref) =>
     const innerRef = React.useRef<HTMLTextAreaElement>(null);
     const { readOnly, error, disabled } = useFormInput(props, innerRef.current);
 
-    const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
+    const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
         props.onChange?.(e);
     };
 
     return (
         <div className={clsx("inline-flex flex-col", props.className)} style={props.style} ref={ref}>
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
+                <Label
+                    variant={props.dense ? "caption" : "form_control"}
+                    error={error}
+                    required={props.required}
+                >
                     {props.label}
                 </Label>
             )}
             <textarea
                 {...props.slotProps?.textarea}
-                ref={textarea => setRef(textarea, innerRef, props.inputRef)}
+                ref={(textarea) => setRef(textarea, innerRef, props.inputRef)}
                 placeholder={props.placeholder}
-                className={clsx("flex-grow transition duration-90 min-h-0", props.noBorder && "!border-0", props.slotProps?.textarea?.className)}
+                className={clsx(
+                    "flex-grow transition duration-90 min-h-0",
+                    props.noBorder && "!border-0",
+                    props.slotProps?.textarea?.className
+                )}
                 onChange={handleChange}
                 onFocus={props.onFocus}
                 onBlur={props.onBlur}
@@ -51,6 +59,7 @@ const TextArea = React.forwardRef<HTMLDivElement, TextAreaProps>((props, ref) =>
                 disabled={disabled}
                 required={props.required}
                 style={props.styleTextarea}
+                name={props.name}
             />
             <HelperText errorMessage={props.errorMessage} error={error} {...props.slotProps?.helperText}>
                 {props.helperText}
