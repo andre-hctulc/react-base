@@ -19,12 +19,17 @@ export interface AlertOptions {
 
 type Severity = "warning" | "info" | "error" | "success";
 
+type ErrorAlertOptions = AlertOptions & {
+    /** This error will be displayed (only) in dev mode  */
+    error?: Error | (Error[] | readonly Error[]) | null;
+};
+
 interface AlertContext {
     success: (message: React.ReactNode, options?: AlertOptions) => void;
     info: (message: React.ReactNode, options?: AlertOptions) => void;
     warn: (message: React.ReactNode, options?: AlertOptions) => void;
     /** In den `options` kann mit `err` ein Error angegeben werden, wodurch deiser im dev mode mit dargestellt wird.  */
-    error: (message: React.ReactNode, options?: AlertOptions & { err?: Error | null }) => void;
+    error: (message: React.ReactNode, options?: ErrorAlertOptions) => void;
     alert: (severity: Severity, message: React.ReactNode, options?: AlertOptions) => void;
 }
 
@@ -36,8 +41,12 @@ const width = 500;
 
 /** Die Alert-Box hat einen z-Index von 2. */
 export default function AlertsProvider(props: AlertContextProviderProps) {
-    const [alerts, setAlerts] = React.useState<Record<string, ({ message: React.ReactNode; severity: Severity } & AlertOptions) | undefined>>({});
-    const currentAlerts = React.useRef<Record<string, ({ message: React.ReactNode; severity: Severity } & AlertOptions) | undefined>>({});
+    const [alerts, setAlerts] = React.useState<
+        Record<string, ({ message: React.ReactNode; severity: Severity } & AlertOptions) | undefined>
+    >({});
+    const currentAlerts = React.useRef<
+        Record<string, ({ message: React.ReactNode; severity: Severity } & AlertOptions) | undefined>
+    >({});
     const hasAlerts = React.useMemo(() => !!Object.keys(alerts).length, [alerts]);
     const { devMode } = useDev();
 
@@ -76,9 +85,13 @@ export default function AlertsProvider(props: AlertContextProviderProps) {
     );
 
     const error = React.useCallback(
-        (message: React.ReactNode, options?: AlertOptions & { err?: Error | null }) => {
+        (message: React.ReactNode, options?: ErrorAlertOptions) => {
             let msg = message;
-            if (devMode && options?.err && typeof message === "string") msg = `${message} -DEV- ${options.err.stack}`;
+            if (devMode && options?.error && typeof message === "string")
+                msg = `${message} - Errors (dev): ${[options.error]
+                    .flat()
+                    .map((e) => e.message)
+                    .join(", ")}`;
             alert("error", msg, options);
         },
         [alert, devMode]
@@ -93,7 +106,9 @@ export default function AlertsProvider(props: AlertContextProviderProps) {
 
     return (
         <>
-            <AlertContext.Provider value={{ success, warn, alert, error, info }}>{props.children}</AlertContext.Provider>
+            <AlertContext.Provider value={{ success, warn, alert, error, info }}>
+                {props.children}
+            </AlertContext.Provider>
             {hasAlerts && (
                 <div
                     className="space-y-4 fixed items-end z-20 bottom-0 right-0 max-w-full max-h-full !m-0 pr-6 pb-4"
@@ -104,7 +119,7 @@ export default function AlertsProvider(props: AlertContextProviderProps) {
                 >
                     {/* <Alert sx={{width: 300, boxShadow: 1}} severity={"success"}>Das ist ein Test</Alert> */}
                     <TransitionGroup component={null}>
-                        {Object.keys(alerts).map(id => {
+                        {Object.keys(alerts).map((id) => {
                             const options = alerts[id];
 
                             if (!options) return null;

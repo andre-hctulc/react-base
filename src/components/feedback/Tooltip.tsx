@@ -19,7 +19,7 @@ interface TooltipProps {
     disabled?: boolean;
     position?: PropsOf<typeof Popover>["position"];
     inactive?: boolean;
-    childRef?: React.ForwardedRef<Element>;
+    childRef?: React.Ref<Element>;
 }
 
 export const TooltipBehaviour = { default: { enterDelay: 230, enterNextDelay: 410 } };

@@ -1,3 +1,5 @@
+import type React from "react";
+
 export type Falsy = null | undefined | "" | 0 | false;
 
 // NOTE: declaration merging not possible with union  types
@@ -23,12 +25,21 @@ export type XSizeMap<T = number> = { [K in XDynamicSize]: T };
 export type Align = "start" | "end" | "center" | "none";
 
 /** Use `<D>`to allow js definitions */
-export type ThemeColor<D extends boolean = false> = D extends true ? keyof ThemeColorMap | ThemeColorDef : keyof ThemeColorMap;
-export type ThemeColorDef = Record<`${"text" | "bg" | "border"}${"Light" | "SuperLight" | "Dark" | ""}` | "contrastText", string>;
+export type ThemeColor<D extends boolean = false> = D extends true
+    ? keyof ThemeColorMap | ThemeColorDef
+    : keyof ThemeColorMap;
+export type ThemeColorDef = Record<
+    `${"text" | "bg" | "border"}${"Light" | "SuperLight" | "Dark" | ""}` | "contrastText",
+    string
+>;
 
 // * Props
 
-export type PropsOf<T> = T extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[T] : T extends React.ComponentType<infer P> ? P : never;
+export type PropsOf<T> = T extends keyof JSX.IntrinsicElements
+    ? JSX.IntrinsicElements[T]
+    : T extends React.ComponentType<infer P>
+    ? P
+    : never;
 export type PartialPropsOf<T> = Partial<PropsOf<T>>;
 
 export interface StyleProps {
@@ -36,7 +47,10 @@ export interface StyleProps {
     style?: React.CSSProperties;
 }
 
-export type ParentProps<T extends React.ReactNode = React.ReactNode, R extends boolean = false> = R extends true ? { children: T } : { children?: T };
+export type ParentProps<
+    T extends React.ReactNode = React.ReactNode,
+    R extends boolean = false
+> = R extends true ? { children: T } : { children?: T };
 
 export interface EventProps<T = Element> {
     // Mouse
@@ -61,9 +75,17 @@ export interface NextPageProps {
     searchParams: Record<string, string>;
 }
 
-export type SlotProps<C extends Record<string, any>> = { slotProps?: { [K in keyof C]?: Partial<PropsOf<C[K]>> } };
+export type SlotProps<C extends Record<string, any>> = {
+    slotProps?: { [K in keyof C]?: Partial<PropsOf<C[K]>> };
+};
 
-export type ImageComponentProps = { height?: number; width?: number; style?: React.CSSProperties; alt?: string; src?: string };
+export type ImageComponentProps = {
+    height?: number;
+    width?: number;
+    style?: React.CSSProperties;
+    alt?: string;
+    src?: string;
+};
 
 export type LinkProps = {
     onClick?: React.MouseEventHandler;

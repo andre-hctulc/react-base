@@ -186,10 +186,10 @@ export function flattenChildren(children: React.ReactNode, flattenElements?: any
 }
 
 /** Sets the value of one or more references */
-export function setRef<T = any>(value: T, ...refs: (React.ForwardedRef<T> | undefined | null)[]) {
+export function setRef<T = any>(value: T, ...refs: (React.ForwardedRef<T> | React.LegacyRef<T> | undefined | null)[]) {
     for (const ref of refs) {
         if (typeof ref === "function") ref(value);
-        else if (ref && typeof ref === "object") ref.current = value;
+        else if (ref && typeof ref === "object") (ref.current as any) = value;
     }
 }
 

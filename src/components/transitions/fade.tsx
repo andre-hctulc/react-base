@@ -1,6 +1,7 @@
 "use client";
 
 import Transition from "./Transition";
+import React from "react";
 
 interface FadeProps {
     in?: boolean;
