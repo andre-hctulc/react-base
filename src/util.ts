@@ -10,7 +10,10 @@ export function collapse<V extends string, R = any>(value: V, map: { [K in V]: R
 }
 
 /** 🌊 🎯 🥈 */
-export function collapseWeak<V extends string, R = any>(value: V | undefined, map: { [K in V]?: R }): R | undefined {
+export function collapseWeak<V extends string, R = any>(
+    value: V | undefined,
+    map: { [K in V]?: R }
+): R | undefined {
     if (value === undefined) return undefined;
     return map[value];
 }
@@ -67,7 +70,7 @@ export function randomColor(exclude?: string[]) {
     let filteredColors = colors;
     if (exclude) {
         const exclSet = new Set(exclude);
-        filteredColors = colors.filter(item => !exclSet.has(item));
+        filteredColors = colors.filter((item) => !exclSet.has(item));
         if (!filteredColors.length) return "";
     }
     const randomIndex = Math.floor(Math.random() * filteredColors.length);
@@ -117,7 +120,12 @@ export function rgbStrToHex(rgb: string) {
 // * CSS Styles
 
 export function alignClass(align: Align) {
-    return collapse(align || "center", { center: "items-center", start: "items-start", end: "items-end", none: "" });
+    return collapse(align || "center", {
+        center: "items-center",
+        start: "items-start",
+        end: "items-end",
+        none: "",
+    });
 }
 
 export function alignSelfClass(align: Align) {
@@ -125,7 +133,12 @@ export function alignSelfClass(align: Align) {
 }
 
 export function justifyClass(justify: Align) {
-    return collapse(justify || "center", { end: "justify-end", center: "justify-center", start: "justify-start", none: "" });
+    return collapse(justify || "center", {
+        end: "justify-end",
+        center: "justify-center",
+        start: "justify-start",
+        none: "",
+    });
 }
 
 // * React
@@ -162,7 +175,9 @@ export function mapChildren<P extends Record<string, any> = Record<string, any>>
                 return React.cloneElement(
                     child,
                     (mapperResult as any).props || {},
-                    (mapperResult as any).children === null ? undefined : (mapperResult as any).children || child.props.children
+                    (mapperResult as any).children === null
+                        ? undefined
+                        : (mapperResult as any).children || child.props.children
                 );
             }
         }
@@ -178,7 +193,10 @@ export function flattenChildren(children: React.ReactNode, flattenElements?: any
     const arr = React.Children.toArray(children);
 
     return arr.reduce((flatChildren: ReactChildrenArray, child) => {
-        if ((child as React.ReactElement<any>).type === React.Fragment || flattenElements?.includes((child as React.ReactElement<any>).type))
+        if (
+            (child as React.ReactElement<any>).type === React.Fragment ||
+            flattenElements?.includes((child as React.ReactElement<any>).type)
+        )
             return flatChildren.concat(flattenChildren((child as React.ReactElement<any>).props.children));
         flatChildren.push(child);
         return flatChildren;
@@ -186,7 +204,10 @@ export function flattenChildren(children: React.ReactNode, flattenElements?: any
 }
 
 /** Sets the value of one or more references */
-export function setRef<T = any>(value: T, ...refs: (React.ForwardedRef<T> | React.LegacyRef<T> | undefined | null)[]) {
+export function setRef<T = any>(
+    value: T,
+    ...refs: (React.ForwardedRef<T> | React.LegacyRef<T> | undefined | null)[]
+) {
     for (const ref of refs) {
         if (typeof ref === "function") ref(value);
         else if (ref && typeof ref === "object") (ref.current as any) = value;
@@ -198,6 +219,23 @@ export function hasChildren(children: React.ReactNode) {
     return React.Children.count(children) !== 0;
 }
 
+export function findChildren<S extends Record<string, (child: React.ReactNode) => boolean>>(
+    children: React.ReactNode,
+    search: S
+): { [K in keyof S]: React.ReactNode[] } {
+    const flattened = flattenChildren(children);
+    const result: any = {};
+    for (const k in search) result[k] = [];
+
+    for (const child of flattened) {
+        for (const k in search) {
+            const find = search[k];
+            if (find(child)) result[k].push(child);
+        }
+    }
+    return result;
+}
+
 // * Theme
 
 /**
@@ -205,7 +243,8 @@ export function hasChildren(children: React.ReactNode) {
  * */
 export function themeColor<C extends ThemeColor<true>>(
     color: C
-): ThemeColorDef & Record<`${"hover_" | "active_" | "focus_" | ""}${C extends ThemeColorDef ? keyof C : C}`, string> {
+): ThemeColorDef &
+    Record<`${"hover_" | "active_" | "focus_" | ""}${C extends ThemeColorDef ? keyof C : C}`, string> {
     let def: ThemeColorDef;
 
     if (color && typeof color === "object") def = color;
@@ -254,7 +293,12 @@ export function cubicBezier(t: number, controllPoints?: CubicBezierControllPoint
 
     /** Interpolation = estimate values between two points for a given function */
     function bezierInterpolation(t: number, p0: number, p1: number, p2: number, p3: number) {
-        return Math.pow(1 - t, 3) * p0 + 3 * Math.pow(1 - t, 2) * t * p1 + 3 * (1 - t) * Math.pow(t, 2) * p2 + Math.pow(t, 3) * p3;
+        return (
+            Math.pow(1 - t, 3) * p0 +
+            3 * Math.pow(1 - t, 2) * t * p1 +
+            3 * (1 - t) * Math.pow(t, 2) * p2 +
+            Math.pow(t, 3) * p3
+        );
     }
 
     // Calculate the value on the curve for a given time fraction 't'
