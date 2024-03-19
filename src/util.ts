@@ -1,5 +1,9 @@
 import React from "react";
-import type { Align, SizeMap, ThemeColor, ThemeColorDef, XSizeMap } from "./types";
+import type { Align, SizeMap, ThemeColor, ThemeColorDef, XSize, XSizeMap } from "./types";
+import clsx from "clsx";
+
+/** This is the prefix of ids and class names // TODO */
+export const pre = "$B_";
 
 // * Helpers
 
@@ -119,6 +123,18 @@ export function rgbStrToHex(rgb: string) {
 
 // * CSS Styles
 
+export function styleProps(style: {
+    style?: React.CSSProperties | React.CSSProperties[];
+    className?: Parameters<typeof clsx> | Parameters<typeof clsx>[0];
+}) {
+    return {
+        style: Array.isArray(style.style)
+            ? style.style.reduce((pre, cur) => ({ ...pre, ...cur }), {})
+            : style.style,
+        className: clsx(style.className),
+    };
+}
+
 export function alignClass(align: Align) {
     return collapse(align || "center", {
         center: "items-center",
@@ -138,6 +154,17 @@ export function justifyClass(justify: Align) {
         center: "justify-center",
         start: "justify-start",
         none: "",
+    });
+}
+
+export function shadowClass(shadow: XSize | "none") {
+    return collapse(shadow, {
+        none: "",
+        xsmall: "shadow-xs",
+        small: "shadow-sm",
+        medium: "shadow-md",
+        large: "shadow-lg",
+        xlarge: "shadow-xl",
     });
 }
 
@@ -189,12 +216,14 @@ export function mapChildren<P extends Record<string, any> = Record<string, any>>
 
 type ReactChildrenArray = ReturnType<typeof React.Children.toArray>;
 
+/** Flattens Fragments and Arrays */
 export function flattenChildren(children: React.ReactNode, flattenElements?: any[]): ReactChildrenArray {
     const arr = React.Children.toArray(children);
 
     return arr.reduce((flatChildren: ReactChildrenArray, child) => {
         if (
             (child as React.ReactElement<any>).type === React.Fragment ||
+            Array.isArray(child) ||
             flattenElements?.includes((child as React.ReactElement<any>).type)
         )
             return flatChildren.concat(flattenChildren((child as React.ReactElement<any>).props.children));
@@ -223,11 +252,11 @@ export function findChildren<S extends Record<string, (child: React.ReactNode) =
     children: React.ReactNode,
     search: S
 ): { [K in keyof S]: React.ReactNode[] } {
-    const flattened = flattenChildren(children);
+    const flatChildren = flattenChildren(children);
     const result: any = {};
     for (const k in search) result[k] = [];
 
-    for (const child of flattened) {
+    for (const child of flatChildren) {
         for (const k in search) {
             const find = search[k];
             if (find(child)) result[k].push(child);
