@@ -1,5 +1,5 @@
 import React from "react";
-import { useStorageContext } from "../../components/others/StorageProvider";
+import { useStorageContext } from "../../providers/StorageProvider";
 
 function getStorage(storage: "localStorage" | "sessionStorage" | Storage) {
     if (typeof window === "undefined") return null;
@@ -13,12 +13,16 @@ export type CurrentStorage<T> = [T, (newValue: T | null | ((prevValue: T) => T |
 export default function useStorage<T = string>(
     key: string,
     initialValue: T | (() => T),
-    options?: { storage?: "localStorage" | "sessionStorage" | Storage; ignorePrefixes?: boolean; prefix?: boolean }
+    options?: {
+        storage?: "localStorage" | "sessionStorage" | Storage;
+        ignorePrefixes?: boolean;
+        prefix?: boolean;
+    }
 ): CurrentStorage<T> {
     const storageContext = useStorageContext(true);
     const prefix = React.useMemo(() => {
         if (options?.ignorePrefixes) return "";
-        const pre = [storageContext.prefix || "", options?.prefix || ""].filter(pre => !!pre).join("-");
+        const pre = [storageContext.prefix || "", options?.prefix || ""].filter((pre) => !!pre).join("-");
         if (pre) return pre;
         else return "";
     }, [options?.prefix, storageContext.prefix, options?.ignorePrefixes]);
@@ -75,7 +79,8 @@ export default function useStorage<T = string>(
         try {
             if (typeof newValue === "function") {
                 const storedValue = store.getItem(k);
-                const prevValue = storedValue === null ? getInitial() : JSON.parse(storedValue, storageContext.jsonReviver);
+                const prevValue =
+                    storedValue === null ? getInitial() : JSON.parse(storedValue, storageContext.jsonReviver);
                 newV = newValue(prevValue);
             } else {
                 newV = newValue;

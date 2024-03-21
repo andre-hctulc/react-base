@@ -1,3 +1,4 @@
+import type clsx from "clsx";
 import type React from "react";
 
 export type Falsy = null | undefined | "" | 0 | false;
@@ -35,16 +36,25 @@ export type ThemeColorDef = Record<
 
 // * Props
 
-export type PropsOf<T> = T extends keyof JSX.IntrinsicElements
+export type PropsOf<T> = T extends HTMLElement
+    ? React.HTMLProps<T>
+    : T extends keyof JSX.IntrinsicElements
     ? JSX.IntrinsicElements[T]
     : T extends React.ComponentType<infer P>
     ? P
     : never;
 export type PartialPropsOf<T> = Partial<PropsOf<T>>;
 
+type Style = React.CSSProperties | Falsy | Style[];
+
 export interface StyleProps {
-    className?: string;
+    style?: Style;
+    className?: clsx.ClassValue;
+}
+
+export interface DefaultStyleProps {
     style?: React.CSSProperties;
+    className?: string;
 }
 
 export type ParentProps<
@@ -77,6 +87,7 @@ export interface NextPageProps {
 
 export type SlotProps<C extends Record<string, any>> = {
     slotProps?: { [K in keyof C]?: Partial<PropsOf<C[K]>> };
+    slots?: { [K in keyof C]?: React.ReactNode };
 };
 
 export type ImageComponentProps = {
@@ -89,10 +100,8 @@ export type ImageComponentProps = {
 
 export type LinkProps = {
     onClick?: React.MouseEventHandler;
-    className?: string;
     target?: React.HTMLAttributeAnchorTarget;
     download?: string;
-    style?: React.CSSProperties;
     href: string | undefined;
     children?: React.ReactNode;
 };

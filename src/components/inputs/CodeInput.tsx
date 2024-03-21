@@ -4,8 +4,10 @@ import clsx from "clsx";
 import React from "react";
 import Button from "../buttons/Button";
 import Typography from "../text/Typography";
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
-interface CodeInputProps {
+interface CodeInputProps extends StyleProps {
     length: number;
     label?: string;
     onFinish?: (code: string) => void;
@@ -47,26 +49,31 @@ export default function CodeInput(props: CodeInputProps) {
     for (let i = 0; i < props.length; i++) {
         inps.push(
             <input
-                onChange={e => {
+                onChange={(e) => {
                     values[i] = e.currentTarget.value;
                     setValues(values);
 
-                    if (e.currentTarget.nextElementSibling) (e.currentTarget.nextElementSibling as HTMLInputElement).focus();
+                    if (e.currentTarget.nextElementSibling)
+                        (e.currentTarget.nextElementSibling as HTMLInputElement).focus();
                     else {
                         e.currentTarget.blur();
                         for (const value of values) if (!value) return;
                         props.onFinish?.(values.join(""));
                     }
                 }}
-                onFocus={e => {
+                onFocus={(e) => {
                     e.currentTarget.value = "";
                     values[i] = null;
                     if (props.onFocus) props.onFocus(e);
                 }}
                 key={i + ""}
                 style={{ height: 40, width: 35, fontSize: 20, textAlign: "center" }}
-                onKeyDown={e => {
-                    if (e.key === "Backspace" && e.currentTarget.previousElementSibling && !e.currentTarget.value) {
+                onKeyDown={(e) => {
+                    if (
+                        e.key === "Backspace" &&
+                        e.currentTarget.previousElementSibling &&
+                        !e.currentTarget.value
+                    ) {
                         (e.currentTarget.previousElementSibling as HTMLInputElement).focus();
                     }
                 }}
@@ -75,7 +82,7 @@ export default function CodeInput(props: CodeInputProps) {
     }
 
     return (
-        <div className={clsx("inline-flex space-x-2", props.className)}>
+        <div {...styleProps({ className: "inline-flex space-x-2" }, props)}>
             {props.label && (
                 <Typography variant="body2" secondary className="mb-1">
                     {props.label}

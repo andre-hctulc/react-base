@@ -1,12 +1,13 @@
-import clsx from "clsx";
 import React from "react";
 import ErrorCircleOutlineIcon from "../icons/collection/ErrorCircleOutline";
 import CheckCircleOutlineIcon from "../icons/collection/CheckCircleOutline";
 import InfoCircleOutlineIcon from "../icons/collection/InfoCircleOutline";
 import WarningOutlineIcon from "../icons/collection/WarningOutline";
 import XIcon from "../icons/collection/X";
-import Styled from "../others/Styled";
+import Styled from "../shadow/Styled";
 import IconButton from "../buttons/IconButton";
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
 function getIcon(severity: AlertProps["severity"]) {
     switch (severity) {
@@ -22,10 +23,8 @@ function getIcon(severity: AlertProps["severity"]) {
     }
 }
 
-interface AlertProps {
+interface AlertProps extends StyleProps {
     severity?: "error" | "info" | "success" | "warning";
-    className?: string;
-    style?: React.CSSProperties;
     children?: React.ReactNode;
     onClose?: React.MouseEventHandler<HTMLButtonElement>;
     margin?: boolean;
@@ -62,13 +61,20 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => {
     return (
         <div
             ref={ref}
-            className={clsx("Alert flex flex-row rounded px-2.5  pr-2", bg, props.className)}
-            style={{ margin: props.margin ? margin : undefined, width, ...props.style }}
+            {...styleProps(
+                {
+                    style: { margin: props.margin ? margin : undefined, width },
+                    className: ["Alert flex flex-row rounded px-2.5  pr-2", bg],
+                },
+                props
+            )}
         >
             <Styled className="self-start my-2.5" size={"small"} color={severity}>
                 {icon}
             </Styled>
-            <div className="flex flex-grow flex-col pl-3 py-[9px] text-[#00000099] text-sm">{props.children}</div>
+            <div className="flex flex-grow flex-col pl-3 py-[9px] text-[#00000099] text-sm">
+                {props.children}
+            </div>
             {props.onClose && (
                 <IconButton size="small" onClick={props.onClose} className="ml-2 mt-[7.5px]">
                     <XIcon className="text-opacity-50" />

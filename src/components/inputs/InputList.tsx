@@ -7,24 +7,29 @@ import IconButton from "../buttons/IconButton";
 import HelperText from "../text/HelperText";
 import { useFormInput } from "./JSForm";
 import { getEventValue, type InputLikeProps } from "./Input";
-import type { PropsOf } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import DataGrid, { DataGridColDef } from "../data-display/DataGrid";
 import PlusIcon from "../icons/collection/Plus";
 import XIcon from "../icons/collection/X";
+import { styleProps } from "../../util";
 
 export type InputListColDef<T extends object> = Omit<DataGridColDef<T>, "render"> & {
     required?: boolean;
-    input: React.ReactElement<Pick<InputLikeProps, "value" | "onChange" | "noBorder" | "readOnly"> & { className?: string }>;
+    input: React.ReactElement<
+        Pick<InputLikeProps, "value" | "onChange" | "noBorder" | "readOnly"> & { className?: string }
+    >;
 };
 
-interface InputListProps<T extends object> extends InputLikeProps<T[]> {
+interface InputListProps<T extends object> extends StyleProps, InputLikeProps<T[]> {
     onChange?: (value: T[]) => void;
-    className?: string;
     addListener?: string;
     addButtonText?: string;
     cols: InputListColDef<T>[];
     rowId: (value: T) => string;
-    slotProps?: { dataGrid?: Omit<PropsOf<typeof DataGrid>, "rows">; addDataGrid?: Omit<PropsOf<typeof DataGrid>, "rows"> };
+    slotProps?: {
+        dataGrid?: Omit<PropsOf<typeof DataGrid>, "rows">;
+        addDataGrid?: Omit<PropsOf<typeof DataGrid>, "rows">;
+    };
     validateRow?: (row: Partial<T>) => boolean;
     autoHeight?: boolean;
     defaultRow: T;
@@ -43,7 +48,7 @@ export default function InputList<T extends object = any>(props: InputListProps<
     const cols = React.useMemo<DataGridColDef<any>[]>(() => {
         const removeItem = (row: T) => {
             const removeRowId = props.rowId(row);
-            setValue(value.filter(r => props.rowId(r) !== removeRowId));
+            setValue(value.filter((r) => props.rowId(r) !== removeRowId));
         };
         const onChange = (key: string, newValue: any) => {
             editCurrentRow(key, newValue);
@@ -57,7 +62,12 @@ export default function InputList<T extends object = any>(props: InputListProps<
             render: ({ row }) => {
                 if (row === currentRow) {
                     return (
-                        <IconButton size="small" disabled={!currentRowIsValid} onClick={() => addRow(currentRow as T)} className="self-center">
+                        <IconButton
+                            size="small"
+                            disabled={!currentRowIsValid}
+                            onClick={() => addRow(currentRow as T)}
+                            className="self-center"
+                        >
                             <PlusIcon />
                         </IconButton>
                     );
@@ -71,7 +81,7 @@ export default function InputList<T extends object = any>(props: InputListProps<
             },
         };
 
-        const c: DataGridColDef<any>[] = props.cols.map(col => ({
+        const c: DataGridColDef<any>[] = props.cols.map((col) => ({
             ...col,
             render: ({ row, value }) => {
                 const editing = row === currentRow;
@@ -110,14 +120,14 @@ export default function InputList<T extends object = any>(props: InputListProps<
 
         // add row
         const newRowId = props.rowId(row);
-        const newRows = [...value.filter(r => props.rowId(r) !== newRowId), row];
+        const newRows = [...value.filter((r) => props.rowId(r) !== newRowId), row];
 
         setCurrentRow({ ...props.defaultRow });
         setValue(newRows);
     }
 
     return (
-        <div className={clsx("flex flex-col overflow-hidden", props.className)}>
+        <div {...styleProps({ className: "flex flex-col overflow-hidden" }, props)}>
             {props.label && (
                 <Label error={error} required={props.required}>
                     {props.label}

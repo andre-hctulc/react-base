@@ -4,7 +4,6 @@ export default function AlignLeftIcon(props: IconProps) {
     return (
         <Icon {...props}>
             <svg
-                style={{ ...props.style, transform: "scaleX(-1)" }}
                 fill="current"
                 fillOpacity={1}
                 strokeWidth={0}

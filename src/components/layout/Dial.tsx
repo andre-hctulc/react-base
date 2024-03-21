@@ -2,8 +2,8 @@
 
 import clsx from "clsx";
 import React from "react";
-import { CubicBezierControllPoints, cubicBezier } from "../../util";
-import type { Size } from "../../types";
+import { CubicBezierControllPoints, cubicBezier, styleProps } from "../../util";
+import type { Size, StyleProps } from "../../types";
 import { alignClass, collapse } from "../../util";
 
 export interface DialItemProps<T extends Element = Element> {
@@ -20,9 +20,7 @@ export interface DialItemProps<T extends Element = Element> {
     scale?: number;
 }
 
-interface DialProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface DialProps extends StyleProps {
     children?: React.ReactElement<DialItemProps>[];
     loading?: boolean;
     vertical?: boolean;
@@ -72,12 +70,20 @@ export default function Dial(props: DialProps) {
     const vert = !!props.vertical;
     const w = props.itemSize.width;
     const h = props.itemSize.height;
-    const [active, setActive] = React.useState<React.Key>(props.defaultActive || (props.children?.[0]?.key == null ? "" : props.children[0]?.key));
-    const _activeIndex = props.children?.findIndex(value => value.key === active);
+    const [active, setActive] = React.useState<React.Key>(
+        props.defaultActive || (props.children?.[0]?.key == null ? "" : props.children[0]?.key)
+    );
+    const _activeIndex = props.children?.findIndex((value) => value.key === active);
     const activeIndex = !_activeIndex || _activeIndex === -1 ? 0 : _activeIndex;
     /** Skalierte Größen memorisieren, statt bei jedem render zu berechnen */
-    const shrinkedSizes = React.useMemo<Map<number | null, { height: number | undefined; width: number | undefined; scale: number }> | null>(() => {
-        const result = new Map<number | null, { height: number | undefined; width: number | undefined; scale: number }>();
+    const shrinkedSizes = React.useMemo<Map<
+        number | null,
+        { height: number | undefined; width: number | undefined; scale: number }
+    > | null>(() => {
+        const result = new Map<
+            number | null,
+            { height: number | undefined; width: number | undefined; scale: number }
+        >();
 
         /** Die Länge auf der X-Achse die einer Distanz von 1 entspricht */
         const xTick = 1 / maxShrinkDist;
@@ -127,7 +133,9 @@ export default function Dial(props: DialProps) {
             onClick: (e: React.MouseEvent<HTMLElement>) => {
                 // Item aktivieren
                 setActive(child.key == null ? "" : child.key);
-                e.currentTarget?.scrollIntoView(props.scrollOptions || { behavior: "smooth", block: "center", inline: "center" });
+                e.currentTarget?.scrollIntoView(
+                    props.scrollOptions || { behavior: "smooth", block: "center", inline: "center" }
+                );
                 child.props.onClick?.(e);
             },
         };
@@ -156,13 +164,30 @@ export default function Dial(props: DialProps) {
 
     return (
         <Comp
-            className={clsx("flex", align, vert ? ["flex-col overflow-y-auto", spacingVert] : ["flex-row overflow-x-auto", spacing], props.className)}
-            style={{ ...props.style }}
+            {...styleProps(
+                {
+                    className: [
+                        "flex",
+                        align,
+                        vert
+                            ? ["flex-col overflow-y-auto", spacingVert]
+                            : ["flex-row overflow-x-auto", spacing],
+                    ],
+                },
+                props
+            )}
         >
             {children}
             {/* Dummy Element, um die Höhe der root konstant zu halten. Durch height transition schwankt die Höhe beim ändern des aktiven Elementes */}
             {!!children?.length && (
-                <PlaceholderComp className="!m-0" style={{ height: vert ? undefined : h, width: vert ? w : undefined, visibility: "hidden" }} />
+                <PlaceholderComp
+                    className="!m-0"
+                    style={{
+                        height: vert ? undefined : h,
+                        width: vert ? w : undefined,
+                        visibility: "hidden",
+                    }}
+                />
             )}
         </Comp>
     );

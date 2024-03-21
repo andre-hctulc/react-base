@@ -1,8 +1,7 @@
-import clsx from "clsx";
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
-interface DialogHeaderProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface DialogHeaderProps extends StyleProps {
     children?: React.ReactNode;
     /** @default "row" */
     direction?: "row" | "col";
@@ -10,7 +9,12 @@ interface DialogHeaderProps {
 
 export default function DialogHeader(props: DialogHeaderProps) {
     return (
-        <header className={clsx("flex p-3", props.direction === "col" ? "flex-col" : "flex-row items-center", props.className)} style={props.style}>
+        <header
+            {...styleProps(
+                { className: ["flex p-3", props.direction === "col" ? "flex-col" : "flex-row items-center"] },
+                props
+            )}
+        >
             {props.children}
         </header>
     );

@@ -1,13 +1,10 @@
-import clsx from "clsx";
 import React from "react";
-import type { ThemeColor } from "../../types";
-import { themeColor } from "../../util";
+import type { StyleProps, ThemeColor } from "../../types";
+import { styleProps, themeColor } from "../../util";
 
 const defaultSize = 8;
 
-interface DotProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface DotProps extends StyleProps {
     color?: ThemeColor;
     /** @default 8 */
     size?: number;
@@ -16,6 +13,12 @@ interface DotProps {
 export default function Circle(props: DotProps) {
     const size = props.size || defaultSize;
     const { bg } = themeColor(props.color || "primary");
-    const classes = clsx("rounded-full flex-shrink-0", bg, props.className);
-    return <div className={classes} style={{ height: size, width: size, ...props.style }} />;
+    return (
+        <div
+            {...styleProps(
+                { className: ["rounded-full flex-shrink-0", bg], style: { height: size, width: size } },
+                props
+            )}
+        />
+    );
 }

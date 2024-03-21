@@ -1,5 +1,5 @@
 import React from "react";
-import type { Align, SizeMap, ThemeColor, ThemeColorDef, XSize, XSizeMap } from "./types";
+import type { Align, Falsy, SizeMap, StyleProps, ThemeColor, ThemeColorDef, XSize, XSizeMap } from "../types";
 import clsx from "clsx";
 
 /** This is the prefix of ids and class names // TODO */
@@ -123,15 +123,23 @@ export function rgbStrToHex(rgb: string) {
 
 // * CSS Styles
 
-export function styleProps(style: {
-    style?: React.CSSProperties | React.CSSProperties[];
-    className?: Parameters<typeof clsx> | Parameters<typeof clsx>[0];
-}) {
+function mergeStyles(...styles: StyleProps["style"][]): React.CSSProperties {
+    return styles.reduce<React.CSSProperties>(
+        (style, currentStyle) => ({
+            ...style,
+            ...(Array.isArray(currentStyle) ? mergeStyles(...currentStyle) : currentStyle || {}),
+        }),
+        {}
+    );
+}
+
+export function styleProps(...style: (StyleProps | Falsy)[]): {
+    style: React.CSSProperties;
+    className: string;
+} {
     return {
-        style: Array.isArray(style.style)
-            ? style.style.reduce((pre, cur) => ({ ...pre, ...cur }), {})
-            : style.style,
-        className: clsx(style.className),
+        style: mergeStyles(...style.map((s) => (s ? s.style : {}))),
+        className: clsx(style.map((s) => s && s.className)),
     };
 }
 

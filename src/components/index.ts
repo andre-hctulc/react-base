@@ -6,7 +6,7 @@ export * from "./icons";
 export * from "./inputs";
 export * from "./layout";
 export * from "./navigation";
-export * from "./others";
+export * from "./shadow";
 export * from "./text";
 export * from "./transitions";
 export * from "./buttons";

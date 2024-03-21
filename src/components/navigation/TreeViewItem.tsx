@@ -30,14 +30,19 @@ export default function TreeViewItem(props: TreeViewItemProps) {
                 href={props.href}
                 className={props.className}
                 style={{ paddingLeft: depth * 15, ...props.style }}
-                onClick={e => {
+                onClick={(e) => {
                     e.stopPropagation();
                     props.onClick?.(e);
                 }}
                 hoverEffect={!!props.onClick || !!props.href}
                 icon={
                     _hasChildren ? (
-                        <ChevronRightIcon color="text_secondary" onClick={() => setOpen(!open)} className="cursor-pointer" rotate={open ? 90 : 0} />
+                        <ChevronRightIcon
+                            color="text_secondary"
+                            onClick={() => setOpen(!open)}
+                            className="cursor-pointer"
+                            rotate={open ? 90 : 0}
+                        />
                     ) : null
                 }
                 active={props.active}

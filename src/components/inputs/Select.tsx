@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import React from "react";
-import type { Size, PropsOf } from "../../types";
+import type { Size, PropsOf, StyleProps } from "../../types";
 import { useFormInput } from "./JSForm";
 import { getInputSizeClasses, type InputLikeProps } from "./Input";
 import FormControl from "./FormControl";
@@ -14,6 +14,7 @@ import Flex from "../layout/Flex";
 import HelperText from "../text/HelperText";
 import Typography from "../text/Typography";
 import List from "../layout/List";
+import { styleProps } from "../../util";
 
 export type SelectOption<T = string> = {
     value: T;
@@ -25,11 +26,9 @@ export type SelectOption<T = string> = {
     actionIcon?: React.ReactElement;
 };
 
-interface SelectProps<T = string> extends InputLikeProps<T> {
-    className?: string;
+interface SelectProps<T = string> extends StyleProps, InputLikeProps<T> {
     options: SelectOption<T>[];
     renderCurrent?: (option: SelectOption<T>) => React.ReactNode;
-    style?: React.CSSProperties;
     onChange?: (value: T | undefined, option: SelectOption<T> | undefined) => void;
     size?: Size;
     placeholder?: string;
@@ -43,7 +42,7 @@ interface SelectProps<T = string> extends InputLikeProps<T> {
 const maxCardHeight = 400;
 
 export default function Select<T = string>(props: SelectProps<T>) {
-    const valueOptionMap = new Map(props.options.map(o => [o.value, o]));
+    const valueOptionMap = new Map(props.options.map((o) => [o.value, o]));
     const sizeClasses = getInputSizeClasses(props.size || "medium");
     const anchor = React.useRef<HTMLDivElement>(null);
     const [open, setOpen] = React.useState(false);
@@ -60,7 +59,11 @@ export default function Select<T = string>(props: SelectProps<T>) {
     const hasValue = !!activeOption;
     const emptyOption: SelectOption<any> | null =
         props.emptyOption === undefined
-            ? { value: props.emptyValue !== undefined ? props.emptyValue : "", label: "Leer", className: "text-text-disabled" }
+            ? {
+                  value: props.emptyValue !== undefined ? props.emptyValue : "",
+                  label: "Leer",
+                  className: "text-text-disabled",
+              }
             : props.emptyOption;
 
     React.useEffect(() => {
@@ -95,10 +98,25 @@ export default function Select<T = string>(props: SelectProps<T>) {
     }
 
     return (
-        <div className={clsx("inline-flex flex-col flex-shrink-0 min", props.fullWidth && "w-full", props.className)} style={props.style}>
-            <FormControl ref={innerRef} required={props.required} name={props.name} type="json" value={activeOption?.value} />
+        <div
+            {...styleProps(
+                { className: ["inline-flex flex-col flex-shrink-0 min", props.fullWidth && "w-full"] },
+                props
+            )}
+        >
+            <FormControl
+                ref={innerRef}
+                required={props.required}
+                name={props.name}
+                type="json"
+                value={activeOption?.value}
+            />
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} required={props.required} error={error}>
+                <Label
+                    variant={props.dense ? "caption" : "form_control"}
+                    required={props.required}
+                    error={error}
+                >
                     {props.label}
                 </Label>
             )}
@@ -132,7 +150,10 @@ export default function Select<T = string>(props: SelectProps<T>) {
                         <Typography disabled>{props.placeholder || "Leer"}</Typography>
                     )}
                 </div>
-                <ChevronDownIcon color={readOnly || disabled ? "disabled" : "text_secondary"} className="ml-1 self-center flex-shrink-0" />
+                <ChevronDownIcon
+                    color={readOnly || disabled ? "disabled" : "text_secondary"}
+                    className="ml-1 self-center flex-shrink-0"
+                />
             </Flex>
             <HelperText error={error} errorMessage={props.errorMessage}>
                 {props.helperText}
@@ -145,7 +166,12 @@ export default function Select<T = string>(props: SelectProps<T>) {
                 onClose={onClose}
                 anchor={anchor.current}
                 position={{ horizontal: "start", vertical: "bottom" }}
-                slotProps={{ card: { className: "!p-0 shadow-lg !bg-bg overflow-y-auto", style: { maxHeight: maxCardHeight } } }}
+                slotProps={{
+                    card: {
+                        className: "!p-0 shadow-lg !bg-bg overflow-y-auto",
+                        style: { maxHeight: maxCardHeight },
+                    },
+                }}
             >
                 <List onActivateOption={(e, opt) => changeValue(opt.value)} options={props.options}>
                     {emptyOption && (

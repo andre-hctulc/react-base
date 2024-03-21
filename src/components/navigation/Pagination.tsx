@@ -9,6 +9,7 @@ import ChevronDoubleRightIcon from "../icons/collection/ChevronDoubleRight";
 import ChevronLeftIcon from "../icons/collection/ChevronLeft";
 import ChevronRightIcon from "../icons/collection/ChevronRight";
 import type { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
 interface PaginationProps extends StyleProps {
     searchParam?: string;
@@ -58,7 +59,17 @@ export default function Pagination(props: PaginationProps) {
     }
 
     return (
-        <nav className={clsx("flex flex-row space-x-3 items-center justify-center pt-4 flex-shrink-0", !props.noPb && "pb-4", props.className)}>
+        <nav
+            {...styleProps(
+                {
+                    className: [
+                        "flex flex-row space-x-3 items-center justify-center pt-4 flex-shrink-0",
+                        !props.noPb && "pb-4",
+                    ],
+                },
+                props
+            )}
+        >
             <div className="flex-row flex flex-grow justify-start">
                 <IconButton disabled={pages.backDisabled} onClick={() => setPage(pages.backFarPage)}>
                     <ChevronDoubleLeftIcon />
@@ -69,14 +80,22 @@ export default function Pagination(props: PaginationProps) {
             </div>
             {Array.from({ length: pages.leftCount }, (_, i) => i)
                 .reverse()
-                .map(page => (
-                    <button key={`pages-left-${page}`} className={buttonClasses + buttonInActiveClasses} onClick={() => setPage(page)}>
+                .map((page) => (
+                    <button
+                        key={`pages-left-${page}`}
+                        className={buttonClasses + buttonInActiveClasses}
+                        onClick={() => setPage(page)}
+                    >
                         {currentPage - page + 1}
                     </button>
                 ))}
             <span className={buttonClasses + buttonActiveClasses}>{currentPage}</span>
-            {Array.from({ length: pages.rightCount }, (_, i) => i).map(page => (
-                <button className={buttonClasses + buttonInActiveClasses} key={`pages-right-${page}`} onClick={() => setPage(page)}>
+            {Array.from({ length: pages.rightCount }, (_, i) => i).map((page) => (
+                <button
+                    className={buttonClasses + buttonInActiveClasses}
+                    key={`pages-right-${page}`}
+                    onClick={() => setPage(page)}
+                >
                     {currentPage + page + 1}
                 </button>
             ))}

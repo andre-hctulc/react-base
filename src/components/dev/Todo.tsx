@@ -1,12 +1,12 @@
 "use client";
 
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 import Alert from "../alerts/Alert";
 import AlertTitle from "../alerts/AlertTitle";
 import Dev from "./Dev";
 
-interface TodoProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface TodoProps extends StyleProps {
     children?: React.ReactNode;
 }
 
@@ -14,7 +14,7 @@ interface TodoProps {
 export default function Todo(props: TodoProps) {
     return (
         <Dev>
-            <Alert style={props.style} className={props.className} severity="info">
+            <Alert {...styleProps(props)} severity="info">
                 <AlertTitle>Todo</AlertTitle>
                 {props.children}
             </Alert>

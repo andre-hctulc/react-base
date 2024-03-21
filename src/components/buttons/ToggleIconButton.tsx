@@ -2,12 +2,11 @@
 
 import React from "react";
 import IconButton from "./IconButton";
-import { Size } from "../../types";
-import Styled from "../others/Styled";
+import { Size, StyleProps } from "../../types";
+import Styled from "../shadow/Styled";
+import { styleProps } from "../../util";
 
-interface ToggleIconButtonProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface ToggleIconButtonProps extends StyleProps {
     children: React.ReactElement;
     activeIcon?: React.ReactElement;
     onClick?: (event: React.MouseEvent) => void;
@@ -29,18 +28,19 @@ const ToggleIconButton = React.forwardRef<HTMLButtonElement, ToggleIconButtonPro
 
     return (
         <IconButton
+            {...styleProps(props)}
             size={props.size}
             ref={ref}
             variant={props.variant ?? "contained"}
-            style={props.style}
-            onClick={e => {
+            onClick={(e) => {
                 props.onClick?.(e);
                 if (!isControlled) setActive(!active);
             }}
             disabled={props.disabled}
-            className={props.className}
         >
-            <Styled color={active ? "info" : "accent"}>{active ? props.activeIcon || props.children : props.children}</Styled>
+            <Styled color={active ? "info" : "accent"}>
+                {active ? props.activeIcon || props.children : props.children}
+            </Styled>
         </IconButton>
     );
 });

@@ -3,12 +3,12 @@ import Alert from "./Alert";
 import AlertTitle from "./AlertTitle";
 import Button from "../buttons/Button";
 import Dev from "../dev/Dev";
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
-export type ErrorAltertProps = {
+export type ErrorAltertProps = StyleProps & {
     active?: boolean;
     title?: string | false;
-    className?: string;
-    style?: React.CSSProperties;
     margin?: boolean;
     fullWidth?: boolean;
     id?: string;
@@ -26,7 +26,7 @@ export default function ErrorAlert(props: ErrorAltertProps) {
     if (props.active === false) return null;
 
     return (
-        <Alert fullWidth={props.fullWidth} margin={props.margin} severity="error" className={props.className} style={props.style}>
+        <Alert fullWidth={props.fullWidth} margin={props.margin} severity="error" {...styleProps(props)}>
             {props.title && <AlertTitle>{props.title}</AlertTitle>}
             {(props as any).message || (props as any).children}
             {props.reset && <Button onClick={props.onReset}></Button>}

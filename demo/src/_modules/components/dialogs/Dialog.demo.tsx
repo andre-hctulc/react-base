@@ -5,10 +5,18 @@ import type { DemoDef, DemoProps } from "src/types";
 // demo_start
 
 import React from "react";
-import { Dialog, DialogHeader, DialogTitleIcon, DialogTitle, DialogContent, DialogFooter } from "@react-base/src/components/dialogs";
+import {
+    Dialog,
+    DialogHeader,
+    DialogTitleIcon,
+    DialogTitle,
+    DialogContent,
+    DialogFooter,
+} from "@react-base/src/components/dialogs";
 import DocumentOutlineIcon from "@react-base/src/components/icons/collection/DocumentOutline";
 import { Button } from "@react-base/src/components/buttons";
 import { Alert } from "@react-base/src/components/alerts";
+import { Toolbar } from "@react-base/src/components";
 
 function DialogDemo({ demoProps }: DemoProps) {
     const [open, setOpen] = React.useState(false);
@@ -32,10 +40,12 @@ function DialogDemo({ demoProps }: DemoProps) {
                 <DialogContent>
                     <Alert severity="info">This is a Dialog</Alert>
                 </DialogContent>
-                <DialogFooter toolbar justify="end">
-                    <Button color="info" onClick={handleClose}>
-                        Understand 🫡
-                    </Button>
+                <DialogFooter>
+                    <Toolbar grow justify="end">
+                        <Button color="info" onClick={handleClose}>
+                            Understand 🫡
+                        </Button>
+                    </Toolbar>
                 </DialogFooter>
             </Dialog>
         </div>

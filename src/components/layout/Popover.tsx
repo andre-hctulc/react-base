@@ -11,7 +11,10 @@ import { PropsOf } from "../../types";
 // TODO bundle functions calc...
 // BUG abstand zum rand wird teilwise falsch bestimmt, durch buffer vorzeichen fehler
 
-type PopoverPosition = { horizontal: "left" | "start" | "right" | "end" | "center"; vertical: "top" | "start" | "bottom" | "end" | "center" };
+type PopoverPosition = {
+    horizontal: "left" | "start" | "right" | "end" | "center";
+    vertical: "top" | "start" | "bottom" | "end" | "center";
+};
 
 type Margins = { mr: number; ml: number; mt: number; mb: number };
 
@@ -108,7 +111,12 @@ function calcHorizontal(
     return { left, right };
 }
 
-function calcMaxWidth(anchorRect: DOMRect, buffer: number, edgeBuffer: number, x: PopoverPosition["horizontal"]): number {
+function calcMaxWidth(
+    anchorRect: DOMRect,
+    buffer: number,
+    edgeBuffer: number,
+    x: PopoverPosition["horizontal"]
+): number {
     switch (x) {
         case "center":
             return window.innerWidth - 2 * edgeBuffer;
@@ -123,7 +131,12 @@ function calcMaxWidth(anchorRect: DOMRect, buffer: number, edgeBuffer: number, x
     }
 }
 
-function calcMaxHeight(anchorRect: DOMRect, buffer: number, edgeBuffer: number, y: PopoverPosition["vertical"]): number {
+function calcMaxHeight(
+    anchorRect: DOMRect,
+    buffer: number,
+    edgeBuffer: number,
+    y: PopoverPosition["vertical"]
+): number {
     switch (y) {
         case "center":
             return window.innerHeight - 2 * edgeBuffer;
@@ -138,7 +151,11 @@ function calcMaxHeight(anchorRect: DOMRect, buffer: number, edgeBuffer: number, 
     }
 }
 
-function flipPosition(expectedSize: { height: number; width: number }, pos: PopoverPosition, anchorRect: DOMRect) {
+function flipPosition(
+    expectedSize: { height: number; width: number },
+    pos: PopoverPosition,
+    anchorRect: DOMRect
+) {
     const expectedHeight = expectedSize.height;
     const expectedWidth = expectedSize.width;
     const margins = getMargins(anchorRect);
@@ -240,12 +257,31 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
     const card = useElement(cardRef);
     const buffer = props.buffer ?? 5;
     const edgeBuffer = props.edgeBuffer ?? 5;
-    const bg = collapse(props.cardBg || "paper", { transparent: "!bg-transparent", paper: "", default: "!bg-bg" });
+    const bg = collapse(props.cardBg || "paper", {
+        transparent: "!bg-transparent",
+        paper: "",
+        default: "!bg-bg",
+    });
     const cardStyle = React.useMemo<
-        Pick<React.CSSProperties, "top" | "bottom" | "right" | "left" | "height" | "minHeight" | "maxHeight" | "width" | "minWidth" | "maxWidth">
+        Pick<
+            React.CSSProperties,
+            | "top"
+            | "bottom"
+            | "right"
+            | "left"
+            | "height"
+            | "minHeight"
+            | "maxHeight"
+            | "width"
+            | "minWidth"
+            | "maxWidth"
+        >
     >(() => {
         if (!anchor || !card || !props.open) return {};
-        const pos = { horizontal: props.position?.horizontal || "start", vertical: props.position?.vertical || "bottom" };
+        const pos = {
+            horizontal: props.position?.horizontal || "start",
+            vertical: props.position?.vertical || "bottom",
+        };
 
         const cardRect = card.rect();
         const anchorRect = anchor.rect();
@@ -300,7 +336,7 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
                 border={!props.noCardBorder}
                 shadow={props.cardShadow || "medium"}
                 {...props.slotProps?.card}
-                onClick={e => {
+                onClick={(e) => {
                     e.stopPropagation();
                     props.slotProps?.card?.onClick?.(e);
                 }}
@@ -314,8 +350,13 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
                             ? "hidden"
                             : undefined,
                 }}
-                className={clsx("absolute pointer-events-auto max-h-full", bg, props.noCardPadding && "!p-0", props.slotProps?.card?.className)}
-                ref={element => {
+                className={clsx(
+                    "absolute pointer-events-auto max-h-full",
+                    bg,
+                    props.noCardPadding && "!p-0",
+                    props.slotProps?.card?.className
+                )}
+                ref={(element) => {
                     setCardRef(element);
                     //setRef(cardRef, element);
                     setRef<any>(element, props.slotProps?.card?.ref, props.cardRef);

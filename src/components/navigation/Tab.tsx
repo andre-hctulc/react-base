@@ -1,15 +1,13 @@
 import clsx from "clsx";
 import React from "react";
 import Chip from "../data-display/Chip";
-import Styled from "../others/Styled";
+import Styled from "../shadow/Styled";
 import LinkContainer from "./LinkContainer";
-import type { LinkProps } from "../../types";
+import type { LinkProps, StyleProps } from "../../types";
 
-interface TabProps {
+interface TabProps extends StyleProps {
     icon?: React.ReactElement;
     children: string;
-    style?: React.CSSProperties;
-    className?: string;
     /** @default "default" */
     variant?: "chips" | "default";
     disabled?: boolean;
@@ -29,7 +27,11 @@ const Tab = React.forwardRef<HTMLElement, TabProps>((props, ref) => {
     if (variant === "chips") {
         // chips text color hover effect ist in css class Tab_chip
         main = (
-            <Chip startIcon={props.icon} variant="pale" className={clsx("Tab_chip", active && "outline-divider outline !bg-bg-paper/40")}>
+            <Chip
+                startIcon={props.icon}
+                variant="pale"
+                className={clsx("Tab_chip", active && "outline-divider outline !bg-bg-paper/40")}
+            >
                 {props.children}
             </Chip>
         );

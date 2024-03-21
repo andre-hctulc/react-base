@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import type { PropsOf } from "../../types";
-import Styled from "../others/Styled";
+import Styled from "../shadow/Styled";
 
 /**
  * Kann entweder in `DialogHeader` oder direkt in `DialogTitle` verwendet werden.

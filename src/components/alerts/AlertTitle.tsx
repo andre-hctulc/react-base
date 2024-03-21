@@ -1,10 +1,16 @@
-import clsx from "clsx";
 import Typography from "../text/Typography";
+import { ParentProps, StyleProps } from "../../types";
 
-export default function AlertTitle(props: { children?: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+interface AlertTitleProps extends StyleProps, ParentProps {}
+
+export default function AlertTitle(props: AlertTitleProps) {
     if (typeof props.children === "string")
         return (
-            <Typography variant="h5" className={clsx("!my-0 text-sm font-medium", props.className)}>
+            <Typography
+                variant="h5"
+                className={["!my-0 text-sm font-medium", props.className]}
+                style={props.style}
+            >
                 {props.children}
             </Typography>
         );

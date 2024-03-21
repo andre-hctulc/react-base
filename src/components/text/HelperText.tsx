@@ -1,11 +1,8 @@
-import clsx from "clsx";
-import type { PropsOf } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import Typography from "./Typography";
 
-interface HelperTextProps {
+interface HelperTextProps extends StyleProps {
     error?: boolean;
-    className?: string;
-    style?: React.CSSProperties;
     children?: React.ReactNode;
     errorMessage?: string;
     /** @default "caption" */
@@ -21,7 +18,11 @@ export default function HelperText(props: HelperTextProps) {
         <Typography
             long
             variant={props.variant || "caption"}
-            className={clsx("pt-1 pl-1", props.error ? "text-error-light" : "text-text-secondary", props.className)}
+            className={[
+                "pt-1 pl-1",
+                props.error ? "text-error-light" : "text-text-secondary",
+                props.className,
+            ]}
             style={props.style}
         >
             {props.error ? props.errorMessage || props.children : props.children}

@@ -1,13 +1,11 @@
 import clsx from "clsx";
 import React from "react";
-import type { ThemeColor, Size, Align } from "../../types";
-import { alignSelfClass, collapse, themeColor } from "../../util";
+import type { ThemeColor, Size, Align, StyleProps } from "../../types";
+import { alignSelfClass, collapse, styleProps, themeColor } from "../../util";
 import XCircleOutlineIcon from "../icons/collection/XCircleOutline";
-import Styled from "../others/Styled";
+import Styled from "../shadow/Styled";
 
-interface ChipProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface ChipProps extends StyleProps {
     children?: React.ReactNode;
     deletable?: boolean;
     endIcon?: React.ReactElement;
@@ -31,9 +29,29 @@ const Chip = React.forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
     const [variantClasses, iconClasses] = collapse(
         variant,
         {
-            contained: [[tc.contrastText, tc.bg, hoverEffect && tc.hover_bgDark, hoverEffect && tc.active_bgLight], [tc.contrastText]],
-            outlined: [["border", tc.border, tc.text, hoverEffect && tc.hover_bgSuperLight, hoverEffect && tc.active_bgLight], [tc.text]],
-            pale: [[tc.bgSuperLight, tc.text, hoverEffect && tc.hover_bgLight, hoverEffect && tc.active_bgSuperLight], [tc.text]],
+            contained: [
+                [tc.contrastText, tc.bg, hoverEffect && tc.hover_bgDark, hoverEffect && tc.active_bgLight],
+                [tc.contrastText],
+            ],
+            outlined: [
+                [
+                    "border",
+                    tc.border,
+                    tc.text,
+                    hoverEffect && tc.hover_bgSuperLight,
+                    hoverEffect && tc.active_bgLight,
+                ],
+                [tc.text],
+            ],
+            pale: [
+                [
+                    tc.bgSuperLight,
+                    tc.text,
+                    hoverEffect && tc.hover_bgLight,
+                    hoverEffect && tc.active_bgSuperLight,
+                ],
+                [tc.text],
+            ],
         },
         [[], []]
     );
@@ -50,15 +68,18 @@ const Chip = React.forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
     return (
         <span
             ref={ref}
-            className={clsx(
-                "inline-flex flex-row justify-center items-center rounded-[20px] whitespace-nowrap min-w-0 flex-shrink-0 transition-l duration-100",
-                sizeClasses,
-                alignSelfClass(props.alignSelf || "none"),
-                hoverEffect && "cursor-pointer",
-                variantClasses,
-                props.className
+            {...styleProps(
+                {
+                    className: [
+                        "inline-flex flex-row justify-center items-center rounded-[20px] whitespace-nowrap min-w-0 flex-shrink-0 transition-l duration-100",
+                        sizeClasses,
+                        alignSelfClass(props.alignSelf || "none"),
+                        hoverEffect && "cursor-pointer",
+                        variantClasses,
+                    ],
+                },
+                props
             )}
-            style={props.style}
             onClick={props.onClick}
         >
             {props.startIcon && (
@@ -69,7 +90,10 @@ const Chip = React.forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
             {props.children}
             {props.deletable && (
                 <XCircleOutlineIcon
-                    className={clsx("cursor-pointer hover:text-opacity-70 ml-1.5 text-text-secondary", iconClasses)}
+                    className={clsx(
+                        "cursor-pointer hover:text-opacity-70 ml-1.5 text-text-secondary",
+                        iconClasses
+                    )}
                     onClick={props.onDelete as any}
                 />
             )}

@@ -2,10 +2,10 @@
 
 import clsx from "clsx";
 import React from "react";
-import type { PropsOf, Size } from "../../types";
+import type { PropsOf, Size, StyleProps } from "../../types";
 import Label from "./Label";
 import { useFormInput } from "./JSForm";
-import { collapse, setRef } from "../../util";
+import { collapse, setRef, styleProps } from "../../util";
 import HelperText from "../text/HelperText";
 
 // Util
@@ -15,7 +15,8 @@ export function getInputSizeClasses(size: Size): string {
 }
 
 export function getEventValue(e: any) {
-    if (e && typeof e === "object" && Object.hasOwn(e, "target") && Object.hasOwn(e, "currentTarget")) return e.target.value;
+    if (e && typeof e === "object" && Object.hasOwn(e, "target") && Object.hasOwn(e, "currentTarget"))
+        return e.target.value;
     else return e;
 }
 
@@ -58,7 +59,7 @@ export interface InputLikeProps<T = any> {
     noBorder?: boolean;
 }
 
-interface InputProps extends InputLikeProps {
+interface InputProps extends StyleProps, InputLikeProps {
     type?: React.HTMLInputTypeAttribute;
     slotProps?: { input?: PropsOf<"input">; helperText?: PropsOf<typeof HelperText> };
     placeholder?: string;
@@ -71,8 +72,6 @@ interface InputProps extends InputLikeProps {
     // * Style
     size?: Size;
     fullWidth?: boolean;
-    className?: string;
-    style?: React.CSSProperties;
     // * Events
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onFocus?: React.FocusEventHandler<HTMLInputElement>;
@@ -87,25 +86,35 @@ const Input = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     const innerRef = React.useRef<HTMLInputElement>(null);
     const { readOnly, disabled, error } = useFormInput(props, innerRef.current);
 
-    const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = e => {
+    const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (props.onKeyDown) props.onKeyDown(e);
         else if (e.key === "Enter") props.onEnterKeyDown?.(e);
     };
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         props.onChange?.(e);
     };
 
     return (
-        <div className={clsx("inline-flex flex-col flex-shrink-0", props.fullWidth && "w-full", props.className)} style={props.style} ref={ref}>
+        <div
+            {...styleProps(
+                { className: ["inline-flex flex-col flex-shrink-0", props.fullWidth && "w-full"] },
+                props
+            )}
+            ref={ref}
+        >
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
+                <Label
+                    variant={props.dense ? "caption" : "form_control"}
+                    error={error}
+                    required={props.required}
+                >
                     {props.label}
                 </Label>
             )}
             <input
                 {...props.slotProps?.input}
-                ref={inp => setRef(inp, innerRef, props.inputRef)}
+                ref={(inp) => setRef(inp, innerRef, props.inputRef)}
                 pattern={props.pattern}
                 placeholder={props.placeholder}
                 type={props.type}

@@ -5,16 +5,21 @@ import React from "react";
 import XIcon from "../icons/collection/X";
 import IconButton from "../buttons/IconButton";
 import Pagination from "../navigation/Pagination";
-import { useDev } from "../dev/DevProvider";
+import { useDev } from "../../providers/DevProvider";
 import Typography from "../text/Typography";
 import Loading from "../feedback/Loading";
 import Placeholder from "../feedback/Placeholder";
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
 export type CellChangeListener<M = any> = (rowParams: GridRowParams<M>, data: any) => void;
 
 interface DataGridContext<D = undefined, M = any> {
     changeCell: (rowParams: GridRowParams<M>, colKey: string, data?: any) => void;
-    addCellChangeListener: (cellKey: string, listener: (rowParams: GridRowParams<M>, data: any) => void) => void;
+    addCellChangeListener: (
+        cellKey: string,
+        listener: (rowParams: GridRowParams<M>, data: any) => void
+    ) => void;
     removeCellChangeListener: (cellKey: string, listener: CellChangeListener<M>) => void;
     data: D;
     editable: boolean;
@@ -48,7 +53,7 @@ export type DataGridColDef<M extends object, K extends string = string> = {
 
 export type GridRowParams<M> = { row: M; rowId: string };
 
-export interface DataGridProps<M extends object> {
+export interface DataGridProps<M extends object> extends StyleProps {
     // * Zellen
     cols: DataGridColDef<M>[];
     /** Spalten, die ausgeschlossen werden sollen. */
@@ -74,9 +79,6 @@ export interface DataGridProps<M extends object> {
     headerRowHeight?: number;
     rowId: (row: M) => string;
     noRowDividers?: boolean;
-    // Style ---
-    className?: string;
-    style?: React.CSSProperties;
     /** Diese Daten werden im `DataGridContext` bereitgestellt */
     contextData?: any;
     pagination?: { max: number; searchParam?: string; onPageChange?: () => void };
@@ -119,17 +121,23 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
     const cellChangeListeners = React.useRef<Map<string, Set<CellChangeListener>>>(new Map());
     const [selectedRows, setSelectedRows] = React.useState<any[]>([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const selectedRowsSet = React.useMemo<Set<string>>(() => new Set(selectedRows.map(row => rowId(row))), [selectedRows]);
+    const selectedRowsSet = React.useMemo<Set<string>>(
+        () => new Set(selectedRows.map((row) => rowId(row))),
+        [selectedRows]
+    );
     const selectedRowsInited = React.useRef(false);
-    const allChecked = React.useMemo(() => selectedRows.length === props.rows.length, [selectedRows.length, props.rows.length]);
+    const allChecked = React.useMemo(
+        () => selectedRows.length === props.rows.length,
+        [selectedRows.length, props.rows.length]
+    );
     const canSelectSomeRow = React.useMemo(
-        () => props.rows.some(row => !props.canSelectRow || props.canSelectRow({ row, rowId: rowId(row) })),
+        () => props.rows.some((row) => !props.canSelectRow || props.canSelectRow({ row, rowId: rowId(row) })),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [props.rows, props.canSelectRow]
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const canDeleteSomeRow = React.useMemo(
-        () => props.rows.some(row => !props.canDeleteRow || props.canDeleteRow({ row, rowId: rowId(row) })),
+        () => props.rows.some((row) => !props.canDeleteRow || props.canDeleteRow({ row, rowId: rowId(row) })),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [props.rows, props.canDeleteRow]
     );
@@ -141,7 +149,9 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
         if (props.skipCols || props.pickCols) {
             const skipSet = new Set(props.skipCols || []);
             const pickSet = new Set(props.pickCols || []);
-            cols = cols.filter(col => !skipSet.has(col.key as any) && (!props.pickCols || pickSet.has(col.key)));
+            cols = cols.filter(
+                (col) => !skipSet.has(col.key as any) && (!props.pickCols || pickSet.has(col.key))
+            );
         }
 
         // select col
@@ -153,7 +163,7 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                     shrink: 0,
                     center: true,
                     stickyLeft: true,
-                    render: row => (
+                    render: (row) => (
                         <input
                             type="checkbox"
                             disabled={props.canSelectRow && !props.canSelectRow(row)}
@@ -169,7 +179,7 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                                 type="checkbox"
                                 className="mx-auto"
                                 checked={allChecked}
-                                onChange={e => {
+                                onChange={(e) => {
                                     if (e.currentTarget.checked) setSelectedRows(props.rows);
                                     else setSelectedRows([]);
                                 }}
@@ -187,7 +197,7 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                 shrink: 0,
                 stickyRight: true,
                 cellClassName: "flex-col justify-center flex",
-                render: row => (
+                render: (row) => (
                     <IconButton
                         disabled={props.canDeleteRow && !props.canDeleteRow(row)}
                         size="small"
@@ -228,7 +238,8 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
 
     function toggleSelectedRow(row: any) {
         const rId = rowId(row);
-        if (selectedRows.some(r => rowId(r) === rId)) setSelectedRows(selectedRows.filter(r => rowId(r) !== rId));
+        if (selectedRows.some((r) => rowId(r) === rId))
+            setSelectedRows(selectedRows.filter((r) => rowId(r) !== rId));
         else setSelectedRows(selectedRows.concat(row));
     }
 
@@ -247,14 +258,26 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
         const newRow = props.onCellChange?.(row, colKey, data);
         if (newRow) props.onRowChange?.({ row: newRow, rowId: row.rowId });
         const listeners = cellChangeListeners.current.get(colKey);
-        listeners?.forEach(listener => listener(row, data));
+        listeners?.forEach((listener) => listener(row, data));
     }
 
     return (
         <DataGridContext.Provider
-            value={{ addCellChangeListener, editable: !!props.editable, removeCellChangeListener, changeCell, data: props.contextData }}
+            value={{
+                addCellChangeListener,
+                editable: !!props.editable,
+                removeCellChangeListener,
+                changeCell,
+                data: props.contextData,
+            }}
         >
-            <div ref={ref} className={clsx("flex flex-col border rounded min-w-0 min-h-0 overflow-hidden", props.className)} style={props.style}>
+            <div
+                ref={ref}
+                {...styleProps(
+                    { className: "flex flex-col border rounded min-w-0 min-h-0 overflow-hidden" },
+                    props
+                )}
+            >
                 {!props.loading && (
                     <div
                         style={{ flexGrow: isEmpty ? 0 : 1 }}
@@ -265,7 +288,11 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                             const cs = getColStyle(col);
                             const rowHeight = props.rowHeight || 32;
                             const headerRowHeight = props.headerRowHeight || 32;
-                            const heightStyle: React.CSSProperties = { height: rowHeight, maxHeight: rowHeight, minHeight: rowHeight };
+                            const heightStyle: React.CSSProperties = {
+                                height: rowHeight,
+                                maxHeight: rowHeight,
+                                minHeight: rowHeight,
+                            };
                             const headerHeightStyle: React.CSSProperties = {
                                 height: headerRowHeight,
                                 maxHeight: headerRowHeight,
@@ -296,7 +323,11 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                                             )}
                                         >
                                             {typeof col.heading === "string" ? (
-                                                <Typography truncate tag="strong" className="px-2 text-sm max-w-full">
+                                                <Typography
+                                                    truncate
+                                                    tag="strong"
+                                                    className="px-2 text-sm max-w-full"
+                                                >
                                                     {col.heading}
                                                 </Typography>
                                             ) : (
@@ -308,7 +339,9 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                                     {props.rows.map((row, i) => {
                                         const rowId = props.rowId(row);
                                         const value = (row as any)[col.key];
-                                        const custom = col.render ? col.render({ value, row, rowId }) : undefined;
+                                        const custom = col.render
+                                            ? col.render({ value, row, rowId })
+                                            : undefined;
                                         const isLastRow = i === props.rows.length - 1;
 
                                         return (
@@ -316,7 +349,9 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                                                 className={clsx(
                                                     "flex items-center",
                                                     debug && "border border-common-blue",
-                                                    !(props.autoHeight && isLastRow) && !props.noRowDividers && "border-b",
+                                                    !(props.autoHeight && isLastRow) &&
+                                                        !props.noRowDividers &&
+                                                        "border-b",
                                                     !isFirstCell && "border-l",
                                                     col.center && "justify-center",
                                                     (props.onRowClick || col.onCellClick) && "cursor-pointer",
@@ -331,7 +366,11 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                                                 }}
                                             >
                                                 {typeof custom === "string" || !custom ? (
-                                                    <Typography truncate variant="body2" className="px-1 max-w-full">
+                                                    <Typography
+                                                        truncate
+                                                        variant="body2"
+                                                        className="px-1 max-w-full"
+                                                    >
                                                         {col.render ? custom : value}
                                                     </Typography>
                                                 ) : (
@@ -346,9 +385,18 @@ const DataGrid = React.forwardRef<HTMLDivElement, DataGridProps<any>>((props, re
                     </div>
                 )}
                 {props.loading && (props.slots?.loading === undefined ? <Loading /> : props.slots.loading)}
-                {isEmpty && (props.slots?.empty === undefined ? <Placeholder py>Keine Daten vorhanden</Placeholder> : props.slots.empty)}
+                {isEmpty &&
+                    (props.slots?.empty === undefined ? (
+                        <Placeholder py>Keine Daten vorhanden</Placeholder>
+                    ) : (
+                        props.slots.empty
+                    ))}
                 {props.pagination && (
-                    <Pagination className="border-t px-2 !py-2" searchParam={props.pagination.searchParam} max={props.pagination.max}></Pagination>
+                    <Pagination
+                        className="border-t px-2 !py-2"
+                        searchParam={props.pagination.searchParam}
+                        max={props.pagination.max}
+                    ></Pagination>
                 )}
             </div>
         </DataGridContext.Provider>

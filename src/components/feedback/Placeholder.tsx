@@ -1,17 +1,15 @@
 import clsx from "clsx";
 import React from "react";
-import type { PropsOf } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import Button from "../buttons/Button";
 import Flex from "../layout/Flex";
-import Delayed from "../others/Delayed";
+import Delayed from "../shadow/Delayed";
 import Typography from "../text/Typography";
 
-interface PlaceholderProps {
+interface PlaceholderProps extends StyleProps {
     children: React.ReactNode;
     actionText?: string;
     action?: (event: React.MouseEvent) => void;
-    className?: string;
-    style?: React.CSSProperties;
     buttonIcon?: React.ReactElement;
     component?: string;
     padding?: boolean;
@@ -31,11 +29,17 @@ export default function Placeholder(props: PlaceholderProps) {
             tag={props.tag}
             align={props.align || "center"}
             justify={props.justify || "center"}
-            className={clsx("flex-grow px-2", props.padding && "p-4", props.py && "py-4", props.className)}
+            className={["flex-grow px-2", props.padding && "p-4", props.py && "py-4", props.className]}
             style={props.style}
         >
             {typeof props.children === "string" ? (
-                <Typography secondary italic className={clsx(props.error && "!text-error")} variant="caption" textCenter>
+                <Typography
+                    secondary
+                    italic
+                    className={clsx(props.error && "!text-error")}
+                    variant="caption"
+                    textCenter
+                >
                     {props.children}
                 </Typography>
             ) : (

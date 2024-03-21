@@ -1,7 +1,7 @@
 import AppContextProvider from "./AppContextProvider";
 import AppMenu from "./AppMenu";
 import Demos from "./Demos";
-import { AlertsProvider } from "@react-base/src/components";
+import { AlertsProvider } from "@react-base/src/providers";
 
 export default function App() {
     return (

@@ -1,9 +1,9 @@
-import clsx from "clsx";
 import React from "react";
-import { collapse } from "../../util";
-import { randomNumber } from "../../system";
+import { collapse, styleProps } from "../../util";
+import { randomNumber } from "../../util/system";
+import { StyleProps } from "../../types";
 
-interface SkeletonProps {
+interface SkeletonProps extends StyleProps {
     /** @default "rounded" */
     variant?: "rounded" | "rect" | "circular" | "rounded_lg" | "text";
     height?: number | string | [number, number];
@@ -12,8 +12,6 @@ interface SkeletonProps {
     minHeight?: number;
     maxWidth?: number;
     maxHeight?: number;
-    className?: string;
-    style?: React.CSSProperties;
     children?: React.ReactNode;
     /** @default true */
     pulse?: boolean;
@@ -31,8 +29,13 @@ interface SkeletonProps {
 }
 
 const Skeleton = React.forwardRef<HTMLElement, SkeletonProps>((props, ref) => {
-    const variantClasses = collapse(props.variant || "rounded", { rounded: "rounded", text: "rounded", rect: "", circular: "rounded-full", rounded_lg: "rounded-lg" });
-    const classes = clsx("Skeleton", props.pulse !== false && "animate-pulse", props.dark ? "bg-bg-dark/60" : "bg-bg-paper", variantClasses, props.className);
+    const variantClasses = collapse(props.variant || "rounded", {
+        rounded: "rounded",
+        text: "rounded",
+        rect: "",
+        circular: "rounded-full",
+        rounded_lg: "rounded-lg",
+    });
 
     const width = React.useMemo(
         () => {
@@ -53,7 +56,8 @@ const Skeleton = React.forwardRef<HTMLElement, SkeletonProps>((props, ref) => {
             else height = randomNumber(minH as number, maxH as number);
 
             // Bei Text Skeleton Höhe abziehen, da Texte kleiener (bzgl. der Höhe) erscheinen, als sie es im DOM tatsächlich sind
-            if (props.variant === "text" && height) return `calc(${typeof height === "string" ? height : height + "px"} - 4px)`;
+            if (props.variant === "text" && height)
+                return `calc(${typeof height === "string" ? height : height + "px"} - 4px)`;
 
             return height;
         },
@@ -70,9 +74,28 @@ const Skeleton = React.forwardRef<HTMLElement, SkeletonProps>((props, ref) => {
     return (
         <Comp
             ref={ref}
-            className={classes}
             onClick={props.onClick}
-            style={{ height, width, minHeight: props.minHeight, minWidth: props.minWidth, maxHeight: props.maxHeight, maxWidth: props.maxWidth, ...props.style }}
+            {...styleProps(
+                {
+                    className: [
+                        [
+                            "Skeleton",
+                            props.pulse !== false && "animate-pulse",
+                            props.dark ? "bg-bg-dark/60" : "bg-bg-paper",
+                            variantClasses,
+                        ],
+                    ],
+                    style: {
+                        height,
+                        width,
+                        minHeight: props.minHeight,
+                        minWidth: props.minWidth,
+                        maxHeight: props.maxHeight,
+                        maxWidth: props.maxWidth,
+                    },
+                },
+                props
+            )}
         >
             {props.children}
         </Comp>

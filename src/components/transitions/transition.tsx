@@ -25,7 +25,13 @@ export default function Transition(props: TransitionProps) {
     });
 
     return (
-        <CSSTransition unmountOnExit={props.unmountOnExit} nodeRef={ref} timeout={props.timeout || 0} in={props.in} classNames={props.transitionName}>
+        <CSSTransition
+            unmountOnExit={props.unmountOnExit}
+            nodeRef={ref}
+            timeout={props.timeout || 0}
+            in={props.in}
+            classNames={props.transitionName}
+        >
             {child as any}
         </CSSTransition>
     );

@@ -26,7 +26,7 @@ export function useDND<D = any>() {
 /**
  * Drag and Drop. Stellt `DNDContext` bereit!
  * */
-export default function DND(props: DNDProviderProps) {
+export default function DNDProvider(props: DNDProviderProps) {
     const [dragging, setDragging] = React.useState(false);
     const [data, setData] = React.useState<any>();
     const [disabled, setDisabled] = React.useState(props.defaultDisabled || false);
@@ -41,6 +41,17 @@ export default function DND(props: DNDProviderProps) {
     }
 
     return (
-        <DNDContext.Provider value={{ dragging, setDragging: _setDragging, currentDragData: data, setData, disabled, setDisabled }}>{props.children}</DNDContext.Provider>
+        <DNDContext.Provider
+            value={{
+                dragging,
+                setDragging: _setDragging,
+                currentDragData: data,
+                setData,
+                disabled,
+                setDisabled,
+            }}
+        >
+            {props.children}
+        </DNDContext.Provider>
     );
 }

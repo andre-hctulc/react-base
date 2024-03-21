@@ -1,5 +1,5 @@
 import React from "react";
-import { AlertContext } from "../../components/alerts/AlertsProvider";
+import { AlertContext } from "../../providers/AlertsProvider";
 
 export default function useAlerts() {
     const alertsContext = React.useContext(AlertContext);

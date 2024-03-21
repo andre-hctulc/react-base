@@ -1,30 +1,27 @@
 "use client";
 
-import clsx from "clsx";
-import type { PropsOf } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import Button from "../buttons/Button";
 import Toolbar from "../feedback/Toolbar";
 
-interface DialogButtonProps {
+interface DialogButtonProps extends StyleProps {
     disabled?: boolean;
     onInvalidClick?: () => void;
     onClick?: () => void;
     children: string;
-    className?: string;
-    style?: React.CSSProperties;
     form?: string;
     type?: PropsOf<typeof Button>["type"];
 }
 
 export default function DialogButton(props: DialogButtonProps) {
     return (
-        <Toolbar padding="large" justify="end" className={clsx("mt-1", props.className)} style={props.style}>
+        <Toolbar padding="large" justify="end" style={props.style} className={["mt-1", props.className]}>
             <Button
                 form={props.form}
                 size="medium"
                 style={{ width: 140 }}
                 variant="contained"
-                onClick={e => {
+                onClick={(e) => {
                     e.stopPropagation();
                 }}
                 disabled={props.disabled}

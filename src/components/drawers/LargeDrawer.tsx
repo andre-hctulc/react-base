@@ -5,10 +5,10 @@ import XIcon from "../icons/collection/X";
 import IconButton from "../buttons/IconButton";
 import Fade from "../transitions/Fade";
 import Typography from "../text/Typography";
+import { StyleProps } from "../../types";
 
-interface LargeDrawerProps {
+interface LargeDrawerProps extends StyleProps {
     open: boolean;
-    className?: string;
     children?: React.ReactNode;
     onClose?: () => void;
     heading?: React.ReactNode;
@@ -18,13 +18,24 @@ const maxWidth = 1500;
 const maxHeight = 1000;
 
 export default function LargeDrawer(props: LargeDrawerProps) {
-    const mainClasses = clsx("rounded-tr-lg rounded-tl-lg shadow-lg bg-bg bottom-0 border-l shadow-lg p-5 min-h-0 h-full overflow-y-auto");
-    const classes = clsx("flex flex-col pt-10 px-10", props.className);
+    const mainClasses = clsx(
+        "rounded-tr-lg rounded-tl-lg shadow-lg bg-bg bottom-0 border-l shadow-lg p-5 min-h-0 h-full overflow-y-auto"
+    );
 
     return (
-        <Overlay invisible={!props.open} onClick={() => props.onClose?.()} className={classes} disablePointerEvents={!props.open}>
+        <Overlay
+            invisible={!props.open}
+            onClick={() => props.onClose?.()}
+            className={["flex flex-col pt-10 px-10", props.className]}
+            style={props.style}
+            disablePointerEvents={!props.open}
+        >
             <Fade in={props.open}>
-                <Flex style={{ maxHeight, maxWidth, pointerEvents: "auto" }} onClick={e => e.stopPropagation()} className={mainClasses}>
+                <Flex
+                    style={{ maxHeight, maxWidth, pointerEvents: "auto" }}
+                    onClick={(e) => e.stopPropagation()}
+                    className={mainClasses}
+                >
                     <Flex direction="row" align="center" shrink={false} justify="end">
                         {typeof props.heading === "string" ? (
                             <Typography truncate variant="h3">

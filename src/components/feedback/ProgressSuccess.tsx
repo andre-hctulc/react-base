@@ -1,15 +1,13 @@
-import clsx from "clsx";
 import Typography from "../text/Typography";
+import { StyleProps } from "../../types";
 
-interface ProgressSuccessProps {
+interface ProgressSuccessProps extends StyleProps {
     children?: string;
-    className?: string;
-    style?: React.CSSProperties;
 }
 
 export default function ProgressSuccess(props: ProgressSuccessProps) {
     return (
-        <Typography className={clsx(props.className, "text-success")} variant="caption" style={props.style}>
+        <Typography className={["text-success", props.className]} variant="caption" style={props.style}>
             {props.children}
         </Typography>
     );

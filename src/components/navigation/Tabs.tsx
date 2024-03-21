@@ -2,14 +2,14 @@
 
 import React from "react";
 import clsx from "clsx";
-import type { PropsOf } from "../../types";
-import { mapChildren } from "../../util";
+import type { PropsOf, StyleProps } from "../../types";
+import { mapChildren, styleProps } from "../../util";
 import Tab from "./Tab";
 import useMutableSearchParams from "../../hooks/document/useMutableSearchParams";
 import Toolbar from "../feedback/Toolbar";
 import useCurrentPathname from "../../hooks/document/useCurrentPathname";
 
-interface TabsProps {
+interface TabsProps extends StyleProps {
     children?: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
@@ -30,7 +30,7 @@ interface TabsProps {
 export default function Tabs(props: TabsProps) {
     const [searchParams, setSearchParam] = useMutableSearchParams();
     const pathname = useCurrentPathname();
-    const children = mapChildren<PropsOf<typeof Tab>>(props.children, child => {
+    const children = mapChildren<PropsOf<typeof Tab>>(props.children, (child) => {
         if (child.type !== Tab) return null;
 
         const tabIsActive = () => {
@@ -51,7 +51,7 @@ export default function Tabs(props: TabsProps) {
                 // Siehe props.activeId
                 active: tabIsActive(),
                 variant: child.props.variant || props.variant,
-                onClick: e => {
+                onClick: (e) => {
                     child.props.onClick?.(e);
 
                     if (!e.defaultPrevented && child.props.id !== undefined) {
@@ -68,7 +68,7 @@ export default function Tabs(props: TabsProps) {
         <Toolbar
             spacing={props.variant === "chips" ? "large" : "none"}
             tag="nav"
-            className={clsx("items-end flex-shrink-0", props.className)}
+            className={["items-end flex-shrink-0", props.className]}
             style={props.style}
             padding="none"
         >

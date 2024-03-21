@@ -2,14 +2,19 @@
 
 import React from "react";
 import clsx from "clsx";
-import type { default as ProgressController, ProgressListener, ProgressStep } from "../../ProgressController";
+import type {
+    default as ProgressController,
+    ProgressListener,
+    ProgressStep,
+} from "../../util/ProgressController";
 import ProgressBar, { ProgressBarAppearance } from "./ProgressBar";
-import type { ThemeColor, PropsOf } from "../../types";
+import type { ThemeColor, PropsOf, StyleProps } from "../../types";
 import Flex from "../layout/Flex";
-import Styled from "../others/Styled";
+import Styled from "../shadow/Styled";
 import Typography from "../text/Typography";
+import { styleProps } from "../../util";
 
-interface ProgressProps<D = any> extends ProgressBarAppearance {
+interface ProgressProps<D = any> extends ProgressBarAppearance, StyleProps {
     controller: ProgressController<D>;
     label?: string;
     icon?: React.ReactElement;
@@ -21,11 +26,13 @@ interface ProgressProps<D = any> extends ProgressBarAppearance {
     /** Nachricht, die dem default Error message angezeigt wird. Siehe `renderError`*/
     errorMessage?: string;
     children?: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
     /** @default 100 */
     color?: ThemeColor;
-    slotProps?: { label?: PropsOf<typeof Typography>; header?: PropsOf<typeof Flex>; progressText?: PropsOf<typeof Typography> };
+    slotProps?: {
+        label?: PropsOf<typeof Typography>;
+        header?: PropsOf<typeof Flex>;
+        progressText?: PropsOf<typeof Typography>;
+    };
     steps?: { [stepId: string]: ProgressBarAppearance };
 }
 
@@ -45,7 +52,16 @@ export default function Progress<D = any>(props: ProgressProps<D>) {
 
         if (!controller) return;
 
-        const listener: ProgressListener = ({ progress, total, finished, error, data, step, totalSteps, message }) => {
+        const listener: ProgressListener = ({
+            progress,
+            total,
+            finished,
+            error,
+            data,
+            step,
+            totalSteps,
+            message,
+        }) => {
             setTotalSteps(totalSteps || 0);
             setIsError(error);
             setFinished(finished);
@@ -64,16 +80,31 @@ export default function Progress<D = any>(props: ProgressProps<D>) {
     }, [props.controller]);
 
     return (
-        <div className={clsx("flex flex-col space-y-2 min-w-0 flex-grow", props.className)} style={props.style}>
+        <div {...styleProps({ className: "flex flex-col space-y-2 min-w-0 flex-grow" }, props)}>
             {props.label && (
-                <Flex direction="row" align="center" {...props.slotProps?.header} className={clsx("space-x-1.5", props.slotProps?.header?.className)}>
+                <Flex
+                    direction="row"
+                    align="center"
+                    {...props.slotProps?.header}
+                    className={clsx("space-x-1.5", props.slotProps?.header?.className)}
+                >
                     {props.icon && <Styled disabled>{props.icon}</Styled>}
-                    <Typography truncate variant="body2" secondary {...props.slotProps?.label} className={clsx(props.slotProps?.label?.className)}>
+                    <Typography
+                        truncate
+                        variant="body2"
+                        secondary
+                        {...props.slotProps?.label}
+                        className={clsx(props.slotProps?.label?.className)}
+                    >
                         {props.label}
                     </Typography>
                 </Flex>
             )}
-            {step && <Typography variant="caption" secondary>{`${step.label} (${step.index + 1}/${totalSteps})`}</Typography>}
+            {step && (
+                <Typography variant="caption" secondary>{`${step.label} (${
+                    step.index + 1
+                }/${totalSteps})`}</Typography>
+            )}
             <ProgressBar
                 slotProps={{ progressText: props.slotProps?.progressText }}
                 className="flex-grow"

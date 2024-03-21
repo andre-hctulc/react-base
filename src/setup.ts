@@ -31,7 +31,7 @@ export default function setup(config: Config): Config {
         // Add base theme
         theme: { ...config.theme, ...baseTheme },
         // Add plugin
-        plugins: [plugin, ...(config.plugins || [])],
+        plugins: [...(config.plugins || []), plugin],
         // Add safelist
         safelist,
     };
@@ -39,7 +39,9 @@ export default function setup(config: Config): Config {
 
 // Helpers
 
-function isThemeColor(obj: any): obj is { DEFAULT: string; light: string; dark: string; "super-light": string; "contrast-text": string } {
+function isThemeColor(
+    obj: any
+): obj is { DEFAULT: string; light: string; dark: string; "super-light": string; "contrast-text": string } {
     return (
         obj &&
         typeof obj === "object" &&
@@ -53,7 +55,7 @@ function isThemeColor(obj: any): obj is { DEFAULT: string; light: string; dark: 
 
 // Plugin
 
-const plugin = _plugin(api => {});
+const plugin = _plugin((api) => {});
 
 // Base Theme
 

@@ -2,12 +2,13 @@
 
 import clsx from "clsx";
 import React from "react";
-import type { PropsOf } from "../../types";
+import type { PropsOf, SlotProps } from "../../types";
 import { setRef } from "../../util";
 import Typography from "../text/Typography";
 import Popover from "../layout/Popover";
+import { Card } from "../layout";
 
-interface TooltipProps {
+interface TooltipProps extends SlotProps<{ card: typeof Card; wrapper: "div" }> {
     children: React.ReactElement;
     content: React.ReactNode;
     /** @default 30 */
@@ -15,7 +16,6 @@ interface TooltipProps {
     enterDelay?: number;
     /** Enter-Delay nach dem ersten Entern */
     enterNextDelay?: number;
-    slotProps?: { popover?: PropsOf<typeof Popover>["slotProps"]; wrapper?: PropsOf<"div"> };
     disabled?: boolean;
     position?: PropsOf<typeof Popover>["position"];
     inactive?: boolean;
@@ -57,7 +57,10 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
             addListener("mouseenter", () => {
                 if (closeTimeout.current) clearTimeout(closeTimeout.current);
 
-                const enterDelay = entered.current && typeof props.enterNextDelay === "number" ? props.enterNextDelay : props.enterDelay;
+                const enterDelay =
+                    entered.current && typeof props.enterNextDelay === "number"
+                        ? props.enterNextDelay
+                        : props.enterDelay;
 
                 if (enterDelay) {
                     openTimeout.current = setTimeout(() => {
@@ -101,11 +104,10 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
                 anchor={childRef.current}
                 ref={ref}
                 slotProps={{
-                    ...props.slotProps?.popover,
                     card: {
                         border: false,
-                        ...props.slotProps?.popover?.card,
-                        ref: card => setRef<any>(card, tipRef, props.slotProps?.popover?.card?.ref),
+                        ...props.slotProps?.card,
+                        ref: (card) => setRef<any>(card, tipRef, props.slotProps?.card?.ref),
                     },
                 }}
             >
@@ -116,7 +118,11 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
                         props.slotProps?.wrapper?.className
                     )}
                 >
-                    {typeof props.content === "string" ? <Typography className="!text-xs">{props.content}</Typography> : props.content}
+                    {typeof props.content === "string" ? (
+                        <Typography className="!text-xs">{props.content}</Typography>
+                    ) : (
+                        props.content
+                    )}
                 </div>
             </Popover>
         </>

@@ -1,19 +1,18 @@
 import clsx from "clsx";
-import type { LinkProps } from "../../types";
+import type { LinkProps, StyleProps } from "../../types";
 import Avatar from "./Avatar";
 import LaunchIcon from "../icons/collection/Launch";
 import IconButton from "../buttons/IconButton";
 import Flex from "../layout/Flex";
 import LinkContainer from "../navigation/LinkContainer";
-import Styled from "../others/Styled";
+import Styled from "../shadow/Styled";
 import Typography from "../text/Typography";
 import Skeleton from "../feedback/Skeleton";
+import { styleProps } from "../../util";
 
-interface StatProps {
+interface StatProps extends StyleProps {
     value: any;
     children: string;
-    className?: string;
-    style?: React.CSSProperties;
     href?: string;
     icon?: React.ReactElement;
     unit?: string;
@@ -25,7 +24,11 @@ interface StatProps {
 
 export default function Stat(props: StatProps) {
     return (
-        <Flex direction="row" align="center" className={props.className} style={{ minWidth: props.minWidth || 130, ...props.style }}>
+        <Flex
+            direction="row"
+            align="center"
+            {...styleProps({ style: { minWidth: props.minWidth || 130 } }, props)}
+        >
             {props.icon && (
                 <Avatar className="p-5">
                     <Styled size={20}>{props.icon}</Styled>
@@ -47,7 +50,11 @@ export default function Stat(props: StatProps) {
                         </span>
                     </Skeleton>
                     {props.href && (
-                        <LinkContainer target={props.linkTarget} renderLink={props.renderLink} href={props.href}>
+                        <LinkContainer
+                            target={props.linkTarget}
+                            renderLink={props.renderLink}
+                            href={props.href}
+                        >
                             <IconButton className="ml-1.5" size="small">
                                 <LaunchIcon />
                             </IconButton>

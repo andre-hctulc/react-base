@@ -1,15 +1,21 @@
-import clsx from "clsx";
 import React from "react";
-import { alignClass, eventProps, justifyClass } from "../../util";
-import type { DragEventProps, KeyboardEventProps, MouseEventProps, ParentProps, StyleProps } from "../../types";
+import { alignClass, eventProps, justifyClass, styleProps } from "../../util";
+import type {
+    Align,
+    DragEventProps,
+    KeyboardEventProps,
+    MouseEventProps,
+    ParentProps,
+    StyleProps,
+} from "../../types";
 
 interface FlexProps extends StyleProps, ParentProps, MouseEventProps, KeyboardEventProps, DragEventProps {
     direction?: "row" | "col";
     id?: string;
-    align?: "start" | "end" | "center";
-    justify?: "start" | "end" | "center";
-    grow?: true | number;
-    shrink?: false | number;
+    align?: Align;
+    justify?: Align;
+    grow?: boolean | number;
+    shrink?: boolean | number;
     minW0?: boolean;
     minH0?: boolean;
     tag?: string;
@@ -20,9 +26,9 @@ interface FlexProps extends StyleProps, ParentProps, MouseEventProps, KeyboardEv
     draggable?: boolean;
     width?: number | string;
     height?: number | string;
-    gap?: number;
-    rowGap?: number;
-    colGap?: number;
+    gap?: number | string;
+    rowGap?: number | string;
+    colGap?: number | string;
     wrap?: boolean;
     basis?: number;
     inline?: boolean;
@@ -36,32 +42,44 @@ const Flex = React.forwardRef<Element, FlexProps>((props, ref) => {
     return (
         <Comp
             id={props.id}
-            className={clsx(
-                props.inline ? "inline-flex" : "flex",
-                props.direction === "row" ? (props.reverse ? "flex-row-reverse" : "flex-row") : props.reverse ? "flex-col-reverse" : "flex-col",
-                props.grow && "flex-grow",
-                props.minH0 && "min-h-0",
-                props.minW0 && "min-w-0",
-                props.scrollX && "overflow-x-auto",
-                props.scrollY && "overflow-y-auto",
-                props.scroll && "overflow-auto",
-                props.wrap && "flex-wrap",
-                align,
-                justify,
-                props.className
+            {...styleProps(
+                {
+                    className: [
+                        props.inline ? "inline-flex" : "flex",
+                        props.direction === "row"
+                            ? props.reverse
+                                ? "flex-row-reverse"
+                                : "flex-row"
+                            : props.reverse
+                            ? "flex-col-reverse"
+                            : "flex-col",
+                        props.grow && "flex-grow",
+                        props.minH0 && "min-h-0",
+                        props.minW0 && "min-w-0",
+                        props.scrollX && "overflow-x-auto",
+                        props.scrollY && "overflow-y-auto",
+                        props.scroll && "overflow-auto",
+                        props.wrap && "flex-wrap",
+                        align,
+                        justify,
+                    ],
+                    style: [
+                        {
+                            flexShrink: props.shrink === false ? 0 : props.shrink === true ? 1 : props.shrink,
+                            flexGrow: props.grow === true ? 1 : props.grow === false ? 0 : props.grow,
+                            flexBasis: props.basis,
+                            height: props.height,
+                            width: props.width,
+                            columnGap: props.colGap,
+                            gap: props.gap,
+                            rowGap: props.rowGap,
+                            ...props.style,
+                        },
+                    ],
+                },
+                props
             )}
             ref={ref}
-            style={{
-                flexShrink: props.shrink === false ? 0 : props.shrink,
-                flexGrow: props.grow === true ? 1 : props.grow,
-                flexBasis: props.basis,
-                height: props.height,
-                with: props.width,
-                columnGap: props.colGap,
-                gap: props.gap,
-                rowGap: props.rowGap,
-                ...props.style,
-            }}
             draggable={props.draggable}
             {...eventProps(props)}
         >

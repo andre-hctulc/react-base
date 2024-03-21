@@ -1,12 +1,9 @@
-import clsx from "clsx";
 import React from "react";
-import { ImageComponentProps, XDynamicSize } from "../../types";
-import { getSize } from "../../util";
+import { ImageComponentProps, StyleProps, XDynamicSize } from "../../types";
+import { getSize, styleProps } from "../../util";
 import Skeleton from "../feedback/Skeleton";
 
-interface AvatarProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface AvatarProps extends StyleProps {
     size?: XDynamicSize;
     children?: React.ReactNode;
     src?: string;
@@ -26,9 +23,8 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
             <Skeleton
                 onClick={props.onClick}
                 ref={ref}
-                className={props.className}
-                style={{ height: size, width: size, ...props.style }}
                 variant="circular"
+                {...styleProps({ style: { height: size, width: size } }, props)}
             />
         );
 
@@ -37,18 +33,23 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     return (
         <div
             ref={ref}
-            className={clsx(
-                "inline-flex flex-col justify-center items-center rounded-full bg-bg-dark/40 p-1 flex-shrink-0 overflow-hidden transition duration-300",
-                props.className
+            {...styleProps(
+                {
+                    style: { height: size, width: size },
+                    className:
+                        "inline-flex flex-col justify-center items-center rounded-full bg-bg-dark/40 p-1 flex-shrink-0 overflow-hidden transition duration-300",
+                },
+                props
             )}
-            style={{ height: size, width: size, ...props.style }}
             onClick={props.onClick}
         >
             {props.src ? (
                 <Image
                     height={size}
                     width={size}
-                    style={{ /* Irgendwer setzt css rule: img, media { maxWidth: 100% } */ maxWidth: "unset" }}
+                    style={{
+                        /* Irgendwer setzt css rule: img, media { maxWidth: 100% } */ maxWidth: "unset",
+                    }}
                     alt={props.alt || ""}
                     src={props.src}
                 />

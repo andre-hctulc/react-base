@@ -2,11 +2,11 @@
 
 import React from "react";
 import { TransitionGroup } from "react-transition-group";
-import { randomId } from "../../system";
-import Fade from "../transitions/Fade";
-import Alert from "./Alert";
-import AlertTitle from "./AlertTitle";
-import { useDev } from "../dev/DevProvider";
+import { randomId } from "../util/system";
+import Fade from "../components/transitions/Fade";
+import Alert from "../components/alerts/Alert";
+import AlertTitle from "../components/alerts/AlertTitle";
+import { useDev } from "./DevProvider";
 
 export const AlertContext = React.createContext<AlertContext | null>(null);
 

@@ -1,10 +1,21 @@
 import clsx from "clsx";
 import React from "react";
-import { collapse, eventProps, themeColor } from "../../util";
-import Styled from "../others/Styled";
-import type { DragEventProps, MouseEventProps, ParentProps, PartialPropsOf, StyleProps, ThemeColor } from "../../types";
+import { collapse, eventProps, styleProps, themeColor } from "../../util";
+import Styled from "../shadow/Styled";
+import type {
+    DragEventProps,
+    MouseEventProps,
+    ParentProps,
+    PartialPropsOf,
+    StyleProps,
+    ThemeColor,
+} from "../../types";
 
-interface ButtonProps extends StyleProps, ParentProps, MouseEventProps<HTMLButtonElement>, DragEventProps<HTMLButtonElement> {
+interface ButtonProps
+    extends StyleProps,
+        ParentProps,
+        MouseEventProps<HTMLButtonElement>,
+        DragEventProps<HTMLButtonElement> {
     /** @default "text" */
     variant?: "text" | "outlined" | "contained";
     size?: "small" | "medium" | "large";
@@ -36,7 +47,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
     const color = props.color || "primary";
     const { bg, text, border, contrastText } =
         color === "text_secondary"
-            ? { bg: "bg-text-secondary", text: "text-text-secondary", border: "border-text-secondary", contrastText: "text-text-contrast" }
+            ? {
+                  bg: "bg-text-secondary",
+                  text: "text-text-secondary",
+                  border: "border-text-secondary",
+                  contrastText: "text-text-contrast",
+              }
             : themeColor(color);
     const size = props.size || "medium";
     const [height, fontSize, iconSize, px] = collapse(
@@ -51,9 +67,30 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
     const [variantClasses, variantIconClasses] = collapse(
         variant,
         {
-            contained: [[bg, contrastText, disabled ? "bg-opacity-80" : "hover:bg-opacity-80 active:bg-opacity-90"], [contrastText]],
-            text: [[text, bg, disabled ? "bg-opacity-0" : "bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20"], [text]],
-            outlined: [["border", [border, bg, text, disabled ? "bg-opacity-5" : "bg-opacity-10 hover:bg-opacity-20 active:bg-opacity-30"]], [text]],
+            contained: [
+                [bg, contrastText, disabled ? "bg-opacity-80" : "hover:bg-opacity-80 active:bg-opacity-90"],
+                [contrastText],
+            ],
+            text: [
+                [
+                    text,
+                    bg,
+                    disabled ? "bg-opacity-0" : "bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20",
+                ],
+                [text],
+            ],
+            outlined: [
+                [
+                    "border",
+                    [
+                        border,
+                        bg,
+                        text,
+                        disabled ? "bg-opacity-5" : "bg-opacity-10 hover:bg-opacity-20 active:bg-opacity-30",
+                    ],
+                ],
+                [text],
+            ],
         },
         [] as any
     );
@@ -68,13 +105,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
             type={props.type || "button"}
             disabled={props.disabled}
             ref={ref}
-            className={clsx(
-                "inline-flex justify-center items-center rounded flex-shrink-0 box-border whitespace-nowrap transition duration-100 transition-bg",
-                px,
-                !props.unstyled && variantClasses,
-                props.className
+            {...styleProps(
+                {
+                    style: { height, fontSize },
+                    className: [
+                        "inline-flex justify-center items-center rounded flex-shrink-0 box-border whitespace-nowrap transition duration-100 transition-bg",
+                        px,
+                        !props.unstyled && variantClasses,
+                    ],
+                },
+                props
             )}
-            style={{ height, fontSize, ...props.style }}
             {...eventProps(props)}
             draggable={props.draggable}
         >
@@ -82,7 +123,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
             {props.startIcon && (
                 <Styled
                     {...props.slotProps?.icon}
-                    className={clsx(size === "small" ? "mr-1" : "mr-2", props.slotProps?.icon?.className, variantIconClasses)}
+                    className={clsx(
+                        size === "small" ? "mr-1" : "mr-2",
+                        props.slotProps?.icon?.className,
+                        variantIconClasses
+                    )}
                     size={iconSize}
                 >
                     {props.startIcon}
@@ -92,7 +137,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
             {props.endIcon && (
                 <Styled
                     {...props.slotProps?.icon}
-                    className={clsx(size === "small" ? "ml-1" : "ml-2", props.slotProps?.icon?.className, variantIconClasses)}
+                    className={clsx(
+                        size === "small" ? "ml-1" : "ml-2",
+                        props.slotProps?.icon?.className,
+                        variantIconClasses
+                    )}
                     size={iconSize}
                 >
                     {props.endIcon}

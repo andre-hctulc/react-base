@@ -6,16 +6,17 @@ import Label from "./Label";
 import IconButton from "../buttons/IconButton";
 import { useFormInput } from "./JSForm";
 import { getInputSizeClasses, type InputLikeProps } from "./Input";
-import type { Size, PropsOf } from "../../types";
+import type { Size, PropsOf, StyleProps } from "../../types";
 import RestartIcon from "../icons/collection/Restart";
 import Flex from "../layout/Flex";
 import HelperText from "../text/HelperText";
 import Typography from "../text/Typography";
 import { forDateLikeInput } from "./TimeInput";
+import { styleProps } from "../../util";
 
 export type TimeRange = [Date | null, Date | null];
 
-export interface TimeRangeInputProps extends InputLikeProps<TimeRange> {
+export interface TimeRangeInputProps extends StyleProps, InputLikeProps<TimeRange> {
     className?: string;
     style?: React.CSSProperties;
     onChange?: (range: TimeRange) => void;
@@ -36,7 +37,10 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
         type: inpType,
         className: clsx("transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses),
     };
-    const [fromStr, toStr] = React.useMemo(() => [forDateLikeInput(from, inpType), forDateLikeInput(to, inpType)], [from, to, inpType]);
+    const [fromStr, toStr] = React.useMemo(
+        () => [forDateLikeInput(from, inpType), forDateLikeInput(to, inpType)],
+        [from, to, inpType]
+    );
 
     function changeValue(newFrom: Date | null | undefined, newTo: Date | null | undefined) {
         let newValue: TimeRange;
@@ -50,10 +54,17 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
     }
 
     return (
-        <div className={clsx("inline-flex flex-col", props.className)} style={props.style}>
+        <div {...styleProps({ className: "inline-flex flex-col" }, props)}>
             {/* Form Control */}
             {props.name && (
-                <input type="hidden" value={formValue} required={props.required} disabled={disabled} readOnly={readOnly} name={props.name} />
+                <input
+                    type="hidden"
+                    value={formValue}
+                    required={props.required}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    name={props.name}
+                />
             )}
             {props.label && (
                 <Label required={props.required} error={error}>
@@ -64,7 +75,7 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
                 <input
                     {...datePickerProps}
                     value={fromStr}
-                    onChange={e => {
+                    onChange={(e) => {
                         changeValue(e.currentTarget.valueAsDate, undefined);
                     }}
                     max={toStr}
@@ -81,7 +92,7 @@ export default function TimeRangeInput(props: TimeRangeInputProps) {
                 <input
                     {...datePickerProps}
                     value={toStr}
-                    onChange={e => {
+                    onChange={(e) => {
                         changeValue(undefined, e.currentTarget.valueAsDate);
                     }}
                     min={fromStr}

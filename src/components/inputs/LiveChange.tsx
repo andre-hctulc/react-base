@@ -36,7 +36,8 @@ export function eventToValue(e: any) {
 }
 
 export default function LiveChange<T = any>(props: LiveChangeProps<T>) {
-    const defaultValue = props.defaultValue === undefined ? props.children.props.defaultValue : props.defaultValue;
+    const defaultValue =
+        props.defaultValue === undefined ? props.children.props.defaultValue : props.defaultValue;
     const savedValue = React.useRef(defaultValue);
     const trigger = props.trigger || "blur";
     const [isError, setIsError] = React.useState(false);

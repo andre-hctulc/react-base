@@ -75,7 +75,8 @@ export function convertFormData<T extends Record<string, any> = any>(
                     parsedValue = rawValue;
                     break;
                 case "blob-array":
-                    if (!Array.isArray(rawValue) || rawValue.some(item => !(item instanceof Blob))) return null;
+                    if (!Array.isArray(rawValue) || rawValue.some((item) => !(item instanceof Blob)))
+                        return null;
                     parsedValue = rawValue;
                     break;
                 default:
@@ -126,7 +127,8 @@ export function useFormInput(
 ) {
     const context = React.useContext(JSFormContext);
     // Wird als dependency in `valid` verwendet, um den neuen Wert zu validieren
-    const jsValidateValue = props.name && context?.validate && context ? context.parsedData[props.name] : undefined;
+    const jsValidateValue =
+        props.name && context?.validate && context ? context.parsedData[props.name] : undefined;
     const valid = React.useMemo(() => {
         if (props.name && context) {
             const val = context.validate?.[props.name];
@@ -138,9 +140,14 @@ export function useFormInput(
         return !!ref?.checkValidity();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.name, ref, jsValidateValue]);
-    if (!props.name || !context) return { readOnly: !!props.readOnly, disabled: !!props.disabled, error: !!props.error };
+    if (!props.name || !context)
+        return { readOnly: !!props.readOnly, disabled: !!props.disabled, error: !!props.error };
     const error = props.error || (context.hint && !valid);
-    return { error, readOnly: props.readOnly ?? context.readOnly, disabled: props.disabled ?? context.diabled };
+    return {
+        error,
+        readOnly: props.readOnly ?? context.readOnly,
+        disabled: props.disabled ?? context.diabled,
+    };
 }
 
 export function useJSForm() {
@@ -148,7 +155,9 @@ export function useJSForm() {
     return context;
 }
 
-export type FormValidator<D extends object> = { [K in keyof D]?: (value: D[K] | undefined, values: Partial<D>) => boolean };
+export type FormValidator<D extends object> = {
+    [K in keyof D]?: (value: D[K] | undefined, values: Partial<D>) => boolean;
+};
 
 type FormState<D = any> = { valid: boolean; data: Partial<D>; form: HTMLFormElement };
 
@@ -162,7 +171,7 @@ interface JSFormProps<D extends object = any> {
     onChange?: (formState: FormState<D>) => void;
     onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
     /** Wird aufgerufen, wenn das Formukar _valid_ ist */
-    action?: ((formData: FormData, parsedData: D) => void) | undefined | "string";
+    action?: ((formData: FormData, parsedData: D) => void) | undefined | string;
     readOnly?: boolean;
     disabled?: boolean;
     id?: string;
@@ -181,7 +190,12 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
     const [valid, setValid] = React.useState<boolean>(false);
     const [forceHint, setForceHint] = React.useState(false);
     const flex = collapse(props.flex || "col", { col: "flex flex-col", row: "flex flex-row", no_flex: "" });
-    const gap = collapse(props.gap || "none", { none: "", small: "gap-1.5", medium: "gap-3", large: "gap-5" });
+    const gap = collapse(props.gap || "none", {
+        none: "",
+        small: "gap-1.5",
+        medium: "gap-3",
+        large: "gap-5",
+    });
 
     // initialize State
     React.useEffect(() => {
@@ -207,7 +221,12 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
         let newData = dataRef.current;
 
         // If triggerd by Input-Element set data
-        if (target && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName) && !!(target as any).name && (target as any).type !== "submit") {
+        if (
+            target &&
+            ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName) &&
+            !!(target as any).name &&
+            (target as any).type !== "submit"
+        ) {
             // valid aktualisieren
             val = f.checkValidity();
 
@@ -284,15 +303,16 @@ const JSForm = React.forwardRef<HTMLFormElement, JSFormProps>((props, ref) => {
                     (typeof props.action === "function"
                         ? (formData: FormData) => {
                               if (valid) {
-                                  if (!props.readOnly && !props.disabled) (props.action as any)?.(formData, parsedData);
+                                  if (!props.readOnly && !props.disabled)
+                                      (props.action as any)?.(formData, parsedData);
                               } else setForceHint(!valid);
                           }
                         : props.action) as any
                 }
                 id={props.id}
-                ref={formElement => setRef<HTMLFormElement | null>(formElement, ref, form)}
+                ref={(formElement) => setRef<HTMLFormElement | null>(formElement, ref, form)}
                 onInvalid={props.onInvalid}
-                onChange={e => handleChange((e as any).target || null)}
+                onChange={(e) => handleChange((e as any).target || null)}
                 onSubmit={props.onSubmit}
                 className={clsx(flex, gap, props.flexWrap && "flex flex-wrap", props.className)}
                 style={props.style}

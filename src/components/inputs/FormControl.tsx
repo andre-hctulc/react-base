@@ -44,7 +44,7 @@ const FormControl = React.forwardRef<HTMLInputElement, FormControlProps>((props,
     return (
         <input
             {...formAttrs}
-            ref={i => setRef<HTMLInputElement | null>(i, inp, ref)}
+            ref={(i) => setRef<HTMLInputElement | null>(i, inp, ref)}
             value={value}
             name={props.name}
             required={props.required}

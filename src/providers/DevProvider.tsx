@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { ParentProps } from "../../types";
+import type { ParentProps } from "../types";
 
 interface DevContext {
     /** @default process.env.NODE_ENV === "development" */
@@ -41,6 +41,14 @@ export default function DevProvider(props: DevProviderProps) {
     }
 
     return (
-        <DevContext.Provider value={{ observe, setObservable, devMode: props.devMode ?? process.env.NODE_ENV === "development" }}>{props.children}</DevContext.Provider>
+        <DevContext.Provider
+            value={{
+                observe,
+                setObservable,
+                devMode: props.devMode ?? process.env.NODE_ENV === "development",
+            }}
+        >
+            {props.children}
+        </DevContext.Provider>
     );
 }

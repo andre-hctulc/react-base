@@ -1,15 +1,13 @@
 import clsx from "clsx";
 import React from "react";
-import type { LinkProps, PropsOf, Size } from "../../types";
+import type { LinkProps, PropsOf, Size, StyleProps } from "../../types";
 import { collapse } from "../../util";
 import IconButton from "../buttons/IconButton";
 import Flex from "./Flex";
-import Styled from "../others/Styled";
+import Styled from "../shadow/Styled";
 import Typography, { TextVariant } from "../text/Typography";
 
-interface ListItemProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface ListItemProps extends StyleProps {
     /** Use _null_ to to immulate the space an icon would occupy */
     icon?: React.ReactElement | null;
     start?: React.ReactNode;
@@ -73,7 +71,11 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
             {props.icon !== undefined && (
                 <span style={{ width: iconSize + 7 }}>
                     {props.icon && (
-                        <Styled onClick={e => e.stopPropagation()} size={props.iconSize || iconSize} {...props.slotProps?.icon}>
+                        <Styled
+                            onClick={(e) => e.stopPropagation()}
+                            size={props.iconSize || iconSize}
+                            {...props.slotProps?.icon}
+                        >
                             {props.icon}
                         </Styled>
                     )}
@@ -82,7 +84,10 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
             {props.start}
             {props.href ? <Link>{text}</Link> : text}
             {props.actionIcon && (
-                <IconButton onClick={e => props.onAction?.(e)} size={props.size === "large" ? "medium" : "small"}>
+                <IconButton
+                    onClick={(e) => props.onAction?.(e)}
+                    size={props.size === "large" ? "medium" : "small"}
+                >
                     {props.actionIcon}
                 </IconButton>
             )}

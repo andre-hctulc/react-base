@@ -3,21 +3,20 @@
 import React from "react";
 import clsx from "clsx";
 import type { InputLikeProps } from "./Input";
-import type { PropsOf } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import Label from "./Label";
 import { useFormInput } from "./JSForm";
 import FormControl from "./FormControl";
 import HelperText from "../text/HelperText";
 import Typography from "../text/Typography";
+import { styleProps } from "../../util";
 
 export type CheckBoxesOptions = { label: React.ReactNode; value: string }[];
 
-interface CheckBoxesProps extends Omit<InputLikeProps<string[]>, "noBorder"> {
+interface CheckBoxesProps extends StyleProps, Omit<InputLikeProps<string[]>, "noBorder"> {
     options: CheckBoxesOptions;
     onChange?: (values: string[], all: boolean) => void;
-    className?: string;
-    style?: React.CSSProperties;
-    slotProps?: { root?: PropsOf<"div">; main?: PropsOf<"ol">; checkBoxes?: PropsOf<"input"> };
+    slotProps?: { main?: PropsOf<"ol">; checkBoxes?: PropsOf<"input"> };
     switches?: boolean;
     row?: boolean;
     /** controlled */
@@ -32,7 +31,7 @@ CheckBoxes.allValues = [] as any[];
 
 /** Benutze `CheckBoxes.allValues` als `defaultValue`, um alle Optionen standardmäßig zu aktivieren. */
 export default function CheckBoxes(props: CheckBoxesProps) {
-    const allValues = () => props.options.map(option => option.value);
+    const allValues = () => props.options.map((option) => option.value);
     const innerRef = React.useRef<HTMLInputElement>(null);
     const { error, readOnly, disabled } = useFormInput(props, innerRef.current);
     const [value, setValue] = React.useState<string[]>(() => {
@@ -57,7 +56,7 @@ export default function CheckBoxes(props: CheckBoxesProps) {
             else newValues = [v];
         } else {
             if (!checked) {
-                if (v.includes(v)) newValues = value.filter(_value => _value !== v);
+                if (v.includes(v)) newValues = value.filter((_value) => _value !== v);
             } else {
                 if (!v.includes(v)) newValues = [...v, v];
             }
@@ -71,20 +70,32 @@ export default function CheckBoxes(props: CheckBoxesProps) {
 
     return (
         <div
-            {...props.slotProps?.root}
-            className={clsx(
-                "inline-flex flex-col min-w-0 unstyled-list min-h-0",
-                !props.unstyled && "bg-bg rounded p-1.5",
-                props.className,
-                props.slotProps?.root?.className
+            {...styleProps(
+                {
+                    className: [
+                        "inline-flex flex-col min-w-0 unstyled-list min-h-0",
+                        !props.unstyled && "bg-bg rounded p-1.5",
+                    ],
+                },
+                props
             )}
-            style={{ ...props.slotProps?.root?.style, ...props.style }}
         >
-            <FormControl ref={innerRef} required={props.required} name={props.name} type="json" value={value} />
+            <FormControl
+                ref={innerRef}
+                required={props.required}
+                name={props.name}
+                type="json"
+                value={value}
+            />
             {props.label && <Label variant={props.dense ? "caption" : "form_control"}>{props.label}</Label>}
             <ol className="flex-grow min-h-0 flex flex-col">
-                {props.options.map(option => {
-                    const label = typeof option.label === "string" ? <Typography truncate>{option.label}</Typography> : option.label;
+                {props.options.map((option) => {
+                    const label =
+                        typeof option.label === "string" ? (
+                            <Typography truncate>{option.label}</Typography>
+                        ) : (
+                            option.label
+                        );
 
                     return (
                         <li key={option.value} className="flex flex-row space-x-3">
@@ -94,7 +105,7 @@ export default function CheckBoxes(props: CheckBoxesProps) {
                                 type="checkbox"
                                 checked={valueSet.has(option.value)}
                                 disabled={disabled}
-                                onChange={e => {
+                                onChange={(e) => {
                                     toggleValue(option.value, e.currentTarget.checked);
                                 }}
                             />

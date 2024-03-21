@@ -1,21 +1,19 @@
 "use client";
 
-import clsx from "clsx";
 import React from "react";
-import type { PropsOf } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import { useFormInput } from "./JSForm";
 import type { InputLikeProps } from "./Input";
 import Label from "./Label";
 import Flex from "../layout/Flex";
 import HelperText from "../text/HelperText";
+import { styleProps } from "../../util";
 
 export type RadioButtonsOption = { label: string; value: string | number };
 
-interface RadioButtonsProps extends Omit<InputLikeProps<string | number>, "noBorder"> {
+interface RadioButtonsProps extends StyleProps, Omit<InputLikeProps<string | number>, "noBorder"> {
     options: RadioButtonsOption[];
     onChange?: (e: React.ChangeEvent<HTMLInputElement>, value: string | number) => void;
-    className?: string;
-    style?: React.CSSProperties;
     slotProps?: { label?: PropsOf<typeof Label>; main?: PropsOf<typeof Flex> };
     // TODO
     // customRadioButton: (active: boolean)=>React.ReactElement<{onClick?: ()=>void}>
@@ -39,7 +37,7 @@ export default function RadioButtons(props: RadioButtonsProps) {
     }
 
     return (
-        <div className={clsx("inline-flex flex-col", props.className)} style={props.style}>
+        <div {...styleProps({ className: "inline-flex flex-col" }, props)}>
             {props.label && (
                 <Label variant={props.dense ? "caption" : "form_control"} {...props.slotProps?.label}>
                     {props.label}
@@ -48,14 +46,14 @@ export default function RadioButtons(props: RadioButtonsProps) {
             <Flex
                 direction={props.horizontal ? "row" : "col"}
                 {...props.slotProps?.main}
-                className={clsx(props.horizontal ? "space-x-0" : "space-y-0", props.slotProps?.main?.className)}
+                className={[props.horizontal ? "space-x-0" : "space-y-0", props.slotProps?.main?.className]}
             >
-                {props.options.map(option => {
+                {props.options.map((option) => {
                     return (
                         <div key={option.value}>
                             <input
                                 required={props.required}
-                                onChange={e => changeValue(e, option.value)}
+                                onChange={(e) => changeValue(e, option.value)}
                                 readOnly={readOnly}
                                 disabled={disabled}
                                 type="radio"

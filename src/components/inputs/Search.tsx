@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import React from "react";
-import type { PropsOf, Size } from "../../types";
+import type { PropsOf, Size, StyleProps } from "../../types";
 import { useFormInput } from "./JSForm";
 import { SelectOption } from "./Select";
 import FormControl from "./FormControl";
@@ -15,9 +15,7 @@ import HelperText from "../text/HelperText";
 import List from "../layout/List";
 import Typography from "../text/Typography";
 
-interface SearchProps<T = string> extends InputLikeProps<T> {
-    className?: string;
-    style?: React.CSSProperties;
+interface SearchProps<T = string> extends InputLikeProps<T>, StyleProps {
     options: ((inpValue: string) => SelectOption<T>[]) | SelectOption<T>[];
     renderCurrent?: (activeOption: SelectOption<T>) => React.ReactNode;
     /**
@@ -76,7 +74,10 @@ export default function Search<T = string>(props: SearchProps<T>) {
     }, [props.value]);
 
     function findOption(value: T) {
-        return props.defaultOptions?.find(opt => opt.value === value) || options.find(opt => opt.value === value);
+        return (
+            props.defaultOptions?.find((opt) => opt.value === value) ||
+            options.find((opt) => opt.value === value)
+        );
     }
 
     function _setOpen(open: boolean) {
@@ -92,10 +93,20 @@ export default function Search<T = string>(props: SearchProps<T>) {
     }
 
     return (
-        <Flex inline className={clsx("relative min-w-0", props.className)} style={props.style}>
-            <FormControl ref={innerRef} required={props.required} name={props.name} type="string" value={activeOption} />
+        <Flex inline className={["relative min-w-0", props.className]} style={props.style}>
+            <FormControl
+                ref={innerRef}
+                required={props.required}
+                name={props.name}
+                type="string"
+                value={activeOption}
+            />
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
+                <Label
+                    variant={props.dense ? "caption" : "form_control"}
+                    error={error}
+                    required={props.required}
+                >
                     {props.label}
                 </Label>
             )}
@@ -115,7 +126,12 @@ export default function Search<T = string>(props: SearchProps<T>) {
                     {props.renderCurrent ? (
                         props.renderCurrent(activeOption!)
                     ) : (
-                        <Typography secondary alignCenter className={clsx("border rounded cursor-text px-2", sizeClasses)} truncate>
+                        <Typography
+                            secondary
+                            alignCenter
+                            className={clsx("border rounded cursor-text px-2", sizeClasses)}
+                            truncate
+                        >
                             {activeOption!.label}
                         </Typography>
                     )}
@@ -128,10 +144,10 @@ export default function Search<T = string>(props: SearchProps<T>) {
                 /* TODO type: "search"? */
                 type={showOpen ? "text" : "hidden"}
                 onFocus={() => _setOpen(true)}
-                onChange={e => setInpValue(e.currentTarget.value)}
+                onChange={(e) => setInpValue(e.currentTarget.value)}
                 readOnly={readOnly}
                 disabled={disabled}
-                onKeyDown={e => {
+                onKeyDown={(e) => {
                     // New line abfangen und verhindern
                     if (e.keyCode === 13) {
                         e.preventDefault();
@@ -178,7 +194,11 @@ export default function Search<T = string>(props: SearchProps<T>) {
                 {props.loading ? (
                     <Loading py />
                 ) : (
-                    <List onActivateOption={(e, opt) => activateOption(opt)} options={options} emptyText={props.emptyText ?? "No results found"} />
+                    <List
+                        onActivateOption={(e, opt) => activateOption(opt)}
+                        options={options}
+                        emptyText={props.emptyText ?? "No results found"}
+                    />
                 )}
             </Popover>
         </Flex>

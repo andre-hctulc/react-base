@@ -50,7 +50,12 @@ export default function ButtonWithTooltip(props: ButtonWithTooltipProps) {
 
     return (
         <Tooltip content={props.tooltip} enterDelay={300} enterNextDelay={500}>
-            <Button onClick={() => info("Button clicked!")} className={props.className} style={props.style} variant="contained">
+            <Button
+                onClick={() => info("Button clicked!")}
+                className={props.className}
+                style={props.style}
+                variant="contained"
+            >
                 {props.children}
             </Button>
         </Tooltip>
@@ -205,3 +210,51 @@ There is 3 text colors and 3 background colors:
 ```
 
 _For most cases you can use the_ `Typography` _component for text_
+
+## Prop Patterns
+
+### StyleProps
+
+`StyleProps` enable [clsx](https://www.npmjs.com/package/clsx)-like usage direcrly in the `className` prop
+and the usage of style array.
+
+-   Implement
+
+```tsx
+import { StyleProps } from "@react-base/src/types";
+import { styleProps } from "@react-base/src/util";
+
+function StyledDiv(props: StyleProps & { children?: React.ReactNode }) {
+    return (
+        <CustomCard
+            {...styleProps(
+                {
+                    // default classes
+                    className: "border rounded p-3",
+                    // default style
+                    style: { display: "flex" },
+                },
+                props
+            )}
+        >
+            {props.children}
+        </CustomCard>
+}
+```
+
+-   Usage
+
+```tsx
+<StyledDiv className="bg-paper" style={{ flexDirection: "column" }}>...</StyledDiv>
+// advanced
+<StyledDiv
+    className={[
+        "bg-paper",
+        active && "outline-secondary",
+        ...otherClasses
+    ]}
+    style={[{ flexDirection: "column" }, ...otherStyles]}
+>
+    ...
+</StyledDiv>
+```

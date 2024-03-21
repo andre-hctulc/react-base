@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { PropsOf } from "../../types";
 import Progress from "../../components/feedback/Progress";
-import ProgressController, { ProgressListener } from "../../ProgressController";
+import ProgressController, { ProgressListener } from "../../util/ProgressController";
 import useAlerts from "./useAlerts";
 
 export type ProgressAlertOptions = {
@@ -30,7 +30,7 @@ export default function useProgressAlert(options?: ProgressAlertOptions) {
 
         if (!controller) return;
 
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             const listener: ProgressListener = ({ finished }) => {
                 // nach success oder error 30 Sekunden abwarten, dann den alert schließen (also diesn Promise resolven)
                 if (finished) {

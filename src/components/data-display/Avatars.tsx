@@ -1,15 +1,12 @@
-import clsx from "clsx";
 import React from "react";
-import type { PropsOf, XDynamicSize } from "../../types";
-import { collapse, justifyClass } from "../../util";
+import type { PropsOf, StyleProps, XDynamicSize } from "../../types";
+import { collapse, justifyClass, styleProps } from "../../util";
 import Avatar from "./Avatar";
 import Skeleton from "../feedback/Skeleton";
 
 type ForwardedAvataProps = Pick<PropsOf<typeof Avatar>, "size">;
 
-interface AvatarsProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface AvatarsProps extends StyleProps {
     max?: number;
     children: React.ReactElement<ForwardedAvataProps>[] | null | undefined;
     loading?: boolean;
@@ -34,17 +31,27 @@ export default function Avatars(props: AvatarsProps) {
     });
 
     return (
-        <div className={clsx("Avatars flex", spacing, props.justify && justifyClass(props.justify), props.className)} style={props.style}>
+        <div
+            {...styleProps(
+                { className: ["Avatars flex", spacing, props.justify && justifyClass(props.justify)] },
+                props
+            )}
+        >
             {loading && (
                 <Skeleton className="flex" {...props.slotProps?.skeleton}>
-                    {Array.from({ length: typeof props.loadingCount === "number" ? props.loadingCount : 3 }, i => (
-                        <Avatar key={`loading-avatar-${i}`} {...avatarProps} size={props.size}>
-                            diff
-                        </Avatar>
-                    ))}
+                    {Array.from(
+                        { length: typeof props.loadingCount === "number" ? props.loadingCount : 3 },
+                        (i) => (
+                            <Avatar key={`loading-avatar-${i}`} {...avatarProps} size={props.size}>
+                                diff
+                            </Avatar>
+                        )
+                    )}
                 </Skeleton>
             )}
-            {props.children?.map(avatar => React.cloneElement<PropsOf<typeof Avatar>>(avatar, { ...avatar.props, ...avatarProps }))}
+            {props.children?.map((avatar) =>
+                React.cloneElement<PropsOf<typeof Avatar>>(avatar, { ...avatar.props, ...avatarProps })
+            )}
             {!!diff && (
                 <Avatar {...avatarProps} size={props.size}>
                     diff

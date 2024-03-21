@@ -1,14 +1,15 @@
 import React from "react";
-import { StyleProps } from "@react-base/src/types";
 import Props from "./ModuleDemoProps";
 import { Toolbar, Tabs, Tab } from "@react-base/src/components";
 import { DemoDef } from "src/types";
 import Code from "../Code";
 import clsx from "clsx";
 
-interface ModulePreviewProps extends StyleProps {
+interface ModulePreviewProps {
     demo: DemoDef;
     path: string;
+    style?: React.CSSProperties;
+    className?: string;
 }
 
 type TabId = "preview" | "code";
@@ -34,7 +35,7 @@ export default function ModulePreview(props: ModulePreviewProps) {
     return (
         <div className={clsx("border rounded", props.className)} style={props.style}>
             <Toolbar padding="none" borderBottom>
-                <Tabs activeId={activeTab} onChange={tabId => setActiveTab(tabId as TabId)}>
+                <Tabs activeId={activeTab} onChange={(tabId) => setActiveTab(tabId as TabId)}>
                     <Tab id={"preview"}>Preview</Tab>
                     <Tab id={"code"}>Preview-Code</Tab>
                 </Tabs>
@@ -45,10 +46,21 @@ export default function ModulePreview(props: ModulePreviewProps) {
                         <div className="overflow-y-auto" style={{ maxHeight: 500 }}>
                             <Demo demoProps={p} />
                         </div>
-                        <Props className="border-t" onChange={p => setP(p)} propDefs={props.demo.demoProps || []} />
+                        <Props
+                            className="border-t"
+                            onChange={(p) => setP(p)}
+                            propDefs={props.demo.demoProps || []}
+                        />
                     </>
                 )}
-                {activeTab === "code" && <Code transformContent={extractDemo} style={{ maxHeight: 600 }} className="px-3 py-2" path={codePath} />}
+                {activeTab === "code" && (
+                    <Code
+                        transformContent={extractDemo}
+                        style={{ maxHeight: 600 }}
+                        className="px-3 py-2"
+                        path={codePath}
+                    />
+                )}
             </div>
         </div>
     );

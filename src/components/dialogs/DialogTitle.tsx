@@ -1,9 +1,9 @@
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 import Typography from "../text/Typography";
 
-interface DialogTitleProps {
+interface DialogTitleProps extends StyleProps {
     children?: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
 }
 
 export default function DialogTitle(props: DialogTitleProps) {
@@ -11,10 +11,9 @@ export default function DialogTitle(props: DialogTitleProps) {
         <Typography
             truncate
             tag={typeof props.children === "string" ? "h4" : "div"}
-            className={props.className}
             alignCenter
             fontWeight="medium"
-            style={props.style}
+            {...styleProps(props)}
         >
             {props.children}
         </Typography>

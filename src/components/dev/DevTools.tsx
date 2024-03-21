@@ -7,7 +7,7 @@ import ExpandIcon from "../icons/collection/Expand";
 import Toolbar from "../feedback/Toolbar";
 import Tab from "../navigation/Tab";
 import Tabs from "../navigation/Tabs";
-import { useDev } from "./DevProvider";
+import { useDev } from "../../providers/DevProvider";
 
 type Position = "top_left" | "top_right" | "bottom_left" | "bottom_right";
 
@@ -28,7 +28,10 @@ export default function DevTools(props: DevToolsProps) {
     const [position, setPosition] = React.useState<Position>(props.position || "top_right");
     const [activeTab, setActiveTab] = React.useState<string | undefined>(() => props.tabs?.[0]?.title);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const activeElement = React.useMemo(() => props.tabs?.filter(tab => tab?.title === activeTab)[0]?.render, [activeTab]);
+    const activeElement = React.useMemo(
+        () => props.tabs?.filter((tab) => tab?.title === activeTab)[0]?.render,
+        [activeTab]
+    );
     const positionStyle = React.useMemo<React.CSSProperties>(() => {
         switch (position) {
             case "top_left":
@@ -63,8 +66,8 @@ export default function DevTools(props: DevToolsProps) {
                             <XIcon />
                         </IconButton>
                     </Toolbar>
-                    <Tabs activeId={activeTab} onChange={tabId => setActiveTab(tabId as string)}>
-                        {props.tabs?.map(tab => {
+                    <Tabs activeId={activeTab} onChange={(tabId) => setActiveTab(tabId as string)}>
+                        {props.tabs?.map((tab) => {
                             const title = tab.title;
 
                             if (!title) return null;
@@ -76,7 +79,9 @@ export default function DevTools(props: DevToolsProps) {
                             );
                         })}
                     </Tabs>
-                    <div className="flex flex-col flex-grow overflow-y-scroll min-h-0 p-1">{activeElement}</div>
+                    <div className="flex flex-col flex-grow overflow-y-scroll min-h-0 p-1">
+                        {activeElement}
+                    </div>
                 </>
             ) : (
                 <div className="p-1 text-lg cursor-pointer">

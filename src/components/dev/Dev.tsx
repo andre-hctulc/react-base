@@ -1,6 +1,6 @@
 "use client";
 
-import { useDev } from "./DevProvider";
+import { useDev } from "../../providers/DevProvider";
 
 interface DevProps {
     children?: React.ReactNode;
@@ -13,6 +13,13 @@ export default function Dev(props: DevProps) {
 
     if (!devMode || props.hidden) return null;
 
-    if (props.highlight) return <span className={typeof props.children === "string" ? "text-common-violet" : "bg-common-yellow/50"}>{props.children}</span>;
+    if (props.highlight)
+        return (
+            <span
+                className={typeof props.children === "string" ? "text-common-violet" : "bg-common-yellow/50"}
+            >
+                {props.children}
+            </span>
+        );
     else return <>{props.children}</>;
 }

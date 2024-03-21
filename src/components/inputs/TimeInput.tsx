@@ -5,9 +5,10 @@ import React from "react";
 import Label from "./Label";
 import { getInputSizeClasses, type InputLikeProps } from "./Input";
 import { useFormInput } from "./JSForm";
-import { PropsOf, Size } from "../../types";
-import { setRef } from "../../util";
+import { PropsOf, Size, StyleProps } from "../../types";
+import { setRef, styleProps } from "../../util";
 import HelperText from "../text/HelperText";
+import { useMemoOnce } from "../../hooks";
 
 export function forInputDate(date: any): string | undefined {
     if (!(date instanceof Date)) return undefined;
@@ -42,9 +43,7 @@ export function forDateLikeInput(date: any, inputType: "date" | "datetime-local"
     else return forInputDatetimeLocal(date);
 }
 
-export interface InputProps extends InputLikeProps<Date> {
-    className?: string;
-    style?: React.CSSProperties;
+export interface InputProps extends StyleProps, InputLikeProps<Date> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>, date: Date | null) => void;
     onFocus?: React.FocusEventHandler<HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
@@ -74,33 +73,48 @@ const TimeInput = React.forwardRef<HTMLDivElement, InputProps>((props, ref) => {
     const inpType = props.datetime ? "datetime-local" : "date";
     const innerRef = React.useRef<HTMLInputElement>(null);
     const { readOnly, disabled, error } = useFormInput(props, innerRef.current);
-    const min = React.useMemo(() => props.min && formatDate(props.min, !!props.datetime), [props.min, props.datetime]);
-    const max = React.useMemo(() => props.max && formatDate(props.max, !!props.datetime), [props.max, props.datetime]);
+    const min = React.useMemo(
+        () => props.min && formatDate(props.min, !!props.datetime),
+        [props.min, props.datetime]
+    );
+    const max = React.useMemo(
+        () => props.max && formatDate(props.max, !!props.datetime),
+        [props.max, props.datetime]
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const defaultValue = React.useMemo(() => (props.defaultValue ? formatDate(props.defaultValue) : undefined), []);
+    const defaultValue = useMemoOnce(() => (props.defaultValue ? formatDate(props.defaultValue) : undefined));
 
-    const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = e => {
+    const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === "Enter") props.onEnterKeyDown?.(e);
     };
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         // e.target.valueAsDate ist null - e.target.valueAsNumber ist date value in Millisekunden
         const newDate = new Date(e.currentTarget.valueAsNumber);
         props.onChange?.(e, newDate);
     };
 
     return (
-        <div className={clsx("inline-flex flex-col flex-shrink-0", props.className)} style={props.style} ref={ref}>
+        <div {...styleProps({ className: "inline-flex flex-col flex-shrink-0" }, props)} ref={ref}>
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
+                <Label
+                    variant={props.dense ? "caption" : "form_control"}
+                    error={error}
+                    required={props.required}
+                >
                     {props.label}
                 </Label>
             )}
             <input
                 {...props.slotProps?.input}
-                ref={inp => setRef<HTMLInputElement | null>(inp, props.inputRef, innerRef)}
+                ref={(inp) => setRef<HTMLInputElement | null>(inp, props.inputRef, innerRef)}
                 placeholder={props.placeholder}
-                className={clsx("transition duration-90 min-h-0", props.noBorder && "!border-0", sizeClasses, props.slotProps?.input?.className)}
+                className={clsx(
+                    "transition duration-90 min-h-0",
+                    props.noBorder && "!border-0",
+                    sizeClasses,
+                    props.slotProps?.input?.className
+                )}
                 type={inpType}
                 onChange={handleChange}
                 onFocus={props.onFocus}

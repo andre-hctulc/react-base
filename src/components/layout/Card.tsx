@@ -1,7 +1,6 @@
-import clsx from "clsx";
 import React from "react";
 import type { DragEventProps, MouseEventProps, ParentProps, Size, StyleProps } from "../../types";
-import { collapse, eventProps } from "../../util";
+import { collapse, eventProps, styleProps } from "../../util";
 
 export interface CardProps extends ParentProps, StyleProps, DragEventProps, MouseEventProps {
     /** @default "contained" */
@@ -15,21 +14,30 @@ export interface CardProps extends ParentProps, StyleProps, DragEventProps, Mous
 const Card = React.forwardRef<Element, CardProps>((props, ref) => {
     const isContained = props.variant !== "outlined";
     const Comp: any = props.tag || "div";
-    const shadow = collapse(props.shadow || "none", { small: "shadow-sm", medium: "shadow-md", large: "shadow-lg", none: "" });
+    const shadow = collapse(props.shadow || "none", {
+        small: "shadow-sm",
+        medium: "shadow-md",
+        large: "shadow-lg",
+        none: "",
+    });
 
     return (
         <Comp
             onMouseLeave={props.onMouseLeave}
             onClick={props.onClick}
             ref={ref}
-            className={clsx(
-                "flex box-border rounded flex-col overflow-y-auto",
-                !props.noPadding && "p-2",
-                isContained ? "bg-bg-paper" : "border bg-bg",
-                shadow,
-                props.border && "border",
-                props.border === false && "border-none",
-                props.className
+            {...styleProps(
+                {
+                    className: [
+                        "flex box-border rounded flex-col overflow-y-auto",
+                        !props.noPadding && "p-2",
+                        isContained ? "bg-bg-paper" : "border bg-bg",
+                        shadow,
+                        props.border && "border",
+                        props.border === false && "border-none",
+                    ],
+                },
+                props
             )}
             style={props.style}
             {...eventProps(props)}

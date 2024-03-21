@@ -1,15 +1,12 @@
-import clsx from "clsx";
 import React from "react";
-import type { PropsOf } from "../../types";
-import { collapse } from "../../util";
+import type { PropsOf, StyleProps } from "../../types";
+import { collapse, styleProps } from "../../util";
 import { pageBarHeight } from "./PageBar";
 
-interface PageHeaderProps {
+interface PageHeaderProps extends StyleProps {
     noPadding?: boolean;
-    style?: React.CSSProperties;
     sticky?: boolean;
     children?: React.ReactNode;
-    className?: string;
     pageHasBar?: boolean;
     noPointerEvents?: boolean;
     top?: number;
@@ -45,18 +42,26 @@ const PageHeader = React.forwardRef<HTMLDivElement, PageHeaderProps>((props, ref
     return (
         <div
             ref={ref}
-            className={clsx(
-                "flex w-full",
-                variantClasses,
-                props.sticky && "sticky z-20",
-                props.noPointerEvents && "pointer-events-none",
-                !props.noPadding && "px-4 py-7",
-                props.className,
-                props.shadow && "shadow"
+            {...styleProps(
+                {
+                    className: [
+                        "flex w-full",
+                        variantClasses,
+                        props.sticky && "sticky z-20",
+                        props.noPointerEvents && "pointer-events-none",
+                        !props.noPadding && "px-4 py-7",
+                        props.className,
+                        props.shadow && "shadow",
+                    ],
+                    style: { top, height: props.height, maxHeight: props.height },
+                },
+                props
             )}
-            style={{ top, height: props.height, maxHeight: props.height, ...props.style }}
         >
-            <div {...props.slotProps?.main} className={clsx(mainVariantClasses, props.slotProps?.main?.className)}>
+            <div
+                {...props.slotProps?.main}
+                {...styleProps({ className: [mainVariantClasses, props.slotProps?.main?.className] })}
+            >
                 {props.children}
             </div>
         </div>

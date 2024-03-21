@@ -1,12 +1,10 @@
 import clsx from "clsx";
 import React from "react";
-import { collapse, flattenChildren } from "../../util";
+import { collapse, flattenChildren, styleProps } from "../../util";
 import Flex from "./Flex";
-import type { Size } from "../../types";
+import type { Size, StyleProps } from "../../types";
 
-interface GridColsProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface GridColsProps extends StyleProps {
     cols: number;
     children?: React.ReactNode;
     spacing?: Size;
@@ -31,14 +29,14 @@ export default function GridCols(props: GridColsProps) {
         []
     );
     const colClases = clsx("flex-grow flex-shrink-0", spaceY);
-    const classes = clsx("grid", props.className);
-    const cols: React.ReactNode[][] = props.content?.map(c => [c]) || [];
+    const cols: React.ReactNode[][] = props.content?.map((c) => [c]) || [];
     const children = flattenChildren(props.children);
 
     children.forEach((child, i) => {
         let col = 0;
 
-        if (props.itemsWrapper && React.isValidElement(child)) child = React.cloneElement(props.itemsWrapper, { ...props.itemsWrapper.props, children: child });
+        if (props.itemsWrapper && React.isValidElement(child))
+            child = React.cloneElement(props.itemsWrapper, { ...props.itemsWrapper.props, children: child });
 
         if (i < props.cols) col = i;
         else col = i % props.cols;
@@ -50,9 +48,22 @@ export default function GridCols(props: GridColsProps) {
     });
 
     return (
-        <div className={classes} style={{ columnGap: colGap, ...props.style, gridTemplateColumns: `repeat(${props.cols}, ${props.colsWidth || "1fr"})` }}>
+        <div
+            {...styleProps(
+                {
+                    className: "grid",
+                    style: {
+                        columnGap: colGap,
+                        gridTemplateColumns: `repeat(${props.cols}, ${props.colsWidth || "1fr"})`,
+                    },
+                },
+                props
+            )}
+        >
             {Array.from({ length: props.cols }, (_, i) => {
-                const colContent = props.colsWrapper ? React.cloneElement(props.colsWrapper, { ...props.colsWrapper.props, children: cols[i] }) : cols[i];
+                const colContent = props.colsWrapper
+                    ? React.cloneElement(props.colsWrapper, { ...props.colsWrapper.props, children: cols[i] })
+                    : cols[i];
 
                 return (
                     <Flex key={i} className={colClases}>

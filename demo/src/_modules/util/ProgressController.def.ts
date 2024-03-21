@@ -4,6 +4,6 @@ import type { ModuleDef, DemoDef } from "src/types";
 
 const demos: DemoDef[] = Object.values(import.meta.glob("./ProgressController.demo*.tsx", { import: "default", eager: true }));
 
-const mod: ModuleDef = { name: "ProgressController.ts", path: "ProgressController.ts", demos: demos || [] };
+const mod: ModuleDef = { name: "ProgressController.ts", path: "util/ProgressController.ts", demos: demos || [] };
 
 export default mod;

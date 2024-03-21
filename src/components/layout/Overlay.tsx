@@ -1,12 +1,11 @@
 "use client";
 
-import clsx from "clsx";
 import React from "react";
 import { createPortal } from "react-dom";
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
-interface OverlayProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface OverlayProps extends StyleProps {
     children?: React.ReactNode;
     absolute?: boolean;
     invisible?: boolean;
@@ -26,16 +25,23 @@ const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
     const main = (
         <div
             ref={ref}
-            className={clsx(
-                "top-0 left-0 w-full h-full border-5 cursor-default text-text",
-                props.blurEffect !== false && !props.invisible && "backdrop-blur-[2px] ",
-                !props.invisible && "bg-common-black/20",
-                props.absolute ? "absolute" : "fixed",
-                "z-50",
-                props.className
+            {...styleProps(
+                {
+                    className: [
+                        "top-0 left-0 w-full h-full border-5 cursor-default text-text",
+                        props.blurEffect !== false && !props.invisible && "backdrop-blur-[2px] ",
+                        !props.invisible && "bg-common-black/20",
+                        props.absolute ? "absolute" : "fixed",
+                        "z-50",
+                    ],
+                    style: {
+                        pointerEvents: props.disablePointerEvents ? "none" : undefined,
+                        zIndex: props.zIndex,
+                    },
+                },
+                props
             )}
-            style={{ pointerEvents: props.disablePointerEvents ? "none" : undefined, zIndex: props.zIndex, ...props.style }}
-            onClick={e => {
+            onClick={(e) => {
                 e.stopPropagation();
                 props.onClick?.(e);
             }}

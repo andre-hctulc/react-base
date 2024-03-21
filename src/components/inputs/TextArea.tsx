@@ -5,13 +5,11 @@ import React from "react";
 import Label from "./Label";
 import type { InputLikeProps } from "./Input";
 import { useFormInput } from "./JSForm";
-import { PropsOf } from "../../types";
-import { setRef } from "../../util";
+import { PropsOf, StyleProps } from "../../types";
+import { setRef, styleProps } from "../../util";
 import HelperText from "../text/HelperText";
 
-export interface TextAreaProps extends InputLikeProps<string> {
-    className?: string;
-    style?: React.CSSProperties;
+export interface TextAreaProps extends StyleProps, InputLikeProps<string> {
     onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
     onFocus?: React.FocusEventHandler<HTMLTextAreaElement>;
     onBlur?: React.FocusEventHandler<HTMLTextAreaElement>;
@@ -31,7 +29,7 @@ const TextArea = React.forwardRef<HTMLDivElement, TextAreaProps>((props, ref) =>
     };
 
     return (
-        <div className={clsx("inline-flex flex-col", props.className)} style={props.style} ref={ref}>
+        <div {...styleProps({ className: "inline-flex flex-col" }, props)} ref={ref}>
             {props.label && (
                 <Label
                     variant={props.dense ? "caption" : "form_control"}

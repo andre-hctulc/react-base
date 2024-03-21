@@ -3,21 +3,19 @@
 import clsx from "clsx";
 import Label from "./Label";
 import React from "react";
-import { randomId } from "../../system";
+import { randomId } from "../../util/system";
 import type { InputLikeProps } from "./Input";
-import type { PropsOf } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import { setRef } from "../../util";
 import { useFormInput } from "./JSForm";
 import Flex from "../layout/Flex";
 import HelperText from "../text/HelperText";
 
-export interface CheckBoxProps extends Omit<InputLikeProps<boolean>, "required" | "noBorder"> {
+export interface CheckBoxProps extends StyleProps, Omit<InputLikeProps<boolean>, "required" | "noBorder"> {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onFocus?: React.FocusEventHandler<HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     onClick?: React.MouseEventHandler<HTMLInputElement>;
-    className?: string;
-    style?: React.CSSProperties;
     slotProps?: { input?: PropsOf<"input">; helperText?: PropsOf<typeof HelperText> };
     inputRef?: (inp: HTMLInputElement | null) => void;
     vertical?: boolean;
@@ -29,8 +27,13 @@ const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) =>
     const { error, readOnly, disabled } = useFormInput(props, innerRef.current);
 
     return (
-        <Flex inline className={clsx("flex-shrink-0", props.className)} ref={ref} minH0 style={props.style}>
-            <div className={clsx("flex min-h-0", props.vertical ? "flex-col-reverse" : "flex-row items-center")} style={props.style}>
+        <Flex inline className={["flex-shrink-0", props.className]} ref={ref} minH0 style={props.style}>
+            <div
+                className={clsx(
+                    "flex min-h-0",
+                    props.vertical ? "flex-col-reverse" : "flex-row items-center"
+                )}
+            >
                 <input
                     {...props.slotProps?.input}
                     onFocus={props.onFocus}
@@ -43,7 +46,7 @@ const CheckBox = React.forwardRef<HTMLDivElement, CheckBoxProps>((props, ref) =>
                     readOnly={readOnly}
                     id={id.current}
                     type="checkbox"
-                    ref={inp => setRef<HTMLInputElement | null>(inp, innerRef, props.inputRef)}
+                    ref={(inp) => setRef<HTMLInputElement | null>(inp, innerRef, props.inputRef)}
                     className={clsx(
                         "transition duration-90",
                         props.vertical && "self-start",

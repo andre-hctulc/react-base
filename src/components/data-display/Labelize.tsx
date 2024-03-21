@@ -1,13 +1,12 @@
 import clsx from "clsx";
-import type { PropsOf } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import Label from "../inputs/Label";
 import Subtitle from "../text/Subtitle";
+import { styleProps } from "../../util";
 
-interface LabelizeProps {
+interface LabelizeProps extends StyleProps {
     label: string;
     children?: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
     vertical?: boolean;
     labelWidth?: string;
     icon?: React.ReactElement;
@@ -24,13 +23,18 @@ export default function Labelize(props: LabelizeProps) {
 
     return (
         <div
-            className={clsx(
-                "flex",
-                props.card && "bg-bg-paper rounded p-2",
-                props.vertical ? ["flex-col", variant !== "caption" && "space-y-2"] : "flex-row space-x-2 items-start",
-                props.className
+            {...styleProps(
+                {
+                    className: [
+                        "flex",
+                        props.card && "bg-bg-paper rounded p-2",
+                        props.vertical
+                            ? ["flex-col", variant !== "caption" && "space-y-2"]
+                            : "flex-row space-x-2 items-start",
+                    ],
+                },
+                props
             )}
-            style={props.style}
         >
             {variant === "large" ? (
                 <Subtitle
@@ -45,7 +49,10 @@ export default function Labelize(props: LabelizeProps) {
                     {props.label}
                 </Subtitle>
             ) : (
-                <Label variant={variant === "caption" ? "caption" : "form_control"} className="whitespace-nowrap text-ellipsis overflow-hidden">
+                <Label
+                    variant={variant === "caption" ? "caption" : "form_control"}
+                    className="whitespace-nowrap text-ellipsis overflow-hidden"
+                >
                     {props.label}
                 </Label>
             )}

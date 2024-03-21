@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleProps } from "@react-base/src/types";
 import useFetchAsset from "./useFetchAsset";
 import Skeleton from "@react-base/src/components/feedback/Skeleton";
 import { highlight, languages } from "prismjs";
 import clsx from "clsx";
 import { Alert } from "@react-base/src/components";
+import { DefaultStyleProps } from "@react-base/src/types";
 
-interface CodeProps extends StyleProps {
+interface CodeProps extends DefaultStyleProps {
     path: string;
     transformContent?: (content: string) => string;
 }
@@ -27,7 +27,10 @@ export default function Code(props: CodeProps) {
             {code === undefined && <Skeleton height={200} />}
             {typeof code === "string" && (
                 <pre>
-                    <code className={`language-${lang}`} dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+                    <code
+                        className={`language-${lang}`}
+                        dangerouslySetInnerHTML={{ __html: highlightedCode }}
+                    />
                 </pre>
             )}
         </div>

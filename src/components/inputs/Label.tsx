@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import { collapse } from "../../util";
+import { collapse, styleProps } from "../../util";
+import { StyleProps } from "../../types";
 
-interface LabelProps {
+interface LabelProps extends StyleProps {
     htmlFor?: string;
     className?: string;
     required?: boolean;
@@ -19,7 +19,10 @@ export default function Label(props: LabelProps) {
     const hintError = !!props.error;
 
     return (
-        <label className={clsx("Label text-text-secondary", variantClasses, props.className)} htmlFor={props.htmlFor}>
+        <label
+            {...styleProps({ className: ["Label text-text-secondary", variantClasses] }, props)}
+            htmlFor={props.htmlFor}
+        >
             {props.children}
             {props.required && <span className={hintError ? "text-error" : ""}> *</span>}
         </label>

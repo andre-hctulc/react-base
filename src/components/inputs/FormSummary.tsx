@@ -4,8 +4,10 @@ import clsx from "clsx";
 import React from "react";
 import type { FormValidator } from "./JSForm";
 import Typography from "../text/Typography";
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
-export type SummaryFactory<T extends object = any> = {
+export type FormSummaryFactory<T extends object = any> = {
     [K in keyof T]-?:
         | ((
               value: T[K],
@@ -13,7 +15,11 @@ export type SummaryFactory<T extends object = any> = {
           ) => {
               render?: React.ReactNode;
               type?: React.HTMLInputTypeAttribute;
-              input?: React.ReactElement<{ onChange?: (...args: any) => void; name?: string; className?: string }>;
+              input?: React.ReactElement<{
+                  onChange?: (...args: any) => void;
+                  name?: string;
+                  className?: string;
+              }>;
               label: string;
               empty?: boolean;
               alignCenter?: boolean;
@@ -21,11 +27,9 @@ export type SummaryFactory<T extends object = any> = {
         | null;
 };
 
-interface SummaryProps<T extends object = any> {
+interface FormSummaryProps<T extends object = any> extends StyleProps {
     data: T;
-    className?: string;
-    style?: React.CSSProperties;
-    factory: SummaryFactory<T>;
+    factory: FormSummaryFactory<T>;
     /** @default 100 */
     labelWidth?: number;
     /** @default "start" */
@@ -34,18 +38,21 @@ interface SummaryProps<T extends object = any> {
     validate?: FormValidator<T>;
 }
 
-export default function Summary<T extends object = any>(props: SummaryProps<T>) {
+export default function Summary<T extends object = any>(props: FormSummaryProps<T>) {
     return (
-        <div className={clsx("flex flex-col space-y-2 flex-shrink-0", props.className)} style={props.style}>
+        <div {...styleProps({ className: "flex flex-col space-y-2 flex-shrink-0" }, props)}>
             <div className="flex flex-col space-y-2 min-w-0">
-                {Object.keys(props.factory).map(key => {
+                {Object.keys(props.factory).map((key) => {
                     const value: any = (props.data as any)[key];
                     const field = props.factory[key as keyof typeof props.factory]?.(value, props.data);
 
                     if (!field) return null;
 
                     const render = field.render || value + "";
-                    const classes = clsx("flex space-x-3 flex-shrink-0 min-h-0 min-w-0, max-w-full", !!field.alignCenter && "items-center");
+                    const classes = clsx(
+                        "flex space-x-3 flex-shrink-0 min-h-0 min-w-0, max-w-full",
+                        !!field.alignCenter && "items-center"
+                    );
                     let body: React.ReactNode;
 
                     if (typeof render === "string" || typeof render === "number")
@@ -70,7 +77,10 @@ export default function Summary<T extends object = any>(props: SummaryProps<T>) 
                                 variant="body2"
                                 className="flex-shrink-0"
                                 disabled
-                                style={{ width: props.labelWidth || 100, textAlign: props.variant === "centered" ? "end" : undefined }}
+                                style={{
+                                    width: props.labelWidth || 100,
+                                    textAlign: props.variant === "centered" ? "end" : undefined,
+                                }}
                             >
                                 {field.label}
                             </Typography>

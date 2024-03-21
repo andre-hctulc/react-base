@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { useDND } from "./DND";
+import { useDND } from "../../providers/DNDProvider";
+import { StyleProps } from "../../types";
+import { styleProps } from "../../util";
 
-interface DroppableProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface DroppableProps extends StyleProps {
     children?: React.ReactNode;
     onDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
     onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
@@ -47,8 +47,7 @@ const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props, ref) 
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDragEnter={handleDragEnter}
-            className={props.className}
-            style={props.style}
+            {...styleProps(props)}
         >
             {props.children}
         </div>

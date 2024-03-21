@@ -4,6 +4,6 @@ import type { ModuleDef, DemoDef } from "src/types";
 
 const demos: DemoDef[] = Object.values(import.meta.glob("./Broadcast.demo*.tsx", { import: "default", eager: true }));
 
-const mod: ModuleDef = { name: "Broadcast.tsx", path: "components/others/Broadcast.tsx", demos: demos || [] };
+const mod: ModuleDef = { name: "Broadcast.tsx", path: "components/shadow/Broadcast.tsx", demos: demos || [] };
 
 export default mod;

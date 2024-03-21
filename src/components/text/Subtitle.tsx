@@ -1,13 +1,10 @@
 import React from "react";
 import Typography from "./Typography";
-import clsx from "clsx";
-import type { PropsOf } from "../../types";
-import Styled from "../others/Styled";
+import type { PropsOf, StyleProps } from "../../types";
+import Styled from "../shadow/Styled";
 import { collapse } from "../../util";
 
-interface IconTextProps {
-    className?: string;
-    style?: React.CSSProperties;
+interface IconTextProps extends StyleProps {
     icon?: React.ReactElement;
     children?: string;
     slotProps?: { text?: PropsOf<typeof Typography> };
@@ -30,7 +27,7 @@ export default function Subtitle(props: IconTextProps) {
 
     return (
         <Typography
-            className={clsx(!props.noMargin && (props.dense ? "mb-1.5 mt-2" : "mb-3 mt-3.5"), props.className)}
+            className={[!props.noMargin && (props.dense ? "mb-1.5 mt-2" : "mb-3 mt-3.5"), props.className]}
             fontWeight={props.bold ? "bold" : undefined}
             tag={props.tag || (variant === "subtitle3" ? "h6" : undefined)}
             alignCenter

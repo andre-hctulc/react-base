@@ -4,12 +4,12 @@ import clsx from "clsx";
 import Label from "./Label";
 import React from "react";
 import { useFormInput } from "./JSForm";
-import type { PropsOf, Size } from "../../types";
-import { setRef } from "../../util";
+import type { PropsOf, Size, StyleProps } from "../../types";
+import { setRef, styleProps } from "../../util";
 import HelperText from "../text/HelperText";
 import { getInputSizeClasses, type InputLikeProps } from "./Input";
 
-interface SliderProps extends InputLikeProps {
+interface SliderProps extends StyleProps, InputLikeProps {
     slotProps?: { input?: PropsOf<"input">; helperText?: PropsOf<typeof HelperText> };
     inputRef?: any;
     // * Restrictions
@@ -20,8 +20,6 @@ interface SliderProps extends InputLikeProps {
     // * Style
     size?: Size;
     fullWidth?: boolean;
-    className?: string;
-    style?: React.CSSProperties;
     // * Events
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onFocus?: React.FocusEventHandler<HTMLInputElement>;
@@ -34,20 +32,37 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     const innerRef = React.useRef<HTMLInputElement>(null);
     const { readOnly, disabled, error } = useFormInput(props, innerRef.current);
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         props.onChange?.(e);
     };
 
     return (
-        <div className={clsx("inline-flex flex-col flex-shrink-0", props.fullWidth && "w-full", props.className)} style={props.style} ref={ref}>
+        <div
+            {...styleProps(
+                {
+                    className: [
+                        "inline-flex flex-col flex-shrink-0",
+                        props.fullWidth && "w-full",
+                        props.className,
+                    ],
+                },
+                props
+            )}
+            className={clsx()}
+            ref={ref}
+        >
             {props.label && (
-                <Label variant={props.dense ? "caption" : "form_control"} error={error} required={props.required}>
+                <Label
+                    variant={props.dense ? "caption" : "form_control"}
+                    error={error}
+                    required={props.required}
+                >
                     {props.label}
                 </Label>
             )}
             <input
                 {...props.slotProps?.input}
-                ref={inp => setRef(inp, props.inputRef, innerRef)}
+                ref={(inp) => setRef(inp, props.inputRef, innerRef)}
                 type={"range"}
                 onChange={handleChange}
                 onFocus={props.onFocus}

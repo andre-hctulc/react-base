@@ -6,7 +6,8 @@ import { DemoDef, DemoProps } from "src/types";
 
 import React from "react";
 import Dev from "@react-base/src/components/dev/Dev";
-import { Button, DevProvider, Flex } from "@react-base/src/components";
+import { Button, Flex } from "@react-base/src/components";
+import { DevProvider } from "@react-base/src/providers";
 
 function DevDemo({ demoProps }: DemoProps) {
     const [devMode, setDevMode] = React.useState(false);

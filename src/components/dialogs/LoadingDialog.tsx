@@ -1,8 +1,9 @@
 import React from "react";
 import Dialog, { DialogDim, DialogProps } from "./Dialog";
 import LoadingOverlay from "../feedback/LoadingOverlay";
+import { StyleProps } from "../../types";
 
-interface LoadingDialogProps {
+interface LoadingDialogProps extends StyleProps {
     loading?: boolean;
     open: boolean;
     onClose?: React.MouseEventHandler<HTMLDivElement>;
@@ -10,8 +11,6 @@ interface LoadingDialogProps {
     size?: DialogDim;
     minSize?: DialogDim;
     maxSize?: DialogDim;
-    style?: React.CSSProperties;
-    className?: string;
     slotProps?: DialogProps["slotProps"];
     /** Wird statt den _children_ während des Ladens gerendert (`loading=true`) */
     staticLoading?: React.ReactNode;
