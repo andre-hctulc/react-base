@@ -132,6 +132,7 @@ return setup({
                 // You can also overwrite default colors like primary ,error etc. here
                 green: {
                     // These values are currently all required for the theme color to be recognized
+                    // Might change to 100, 200, 300, ...
                     DEFAULT: "#1d782f",
                     light: "#4b8e58",
                     dark: "#0a5f1b",
