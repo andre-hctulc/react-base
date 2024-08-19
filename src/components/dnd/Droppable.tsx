@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useDND } from "../../providers/DNDProvider";
-import { StyleProps } from "../../types";
-import { styleProps } from "../../util";
+import type { StyleProps } from "../../types";
+import clsx from "clsx";
 
 interface DroppableProps extends StyleProps {
     children?: React.ReactNode;
@@ -47,7 +47,8 @@ const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props, ref) 
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDragEnter={handleDragEnter}
-            {...styleProps(props)}
+            className={clsx(props.className)}
+            style={props.style}
         >
             {props.children}
         </div>

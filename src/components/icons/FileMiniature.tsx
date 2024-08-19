@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import type { ImageComponentProps, PropsOf, StyleProps } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 import { setRef } from "../../util";
 import Typography from "../text/Typography";
 import Styled from "../shadow/Styled";
@@ -16,7 +16,6 @@ interface FileMiniatureProps extends StyleProps {
     text?: React.ReactNode;
     hoverEffect?: boolean;
     slotProps?: { text?: PropsOf<typeof Typography> };
-    imageComponent?: React.ComponentType<ImageComponentProps>;
     tag?: string;
     block?: boolean;
 }
@@ -59,7 +58,7 @@ const FileMiniature = React.forwardRef<HTMLDivElement, FileMiniatureProps>((prop
                 props.onClick && "cursor-pointer",
                 props.className,
             ]}
-            style={[props.style, { width: size, height: size, maxHeight: size, maxWidth: size }]}
+            style={{ ...props.style, width: size, height: size, maxHeight: size, maxWidth: size }}
         >
             <Flex align="center" justify="center" grow className="overflow-hidden py-auto">
                 <Styled size={iconSize}>{props.icon}</Styled>

@@ -2,9 +2,9 @@
 
 import clsx from "clsx";
 import React from "react";
-import { CubicBezierControllPoints, cubicBezier, styleProps } from "../../util";
-import type { Size, StyleProps } from "../../types";
-import { alignClass, collapse } from "../../util";
+import { cubicBezier, type CubicBezierInput } from "../../util";
+import type { StyleProps } from "../../types";
+import { alignClass } from "../../util";
 
 export interface DialItemProps<T extends Element = Element> {
     className?: string;
@@ -30,7 +30,6 @@ interface DialProps extends StyleProps {
      */
     itemSize: { height: number | undefined; width: number | undefined };
     /** @default "medium" */
-    spacing?: Size;
     /**
      * Shrink span
      *
@@ -47,7 +46,7 @@ interface DialProps extends StyleProps {
      * @default 10
      * */
     maxShrinkDist?: number;
-    scale?: CubicBezierControllPoints;
+    scale?: CubicBezierInput;
     scrollOptions?: ScrollIntoViewOptions;
     /** Key vom aktiven Element  */
     defaultActive?: React.Key;
@@ -61,7 +60,7 @@ interface DialProps extends StyleProps {
     tag?: string;
 }
 
-const defaultScale: CubicBezierControllPoints = [0.17, 0.86, 0.75, 0.89];
+const defaultScale: CubicBezierInput = [0.17, 0.86, 0.75, 0.89];
 
 export default function Dial(props: DialProps) {
     const controllPoints = props.scale || defaultScale;
@@ -148,15 +147,7 @@ export default function Dial(props: DialProps) {
             ...itemProps,
         });
     });
-    const [spacing, spacingVert] = collapse(
-        props.spacing || "medium",
-        {
-            small: ["space-x-2", "space-y-2"],
-            medium: ["space-x-4", "space-y-4"],
-            large: ["space-x-6", "space-y-6"],
-        },
-        []
-    );
+    const [spacing, spacingVert] = ["space-x-4", "space-y-4"];
     const align = alignClass(props.align || "center");
     const Comp: any = props.tag || "div";
     // Listen düren nur li-Elemente enthalten
@@ -164,18 +155,12 @@ export default function Dial(props: DialProps) {
 
     return (
         <Comp
-            {...styleProps(
-                {
-                    className: [
-                        "flex",
-                        align,
-                        vert
-                            ? ["flex-col overflow-y-auto", spacingVert]
-                            : ["flex-row overflow-x-auto", spacing],
-                    ],
-                },
-                props
+            className={clsx(
+                "flex",
+                align,
+                vert ? ["flex-col overflow-y-auto", spacingVert] : ["flex-row overflow-x-auto", spacing]
             )}
+            style={props.style}
         >
             {children}
             {/* Dummy Element, um die Höhe der root konstant zu halten. Durch height transition schwankt die Höhe beim ändern des aktiven Elementes */}

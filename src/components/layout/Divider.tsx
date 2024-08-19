@@ -1,6 +1,5 @@
 import clsx from "clsx";
-import { StyleProps } from "../../types";
-import { styleProps } from "../../util";
+import type { StyleProps } from "../../types";
 
 interface DividerProps extends StyleProps {
     children?: React.ReactNode;
@@ -23,17 +22,13 @@ export default function Divider(props: DividerProps) {
 
     return (
         <div
-            {...styleProps(
-                {
-                    className: [
-                        "flex items-center flex-shrink-0",
-                        props.vertical ? "flex-col" : "flex-row",
-                        props.section && props.vertical && "mx-7",
-                        props.section && !props.vertical && "my-7",
-                    ],
-                },
-                props
-            )}
+            style={props.style}
+            className={clsx([
+                "flex items-center flex-shrink-0",
+                props.vertical ? "flex-col" : "flex-row",
+                props.section && props.vertical && "mx-7",
+                props.section && !props.vertical && "my-7",
+            ])}
         >
             <div className={lineClasses} />
             {typeof props.children === "string" ? (

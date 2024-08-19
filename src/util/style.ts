@@ -1,9 +1,9 @@
 // * Colors
 
 import clsx from "clsx";
-import { Falsy } from "react-native";
+import type { Falsy } from "react-native";
 import { collapse } from "./helpers";
-import { StyleProps, Align, XSize, ThemeColor, ThemeColorDef, SizeMap, XSizeMap } from "../types";
+import type { StyleProps, Align } from "../types";
 
 /** Some colors 🌈 */
 export const colors = [
@@ -79,27 +79,8 @@ export function rgbStrToHex(rgb: string) {
     return rgbToHex(r, g, b);
 }
 
-// * CSS Styles
+// --- CSS Styles
 
-function mergeStyles(...styles: StyleProps["style"][]): React.CSSProperties {
-    return styles.reduce<React.CSSProperties>(
-        (style, currentStyle) => ({
-            ...style,
-            ...(Array.isArray(currentStyle) ? mergeStyles(...currentStyle) : currentStyle || {}),
-        }),
-        {}
-    );
-}
-
-export function styleProps(...style: (StyleProps | Falsy)[]): {
-    style: React.CSSProperties;
-    className: string;
-} {
-    return {
-        style: mergeStyles(...style.map((s) => (s ? s.style : {}))),
-        className: clsx(style.map((s) => s && s.className)),
-    };
-}
 
 export function alignClass(align: Align) {
     return collapse(align || "center", {
@@ -123,55 +104,7 @@ export function justifyClass(justify: Align) {
     });
 }
 
-export function shadowClass(shadow: XSize | "none") {
-    return collapse(shadow, {
-        none: "",
-        xsmall: "shadow-xs",
-        small: "shadow-sm",
-        medium: "shadow-md",
-        large: "shadow-lg",
-        xlarge: "shadow-xl",
-    });
-}
-
-// * Theme
-
-/**
- * @returns Utility classes for theme colors
- * */
-export function themeColor<C extends ThemeColor<true>>(
-    color: C
-): ThemeColorDef &
-    Record<`${"hover_" | "active_" | "focus_" | ""}${C extends ThemeColorDef ? keyof C : C}`, string> {
-    let def: ThemeColorDef;
-
-    if (color && typeof color === "object") def = color;
-    else {
-        def = {
-            bg: `bg-${color}`,
-            bgSuperLight: `bg-${color}-super-light`,
-            bgLight: `bg-${color}-light`,
-            bgDark: `bg-${color}-dark`,
-            text: `text-${color}`,
-            textSuperLight: `text-${color}-super-light`,
-            textLight: `text-${color}-light`,
-            textDark: `text-${color}-dark`,
-            border: `border-${color}`,
-            borderLight: `border-${color}-light`,
-            borderSuperLight: `border-${color}-super-light`,
-            borderDark: `border-${color}-dark`,
-            contrastText: `text-${color}-contrast-text`,
-        };
-    }
-
-    for (const key in def) {
-        (def as any)[`hover_${key}`] = `hover:${(def as any)[key]}`;
-        (def as any)[`active_${key}`] = `active:${(def as any)[key]}`;
-        (def as any)[`focus_${key}`] = `focus:${(def as any)[key]}`;
-    }
-
-    return def as any;
-}
+// --- Theme
 
 export function numberToColor(num: number): string {
     if (!num) return "gray";
@@ -183,9 +116,4 @@ export function colorToNumber(color: string): number {
     const num = +(color.substring(1), 16);
     if (isNaN(num)) return -1;
     return num;
-}
-
-export function getSize<S extends SizeMap | XSizeMap>(size: keyof S | number, sizeMap: S): number {
-    const result = typeof size === "string" ? (sizeMap as any)[size] : size;
-    return result;
 }

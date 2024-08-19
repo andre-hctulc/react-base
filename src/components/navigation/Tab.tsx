@@ -3,7 +3,7 @@ import React from "react";
 import Chip from "../data-display/Chip";
 import Styled from "../shadow/Styled";
 import LinkContainer from "./LinkContainer";
-import type { LinkProps, StyleProps } from "../../types";
+import type {  StyleProps } from "../../types";
 
 interface TabProps extends StyleProps {
     icon?: React.ReactElement;
@@ -16,7 +16,6 @@ interface TabProps extends StyleProps {
     href?: string;
     id?: string | number;
     active?: boolean;
-    renderLink?: React.ReactElement<LinkProps>;
 }
 
 const Tab = React.forwardRef<HTMLElement, TabProps>((props, ref) => {
@@ -53,7 +52,6 @@ const Tab = React.forwardRef<HTMLElement, TabProps>((props, ref) => {
     return (
         <LinkContainer
             ref={ref as any}
-            renderLink={props.renderLink}
             onClick={props.onClick}
             href={props.href}
             style={props.style}

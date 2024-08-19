@@ -1,21 +1,17 @@
 import React from "react";
 import Flex from "./Flex";
 import Placeholder from "../feedback/Placeholder";
-import ListItem from "./ListItem";
-import type { SelectOption } from "../inputs/Select";
-import { StyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 
 interface ListProps<T = string> extends StyleProps {
     children?: React.ReactNode;
     /** @default "ol" */
     tag?: string;
-    options?: SelectOption<T>[];
-    onActivateOption?: (e: React.MouseEvent, option: SelectOption<T>) => void;
     emptyText?: string;
 }
 
 export default function List<T = string>(props: ListProps<T>) {
-    const isEmpty = !props.children && !props.options?.length;
+    const isEmpty = !props.children;
 
     return (
         <Flex className={props.className} style={props.style} tag="ol">
@@ -24,28 +20,6 @@ export default function List<T = string>(props: ListProps<T>) {
                     {props.emptyText}
                 </Placeholder>
             )}
-            {props.options?.map((opt) => {
-                const key: string =
-                    opt.value && typeof opt.value === "object" ? JSON.stringify(opt.value) : opt.value + "";
-
-                return (
-                    <ListItem
-                        hoverEffect
-                        onClick={(e) => {
-                            if (!opt.actionIcon) props.onActivateOption?.(e, opt);
-                        }}
-                        onAction={(e) => {
-                            if (opt.actionIcon) props.onActivateOption?.(e, opt);
-                        }}
-                        key={key}
-                        className={opt.className}
-                        style={opt.style}
-                        icon={opt.icon}
-                    >
-                        {opt.label}
-                    </ListItem>
-                );
-            })}
             {props.children}
         </Flex>
     );

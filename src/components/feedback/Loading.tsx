@@ -1,7 +1,7 @@
 import Spinner from "./Spinner";
 import Delayed from "../shadow/Delayed";
-import { StyleProps } from "../../types";
-import { styleProps } from "../../util";
+import type { StyleProps } from "../../types";
+import clsx from "clsx";
 
 interface LoadingProps extends StyleProps {
     /** @default "div" */
@@ -15,9 +15,11 @@ export default function Loading(props: LoadingProps) {
     const Comp: any = props.tag || "div";
     const loading = (
         <Comp
-            {...styleProps(
-                { className: ["flex flex-grow items-center justify-center", props.py && "py-4"] },
-                props
+            style={props.style}
+            className={clsx(
+                "flex flex-grow items-center justify-center",
+                props.py && "py-4",
+                props.className
             )}
         >
             <Spinner />

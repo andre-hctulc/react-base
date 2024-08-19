@@ -3,9 +3,8 @@ import Flex from "../layout/Flex";
 import Overlay from "../layout/Overlay";
 import XIcon from "../icons/collection/X";
 import IconButton from "../buttons/IconButton";
-import Fade from "../transitions/Fade";
 import Typography from "../text/Typography";
-import { StyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 
 interface LargeDrawerProps extends StyleProps {
     open: boolean;
@@ -30,7 +29,7 @@ export default function LargeDrawer(props: LargeDrawerProps) {
             style={props.style}
             disablePointerEvents={!props.open}
         >
-            <Fade in={props.open}>
+            {props.open && (
                 <Flex
                     style={{ maxHeight, maxWidth, pointerEvents: "auto" }}
                     onClick={(e) => e.stopPropagation()}
@@ -52,7 +51,7 @@ export default function LargeDrawer(props: LargeDrawerProps) {
                     {/* Children nur rendern, wenn drawer auch offen */}
                     {props.open && props.children}
                 </Flex>
-            </Fade>
+            )}
         </Overlay>
     );
 }

@@ -1,13 +1,12 @@
 import clsx from "clsx";
 import React from "react";
-import { collapse, flattenChildren, styleProps } from "../../util";
+import { flattenChildren } from "../../util";
 import Flex from "./Flex";
-import type { Size, StyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 
 interface GridColsProps extends StyleProps {
     cols: number;
     children?: React.ReactNode;
-    spacing?: Size;
     content?: React.ReactNode[];
     /** Kann bpsw. in Kombination mit `itemsWrapper` für _react-transition-group_ Transitions benutzt werden. */
     colsWrapper?: React.ReactElement;
@@ -18,16 +17,7 @@ interface GridColsProps extends StyleProps {
 }
 
 export default function GridCols(props: GridColsProps) {
-    const [colGap, spaceY] = collapse(
-        props.spacing || "none",
-        {
-            none: [0, ""],
-            small: [10, "space-y-3"],
-            medium: [20, "space-y-7"],
-            large: [30, "space-y-10"],
-        },
-        []
-    );
+    const [colGap, spaceY] = [20, "space-y-7"];
     const colClases = clsx("flex-grow flex-shrink-0", spaceY);
     const cols: React.ReactNode[][] = props.content?.map((c) => [c]) || [];
     const children = flattenChildren(props.children);
@@ -49,16 +39,12 @@ export default function GridCols(props: GridColsProps) {
 
     return (
         <div
-            {...styleProps(
-                {
-                    className: "grid",
-                    style: {
-                        columnGap: colGap,
-                        gridTemplateColumns: `repeat(${props.cols}, ${props.colsWidth || "1fr"})`,
-                    },
-                },
-                props
-            )}
+            className={clsx("grid", props.className)}
+            style={{
+                columnGap: colGap,
+                gridTemplateColumns: `repeat(${props.cols}, ${props.colsWidth || "1fr"})`,
+                ...props.style,
+            }}
         >
             {Array.from({ length: props.cols }, (_, i) => {
                 const colContent = props.colsWrapper

@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import type { ParentProps } from "../../types";
+import type { ChildrenProps } from "../../types";
 
-interface DelayedProps extends ParentProps {
+interface DelayedProps extends ChildrenProps {
     delay: number;
     in?: boolean;
     rederDelay?: React.ReactNode;

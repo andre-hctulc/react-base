@@ -1,21 +1,10 @@
 import clsx from "clsx";
 import React from "react";
-import { collapse, eventProps, styleProps, themeColor } from "../../util";
+import { collapse, eventProps } from "../../util";
 import Styled from "../shadow/Styled";
-import type {
-    DragEventProps,
-    MouseEventProps,
-    ParentProps,
-    PartialPropsOf,
-    StyleProps,
-    ThemeColor,
-} from "../../types";
+import type { ChildrenProps, EventProps, PartialPropsOf, StyleProps } from "../../types";
 
-interface ButtonProps
-    extends StyleProps,
-        ParentProps,
-        MouseEventProps<HTMLButtonElement>,
-        DragEventProps<HTMLButtonElement> {
+interface ButtonProps extends StyleProps, ChildrenProps, EventProps {
     /** @default "text" */
     variant?: "text" | "outlined" | "contained";
     size?: "small" | "medium" | "large";
@@ -24,7 +13,6 @@ interface ButtonProps
     start?: React.ReactNode;
     end?: React.ReactNode;
     disabled?: boolean;
-    color?: ThemeColor | "text_secondary";
     unstyled?: boolean;
     /**
      * The default value of normal _buttons_ ist "button" or "submit" für _buttons_ in forms.
@@ -44,16 +32,6 @@ interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     const variant = props.variant || "text";
     const disabled = !!props.disabled;
-    const color = props.color || "primary";
-    const { bg, text, border, contrastText } =
-        color === "text_secondary"
-            ? {
-                  bg: "bg-text-secondary",
-                  text: "text-text-secondary",
-                  border: "border-text-secondary",
-                  contrastText: "text-text-contrast",
-              }
-            : themeColor(color);
     const size = props.size || "medium";
     const [height, fontSize, iconSize, px] = collapse(
         size,
@@ -67,29 +45,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
     const [variantClasses, variantIconClasses] = collapse(
         variant,
         {
-            contained: [
-                [bg, contrastText, disabled ? "bg-opacity-80" : "hover:bg-opacity-80 active:bg-opacity-90"],
-                [contrastText],
-            ],
-            text: [
-                [
-                    text,
-                    bg,
-                    disabled ? "bg-opacity-0" : "bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20",
-                ],
-                [text],
-            ],
+            contained: [[disabled ? "bg-opacity-80" : "hover:bg-opacity-80 active:bg-opacity-90"], []],
+            text: [[disabled ? "bg-opacity-0" : "bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20"], []],
             outlined: [
                 [
                     "border",
-                    [
-                        border,
-                        bg,
-                        text,
-                        disabled ? "bg-opacity-5" : "bg-opacity-10 hover:bg-opacity-20 active:bg-opacity-30",
-                    ],
+                    [disabled ? "bg-opacity-5" : "bg-opacity-10 hover:bg-opacity-20 active:bg-opacity-30"],
                 ],
-                [text],
+                [],
             ],
         },
         [] as any
@@ -105,17 +68,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
             type={props.type || "button"}
             disabled={props.disabled}
             ref={ref}
-            {...styleProps(
-                {
-                    style: { height, fontSize },
-                    className: [
-                        "inline-flex justify-center items-center rounded flex-shrink-0 box-border whitespace-nowrap transition duration-100 transition-bg",
-                        px,
-                        !props.unstyled && variantClasses,
-                    ],
-                },
-                props
-            )}
+            className={clsx([
+                "inline-flex justify-center items-center rounded flex-shrink-0 box-border whitespace-nowrap transition duration-100 transition-bg",
+                px,
+                !props.unstyled && variantClasses,
+            ])}
+            style={{ height, fontSize, ...props.style }}
             {...eventProps(props)}
             draggable={props.draggable}
         >

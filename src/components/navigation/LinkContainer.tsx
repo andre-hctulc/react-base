@@ -1,32 +1,28 @@
-import React, { ReactElement } from "react";
-import type { LinkProps, StyleProps } from "../../types";
-import { styleProps } from "../../util";
+import React from "react";
+import type { ChildrenProps, EventProps, StyleProps } from "../../types";
+import clsx from "clsx";
 
-export interface LinkContainerProps extends LinkProps, StyleProps {
+export interface LinkContainerProps extends StyleProps, EventProps, ChildrenProps {
     href: string | undefined;
     disabled?: boolean;
-    renderLink?: ReactElement<LinkProps>;
+    target?: string;
+    download?: string;
 }
 
 const LinkContainer = React.forwardRef<HTMLAnchorElement | HTMLDivElement, LinkContainerProps>(
     (props, ref) => {
         if (!props.href || props.disabled)
             return (
-                <div ref={ref as any} {...styleProps(props)} onClick={props.onClick} role="link">
+                <div
+                    ref={ref as any}
+                    className={clsx(props.className)}
+                    style={props.style}
+                    onClick={props.onClick}
+                    role="link"
+                >
                     {props.children}
                 </div>
             );
-
-        if (props.renderLink) {
-            const p = {
-                ...props,
-                ...props.renderLink.props,
-                ...styleProps(props, props.renderLink.props as any),
-                ref,
-            };
-            delete p.renderLink;
-            return React.cloneElement(props.renderLink as any, p);
-        }
 
         return (
             <a
@@ -35,7 +31,8 @@ const LinkContainer = React.forwardRef<HTMLAnchorElement | HTMLDivElement, LinkC
                 ref={ref as any}
                 onClick={props.onClick}
                 href={props.href}
-                {...styleProps({ className: "inline no-underline color-unset pointer-events-auto" }, props)}
+                className={clsx("inline no-underline color-unset pointer-events-auto", props.className)}
+                style={props.style}
             >
                 {props.children}
             </a>

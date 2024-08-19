@@ -1,6 +1,5 @@
 "use client";
 
-import clsx from "clsx";
 import IconButton from "../buttons/IconButton";
 import React from "react";
 import useMutableSearchParams from "../../hooks/document/useMutableSearchParams";
@@ -9,7 +8,7 @@ import ChevronDoubleRightIcon from "../icons/collection/ChevronDoubleRight";
 import ChevronLeftIcon from "../icons/collection/ChevronLeft";
 import ChevronRightIcon from "../icons/collection/ChevronRight";
 import type { StyleProps } from "../../types";
-import { styleProps } from "../../util";
+import clsx from "clsx";
 
 interface PaginationProps extends StyleProps {
     searchParam?: string;
@@ -60,15 +59,12 @@ export default function Pagination(props: PaginationProps) {
 
     return (
         <nav
-            {...styleProps(
-                {
-                    className: [
-                        "flex flex-row space-x-3 items-center justify-center pt-4 flex-shrink-0",
-                        !props.noPb && "pb-4",
-                    ],
-                },
-                props
+            className={clsx(
+                "flex flex-row space-x-3 items-center justify-center pt-4 flex-shrink-0",
+                !props.noPb && "pb-4",
+                props.className
             )}
+            style={props.style}
         >
             <div className="flex-row flex flex-grow justify-start">
                 <IconButton disabled={pages.backDisabled} onClick={() => setPage(pages.backFarPage)}>

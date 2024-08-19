@@ -1,7 +1,5 @@
 export { default as Chip } from "./Chip";
-export { default as DataGrid } from "./DataGrid";
 export { default as InfoCard } from "./InfoCard";
-export { default as Labelize } from "./Labelize";
 export { default as Avatar } from "./Avatar";
 export { default as Avatars } from "./Avatars";
 export { default as Badge } from "./Badge";

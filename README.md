@@ -1,6 +1,6 @@
 # react-base
 
-A React/Tailwind lib
+A React base lib. This package does not make use of any external configurations.
 
 ## Features
 

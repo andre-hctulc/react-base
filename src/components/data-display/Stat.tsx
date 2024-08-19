@@ -1,14 +1,13 @@
 import clsx from "clsx";
-import type { LinkProps, StyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 import Avatar from "./Avatar";
-import LaunchIcon from "../icons/collection/Launch";
 import IconButton from "../buttons/IconButton";
 import Flex from "../layout/Flex";
 import LinkContainer from "../navigation/LinkContainer";
 import Styled from "../shadow/Styled";
 import Typography from "../text/Typography";
 import Skeleton from "../feedback/Skeleton";
-import { styleProps } from "../../util";
+import LaunchIcon from "../icons/collection/launch";
 
 interface StatProps extends StyleProps {
     value: any;
@@ -18,7 +17,6 @@ interface StatProps extends StyleProps {
     unit?: string;
     /** @default 130 */
     minWidth?: number;
-    renderLink?: React.ReactElement<LinkProps>;
     linkTarget?: React.HTMLAttributeAnchorTarget;
 }
 
@@ -27,7 +25,8 @@ export default function Stat(props: StatProps) {
         <Flex
             direction="row"
             align="center"
-            {...styleProps({ style: { minWidth: props.minWidth || 130 } }, props)}
+            style={{ minWidth: props.minWidth || 130, ...props.style }}
+            className={clsx(props.className)}
         >
             {props.icon && (
                 <Avatar className="p-5">
@@ -50,11 +49,7 @@ export default function Stat(props: StatProps) {
                         </span>
                     </Skeleton>
                     {props.href && (
-                        <LinkContainer
-                            target={props.linkTarget}
-                            renderLink={props.renderLink}
-                            href={props.href}
-                        >
+                        <LinkContainer target={props.linkTarget} href={props.href}>
                             <IconButton className="ml-1.5" size="small">
                                 <LaunchIcon />
                             </IconButton>

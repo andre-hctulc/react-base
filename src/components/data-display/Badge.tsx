@@ -1,13 +1,12 @@
 import React from "react";
 import clsx from "clsx";
-import type { PropsOf, StyleProps, ThemeColor } from "../../types";
-import { collapse, styleProps } from "../../util";
+import type { PropsOf, StyleProps } from "../../types";
+import { collapse } from "../../util";
 import StaticBadge from "./StaticBadge";
 
 interface BadgeProps extends StyleProps {
     children: React.ReactElement;
     content?: React.ReactNode;
-    color?: ThemeColor;
     slotProps?: { badge?: PropsOf<typeof StaticBadge> };
     position?: { vertical?: "top" | "bottom"; horizontal?: "left" | "right" };
 }
@@ -23,11 +22,10 @@ export default function Badge(props: BadgeProps) {
     });
 
     return (
-        <div {...styleProps({ className: "inline-block relative" }, props)}>
+        <div className={clsx("inline-block relative", props.className)} style={props.style}>
             {props.children}
             <StaticBadge
                 variant="small"
-                color={props.color}
                 {...props.slotProps?.badge}
                 className={clsx("absolute", vertClasses, horClasses, props.slotProps?.badge?.className)}
             >

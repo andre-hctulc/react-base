@@ -1,6 +1,7 @@
 import React from "react";
-import { collapse, eventProps, styleProps } from "../../util";
-import type { DragEventProps, MouseEventProps, ParentProps, StyleProps } from "../../types";
+import { collapse, eventProps } from "../../util";
+import type { ChildrenProps, EventProps, StyleProps } from "../../types";
+import clsx from "clsx";
 
 export type TextLikeTag = string;
 export type TextVariant =
@@ -16,8 +17,9 @@ export type TextVariant =
     | "subtitle1"
     | "subtitle2";
 
-interface TypographyProps extends StyleProps, ParentProps, DragEventProps, MouseEventProps {
+interface TypographyProps extends StyleProps, EventProps, ChildrenProps {
     tag?: TextLikeTag;
+    draggable?: boolean;
     variant?: TextVariant;
     secondary?: boolean;
     disabled?: boolean;
@@ -67,31 +69,26 @@ const Typography = React.forwardRef<Element, TypographyProps>((props, ref) => {
             ref={ref}
             draggable={props.draggable}
             {...eventProps(props)}
-            {...styleProps(
-                {
-                    className: [
-                        "flex-shrink-0",
-                        display,
-                        variantClasses,
-                        props.underline && "underline",
-                        props.secondary && "text-text-secondary",
-                        props.disabled && "text-text-disabled",
-                        props.truncate && "truncate overflow-hidden",
-                        props.alignCenter && "flex items-center",
-                        props.textCenter && "text-center",
-                        props.textAlign === "right"
-                            ? "text-right"
-                            : props.textAlign === "left"
-                            ? "text-left"
-                            : props.textAlign === "center" && "text-center",
-                        props.italic && "italic",
-                        props.defaultCursor && "cursor-default",
-                        props.long &&
-                            "break-words overflow-auto scrollbar-hidden whitespace-normal max-w-full",
-                    ],
-                    style: { fontWeight: props.fontWeight, fontSize: props.fontSize },
-                },
-                props
+            style={{ fontWeight: props.fontWeight, fontSize: props.fontSize, ...props.style }}
+            className={clsx(
+                "flex-shrink-0",
+                display,
+                variantClasses,
+                props.underline && "underline",
+                props.secondary && "text-text-secondary",
+                props.disabled && "text-text-disabled",
+                props.truncate && "truncate overflow-hidden",
+                props.alignCenter && "flex items-center",
+                props.textCenter && "text-center",
+                props.textAlign === "right"
+                    ? "text-right"
+                    : props.textAlign === "left"
+                    ? "text-left"
+                    : props.textAlign === "center" && "text-center",
+                props.italic && "italic",
+                props.defaultCursor && "cursor-default",
+                props.long && "break-words overflow-auto scrollbar-hidden whitespace-normal max-w-full",
+                props.className
             )}
         >
             {props.children}

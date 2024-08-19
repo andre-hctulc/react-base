@@ -1,11 +1,5 @@
 export { default as Loading } from "./Loading";
 export { default as Placeholder } from "./Placeholder";
-export { default as Progress } from "./Progress";
-export { default as ProgressBar } from "./ProgressBar";
-export { default as ProgressBarSub } from "./ProgressBarSub";
-export { default as ProgressBarText } from "./ProgressBarText";
-export { default as ProgressError } from "./ProgressError";
-export { default as ProgressSuccess } from "./ProgressSuccess";
 export { default as Skeleton } from "./Skeleton";
 export { default as Spinner } from "./Spinner";
 export { default as Toolbar } from "./Toolbar";

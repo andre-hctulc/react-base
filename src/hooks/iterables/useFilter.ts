@@ -1,5 +1,5 @@
 import React from "react";
-import { Falsy } from "../../types";
+import type { Falsy } from "../../types";
 
 export default function useFilter<T = any>(
     arr: T[] | Falsy,

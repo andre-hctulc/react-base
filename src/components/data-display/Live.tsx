@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleProps } from "../../types";
-import { styleProps } from "../../util";
+import type { StyleProps } from "../../types";
+import clsx from "clsx";
 
 interface LiveProps extends StyleProps {
     /** @default 13 */
@@ -14,13 +14,8 @@ export default function Live(props: LiveProps) {
 
     return (
         <div
-            {...styleProps(
-                {
-                    className: "inline-block Live relative flex-shrink-0 rounded-full",
-                    style: { width: _size, height: _size },
-                },
-                props
-            )}
+            className={clsx("inline-block Live relative flex-shrink-0 rounded-full", props.className)}
+            style={{ width: _size, height: _size, ...props.style }}
         />
     );
 }

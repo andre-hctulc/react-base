@@ -1,7 +1,7 @@
 import Chip from "../data-display/Chip";
 import Flex from "../layout/Flex";
 import Styled from "../shadow/Styled";
-import { StyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 
 interface DrawerHeaderProps extends StyleProps {
     style?: React.CSSProperties;

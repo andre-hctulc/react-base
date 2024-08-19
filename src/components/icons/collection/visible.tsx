@@ -1,4 +1,4 @@
-import Icon, { IconProps } from "../Icon";
+import Icon, { type IconProps } from "../Icon";
 
 export default function VisisbleIcon(props: IconProps) {
     return (

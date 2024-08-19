@@ -1,15 +1,9 @@
 import React from "react";
-import { alignClass, eventProps, justifyClass, styleProps } from "../../util";
-import type {
-    Align,
-    DragEventProps,
-    KeyboardEventProps,
-    MouseEventProps,
-    ParentProps,
-    StyleProps,
-} from "../../types";
+import { alignClass, eventProps, justifyClass } from "../../util";
+import type { Align, ChildrenProps, EventProps, StyleProps } from "../../types";
+import clsx from "clsx";
 
-interface FlexProps extends StyleProps, ParentProps, MouseEventProps, KeyboardEventProps, DragEventProps {
+interface FlexProps extends StyleProps, ChildrenProps, EventProps {
     direction?: "row" | "col";
     id?: string;
     align?: Align;
@@ -42,43 +36,37 @@ const Flex = React.forwardRef<Element, FlexProps>((props, ref) => {
     return (
         <Comp
             id={props.id}
-            {...styleProps(
-                {
-                    className: [
-                        props.inline ? "inline-flex" : "flex",
-                        props.direction === "row"
-                            ? props.reverse
-                                ? "flex-row-reverse"
-                                : "flex-row"
-                            : props.reverse
-                            ? "flex-col-reverse"
-                            : "flex-col",
-                        props.grow && "flex-grow",
-                        props.minH0 && "min-h-0",
-                        props.minW0 && "min-w-0",
-                        props.scrollX && "overflow-x-auto",
-                        props.scrollY && "overflow-y-auto",
-                        props.scroll && "overflow-auto",
-                        props.wrap && "flex-wrap",
-                        align,
-                        justify,
-                    ],
-                    style: [
-                        {
-                            flexShrink: props.shrink === false ? 0 : props.shrink === true ? 1 : props.shrink,
-                            flexGrow: props.grow === true ? 1 : props.grow === false ? 0 : props.grow,
-                            flexBasis: props.basis,
-                            height: props.height,
-                            width: props.width,
-                            columnGap: props.colGap,
-                            gap: props.gap,
-                            rowGap: props.rowGap,
-                            ...props.style,
-                        },
-                    ],
-                },
-                props
-            )}
+            style={{
+                flexShrink: props.shrink === false ? 0 : props.shrink === true ? 1 : props.shrink,
+                flexGrow: props.grow === true ? 1 : props.grow === false ? 0 : props.grow,
+                flexBasis: props.basis,
+                height: props.height,
+                width: props.width,
+                columnGap: props.colGap,
+                gap: props.gap,
+                rowGap: props.rowGap,
+                ...props.style,
+            }}
+            className={clsx([
+                props.inline ? "inline-flex" : "flex",
+                props.direction === "row"
+                    ? props.reverse
+                        ? "flex-row-reverse"
+                        : "flex-row"
+                    : props.reverse
+                    ? "flex-col-reverse"
+                    : "flex-col",
+                props.grow && "flex-grow",
+                props.minH0 && "min-h-0",
+                props.minW0 && "min-w-0",
+                props.scrollX && "overflow-x-auto",
+                props.scrollY && "overflow-y-auto",
+                props.scroll && "overflow-auto",
+                props.wrap && "flex-wrap",
+                align,
+                justify,
+                props.className,
+            ])}
             ref={ref}
             draggable={props.draggable}
             {...eventProps(props)}

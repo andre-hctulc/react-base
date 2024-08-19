@@ -1,11 +1,10 @@
 import clsx from "clsx";
 import React from "react";
-import type { LinkProps, PropsOf, Size, StyleProps } from "../../types";
-import { collapse } from "../../util";
+import type { PropsOf, StyleProps } from "../../types";
 import IconButton from "../buttons/IconButton";
 import Flex from "./Flex";
 import Styled from "../shadow/Styled";
-import Typography, { TextVariant } from "../text/Typography";
+import { Typography } from "../text";
 
 interface ListItemProps extends StyleProps {
     /** Use _null_ to to immulate the space an icon would occupy */
@@ -17,32 +16,23 @@ interface ListItemProps extends StyleProps {
     tag?: string;
     slotProps?: { text?: PropsOf<typeof Typography>; icon?: PropsOf<typeof Styled> };
     hoverEffect?: boolean;
-    size?: Size;
     onClick?: React.MouseEventHandler;
     onAction?: React.MouseEventHandler;
     actionIcon?: React.ReactElement;
     href?: string;
     iconSize?: number;
-    linkComponent?: React.ComponentType<LinkProps>;
     active?: boolean;
 }
 
 const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
-    const [textVariant, height, iconSize] = collapse<Size, [TextVariant, number, number]>(
-        props.size || "medium",
-        {
-            small: ["body2", 32, 15],
-            medium: ["body2", 36, 17],
-            large: ["body2", 40, 21],
-        },
-        ["body2", 36, 18]
-    );
+    const [height, iconSize] = [36, 17];
+
     const text =
         typeof props.children === "string" ? (
             <Typography
                 tag="span"
                 truncate
-                variant={textVariant}
+                variant="body2"
                 {...props.slotProps?.text}
                 className={clsx(props.active && "text-info", props.slotProps?.text?.className)}
             >
@@ -51,7 +41,6 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
         ) : (
             props.children
         );
-    const Link: any = props.linkComponent || "a";
 
     return (
         <Flex
@@ -82,12 +71,9 @@ const ListItem = React.forwardRef<HTMLElement, ListItemProps>((props, ref) => {
                 </span>
             )}
             {props.start}
-            {props.href ? <Link>{text}</Link> : text}
+            {props.href ? <a>{text}</a> : text}
             {props.actionIcon && (
-                <IconButton
-                    onClick={(e) => props.onAction?.(e)}
-                    size={props.size === "large" ? "medium" : "small"}
-                >
+                <IconButton onClick={(e) => props.onAction?.(e)} size="small">
                     {props.actionIcon}
                 </IconButton>
             )}

@@ -5,6 +5,7 @@
     "type": "module",
     "scripts": {
         "tc": "tsc --noEmit",
+        "tc:watch": "tsc --watch --noEmit",
         "lint": "npx eslint src",
         "demo": "npx serve -s ./demo-build -p 3065",
         "demo:prepare": "node --loader ts-node/esm scripts/build-comp-demos.ts"

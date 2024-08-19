@@ -10,8 +10,13 @@
         "module": "esnext",
         "moduleResolution": "node",
         "isolatedModules": true,
-        "jsx": "preserve"
+        "jsx": "preserve",
+        "verbatimModuleSyntax": true
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "../../../../../packages/progress-controller/src/controller.ts"
+    ],
     "exclude": ["demo"]
 }

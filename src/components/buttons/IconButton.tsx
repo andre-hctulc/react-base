@@ -1,7 +1,8 @@
 import React from "react";
-import type { DynamicSize, StyleProps } from "../../types";
-import { collapse, styleProps } from "../../util";
+import type { StyleProps } from "../../types";
+import { collapse } from "../../util";
 import Styled from "../shadow/Styled";
+import clsx from "clsx";
 
 interface IconButtonProps extends StyleProps {
     children: React.ReactElement;
@@ -11,7 +12,7 @@ interface IconButtonProps extends StyleProps {
     disabled?: boolean;
     /** @default outlined */
     variant?: "contained" | "outlined";
-    iconSize?: DynamicSize;
+    iconSize?: number;
     type?: "submit" | "reset" | "button" | undefined;
 }
 
@@ -33,16 +34,12 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, 
             disabled={props.disabled}
             ref={ref}
             onClick={props.onClick}
-            {...styleProps(
-                {
-                    className: [
-                        "IconButton inline-flex items-center justify-center rounded-lg aspect-square flex-shrink-0 box-border",
-                        sizeClasses,
-                        props.disabled && "!cursor-default",
-                        variantClasses,
-                    ],
-                },
-                props
+            className={clsx(
+                "IconButton inline-flex items-center justify-center rounded-lg aspect-square flex-shrink-0 box-border",
+                sizeClasses,
+                props.disabled && "!cursor-default",
+                variantClasses,
+                props.className
             )}
         >
             <Styled disabled={props.disabled} size={props.iconSize || iconSize}>

@@ -1,8 +1,9 @@
 import React from "react";
-import type { PropsOf, StyleProps, XDynamicSize } from "../../types";
-import { collapse, justifyClass, styleProps } from "../../util";
+import type { PropsOf, StyleProps } from "../../types";
+import {  justifyClass } from "../../util";
 import Avatar from "./Avatar";
 import Skeleton from "../feedback/Skeleton";
+import clsx from "clsx";
 
 type ForwardedAvataProps = Pick<PropsOf<typeof Avatar>, "size">;
 
@@ -12,7 +13,6 @@ interface AvatarsProps extends StyleProps {
     loading?: boolean;
     justify?: "start" | "center" | "end";
     slotProps?: { skeleton?: PropsOf<typeof Skeleton> };
-    size?: XDynamicSize;
     /** @default 3 */
     loadingCount?: number;
     /** @default "medium" */
@@ -20,29 +20,20 @@ interface AvatarsProps extends StyleProps {
 
 export default function Avatars(props: AvatarsProps) {
     const loading = props.loading ?? !props.children;
-    const avatarProps: ForwardedAvataProps = { size: props.size };
+    const avatarProps: ForwardedAvataProps = {};
     const diff = props.max && props.children ? Math.max(0, props.children.length - props.max) : 0;
-    const spacing = collapse(typeof props.size === "number" ? "medium" : props.size || "medium", {
-        xsmall: "-space-x-3",
-        small: "-space-x-3",
-        medium: "-space-x-4",
-        large: "-space-x-5",
-        xlarge: "-space-x-6",
-    });
 
     return (
         <div
-            {...styleProps(
-                { className: ["Avatars flex", spacing, props.justify && justifyClass(props.justify)] },
-                props
-            )}
+            style={props.style}
+            className={clsx(["Avatars flex", props.justify && justifyClass(props.justify)])}
         >
             {loading && (
                 <Skeleton className="flex" {...props.slotProps?.skeleton}>
                     {Array.from(
                         { length: typeof props.loadingCount === "number" ? props.loadingCount : 3 },
                         (i) => (
-                            <Avatar key={`loading-avatar-${i}`} {...avatarProps} size={props.size}>
+                            <Avatar key={`loading-avatar-${i}`} {...avatarProps}>
                                 diff
                             </Avatar>
                         )
@@ -52,11 +43,7 @@ export default function Avatars(props: AvatarsProps) {
             {props.children?.map((avatar) =>
                 React.cloneElement<PropsOf<typeof Avatar>>(avatar, { ...avatar.props, ...avatarProps })
             )}
-            {!!diff && (
-                <Avatar {...avatarProps} size={props.size}>
-                    diff
-                </Avatar>
-            )}
+            {!!diff && <Avatar {...avatarProps}>diff</Avatar>}
         </div>
     );
 }

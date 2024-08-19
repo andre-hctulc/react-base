@@ -11,8 +11,6 @@ export function findChildren<P>(
     }
 }
 
-// * React
-
 /**
  * @param children
  * @param mapper New children are replaced and props are added. Use `overwriteProps` to replace previous props.
@@ -77,12 +75,12 @@ export function flattenChildren(children: React.ReactNode, flattenElements?: any
 
 /** Sets the value of one or more references */
 export function setRef<T = any>(
-    value: T,
-    ...refs: (React.ForwardedRef<T> | React.LegacyRef<T> | undefined | null)[]
+    refValue: T,
+    ...targetRefs: (React.ForwardedRef<T> | React.LegacyRef<T> | undefined | null)[]
 ) {
-    for (const ref of refs) {
-        if (typeof ref === "function") ref(value);
-        else if (ref && typeof ref === "object") (ref.current as any) = value;
+    for (const ref of targetRefs) {
+        if (typeof ref === "function") ref(refValue);
+        else if (ref && typeof ref === "object") (ref.current as any) = refValue;
     }
 }
 

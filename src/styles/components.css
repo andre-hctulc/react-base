@@ -10,51 +10,39 @@
 @layer components {
     /* Skeleton */
 
-    .Skeleton > * {
+    .RBSkeleton > * {
         visibility: hidden;
         user-select: none;
     }
 
     /* SectionCard */
 
-    .SectionCard + .SectionCard {
+    .RBSectionCard + .RBSectionCard {
         @apply mt-4 lg:mt-7;
     }
 
     /* Spinner */
 
-    .Spinner path {
+    .RBSpinner path {
         transform-origin: center;
         animation: rotate 0.75s infinite linear;
     }
 
-    /* Markdown */
-
-    .Markdown ul {
-        list-style-type: disc;
-        @apply pl-5;
-    }
-
-    .Markdown ol {
-        list-style-type: decimal;
-        @apply pl-5;
-    }
-
     /* ToggleButtonGroup */
 
-    .ToggleButtonGroup .ToggleButton {
+    .RBToggleButtonGroup .RBToggleButton {
         border-radius: 0;
         border: 0;
     }
 
-    .ToggleButtonGroup .ToggleButton:not(:first-child) {
+    .RBToggleButtonGroup .RBToggleButton:not(:first-child) {
         border-left: 1px solid;
         @apply border-divider;
     }
 
     /* Alert */
 
-    .Alert code {
+    .RBAlert code {
         @apply bg-bg-paper rounded py-1 px-0.5 border;
         font-size: 12px;
         border-width: 1.5px;
@@ -62,7 +50,7 @@
 
     /* Live */
 
-    .Live & :before {
+    .RBLive & :before {
         content: "";
         position: relative;
         display: block;
@@ -76,7 +64,7 @@
         animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
     }
 
-    .Live & :after {
+    .RBLive & :after {
         content: "";
         position: absolute;
         left: 0;
@@ -92,14 +80,14 @@
 
     /* Tab */
 
-    .Tab_chip:hover,
-    .Tab_chip.hover svg {
+    .RBTab_chip:hover,
+    .RBTab_chip.hover svg {
         @apply text-info;
     }
 
     /* Avatar/Avatars */
 
-    .Avatars > * {
+    .RBAvatars > * {
         @apply border border-bg;
     }
 }

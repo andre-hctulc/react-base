@@ -1,10 +1,9 @@
 import clsx from "clsx";
 import Overlay from "../layout/Overlay";
-import { Transition } from "react-transition-group";
 import XIcon from "../icons/collection/X";
 import IconButton from "../buttons/IconButton";
 import Flex from "../layout/Flex";
-import { StyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 
 interface DrawerProps extends StyleProps {
     open: boolean;
@@ -33,7 +32,7 @@ export default function Drawer(props: DrawerProps) {
             className={props.className}
             disablePointerEvents={!props.open}
         >
-            <Transition timeout={300} unmountOnExit transitionName="T-Drawer" in={props.open}>
+            {props.open && (
                 <Flex
                     tag="aside"
                     style={{ width, maxWidth: width, pointerEvents: "auto" }}
@@ -48,7 +47,7 @@ export default function Drawer(props: DrawerProps) {
                     {/* Children nur rendern, wenn drawer auch offen */}
                     {props.open && props.children}
                 </Flex>
-            </Transition>
+            )}
         </Overlay>
     );
 }

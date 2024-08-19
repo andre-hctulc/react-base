@@ -1,17 +1,20 @@
-import React from "react";
-import type { XSize, ThemeColor, StyleProps } from "../../types";
-import { styleProps } from "../../util";
+import React, { Children } from "react";
+import type { StyleProps } from "../../types";
+import clsx from "clsx";
 
 interface StyledProps extends StyleProps {
-    size?: XSize | number;
+    size?: number;
     children: React.ReactElement;
-    color?: ThemeColor | "text_secondary" | "disabled";
+    color?: "text_secondary" | "disabled";
     onClick?: React.MouseEventHandler;
     disabled?: boolean;
 }
 
 const Styled = React.forwardRef<SVGElement, StyledProps>((props, ref) => {
-    const { style, className } = styleProps(props.children.props, props);
+    const { style, className } = {
+        style: { ...props.children.props.style, ...props.style },
+        className: clsx(props.children.props.className, props.className),
+    };
     const newProps: StyledProps = { ...props.children.props };
     if (props.size !== undefined) newProps.size = props.size;
     if (props.className) newProps.className = className;

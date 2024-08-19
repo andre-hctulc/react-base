@@ -6,7 +6,7 @@ import Card from "./Card";
 import Overlay from "./Overlay";
 import React from "react";
 import { collapse, setRef } from "../../util";
-import { PropsOf } from "../../types";
+import type { PropsOf } from "../../types";
 
 // TODO bundle functions calc...
 // BUG abstand zum rand wird teilwise falsch bestimmt, durch buffer vorzeichen fehler
@@ -204,13 +204,11 @@ export interface PopoverProps {
     disablePointerEvents?: boolean;
     /** @default { horizontal: "start", vertical: "bottom" } */
     position?: Partial<PopoverPosition>;
-    // * Width
+    // --- Width
     matchAnchorWidth?: boolean;
     matchAnchorMinWidth?: boolean;
-    // * Card
+    // --- Card
     noCardPadding?: boolean;
-    /** @default "md" */
-    cardShadow?: PropsOf<typeof Card>["shadow"];
     // width
     width?: number;
     minWidth?: number;
@@ -226,7 +224,7 @@ export interface PopoverProps {
     /** @default "paper" */
     cardBg?: "transparent" | "paper" | "default";
     cardRef?: React.ForwardedRef<Element>;
-    // * Popover
+    // --- Popover
     /** @default true */
     invisible?: boolean;
     /**
@@ -334,7 +332,6 @@ const Popover = React.forwardRef<HTMLDivElement, PopoverProps>((props, ref) => {
         >
             <Card
                 border={!props.noCardBorder}
-                shadow={props.cardShadow || "medium"}
                 {...props.slotProps?.card}
                 onClick={(e) => {
                     e.stopPropagation();

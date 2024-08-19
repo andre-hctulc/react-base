@@ -1,5 +1,5 @@
 import React from "react";
-import type { ParentProps, PartialPropsOf, StyleProps } from "../../types";
+import type { ChildrenProps, PartialPropsOf, StyleProps } from "../../types";
 import TreeViewItem from "./TreeViewItem";
 import List from "../layout/List";
 
@@ -8,7 +8,7 @@ export type TreeViewStruct = Record<
     { props?: PartialPropsOf<typeof TreeViewItem>; children?: TreeViewStruct }
 >;
 
-interface TreeViewProps extends StyleProps, ParentProps {
+interface TreeViewProps extends StyleProps, ChildrenProps {
     from?: TreeViewStruct;
     depth?: number;
 }
@@ -25,7 +25,6 @@ export default function TreeView(props: TreeViewProps) {
                             key={key}
                             {...value.props}
                             text={value.props?.text || key}
-                            from={value.children}
                         />
                     );
                 })}

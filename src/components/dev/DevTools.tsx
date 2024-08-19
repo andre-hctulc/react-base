@@ -2,12 +2,12 @@
 
 import React from "react";
 import IconButton from "../buttons/IconButton";
-import XIcon from "../icons/collection/X";
 import ExpandIcon from "../icons/collection/Expand";
 import Toolbar from "../feedback/Toolbar";
 import Tab from "../navigation/Tab";
 import Tabs from "../navigation/Tabs";
 import { useDev } from "../../providers/DevProvider";
+import XIcon from "../icons/collection/X";
 
 type Position = "top_left" | "top_right" | "bottom_left" | "bottom_right";
 

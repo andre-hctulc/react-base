@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleProps } from "../../types";
-import { styleProps } from "../../util";
+import type { StyleProps } from "../../types";
+import clsx from "clsx";
 
 interface DraggableProps extends StyleProps {
     children?: React.ReactNode;
@@ -24,7 +24,8 @@ const Draggable = React.forwardRef<HTMLDivElement, DraggableProps>((props, ref) 
             draggable={!props.disabled}
             onDragEnd={handleDragEnd}
             onDragStart={handleDragStart}
-            {...styleProps({ className: "inline-block" }, props)}
+            className={clsx("inline-block", props.className)}
+            style={props.style}
         >
             {props.children}
         </div>

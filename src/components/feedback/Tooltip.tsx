@@ -97,7 +97,6 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>((props, ref) => {
                 position={props.position || { vertical: "top", horizontal: "center" }}
                 cardBg="transparent"
                 noCardBorder
-                cardShadow="small"
                 noCardPadding
                 disablePointerEvents
                 open={open && !props.disabled}

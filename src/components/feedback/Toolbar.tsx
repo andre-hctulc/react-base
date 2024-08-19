@@ -1,8 +1,9 @@
 import React from "react";
-import { alignClass, collapse, collapseWeak, styleProps } from "../../util";
-import type { ParentProps, Size, StyleProps } from "../../types";
+import { alignClass, collapse, collapseWeak } from "../../util";
+import type { ChildrenProps, StyleProps } from "../../types";
+import clsx from "clsx";
 
-interface ToolbarProps extends StyleProps, ParentProps {
+interface ToolbarProps extends StyleProps, ChildrenProps {
     id?: string;
     tag?: string;
     /** @default "medium" */
@@ -10,7 +11,6 @@ interface ToolbarProps extends StyleProps, ParentProps {
     justify?: "start" | "end" | "center";
     grow?: boolean;
     /** @default "small" */
-    padding?: "none" | Size;
     borderTop?: boolean;
     borderBottom?: boolean;
     /** @default "horizontal"  */
@@ -20,12 +20,6 @@ interface ToolbarProps extends StyleProps, ParentProps {
 }
 
 const Toolbar = React.forwardRef<HTMLElement, ToolbarProps>((props, ref) => {
-    const paddingClasses = collapse(props.padding || "small", {
-        none: "",
-        small: "p-1",
-        medium: "p-2",
-        large: "p-3",
-    });
     const variant = props.variant || "horizontal";
     const variantClasses = collapse(variant, {
         horizontal: "flex flex-row overflow-x-auto",
@@ -46,21 +40,17 @@ const Toolbar = React.forwardRef<HTMLElement, ToolbarProps>((props, ref) => {
         <Comp
             id={props.id}
             ref={ref}
-            {...styleProps(
-                {
-                    className: [
-                        "scrollbar-hidden pointer-events-auto flex-shrink-0",
-                        align,
-                        variantClasses,
-                        spacingClass,
-                        paddingClasses,
-                        justifyClass,
-                        props.borderTop && "border-t",
-                        props.borderBottom && "border-b",
-                        props.grow && "flex-grow",
-                    ],
-                },
-                props
+            style={props.style}
+            className={clsx(
+                "scrollbar-hidden pointer-events-auto flex-shrink-0",
+                align,
+                variantClasses,
+                spacingClass,
+                justifyClass,
+                props.borderTop && "border-t",
+                props.borderBottom && "border-b",
+                props.grow && "flex-grow",
+                props.className
             )}
         >
             {props.children}

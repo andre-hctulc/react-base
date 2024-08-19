@@ -2,9 +2,9 @@
 
 import React from "react";
 import IconButton from "./IconButton";
-import { Size, StyleProps } from "../../types";
 import Styled from "../shadow/Styled";
-import { styleProps } from "../../util";
+import type { StyleProps } from "../../types";
+import clsx from "clsx";
 
 interface ToggleIconButtonProps extends StyleProps {
     children: React.ReactElement;
@@ -14,7 +14,6 @@ interface ToggleIconButtonProps extends StyleProps {
     /** controlled */
     active?: boolean;
     value?: string;
-    size?: Size;
     variant?: "contained" | "outlined";
 }
 
@@ -28,8 +27,7 @@ const ToggleIconButton = React.forwardRef<HTMLButtonElement, ToggleIconButtonPro
 
     return (
         <IconButton
-            {...styleProps(props)}
-            size={props.size}
+            className={clsx(props.className)}
             ref={ref}
             variant={props.variant ?? "contained"}
             onClick={(e) => {
@@ -38,9 +36,7 @@ const ToggleIconButton = React.forwardRef<HTMLButtonElement, ToggleIconButtonPro
             }}
             disabled={props.disabled}
         >
-            <Styled color={active ? "info" : "accent"}>
-                {active ? props.activeIcon || props.children : props.children}
-            </Styled>
+            <Styled>{active ? props.activeIcon || props.children : props.children}</Styled>
         </IconButton>
     );
 });

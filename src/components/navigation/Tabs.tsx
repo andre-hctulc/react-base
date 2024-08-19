@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import clsx from "clsx";
 import type { PropsOf, StyleProps } from "../../types";
-import { mapChildren, styleProps } from "../../util";
+import { mapChildren } from "../../util";
 import Tab from "./Tab";
 import useMutableSearchParams from "../../hooks/document/useMutableSearchParams";
 import Toolbar from "../feedback/Toolbar";
@@ -70,7 +69,6 @@ export default function Tabs(props: TabsProps) {
             tag="nav"
             className={["items-end flex-shrink-0", props.className]}
             style={props.style}
-            padding="none"
         >
             {children}
         </Toolbar>

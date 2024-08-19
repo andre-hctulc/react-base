@@ -1,7 +1,8 @@
 import React from "react";
-import { collapse, styleProps } from "../../util";
+import { collapse } from "../../util";
 import { randomNumber } from "../../util/system";
-import { StyleProps } from "../../types";
+import type { StyleProps } from "../../types";
+import clsx from "clsx";
 
 interface SkeletonProps extends StyleProps {
     /** @default "rounded" */
@@ -75,27 +76,22 @@ const Skeleton = React.forwardRef<HTMLElement, SkeletonProps>((props, ref) => {
         <Comp
             ref={ref}
             onClick={props.onClick}
-            {...styleProps(
-                {
-                    className: [
-                        [
-                            "Skeleton",
-                            props.pulse !== false && "animate-pulse",
-                            props.dark ? "bg-bg-dark/60" : "bg-bg-paper",
-                            variantClasses,
-                        ],
-                    ],
-                    style: {
-                        height,
-                        width,
-                        minHeight: props.minHeight,
-                        minWidth: props.minWidth,
-                        maxHeight: props.maxHeight,
-                        maxWidth: props.maxWidth,
-                    },
-                },
-                props
-            )}
+            className={clsx([
+                "Skeleton",
+                props.pulse !== false && "animate-pulse",
+                props.dark ? "bg-bg-dark/60" : "bg-bg-paper",
+                variantClasses,
+                props.className,
+            ])}
+            style={{
+                height,
+                width,
+                minHeight: props.minHeight,
+                minWidth: props.minWidth,
+                maxHeight: props.maxHeight,
+                maxWidth: props.maxWidth,
+                ...props.style,
+            }}
         >
             {props.children}
         </Comp>

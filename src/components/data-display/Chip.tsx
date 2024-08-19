@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
-import type { ThemeColor, Size, Align, StyleProps } from "../../types";
-import { alignSelfClass, collapse, styleProps, themeColor } from "../../util";
+import type { Align, StyleProps } from "../../types";
+import { alignSelfClass, collapse } from "../../util";
 import XCircleOutlineIcon from "../icons/collection/XCircleOutline";
 import Styled from "../shadow/Styled";
 
@@ -10,21 +10,18 @@ interface ChipProps extends StyleProps {
     deletable?: boolean;
     endIcon?: React.ReactElement;
     startIcon?: React.ReactElement;
-    color?: ThemeColor<true>;
     onDelete?: React.MouseEventHandler<SVGSVGElement>;
     onClick?: React.MouseEventHandler<HTMLSpanElement>;
     /** @default "contained" */
     variant?: "outlined" | "contained" | "pale";
     alignSelf?: Align;
-    /** @default "medium" */
-    size?: Size;
     hoverEffect?: boolean;
 }
 
 const Chip = React.forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
     const variant = props.variant || "contained";
-    const size = props.size || "medium";
-    const tc = themeColor(props.color || "accent");
+    const size = "medium";
+    const tc: any = {};
     const hoverEffect = props.hoverEffect ?? !!props.onClick;
     const [variantClasses, iconClasses] = collapse(
         variant,
@@ -55,38 +52,23 @@ const Chip = React.forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
         },
         [[], []]
     );
-    const [sizeClasses, iconSize] = collapse(
-        size,
-        {
-            small: [" px-2.5 text-[11px] py-0.5", 12],
-            medium: ["py-[4px] px-3.5 text-[13px]", 13],
-            large: ["py-1.5 px-3 text-sm", 15],
-        },
-        []
-    );
 
     return (
         <span
             ref={ref}
-            {...styleProps(
-                {
-                    className: [
-                        "inline-flex flex-row justify-center items-center rounded-[20px] whitespace-nowrap min-w-0 flex-shrink-0 transition-l duration-100",
-                        sizeClasses,
-                        alignSelfClass(props.alignSelf || "none"),
-                        hoverEffect && "cursor-pointer",
-                        variantClasses,
-                    ],
-                },
-                props
+            className={clsx(
+                [
+                    "inline-flex flex-row justify-center items-center rounded-[20px] whitespace-nowrap min-w-0 flex-shrink-0 transition-l duration-100",
+                    alignSelfClass(props.alignSelf || "none"),
+                    hoverEffect && "cursor-pointer",
+                    variantClasses,
+                ],
+                props.className
             )}
+            style={props.style}
             onClick={props.onClick}
         >
-            {props.startIcon && (
-                <Styled size={iconSize} className={clsx(iconClasses, "mr-1.5")}>
-                    {props.startIcon}
-                </Styled>
-            )}
+            {props.startIcon && <Styled className={clsx(iconClasses, "mr-1.5")}>{props.startIcon}</Styled>}
             {props.children}
             {props.deletable && (
                 <XCircleOutlineIcon
@@ -97,11 +79,7 @@ const Chip = React.forwardRef<HTMLSpanElement, ChipProps>((props, ref) => {
                     onClick={props.onDelete as any}
                 />
             )}
-            {props.endIcon && (
-                <Styled size={iconSize} className={clsx(iconClasses, "ml-1.5")}>
-                    {props.endIcon}
-                </Styled>
-            )}
+            {props.endIcon && <Styled className={clsx(iconClasses, "ml-1.5")}>{props.endIcon}</Styled>}
         </span>
     );
 });

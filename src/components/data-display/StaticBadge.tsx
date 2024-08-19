@@ -1,16 +1,15 @@
 import React from "react";
-import type { StyleProps, ThemeColor } from "../../types";
-import { collapse, styleProps, themeColor } from "../../util";
+import type { StyleProps } from "../../types";
+import { collapse } from "../../util";
+import clsx from "clsx";
 
 interface StaticBadgeProps extends StyleProps {
-    color?: ThemeColor;
     children?: React.ReactNode;
     max?: number;
     variant?: "text" | "icon" | "small";
 }
 
 const StaticBadge = React.forwardRef<HTMLSpanElement, StaticBadgeProps>((props, ref) => {
-    const { bg, contrastText } = themeColor(props.color || "primary");
     const content = (() => {
         if (props.max && typeof props.children === "number" && props.children > props.max)
             return props.max + "+";
@@ -26,18 +25,12 @@ const StaticBadge = React.forwardRef<HTMLSpanElement, StaticBadgeProps>((props, 
     return (
         <span
             ref={ref}
-            {...styleProps(
-                {
-                    className: [
-                        "inline-flex align-middle justify-center font-medium text-13",
-                        props.children === undefined && "p-[2px]",
-                        contrastText,
-                        bg,
-                        variantClasses,
-                    ],
-                },
-                props
-            )}
+            style={props.style}
+            className={clsx([
+                "inline-flex align-middle justify-center font-medium text-13",
+                props.children === undefined && "p-[2px]",
+                variantClasses,
+            ])}
         >
             {content}
         </span>
