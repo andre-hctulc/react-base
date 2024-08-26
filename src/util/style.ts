@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import type { Falsy } from "react-native";
 import { collapse } from "./helpers";
-import type { StyleProps, Align } from "../types";
+import type { StyleProps, Align, Size } from "../types";
 
 /** Some colors 🌈 */
 export const colors = [
@@ -81,6 +81,17 @@ export function rgbStrToHex(rgb: string) {
 
 // --- CSS Styles
 
+export function sizeClass(size: Size) {
+    return collapse(size, {
+        xxs: "RB§xxs",
+        xs: "RB§xs",
+        s: "RB§s",
+        m: "RB§m",
+        l: "RB§l",
+        xl: "RB§xl",
+        xxl: "RB§xxl",
+    });
+}
 
 export function alignClass(align: Align) {
     return collapse(align || "center", {

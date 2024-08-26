@@ -5,6 +5,8 @@ export type Falsy = null | undefined | "" | 0 | false;
 
 export type Align = "start" | "end" | "center" | "none";
 
+export type Size = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
+
 // --- Props
 
 export type PropsOf<T extends keyof React.JSX.IntrinsicElements | React.JSXElementConstructor<any>> =
