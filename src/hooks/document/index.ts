@@ -1,10 +1,4 @@
 export { default as useBlobUrl } from "./useBlobUrl";
 export { default as useSvgUrl } from "./useSvgUrl";
-export { default as useCurrentPathname } from "./useCurrentPathname";
-export { default as useCurrentSearchParams } from "./useCurrentSearchParams";
-export { default as useElement } from "./useElement";
-export { default as useInterval } from "./useInterval";
 export { default as useKeyDownObserver } from "./useKeyDownObserver";
-export { default as useMutableSearchParams } from "./useMutableSearchParams";
-export { default as useMutationObserver } from "./useMutationObserver";
 export { default as useTimeout } from "./useTimeout";

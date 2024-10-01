@@ -7,7 +7,7 @@ interface DevContext {
     /** @default process.env.NODE_ENV === "development" */
     devMode: boolean;
     observe: Record<string, any>;
-    /** Only works for contexts initilized by `DevProvider`  */
+    /** Only works for contexts initialized by `DevProvider`  */
     setObservable: (key: string, value: any) => void;
 }
 

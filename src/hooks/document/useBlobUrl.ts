@@ -1,9 +1,7 @@
 import React from "react";
-import useId from "../others/useId";
 
 export default function useBlobUrl(file: Blob | null | undefined) {
     const [blobUrl, setBlobUrl] = React.useState<string | undefined>();
-    const id = useId();
 
     React.useEffect(() => {
         if (!file) return setBlobUrl(undefined);
@@ -17,8 +15,8 @@ export default function useBlobUrl(file: Blob | null | undefined) {
     }, [file]);
 
     /**
-     * Startet Download
-     * @param fileName Name des Downloads. Standardmäßig zufällige Id
+     * Starts a  download
+     * @param fileName
      */
     function download(fileName?: string) {
         if (!blobUrl) return;
@@ -26,7 +24,7 @@ export default function useBlobUrl(file: Blob | null | undefined) {
         const a = document.createElement("a");
 
         a.href = blobUrl;
-        a.download = typeof fileName === "string" ? fileName : id;
+        a.download = typeof fileName === "string" ? fileName : "unnamed";
 
         a.click();
         // Clean up: remove the anchor

@@ -6,7 +6,7 @@ import type { ChildrenProps } from "../../types";
 interface DelayedProps extends ChildrenProps {
     delay: number;
     in?: boolean;
-    rederDelay?: React.ReactNode;
+    renderDelay?: React.ReactNode;
 }
 
 export default function Delayed(props: DelayedProps) {
@@ -29,6 +29,6 @@ export default function Delayed(props: DelayedProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.in]);
 
-    if (delayed) return props.rederDelay ?? null;
+    if (delayed) return props.renderDelay ?? null;
     else return props.children;
 }

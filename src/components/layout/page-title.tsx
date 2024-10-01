@@ -1,4 +1,3 @@
-import { Divider } from "@nextui-org/react";
 import type React from "react";
 
 interface PageTitleProps {
@@ -15,7 +14,7 @@ export const PageTitle: React.FC<PageTitleProps> = ({ title, actions, badges }) 
                 {badges && <div className="flex gap-3">{badges}</div>}
                 {actions && <div className="flex items-center gap-3 ml-auto">{actions}</div>}
             </div>
-            <Divider className="my-5" />
+            <hr className="my-5" />
         </div>
     );
 };

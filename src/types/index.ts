@@ -5,7 +5,9 @@ export type Falsy = null | undefined | "" | 0 | false;
 
 export type Align = "start" | "end" | "center" | "none";
 
-export type Size = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
+export type Size = "s" | "m" | "l";
+export type XSize = "xs" | "s" | "m" | "l" | "xl";
+export type XXSize = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 
 // --- Props
 
@@ -19,18 +21,6 @@ export interface StyleProps {
     style?: React.CSSProperties;
     className?: clsx.ClassValue;
 }
-
-export type EventProps = {
-    [K in Extract<
-        keyof React.DOMAttributes<HTMLElement>,
-        `on${Capitalize<string>}`
-    >]?: React.DOMAttributes<HTMLElement>[K];
-};
-
-export type SlotProps<C extends Record<string, any>> = {
-    slotProps?: { [K in keyof C]?: Partial<PropsOf<C[K]>> };
-    slots?: { [K in keyof C]?: React.ReactNode };
-};
 
 export interface ChildrenProps {
     children?: React.ReactNode;
