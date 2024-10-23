@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function useBlobUrl(file: Blob | null | undefined) {
+export function useBlobUrl(file: Blob | null | undefined) {
     const [blobUrl, setBlobUrl] = React.useState<string | undefined>();
 
     React.useEffect(() => {

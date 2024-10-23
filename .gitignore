@@ -5,3 +5,4 @@
 demo/src/_modules/**/*.def*.{ts,tsx,css}
 Todo.md
 Dev.md
+*storybook.log

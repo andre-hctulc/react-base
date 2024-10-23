@@ -1,1 +1,1 @@
-export { default as usePromise } from "./usePromise";
+export { default as usePromise } from "./use-promise";

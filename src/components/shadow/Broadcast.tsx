@@ -13,7 +13,7 @@ type BroadcastProps<T = any> = {
 /**
  * Broadcast props to children
  */
-export default function Broadcast<T = any>(props: BroadcastProps<T>) {
+export function Broadcast<T = any>(props: BroadcastProps<T>) {
     const children = React.Children.map(props.children, (child) => {
         if (React.isValidElement(child)) {
             if (props.filter && !props.filter(child as any)) return child;

@@ -1,4 +1,4 @@
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 
 const toolbar = tv({
     base: "flex",
@@ -26,7 +26,7 @@ const toolbar = tv({
 
 interface ToolbarProps extends VariantProps<typeof toolbar> {
     children?: React.ReactNode;
-    className?: string;
+    className?: ClassValue;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({ children, direction, size, padding, className }) => {

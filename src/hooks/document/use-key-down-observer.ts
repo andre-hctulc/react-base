@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function useKeyDownObserver(observe?: Iterable<string>) {
+export function useKeyDownObserver(observe?: Iterable<string>) {
     const [keysPressed, setKeysPressed] = React.useState<Set<string>>(new Set());
 
     React.useEffect(() => {

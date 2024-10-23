@@ -16,7 +16,8 @@
     "include": [
         "src/**/*.ts",
         "src/**/*.tsx",
-        "../../../../../packages/progress-controller/src/controller.ts"
-, "../../components/layout/page-header-tabs.tsx"    ],
+        "../../../../../packages/progress-controller/src/controller.ts",
+        "../../components/view/page-header-tabs.tsx"
+    ],
     "exclude": ["demo"]
 }

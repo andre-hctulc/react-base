@@ -1,7 +1,17 @@
 import React from "react";
 
-export default function useArray<T = any>(defaultValue?: T[] | (() => T[])) {
-    const [array, setArray] = React.useState<T[]>(defaultValue || []);
+export function useArray<T = any>(source?: T[] | (() => T[]), resetOnSourceChange = false) {
+    const [array, setArray] = React.useState<T[]>(source || []);
+    const resetActive = React.useRef(false);
+
+    React.useEffect(() => {
+        if (!resetActive.current) {
+            resetActive.current = true;
+            return;
+        }
+
+        if (resetOnSourceChange) setArray(source || []);
+    }, [source]);
 
     const push = React.useCallback((item: T, noDuplicates?: boolean) => {
         setArray((arr) => {

@@ -21,14 +21,14 @@ export default function usePromise<T = any, E = Error>() {
         setIsPending(true);
 
         currentPromise
-            .then(data => {
+            .then((data) => {
                 if (interrupted) return;
                 setIsPending(false);
                 setData(data);
                 setResolved(true);
                 setError(null);
             })
-            .catch(err => {
+            .catch((err) => {
                 if (interrupted) return;
                 setIsPending(false);
                 setData(undefined);

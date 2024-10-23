@@ -9,7 +9,7 @@ interface DelayedProps extends ChildrenProps {
     renderDelay?: React.ReactNode;
 }
 
-export default function Delayed(props: DelayedProps) {
+export function Delayed(props: DelayedProps) {
     const [delayed, setDelayed] = React.useState(!!props.delay);
 
     React.useEffect(() => {

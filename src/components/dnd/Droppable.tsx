@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useDND } from "../../providers/DNDProvider";
 import type { StyleProps } from "../../types";
 import clsx from "clsx";
 
@@ -15,8 +14,7 @@ interface DroppableProps extends StyleProps {
 }
 
 const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props, ref) => {
-    const dnd = useDND();
-    const disabled = dnd?.disabled || props.disabled;
+    const disabled = props.disabled;
 
     function handleDrop(e: React.DragEvent<HTMLDivElement>) {
         if (disabled) return;
