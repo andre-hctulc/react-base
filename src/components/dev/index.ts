@@ -1,1 +1,2 @@
-export { default as Dev } from "./Dev";
+export * from "./dev";
+export * from "./dev-provider";

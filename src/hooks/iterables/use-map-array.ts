@@ -9,7 +9,7 @@ import React from "react";
  */
 export function useMapArray<T, S>(
     arr: T[],
-    mapper: (item: T, index: number) => S,
+    mapper: (item: T, index: number, arr: T[]) => S,
     deps?: React.DependencyList,
     reactiveMapper = false
 ): S[] {

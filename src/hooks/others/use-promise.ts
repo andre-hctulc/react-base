@@ -1,6 +1,14 @@
 import React from "react";
 
-export default function usePromise<T = any, E = Error>() {
+interface PromiseListeners {
+    onError?: (error: any) => void;
+    onSuccess?: (result: any) => void;
+}
+
+/**
+ * A hook to handle promises.
+ */
+export function usePromise<T = any, E = Error>(listeners?: PromiseListeners) {
     const [data, setData] = React.useState<T>();
     const [isPending, setIsPending] = React.useState(false);
     const [resolved, setResolved] = React.useState(false);
@@ -27,6 +35,9 @@ export default function usePromise<T = any, E = Error>() {
                 setData(data);
                 setResolved(true);
                 setError(null);
+                if (listeners?.onSuccess) {
+                    listeners.onSuccess(data);
+                }
             })
             .catch((err) => {
                 if (interrupted) return;
@@ -34,6 +45,9 @@ export default function usePromise<T = any, E = Error>() {
                 setData(undefined);
                 setResolved(true);
                 setError(err);
+                if (listeners?.onError && error) {
+                    listeners.onError(error);
+                }
             });
 
         return () => {
@@ -41,5 +55,5 @@ export default function usePromise<T = any, E = Error>() {
         };
     }, [currentPromise]);
 
-    return { data, isPending, resolved, error, promise };
+    return { data, isPending, resolved, error, promise, isError: error !== null };
 }

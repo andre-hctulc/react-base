@@ -1,8 +1,3 @@
 # react-base
 
-Based on tailwind-variants.
-
-## Features
-
--   Components
--   Hooks
+[headlessui](https://headlessui.com) X [tailwind-variants](https://www.tailwind-variants.org)

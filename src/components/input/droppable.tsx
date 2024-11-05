@@ -3,6 +3,7 @@
 import React from "react";
 import type { StyleProps } from "../../types";
 import clsx from "clsx";
+import { withPrefix } from "../../util/system";
 
 interface DroppableProps extends StyleProps {
     children?: React.ReactNode;
@@ -13,7 +14,7 @@ interface DroppableProps extends StyleProps {
     disabled?: boolean;
 }
 
-const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props, ref) => {
+export const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props, ref) => {
     const disabled = props.disabled;
 
     function handleDrop(e: React.DragEvent<HTMLDivElement>) {
@@ -53,6 +54,4 @@ const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props, ref) 
     );
 });
 
-Droppable.displayName = "Droppable";
-
-export default Droppable;
+Droppable.displayName = withPrefix("Droppable");

@@ -20,13 +20,28 @@ interface RootProps extends VariantProps<typeof root> {
     children?: React.ReactNode;
     className?: ClassValue;
     scroll?: boolean;
+    fullHeight?: boolean;
+    hScreen?: boolean;
 }
 
-export const Root: React.FC<RootProps> = ({ children, className, direction, scroll }) => {
+export const Root: React.FC<RootProps> = ({
+    children,
+    className,
+    direction,
+    scroll,
+    fullHeight: hFull,
+    hScreen,
+    ...props
+}) => {
     return (
         <div
             className={root({
-                className: [scroll && "overflow-y-auto", className],
+                className: [
+                    scroll && "overflow-y-auto overflow-x-hidden",
+                    hScreen && "h-screen",
+                    hFull && "h-full",
+                    className,
+                ],
                 direction,
             })}
         >

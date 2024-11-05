@@ -1,6 +1,7 @@
 import React from "react";
 import type { StyleProps } from "../../types";
 import clsx from "clsx";
+import { withPrefix } from "../../util/system";
 
 interface DraggableProps extends StyleProps {
     children?: React.ReactNode;
@@ -9,7 +10,7 @@ interface DraggableProps extends StyleProps {
     onDragEnd?: React.DragEventHandler<HTMLDivElement>;
 }
 
-const Draggable = React.forwardRef<HTMLDivElement, DraggableProps>((props, ref) => {
+export const Draggable = React.forwardRef<HTMLDivElement, DraggableProps>((props, ref) => {
     function handleDragStart(e: React.DragEvent<HTMLDivElement>) {
         props.onDragStart?.(e);
     }
@@ -32,6 +33,4 @@ const Draggable = React.forwardRef<HTMLDivElement, DraggableProps>((props, ref) 
     );
 });
 
-Draggable.displayName = "Draggable";
-
-export default Draggable;
+Draggable.displayName = withPrefix("Draggable");

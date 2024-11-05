@@ -1,4 +1,5 @@
-import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import type { TVCProps } from "../../types";
 
 const toolbar = tv({
     base: "flex",
@@ -7,7 +8,7 @@ const toolbar = tv({
             row: "flex-row",
             column: "flex-col",
         },
-        size: {
+        gap: {
             sm: "gap-2",
             md: "gap-3",
             lg: "gap-5",
@@ -18,17 +19,68 @@ const toolbar = tv({
             md: "p-3",
             lg: "p-4",
         },
+        justify: {
+            start: "justify-start",
+            end: "justify-end",
+            center: "justify-center",
+            between: "justify-between",
+            around: "justify-around",
+            evenly: "justify-evenly",
+        },
+        align: {
+            start: "items-start",
+            end: "items-end",
+            center: "items-center",
+            baseline: "items-baseline",
+            stretch: "items-stretch",
+        },
     },
     defaultVariants: {
-        size: "md",
+        gap: "md",
+        align: "center",
+        direction: "row",
     },
 });
 
-interface ToolbarProps extends VariantProps<typeof toolbar> {
+interface ToolbarProps extends TVCProps<typeof toolbar, "div"> {
     children?: React.ReactNode;
-    className?: ClassValue;
+    grow?: boolean;
+    stopEventPropagation?: boolean;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({ children, direction, size, padding, className }) => {
-    return <div className={toolbar({ direction, padding, className, size })}>{children}</div>;
+export const Toolbar: React.FC<ToolbarProps> = ({
+    children,
+    direction,
+    gap,
+    padding,
+    className,
+    justify,
+    align,
+    grow,
+    stopEventPropagation,
+    ...props
+}) => {
+    return (
+        <div
+            className={toolbar({
+                direction,
+                padding,
+                className: [grow && "flex-grow", className],
+                gap,
+                align,
+                justify,
+            })}
+            onClick={
+                stopEventPropagation
+                    ? (e) => {
+                          e.stopPropagation();
+                          props.onClick?.(e);
+                      }
+                    : undefined
+            }
+            {...props}
+        >
+            {children}
+        </div>
+    );
 };

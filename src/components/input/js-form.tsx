@@ -1,12 +1,12 @@
 "use client";
 
-interface JSFormProps {
+interface JSFormProps<T extends object = any> {
     id?: string;
     children?: React.ReactNode;
-    onSubmit?: (data: FormData, objData: any) => void;
-    onChange?: (data: FormData, objData: any) => void;
-    onInvalid?: (data: FormData, objData: any, reason: { source: "form" | "validate" }) => void;
-    validate?: (data: FormData, objData: any) => boolean;
+    onSubmit?: (formData: FormData, values: T) => void;
+    onChange?: (formData: FormData, values: T) => void;
+    onInvalid?: (formData: FormData, values: T, reason: { source: "form" | "validate" }) => void;
+    validate?: (formData: FormData, values: T) => boolean;
     className?: string;
     action?: any;
     target?: string;

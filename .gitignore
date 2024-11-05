@@ -1,8 +1,7 @@
-**/.vscode
-**/.DS_Store
-**/*.code-worksapce
-**/node_modules
-demo/src/_modules/**/*.def*.{ts,tsx,css}
+.vscode
+.DS_Store
+*.code-worksapce
+node_modules
 Todo.md
 Dev.md
 *storybook.log

@@ -12,10 +12,9 @@ const page = tv({
             md: "max-w-6xl mx-auto",
             lg: "max-w-7xl mx-auto",
             full_width: "w-full",
-            grow: "flex-grow",
         },
         flex: {
-            row: "flex flex-row",
+            row: "flex",
             col: "flex flex-col",
         },
     },
@@ -28,17 +27,27 @@ interface PageProps extends VariantProps<typeof page> {
     children?: React.ReactNode;
     className?: ClassValue;
     grow?: boolean;
-    maxHFull?: boolean;
-    minH0?: boolean;
+    maxHeightFull?: boolean;
+    minHeight0?: boolean;
+    fullHeight?: boolean;
 }
 
 export const Page = React.forwardRef<HTMLDivElement, PageProps>(
-    ({ children, className, grow, size, maxHFull, minH0 }, ref) => {
+    (
+        { children, className, grow, size, maxHeightFull: maxHFull, minHeight0: minH0, fullHeight: hFull },
+        ref
+    ) => {
         return (
             <div
                 className={page({
                     size,
-                    className: [className, minH0 && "min-h-0", maxHFull && "max-h-full", grow && "flex-grow"],
+                    className: [
+                        className,
+                        minH0 && "min-h-0",
+                        maxHFull && "max-h-full",
+                        hFull && "h-full",
+                        grow && "flex-grow",
+                    ],
                 })}
                 ref={ref}
             >

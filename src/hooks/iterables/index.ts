@@ -6,3 +6,4 @@ export * from "./use-as-array";
 export * from "./use-array";
 export * from "./use-map-array";
 export * from "./use-map";
+export * from "./use-as-map";
