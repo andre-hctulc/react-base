@@ -1,9 +1,10 @@
 import React from "react";
 import { withPrefix } from "../../util/system";
 import { type ClassValue, tv, type VariantProps } from "tailwind-variants";
+import type { StyleProps } from "../../types";
 
 const page = tv({
-    base: "container box-border",
+    base: "box-border w-full",
     variants: {
         size: {
             xxs: "max-w-3xl mx-auto",
@@ -17,39 +18,42 @@ const page = tv({
             row: "flex",
             col: "flex flex-col",
         },
+        grow: {
+            true: "flex-grow",
+        },
+        maxHeightFull: {
+            true: "max-h-full",
+        },
+        minHeight0: {
+            true: "min-h-0",
+        },
+        fullHeight: {
+            true: "h-full",
+        },
     },
     defaultVariants: {
         size: "lg",
     },
 });
 
-interface PageProps extends VariantProps<typeof page> {
+interface PageProps extends VariantProps<typeof page>, StyleProps {
     children?: React.ReactNode;
-    className?: ClassValue;
-    grow?: boolean;
-    maxHeightFull?: boolean;
-    minHeight0?: boolean;
-    fullHeight?: boolean;
 }
 
 export const Page = React.forwardRef<HTMLDivElement, PageProps>(
-    (
-        { children, className, grow, size, maxHeightFull: maxHFull, minHeight0: minH0, fullHeight: hFull },
-        ref
-    ) => {
+    ({ children, className, grow, size, maxHeightFull, minHeight0, fullHeight, style }, ref) => {
         return (
             <div
                 className={page({
                     size,
-                    className: [
-                        className,
-                        minH0 && "min-h-0",
-                        maxHFull && "max-h-full",
-                        hFull && "h-full",
-                        grow && "flex-grow",
-                    ],
+                    className,
+                    grow,
+                    maxHeightFull,
+                    minHeight0,
+                    fullHeight,
                 })}
                 ref={ref}
+                style={style}
             >
                 {children}
             </div>

@@ -8,3 +8,5 @@ export * from "./dialog";
 export * from "./text";
 export * from "./notifications";
 export * from "./transitions";
+export * from "./icons";
+export * from "./data-grid";

@@ -10,6 +10,21 @@ const root = tv({
             mix: "flex-col lg:flex-row",
             mix_inverse: "flex-col lg:flex-row-reverse",
         },
+        grow: {
+            true: "flex-grow",
+        },
+        scroll: {
+            true: "overflow-y-auto overflow-x-hidden",
+        },
+        heightScreen: {
+            true: "h-screen",
+        },
+        fullHeight: {
+            true: "h-full",
+        },
+        maxHeightFull: {
+            true: "max-h-full",
+        },
     },
     defaultVariants: {
         direction: "col",
@@ -19,30 +34,31 @@ const root = tv({
 interface RootProps extends VariantProps<typeof root> {
     children?: React.ReactNode;
     className?: ClassValue;
-    scroll?: boolean;
-    fullHeight?: boolean;
-    hScreen?: boolean;
 }
 
+/**
+ * A flex container. Use it for the general layout.
+ */
 export const Root: React.FC<RootProps> = ({
     children,
     className,
     direction,
     scroll,
-    fullHeight: hFull,
-    hScreen,
-    ...props
+    fullHeight,
+    heightScreen,
+    maxHeightFull,
+    grow,
 }) => {
     return (
         <div
             className={root({
-                className: [
-                    scroll && "overflow-y-auto overflow-x-hidden",
-                    hScreen && "h-screen",
-                    hFull && "h-full",
-                    className,
-                ],
+                className,
+                scroll,
+                heightScreen,
+                fullHeight,
+                grow,
                 direction,
+                maxHeightFull,
             })}
         >
             {children}

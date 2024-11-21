@@ -17,7 +17,6 @@ const flexForm = tv({
     },
     defaultVariants: {
         direction: "col",
-        gap: "md",
     },
 });
 

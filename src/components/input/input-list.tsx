@@ -1,74 +1,69 @@
 import clsx from "clsx";
 import React from "react";
-import { Menu, MenuItem } from "../containers";
-import { IconButton } from "./button";
 import type { InputLikeProps } from "./input";
+import type { StyleProps } from "../../types";
 
-interface InputListProps<T = any> extends InputLikeProps<T[]> {
-    className?: string;
-    renderInput: (params: {
-        change: (value: T, previousValue: T) => void;
-        initialValue: T;
-        del: (value: T) => void;
-    }) => React.ReactNode;
-    renderValues: ((values: T[]) => React.ReactNode) | { menuItems: (value: T) => MenuItem };
+type InputListInputProps<T> = Omit<InputLikeProps<T>, "onChange" | "value">;
+
+interface InputListProps<T = any> extends InputLikeProps<T[]>, StyleProps {
+    renderInput: (
+        params: {
+            add: (newItem: T) => void;
+            values: T[];
+        } & InputListInputProps<T>
+    ) => React.ReactNode;
+    renderValues: (
+        params: {
+            values: T[];
+            change: (mutator: (currentValues: T[]) => T[]) => void;
+            remove: (item: T) => void;
+        } & InputListInputProps<T[]>
+    ) => React.ReactNode;
     /** Passed to `renderInput` as initial state */
-    suggestedValue?: T;
-    checkInput?: (value: T) => boolean;
-    /**
-     * Default is strict equality
-     */
-    compareValues?: (a: T, b: T) => boolean;
+    defaultItemValue?: T;
     addIcon?: React.ReactNode;
+    as?: any;
 }
 
-export const InputList: React.FC<InputListProps> = ({
+export const InputList = <T,>({
     className,
     renderInput,
     renderValues,
     addIcon,
-    ...props
-}) => {
-    const [values, setValues] = React.useState(props.defaultValue || []);
-    const [inputOk, setInputOk] = React.useState(true);
-    const [input, setInput] = React.useState<any>(props.suggestedValue);
-    const compare = props.compareValues || ((a, b) => a === b);
+    style,
+    defaultItemValue,
+    as,
+    ...inputProps
+}: InputListProps<T>) => {
+    const [values, setValues] = React.useState(inputProps.defaultValue || []);
+    const Comp = as || "div";
 
-    function handleInputChange(value: any) {
-        const ok = props.checkInput ? props.checkInput(value) : true;
-        setInputOk(ok);
-        setInput(value);
-    }
+    const change = (mutator: (currentValues: T[]) => T[]) => {
+        setValues(mutator);
+    };
 
-    function handleDelete(value: any) {
-        setValues(values.filter((v) => compare(v, value)));
-    }
-
-    function handleAdd() {
-        const newValues = [...values, input];
+    const add = (newItem: T) => {
+        const newValues = [...values, newItem];
         setValues(newValues);
-        props.onChange?.(newValues);
-    }
+        inputProps.onChange?.(newValues);
+    };
+
+    const remove = (item: T) => {
+        const newValues = values.filter((v) => v !== item);
+        setValues(newValues);
+        inputProps.onChange?.(newValues);
+    };
 
     return (
-        <div className={clsx("space-y-2", className)}>
-            {"menuItems" in renderValues ? (
-                <Menu items={values.map((val) => renderValues.menuItems(val))} />
-            ) : (
-                renderValues(values)
-            )}
-            <div className="flex">
-                <div className="flex-grow">
-                    {renderInput({
-                        change: handleInputChange,
-                        initialValue: props.suggestedValue,
-                        del: handleDelete,
-                    })}
-                </div>
-                <IconButton disabled={!inputOk} className="float-end ml-2" onClick={() => handleAdd()}>
-                    {addIcon || "+"}
-                </IconButton>
-            </div>
-        </div>
+        <Comp className={clsx("", className)} style={style}>
+            {renderValues({ values, change, remove, ...inputProps, readOnly: true })}
+            {!inputProps.readOnly &&
+                renderInput({
+                    values,
+                    add,
+                    ...inputProps,
+                    defaultValue: defaultItemValue,
+                })}
+        </Comp>
     );
 };

@@ -5,5 +5,3 @@ export function useAsSet<T>(iterable: Iterable<T>, deps?: React.DependencyList):
     const set = React.useMemo(() => new Set(iterable), [iterable, ...(deps || [])]);
     return set;
 }
-
-

@@ -31,7 +31,10 @@ const _switch = tv({
 interface SwitchProps
     extends InputLikeProps<boolean>,
         VariantProps<typeof _switch>,
-        Omit<PropsOf<typeof BaseSwitch>, keyof InputLikeProps | "className" | "style" | "color">,
+        Omit<
+            PropsOf<typeof BaseSwitch>,
+            keyof InputLikeProps | "className" | "style" | "color" | "checked" | "defaultChecked"
+        >,
         XStyleProps {}
 
 export const Switch: React.FC<SwitchProps> = ({

@@ -13,3 +13,6 @@ export * from "./draggable";
 export * from "./droppable";
 export * from "./upload-zone";
 export * from "./tool";
+export * from "./checkbox";
+export * from "./editable";
+export * from "./textarea"

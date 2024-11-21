@@ -11,6 +11,16 @@ const pageContent = tv({
             lg: "px-6 md:px-10 py-5 md:py-9",
             none: "",
         },
+        flex: {
+            row: "flex",
+            col: "flex flex-col",
+        },
+        fullHeight: {
+            true: "h-full",
+        },
+        maxHeightFull: {
+            true: "max-h-full",
+        },
     },
     defaultVariants: {
         padding: "md",
@@ -26,9 +36,18 @@ interface PageContentProps extends VariantProps<typeof pageContent> {
  * Use this inside a `Page` component to display page content.
  */
 export const PageContent = React.forwardRef<HTMLElement, PageContentProps>(
-    ({ children, className, padding }, ref) => {
+    ({ children, className, padding, fullHeight, maxHeightFull, flex }, ref) => {
         return (
-            <main className={pageContent({ className, padding })} ref={ref}>
+            <main
+                className={pageContent({
+                    className,
+                    padding,
+                    flex,
+                    maxHeightFull,
+                    fullHeight,
+                })}
+                ref={ref}
+            >
                 {children}
             </main>
         );

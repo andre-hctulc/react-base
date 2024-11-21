@@ -42,12 +42,14 @@ export interface RequiredChildrenProps {
 /**
  * A Helper type for a `tailwind-variants` component's props.
  * It bundles the variant props with the root element's props.
- * Additionally props can be excluded from the root element's props.
- * @template T Tailwind CSS variant object
+ * @template T tailwind-variant object
  * @template R Root element type
- * @template O Whether to exclude `className` prop or the given props.
  */
 export type TVCProps<
     T extends (...args: any) => any,
     R extends keyof React.JSX.IntrinsicElements | React.JSXElementConstructor<any> | never = never
 > = VariantProps<T> & Omit<React.ComponentProps<R>, "className"> & XStyleProps;
+
+// -- Components
+
+export type LinkComponent = React.ComponentType<{ href: any; className?: string }>;

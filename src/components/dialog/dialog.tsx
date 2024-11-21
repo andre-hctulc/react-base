@@ -43,10 +43,24 @@ interface DialogProps extends VariantProps<typeof dialog>, VariantProps<typeof d
     children?: React.ReactNode;
     loading?: boolean;
     variant?: "transparent" | "default";
+    /**
+     * @default true
+     */
+    closable?: boolean;
 }
 
-export const Dialog: React.FC<DialogProps> = ({ open, children, className, loading, variant, ...props }) => {
+export const Dialog: React.FC<DialogProps> = ({
+    open,
+    children,
+    className,
+    loading,
+    variant,
+    closable,
+    onClose,
+    ...props
+}) => {
     const mounted = useIsHydrated();
+    const cl = closable !== false;
 
     if (!mounted) return null;
 
@@ -56,7 +70,9 @@ export const Dialog: React.FC<DialogProps> = ({ open, children, className, loadi
             as="div"
             className={dialog({ className })}
             style={props.style}
-            onClose={() => props.onClose?.()}
+            onClose={() => {
+                if (cl && onClose) onClose();
+            }}
         >
             <div
                 data-open={open}

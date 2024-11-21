@@ -4,7 +4,7 @@ import type { StyleProps } from "../../types";
 import { Droppable } from "./droppable";
 import type { InputLikeProps } from "./input";
 import React from "react";
-import { Menu } from "../containers";
+import { List } from "../containers";
 import clsx from "clsx";
 
 interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
@@ -115,7 +115,8 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
                 </div>
             </Droppable>
             {props.renderFiles === "menu" && (
-                <Menu
+                <List
+                    rounded="base"
                     className="mt-2"
                     items={files.map((file) => ({
                         key: file.webkitRelativePath || file.name,

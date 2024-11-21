@@ -34,13 +34,13 @@ export const baseTheme: Config = {
                 "elevated-3": "rgb(210, 210, 210)",
                 "transparent-1": "rgba(128, 128, 128, 0.1)",
                 "transparent-2": "rgba(128, 128, 128, 0.2)",
-                "transparent-3": "rgba(128, 128, 128, 0.4)",
-                "transparent-4": "rgba(128, 128, 128, 0.6)",
+                "transparent-3": "rgba(128, 128, 128, 0.3)",
+                "transparent-4": "rgba(128, 128, 128, 0.4)",
             },
             textColor: {
                 // Alias for text-1
-                DEFAULT: "rgb(51, 51, 51)",
-                1: "rgb(51, 51, 51)",
+                DEFAULT: "rgb(0, 0, 0)",
+                1: "rgb(0, 0, 0)",
                 2: "rgb(102, 102, 102)",
                 3: "rgb(153, 153, 153)",
                 // Alias for contrast-1
@@ -55,7 +55,7 @@ export const baseTheme: Config = {
                 DEFAULT: DIVIDER,
             },
             primary: {
-                DEFAULT: "rgb(0, 119, 182)",
+                DEFAULT: "rgb(73, 135, 243)",
                 contrast: "rgb(255, 255, 255)",
             },
             secondary: {
@@ -67,11 +67,11 @@ export const baseTheme: Config = {
                 contrast: "rgb(255, 255, 255)",
             },
             error: {
-                DEFAULT: "rgb(228, 66, 66)",
+                DEFAULT: "rgb(232, 59, 63)",
                 contrast: "rgb(255, 255, 255)",
             },
             success: {
-                DEFAULT: "rgb(102, 204, 153)",
+                DEFAULT: "rgb(64, 163, 63)",
                 contrast: "rgb(255, 255, 255)",
             },
             warning: {

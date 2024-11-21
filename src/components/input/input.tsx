@@ -1,9 +1,9 @@
 "use client";
 
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
-import type { TVCProps, XStyleProps } from "../../types";
+import type { TVCProps } from "../../types";
 
 const input = tv({
     base: [
@@ -13,8 +13,8 @@ const input = tv({
     variants: {
         size: {
             sm: "h-7 text-sm",
-            md: "h-9 text-base",
-            lg: "h-11",
+            md: "h-9 text-sm",
+            lg: "h-11 text-base",
         },
     },
     defaultVariants: {
@@ -33,9 +33,11 @@ export interface InputLikeProps<T = any, E = any> {
 }
 
 interface InputProps
-    extends Omit<TVCProps<typeof input, "input">, "className" | "defaultValue" | "value" | "onChange">,
-        InputLikeProps<string | number>,
-        XStyleProps {
+    extends Omit<
+            TVCProps<typeof input, "input">,
+            "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
+        >,
+        InputLikeProps<string | number> {
     type?: "text" | "password" | "email" | "number" | "tel" | "url";
 }
 

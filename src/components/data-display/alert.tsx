@@ -1,6 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import type { TVCProps, XStyleProps } from "../../types";
+import type { TVCProps } from "../../types";
 
 const alert = tv({
     base: "rounded px-4 py-3 text-contrast",

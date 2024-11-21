@@ -36,56 +36,95 @@ interface CancelConfirmProps {
     buttonProps?: PropsOf<typeof Button>;
     form?: string;
     ok?: boolean;
-    confirmIcon?: React.ReactNode;
+    confirmButtonProps?: PropsOf<typeof ConfirmButton>;
+    cancelButtonProps?: PropsOf<typeof CancelButton>;
+    loading?: boolean;
+    danger?: boolean;
+    size?: "sm" | "md" | "lg";
+    /**
+     * @default true
+     */
+    showCancel?: boolean;
 }
 
 /**
- * A footer for dialogs that contains a cancel and confirm button.
+ * Cancel and confirm button for a dialog footer. Use variant `actions` for the footer to align the buttons correctly.
  */
 export const CancelConfirm: React.FC<CancelConfirmProps> = ({
     onCancel,
     onConfirm,
     confirmText,
-    cancelText: abortText,
+    cancelText,
     buttonProps,
     form,
-    ...props
+    loading,
+    danger,
+    size,
+    showCancel,
+    confirmButtonProps,
+    cancelButtonProps,
 }) => {
     return (
         <>
-            <CancelButton
-                onClick={(e) => {
-                    onCancel?.();
-                    buttonProps?.onClick?.(e);
-                }}
-            >
-                {abortText}
-            </CancelButton>
-            <Button
+            {showCancel !== false && (
+                <CancelButton
+                    size={size}
+                    disabled={loading}
+                    {...buttonProps}
+                    {...cancelButtonProps}
+                    onClick={(e) => {
+                        onCancel?.();
+                        buttonProps?.onClick?.(e);
+                        cancelButtonProps?.onClick?.(e);
+                    }}
+                >
+                    {cancelText}
+                </CancelButton>
+            )}
+            <ConfirmButton
+                size={size}
+                loading={loading}
+                danger={danger}
+                form={form}
+                type={form ? "submit" : "button"}
+                {...buttonProps}
+                {...confirmButtonProps}
                 onClick={(e) => {
                     onConfirm?.();
                     buttonProps?.onClick?.(e);
+                    confirmButtonProps?.onClick?.(e);
                 }}
-                variant="filled"
-                color="primary"
-                form={form}
-                type={form ? "submit" : "button"}
-                icon={props.confirmIcon}
-                {...buttonProps}
             >
                 {confirmText || "Confirm"}
-            </Button>
+            </ConfirmButton>
         </>
     );
 };
 
+interface CancelButtonProps extends PropsOf<typeof Button> {}
+
 /**
  * A cancel button for dialogs.
  */
-export const CancelButton: React.FC<PropsOf<typeof Button>> = (props) => {
+export const CancelButton: React.FC<CancelButtonProps> = (props) => {
     return (
-        <Button variant="outlined" color="neutral" {...props}>
+        <Button variant="text" color="neutral" {...props}>
             {props.children || "Cancel"}
+        </Button>
+    );
+};
+
+interface ConfirmButtonProps extends PropsOf<typeof Button> {
+    danger?: boolean;
+}
+
+/**
+ * A confirm button for dialogs.
+ */
+export const ConfirmButton: React.FC<ConfirmButtonProps> = ({ danger, ...props }) => {
+    return (
+        <Button color={danger ? "error" : "primary"} {...props}>
+            {props.children || "Confirm"}
         </Button>
     );
 };

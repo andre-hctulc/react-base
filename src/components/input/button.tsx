@@ -2,12 +2,12 @@ import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
 import { Button as BaseButton } from "@headlessui/react";
-import clsx from "clsx";
 import type { TVCProps, XStyleProps } from "../../types";
 import { Spinner } from "../data-display/spinner";
+import { Icon } from "../icons";
 
 const btn = tv({
-    base: "px-3.5 flex items-center justify-center transition",
+    base: "flex items-center justify-center transition duration-100",
     variants: {
         color: {
             neutral: "bg-neutral border-neutral text-neutral",
@@ -27,15 +27,25 @@ const btn = tv({
             square: "rounded-[1px]",
         },
         variant: {
-            filled: "bg-opacity-100 hover:brightness-90 active:brightness-75",
-            outlined: "border bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20",
-            pale: "bg-opacity-20 hover:bg-opacity-30 active:bg-opacity-40",
-            text: "bg-opacity-0 hover:bg-opacity-10 active:bg-opacity-20",
+            filled: "bg-opacity-100 data-[disabled=false]:hover:brightness-90 data-[disabled=false]:active:brightness-75",
+            outlined:
+                "border bg-opacity-0 data-[disabled=false]:hover:bg-opacity-10 data-[disabled=false]:active:bg-opacity-20",
+            pale: "bg-opacity-20 data-[disabled=false]:hover:bg-opacity-30 data-[disabled=false]:active:bg-opacity-40",
+            text: "bg-opacity-0 data-[disabled=false]:hover:bg-opacity-10 data-[disabled=false]:active:bg-opacity-20",
         },
         size: {
-            sm: "h-7 text-sm",
-            md: "h-9 text-base",
-            lg: "h-12 text-lg",
+            xs: "h-5 text-xs px-2",
+            sm: "h-7 text-sm px-3",
+            md: "h-9 text-base px-3.5",
+            lg: "h-12 text-xl px-3.5",
+        },
+        floating: {
+            md: "shadow-lg",
+            lg: "shadow-xl",
+            xl: "shadow-2xl",
+        },
+        disabled: {
+            true: "!cursor-not-allowed !brightness-90",
         },
     },
     defaultVariants: {
@@ -56,28 +66,45 @@ interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">,
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     (
-        { children, color, variant, className, size, loading, iconPosition, icon, shape, disabled, ...props },
+        {
+            children,
+            color,
+            variant,
+            className,
+            size,
+            loading,
+            iconPosition,
+            icon,
+            shape,
+            disabled,
+            floating,
+            ...props
+        },
         ref
     ) => {
         const ico = loading ? <Spinner color="inherit" size="sm" /> : icon;
+        const dis = disabled || loading;
 
         return (
             <BaseButton
                 ref={ref}
                 data-variant={variant || "filled"}
+                data-disabled={!!dis}
                 className={btn({
+                    className,
                     color,
                     variant,
                     size,
                     shape,
-                    className: [(disabled || loading) && "brightness-120", className],
+                    floating,
+                    disabled,
                 })}
-                disabled={disabled || loading}
+                disabled={dis}
                 {...props}
             >
-                {ico && iconPosition === "left" && <span className="mr-2">{ico}</span>}
+                {ico && iconPosition === "left" && <Icon className="mr-2">{ico}</Icon>}
                 {children}
-                {ico && iconPosition !== "left" && <span className="ml-2">{ico}</span>}
+                {ico && iconPosition !== "left" && <Icon className="ml-2">{ico}</Icon>}
             </BaseButton>
         );
     }
@@ -85,14 +112,31 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = withPrefix("Button");
 
+const iconButton = tv({
+    base: "!p-0",
+    variants: {
+        size: {
+            xs: "w-5",
+            sm: "w-7",
+            md: "w-9",
+            lg: "w-12",
+        },
+    },
+    defaultVariants: {
+        size: "md",
+    },
+});
+
 export const IconButton = React.forwardRef<HTMLButtonElement, Omit<ButtonProps, "icon">>(
-    ({ children, className, loading, disabled, ...props }, ref) => {
-        const w = props.size === "sm" ? "w-7" : props.size === "md" || !props.size ? "w-9" : "w-12";
+    ({ children, className, loading, disabled, size, ...props }, ref) => {
         return (
             <Button
-                className={clsx("!p-0", w, className as any)}
+                color="neutral"
+                variant="text"
+                className={iconButton({ className, size })}
                 disabled={loading || disabled}
                 ref={ref}
+                size={size}
                 {...props}
             >
                 {loading ? <Spinner color="inherit" size="inherit" /> : children}

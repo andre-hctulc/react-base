@@ -1,13 +1,11 @@
 "use client";
 
 import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import { Transition } from "@headlessui/react";
-import type { TVCProps, XStyleProps } from "../../types";
-import { Overlay } from "./overlay";
-import { createPortal } from "react-dom";
-import { useIsHydrated } from "../../hooks";
+import type { TVCProps } from "../../types";
+import { Overlay } from "../layout/overlay";
 
 const drawer = tv({
     base: "fixed z-30 bg-background shadow-lg ease-in-out duration-300 max-w-full max-h-full bg",
@@ -31,20 +29,25 @@ interface DrawerProps extends TVCProps<typeof drawer, "div"> {
 }
 
 export const Drawer = React.forwardRef<HTMLDivElement, DrawerProps>(
-    ({ children, position, className, style, open, ...props }, ref) => {
-        const isMounted = useIsHydrated();
-
-        if (!isMounted) return null;
-
-        return createPortal(
-            <Overlay noInteraction={!open} bg={open ? 1 : "transparent"} onClick={() => props.onClose?.()}>
+    ({ children, position, className, style, open, onClose, ...props }, ref) => {
+        return (
+            <Overlay
+                portal
+                noInteraction={!open}
+                bg={open ? "transparent-1" : "transparent"}
+                onClick={() => onClose?.()}
+            >
                 <Transition show={open}>
-                    <div ref={ref} className={drawer({ position, className })} style={style}>
+                    <div
+                        ref={ref}
+                        className={drawer({ position, className })}
+                        style={style}
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         {children}
                     </div>
                 </Transition>
-            </Overlay>,
-            document.body
+            </Overlay>
         );
     }
 );

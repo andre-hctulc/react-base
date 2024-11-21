@@ -12,7 +12,7 @@ export function joinPaths(...parts: (string | undefined | null)[]) {
 export function randomNumber(min: number, max: number) {
     return min + Math.round(Math.random() * (max - min));
 }
-export const PRE = "$RB_";
+export const PRE = "RB_";
 
 export function withPrefix(suffix: string) {
     return PRE + suffix;

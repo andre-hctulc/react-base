@@ -1,21 +1,38 @@
-import clsx from "clsx";
 import { withPrefix } from "../../util/system";
 import React from "react";
+import { tv } from "tailwind-variants";
+import type { TVCProps } from "../../types";
 
-interface SubtitleProps extends React.ComponentPropsWithoutRef<"h2"> {
+const subtitle = tv({
+    base: "text-lg font-medium text-gray-500",
+    variants: {
+        variant: {
+            h2: "text-lg",
+            h3: "text-base",
+            h4: "text-sm",
+            h5: "text-xs",
+        },
+        underline: {
+            true: "underline",
+        },
+    },
+});
+
+interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
     as?: any;
 }
 
+/**
+ * ### Props
+ * - `variant`
+ * - `underline`
+ */
 export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
-    ({ children, className, as, ...props }, ref) => {
-        const Comp = as || "h2";
+    ({ children, className, as, variant, underline, ...props }, ref) => {
+        const Comp = as || variant || "h2";
 
         return (
-            <Comp
-                className={clsx("text-lg font-semibold text-gray-500", className)}
-                ref={ref as any}
-                {...props}
-            >
+            <Comp className={subtitle({ className, underline, variant })} ref={ref as any} {...props}>
                 {children}
             </Comp>
         );

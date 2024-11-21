@@ -34,6 +34,9 @@ const toolbar = tv({
             baseline: "items-baseline",
             stretch: "items-stretch",
         },
+        grow: {
+            true: "flex-grow",
+        },
     },
     defaultVariants: {
         gap: "md",
@@ -44,7 +47,6 @@ const toolbar = tv({
 
 interface ToolbarProps extends TVCProps<typeof toolbar, "div"> {
     children?: React.ReactNode;
-    grow?: boolean;
     stopEventPropagation?: boolean;
 }
 
@@ -63,9 +65,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     return (
         <div
             className={toolbar({
+                className,
                 direction,
                 padding,
-                className: [grow && "flex-grow", className],
+                grow,
                 gap,
                 align,
                 justify,
