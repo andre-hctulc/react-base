@@ -1,24 +1,9 @@
-import { collapse } from "./helpers";
-import type { Align } from "../types";
+export function hideScrollbar(element: HTMLElement) {
+    element.style.overflow = "scroll"; // Ensure it's scrollable
+    // @ts-ignore
+    element.style.scrollbarWidth = "none"; // For Firefox
 
-export function alignClass(align: Align) {
-    return collapse(align || "center", {
-        center: "items-center",
-        start: "items-start",
-        end: "items-end",
-        none: "",
-    });
-}
-
-export function alignSelfClass(align: Align) {
-    return collapse(align, { start: "self-start", end: "self-end", center: "self-center", none: "" });
-}
-
-export function justifyClass(justify: Align) {
-    return collapse(justify || "center", {
-        end: "justify-end",
-        center: "justify-center",
-        start: "justify-start",
-        none: "",
-    });
+    // Hide the scrollbar for Webkit-based browsers
+    element.style.setProperty("webkitOverflowScrolling", "touch");
+    element.style.setProperty("::-webkit-scrollbar", "display: none");
 }

@@ -8,8 +8,9 @@ import { Switch } from "./switch";
 import { Checkbox } from "./checkbox";
 import { Select, type SelectOption } from "./select";
 import clsx from "clsx";
-import { JSONInput, Textarea } from "./textarea";
+import { Textarea } from "./textarea";
 import { InputList } from "./input-list";
+import { JSONInput } from "./json-input";
 
 interface EditableContext {
     editMode: boolean;
@@ -37,7 +38,7 @@ export const Editable: React.FC<EditableProps> = ({ children, editMode }) => {
  * @template I Input props (edit mode enabled)
  * @template D Display props (edit mode disabled)
  */
-export interface EditEffectProps<T> extends Omit<InputLikeProps<T>, "value"> {
+export interface EditEffectProps<T> extends InputLikeProps<T> {
     renderInput: (params: { value: T | undefined }) => React.ReactElement<InputLikeProps<T>>;
     renderValue: (params: { value: T | undefined }) => React.ReactNode;
     /**
@@ -74,10 +75,10 @@ export const EditEffect = <T,>({
         ...inputProps,
         ...inp.props,
         value,
-        onChange: (value: T, ev: any) => {
+        onChange: (e: any) => {
             setValue(value);
-            if (inp.props.onChange) inp.props.onChange(value, ev);
-            if (onChange) onChange(value, ev);
+            if (inp.props.onChange) inp.props.onChange(e);
+            if (onChange) onChange(e);
         },
     });
 };

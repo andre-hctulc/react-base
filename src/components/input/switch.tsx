@@ -1,3 +1,5 @@
+"use client";
+
 import { Switch as BaseSwitch } from "@headlessui/react";
 import type { InputLikeProps } from "./input";
 import { tv, type VariantProps } from "tailwind-variants";
@@ -5,7 +7,7 @@ import React from "react";
 import type { PropsOf, XStyleProps } from "../../types";
 
 const _switch = tv({
-    base: "group relative flex  cursor-pointer rounded-full bg-elevated-2 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white",
+    base: "group relative flex  cursor-pointer rounded-full bg-3 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white",
     variants: {
         size: {
             sm: "h-5 w-11",
@@ -51,7 +53,7 @@ export const Switch: React.FC<SwitchProps> = ({
         <BaseSwitch
             checked={value}
             defaultChecked={defaultValue}
-            onChange={onChange}
+            onChange={(checked) => onChange?.({ value: checked })}
             className={_switch({ className, color, size })}
             disabled={disabled}
             {...props}

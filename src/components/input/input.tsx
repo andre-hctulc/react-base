@@ -7,7 +7,7 @@ import type { TVCProps } from "../../types";
 
 const input = tv({
     base: [
-        "transition block w-full rounded-lg border-none bg-elevated-2 py-1.5 px-3",
+        "transition block w-full rounded-lg border-none bg-3 py-1.5 px-3",
         "focus:outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-divider",
     ],
     variants: {
@@ -22,14 +22,15 @@ const input = tv({
     },
 });
 
-export interface InputLikeProps<T = any, E = any> {
+export interface InputLikeProps<T = any, E extends object = {}> {
     defaultValue?: T;
     value?: T;
-    onChange?: (value: T, event?: E) => void;
+    onChange?: (value: { value: T } & E) => void;
     name?: string;
     required?: boolean;
     disabled?: boolean;
     readOnly?: boolean;
+    id?: string;
 }
 
 interface InputProps
@@ -37,7 +38,7 @@ interface InputProps
             TVCProps<typeof input, "input">,
             "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
         >,
-        InputLikeProps<string | number> {
+        InputLikeProps<string, React.ChangeEvent<HTMLInputElement>> {
     type?: "text" | "password" | "email" | "number" | "tel" | "url";
 }
 
@@ -53,8 +54,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 name={name}
                 type={type}
                 onChange={(e) => {
-                    const val = type === "number" ? parseFloat(e.target.value) : e.target.value;
-                    if (onChange) onChange(val, e);
+                    onChange?.({ value: e.target.value, ...e });
                 }}
                 {...props}
             />

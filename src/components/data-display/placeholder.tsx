@@ -2,9 +2,10 @@ import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types";
 import { Typography } from "../text";
 import { Icon } from "../icons";
+import React from "react";
 
 const placeholder = tv({
-    base: "flex items-center justify-center",
+    base: "flex flex-col items-center justify-center",
     variants: {
         gap: {
             none: "",
@@ -17,6 +18,15 @@ const placeholder = tv({
             sm: "p-6",
             md: "p-8",
             lg: "p-10",
+        },
+        grow: {
+            true: "flex-grow",
+        },
+        fullHeight: {
+            true: "h-full",
+        },
+        fullWidth: {
+            true: "w-full",
         },
     },
     defaultVariants: {
@@ -37,10 +47,13 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
     gap,
     padding,
     helperText,
+    grow,
+    fullHeight,
+    fullWidth,
     ...props
 }) => {
     return (
-        <div className={placeholder({ className, gap, padding })} {...props}>
+        <div className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth })} {...props}>
             {icon && <Icon size="4xl">{icon}</Icon>}
             {typeof children === "string" ? (
                 <Typography variant="secondary">{children ?? "Empty"}</Typography>

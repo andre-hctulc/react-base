@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types";
 
 const subtitle = tv({
-    base: "text-lg font-medium text-gray-500",
+    base: "text-lg font-medium text-2",
     variants: {
         variant: {
             h2: "text-lg",
@@ -14,6 +14,30 @@ const subtitle = tv({
         },
         underline: {
             true: "underline",
+        },
+        my: {
+            none: "",
+            xs: "my-1",
+            sm: "my-2",
+            md: "my-4",
+            lg: "my-7",
+            xl: "my-12",
+        },
+        mt: {
+            none: "",
+            xs: "mt-1",
+            sm: "mt-2",
+            md: "mt-4",
+            lg: "mt-7",
+            xl: "mt-12",
+        },
+        mb: {
+            none: "",
+            xs: "mb-1",
+            sm: "mb-2",
+            md: "mb-4",
+            lg: "mb-7",
+            xl: "mb-12",
         },
     },
 });
@@ -28,11 +52,15 @@ interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
  * - `underline`
  */
 export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
-    ({ children, className, as, variant, underline, ...props }, ref) => {
+    ({ children, className, as, variant, underline, my, mt, mb, ...props }, ref) => {
         const Comp = as || variant || "h2";
 
         return (
-            <Comp className={subtitle({ className, underline, variant })} ref={ref as any} {...props}>
+            <Comp
+                className={subtitle({ className, underline, variant, my, mb, mt })}
+                ref={ref as any}
+                {...props}
+            >
                 {children}
             </Comp>
         );

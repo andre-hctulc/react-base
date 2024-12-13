@@ -37,6 +37,9 @@ const toolbar = tv({
         grow: {
             true: "flex-grow",
         },
+        wrap: {
+            true: "flex-wrap",
+        },
     },
     defaultVariants: {
         gap: "md",
@@ -59,6 +62,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     justify,
     align,
     grow,
+    wrap,
     stopEventPropagation,
     ...props
 }) => {
@@ -72,6 +76,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 gap,
                 align,
                 justify,
+                wrap,
             })}
             onClick={
                 stopEventPropagation

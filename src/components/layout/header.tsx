@@ -3,11 +3,11 @@ import { tv, type VariantProps, type ClassValue } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 
 const header = tv({
-    base: "w-full max-w-full box-border",
+    base: "w-full max-w-full box-border flex-shrink-0",
     variants: {
         variant: {
-            elevated: "bg-elevated",
-            border: "border-b",
+            elevated: "bg-2",
+            border: "bg border-b",
             custom: "",
         },
         shadow: {
@@ -19,6 +19,7 @@ const header = tv({
             xl: "shadow-xl",
             "2xl": "shadow-2xl",
         },
+        sticky: { true: "sticky top-0 z-10" },
     },
     defaultVariants: {
         variant: "elevated",
@@ -29,7 +30,6 @@ interface HeaderProps extends VariantProps<typeof header> {
     children?: React.ReactNode;
     className?: ClassValue;
     style?: React.CSSProperties;
-    sticky?: boolean;
 }
 
 /**
@@ -40,11 +40,7 @@ interface HeaderProps extends VariantProps<typeof header> {
 export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
     ({ children, variant, className, style, sticky, shadow }, ref) => {
         return (
-            <div
-                ref={ref}
-                className={header({ className: [className, sticky && "sticky top-0"], variant, shadow })}
-                style={style}
-            >
+            <div ref={ref} className={header({ className, variant, shadow, sticky })} style={style}>
                 {children}
             </div>
         );

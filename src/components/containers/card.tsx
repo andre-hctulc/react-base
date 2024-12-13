@@ -1,23 +1,25 @@
-import clsx from "clsx";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { StyleProps, TVCProps } from "../../types";
 import { withPrefix } from "../../util/system";
 import React from "react";
 
 const card = tv({
-    base: "",
+    base: "bg overflow-hidden",
     variants: {
         shadow: {
             none: "",
             sm: "shadow-sm",
-            md: "shadow",
-            lg: "shadow-md",
-            xl: "shadow-lg",
+            base: "shadow",
+            md: "shadow-md",
+            lg: "shadow-lg",
+            xl: "shadow-xl",
         },
         elevated: {
-            "1": "bg-elevated-1",
-            "2": "bg-elevated-2",
-            "3": "bg-elevated-3",
+            "0": "",
+            "1": "bg-2",
+            "2": "bg-3",
+            "3": "bg-4",
+            "4": "bg-5",
         },
         rounded: {
             none: "",
@@ -27,10 +29,13 @@ const card = tv({
             lg: "rounded-lg",
         },
         border: {
-            true: "border",
+            none: "",
+            border: "border",
+            thin: "border-[0.5px]",
         },
     },
     defaultVariants: {
+        elevated: "0",
         rounded: "lg",
     },
 });
@@ -40,7 +45,7 @@ interface CardProps extends TVCProps<typeof card, "div"> {}
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     ({ children, shadow, className, border, elevated, ...props }, ref) => {
         return (
-            <div ref={ref} className={card({ shadow, elevated, className })} {...props}>
+            <div ref={ref} className={card({ shadow, elevated, className, border })} {...props}>
                 {children}
             </div>
         );
@@ -106,6 +111,10 @@ const cardBody = tv({
             lg: "py-3 px-3.5",
             responsive: "py-1 px-1.5 md:py-2 md:px-2.5 lg:py-3 lg:px-3.5",
         },
+        flex: {
+            col: "flex flex-col",
+            row: "flex flex-row",
+        },
     },
     defaultVariants: {
         padding: "md",
@@ -118,9 +127,9 @@ interface CardBodyProps extends VariantProps<typeof cardBody> {
     as?: any;
 }
 
-export const CardBody: React.FC<CardBodyProps> = ({ children, className, as, padding }) => {
+export const CardBody: React.FC<CardBodyProps> = ({ children, className, flex, as, padding }) => {
     const Comp = as || "div";
-    return <Comp className={cardBody({ className, padding })}>{children}</Comp>;
+    return <Comp className={cardBody({ className, padding, flex })}>{children}</Comp>;
 };
 
 const cardFooter = tv({

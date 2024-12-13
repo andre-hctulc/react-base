@@ -3,9 +3,9 @@ import type { PropsOf } from "../../types";
 import { Icon } from "./icon";
 import { withPrefix } from "../../util/system";
 
-interface CheckIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
+interface CheckFatIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 
-export const CheckIcon = React.forwardRef<HTMLElement, CheckIconProps>((props, ref) => {
+export const CheckFactIcon = React.forwardRef<HTMLElement, CheckFatIconProps>((props, ref) => {
     return (
         <Icon ref={ref} {...props}>
             <svg
@@ -17,11 +17,11 @@ export const CheckIcon = React.forwardRef<HTMLElement, CheckIconProps>((props, r
             >
                 <path
                     fill="currentColor"
-                    d="m232.49 80.49l-128 128a12 12 0 0 1-17 0l-56-56a12 12 0 1 1 17-17L96 183L215.51 63.51a12 12 0 0 1 17 17Z"
+                    d="m243.31 90.91l-128.4 128.4a16 16 0 0 1-22.62 0l-71.62-72a16 16 0 0 1 0-22.61l20-20a16 16 0 0 1 22.58 0L104 144.22l96.76-95.57a16 16 0 0 1 22.59 0l19.95 19.54a16 16 0 0 1 .01 22.72"
                 />
             </svg>
         </Icon>
     );
 });
 
-CheckIcon.displayName = withPrefix("CheckIcon");
+CheckFactIcon.displayName = withPrefix("CheckFactIcon");

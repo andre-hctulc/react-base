@@ -5,7 +5,11 @@ import type { TVCProps, XStyleProps } from "../../types";
 
 const helperText = tv({
     base: "text-sm/6 text-2",
-    variants: {},
+    variants: {
+        italic: {
+            true: "italic",
+        },
+    },
     defaultVariants: {},
 });
 
@@ -15,9 +19,9 @@ interface HelperTextProps extends Omit<TVCProps<typeof helperText, "p">, "classN
 }
 
 export const HelperText = React.forwardRef<HTMLParagraphElement, HelperTextProps>(
-    ({ children, className, ...props }, ref) => {
+    ({ children, className, italic, ...props }, ref) => {
         return (
-            <p ref={ref} className={helperText({ className })} {...props}>
+            <p ref={ref} className={helperText({ className, italic })} {...props}>
                 {children}
             </p>
         );

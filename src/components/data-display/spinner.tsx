@@ -10,7 +10,7 @@ export const spinner = tv({
             primary: "text-primary",
             secondary: "text-secondary",
             success: "text-success",
-            danger: "text-danger",
+            error: "text-error",
             warning: "text-warning",
             info: "text-info",
             light: "text-light",

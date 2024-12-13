@@ -22,7 +22,10 @@ const btn = tv({
             accent: "bg-accent text-accent border-accent data-[variant=filled]:text-accent-contrast",
         },
         shape: {
+            rounded_sm: "rounded-sm",
             rounded: "rounded",
+            rounded_md: "rounded-md",
+            rounded_lg: "rounded-lg",
             pill: "rounded-full",
             square: "rounded-[1px]",
         },
@@ -34,10 +37,11 @@ const btn = tv({
             text: "bg-opacity-0 data-[disabled=false]:hover:bg-opacity-10 data-[disabled=false]:active:bg-opacity-20",
         },
         size: {
-            xs: "h-5 text-xs px-2",
-            sm: "h-7 text-sm px-3",
-            md: "h-9 text-base px-3.5",
-            lg: "h-12 text-xl px-3.5",
+            xs: "h-5 text-xs px-2 gap-1.5",
+            sm: "h-7 text-sm px-3 gap-2",
+            md: "h-9 text-base px-3.5 gap-2.5",
+            lg: "h-[42px] text-lg px-2.5",
+            xl: "h-12 text-xl px-4 gap-3",
         },
         floating: {
             md: "shadow-lg",
@@ -46,6 +50,15 @@ const btn = tv({
         },
         disabled: {
             true: "!cursor-not-allowed !brightness-90",
+        },
+        // Used for consistent margin in forms
+        mt: {
+            none: "",
+            xs: "mt-2",
+            sm: "mt-4",
+            md: "mt-6",
+            lg: "mt-10",
+            xl: "mt-16",
         },
     },
     defaultVariants: {
@@ -78,6 +91,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             shape,
             disabled,
             floating,
+            mt,
             ...props
         },
         ref
@@ -97,14 +111,15 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     size,
                     shape,
                     floating,
+                    mt,
                     disabled,
                 })}
                 disabled={dis}
                 {...props}
             >
-                {ico && iconPosition === "left" && <Icon className="mr-2">{ico}</Icon>}
+                {ico && iconPosition === "left" && <Icon>{ico}</Icon>}
                 {children}
-                {ico && iconPosition !== "left" && <Icon className="ml-2">{ico}</Icon>}
+                {ico && iconPosition !== "left" && <Icon>{ico}</Icon>}
             </BaseButton>
         );
     }
@@ -119,7 +134,8 @@ const iconButton = tv({
             xs: "w-5",
             sm: "w-7",
             md: "w-9",
-            lg: "w-12",
+            lg: "w-[42px]",
+            xl: "w-12",
         },
     },
     defaultVariants: {

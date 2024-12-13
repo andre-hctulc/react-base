@@ -26,14 +26,3 @@ export function hasChildren(children: React.ReactNode) {
     if (!children) return false;
     return React.Children.count(children) !== 0;
 }
-
-export function formEventToValues<T extends object = any>(event: React.FormEvent<HTMLFormElement>): T {
-    const form = event.currentTarget;
-    const fd = new FormData(form);
-    return Object.fromEntries(fd) as T;
-}
-
-export function formEventToFormData(event: React.FormEvent<HTMLFormElement>): FormData {
-    const form = event.currentTarget;
-    return new FormData(form);
-}

@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "target": "ES2022",
-        "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
@@ -10,14 +9,9 @@
         "module": "esnext",
         "moduleResolution": "node",
         "isolatedModules": true,
-        "jsx": "preserve",
+        "jsx": "react-jsx",
         "verbatimModuleSyntax": true
     },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.tsx",
-        "../../../../../packages/progress-controller/src/controller.ts",
-        "../../components/view/page-header-tabs.tsx"
-    ],
+    "include": ["src/**/*"],
     "exclude": ["demo"]
 }

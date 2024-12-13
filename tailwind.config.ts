@@ -6,6 +6,7 @@ Use RGB values, to allow for easier color manipulation
 
 const DIVIDER = "rgb(204, 204, 204)";
 
+const TEXT_2 = "rgb(94, 94, 94)";
 /**
  * Use this in the `presets` array in your `tailwind.config.ts` file:
  *
@@ -26,12 +27,13 @@ export const baseTheme: Config = {
                 dark: "rgb(102, 102, 102)",
             },
             backgroundColor: {
+                // Alias for bg-1
                 DEFAULT: "rgb(255, 255, 255)",
-                // Alias for elevated-1
-                elevated: "rgb(248, 248, 248)",
-                "elevated-1": "rgb(248, 248, 248)",
-                "elevated-2": "rgb(234, 234, 234)",
-                "elevated-3": "rgb(210, 210, 210)",
+                1: "rgb(255, 255, 255)",
+                2: "rgb(248, 248, 248)",
+                3: "rgb(236, 236, 236)",
+                4: "rgb(224, 224, 224)",
+                5: "rgb(212, 210, 212)",
                 "transparent-1": "rgba(128, 128, 128, 0.1)",
                 "transparent-2": "rgba(128, 128, 128, 0.2)",
                 "transparent-3": "rgba(128, 128, 128, 0.3)",
@@ -41,15 +43,32 @@ export const baseTheme: Config = {
                 // Alias for text-1
                 DEFAULT: "rgb(0, 0, 0)",
                 1: "rgb(0, 0, 0)",
-                2: "rgb(102, 102, 102)",
-                3: "rgb(153, 153, 153)",
+                2: TEXT_2,
+                3: "rgb(151, 151, 151)",
+                4: "rgb(178, 178, 178)",
+                5: "rgb(204, 204, 204)",
                 // Alias for contrast-1
                 contrast: "rgb(255, 255, 255)",
                 "contrast-1": "rgb(255, 255, 255)",
                 "contrast-2": "rgb(204, 204, 204)",
                 "contrast-3": "rgb(153, 153, 153)",
             },
+            // #### Animations ####
+            animation: {
+                skeleton: "skeleton 1.5s ease-in-out infinite",
+            },
+            keyframes: {
+                skeleton: {
+                    "0%, 100%": {
+                        backgroundColor: "theme('backgroundColor.transparent-1')",
+                    },
+                    "50%": {
+                        backgroundColor: "theme('backgroundColor.transparent-2')",
+                    },
+                },
+            },
         },
+        // #### Colors ####
         colors: {
             divider: {
                 DEFAULT: DIVIDER,
@@ -59,7 +78,7 @@ export const baseTheme: Config = {
                 contrast: "rgb(255, 255, 255)",
             },
             secondary: {
-                DEFAULT: "rgb(255, 107, 107)",
+                DEFAULT: "rgb(243, 73, 135)",
                 contrast: "rgb(255, 255, 255)",
             },
             accent: {
@@ -82,8 +101,11 @@ export const baseTheme: Config = {
                 DEFAULT: "rgb(15, 115, 198)",
                 contrast: "rgb(255, 255, 255)",
             },
+            /**
+             * Neutral color. this color blends in with the general theme of the application.
+             */
             neutral: {
-                DEFAULT: "rgb(107, 114, 128)",
+                DEFAULT: TEXT_2,
                 contrast: "rgb(255, 255, 255)",
             },
             black: "rgb(0, 0, 0)",
@@ -95,19 +117,8 @@ export const baseTheme: Config = {
             yellow: "rgb(255, 255, 0)",
             pink: "rgb(255, 0, 255)",
             cyan: "rgb(0, 255, 255)",
-            gray: {
-                50: "rgb(249, 250, 251)",
-                100: "rgb(244, 245, 247)",
-                200: "rgb(229, 231, 235)",
-                300: "rgb(210, 214, 220)",
-                400: "rgb(159, 166, 178)",
-                500: "rgb(107, 114, 128)",
-                DEFAULT: "rgb(107, 114, 128)",
-                600: "rgb(75, 85, 99)",
-                700: "rgb(55, 65, 81)",
-                800: "rgb(37, 47, 63)",
-                900: "rgb(22, 30, 46)",
-            },
+            gray: "rgb(94, 94, 94)",
+            "blueish-gray": "rgb(107, 114, 128)",
         },
     },
 };

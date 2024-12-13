@@ -1,4 +1,4 @@
-import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
+import { tv, type ClassValue } from "tailwind-variants";
 import type { TVCProps } from "../../types";
 
 const flexForm = tv({
@@ -7,6 +7,7 @@ const flexForm = tv({
         direction: {
             row: "flex-row",
             col: "flex-col",
+            wrap: "flex flex-wrap",
         },
         gap: {
             sm: "gap-2",
@@ -20,7 +21,7 @@ const flexForm = tv({
     },
 });
 
-interface FlexFormProps<T extends object = any> extends Omit<TVCProps<typeof flexForm, "form">, "className"> {
+interface FlexFormProps extends Omit<TVCProps<typeof flexForm, "form">, "className"> {
     children?: React.ReactNode;
     className?: ClassValue;
 }

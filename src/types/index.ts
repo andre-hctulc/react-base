@@ -1,14 +1,7 @@
-import type clsx from "clsx";
 import type React from "react";
 import type { ClassValue, VariantProps } from "tailwind-variants";
 
 export type Falsy = null | undefined | "" | 0 | false;
-
-export type Align = "start" | "end" | "center" | "none";
-
-export type Size = "s" | "m" | "l";
-export type XSize = "xs" | "s" | "m" | "l" | "xl";
-export type XXSize = "xxs" | "xs" | "s" | "m" | "l" | "xl" | "xxl";
 
 // --- Props
 

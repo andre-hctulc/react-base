@@ -23,42 +23,69 @@ const chip = tv({
             square: "rounded-[1px]",
         },
         variant: {
-            filled: "text-contrast bg-opacity-100 data-[hover-effect=true]:hover:brightness-90 data-[clickable=true]:active:brightness-75",
+            filled: "text-contrast bg-opacity-100 data-[clickable=true]:hover:brightness-90 data-[clickable=true]:active:brightness-75",
             outlined:
-                "border bg-opacity-0 data-[hover-effect=true]:hover:bg-opacity-10 data-[clickable=true]:active:bg-opacity-20",
-            pale: "bg-opacity-20 data-[hover-effect=true]:hover:bg-opacity-30 data-[clickable=true]:active:bg-opacity-40",
-            text: "bg-opacity-0 data-[hover-effect=true]:hover:bg-opacity-10 data-[clickable=true]:active:bg-opacity-20",
+                "border bg-opacity-0 data-[clickable=true]:hover:bg-opacity-10 data-[clickable=true]:active:bg-opacity-20",
+            pale: "bg-opacity-20 data-[clickable=true]:hover:bg-opacity-30 data-[clickable=true]:active:bg-opacity-40",
+            text: "bg-opacity-0 data-[clickable=true]:hover:bg-opacity-10 data-[clickable=true]:active:bg-opacity-20",
         },
         size: {
-            sm: "h-5 text-sm px-1.5",
-            md: "h-6 text-sm px-2",
-            lg: "h-7 text-base px-2.5",
+            sm: "h-5 text-xs px-1.5 gap-1",
+            md: "h-6 text-sm px-2 gap-1.5",
+            lg: "h-7 text-base px-2.5 gap-2",
+        },
+        textSelect: {
+            enabled: "",
+            disabled: "select-none",
         },
     },
     defaultVariants: {
         size: "md",
         color: "neutral",
         variant: "outlined",
+        userSelect: "enabled",
     },
 });
 
 interface ChipProps extends TVCProps<typeof chip, "span"> {
     hoverEffect?: boolean;
     clickable?: boolean;
+    icon?: React.ReactNode;
+    iconPosition?: "left" | "right";
+    as?: any;
 }
 
-export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
-    ({ children, color, variant, className, size, hoverEffect, clickable, ...props }, ref) => {
+export const Chip = React.forwardRef<HTMLElement, ChipProps>(
+    (
+        {
+            children,
+            color,
+            variant,
+            className,
+            size,
+            hoverEffect,
+            clickable,
+            textSelect,
+            icon,
+            iconPosition,
+            as,
+            ...props
+        },
+        ref
+    ) => {
+        const Comp: any = as || "span";
+
         return (
-            <span
+            <Comp
                 ref={ref}
-                data-hover-effect={hoverEffect}
                 data-clickable={clickable}
-                className={chip({ color, variant, size, className })}
+                className={chip({ color, variant, size, className, textSelect })}
                 {...props}
             >
+                {icon && iconPosition === "left" && icon}
                 {children}
-            </span>
+                {icon && iconPosition !== "left" && icon}
+            </Comp>
         );
     }
 );

@@ -3,6 +3,7 @@
 import { usePromise } from "../../hooks";
 import type { PropsOf } from "../../types";
 import { IconButton } from "./button";
+import React from "react";
 
 export interface ToolItem<T = any> {
     action: (e: React.MouseEvent) => T | Promise<T>;

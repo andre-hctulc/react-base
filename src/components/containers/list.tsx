@@ -3,7 +3,7 @@
 import React from "react";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { IconButton, Tool, type ToolItem } from "../input";
-import type { LinkComponent, TVCProps } from "../../types";
+import type { LinkComponent, PropsOf, TVCProps } from "../../types";
 import { Toolbar } from "./toolbar";
 import clsx from "clsx";
 import { Icon } from "../icons";
@@ -18,15 +18,26 @@ const list = tv({
             "2": "bg-elevate-2",
             "3": "bg-elevate-3",
         },
+        padding: {
+            none: "",
+            "2xs": "p-0.5",
+            xs: "p-1",
+            sm: "p-1.5",
+            md: "p-2",
+            lg: "p-4",
+            xl: "p-3",
+            "2xl": "p-4",
+            "3xl": "p-5",
+        },
         gap: {
             none: "",
-            sm: "gap-0.5",
-            md: "gap-1",
-            lg: "gap-1.5",
-            xl: "gap-2",
-            "2xl": "gap-3",
-            "3xl": "gap-4",
-            "4xl": "gap-5",
+            xs: "gap-0.5",
+            sm: "gap-1",
+            md: "gap-1.5",
+            lg: "gap-2",
+            xl: "gap-3",
+            "2xl": "gap-4",
+            "3xl": "gap-5",
         },
         rounded: {
             sm: "overflow-hidden rounded-sm",
@@ -40,7 +51,6 @@ const list = tv({
         },
     },
     defaultVariants: {
-        gap: "none",
         variant: "default",
         direction: "col",
     },
@@ -50,11 +60,13 @@ interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
     items?: ListItem[];
     onItemClick?: (item: ListItem) => void;
-    activeKey?: string;
+    activeKey?: string | ((item: ListItem) => boolean);
     size?: "sm" | "md" | "lg" | "xl";
     LinkComponent?: LinkComponent;
     loading?: boolean;
     variant?: "icons" | "default";
+    iconButtonProps?: Partial<PropsOf<typeof IconButton>>;
+    listItemProps?: Partial<PropsOf<typeof ListItem>>;
     /**
      * @default "ul"
      */
@@ -69,7 +81,6 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
             style,
             onItemClick,
             children,
-            gap,
             variant,
             activeKey,
             size,
@@ -77,6 +88,11 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
             rounded,
             direction,
             as,
+            iconButtonProps,
+            listItemProps,
+            elevate,
+            gap,
+            padding,
             ...props
         },
         ref
@@ -86,23 +102,40 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
         return (
             <Comp
                 ref={ref}
-                className={list({ className, direction, gap, elevate: props.elevate, rounded })}
+                className={list({
+                    className,
+                    direction,
+                    padding: padding ?? (size || "md"),
+                    elevate,
+                    rounded,
+                    gap,
+                })}
                 {...props}
             >
                 {children}
                 {items?.map((item) => {
-                    const active = item.active || item.key === activeKey;
+                    const active =
+                        item.active ??
+                        (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
 
                     if (variant === "icons") {
                         const btn = (
                             <IconButton
                                 size={size === "xl" ? "lg" : size}
                                 loading={item.loading}
-                                key={item.key}
-                                onClick={() => onItemClick?.(item)}
                                 variant="text"
                                 color={active ? "black" : "neutral"}
-                                className={active && "bg-transparent-2"}
+                                {...iconButtonProps}
+                                key={item.key}
+                                className={clsx(
+                                    active && "bg-transparent-2",
+                                    iconButtonProps?.className as any
+                                )}
+                                onClick={(e) => {
+                                    onItemClick?.(item);
+                                    iconButtonProps?.onClick?.(e);
+                                }}
+                                disabled={item.disabled}
                             >
                                 {item.icon}
                             </IconButton>
@@ -127,12 +160,26 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
                             LinkComponent={LinkComponent}
                             size={size || "md"}
                             key={item.key}
-                            className={item.className}
-                            onClick={onItemClick ? () => onItemClick(item) : undefined}
+                            disabled={item.disabled}
                             icon={item.icon}
                             active={active}
                             tools={item.tools}
                             href={item.href}
+                            variant={item.variant}
+                            {...listItemProps}
+                            className={clsx(item.className, listItemProps?.className as any)}
+                            onClick={(e) => {
+                                item.onClick?.(e);
+                                onItemClick?.(item);
+                                listItemProps?.onClick?.(e);
+                            }}
+                            clickable={
+                                item.clickable ||
+                                !!item.onClick ||
+                                !!listItemProps?.onClick ||
+                                listItemProps?.clickable ||
+                                !!item.href
+                            }
                         >
                             {item.label}
                         </ListItem>
@@ -146,22 +193,58 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
 List.displayName = withPrefix("List");
 
 const listItem = tv({
-    base: "flex w-full box-border transition duration-100",
+    base: "w-full transition duration-75",
     variants: {
-        size: {
-            sm: "text-xs",
-            md: "text-[15px]",
-            lg: "text-base",
-            xl: "text-lg",
+        rounded: {
+            sm: "rounded-sm",
+            base: "rounded",
+            md: "rounded-md",
+            lg: "rounded-lg",
+            xl: "rounded-xl",
+            full: "rounded-full",
+        },
+        clickable: {
+            true: "cursor-pointer active:brightness-50",
         },
         variant: {
-            danger: "text-error hover:bg-error/5 data-[active=true]:bg-error/10",
-            default: "hover:bg-transparent-1 data-[active=true]:bg-transparent-2",
+            danger: "",
+            default: "",
+        },
+        effects: {
+            true: "",
+        },
+    },
+    compoundVariants: [
+        {
+            variant: "danger",
+            effects: true,
+            class: "text-error hover:bg-error/5 data-[active=true]:bg-error/10",
+        },
+        {
+            variant: "default",
+            effects: true,
+            class: "hover:bg-transparent-1 data-[active=true]:bg-transparent-2",
+        },
+    ],
+    defaultVariants: {
+        variant: "default",
+        effects: true,
+        rounded: "md",
+    },
+});
+
+const listItemInner = tv({
+    base: "w-full flex box-border transition duration-100",
+    variants: {
+        size: {
+            sm: "text-xs px-2 gap-1.5 py-1",
+            md: "text-[15px] px-3 gap-2 py-1.5",
+            lg: "text-base px-4 gap-3 py-1.5",
+            xl: "text-lg px-5 gap-4 py-2",
         },
     },
     defaultVariants: {
         size: "md",
-        variant: "default",
     },
 });
 
@@ -171,15 +254,24 @@ export interface ListItem {
     className?: string;
     data?: any;
     icon?: React.ReactNode;
+    /**
+     * Takes precedence over `activeKey` in `List`
+     */
     active?: boolean;
     tools?: ToolItem[];
     color?: string;
     loading?: boolean;
     href?: string;
     variant?: "danger" | "default";
+    disabled?: boolean;
+    onClick?: React.MouseEventHandler<HTMLLIElement>;
+    /**
+     * @default !!onClick
+     */
+    clickable?: boolean;
 }
 
-interface ListItemProps extends VariantProps<typeof listItem> {
+interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<typeof listItemInner> {
     children?: React.ReactNode;
     onClick?: React.MouseEventHandler<HTMLLIElement>;
     className?: ClassValue;
@@ -190,11 +282,17 @@ interface ListItemProps extends VariantProps<typeof listItem> {
     tools?: ToolItem[];
     href?: string;
     LinkComponent?: LinkComponent;
+    InnerProps?: any;
     loading?: boolean;
     /**
      * @default "div"
      */
     as?: any;
+    disabled?: boolean;
+    /**
+     * Apply clickable styles? Defaults to true when {@link onClick} or {@link href} is provided.
+     */
+    clickable?: boolean;
 }
 
 export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
@@ -210,54 +308,56 @@ export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
             LinkComponent,
             loading,
             variant,
+            size,
+            InnerProps,
+            effects,
+            disabled,
             ...props
         },
         ref
     ) => {
         const Link = LinkComponent || "a";
-        const strChildren = typeof children === "string";
-        const textClasses = "flex-grow truncate py-1.5";
-        const icon = loading ? <Spinner /> : props.icon;
+        const icon = loading ? <Spinner color={variant === "danger" ? "error" : "neutral"} /> : props.icon;
         const clickHandler = loading ? undefined : onClick;
-        const rawChildren = !href && typeof children !== "string";
         const Comp: any = props.as || "div";
+        const Inner: any = href ? Link : "div";
+        const innerProps = href ? { href } : {};
+        const _disabled = loading || disabled;
+        const interactive = _disabled ? false : props.clickable ?? (!!onClick || !!href);
 
         return (
             <Comp
                 ref={ref}
                 data-active={active}
                 className={listItem({
+                    effects,
                     variant,
-                    className: [clickHandler && "cursor-pointer", className],
-                    size: props.size,
+                    className,
+                    clickable: interactive,
                 })}
                 data-reactive={true}
-                onClick={clickHandler}
+                onClick={_disabled ? undefined : clickHandler}
                 style={style}
             >
-                <div className={clsx("gap-3 flex-grow flex px-3", rawChildren && "py-1.5")}>
+                <Inner className={listItemInner({ size })} {...innerProps} {...InnerProps}>
                     {icon ? (
                         <Icon className="self-center" size="md">
                             {icon}
                         </Icon>
                     ) : null}
-                    {href ? (
-                        <Link href={href} className={clsx("block", strChildren && textClasses)}>
-                            {children}
-                        </Link>
-                    ) : typeof children === "string" ? (
-                        <span className={textClasses}>{children}</span>
+                    {typeof children === "string" ? (
+                        <span className="flex-grow truncate">{children}</span>
                     ) : (
                         children
                     )}
-                </div>
-                {tools?.length && (
-                    <Toolbar justify="end" gap="sm" className="mx-2">
-                        {tools?.map(({ key, ...tool }) => (
-                            <Tool variant="text" size="sm" color="neutral" key={key} {...tool} />
-                        ))}
-                    </Toolbar>
-                )}
+                    {tools?.length && (
+                        <Toolbar justify="end" gap="sm">
+                            {tools?.map(({ key, ...tool }) => (
+                                <Tool variant="text" size="sm" color="neutral" key={key} {...tool} />
+                            ))}
+                        </Toolbar>
+                    )}
+                </Inner>
             </Comp>
         );
     }

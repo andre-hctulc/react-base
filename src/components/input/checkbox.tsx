@@ -3,8 +3,8 @@ import type { InputLikeProps } from "./input";
 import { tv, type VariantProps } from "tailwind-variants";
 import React from "react";
 import type { XStyleProps } from "../../types";
-import { CheckIcon } from "../icons/check";
 import { Icon } from "../icons";
+import { CheckFactIcon } from "../icons/check-fat";
 
 const checkbox = tv({
     base: "shrink-0 group block rounded-md ring-[1.5px] ring-inset",
@@ -15,8 +15,7 @@ const checkbox = tv({
             lg: "size-8 !text-lg",
         },
         color: {
-            default:
-                "!text-2 ring-divider bg-elevated hover:bg-elevated-2 data-[checked]:bg-elevated-2 data-[checked]:hover:bg-elevated-2/70",
+            default: "!text-2 ring-divider bg-2 hover:bg-2 data-[checked]:bg-3 data-[checked]:hover:bg-3/70",
             primary:
                 "!text-primary ring-primary-500 bg-primary/10 hover:bg-primary/20 data-[checked]:bg-primary/20 data-[checked]:hover:bg-primary/15",
             secondary:
@@ -26,10 +25,15 @@ const checkbox = tv({
             warning:
                 "!text-warning ring-warning-500 bg-warning/10 hover:bg-warning/20 data-[checked]:bg-warning/20 data-[checked]:hover:bg-warning/15",
         },
+        disabled: {
+            false: "cursor-pointer",
+            true: "cursor-not-allowed",
+        },
     },
     defaultVariants: {
         size: "md",
         color: "default",
+        disabled: false,
     },
 });
 
@@ -50,9 +54,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     onChange,
     value,
     defaultValue,
-    readOnly,
     required,
     disabled,
+    readOnly,
     color,
     icon,
     ...props
@@ -62,14 +66,14 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     return (
         <BaseCheckbox
             disabled={dis}
-            onChange={onChange}
-            className={checkbox({ className: [!dis && "cursor-pointer", className], color, size })}
+            onChange={(checked) => onChange?.({ value: checked })}
+            className={checkbox({ className, disabled: dis, color, size })}
             {...props}
             checked={value}
             defaultChecked={defaultValue}
         >
             <span className="group-data-[checked]:flex hidden items-center justify-center h-full">
-                <Icon size="sm">{icon || <CheckIcon />}</Icon>
+                <Icon size="sm">{icon || <CheckFactIcon />}</Icon>
             </span>
         </BaseCheckbox>
     );

@@ -7,10 +7,23 @@ const typography = tv({
     base: "",
     variants: {
         variant: {
-            primary: "",
-            secondary: "text-2 text-sm",
-            tertiary: "text-3 text-sm",
-            pale: "text-3 text-xs",
+            primary: "text-base text-1",
+            secondary: "text-sm text-2",
+            tertiary: "text-sm text-3",
+            quaternary: "text-xs text-4",
+        },
+        size: {
+            xs: "text-xs",
+            sm: "text-sm",
+            base: "text-base",
+            md: "text-md",
+            lg: "text-lg",
+            xl: "text-xl",
+            "2xl": "text-2xl",
+            "3xl": "text-3xl",
+            "4xl": "text-4xl",
+            "5xl": "text-5xl",
+            "6xl": "text-6xl",
         },
         center: {
             true: "text-center",
@@ -22,9 +35,7 @@ const typography = tv({
             true: "italic",
         },
     },
-    defaultVariants: {
-        variant: "primary",
-    },
+    defaultVariants: {},
 });
 
 interface TypographyProps extends TVCProps<typeof typography, "span"> {
@@ -35,15 +46,11 @@ interface TypographyProps extends TVCProps<typeof typography, "span"> {
  * Text. Used across components to consistently style text.
  */
 export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
-    ({ children, className, variant, center, underline, italic, as, ...props }, ref) => {
+    ({ children, className, center, underline, italic, as, size, ...props }, ref) => {
         const Comp = as || "p";
 
         return (
-            <Comp
-                ref={ref}
-                className={typography({ className, variant, center, underline, italic })}
-                {...props}
-            >
+            <Comp ref={ref} className={typography({ className, center, underline, size, italic })} {...props}>
                 {children}
             </Comp>
         );

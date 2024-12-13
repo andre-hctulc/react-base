@@ -44,17 +44,21 @@ export const HideCols: React.FC<HideColsProps> = ({ colsIcon, cols, hiddenCols, 
                 minWidth="xs"
             >
                 <List
-                    items={cols
-                        .map((col) => {
-                            if (col.hidable === false) return null;
+                    items={
+                        cols
+                            .map((col) => {
+                                if (col.hidable === false) return null;
 
-                            return {
-                                key: col.key,
-                                label: col.label,
-                                icon: hidden.has(col.key) ? props.showIcon || "➕" : props.hideIcon || "➖",
-                            };
-                        })
-                        .filter((item) => !!item)}
+                                return {
+                                    key: col.key,
+                                    label: col.label,
+                                    icon: hidden.has(col.key)
+                                        ? props.showIcon || "➕"
+                                        : props.hideIcon || "➖",
+                                };
+                            })
+                            .filter(Boolean) as DataGridColDef<any>[]
+                    }
                     onItemClick={(item) => {
                         props.onChange?.(item.key, hidden.has(item.key));
                     }}

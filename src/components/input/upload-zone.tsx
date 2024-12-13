@@ -56,7 +56,7 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
 
     const updateFiles = (files: File[], inputOrigin: boolean, callOnChange: boolean) => {
         setFiles(files);
-        onChange?.(files);
+        if (callOnChange) onChange?.({ value: files });
 
         if (!inputOrigin) {
             const dataTransfer = new DataTransfer();

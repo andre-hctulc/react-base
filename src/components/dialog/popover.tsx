@@ -7,13 +7,12 @@ import { Transition } from "@headlessui/react";
 import { Overlay } from "../layout";
 
 const popover = tv({
-    base: "absolute overflow-hidden bg",
+    base: "absolute",
     variants: {
         width: {
-            none: "",
             auto: "w-auto",
             xs: "w-[150px]",
-            sm: "w-[200px]",
+            sm: "w-[250px]",
             md: "w-[370px]",
             lg: "w-[500px]",
             xl: "w-[600px]",
@@ -21,7 +20,6 @@ const popover = tv({
             "3xl": "w-[1000px]",
         },
         minWidth: {
-            none: "",
             auto: "w-auto",
             xs: "min-w-[150px]",
             sm: "min-w-[200px]",
@@ -32,7 +30,6 @@ const popover = tv({
             "3xl": "min-w-[1000px]",
         },
         height: {
-            none: "",
             auto: "w-auto",
             xs: "h-20",
             sm: "h-24",
@@ -42,49 +39,23 @@ const popover = tv({
             "2xl": "h-96",
             "3xl": "h-128",
         },
-        shadow: {
-            none: "",
-            sm: "shadow-sm",
-            base: "shadow",
-            md: "shadow-md",
-            lg: "shadow-lg",
-            xl: "shadow-xl",
-            "2xl": "shadow-2xl",
-        },
-        rounded: {
-            none: "",
-            sm: "rounded-sm",
-            base: "rounded",
-            md: "rounded-md",
-            lg: "rounded-lg",
-            xl: "rounded-xl",
-            "2xl": "rounded-2xl",
-        },
-        padding: {
-            none: "",
-            xs: "p-1",
-            sm: "p-2",
-            md: "p-4",
-            lg: "p-6",
-            xl: "p-8",
+        minHeight: {
+            auto: "w-auto",
+            xs: "min-h-20",
+            sm: "min-h-24",
+            md: "min-h-32",
+            lg: "min-h-48",
+            xl: "min-h-64",
+            "2xl": "min-h-96",
+            "3xl": "min-h-128",
         },
     },
-    defaultVariants: {
-        shadow: "base",
-        width: "none",
-        height: "none",
-        rounded: "base",
-        padding: "none",
-    },
+    defaultVariants: {},
 });
 
 interface PopoverProps extends VariantProps<typeof popover>, XStyleProps {
     anchor: HTMLElement | null | undefined;
     children?: React.ReactNode;
-    /**
-     * @default true
-     */
-    border?: boolean;
     panelClasses?: ClassValue;
     open: boolean;
     position?: Placement;
@@ -110,6 +81,7 @@ const getOffset = (position: Placement, gap: number) => {
 export const Popover: React.FC<PopoverProps> = (props) => {
     const [popperElement, setPopperElement] = React.useState<HTMLDivElement | null>(null);
     const pos = props.position ?? "bottom";
+    const [isPositioned, setIsPositioned] = React.useState(false); // Track whether the popover is positioned
     const { styles, attributes } = usePopper(props.anchor, popperElement, {
         placement: pos,
         modifiers: [
@@ -135,18 +107,12 @@ export const Popover: React.FC<PopoverProps> = (props) => {
             // },
         ],
     });
-    const wasOpen = React.useRef(props.open);
 
     React.useEffect(() => {
-        if (props.open && !wasOpen.current) {
-            wasOpen.current = true;
+        if (styles.popper?.top) {
+            setIsPositioned(true);
         }
-    }, [open]);
-
-    // Don't render if not open and was not open,
-    // this is to fix the animation issue on first open.
-    // Without this fix, the popover visible adjust its position from 0,0 to the actual position.
-    if (!open && !wasOpen.current) return null;
+    }, [styles.popper?.top]);
 
     return (
         <Overlay
@@ -162,12 +128,12 @@ export const Popover: React.FC<PopoverProps> = (props) => {
             <Transition
                 as={React.Fragment}
                 show={props.open}
-                enter="transition ease-out duration-150"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
+                enter="transition-opacity ease-out duration-150"
+                enterFrom="opacity-0 "
+                enterTo="opacity-100"
+                leave="transition-opacity ease-in duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0 "
             >
                 <div
                     ref={setPopperElement}
@@ -175,12 +141,11 @@ export const Popover: React.FC<PopoverProps> = (props) => {
                     onClick={(e) => e.stopPropagation()}
                     {...attributes.popper}
                     className={popover({
-                        shadow: props.shadow,
                         minWidth: props.minWidth,
                         width: props.width,
-                        padding: props.padding,
                         height: props.height,
-                        className: [props.border && "border", props.className],
+                        className: [props.className, !isPositioned && "invisible"],
+                        minHeight: props.minHeight,
                     })}
                 >
                     {props.children}

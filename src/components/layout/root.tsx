@@ -1,20 +1,28 @@
-import type React from "react";
+import React from "react";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 
 const root = tv({
-    base: "w-full max-w-full box-border flex flex-col flex-grow min-h-0",
+    base: "max-w-full box-border flex",
     variants: {
+        variant: {
+            grow: "flex-grow",
+            full_width: "w-full",
+        },
         direction: {
             row: "flex-row",
             col: "flex-col",
             mix: "flex-col lg:flex-row",
             mix_inverse: "flex-col lg:flex-row-reverse",
         },
+        minHeight0: {
+            true: "min-h-0",
+        },
         grow: {
             true: "flex-grow",
         },
         scroll: {
-            true: "overflow-y-auto overflow-x-hidden",
+            true: "overflow-y-auto",
+            false: "",
         },
         heightScreen: {
             true: "h-screen",
@@ -25,9 +33,15 @@ const root = tv({
         maxHeightFull: {
             true: "max-h-full",
         },
+        relative: {
+            true: "relative",
+        },
     },
     defaultVariants: {
         direction: "col",
+        grow: true,
+        scroll: false,
+        variant: "full_width",
     },
 });
 
@@ -47,18 +61,24 @@ export const Root: React.FC<RootProps> = ({
     fullHeight,
     heightScreen,
     maxHeightFull,
+    variant,
     grow,
+    minHeight0,
+    relative,
 }) => {
     return (
         <div
             className={root({
                 className,
+                variant,
                 scroll,
                 heightScreen,
                 fullHeight,
                 grow,
                 direction,
                 maxHeightFull,
+                minHeight0,
+                relative,
             })}
         >
             {children}

@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import React from "react";
 import type { InputLikeProps } from "./input";
@@ -45,13 +47,13 @@ export const InputList = <T,>({
     const add = (newItem: T) => {
         const newValues = [...values, newItem];
         setValues(newValues);
-        inputProps.onChange?.(newValues);
+        inputProps.onChange?.({ value: newValues });
     };
 
     const remove = (item: T) => {
         const newValues = values.filter((v) => v !== item);
         setValues(newValues);
-        inputProps.onChange?.(newValues);
+        inputProps.onChange?.({ value: newValues });
     };
 
     return (
