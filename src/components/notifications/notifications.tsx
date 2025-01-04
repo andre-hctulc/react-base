@@ -7,6 +7,10 @@ import { useIsHydrated } from "../../hooks";
 import { createPortal } from "react-dom";
 import clsx from "clsx";
 import { Fade } from "../transitions/fade";
+import { InfoCircleIcon } from "../icons/info-circle";
+import { CheckCircleIcon } from "../icons/check-cirlce";
+import { ExclamationMarkIcon } from "../icons/exclamation-mark";
+import { QuestionCircleIcon } from "../icons/question-circle";
 
 const DEFAULT_DURATION: number = 3000;
 
@@ -54,10 +58,9 @@ interface NotificationIcons {
 
 interface NotificationsProviderProps {
     children?: React.ReactNode;
-    Icons?: Partial<NotificationIcons>;
 }
 
-export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ children, Icons: icons }) => {
+export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ children }) => {
     const [notifications, setNotifications] = React.useState<Notification[]>([]);
     const isMounted = useIsHydrated();
     const { top_center, top_right, bottom_left, bottom_right, top_left } = React.useMemo(() => {
@@ -79,15 +82,6 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
 
         return result;
     }, [notifications]);
-    const Icons = React.useMemo<NotificationIcons>(
-        () => ({
-            info: icons?.info || "ℹ",
-            success: icons?.success || "✔️",
-            warning: icons?.warning || "⚠️",
-            error: icons?.error || "X",
-        }),
-        [icons]
-    );
 
     const removeNotification = React.useCallback((notificationId: string) => {
         setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
@@ -131,7 +125,7 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
             {createPortal(
                 <ol {...listProps} className={clsx("fixed top-0 left-0", listProps.className)}>
                     {top_left.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} Icons={Icons} />
+                        <NotificationItem key={notification.id} notification={notification} />
                     ))}
                 </ol>,
                 document.body
@@ -142,7 +136,7 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
                     className={clsx("top-0 left-[50%] translate-x-[-50%]", listProps.className)}
                 >
                     {top_center.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} Icons={Icons} />
+                        <NotificationItem key={notification.id} notification={notification} />
                     ))}
                 </NotificationsBox>,
                 document.body
@@ -151,7 +145,7 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
             {createPortal(
                 <NotificationsBox className={clsx("fixed top-0 right-0", listProps.className)}>
                     {top_right.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} Icons={Icons} />
+                        <NotificationItem key={notification.id} notification={notification} />
                     ))}
                 </NotificationsBox>,
                 document.body
@@ -160,7 +154,7 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
             {createPortal(
                 <NotificationsBox className={clsx("fixed bottom-0 right-0", listProps.className)}>
                     {bottom_right.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} Icons={Icons} />
+                        <NotificationItem key={notification.id} notification={notification} />
                     ))}
                 </NotificationsBox>,
                 document.body
@@ -169,7 +163,7 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
             {createPortal(
                 <NotificationsBox className={clsx("fixed bottom-0 left-0", listProps.className)}>
                     {bottom_left.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} Icons={Icons} />
+                        <NotificationItem key={notification.id} notification={notification} />
                     ))}
                 </NotificationsBox>,
                 document.body
@@ -212,13 +206,16 @@ const notificationBox = tv({
 
 interface NotificationItemProps extends PropsOf<"li"> {
     notification: Notification;
-    Icons: NotificationIcons;
 }
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ className, notification, Icons, ...props }) => {
+const NotificationItem: React.FC<NotificationItemProps> = ({ className, notification, ...props }) => {
     const icon = React.useMemo(() => {
         if (notification.icon) return notification.icon;
-        return Icons[notification.severity || "info"];
+        else if (!notification.severity || notification.severity === "info") return <InfoCircleIcon />;
+        else if (notification.severity === "success") return <CheckCircleIcon />;
+        else if (notification.severity === "error") return <ExclamationMarkIcon />;
+        else if (notification.severity === "warning") return <QuestionCircleIcon />;
+        return <QuestionCircleIcon />;
     }, [notification.severity]);
 
     return (

@@ -6,3 +6,4 @@ export * from "./page-content";
 export * from "./overlay";
 export * from "./section-start";
 export * from "./menu";
+export * from "./page-footer";

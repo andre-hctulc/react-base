@@ -9,9 +9,12 @@ const toolbar = tv({
             column: "flex-col",
         },
         gap: {
+            xs: "gap-1",
             sm: "gap-2",
             md: "gap-3",
             lg: "gap-5",
+            xl: "gap-6",
+            "2xl": "gap-8",
         },
         padding: {
             none: "p-0",

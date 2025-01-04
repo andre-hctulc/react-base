@@ -34,7 +34,7 @@ export function useAsMap<K, V>(
 /**
  * Use `map.mapKeys` or `map.mapEntries` to map over the keys or entries of the map.
  */
-export function useToArrayMap<K, V>(
+export function useAsArrayMap<K, V>(
     iterable: Iterable<V>,
     key: (value: V) => K,
     deps?: React.DependencyList

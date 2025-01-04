@@ -13,6 +13,7 @@ const flexForm = tv({
             sm: "gap-2",
             md: "gap-3.5",
             lg: "gap-6",
+            xl: "gap-9",
             none: "",
         },
     },

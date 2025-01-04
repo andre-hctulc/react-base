@@ -73,9 +73,13 @@ export interface DataGridColDef<T extends object = any> {
     stringify?: CellStringify<T>;
     className?: string;
     /**
-     * Creates flex cells with centered alignment.
+     * Creates flex cells with `align-items: flex-start`.
      */
     alignCenter?: boolean;
+    /**
+     * Creates flex cells with `justify-content: flex-start`.
+     */
+    justifyCenter?: boolean;
     /**
      * Current custom state of the column.
      */
@@ -155,6 +159,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     const [rightEnd, setRightEnd] = React.useState(true);
     const [leftEnd, setLeftEnd] = React.useState(true);
     const scrollXBox = React.useRef<HTMLDivElement>(null);
+
     const cols = React.useMemo(() => {
         const c = [...props.cols];
 
@@ -273,10 +278,25 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
         updateEnds();
     });
 
+    const showPlaceholder = empty || props.loading;
+
     return (
-        <div className={clsx("flex flex-col relative overflow-y-auto", props.className)}>
+        <div
+            className={clsx(
+                "bg flex flex-col relative overflow-y-auto min-h-0",
+                showPlaceholder && "min-h-40",
+                props.className
+            )}
+        >
+            {showPlaceholder && (
+                <Placeholder className="absolute w-full h-full left-0">
+                    {!props.loading
+                        ? empty && (props.components?.empty || "No data found")
+                        : props.components?.loading || <Spinner size="2xl" />}
+                </Placeholder>
+            )}
             <div
-                className="flex-grow overflow-x-auto relative flex flex-col"
+                className={clsx("flex-grow overflow-x-auto relative flex flex-col")}
                 style={{}}
                 ref={scrollXBox}
                 onScroll={() => updateEnds()}
@@ -305,13 +325,6 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                             />
                         ))}
                 </div>
-                {(empty || props.loading) && (
-                    <Placeholder className="left-0">
-                        {!props.loading
-                            ? empty && (props.components?.empty || "No data found")
-                            : props.components?.loading || <Spinner size="2xl" />}
-                    </Placeholder>
-                )}
             </div>
             <Footer />
         </div>
@@ -518,6 +531,7 @@ const Cell: React.FC<CellProps> = ({
                     hoverEffect && "group-hover:bg-primary/5",
                     selected && "bg-primary/10",
                     col.alignCenter && "flex items-center",
+                    col.justifyCenter && "flex justify-center",
                     col.className
                 )}
             >

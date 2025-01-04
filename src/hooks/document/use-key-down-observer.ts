@@ -2,10 +2,15 @@ import React from "react";
 
 export function useKeyDownObserver(observe?: Iterable<string>) {
     const [keysPressed, setKeysPressed] = React.useState<Set<string>>(new Set());
+    const observeRef = React.useRef(observe);
+
+    React.useEffect(() => {
+        observeRef.current = observe;
+    }, [observe]);
 
     React.useEffect(() => {
         const observes = (key: string) => {
-            return !observe || new Set(observe).has(key);
+            return !observeRef.current || new Set(observeRef.current).has(key);
         };
 
         const keyDownListener = (e: KeyboardEvent) => {
@@ -27,7 +32,6 @@ export function useKeyDownObserver(observe?: Iterable<string>) {
             removeEventListener("keydown", keyDownListener);
             removeEventListener("keyup", keyUpListener);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return keysPressed;

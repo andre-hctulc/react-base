@@ -3,13 +3,19 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { StyleProps } from "../../types";
-import { CollapseH } from "../transitions";
+import { CollapseH1000, CollapseVScreen } from "../transitions";
 import { IconButton } from "../input";
 import { XIcon } from "../icons/x";
 
 const menu = tv({
-    base: "box-border w-full h-full flex-shrink-0",
+    base: "bg box-border h-full flex-shrink-0 min-h-0 overflow-y-auto",
     variants: {
+        elevated: {
+            "1": "bg",
+            "2": "bg-2",
+            "3": "bg-3",
+            "4": "bg-4",
+        },
         size: {
             none: "",
             auto: "w-auto",
@@ -17,6 +23,13 @@ const menu = tv({
             md: "w-[350px]",
             lg: "w-[450px]",
             xl: "w-[600px]",
+        },
+        flex: {
+            true: "flex flex-col",
+        },
+        variant: {
+            embedded: "",
+            overlay: "w-full absolute h-full z-30 shadow-lg",
         },
         sticky: {
             // height must be auto and align must be start for sticky to work (especially in flex context)
@@ -63,8 +76,8 @@ const menu = tv({
 
 interface MenuProps extends VariantProps<typeof menu>, StyleProps {
     children?: React.ReactNode;
-    /** @default true */
     closable?: boolean;
+    /** @default true */
     open?: boolean;
     as?: any;
     onClose?: () => void;
@@ -84,32 +97,51 @@ export const Menu: React.FC<MenuProps> = ({
     sticky,
     heightScreen,
     onClose,
+    variant,
+    elevated,
+    flex,
 }) => {
     const Comp = as || "div";
 
+    const main = (
+        <Comp
+            className={menu({
+                className,
+                size,
+                position,
+                shadow,
+                border,
+                sticky,
+                heightScreen,
+                variant,
+                elevated,
+                flex,
+            })}
+            style={style}
+        >
+            {closable && (
+                <div className="p-3">
+                    <IconButton className="ml-auto" onClick={() => onClose?.()}>
+                        <XIcon />
+                    </IconButton>
+                </div>
+            )}
+            {children}
+        </Comp>
+    );
+    const show = open ?? true;
+
+    if (variant === "overlay") {
+        return (
+            <CollapseVScreen appear={false} show={show}>
+                {main}
+            </CollapseVScreen>
+        );
+    }
+
     return (
-        <CollapseH show={open !== false}>
-            <Comp
-                className={menu({
-                    className,
-                    size,
-                    position,
-                    shadow,
-                    border,
-                    sticky,
-                    heightScreen,
-                })}
-                style={style}
-            >
-                {closable && (
-                    <div className="p-3">
-                        <IconButton className="ml-auto" onClick={() => onClose?.()}>
-                            <XIcon />
-                        </IconButton>
-                    </div>
-                )}
-                {children}
-            </Comp>
-        </CollapseH>
+        <CollapseH1000 appear={false} show={show}>
+            {main}
+        </CollapseH1000>
     );
 };

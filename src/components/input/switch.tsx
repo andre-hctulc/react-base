@@ -7,7 +7,11 @@ import React from "react";
 import type { PropsOf, XStyleProps } from "../../types";
 
 const _switch = tv({
-    base: "group relative flex  cursor-pointer rounded-full bg-3 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white",
+    base: [
+        "relative flex rounded-full bg-3 p-1 flex-shrink-0",
+        "group  cursor-pointer",
+        "transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white",
+    ],
     variants: {
         size: {
             sm: "h-5 w-11",

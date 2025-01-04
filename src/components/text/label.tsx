@@ -2,15 +2,16 @@ import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
 import type { PropsOf, TVCProps } from "../../types";
-import { HelperText } from "../input";
+import { HelperText, IconButton } from "../input";
+import { InfoCircleIcon } from "../icons/info-circle";
 
 const label = tv({
     base: "inline-block",
     variants: {
         variant: {
             default: "text-base",
-            secondary: "text-2 text-base",
-            tertiary: "text-2 text-sm",
+            secondary: "text-2 text-sm",
+            tertiary: "text-3 text-xs",
         },
         mb: {
             none: "mb-0",
@@ -49,7 +50,7 @@ export const Label = React.forwardRef<HTMLElement, LabelProps>(
         const Comp = as || "label";
 
         return (
-            <Comp ref={ref} className={label({ className, mb, mt, my, variant })} {...props}>
+            <Comp ref={ref as any} className={label({ className, mb, mt, my, variant })} {...props}>
                 {children}
                 {requiredHint && <span>{" *"}</span>}
             </Comp>
@@ -73,9 +74,9 @@ const labeled = tv({
             sm: "gap-0.5",
             md: "gap-1",
             lg: "gap-2",
-            xl: "gap-3",
-            "2xl": "gap-4",
-            "3xl": "gap-5",
+            xl: "gap-3.5",
+            "2xl": "gap-5",
+            "3xl": "gap-7",
         },
         mb: {
             none: "mb-0",
@@ -103,7 +104,7 @@ const labeled = tv({
         {
             orientation: "horizontal",
             reverse: true,
-            class: "flex-row-reverse",
+            class: "flex-row-reverse justify-end",
         },
         {
             orientation: "vertical",
@@ -123,8 +124,14 @@ interface LabeledProps extends VariantProps<typeof labeled> {
     id?: string;
     className?: ClassValue;
     children: React.ReactElement<{ id?: string }>;
-    helperText?: string;
+    helperText?: React.ReactNode;
     variant?: PropsOf<typeof Label>["variant"];
+    base?: number;
+    info?: boolean;
+    onInfoClick?: (e: React.MouseEvent) => void;
+    infoProps?: PropsOf<typeof IconButton>;
+    infoDisabled?: boolean;
+    infoIcon?: React.ReactNode;
 }
 
 /**
@@ -135,6 +142,7 @@ interface LabeledProps extends VariantProps<typeof labeled> {
  * - `mb`, `mt`, `my` - Margins
  * - `variant` - Controls the variant of the label
  * - `helperText` - A helper text
+ * - `base` - The base label with. has only an effect when {@link orientation} is _horizontal_
  */
 export const Labeled: React.FC<LabeledProps> = ({
     children,
@@ -148,16 +156,38 @@ export const Labeled: React.FC<LabeledProps> = ({
     helperText,
     variant,
     gap,
+    base,
     reverse,
+    info,
+    infoDisabled,
+    onInfoClick,
+    className,
+    infoIcon,
+    infoProps,
 }) => {
     const _id = id || children.props.id || label;
 
     return (
-        <div className={labeled({ orientation, mb, mt, my, gap, reverse })}>
+        <div className={labeled({ orientation, mb, mt, my, gap, reverse, className })}>
             {label && (
-                <Label variant={variant} {...labelProps} htmlFor={_id}>
-                    {label}
-                </Label>
+                <span className="inline-flex items-center gap-2">
+                    <Label
+                        variant={variant}
+                        {...labelProps}
+                        style={{
+                            width: orientation === "horizontal" ? base : undefined,
+                            ...labelProps?.style,
+                        }}
+                        htmlFor={_id}
+                    >
+                        {label}
+                    </Label>
+                    {info && (
+                        <IconButton size="sm" disabled={infoDisabled} onClick={onInfoClick} {...infoProps}>
+                            {infoIcon || <InfoCircleIcon />}
+                        </IconButton>
+                    )}
+                </span>
             )}
             {React.cloneElement(children, { ...children.props, id: _id })}
             {helperText && <HelperText>{helperText}</HelperText>}

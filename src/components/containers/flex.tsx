@@ -34,6 +34,10 @@ const flex = tv({
         grow: {
             true: "flex-grow",
         },
+        noShrink: {
+            true: "flex-shrink-0",
+        },
+        minH0: { true: "min-h-0" },
     },
     defaultVariants: {
         direction: "row",
@@ -43,9 +47,13 @@ const flex = tv({
 interface FlexProps extends TVCProps<typeof flex, "div"> {}
 
 export const Flex = React.forwardRef<HTMLDivElement, FlexProps>(
-    ({ children, className, direction, align, justify, wrap, grow, ...props }, ref) => {
+    ({ children, className, direction, align, justify, wrap, grow, noShrink, minH0, ...props }, ref) => {
         return (
-            <div ref={ref} className={flex({ className, direction, align, justify, wrap, grow })} {...props}>
+            <div
+                ref={ref}
+                className={flex({ className, direction, align, noShrink, justify, wrap, grow, minH0 })}
+                {...props}
+            >
                 {children}
             </div>
         );

@@ -7,17 +7,11 @@ import React from "react";
  * @param deps Additional dependencies
  * @param reactiveFilter Whether to recompute the filter when the filter changes.
  */
-export function useFilter<T = any>(
-    arr: T[],
-    filter: (item: T) => any,
-    deps?: React.DependencyList,
-    reactiveFilter = false
-): T[] {
+export function useFilter<T = any>(arr: T[], filter: (item: T) => any): T[] {
     const filtered = React.useMemo(() => {
         if (!arr) return [];
-        return arr.filter((item) => filter(item));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [arr, reactiveFilter ? filter : false, ...(deps || [])]);
+        return arr.filter(filter);
+    }, [arr]);
 
     return filtered;
 }

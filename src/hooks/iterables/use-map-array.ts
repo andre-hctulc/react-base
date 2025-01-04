@@ -7,15 +7,7 @@ import React from "react";
  * @param deps Additional dependencies
  * @param reactiveMapper Whether to remap when the mapper changes.
  */
-export function useMapArray<T, S>(
-    arr: T[],
-    mapper: (item: T, index: number, arr: T[]) => S,
-    deps?: React.DependencyList,
-    reactiveMapper = false
-): S[] {
-    const mapped = React.useMemo(
-        () => arr.map(mapper),
-        [arr, reactiveMapper ? mapper : false, ...(deps || [])]
-    );
+export function useMapArray<T, S>(arr: T[], mapper: (item: T, index: number, arr: T[]) => S): S[] {
+    const mapped = React.useMemo(() => arr.map(mapper), [arr]);
     return mapped;
 }

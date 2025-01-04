@@ -209,6 +209,7 @@ const listItem = tv({
         variant: {
             danger: "",
             default: "",
+            secondary: "",
         },
         effects: {
             true: "",
@@ -225,6 +226,11 @@ const listItem = tv({
             effects: true,
             class: "hover:bg-transparent-1 data-[active=true]:bg-transparent-2",
         },
+        {
+            variant: "secondary",
+            effects: true,
+            class: "text-2 hover:bg-neutral/5 data-[active=true]:bg-neutral/10",
+        },
     ],
     defaultVariants: {
         variant: "default",
@@ -237,10 +243,10 @@ const listItemInner = tv({
     base: "w-full flex box-border transition duration-100",
     variants: {
         size: {
-            sm: "text-xs px-2 gap-1.5 py-1",
-            md: "text-[15px] px-3 gap-2 py-1.5",
-            lg: "text-base px-4 gap-3 py-1.5",
-            xl: "text-lg px-5 gap-4 py-2",
+            sm: "text-xs px-2 gap-2 py-1",
+            md: "text-[15px] px-3 gap-3 py-1.5",
+            lg: "text-[15px] px-4 gap-4 py-2",
+            xl: "text-[15px] px-5 gap-4 py-3",
         },
     },
     defaultVariants: {
@@ -282,7 +288,7 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
     tools?: ToolItem[];
     href?: string;
     LinkComponent?: LinkComponent;
-    InnerProps?: any;
+    innerProps?: any;
     loading?: boolean;
     /**
      * @default "div"
@@ -293,6 +299,7 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
      * Apply clickable styles? Defaults to true when {@link onClick} or {@link href} is provided.
      */
     clickable?: boolean;
+    iconProps?: PropsOf<typeof Icon>;
 }
 
 export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
@@ -309,9 +316,10 @@ export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
             loading,
             variant,
             size,
-            InnerProps,
+            innerProps,
             effects,
             disabled,
+            iconProps,
             ...props
         },
         ref
@@ -321,9 +329,10 @@ export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
         const clickHandler = loading ? undefined : onClick;
         const Comp: any = props.as || "div";
         const Inner: any = href ? Link : "div";
-        const innerProps = href ? { href } : {};
+        const _innerProps = href ? { ...innerProps, href } : innerProps;
         const _disabled = loading || disabled;
         const interactive = _disabled ? false : props.clickable ?? (!!onClick || !!href);
+        const iconSize = size === "sm" ? "sm" : size === "lg" || size === "xl" ? "xl" : "md";
 
         return (
             <Comp
@@ -339,9 +348,9 @@ export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
                 onClick={_disabled ? undefined : clickHandler}
                 style={style}
             >
-                <Inner className={listItemInner({ size })} {...innerProps} {...InnerProps}>
+                <Inner className={listItemInner({ size })} {..._innerProps}>
                     {icon ? (
-                        <Icon className="self-center" size="md">
+                        <Icon className="self-center" size={iconSize}>
                             {icon}
                         </Icon>
                     ) : null}

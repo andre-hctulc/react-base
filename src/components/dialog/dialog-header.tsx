@@ -1,11 +1,13 @@
 "use client";
 
-import type { TVCProps, XStyleProps } from "../../types";
+import type { PropsOf, TVCProps } from "../../types";
+import { Icon } from "../icons";
 import { IconButton } from "../input";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv } from "tailwind-variants";
+import { Title } from "../text";
 
 const dialogHeader = tv({
-    base: "flex items-center justify-between px-6 pt-5 gap-2 box-border",
+    base: "flex items-center px-6 pt-5 pb-4 gap-2 box-border",
     variants: {},
     defaultVariants: {},
 });
@@ -14,6 +16,9 @@ interface DialogHeaderProps extends Omit<TVCProps<typeof dialogHeader, "div">, "
     closeIcon?: React.ReactNode;
     onClose?: () => void;
     title?: React.ReactNode;
+    icon?: React.ReactNode;
+    iconProps?: PropsOf<typeof Icon>;
+    titleProps?: PropsOf<typeof Title>;
 }
 
 export const DialogHeader: React.FC<DialogHeaderProps> = ({
@@ -21,11 +26,25 @@ export const DialogHeader: React.FC<DialogHeaderProps> = ({
     className,
     onClose,
     closeIcon,
+    icon,
+    iconProps,
+    titleProps,
     ...props
 }) => {
     return (
         <div className={dialogHeader({ className })} style={props.style}>
-            {typeof title === "string" ? <h2 className="text-lg/6 font-medium">{title}</h2> : title}
+            {icon && (
+                <Icon size="lg" {...iconProps}>
+                    {icon}
+                </Icon>
+            )}
+            {typeof title === "string" ? (
+                <Title bold={false} variant="h3" {...titleProps}>
+                    {title}
+                </Title>
+            ) : (
+                title
+            )}
             {onClose && (
                 <IconButton onClick={() => onClose()} variant="text" color="neutral" className="ml-auto">
                     {closeIcon || "×"}

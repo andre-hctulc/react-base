@@ -3,21 +3,16 @@ import type React from "react";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { Title } from "../text/title";
 import type { PropsOf } from "../../types";
+import type { Page } from "./page";
 
 const pageHeader = tv({
     base: "w-full",
     variants: {
-        px: {
+        padding: {
             none: "",
-            sm: "px-2 md:px-4",
-            md: "px-4 md:px-8",
-            lg: "px-8 md:px-12",
-        },
-        pt: {
-            none: "",
-            sm: "pt-2 md:pt-4",
-            md: "pt-4 md:pt-7",
-            lg: "pt-7 md:pt-10",
+            sm: "p-2 md:p-4 pb-0 md:pb-0",
+            md: "p-4 md:p-8 pb-0 md:pb-0",
+            lg: "p-8 md:p-12 pb-0 md:pb-0",
         },
         mb: {
             none: "",
@@ -27,15 +22,22 @@ const pageHeader = tv({
             lg: "mb-16",
             xl: "mb-20",
         },
+        mt: {
+            none: "",
+            xs: "mt-4",
+            sm: "mt-8",
+            md: "mt-12",
+            lg: "mt-16",
+            xl: "mt-20",
+        },
     },
     defaultVariants: {
-        px: "md",
-        pt: "md",
+        padding: "md",
     },
 });
 
 interface PageHeaderProps extends VariantProps<typeof pageHeader> {
-    title?: string;
+    title?: React.ReactNode;
     titleProps?: PropsOf<typeof Title>;
     badges?: React.ReactNode;
     actions?: React.ReactNode;
@@ -43,10 +45,11 @@ interface PageHeaderProps extends VariantProps<typeof pageHeader> {
     pre?: React.ReactNode;
     className?: ClassValue;
     center?: boolean;
+    padding?: "none" | "sm" | "md" | "lg";
 }
 
 /**
- * Use this inside a `Page` component to display a header with title, badges and actions.
+ * Use this inside a {@link Page} component to display a header with title, badges and actions.
  */
 export const PageHeader: React.FC<PageHeaderProps> = ({
     title,
@@ -57,12 +60,11 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     children,
     className,
     center,
-    pt,
-    px,
     mb,
+    padding,
 }) => {
     return (
-        <div className={pageHeader({ className, mb, pt, px })}>
+        <div className={pageHeader({ className, mb, padding })}>
             {pre}
             {(badges || actions || title) && (
                 <div className={clsx("flex gap-3 py-2", center && "justify-center")}>

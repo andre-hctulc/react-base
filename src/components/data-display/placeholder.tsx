@@ -28,6 +28,13 @@ const placeholder = tv({
         fullWidth: {
             true: "w-full",
         },
+        my: {
+            none: "",
+            sm: "my-4",
+            md: "my-8",
+            lg: "my-12",
+            xl: "my-20",
+        },
     },
     defaultVariants: {
         padding: "md",
@@ -50,10 +57,11 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
     grow,
     fullHeight,
     fullWidth,
+    my,
     ...props
 }) => {
     return (
-        <div className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth })} {...props}>
+        <div className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth, my })} {...props}>
             {icon && <Icon size="4xl">{icon}</Icon>}
             {typeof children === "string" ? (
                 <Typography variant="secondary">{children ?? "Empty"}</Typography>

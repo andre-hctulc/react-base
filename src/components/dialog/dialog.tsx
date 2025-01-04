@@ -16,13 +16,32 @@ const dialog = tv({
 });
 
 const dialogPanel = tv({
-    base: "max-w-full bg max-w-md rounded-xl backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0",
+    base: [
+        // use flex layout to fix overflow issues
+        "flex flex-col",
+        "max-w-full bg max-w-md rounded-xl backdrop-blur-2xl m-4 box-border max-h-full",
+        "duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0",
+    ],
     variants: {
-        size: {
+        width: {
             sm: "w-[300px]",
             md: "w-[500px]",
             lg: "w-[700px]",
-            auto: "",
+            none: "",
+        },
+        height: {
+            none: "",
+            sm: "h-[250px]",
+            md: "h-[400px]",
+            lg: "h-[550px]",
+            xl: "h-[800px]",
+        },
+        maxHeight: {
+            none: "",
+            sm: "max-h-[250px]",
+            md: "max-h-[400px]",
+            lg: "max-h-[550px]",
+            xl: "max-h-[800px]",
         },
         shadow: {
             sm: "shadow-sm",
@@ -32,7 +51,7 @@ const dialogPanel = tv({
         },
     },
     defaultVariants: {
-        size: "md",
+        width: "md",
         shadow: "lg",
     },
 });
@@ -57,7 +76,10 @@ export const Dialog: React.FC<DialogProps> = ({
     variant,
     closable,
     onClose,
-    ...props
+    width,
+    height,
+    shadow,
+    style,
 }) => {
     const mounted = useIsHydrated();
     const cl = closable !== false;
@@ -69,7 +91,7 @@ export const Dialog: React.FC<DialogProps> = ({
             open={open}
             as="div"
             className={dialog({ className })}
-            style={props.style}
+            style={style}
             onClose={() => {
                 if (cl && onClose) onClose();
             }}
@@ -77,16 +99,17 @@ export const Dialog: React.FC<DialogProps> = ({
             <div
                 data-open={open}
                 className={clsx(
-                    "fixed inset-0 z-40 w-screen overflow-y-auto transition duration-500",
-                    variant == "transparent" ? "" : "data-[open=true]:bg-black/20"
+                    "fixed inset-0 z-40 w-screen overflow-y-auto transition-all duration-500 ease-out",
+                    variant == "transparent"
+                        ? ""
+                        : open
+                        ? "data-[open=true]:bg-black/10"
+                        : "data-[open=false]:bg-black/0"
                 )}
             >
                 <div className="flex h-screen items-center justify-center p-4 box-border">
-                    <DialogPanel
-                        transition
-                        className={dialogPanel({ size: props.size, shadow: props.shadow })}
-                    >
-                        <div>{children}</div>
+                    <DialogPanel transition className={dialogPanel({ width, height, shadow })}>
+                        {children}
                     </DialogPanel>
                 </div>
             </div>

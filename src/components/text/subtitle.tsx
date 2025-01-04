@@ -39,6 +39,17 @@ const subtitle = tv({
             lg: "mb-7",
             xl: "mb-12",
         },
+        lineHeight: {
+            none: "",
+            tight: "leading-tight",
+            snug: "leading-snug",
+            normal: "leading-normal",
+            relaxed: "leading-relaxed",
+            loose: "leading-loose",
+        },
+    },
+    defaultVariants: {
+        variant: "h2",
     },
 });
 
@@ -52,12 +63,12 @@ interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
  * - `underline`
  */
 export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
-    ({ children, className, as, variant, underline, my, mt, mb, ...props }, ref) => {
+    ({ children, className, as, variant, underline, my, mt, mb, lineHeight, ...props }, ref) => {
         const Comp = as || variant || "h2";
 
         return (
             <Comp
-                className={subtitle({ className, underline, variant, my, mb, mt })}
+                className={subtitle({ className, underline, variant, my, mb, mt, lineHeight })}
                 ref={ref as any}
                 {...props}
             >

@@ -7,8 +7,8 @@ import type { TVCProps } from "../../types";
 
 const input = tv({
     base: [
-        "transition block w-full rounded-lg border-none bg-3 py-1.5 px-3",
-        "focus:outline-none focus:outline-2 focus:-outline-offset-2 focus:outline-divider",
+        "block w-full rounded-lg border-none bg-3 py-1.5 px-3",
+        "transition outline-0 focus:outline-2 focus:outline-divider",
     ],
     variants: {
         size: {
@@ -39,7 +39,6 @@ interface InputProps
             "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
         >,
         InputLikeProps<string, React.ChangeEvent<HTMLInputElement>> {
-    type?: "text" | "password" | "email" | "number" | "tel" | "url";
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(

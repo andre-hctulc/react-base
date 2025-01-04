@@ -2,20 +2,22 @@ import React from "react";
 
 export function useWindowEvent<E extends keyof WindowEventMap>(
     event: E,
-    listener: (this: Window, ev: WindowEventMap[E]) => void,
-    reactiveListener = false
+    listener: (this: Window, ev: WindowEventMap[E]) => void
 ) {
     const [active, setActive] = React.useState(true);
+    const savedListener = React.useRef(listener);
 
     React.useEffect(() => {
         if (!active) return;
 
-        window.addEventListener(event, listener);
+        const l = savedListener.current;
+
+        window.addEventListener(event, l);
 
         return () => {
-            window.removeEventListener(event, listener);
+            window.removeEventListener(event, l);
         };
-    }, [reactiveListener ? listener : false, active]);
+    }, [active]);
 
     const deactivateListener = () => {
         setActive(false);

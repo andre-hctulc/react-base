@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types";
 
 const title = tv({
-    base: "font-semibold",
+    base: "",
     variants: {
         variant: {
             h1: "text-2xl",
@@ -15,6 +15,10 @@ const title = tv({
         },
         underline: {
             true: "underline",
+        },
+        bold: {
+            true: "font-semibold",
+            false: "font-medium",
         },
         size: {
             xs: "text-xs",
@@ -52,9 +56,18 @@ const title = tv({
             lg: "mb-7",
             xl: "mb-12",
         },
+        lineHeight: {
+            none: "",
+            tight: "leading-tight",
+            snug: "leading-snug",
+            normal: "leading-normal",
+            relaxed: "leading-relaxed",
+            loose: "leading-loose",
+        },
     },
     defaultVariants: {
         variant: "h1",
+        bold: true,
     },
 });
 
@@ -68,12 +81,12 @@ interface TitleProps extends TVCProps<typeof title, "h2"> {
  * - `underline`
  */
 export const Title = React.forwardRef<HTMLElement, TitleProps>(
-    ({ children, className, as, variant, underline, size, my, mb, mt, ...props }, ref) => {
+    ({ children, className, as, variant, underline, size, my, mb, mt, lineHeight, bold, ...props }, ref) => {
         const Comp = as || variant || "h1";
 
         return (
             <Comp
-                className={title({ className, variant, underline, size, my, mb, mt })}
+                className={title({ className, variant, underline, size, my, mb, mt, lineHeight, bold })}
                 ref={ref as any}
                 {...props}
             >

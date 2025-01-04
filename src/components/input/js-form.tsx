@@ -106,6 +106,30 @@ function getAllFormElements(
     ) as (HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement)[];
 }
 
+function checkValidity(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) {
+    // InputLike.checkValidity() always returns true for **hidden inputs**,
+    // so we implement a custom check for them
+    if (el.type === "hidden") {
+        if (el.required && !el.value) return false;
+        if (
+            (el as HTMLInputElement).pattern &&
+            el.value &&
+            !new RegExp((el as HTMLInputElement).pattern).test(el.value)
+        )
+            return false;
+        if (el.minLength > 0 && el.value.length < el.minLength) return false;
+        if (el.maxLength > 0 && el.value.length > el.maxLength) return false;
+        if ((el as HTMLInputElement).min && parseFloat(el.value) < parseFloat((el as HTMLInputElement).min))
+            return false;
+        if ((el as HTMLInputElement).max && parseFloat(el.value) > parseFloat((el as HTMLInputElement).max))
+            return false;
+        return true;
+    }
+
+    // For other input types, we can use the built-in checkValidity()
+    return el.checkValidity();
+}
+
 export const JSForm = <T extends object = any>({
     children,
     onSubmit,
@@ -155,7 +179,7 @@ export const JSForm = <T extends object = any>({
 
         elements.forEach((element) => {
             if (!element.name) return;
-            const inpOk = element.checkValidity();
+            const inpOk = checkValidity(element);
             if (!inpOk) {
                 ok = false;
                 invalidReason.form = true;

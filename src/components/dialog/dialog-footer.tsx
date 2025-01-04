@@ -3,12 +3,13 @@
 import { tv } from "tailwind-variants";
 import type { PropsOf, TVCProps } from "../../types";
 import { Button } from "../input";
+import { Toolbar } from "../containers";
 
 const dialogFooter = tv({
-    base: "px-6 pb-5 box-border",
+    base: "px-6 pb-5 pt-4 box-border",
     variants: {
         variant: {
-            actions: "flex gap-4 justify-end",
+            actions: "flex justify-end",
             default: "",
             flex: "flex",
         },
@@ -35,20 +36,24 @@ interface CancelConfirmProps {
     cancelText?: string;
     buttonProps?: PropsOf<typeof Button>;
     form?: string;
-    ok?: boolean;
     confirmButtonProps?: PropsOf<typeof ConfirmButton>;
     cancelButtonProps?: PropsOf<typeof CancelButton>;
     loading?: boolean;
     danger?: boolean;
     size?: "sm" | "md" | "lg";
+    disabled?: boolean;
     /**
      * @default true
      */
     showCancel?: boolean;
+    children?: React.ReactNode;
 }
 
 /**
- * Cancel and confirm button for a dialog footer. Use variant `actions` for the footer to align the buttons correctly.
+ * Cancel and confirm button for a dialog footer. Use  {@link DialogFooter} `variant="actions"` for the footer to align the buttons correctly.
+ *
+ * ### Props
+ * - `form` - The form associated with the confirm button
  */
 export const CancelConfirm: React.FC<CancelConfirmProps> = ({
     onCancel,
@@ -63,9 +68,12 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
     showCancel,
     confirmButtonProps,
     cancelButtonProps,
+    disabled,
+    children,
 }) => {
     return (
-        <>
+        <Toolbar gap="md">
+            {children}
             {showCancel !== false && (
                 <CancelButton
                     size={size}
@@ -84,6 +92,7 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
             <ConfirmButton
                 size={size}
                 loading={loading}
+                disabled={disabled}
                 danger={danger}
                 form={form}
                 type={form ? "submit" : "button"}
@@ -97,7 +106,7 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
             >
                 {confirmText || "Confirm"}
             </ConfirmButton>
-        </>
+        </Toolbar>
     );
 };
 

@@ -34,6 +34,14 @@ const typography = tv({
         italic: {
             true: "italic",
         },
+        lineHeight: {
+            none: "",
+            tight: "leading-tight",
+            snug: "leading-snug",
+            normal: "leading-normal",
+            relaxed: "leading-relaxed",
+            loose: "leading-loose",
+        },
     },
     defaultVariants: {},
 });
@@ -46,11 +54,15 @@ interface TypographyProps extends TVCProps<typeof typography, "span"> {
  * Text. Used across components to consistently style text.
  */
 export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
-    ({ children, className, center, underline, italic, as, size, ...props }, ref) => {
+    ({ children, className, center, underline, italic, as, size, lineHeight, variant, ...props }, ref) => {
         const Comp = as || "p";
 
         return (
-            <Comp ref={ref} className={typography({ className, center, underline, size, italic })} {...props}>
+            <Comp
+                ref={ref}
+                className={typography({ className, center, underline, size, italic, lineHeight, variant })}
+                {...props}
+            >
                 {children}
             </Comp>
         );

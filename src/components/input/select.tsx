@@ -5,7 +5,7 @@ import clsx from "clsx";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
-import type { PropsOf, XStyleProps } from "../../types";
+import type { XStyleProps } from "../../types";
 import { ChevronDownIcon } from "../icons/chevron-down";
 import { Chip } from "../data-display/chip";
 import { Checkbox } from "./checkbox";
@@ -45,16 +45,19 @@ const selectButton = tv({
     },
 });
 
-interface SelectProps<V = string>
-    extends InputLikeProps<SelectOption<V>[]>,
+export interface RenderSelectedParams<D = any> {
+    selected: SelectOption<D>[];
+}
+
+interface SelectProps<D = any>
+    extends InputLikeProps<SelectOption<D>[]>,
         VariantProps<typeof select>,
-        Omit<PropsOf<typeof Listbox>, keyof InputLikeProps | "className" | "style" | "color">,
         XStyleProps {
-    options: SelectOption<V>[];
+    options: SelectOption<D>[];
     icon?: React.ReactNode;
     placeholder?: React.ReactNode;
     multiple?: boolean;
-    renderSelected?: (selected: SelectOption<V>[]) => React.ReactNode;
+    renderSelected?: (params: RenderSelectedParams<D>) => React.ReactNode;
     loading?: boolean;
     defaultSelectedKeys?: string[];
     selectedKeys?: string[];
@@ -64,10 +67,16 @@ interface SelectProps<V = string>
     loadingText?: string;
 }
 
-export interface SelectOption<D = any> {
-    key: string;
-    label: string;
+export interface Choice<D = any> {
+    value: string;
     data?: D;
+    disabled?: boolean;
+}
+
+export interface SelectOption<D = any> extends Choice<D> {
+    label: React.ReactNode;
+    defaultChecked?: boolean;
+    icon?: React.ReactNode;
 }
 
 /**
@@ -98,35 +107,39 @@ export const Select = <V,>({
     value,
     defaultValue,
     onChange,
-    ...props
+    icon,
+    name,
+    id,
 }: SelectProps<V>) => {
     const controlled = value !== undefined || selectedKeys !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<SelectOption<V>[]>(() => {
         if (defaultSelectedKeys) {
             const set = new Set(defaultSelectedKeys);
-            return options.filter(({ key }) => set.has(key));
+            return options.filter(({ value: key }) => set.has(key));
         }
         return value || defaultValue || [];
     });
 
     const selectedEl = renderSelected ? (
-        renderSelected(selected)
-    ) : (
+        renderSelected({ selected })
+    ) : multiple ? (
         <>
             {selected.map((sel) => {
                 if (multiple)
                     return (
-                        <Chip size="sm" key={sel.key} className="!bg-2">
+                        <Chip size="sm" key={sel.value} className="!bg-2">
                             {sel.label}
                         </Chip>
                     );
-                return <span key={sel.key}></span>;
+                return <span key={sel.value}></span>;
             })}
         </>
+    ) : (
+        <span className="truncate">{selected[0]?.label}</span>
     );
 
-    const loadingEl = <span className="text-3">{loadingText ?? "Loading..."}</span>;
+    const loadingEl = <span className="text-3 truncate">{loadingText ?? "Loading..."}</span>;
 
     const placeholderEl =
         typeof placeholder === "string" ? <span className="text-3">{placeholder}</span> : placeholder;
@@ -134,7 +147,7 @@ export const Select = <V,>({
     React.useEffect(() => {
         if (selectedKeys) {
             const set = new Set(selectedKeys);
-            setSelected(options.filter(({ key }) => set.has(key)));
+            setSelected(options.filter(({ value: key }) => set.has(key)));
         }
     }, [selectedKeys, options]);
 
@@ -149,13 +162,15 @@ export const Select = <V,>({
             <Listbox
                 value={selected}
                 onChange={(option) => {
-                    // multiple is handled by the checkboxes
+                    // multiple is handled by the checkboxes exclusively
                     if (multiple) return;
+
+                    if (!Array.isArray(option)) option = [option];
 
                     if (!controlled) setSelected(option);
                     onChange?.({ value: option });
                 }}
-                name={props.name}
+                name={name}
             >
                 <ListboxButton disabled={loading || readOnly || disabled} className={selectButton({ size })}>
                     <WheelX hideScrollbar>
@@ -164,7 +179,7 @@ export const Select = <V,>({
                         </div>
                     </WheelX>
                     <span className="absolute translate-y-[-50%] top-[50%] right-3 text-2 text-base">
-                        {props.icon || <ChevronDownIcon />}
+                        {icon || <ChevronDownIcon />}
                     </span>
                 </ListboxButton>
                 <ListboxOptions
@@ -179,13 +194,15 @@ export const Select = <V,>({
                 >
                     {options.map((option) => {
                         const toggle = () => {
+                            if (option.disabled) return;
+
                             if (multiple) {
                                 let newSelected: SelectOption<V>[];
 
-                                const checked = selected.some(({ key }) => key === option.key);
+                                const checked = selected.some(({ value: key }) => key === option.value);
 
                                 if (!checked) newSelected = [...selected, option];
-                                else newSelected = selected.filter(({ key }) => key !== option.key);
+                                else newSelected = selected.filter(({ value: key }) => key !== option.value);
 
                                 if (controlled) setSelected(newSelected);
                                 onChange?.({ value: newSelected });
@@ -194,6 +211,7 @@ export const Select = <V,>({
 
                         return (
                             <ListboxOption
+                                disabled={option.disabled}
                                 onClick={(e) => {
                                     if (multiple) {
                                         // prevents closing the dropdown
@@ -201,19 +219,24 @@ export const Select = <V,>({
                                         toggle();
                                     }
                                 }}
-                                key={option.key}
+                                key={option.value}
                                 value={option}
                                 className={clsx(
-                                    "group flex gap-2.5 cursor-default items-center rounded py-1.5 px-3 select-none data-[focus]:bg-3"
+                                    "group flex gap-2.5 cursor-default items-center rounded py-1.5 px-3 select-none data-[focus]:bg-3",
+                                    disabled && "cursor-not-allowed"
                                 )}
                             >
                                 {multiple && (
                                     <Checkbox
+                                        defaultValue={option.defaultChecked}
+                                        disabled={option.disabled}
                                         onClick={() => toggle()}
-                                        value={selected.some(({ key }) => option.key === key)}
+                                        value={selected.some(({ value: key }) => option.value === key)}
                                     />
                                 )}
-                                <span className="text-sm/6">{option.label}</span>
+                                <span className={clsx("text-sm/6", option.disabled && "text-3")}>
+                                    {option.label}
+                                </span>
                             </ListboxOption>
                         );
                     })}
