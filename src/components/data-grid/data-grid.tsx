@@ -45,11 +45,11 @@ export interface DataGridColDef<T extends object = any> {
      */
     label: React.ReactNode;
     /**
-     * The key to access the data in the row object. Can be a nested key.
+     * The data field. Can be a nested path.
      *
      * Examples: `name`, `data.user.name`
      */
-    key: string;
+    path: string;
     /**
      * @default true
      */
@@ -67,7 +67,7 @@ export interface DataGridColDef<T extends object = any> {
      */
     render?: CellRenderer<T>;
     /**
-     * Get the text value of the cell. By default null and undefined values are converted to empty string,
+     * Determine the text value of the cell. By default null and undefined values are converted to empty string,
      * otherwise String() is used.
      */
     stringify?: CellStringify<T>;
@@ -113,6 +113,9 @@ interface DataGridProps<T extends object> {
         empty?: React.ReactNode;
         loading?: React.ReactNode;
     };
+    /**
+     * Render popover content for an actions column.
+     */
     renderActions?: (row: T) => React.ReactNode;
     actionsCol?: boolean;
     defaultHideCols?: string[];
@@ -189,7 +192,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                         row={row}
                     />
                 ),
-                key: "$actions$",
+                path: "$actions$",
                 width: 50,
                 className: "flex justify-center items-center",
                 headerCellClassName: "flex justify-center items-center",
@@ -215,7 +218,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                             onClick={(e) => e.stopPropagation()}
                         />
                     ),
-                key: "$select$",
+                path: "$select$",
                 width: 50,
                 hidable: false,
                 className: "flex justify-center items-center",
@@ -239,7 +242,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
 
         const hideSet = new Set(hiddenCols);
 
-        return c.filter((col) => !hideSet.has(col.key));
+        return c.filter((col) => !hideSet.has(col.path));
     }, [
         props.cols,
         hiddenCols,
@@ -368,7 +371,7 @@ const HeaderRow: React.FC<HeaderRowProps> = ({ cols, height, rightEnd, leftEnd }
     const headerRow = React.useMemo(() => {
         const result: any = {};
         cols.forEach((col) => {
-            setPropertyByPath(result, col.key, col.label);
+            setPropertyByPath(result, col.path, col.label);
         });
         return result;
     }, [cols]);
@@ -424,10 +427,10 @@ const Row: React.FC<RowProps<any>> = ({
                 <Cell
                     cols={cols}
                     row={row}
-                    key={col.key}
+                    key={col.path}
                     col={col}
                     onClick={onCellClick}
-                    value={resolvePropertyPath(row, col.key)}
+                    value={resolvePropertyPath(row, col.path)}
                     {...cellStyleProps}
                 />
             ))}

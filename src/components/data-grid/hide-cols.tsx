@@ -50,9 +50,9 @@ export const HideCols: React.FC<HideColsProps> = ({ colsIcon, cols, hiddenCols, 
                                 if (col.hidable === false) return null;
 
                                 return {
-                                    key: col.key,
+                                    key: col.path,
                                     label: col.label,
-                                    icon: hidden.has(col.key)
+                                    icon: hidden.has(col.path)
                                         ? props.showIcon || "➕"
                                         : props.hideIcon || "➖",
                                 };
