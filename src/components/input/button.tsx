@@ -132,8 +132,7 @@ const btn = tv({
         {
             variant: "floating",
             color: "neutral",
-            className:
-                "data-[disabled=false]:shadow-neutral",
+            className: "data-[disabled=false]:shadow-neutral",
         },
         {
             variant: "floating",
@@ -143,14 +142,12 @@ const btn = tv({
         {
             variant: "floating",
             color: "primary",
-            className:
-                "data-[disabled=false]:shadow-primary",
+            className: "data-[disabled=false]:shadow-primary",
         },
         {
             variant: "floating",
             color: "secondary",
-            className:
-                "data-[disabled=false]:shadow-secondary",
+            className: "data-[disabled=false]:shadow-secondary",
         },
         {
             variant: "floating",
@@ -160,14 +157,12 @@ const btn = tv({
         {
             variant: "floating",
             color: "success",
-            className:
-                "data-[disabled=false]:shadow-success",
+            className: "data-[disabled=false]:shadow-success",
         },
         {
             variant: "floating",
             color: "warning",
-            className:
-                "data-[disabled=false]:shadow-warning",
+            className: "data-[disabled=false]:shadow-warning",
         },
         {
             variant: "floating",
@@ -195,6 +190,7 @@ interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">,
     loading?: boolean;
     disabled?: boolean;
     as?: any;
+    href?: string;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -213,13 +209,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             shadow,
             mt,
             as,
+            href,
             ...props
         },
         ref
     ) => {
         const ico = loading ? <Spinner color="inherit" size="sm" /> : icon;
         const dis = disabled || loading;
-        const Comp = as || "button";
+        const Comp = as || (href ? "a" : "button");
+        const p: any = { ...props };
+
+        if (href) {
+            p.href = href;
+        }
 
         return (
             <Comp
