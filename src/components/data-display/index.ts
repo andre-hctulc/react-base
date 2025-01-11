@@ -1,3 +1,7 @@
-export { default as StaticBadge } from "./StaticBadge";
-export { default as Live } from "./Live";
-export { default as Circle } from "./circle";
+export * from "./alert";
+export * from "./chip";
+export * from "./stat";
+export * from "./avatar";
+export * from "./placeholder";
+export * from "./skeleton";
+export * from "./tabs";

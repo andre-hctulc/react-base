@@ -1,6 +1,6 @@
 "use client";
 
-import { useDev } from "../../providers/DevProvider";
+import { useDev } from "./dev-provider";
 
 interface DevProps {
     children?: React.ReactNode;
@@ -8,7 +8,7 @@ interface DevProps {
     highlight?: boolean;
 }
 
-export default function Dev(props: DevProps) {
+export function Dev(props: DevProps) {
     const { devMode } = useDev();
 
     if (!devMode || props.hidden) return null;

@@ -1,6 +1,9 @@
-export { default as useFilter } from "./useFilter";
-export { default as useRange } from "./useRange";
-export { default as useSet } from "./useSet";
-export { default as useAsSet } from "./useAsSet";
-export { default as useAsArray } from "./useAsArray";
-export { default as useArray } from "./useArray";
+export * from "./use-filter";
+export * from "./use-range";
+export * from "./use-set";
+export * from "./use-as-set";
+export * from "./use-as-array";
+export * from "./use-array";
+export * from "./use-map-array";
+export * from "./use-map";
+export * from "./use-as-map";

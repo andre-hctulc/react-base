@@ -1,3 +1,5 @@
-export { default as Typography } from "./Typography";
-export { default as HelperText } from "./HelperText";
-export { default as Subtitle } from "./Subtitle";
+export * from "./subtitle";
+export * from "./title";
+export * from "./typography";
+export * from "./label";
+export * from "./error-text";

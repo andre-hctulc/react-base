@@ -1,0 +1,147 @@
+"use client";
+
+import React from "react";
+import { tv, type VariantProps } from "tailwind-variants";
+import type { StyleProps } from "../../types";
+import { CollapseH1000, CollapseVScreen } from "../transitions";
+import { IconButton } from "../input";
+import { XIcon } from "../icons/x";
+
+const menu = tv({
+    base: "bg box-border h-full flex-shrink-0 min-h-0 overflow-y-auto",
+    variants: {
+        elevated: {
+            "1": "bg",
+            "2": "bg-2",
+            "3": "bg-3",
+            "4": "bg-4",
+        },
+        size: {
+            none: "",
+            auto: "w-auto",
+            sm: "w-[250px]",
+            md: "w-[350px]",
+            lg: "w-[450px]",
+            xl: "w-[600px]",
+        },
+        flex: {
+            true: "flex flex-col",
+        },
+        variant: {
+            embedded: "",
+            overlay: "w-full absolute h-full z-30 shadow-lg",
+        },
+        sticky: {
+            // height must be auto and align must be start for sticky to work (especially in flex context)
+            true: "sticky top-0 h-auto",
+        },
+        heightScreen: {
+            true: "h-screen",
+        },
+        position: {
+            left: "left-0 self-start",
+            right: "right-0 ml-auto self-end",
+        },
+        border: {
+            true: "",
+        },
+        shadow: {
+            none: "",
+            sm: "shadow-sm",
+            base: "shadow",
+            md: "shadow-md",
+            lg: "shadow-lg",
+            xl: "shadow-xl",
+            "2xl": "shadow-2xl",
+        },
+    },
+    compoundVariants: [
+        {
+            position: "right",
+            border: true,
+            class: "border-l",
+        },
+        {
+            position: ["left"],
+            border: true,
+            class: "border-r",
+        },
+    ],
+    defaultVariants: {
+        size: "md",
+        position: "left",
+        border: true,
+    },
+});
+
+interface MenuProps extends VariantProps<typeof menu>, StyleProps {
+    children?: React.ReactNode;
+    closable?: boolean;
+    /** @default true */
+    open?: boolean;
+    as?: any;
+    onClose?: () => void;
+}
+
+export const Menu: React.FC<MenuProps> = ({
+    children,
+    style,
+    className,
+    size,
+    as,
+    open,
+    closable,
+    position,
+    shadow,
+    border,
+    sticky,
+    heightScreen,
+    onClose,
+    variant,
+    elevated,
+    flex,
+}) => {
+    const Comp = as || "div";
+
+    const main = (
+        <Comp
+            className={menu({
+                className,
+                size,
+                position,
+                shadow,
+                border,
+                sticky,
+                heightScreen,
+                variant,
+                elevated,
+                flex,
+            })}
+            style={style}
+        >
+            {closable && (
+                <div className="p-3">
+                    <IconButton className="ml-auto" onClick={() => onClose?.()}>
+                        <XIcon />
+                    </IconButton>
+                </div>
+            )}
+            {children}
+        </Comp>
+    );
+    const show = open ?? true;
+
+    if (variant === "overlay") {
+        return (
+            <CollapseVScreen appear={false} show={show}>
+                {main}
+            </CollapseVScreen>
+        );
+    }
+
+    return (
+        <CollapseH1000 appear={false} show={show}>
+            {main}
+        </CollapseH1000>
+    );
+};

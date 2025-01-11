@@ -1,8 +1,7 @@
 # react-base
 
-Based on tailwind-variants.
+[headlessui](https://headlessui.com) X [tailwind-variants](https://www.tailwind-variants.org)
 
-## Features
+## Compatibility
 
--   Components
--   Hooks
+`react@18` `react-dom@18` `@types/react@18` `@types/react-dom@18`
