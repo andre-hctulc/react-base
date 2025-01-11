@@ -10,9 +10,8 @@ const pageContent = tv({
         },
         width: {
             full: "w-full",
-            dialog_sm: "w-96",
-            dialog_md: "w-[500px]",
-            dialog_lg: "w-[700px]",
+            none: "",
+            auto: "w-auto",
         },
         padding: {
             none: "",

@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { useAsSet } from "../../hooks";
-import { List } from "../containers";
-import { Popover } from "../dialog/popover";
-import { IconButton } from "../input";
+import { useAsSet } from "../../../hooks";
+import { List, ListItem } from "../../containers";
+import { Popover } from "../../dialog/popover";
+import { IconButton } from "../../input";
 import type { DataGridColDef } from "./data-grid";
-import { GearIcon } from "../icons/gear";
+import { GearIcon } from "../../icons/gear";
 
 interface HideColsProps {
     colsIcon?: React.ReactNode;
@@ -57,7 +57,7 @@ export const HideCols: React.FC<HideColsProps> = ({ colsIcon, cols, hiddenCols, 
                                         : props.hideIcon || "➖",
                                 };
                             })
-                            .filter(Boolean) as DataGridColDef<any>[]
+                            .filter(Boolean) as ListItem[]
                     }
                     onItemClick={(item) => {
                         props.onChange?.(item.key, hidden.has(item.key));

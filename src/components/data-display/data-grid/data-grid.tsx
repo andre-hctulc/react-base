@@ -2,15 +2,15 @@
 
 import clsx from "clsx";
 import React from "react";
-import { useMapArray, useWindowEvent } from "../../hooks";
-import { resolvePropertyPath, setPropertyByPath } from "../../util";
-import { Spinner } from "../data-display/spinner";
-import { usePersistentState } from "../../hooks/others/use-persistent";
+import { useMapArray, useWindowEvent } from "../../../hooks";
+import { resolvePropertyPath, setPropertyByPath } from "../../../util";
+import { Spinner } from "../../data-display/spinner";
+import { usePersistentState } from "../../../hooks/others/use-persistent";
 import { HideCols } from "./hide-cols";
 import { RowActions } from "./row-actions";
-import { Checkbox } from "../input/checkbox";
-import { withPrefix } from "../../util/system";
-import { Placeholder } from "../data-display/placeholder";
+import { Checkbox } from "../../input/checkbox";
+import { withPrefix } from "../../../util/system";
+import { Placeholder } from "../../data-display/placeholder";
 
 const DEFAULT_CELL_WIDTH = 100;
 

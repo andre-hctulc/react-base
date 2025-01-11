@@ -109,6 +109,7 @@ const cardHeader = tv({
             md: "p-3",
             lg: "p-5",
             xl: "p-7",
+            "2xl": "p-10",
         },
     },
     defaultVariants: {
@@ -172,6 +173,7 @@ const cardBody = tv({
             md: "py-3 px-3.5",
             lg: "py-5 px-6",
             xl: "py-7 px-8",
+            "2xl": "p-12",
         },
         flex: {
             col: "flex flex-col",
@@ -220,6 +222,11 @@ export const CardBody: React.FC<CardBodyProps> = ({
 
 const cardFooter = tv({
     variants: {
+        variant: {
+            flex: "flex",
+            default: "",
+            actions: "flex justify-end",
+        },
         border: {
             true: "border-t",
         },
@@ -229,11 +236,13 @@ const cardFooter = tv({
             md: "py-3",
             lg: "py-5",
             xl: "py-7",
+            "2xl": "py-10",
         },
     },
     defaultVariants: {
         padding: "md",
         border: false,
+        variant: "default",
     },
 });
 
@@ -249,11 +258,12 @@ export const CardFooter: React.FC<CardFooterProps> = ({
     style,
     padding,
     as,
+    variant,
 }) => {
     const Comp = as || "div";
 
     return (
-        <Comp className={cardFooter({ className, border, padding })} style={style}>
+        <Comp className={cardFooter({ className, border, padding, variant })} style={style}>
             {children}
         </Comp>
     );

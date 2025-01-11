@@ -4,4 +4,3 @@ export * from "./dialog-body";
 export * from "./dialog-footer";
 export * from "./popover";
 export * from "./drawer";
-export * from "./confirm-dialog";

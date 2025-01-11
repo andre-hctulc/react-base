@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Popover } from "../dialog/popover";
-import { IconButton } from "../input";
-import { MoreVertIcon } from "../icons/more-vert";
+import { Popover } from "../../dialog/popover";
+import { IconButton } from "../../input";
+import { MoreVertIcon } from "../../icons/more-vert";
 
 interface RowActions {
     moreIcon?: React.ReactNode;
