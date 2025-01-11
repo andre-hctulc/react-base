@@ -78,6 +78,9 @@ const getOffset = (position: Placement, gap: number) => {
     return [0, gap];
 };
 
+/**
+ * The popover is portaled to the body
+ */
 export const Popover: React.FC<PopoverProps> = (props) => {
     const [popperElement, setPopperElement] = React.useState<HTMLDivElement | null>(null);
     const pos = props.position ?? "bottom";

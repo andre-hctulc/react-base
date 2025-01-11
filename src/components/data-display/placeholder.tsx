@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types";
+import type { PropsOf, TVCProps } from "../../types";
 import { Typography } from "../text";
 import { Icon } from "../icons";
 import React from "react";
@@ -44,17 +44,34 @@ const placeholder = tv({
 
 interface PlaceholderProps extends TVCProps<typeof placeholder, "div"> {
     icon?: React.ReactNode;
+    iconProps?: Partial<PropsOf<typeof Icon>>;
     helperText?: string;
+    helperTextProps?: PropsOf<typeof Typography>;
+    textProps?: PropsOf<typeof Typography>;
 }
 
+/**
+ * ### Props
+ * - `gap`
+ * - `padding`
+ * - `icon`
+ * - `helperText`
+ * - `grow`
+ * - `fullHeight`
+ * - `fullWidth`
+ * - `my`
+ */
 export const Placeholder: React.FC<PlaceholderProps> = ({
     children,
     className,
     icon,
+    iconProps,
     gap,
     padding,
     helperText,
+    helperTextProps,
     grow,
+    textProps,
     fullHeight,
     fullWidth,
     my,
@@ -62,13 +79,25 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
 }) => {
     return (
         <div className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth, my })} {...props}>
-            {icon && <Icon size="4xl">{icon}</Icon>}
+            {icon && (
+                <span className="text-2">
+                    <Icon size="4xl" {...iconProps}>
+                        {icon}
+                    </Icon>
+                </span>
+            )}
             {typeof children === "string" ? (
-                <Typography variant="secondary">{children ?? "Empty"}</Typography>
+                <Typography variant="secondary" {...textProps}>
+                    {children ?? "Empty"}
+                </Typography>
             ) : (
                 children
             )}
-            {helperText && <Typography variant="tertiary">{helperText}</Typography>}
+            {helperText && (
+                <Typography variant="tertiary" {...helperTextProps}>
+                    {helperText}
+                </Typography>
+            )}
         </div>
     );
 };

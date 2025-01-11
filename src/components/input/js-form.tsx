@@ -117,8 +117,10 @@ function checkValidity(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectEl
             !new RegExp((el as HTMLInputElement).pattern).test(el.value)
         )
             return false;
-        if (el.minLength > 0 && el.value.length < el.minLength) return false;
-        if (el.maxLength > 0 && el.value.length > el.maxLength) return false;
+        // @ts-ignore
+        if (el.minLength !== undefined && el.minLength > 0 && el.value.length < el.minLength) return false;
+        // @ts-ignore
+        if (el.maxLength !== undefined && el.maxLength > 0 && el.value.length > el.maxLength) return false;
         if ((el as HTMLInputElement).min && parseFloat(el.value) < parseFloat((el as HTMLInputElement).min))
             return false;
         if ((el as HTMLInputElement).max && parseFloat(el.value) > parseFloat((el as HTMLInputElement).max))
