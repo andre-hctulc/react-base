@@ -5,7 +5,7 @@ const toolbar = tv({
     variants: {
         direction: {
             row: "flex-row",
-            column: "flex-col",
+            col: "flex-col",
         },
         size: {
             sm: "gap-2",

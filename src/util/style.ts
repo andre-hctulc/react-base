@@ -1,9 +1,7 @@
 // * Colors
 
-import clsx from "clsx";
-import type { Falsy } from "react-native";
 import { collapse } from "./helpers";
-import type { StyleProps, Align, Size } from "../types";
+import type {  Align, Size } from "../types";
 
 /** Some colors 🌈 */
 export const colors = [
@@ -118,7 +116,7 @@ export function justifyClass(justify: Align) {
 // --- Theme
 
 export function numberToColor(num: number): string {
-    if (!num) return "gray";
+    if (!num) return "#000000";
     return "#" + num.toString(16).padStart(6, "0");
 }
 
