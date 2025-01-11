@@ -239,7 +239,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     disabled,
                 })}
                 disabled={dis}
-                {...props}
+                {...p}
             >
                 {ico && iconPosition === "left" && <Icon>{ico}</Icon>}
                 {children}
