@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps, XStyleProps } from "../../types";
+import type { TVCProps, StyleProps } from "../../types";
 import React from "react";
 import { withPrefix } from "../../util/system";
 

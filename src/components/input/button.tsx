@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
-import type { TVCProps, XStyleProps } from "../../types";
+import type { TVCProps, StyleProps } from "../../types";
 import { Spinner } from "../data-display/spinner";
 import { Icon } from "../icons";
 
@@ -183,7 +183,7 @@ const btn = tv({
     },
 });
 
-interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">, XStyleProps {
+interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">, StyleProps {
     iconPosition?: "left" | "right";
     icon?: React.ReactNode;
     children?: React.ReactNode;

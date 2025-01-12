@@ -63,7 +63,6 @@ export const EditEffect = <T,>({
 
     return React.cloneElement(inp, {
         ...inputProps,
-        ...inp.props,
         value,
         onChange: (e: any) => {
             setValue(value);

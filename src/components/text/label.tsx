@@ -189,7 +189,7 @@ export const Labeled: React.FC<LabeledProps> = ({
                     )}
                 </span>
             )}
-            {React.cloneElement(children, { ...children.props, id: _id })}
+            {React.cloneElement(children, { id: _id })}
             {helperText && <HelperText>{helperText}</HelperText>}
         </div>
     );

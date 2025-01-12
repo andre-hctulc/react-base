@@ -3,7 +3,7 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
-import type { PropsOf, TVCProps, XStyleProps } from "../../types";
+import type { PropsOf, TVCProps, StyleProps } from "../../types";
 import type { Choice } from "./select";
 import { Card } from "../containers";
 import clsx from "clsx";
@@ -27,7 +27,7 @@ export interface RadioRenderParams<D = any> {
     activate: () => void;
 }
 
-interface RadioProps<D = any> extends InputLikeProps<Choice<D>>, VariantProps<typeof radio>, XStyleProps {
+interface RadioProps<D = any> extends InputLikeProps<Choice<D>>, VariantProps<typeof radio>, StyleProps {
     options: Choice<D>[];
     icon?: React.ReactNode;
     defaultSelectedKey?: string;

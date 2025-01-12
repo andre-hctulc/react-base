@@ -27,5 +27,5 @@ interface InputWidthProps extends VariantProps<typeof inputWidth> {
  * Define consistent widths for input components.
  */
 export const InputWidth: React.FC<InputWidthProps> = ({ variant, children }) => {
-    return React.cloneElement(children, { ...children.props, className: inputWidth({ variant }) });
+    return React.cloneElement(children, { className: inputWidth({ variant }) });
 };

@@ -1,5 +1,5 @@
 import type React from "react";
-import type { ClassValue, VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
 export type Falsy = null | undefined | "" | 0 | false;
 
@@ -19,11 +19,6 @@ export interface StyleProps {
     className?: string;
 }
 
-export interface XStyleProps {
-    style?: React.CSSProperties;
-    className?: ClassValue;
-}
-
 export interface ChildrenProps {
     children?: React.ReactNode;
 }
@@ -41,7 +36,7 @@ export interface RequiredChildrenProps {
 export type TVCProps<
     T extends (...args: any) => any,
     R extends keyof React.JSX.IntrinsicElements | React.JSXElementConstructor<any> | never = never
-> = VariantProps<T> & Omit<React.ComponentProps<R>, "className"> & XStyleProps;
+> = VariantProps<T> & Omit<React.ComponentProps<R>, "className"> & StyleProps;
 
 // -- Components
 

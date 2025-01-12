@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
-import type { XStyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 import { usePopper } from "react-popper";
 import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
@@ -53,10 +55,9 @@ const popover = tv({
     defaultVariants: {},
 });
 
-interface PopoverProps extends VariantProps<typeof popover>, XStyleProps {
+interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
     anchor: HTMLElement | null | undefined;
     children?: React.ReactNode;
-    panelClasses?: ClassValue;
     open: boolean;
     position?: Placement;
     /**

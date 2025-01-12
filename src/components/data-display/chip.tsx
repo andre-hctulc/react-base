@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
-import type { TVCProps, XStyleProps } from "../../types";
+import type { TVCProps, StyleProps } from "../../types";
 
 const chip = tv({
     base: "rounded-full inline-flex text-center align-middle flex-shrink-0 items-center data-[clickable=true]:cursor-pointer transition",

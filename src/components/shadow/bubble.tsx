@@ -72,5 +72,5 @@ export const Bubble: React.FC<BubbleProps> = ({
         onBubble?.(customEvent);
     };
 
-    return React.cloneElement(children, { ...children.props, [eventProp]: bubble });
+    return React.cloneElement(children, { [eventProp]: bubble });
 };

@@ -1,7 +1,7 @@
-import { tv, type ClassValue } from "tailwind-variants";
+import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
-import type { TVCProps, XStyleProps } from "../../types";
+import type { TVCProps, StyleProps } from "../../types";
 
 const helperText = tv({
     base: "text-sm/6 text-2",
@@ -13,8 +13,7 @@ const helperText = tv({
     defaultVariants: {},
 });
 
-interface HelperTextProps extends Omit<TVCProps<typeof helperText, "p">, "className">, XStyleProps {
-    className?: ClassValue;
+interface HelperTextProps extends Omit<TVCProps<typeof helperText, "p">, "className">, StyleProps {
     children?: React.ReactNode;
 }
 

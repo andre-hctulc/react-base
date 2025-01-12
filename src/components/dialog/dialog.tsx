@@ -2,7 +2,7 @@
 
 import { Dialog as BaseDialog, DialogPanel } from "@headlessui/react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { XStyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 import clsx from "clsx";
 import { useIsHydrated } from "../../hooks";
 import { createPortal } from "react-dom";
@@ -56,7 +56,7 @@ const dialogPanel = tv({
     },
 });
 
-interface DialogProps extends VariantProps<typeof dialog>, VariantProps<typeof dialogPanel>, XStyleProps {
+interface DialogProps extends VariantProps<typeof dialog>, VariantProps<typeof dialogPanel>, StyleProps {
     open: boolean;
     onClose?: () => void;
     children?: React.ReactNode;

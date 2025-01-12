@@ -2,7 +2,7 @@ import { Checkbox as BaseCheckbox, type CheckboxProps as BaseCheckboxProps } fro
 import type { InputLikeProps } from "./input";
 import { tv, type VariantProps } from "tailwind-variants";
 import React from "react";
-import type { XStyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 import { Icon } from "../icons";
 import { CheckFactIcon } from "../icons/check-fat";
 
@@ -44,7 +44,7 @@ interface CheckboxProps
             BaseCheckboxProps,
             keyof InputLikeProps | "className" | "style" | "checked" | "defaultChecked" | "color"
         >,
-        XStyleProps {
+        StyleProps {
     icon?: React.ReactNode;
 }
 
