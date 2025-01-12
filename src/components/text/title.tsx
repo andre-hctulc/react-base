@@ -67,7 +67,7 @@ const title = tv({
     },
     defaultVariants: {
         variant: "h1",
-        bold: true,
+        bold: false,
     },
 });
 

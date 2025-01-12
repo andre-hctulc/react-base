@@ -4,6 +4,7 @@ import { withPrefix } from "../../util/system";
 import React from "react";
 import clsx from "clsx";
 import { Icon } from "../icons";
+import { Title } from "../text";
 
 const card = tv({
     base: "overflow-hidden",
@@ -37,8 +38,9 @@ const card = tv({
         },
         border: {
             none: "",
-            border: "border",
+            default: "border",
             thin: "border-[0.5px]",
+            thicker: "border-[1.5px]",
         },
         width: {
             none: "",
@@ -102,8 +104,10 @@ const cardHeader = tv({
     variants: {
         border: {
             true: "border-b",
+            false: "!pb-0",
         },
         padding: {
+            none: "",
             xs: "p-1.5",
             sm: "p-2 ",
             md: "p-3",
@@ -122,6 +126,7 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
     children?: React.ReactNode;
     className?: string;
     title?: React.ReactNode;
+    titleProps?: PropsOf<typeof Title>;
     badges?: React.ReactNode;
     actions?: React.ReactNode;
     style?: React.CSSProperties;
@@ -142,6 +147,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
     innerProps,
     iconProps,
     icon,
+    titleProps,
     as,
     ...props
 }) => {
@@ -154,7 +160,9 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
                 <div {...innerProps} className={clsx("flex items-center gap-3", innerProps?.className)}>
                     {icon && <Icon {...iconProps}>{icon}</Icon>}
                     {badges}
-                    <span className="font-medium">{title}</span>
+                    <Title variant="h4" {...titleProps}>
+                        {title}
+                    </Title>
                     {actions && <div className="ml-auto">{actions}</div>}
                 </div>
             )}
@@ -231,6 +239,7 @@ const cardFooter = tv({
             true: "border-t",
         },
         padding: {
+            none: "",
             xs: "p-1.5",
             sm: "py-2 ",
             md: "py-3",
