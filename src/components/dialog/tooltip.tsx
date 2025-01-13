@@ -1,3 +1,5 @@
+"use client";
+
 import { tv, type VariantProps } from "tailwind-variants";
 import type { PropsOf, StyleProps } from "../../types";
 import type { Placement } from "@popperjs/core";
@@ -56,7 +58,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
 }) => {
     const anchor = useRef<HTMLElement | null>(null);
     const [open, setOpen] = useState(false);
-    const closeTimeout = useRef<any>(null);
+    const openTimeout = useRef<any>(null);
     const entered = useRef<boolean>(false);
 
     return (
@@ -64,26 +66,38 @@ export const Tooltip: React.FC<TooltipProps> = ({
             {cloneElement(children, {
                 ref: anchor,
                 onMouseEnter: (e: any) => {
-                    if (disabled) return;
-                    if (closeTimeout.current) clearTimeout(closeTimeout.current);
-                    setOpen(true);
                     children.props?.onMouseEnter?.(e);
-                },
-                onMouseLeave: (e: any) => {
-                    closeTimeout.current = setTimeout(
+
+                    if (disabled) return;
+
+                    if (openTimeout.current) clearTimeout(openTimeout.current);
+
+                    openTimeout.current = setTimeout(
                         () => {
-                            setOpen(false);
+                            setOpen(true);
                         },
                         entered.current ? reEnterDelay ?? 200 : enterDelay ?? 200
                     );
-                    entered.current = true;
+                },
+                onMouseLeave: (e: any) => {
                     children.props?.onMouseLeave?.(e);
+                    if (openTimeout.current) clearTimeout(openTimeout.current);
+                    setOpen(false);
                 },
             } as any)}
-            <Popover open={open} position={position || "top"} anchor={anchor.current} {...props}>
+            <Popover
+                open={open}
+                noInteraction
+                position={position || "top"}
+                anchor={anchor.current}
+                {...props}
+            >
                 <div
                     {...containerProps}
-                    className={clsx("bg-black/90 rounded p-1.5 text-white", containerProps?.className)}
+                    className={clsx(
+                        "bg-black/75 rounded py-1.5 px-2 text-white text-sm",
+                        containerProps?.className
+                    )}
                 >
                     {content}
                 </div>

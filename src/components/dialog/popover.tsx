@@ -72,6 +72,7 @@ interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
     onClose?: () => void;
     bg?: boolean;
     zIndex?: "none" | "10" | "20" | "30" | "40" | "50";
+    noInteraction?: boolean;
 }
 
 const getOffset = (position: Placement, gap: number) => {
@@ -120,7 +121,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
 
     return (
         <Overlay
-            noInteraction={!props.open}
+            noInteraction={props.noInteraction || !props.open}
             bg={props.bg ? "transparent-1" : "transparent"}
             onClick={(e) => {
                 e.stopPropagation();
