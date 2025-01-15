@@ -55,6 +55,8 @@ const subtitle = tv({
 
 interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
     as?: any;
+    icon?: ReactNode;
+    iconProps?: Partial<PropsOf<typeof Icon>>;
 }
 
 /**
@@ -63,7 +65,10 @@ interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
  * - `underline`
  */
 export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
-    ({ children, className, as, variant, underline, my, mt, mb, lineHeight, ...props }, ref) => {
+    (
+        { children, className, as, variant, underline, my, mt, mb, lineHeight, icon, iconProps, ...props },
+        ref
+    ) => {
         const Comp = as || variant || "h2";
 
         return (
@@ -72,6 +77,11 @@ export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
                 ref={ref as any}
                 {...props}
             >
+                {icon && (
+                    <Icon {...iconProps} className={clsx("mr-2", iconProps.className)}>
+                        {icon}
+                    </Icon>
+                )}
                 {children}
             </Comp>
         );
