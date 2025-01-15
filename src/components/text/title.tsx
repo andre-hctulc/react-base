@@ -113,7 +113,7 @@ export const Title = React.forwardRef<HTMLElement, TitleProps>(
                 {...props}
             >
                 {icon && (
-                    <Icon {...iconProps} className={clsx("mr-3", iconProps?.className)}>
+                    <Icon size="none" inline {...iconProps} className={clsx("mr-3", iconProps?.className)}>
                         {icon}
                     </Icon>
                 )}

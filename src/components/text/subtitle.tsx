@@ -80,7 +80,7 @@ export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
                 {...props}
             >
                 {icon && (
-                    <Icon {...iconProps} className={clsx("mr-2", iconProps?.className)}>
+                    <Icon size="none" inline {...iconProps} className={clsx("mr-2", iconProps?.className)}>
                         {icon}
                     </Icon>
                 )}

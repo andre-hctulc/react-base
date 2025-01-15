@@ -16,6 +16,8 @@ const icon = tv({
             "3xl": "text-3xl",
             "4xl": "text-4xl",
             "5xl": "text-5xl",
+            none: "",
+            inherit: "text-inherit",
         },
         color: {
             primary: "text-primary",
@@ -31,6 +33,9 @@ const icon = tv({
             "text-3": "text-3",
             "text-4": "text-4",
         },
+        inline: {
+            true: "inline",
+        },
     },
     defaultVariants: {
         size: "md",
@@ -43,8 +48,8 @@ interface IconProps extends TVCProps<typeof icon, "span"> {
 }
 
 export const Icon = React.forwardRef<HTMLElement, IconProps>(
-    ({ className, children, size, color, ...props }, ref) => {
-        const classes = icon({ className, size, color });
+    ({ className, children, size, color, inline, ...props }, ref) => {
+        const classes = icon({ className, size, color, inline });
 
         if (!React.isValidElement(children))
             return (
