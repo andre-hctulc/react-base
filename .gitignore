@@ -1,7 +1,8 @@
 .vscode
 .DS_Store
-*.code-worksapce
+*.code-workspace
 node_modules
 Todo.md
 Dev.md
 *storybook.log
+package-lock.json
