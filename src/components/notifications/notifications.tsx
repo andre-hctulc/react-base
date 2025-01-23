@@ -49,13 +49,6 @@ export function useNotifications() {
     return context;
 }
 
-interface NotificationIcons {
-    info: React.ReactNode;
-    success: React.ReactNode;
-    warning: React.ReactNode;
-    error: React.ReactNode;
-}
-
 interface NotificationsProviderProps {
     children?: React.ReactNode;
 }
