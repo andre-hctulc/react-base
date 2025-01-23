@@ -4,7 +4,7 @@ import React from "react";
 import type { TVCProps, StyleProps } from "../../types";
 
 const helperText = tv({
-    base: "text-sm/6 text-2",
+    base: "text-sm text-2 leading-4",
     variants: {
         italic: {
             true: "italic",

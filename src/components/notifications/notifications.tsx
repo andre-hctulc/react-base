@@ -25,7 +25,7 @@ export interface Notification {
      */
     position?: NotificationPosition;
     /**
-     * Milliseconds
+     * Milliseconds. Use `Infinity` or `0` to keep the notification until manually removed.
      * @default 5000
      */
     duration?: number;

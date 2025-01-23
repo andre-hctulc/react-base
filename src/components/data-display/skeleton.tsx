@@ -32,7 +32,7 @@ const skeleton = tv({
 });
 
 interface SkeletonProps extends VariantProps<typeof skeleton> {
-    className?: ClassValue;
+    className?: string;
     children?: React.ReactNode;
     style?: React.CSSProperties;
     /**
@@ -46,6 +46,7 @@ interface SkeletonProps extends VariantProps<typeof skeleton> {
     width?: number;
     maxWidth?: number;
     minWidth?: number;
+    as?: any;
 }
 
 export const Skeleton: React.FC<SkeletonProps> = ({
@@ -62,9 +63,12 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     maxHeight,
     padding,
     size,
+    as,
 }) => {
+    const Comp = as || "div";
+
     return (
-        <div
+        <Comp
             data-children-visible={childrenVisible ?? true}
             className={skeleton({ className, shape, padding })}
             style={{
@@ -78,6 +82,6 @@ export const Skeleton: React.FC<SkeletonProps> = ({
             }}
         >
             {children}
-        </div>
+        </Comp>
     );
 };

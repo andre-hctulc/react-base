@@ -22,18 +22,6 @@ const title = tv({
             true: "font-semibold",
             false: "font-medium",
         },
-        size: {
-            xs: "text-xs",
-            sm: "text-sm",
-            base: "text-base",
-            md: "text-base",
-            lg: "text-lg",
-            xl: "text-xl",
-            "2xl": "text-2xl",
-            "3xl": "text-3xl",
-            "4xl": "text-4xl",
-            "5xl": "text-5xl",
-        },
         my: {
             none: "",
             xs: "my-1",
@@ -92,7 +80,6 @@ export const Title = React.forwardRef<HTMLElement, TitleProps>(
             as,
             variant,
             underline,
-            size,
             my,
             mb,
             mt,
@@ -108,7 +95,7 @@ export const Title = React.forwardRef<HTMLElement, TitleProps>(
 
         return (
             <Comp
-                className={title({ className, variant, underline, size, my, mb, mt, lineHeight, bold })}
+                className={title({ className, variant, underline, my, mb, mt, lineHeight, bold })}
                 ref={ref as any}
                 {...props}
             >
