@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import type { PropsOf } from "../../types";
 import { ErrorText } from "../text";
+import { setProperty } from "dot-prop";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 export interface InputState {
     ok: boolean;
@@ -23,7 +24,7 @@ export interface JSFormSnapshot<T extends object = any> {
      */
     values: T;
     /**
-     * State of all input fields in the form
+     * Maps input names to the input states
      */
     inputs: Record<string, InputState>;
     /**
@@ -52,51 +53,18 @@ interface JSFormContext<T extends object = any> extends JSFormSnapshot<T> {
     reset: () => void;
 }
 
-const JSFormContext = React.createContext<JSFormContext | null>(null);
+const JSFormContext = createContext<JSFormContext | null>(null);
 
 export function useJSForm<T extends object = any>(): JSFormContext<T> | null {
-    const ctx = React.useContext(JSFormContext);
+    const ctx = useContext(JSFormContext);
     if (!ctx) return null;
     return ctx;
 }
 
-type Errors<T extends object> = {
-    [K in keyof T]?: string | boolean;
-};
-
-const jsForm = tv({
-    variants: {
-        flex: {
-            row: "flex flex-row",
-            col: "flex flex-col",
-            wrap: "flex flex-wrap",
-        },
-        gap: {
-            sm: "gap-2",
-            md: "gap-3.5",
-            lg: "gap-6",
-            none: "",
-        },
-    },
-});
-
-interface JSFormProps<T extends object = any> extends VariantProps<typeof jsForm> {
-    id?: string;
-    children?: React.ReactNode;
-    onSubmit?: (snapshot: JSFormSnapshot<T>) => void;
-    onChange?: (snapshot: JSFormChange<T> & { changedField: { name: string; newValue: any } }) => void;
-    onInvalid?: (snapshot: JSFormSnapshot<T>) => void;
-    validate?: (data: JSFormValidateData<T>) => Errors<T> | boolean | undefined | void;
-    className?: ClassValue;
-    target?: string;
-    /**
-     * Whether to show validation errors on change
-     * @default "on_submit"
-     */
-    reportStrategy?: "on_submit" | "on_change";
-    defaultState?: Partial<JSFormSnapshot<T>>;
-    onInit?: (snapshot: JSFormSnapshot<T>) => void;
-}
+/**
+ * Maps input names to their validation result
+ */
+type FormErrors = Record<string, string | boolean>;
 
 function getAllFormElements(
     form: HTMLFormElement
@@ -132,6 +100,56 @@ function checkValidity(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectEl
     return el.checkValidity();
 }
 
+function formDataToObject(formData: FormData) {
+    const obj: Record<string, any> = {};
+
+    for (const [key, value] of formData.entries()) {
+        setProperty(obj, key, value);
+    }
+
+    return obj;
+}
+
+const jsForm = tv({
+    variants: {
+        flex: {
+            row: "flex flex-row",
+            col: "flex flex-col",
+            wrap: "flex flex-wrap",
+        },
+        gap: {
+            sm: "gap-2",
+            md: "gap-3.5",
+            lg: "gap-6",
+            none: "",
+        },
+    },
+});
+
+interface JSFormProps<T extends object = any> extends VariantProps<typeof jsForm> {
+    id?: string;
+    children?: React.ReactNode;
+    onSubmit?: (snapshot: JSFormSnapshot<T>) => void;
+    onChange?: (snapshot: JSFormChange<T> & { changedField: { name: string; newValue: any } }) => void;
+    onInvalid?: (snapshot: JSFormSnapshot<T>) => void;
+    validate?: (data: JSFormValidateData<T>) => FormErrors | boolean | undefined | void;
+    className?: ClassValue;
+    /**
+     * Form target attribute
+     */
+    target?: string;
+    /**
+     * Whether to show validation errors on change
+     * @default "on_submit"
+     */
+    reportStrategy?: "on_submit" | "on_change";
+    defaultState?: Partial<JSFormSnapshot<T>>;
+    onInit?: (snapshot: JSFormSnapshot<T>) => void;
+}
+
+/**
+ * Input names are interpreted as dot prop paths
+ */
 export const JSForm = <T extends object = any>({
     children,
     onSubmit,
@@ -147,8 +165,8 @@ export const JSForm = <T extends object = any>({
     reportStrategy,
     onInit,
 }: JSFormProps<T>) => {
-    const form = React.useRef<HTMLFormElement>(null);
-    const [snapshot, setSnapshot] = React.useState<JSFormSnapshot<T>>(() => {
+    const form = useRef<HTMLFormElement>(null);
+    const [snapshot, setSnapshot] = useState<JSFormSnapshot<T>>(() => {
         return {
             ok: true,
             form: null,
@@ -163,18 +181,18 @@ export const JSForm = <T extends object = any>({
     /**
      * Keep track of whether the form is reporting errors for the _on\_submit_ strategy
      */
-    const reporting = React.useRef(false);
-    const reset = React.useCallback(() => {
+    const reporting = useRef(false);
+    const reset = useCallback(() => {
         if (form.current) form.current.reset();
         reporting.current = false;
     }, []);
-    const ctx = React.useMemo(() => ({ ...snapshot, reset }), [snapshot, reset]);
-    const inited = React.useRef(false);
+    const ctx = useMemo(() => ({ ...snapshot, reset }), [snapshot, reset]);
+    const inited = useRef(false);
 
     const createSnapshot = (form: HTMLFormElement, reportFormErrors: boolean, showErrors: boolean) => {
         let ok = true;
         const formData = new FormData(form);
-        const values: any = Object.fromEntries(formData);
+        const values: any = formDataToObject(formData);
         const elements = getAllFormElements(form);
         const inputs: { [InputName in string]: InputState } = {};
         const invalidReason: { form: boolean; validate: boolean } = { form: false, validate: false };
@@ -270,7 +288,7 @@ export const JSForm = <T extends object = any>({
         });
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!inited.current && snapshot.form) {
             inited.current = true;
             onInit?.(snapshot);

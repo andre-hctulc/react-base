@@ -25,7 +25,7 @@ export interface Notification {
      */
     position?: NotificationPosition;
     /**
-     * Milliseconds
+     * Milliseconds. Use `Infinity` or `0` to keep the notification until manually removed.
      * @default 5000
      */
     duration?: number;
@@ -47,13 +47,6 @@ export function useNotifications() {
         throw new Error("`useNotifications` must be used within a `NotificationsProvider`");
     }
     return context;
-}
-
-interface NotificationIcons {
-    info: React.ReactNode;
-    success: React.ReactNode;
-    warning: React.ReactNode;
-    error: React.ReactNode;
 }
 
 interface NotificationsProviderProps {

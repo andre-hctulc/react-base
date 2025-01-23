@@ -236,7 +236,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     shape,
                     shadow,
                     mt,
-                    disabled,
+                    disabled: disabled || loading,
                 })}
                 disabled={dis}
                 {...p}

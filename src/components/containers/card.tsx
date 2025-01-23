@@ -75,7 +75,7 @@ interface CardProps extends TVCProps<typeof card, "div"> {
 }
 
 export const Card = React.forwardRef<HTMLElement, CardProps>(
-    ({ children, shadow, className, border, bg, width, height, size, variant, ...props }, ref) => {
+    ({ children, shadow, className, border, bg, width, height, size, variant, rounded, ...props }, ref) => {
         const Comp = props.as || "div";
 
         return (
@@ -83,6 +83,7 @@ export const Card = React.forwardRef<HTMLElement, CardProps>(
                 ref={ref as any}
                 className={card({
                     shadow,
+                    rounded,
                     bg,
                     className,
                     border,
