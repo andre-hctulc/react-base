@@ -3,7 +3,7 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
-import type { XStyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 import type { SelectOption } from "./select";
 import { Icon } from "../icons";
 
@@ -21,7 +21,7 @@ const radioButtons = tv({
 interface RadioButtonsProps<V = string>
     extends InputLikeProps<SelectOption<V>>,
         VariantProps<typeof radioButtons>,
-        XStyleProps {
+        StyleProps {
     options: SelectOption<V>[];
     defaultSelectedKey?: string;
     selectedKey?: string;

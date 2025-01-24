@@ -7,18 +7,21 @@ const sectionStart = tv({
     base: "flex flex-col",
     variants: {
         mt: {
+            xs: "mt-1",
             sm: "mt-3",
             md: "mt-5",
             lg: "mt-8",
             none: "",
         },
         mb: {
+            xs: "mb-1",
             sm: "mb-3",
             md: "mb-5",
             lg: "mb-8",
             none: "",
         },
         my: {
+            xs: "my-1",
             sm: "my-3",
             md: "my-5",
             lg: "my-8",

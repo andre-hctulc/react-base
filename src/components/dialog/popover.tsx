@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
-import type { XStyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 import { usePopper } from "react-popper";
 import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
@@ -53,10 +55,9 @@ const popover = tv({
     defaultVariants: {},
 });
 
-interface PopoverProps extends VariantProps<typeof popover>, XStyleProps {
+interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
     anchor: HTMLElement | null | undefined;
     children?: React.ReactNode;
-    panelClasses?: ClassValue;
     open: boolean;
     position?: Placement;
     /**
@@ -71,6 +72,7 @@ interface PopoverProps extends VariantProps<typeof popover>, XStyleProps {
     onClose?: () => void;
     bg?: boolean;
     zIndex?: "none" | "10" | "20" | "30" | "40" | "50";
+    noInteraction?: boolean;
 }
 
 const getOffset = (position: Placement, gap: number) => {
@@ -78,6 +80,9 @@ const getOffset = (position: Placement, gap: number) => {
     return [0, gap];
 };
 
+/**
+ * The popover is portaled to the body
+ */
 export const Popover: React.FC<PopoverProps> = (props) => {
     const [popperElement, setPopperElement] = React.useState<HTMLDivElement | null>(null);
     const pos = props.position ?? "bottom";
@@ -116,7 +121,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
 
     return (
         <Overlay
-            noInteraction={!props.open}
+            noInteraction={props.noInteraction || !props.open}
             bg={props.bg ? "transparent-1" : "transparent"}
             onClick={(e) => {
                 e.stopPropagation();

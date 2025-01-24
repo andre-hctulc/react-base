@@ -1,9 +1,9 @@
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
-import React from "react";
 import type { PropsOf, TVCProps } from "../../types";
 import { HelperText, IconButton } from "../input";
 import { InfoCircleIcon } from "../icons/info-circle";
+import { cloneElement, forwardRef, isValidElement, useId, type ReactNode } from "react";
 
 const label = tv({
     base: "inline-block",
@@ -45,12 +45,17 @@ interface LabelProps extends TVCProps<typeof label, "label"> {
     as?: any;
 }
 
-export const Label = React.forwardRef<HTMLElement, LabelProps>(
+export const Label = forwardRef<HTMLElement, LabelProps>(
     ({ children, className, requiredHint, mb, mt, my, as, variant, ...props }, ref) => {
         const Comp = as || "label";
+        const p = { ...props };
+
+        if (as && as !== "label") {
+            delete p.htmlFor;
+        }
 
         return (
-            <Comp ref={ref as any} className={label({ className, mb, mt, my, variant })} {...props}>
+            <Comp ref={ref as any} className={label({ className, mb, mt, my, variant })} {...p}>
                 {children}
                 {requiredHint && <span>{" *"}</span>}
             </Comp>
@@ -121,9 +126,8 @@ const labeled = tv({
 interface LabeledProps extends VariantProps<typeof labeled> {
     labelProps?: PropsOf<typeof Label>;
     label?: string;
-    id?: string;
     className?: ClassValue;
-    children: React.ReactElement<{ id?: string }>;
+    children: React.ReactElement<{ id?: string }> | ((inputId: string) => ReactNode);
     helperText?: React.ReactNode;
     variant?: PropsOf<typeof Label>["variant"];
     base?: number;
@@ -132,6 +136,7 @@ interface LabeledProps extends VariantProps<typeof labeled> {
     infoProps?: PropsOf<typeof IconButton>;
     infoDisabled?: boolean;
     infoIcon?: React.ReactNode;
+    helperTextTop?: boolean;
 }
 
 /**
@@ -147,7 +152,6 @@ interface LabeledProps extends VariantProps<typeof labeled> {
 export const Labeled: React.FC<LabeledProps> = ({
     children,
     labelProps,
-    id,
     label,
     orientation,
     mb,
@@ -164,12 +168,13 @@ export const Labeled: React.FC<LabeledProps> = ({
     className,
     infoIcon,
     infoProps,
+    helperTextTop,
 }) => {
-    const _id = id || children.props.id || label;
+    const id = useId();
 
     return (
         <div className={labeled({ orientation, mb, mt, my, gap, reverse, className })}>
-            {label && (
+            {(label || info) && (
                 <span className="inline-flex items-center gap-2">
                     <Label
                         variant={variant}
@@ -178,7 +183,7 @@ export const Labeled: React.FC<LabeledProps> = ({
                             width: orientation === "horizontal" ? base : undefined,
                             ...labelProps?.style,
                         }}
-                        htmlFor={_id}
+                        htmlFor={id}
                     >
                         {label}
                     </Label>
@@ -189,8 +194,9 @@ export const Labeled: React.FC<LabeledProps> = ({
                     )}
                 </span>
             )}
-            {React.cloneElement(children, { ...children.props, id: _id })}
-            {helperText && <HelperText>{helperText}</HelperText>}
+            {helperText && helperTextTop && <HelperText>{helperText}</HelperText>}
+            {isValidElement(children) ? cloneElement(children, { id }) : children(id)}
+            {helperText && !helperTextTop && <HelperText>{helperText}</HelperText>}
         </div>
     );
 };

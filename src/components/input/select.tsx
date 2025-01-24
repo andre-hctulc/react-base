@@ -5,7 +5,7 @@ import clsx from "clsx";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
-import type { XStyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 import { ChevronDownIcon } from "../icons/chevron-down";
 import { Chip } from "../data-display/chip";
 import { Checkbox } from "./checkbox";
@@ -52,7 +52,7 @@ export interface RenderSelectedParams<D = any> {
 interface SelectProps<D = any>
     extends InputLikeProps<SelectOption<D>[]>,
         VariantProps<typeof select>,
-        XStyleProps {
+        StyleProps {
     options: SelectOption<D>[];
     icon?: React.ReactNode;
     placeholder?: React.ReactNode;

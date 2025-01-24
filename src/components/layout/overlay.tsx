@@ -46,6 +46,10 @@ interface OverlayProps extends TVCProps<typeof overlay, "div"> {
     portal?: boolean;
 }
 
+/**
+ * ### Props
+ * - `portal` - Render this overlay in the body
+ */
 export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
     ({ children, className, variant, noInteraction, bg, portal, zIndex, ...props }, ref) => {
         const over = (

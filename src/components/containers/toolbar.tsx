@@ -54,6 +54,7 @@ const toolbar = tv({
 interface ToolbarProps extends TVCProps<typeof toolbar, "div"> {
     children?: React.ReactNode;
     stopEventPropagation?: boolean;
+    as?: any;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
@@ -69,8 +70,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     stopEventPropagation,
     ...props
 }) => {
+    const Comp: any = props.as || "div";
+
     return (
-        <div
+        <Comp
             className={toolbar({
                 className,
                 direction,
@@ -83,7 +86,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             })}
             onClick={
                 stopEventPropagation
-                    ? (e) => {
+                    ? (e: React.MouseEvent<any>) => {
                           e.stopPropagation();
                           props.onClick?.(e);
                       }
@@ -92,6 +95,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             {...props}
         >
             {children}
-        </div>
+        </Comp>
     );
 };

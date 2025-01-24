@@ -9,4 +9,5 @@ export * from "./text";
 export * from "./notifications";
 export * from "./transitions";
 export * from "./icons";
-export * from "./data-grid";
+export * from "./exotic";
+export * from "./editors";

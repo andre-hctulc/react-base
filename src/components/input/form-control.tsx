@@ -1,5 +1,5 @@
 import { tv, type VariantProps } from "tailwind-variants";
-import type { XStyleProps } from "../../types";
+import type { StyleProps } from "../../types";
 
 const formControl = tv({
     base: "flex",
@@ -14,7 +14,7 @@ const formControl = tv({
     },
 });
 
-interface FormControlProps extends VariantProps<typeof formControl>, XStyleProps {
+interface FormControlProps extends VariantProps<typeof formControl>, StyleProps {
     children?: React.ReactNode;
 }
 

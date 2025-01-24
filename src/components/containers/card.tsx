@@ -4,6 +4,7 @@ import { withPrefix } from "../../util/system";
 import React from "react";
 import clsx from "clsx";
 import { Icon } from "../icons";
+import { Title } from "../text";
 
 const card = tv({
     base: "overflow-hidden",
@@ -37,8 +38,9 @@ const card = tv({
         },
         border: {
             none: "",
-            border: "border",
+            default: "border",
             thin: "border-[0.5px]",
+            thicker: "border-[1.5px]",
         },
         width: {
             none: "",
@@ -73,7 +75,7 @@ interface CardProps extends TVCProps<typeof card, "div"> {
 }
 
 export const Card = React.forwardRef<HTMLElement, CardProps>(
-    ({ children, shadow, className, border, bg, width, height, size, variant, ...props }, ref) => {
+    ({ children, shadow, className, border, bg, width, height, size, variant, rounded, ...props }, ref) => {
         const Comp = props.as || "div";
 
         return (
@@ -81,6 +83,7 @@ export const Card = React.forwardRef<HTMLElement, CardProps>(
                 ref={ref as any}
                 className={card({
                     shadow,
+                    rounded,
                     bg,
                     className,
                     border,
@@ -102,8 +105,10 @@ const cardHeader = tv({
     variants: {
         border: {
             true: "border-b",
+            false: "!pb-0",
         },
         padding: {
+            none: "",
             xs: "p-1.5",
             sm: "p-2 ",
             md: "p-3",
@@ -122,6 +127,7 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
     children?: React.ReactNode;
     className?: string;
     title?: React.ReactNode;
+    titleProps?: PropsOf<typeof Title>;
     badges?: React.ReactNode;
     actions?: React.ReactNode;
     style?: React.CSSProperties;
@@ -142,6 +148,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
     innerProps,
     iconProps,
     icon,
+    titleProps,
     as,
     ...props
 }) => {
@@ -154,7 +161,9 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
                 <div {...innerProps} className={clsx("flex items-center gap-3", innerProps?.className)}>
                     {icon && <Icon {...iconProps}>{icon}</Icon>}
                     {badges}
-                    <span className="font-medium">{title}</span>
+                    <Title variant="h4" {...titleProps}>
+                        {title}
+                    </Title>
                     {actions && <div className="ml-auto">{actions}</div>}
                 </div>
             )}
@@ -222,10 +231,16 @@ export const CardBody: React.FC<CardBodyProps> = ({
 
 const cardFooter = tv({
     variants: {
+        variant: {
+            flex: "flex",
+            default: "",
+            actions: "flex justify-end",
+        },
         border: {
             true: "border-t",
         },
         padding: {
+            none: "",
             xs: "p-1.5",
             sm: "py-2 ",
             md: "py-3",
@@ -237,6 +252,7 @@ const cardFooter = tv({
     defaultVariants: {
         padding: "md",
         border: false,
+        variant: "default",
     },
 });
 
@@ -252,11 +268,12 @@ export const CardFooter: React.FC<CardFooterProps> = ({
     style,
     padding,
     as,
+    variant,
 }) => {
     const Comp = as || "div";
 
     return (
-        <Comp className={cardFooter({ className, border, padding })} style={style}>
+        <Comp className={cardFooter({ className, border, padding, variant })} style={style}>
             {children}
         </Comp>
     );

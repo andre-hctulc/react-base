@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps, XStyleProps } from "../../types";
+import type { TVCProps } from "../../types";
 import React from "react";
 import { withPrefix } from "../../util/system";
 
@@ -10,31 +10,62 @@ const avatar = tv({
             circle: "rounded-full",
             square: "rounded",
         },
+        bg: {
+            "1": "bg-1",
+            "2": "bg-2",
+            "3": "bg-3",
+            "4": "bg-4",
+            none: "",
+        },
         size: {
-            sm: "size-8 text-xs",
-            md: "size-12 text-sm",
-            lg: "size-16 text-base",
-            xl: "size-20 text-lg",
-            "2xl": "size-24 text-xl",
+            sm: "size-8 text-md",
+            md: "size-10 text-lg",
+            lg: "size-14 text-2xl",
+            xl: "size-16 text-3xl",
+        },
+        padding: {
+            sm: "p-1",
+            md: "p-2",
+            lg: "p-3",
+            xl: "p-4",
+            "2xl": "p-5",
+            "50%": "p-[50%]",
+        },
+        bold: {
+            true: "font-medium",
+        },
+        textColor: {
+            "1": "text-1",
+            "2": "text-2",
+            "3": "text-3",
+            "4": "text-4",
         },
     },
     defaultVariants: {
         shape: "circle",
-        size: "md",
+        bg: "3",
+        textColor: "2",
     },
 });
 
 interface AvatarProps extends TVCProps<typeof avatar, "div"> {
     src?: string;
+    as?: any;
     alt?: string;
 }
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-    ({ src, alt, className, size, shape, ...props }, ref) => {
+    ({ src, alt, className, size, shape, padding, children, as, bold, textColor, ...props }, ref) => {
+        const Comp: any = as || "div";
+
         return (
-            <div ref={ref} className={avatar({ size, shape, className })} {...props}>
-                <img src={src} alt={alt || "Avatar"} />
-            </div>
+            <Comp
+                ref={ref}
+                className={avatar({ size, shape, padding, className, textColor, bold })}
+                {...props}
+            >
+                {children}
+            </Comp>
         );
     }
 );

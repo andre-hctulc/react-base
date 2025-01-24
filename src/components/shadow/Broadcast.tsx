@@ -39,7 +39,7 @@ export const Broadcast = <P = any,>(props: BroadcastProps<P>) => {
                 return child;
             }
 
-            return React.cloneElement(child, { ...child.props, ...p });
+            return React.cloneElement(child, p);
         } else {
             return child;
         }

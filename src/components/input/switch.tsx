@@ -4,7 +4,7 @@ import { Switch as BaseSwitch } from "@headlessui/react";
 import type { InputLikeProps } from "./input";
 import { tv, type VariantProps } from "tailwind-variants";
 import React from "react";
-import type { PropsOf, XStyleProps } from "../../types";
+import type { PropsOf, StyleProps } from "../../types";
 
 const _switch = tv({
     base: [
@@ -41,7 +41,7 @@ interface SwitchProps
             PropsOf<typeof BaseSwitch>,
             keyof InputLikeProps | "className" | "style" | "color" | "checked" | "defaultChecked"
         >,
-        XStyleProps {}
+        StyleProps {}
 
 export const Switch: React.FC<SwitchProps> = ({
     className,

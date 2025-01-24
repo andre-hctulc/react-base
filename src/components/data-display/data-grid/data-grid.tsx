@@ -2,15 +2,15 @@
 
 import clsx from "clsx";
 import React from "react";
-import { useMapArray, useWindowEvent } from "../../hooks";
-import { resolvePropertyPath, setPropertyByPath } from "../../util";
-import { Spinner } from "../data-display/spinner";
-import { usePersistentState } from "../../hooks/others/use-persistent";
+import { useMapArray, useWindowEvent } from "../../../hooks";
+import { Spinner } from "../../data-display/spinner";
+import { usePersistentState } from "../../../hooks/others/use-persistent";
 import { HideCols } from "./hide-cols";
 import { RowActions } from "./row-actions";
-import { Checkbox } from "../input/checkbox";
-import { withPrefix } from "../../util/system";
-import { Placeholder } from "../data-display/placeholder";
+import { Checkbox } from "../../input/checkbox";
+import { withPrefix } from "../../../util/system";
+import { Placeholder } from "../../data-display/placeholder";
+import { getProperty, setProperty } from "dot-prop";
 
 const DEFAULT_CELL_WIDTH = 100;
 
@@ -371,7 +371,7 @@ const HeaderRow: React.FC<HeaderRowProps> = ({ cols, height, rightEnd, leftEnd }
     const headerRow = React.useMemo(() => {
         const result: any = {};
         cols.forEach((col) => {
-            setPropertyByPath(result, col.path, col.label);
+            setProperty(result, col.path, col.label);
         });
         return result;
     }, [cols]);
@@ -430,7 +430,7 @@ const Row: React.FC<RowProps<any>> = ({
                     key={col.path}
                     col={col}
                     onClick={onCellClick}
-                    value={resolvePropertyPath(row, col.path)}
+                    value={getProperty(row, col.path)}
                     {...cellStyleProps}
                 />
             ))}

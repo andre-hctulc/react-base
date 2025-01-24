@@ -1,7 +1,9 @@
 import { withPrefix } from "../../util/system";
-import React from "react";
+import React, { type ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types";
+import type { PropsOf, TVCProps } from "../../types";
+import { Icon } from "../icons";
+import clsx from "clsx";
 
 const subtitle = tv({
     base: "text-lg font-medium text-2",
@@ -55,6 +57,8 @@ const subtitle = tv({
 
 interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
     as?: any;
+    icon?: ReactNode;
+    iconProps?: Partial<PropsOf<typeof Icon>>;
 }
 
 /**
@@ -63,7 +67,10 @@ interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
  * - `underline`
  */
 export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
-    ({ children, className, as, variant, underline, my, mt, mb, lineHeight, ...props }, ref) => {
+    (
+        { children, className, as, variant, underline, my, mt, mb, lineHeight, icon, iconProps, ...props },
+        ref
+    ) => {
         const Comp = as || variant || "h2";
 
         return (
@@ -72,6 +79,11 @@ export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
                 ref={ref as any}
                 {...props}
             >
+                {icon && (
+                    <Icon size="none" inline {...iconProps} className={clsx("mr-2", iconProps?.className)}>
+                        {icon}
+                    </Icon>
+                )}
                 {children}
             </Comp>
         );

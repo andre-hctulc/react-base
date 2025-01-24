@@ -1,15 +1,22 @@
 "use client";
 
 import clsx from "clsx";
-import React from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import type { InputLikeProps } from "./input";
 import type { StyleProps } from "../../types";
 
-type InputListInputProps<T> = Omit<InputLikeProps<T>, "onChange" | "value">;
+type InputListInputProps<T> = Pick<InputLikeProps<T>, "readOnly" | "disabled" | "name" | "defaultValue">;
 
 interface InputListProps<T = any> extends InputLikeProps<T[]>, StyleProps {
     renderInput: (params: {
-        add: (newItem: T) => void;
+        /**
+         * @param newItem - The value of the new item. Id not provided the current candidate is used
+         */
+        add: (newItem?: T) => void;
+        /**
+         * Sets the given item as the candidate for the next `add`
+         */
+        candidate: (item: T) => void;
         values: T[];
         inputProps: InputListInputProps<T>;
     }) => React.ReactNode;
@@ -24,11 +31,17 @@ interface InputListProps<T = any> extends InputLikeProps<T[]>, StyleProps {
     addIcon?: React.ReactNode;
     as?: any;
     reverse?: boolean;
+    compareValues?: (a: T, b: T) => boolean;
+    unique?: boolean;
+    sort?: (a: T, b: T) => number;
 }
 
 /**
  * ### Props
  * - `reverse`- Render the input at the top
+ * - `compareValues` - Function to compare values. Default is `===`
+ * - `unique` - Only allow unique values
+ * - `sort` - Sort function for the values
  */
 export const InputList = <T,>({
     className,
@@ -41,11 +54,17 @@ export const InputList = <T,>({
     onChange,
     value,
     reverse,
+    compareValues,
+    unique,
+    sort,
+    defaultValue,
+    readOnly,
     ...inputProps
 }: InputListProps<T>) => {
-    const [values, setValues] = React.useState(inputProps.defaultValue || []);
+    const [values, setValues] = React.useState(() => value || defaultValue || []);
     const Comp = as || "div";
-
+    const [candidate, setCandidate] = React.useState<T>();
+    const compare = compareValues || ((a: T, b: T) => a === b);
     const change = (mutator: (currentValues: T[]) => T[]) => {
         setValues(mutator);
     };
@@ -56,24 +75,59 @@ export const InputList = <T,>({
         }
     }, [value]);
 
-    const add = (newItem: T) => {
-        const newValues = [...values, newItem];
-        setValues(newValues);
+    const add = (newItem?: T) => {
+        if (newItem === undefined) {
+            if (candidate === undefined) {
+                return;
+            }
+            newItem = candidate;
+        }
+        let newValues = [...values];
+        if (unique) {
+            newValues = newValues.filter((v) => !compare(v, newItem!));
+        }
+        newValues.push(newItem);
+        if (value === undefined) setValues(newValues);
+        onChange?.({ value: newValues });
+        setCandidate(undefined);
+    };
+
+    const remove = () => (item: T, index?: number) => {
+        const newValues = values.filter((v, i) => !compare(v, item) && (index === undefined || index === i));
+        if (value === undefined) setValues(newValues);
         onChange?.({ value: newValues });
     };
 
-    const remove = (item: T) => {
-        const newValues = values.filter((v) => v !== item);
-        setValues(newValues);
-        onChange?.({ value: newValues });
-    };
+    const changeCandidate = useCallback((neItem: T) => {
+        setCandidate(neItem);
+    }, []);
 
-    const valuesEl = renderValues({ values, change, remove, inputProps: inputProps });
-    const inpEl = renderInput({
-        values,
-        add,
-        inputProps: { ...inputProps, defaultValue: defaultItemValue },
+    const sorter = useRef(sort);
+    const sortedValues = useMemo(() => {
+        if (sorter.current) {
+            return values.sort(sorter.current);
+        }
+        return values;
+    }, [values]);
+
+    React.useEffect(() => {
+        sorter.current = sort;
+    }, [sort]);
+
+    const valuesEl = renderValues({
+        values: sortedValues,
+        change,
+        remove,
+        inputProps: { ...inputProps, defaultValue: undefined },
     });
+    const inpEl =
+        !readOnly &&
+        renderInput({
+            values: sortedValues,
+            add,
+            candidate: changeCandidate,
+            inputProps: { ...inputProps, defaultValue: defaultItemValue },
+        });
 
     return (
         <Comp className={clsx("", className)} style={style}>

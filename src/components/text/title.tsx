@@ -1,7 +1,9 @@
-import React from "react";
+import React, { type ReactNode } from "react";
 import { withPrefix } from "../../util/system";
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types";
+import type { PropsOf, TVCProps } from "../../types";
+import { Icon } from "../icons";
+import clsx from "clsx";
 
 const title = tv({
     base: "",
@@ -19,18 +21,6 @@ const title = tv({
         bold: {
             true: "font-semibold",
             false: "font-medium",
-        },
-        size: {
-            xs: "text-xs",
-            sm: "text-sm",
-            base: "text-base",
-            md: "text-base",
-            lg: "text-lg",
-            xl: "text-xl",
-            "2xl": "text-2xl",
-            "3xl": "text-3xl",
-            "4xl": "text-4xl",
-            "5xl": "text-5xl",
         },
         my: {
             none: "",
@@ -67,12 +57,14 @@ const title = tv({
     },
     defaultVariants: {
         variant: "h1",
-        bold: true,
+        bold: false,
     },
 });
 
 interface TitleProps extends TVCProps<typeof title, "h2"> {
     as?: any;
+    icon?: ReactNode;
+    iconProps?: Partial<PropsOf<typeof Icon>>;
 }
 
 /**
@@ -81,15 +73,37 @@ interface TitleProps extends TVCProps<typeof title, "h2"> {
  * - `underline`
  */
 export const Title = React.forwardRef<HTMLElement, TitleProps>(
-    ({ children, className, as, variant, underline, size, my, mb, mt, lineHeight, bold, ...props }, ref) => {
+    (
+        {
+            children,
+            className,
+            as,
+            variant,
+            underline,
+            my,
+            mb,
+            mt,
+            lineHeight,
+            bold,
+            icon,
+            iconProps,
+            ...props
+        },
+        ref
+    ) => {
         const Comp = as || variant || "h1";
 
         return (
             <Comp
-                className={title({ className, variant, underline, size, my, mb, mt, lineHeight, bold })}
+                className={title({ className, variant, underline, my, mb, mt, lineHeight, bold })}
                 ref={ref as any}
                 {...props}
             >
+                {icon && (
+                    <Icon size="none" inline {...iconProps} className={clsx("mr-3", iconProps?.className)}>
+                        {icon}
+                    </Icon>
+                )}
                 {children}
             </Comp>
         );

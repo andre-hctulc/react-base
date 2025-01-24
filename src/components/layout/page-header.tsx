@@ -11,8 +11,8 @@ const pageHeader = tv({
         padding: {
             none: "",
             sm: "p-2 md:p-4 pb-0 md:pb-0",
-            md: "p-4 md:p-8 pb-0 md:pb-0",
-            lg: "p-8 md:p-12 pb-0 md:pb-0",
+            md: "p-3.5 md:p-7 pb-0 md:pb-0",
+            lg: "p-5 md:p-9 pb-0 md:pb-0",
         },
         mb: {
             none: "",

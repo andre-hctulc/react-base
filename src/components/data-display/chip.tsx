@@ -1,10 +1,12 @@
 import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
-import type { TVCProps, XStyleProps } from "../../types";
+import type { TVCProps } from "../../types";
+
+// removed: align-middle
 
 const chip = tv({
-    base: "rounded-full inline-flex text-center align-middle flex-shrink-0 items-center data-[clickable=true]:cursor-pointer transition",
+    base: "inline-flex text-center flex-shrink-0 items-center data-[clickable=true]:cursor-pointer transition",
     variants: {
         color: {
             neutral: "bg-neutral border-neutral text-neutral",
@@ -43,6 +45,7 @@ const chip = tv({
         size: "md",
         color: "neutral",
         variant: "outlined",
+        shape: "pill",
         userSelect: "enabled",
     },
 });

@@ -39,5 +39,5 @@ export const WheelX: React.FC<WheelXProps> = ({ children, hideScrollbar }) => {
         };
     }, [container]);
 
-    return React.cloneElement(children, { ...children.props, ref: setContainer });
+    return React.cloneElement(children, { ref: setContainer });
 };
