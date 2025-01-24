@@ -45,7 +45,7 @@ const chip = tv({
         size: "md",
         color: "neutral",
         variant: "outlined",
-        rounded: "pill",
+        shape: "pill",
         userSelect: "enabled",
     },
 });

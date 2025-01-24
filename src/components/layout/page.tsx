@@ -8,7 +8,7 @@ import type { Root } from "./root";
 import { Spinner } from "../data-display/spinner";
 
 const page = tv({
-    base: "box-border w-full min-h-0",
+    base: "box-border w-full min-h-0 ",
     variants: {
         size: {
             "4xs": "max-w-xl mx-auto",
@@ -26,6 +26,9 @@ const page = tv({
             flex_row: "flex",
             flex_col: "flex flex-col",
             center: "flex items-center justify-center",
+        },
+        noShrink: {
+            true: "flex-shrink-0",
         },
         grow: {
             true: "flex-grow",
@@ -56,7 +59,19 @@ interface PageProps extends VariantProps<typeof page>, StyleProps {
 
 export const Page = React.forwardRef<HTMLDivElement, PageProps>(
     (
-        { children, variant, className, grow, size, maxHeightFull, minHeight0, fullHeight, style, flex },
+        {
+            children,
+            variant,
+            className,
+            grow,
+            size,
+            maxHeightFull,
+            minHeight0,
+            fullHeight,
+            style,
+            flex,
+            noShrink,
+        },
         ref
     ) => {
         return (
@@ -64,6 +79,7 @@ export const Page = React.forwardRef<HTMLDivElement, PageProps>(
                 className={page({
                     size,
                     flex,
+                    noShrink,
                     className,
                     grow,
                     maxHeightFull,

@@ -1,7 +1,11 @@
 import type { PropsOf } from "../../types";
+import { Toolbar } from "../containers";
 import { Button } from "../input";
 
 interface CancelConfirmProps {
+    className?: string;
+    gap?: PropsOf<typeof Toolbar>["gap"];
+    padding?: PropsOf<typeof Toolbar>["padding"];
     onCancel?: () => void;
     onConfirm?: () => void;
     confirmText?: string;
@@ -41,9 +45,12 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
     confirmButtonProps,
     cancelButtonProps,
     disabled,
+    className,
+    gap,
+    padding,
 }) => {
     return (
-        <>
+        <Toolbar className={className} gap={gap} padding={padding}>
             {showCancel !== false && (
                 <CancelButton
                     size={size}
@@ -76,7 +83,7 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
             >
                 {confirmText || "Confirm"}
             </ConfirmButton>
-        </>
+        </Toolbar>
     );
 };
 

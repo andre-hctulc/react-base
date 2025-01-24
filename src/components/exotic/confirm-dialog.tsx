@@ -8,7 +8,6 @@ import { DialogBody } from "../dialog/dialog-body";
 import { DialogFooter } from "../dialog/dialog-footer";
 import React from "react";
 import { CancelConfirm, type CancelButton, type ConfirmButton } from "./dialog-actions";
-import { Toolbar } from "../containers";
 
 interface ConfirmOptions {
     /**
@@ -122,18 +121,16 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             {heading && <DialogHeader title={heading} />}
             <DialogBody>{children}</DialogBody>
             <DialogFooter variant="actions">
-                <Toolbar>
-                    <CancelConfirm
-                        showCancel={showCancel}
-                        cancelText={cancelButtonText}
-                        confirmText={confirmButtonText}
-                        danger={danger}
-                        onCancel={onCancel}
-                        onConfirm={onConfirm}
-                        cancelButtonProps={cancelButtonProps}
-                        confirmButtonProps={confirmButtonProps}
-                    />
-                </Toolbar>
+                <CancelConfirm
+                    showCancel={showCancel}
+                    cancelText={cancelButtonText}
+                    confirmText={confirmButtonText}
+                    danger={danger}
+                    onCancel={onCancel}
+                    onConfirm={onConfirm}
+                    cancelButtonProps={cancelButtonProps}
+                    confirmButtonProps={confirmButtonProps}
+                />
             </DialogFooter>
         </Dialog>
     );

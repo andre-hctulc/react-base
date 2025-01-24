@@ -1,7 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types";
-import type { PropsOf } from "@headlessui/react/dist/types";
+import type { PropsOf, TVCProps } from "../../types";
 import { IconButton } from "../input";
 import { XIcon } from "../icons/x";
 import { Title } from "../text";
