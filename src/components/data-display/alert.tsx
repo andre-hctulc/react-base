@@ -5,6 +5,7 @@ import { IconButton } from "../input";
 import { XIcon } from "../icons/x";
 import { Title } from "../text";
 import clsx from "clsx";
+
 const alert = tv({
     base: "px-3 py-2 text-contrast",
     variants: {
