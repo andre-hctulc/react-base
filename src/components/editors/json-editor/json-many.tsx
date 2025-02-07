@@ -55,7 +55,7 @@ export const JSONMany: FC<JSONOrInputProps> = ({ path, schemas, label, schema, f
                 <>
                     <Select
                         id={id}
-                        defaultSelectedKeys={[activeType]}
+                        defaultChoiceValues={[activeType]}
                         onChange={({ value }) => setActiveType(value[0].value)}
                         size="sm"
                         required

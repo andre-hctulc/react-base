@@ -60,7 +60,7 @@ export const JSONArrayInput: FC<JSONInputBaseProps> = ({ path, schema, label, fa
                     renderInput={({ add }) => (
                         <div className="flex items-center gap-3 pl-5">
                             <Select
-                                defaultSelectedKeys={itemsSchema.length ? ["0"] : []}
+                                defaultChoiceValues={itemsSchema.length ? ["0"] : []}
                                 className="flex-grow"
                                 onChange={({ value }) =>
                                     setNewPropSchema(itemsSchema[parseInt(value[0].value)])

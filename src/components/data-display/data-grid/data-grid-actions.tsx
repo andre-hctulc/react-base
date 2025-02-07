@@ -5,13 +5,13 @@ import { Popover } from "../../dialog/popover";
 import { IconButton } from "../../input";
 import { MoreVertIcon } from "../../icons/more-vert";
 
-interface RowActions {
+interface DataGridActions {
     moreIcon?: React.ReactNode;
     row: any;
     render?: (row: any) => React.ReactNode;
 }
 
-export const RowActions: React.FC<RowActions> = ({ row, moreIcon, render }) => {
+export const DataGridActions: React.FC<DataGridActions> = ({ row, moreIcon, render }) => {
     const [open, setOpen] = React.useState(false);
     const btn = React.useRef<HTMLButtonElement>(null);
 
@@ -29,7 +29,13 @@ export const RowActions: React.FC<RowActions> = ({ row, moreIcon, render }) => {
             >
                 {moreIcon || <MoreVertIcon />}
             </IconButton>
-            <Popover anchor={btn.current} open={open} onClose={() => setOpen(false)} zIndex="10">
+            <Popover
+                anchor={btn.current}
+                open={open}
+                onClose={() => setOpen(false)}
+                zIndex="10"
+                position="bottom-end"
+            >
                 {render ? render(row) : <i className="text-2 text-sm px-4 py-2">No actions</i>}
             </Popover>
         </>

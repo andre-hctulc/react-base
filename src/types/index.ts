@@ -1,30 +1,43 @@
-import type React from "react";
+import type { JSXElementConstructor, ComponentProps, CSSProperties, ReactNode, ComponentType } from "react";
 import type { VariantProps } from "tailwind-variants";
 
-export type Falsy = null | undefined | "" | 0 | false;
-
-// --- Props
+// #### Props ####
 
 /**
- * Alias for `React.ComponentProps<T>`.
+ * Alias for {@link ComponentProps}
  */
-export type PropsOf<T extends keyof React.JSX.IntrinsicElements | React.JSXElementConstructor<any>> =
-    React.ComponentProps<T>;
+export type PropsOf<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> = ComponentProps<T>;
 
-export type PartialPropsOf<T extends keyof React.JSX.IntrinsicElements | React.JSXElementConstructor<any>> =
-    Partial<PropsOf<T>>;
+export type PartialPropsOf<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> = Partial<
+    PropsOf<T>
+>;
 
+/**
+ * Style and class name props.
+ */
 export interface StyleProps {
-    style?: React.CSSProperties;
+    /**
+     * Inline style
+     */
+    style?: CSSProperties;
+    /**
+     * CSS classes
+     */
     className?: string;
 }
 
+/**
+ * Children props
+ */
 export interface ChildrenProps {
-    children?: React.ReactNode;
+    /**
+     * Child elements
+     */
+    children?: ReactNode;
 }
 
 export interface RequiredChildrenProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**
@@ -35,9 +48,45 @@ export interface RequiredChildrenProps {
  */
 export type TVCProps<
     T extends (...args: any) => any,
-    R extends keyof React.JSX.IntrinsicElements | React.JSXElementConstructor<any> | never = never
-> = VariantProps<T> & Omit<React.ComponentProps<R>, "className"> & StyleProps;
+    R extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> | never = never
+> = VariantProps<T> & Omit<ComponentProps<R>, "className"> & StyleProps;
 
-// -- Components
+// #### Components ####
 
-export type LinkComponent = React.ComponentType<{ href: any; className?: string }>;
+export type LinkComponent = ComponentType<{ href: any; className?: string }>;
+
+// #### Helpers ####
+
+export type Falsy = null | undefined | "" | 0 | false;
+
+/**
+ * General purpose choice type
+ */
+export interface Choice<D = any> {
+    /**
+     * The value of the choice. Should be unique among the choices
+     */
+    value: string;
+    /**
+     * Data associated with the choice
+     */
+    data?: D;
+    /**
+     * Choice disabled?
+     */
+    disabled?: boolean;
+}
+
+/**
+ * Choice with a label
+ */
+export interface LabeledChoice<D = any> extends Choice<D> {
+    /**
+     * The label to display
+     */
+    label: React.ReactNode;
+    /**
+     * Icon to display next to the label
+     */
+    icon?: React.ReactNode;
+}

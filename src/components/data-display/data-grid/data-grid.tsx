@@ -5,8 +5,8 @@ import React from "react";
 import { useMapArray, useWindowEvent } from "../../../hooks";
 import { Spinner } from "../../data-display/spinner";
 import { usePersistentState } from "../../../hooks/others/use-persistent";
-import { HideCols } from "./hide-cols";
-import { RowActions } from "./row-actions";
+import { DataGridSettings } from "./data-grid-settings";
+import { DataGridActions } from "./data-grid-actions";
 import { Checkbox } from "../../input/checkbox";
 import { withPrefix } from "../../../util/system";
 import { Placeholder } from "../../data-display/placeholder";
@@ -25,10 +25,6 @@ export type CellStringify<T extends object = any> = (
     row: T,
     col: DataGridColDef<T>
 ) => string;
-
-export interface CellSnapshot {
-    width?: number;
-}
 
 export type OnCellClick<T extends object = any> = (
     cellValue: any,
@@ -81,9 +77,9 @@ export interface DataGridColDef<T extends object = any> {
      */
     justifyCenter?: boolean;
     /**
-     * Current custom state of the column.
+     * Creates flex cells with `justify-content: flex-start` and `align-items: center`.
      */
-    snapshot?: CellSnapshot;
+    center?: boolean;
     /**
      * Additional data attached to the column.
      */
@@ -103,13 +99,14 @@ interface DataGridProps<T extends object> {
     onRowClick?: OnRowClick<T>;
     onCellClick?: OnCellClick<T>;
     onSelectionChange?: (rows: T[]) => void;
+    /**
+     * @default 40
+     */
     rowHeight?: number;
     headerRowHeight?: number;
     components?: {
-        colsIcon?: React.ReactNode;
+        settingsIcon?: React.ReactNode;
         moreIcon?: React.ReactNode;
-        hideIcon?: React.ReactNode;
-        showIcon?: React.ReactNode;
         empty?: React.ReactNode;
         loading?: React.ReactNode;
     };
@@ -117,7 +114,16 @@ interface DataGridProps<T extends object> {
      * Render popover content for an actions column.
      */
     renderActions?: (row: T) => React.ReactNode;
-    actionsCol?: boolean;
+    /**
+     * Show actions column?
+     * @default false
+     */
+    actions?: boolean;
+    /**
+     * Show settings column?
+     * @default true
+     */
+    settings?: boolean;
     defaultHideCols?: string[];
     selectable?: boolean;
     /**
@@ -140,6 +146,10 @@ interface DataGridProps<T extends object> {
          */
         id?: string;
     };
+    /**
+     * Base column definition. All column definitions will be merged with this.
+     */
+    baseColDef?: Partial<DataGridColDef<T>>;
 }
 
 /**
@@ -167,37 +177,35 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
         const c = [...props.cols];
 
         // Add actions col
-        if (props.actionsCol) {
+        if (props.actions || props.settings) {
             c.push({
-                label: (
-                    <HideCols
-                        cols={c}
-                        hiddenCols={hiddenCols}
-                        colsIcon={props.components?.colsIcon}
-                        hideIcon={props.components?.hideIcon}
-                        showIcon={props.components?.showIcon}
-                        onChange={(colKey) => {
-                            if (hiddenCols.includes(colKey)) {
-                                setHiddenCols([...hiddenCols, colKey]);
-                            } else {
-                                setHiddenCols(hiddenCols.filter((key) => key !== colKey));
-                            }
-                        }}
-                    />
-                ),
-                render: (cell, row, col) => (
-                    <RowActions
-                        moreIcon={props.components?.moreIcon}
-                        render={props.renderActions}
-                        row={row}
-                    />
-                ),
+                hidable: false,
+                label:
+                    props.settings !== false ? (
+                        <DataGridSettings
+                            cols={c}
+                            hiddenCols={hiddenCols}
+                            icon={props.components?.settingsIcon}
+                            onChange={(hiddenCols) => setHiddenCols(hiddenCols)}
+                        />
+                    ) : (
+                        ""
+                    ),
+                render: (cell, row, col) =>
+                    props.actions ? (
+                        <DataGridActions
+                            moreIcon={props.components?.moreIcon}
+                            render={props.renderActions}
+                            row={row}
+                        />
+                    ) : (
+                        ""
+                    ),
                 path: "$actions$",
                 width: 50,
                 className: "flex justify-center items-center",
                 headerCellClassName: "flex justify-center items-center",
                 stickyRight: true,
-                hidable: false,
             });
         }
 
@@ -212,8 +220,9 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                             size="sm"
                             value={selection.length === len}
                             onChange={({ value }) => {
-                                if (value) setSelection(props.rows);
-                                else setSelection([]);
+                                const newSelection = value ? props.rows : [];
+                                setSelection(newSelection);
+                                props.onSelectionChange?.(newSelection);
                             }}
                             onClick={(e) => e.stopPropagation()}
                         />
@@ -228,10 +237,11 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                         size="sm"
                         value={selectionSet.has(getRowId(row))}
                         onChange={({ value }) => {
-                            setSelection((prev) => {
-                                if (value) return [...prev, row];
-                                else return prev.filter((r) => getRowId(r) !== getRowId(row));
-                            });
+                            const newSelection = value
+                                ? [...selection, row]
+                                : selection.filter((r) => getRowId(r) !== getRowId(row));
+                            setSelection(newSelection);
+                            props.onSelectionChange?.(newSelection);
                         }}
                         onClick={(e) => e.stopPropagation()}
                     />
@@ -242,11 +252,18 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
 
         const hideSet = new Set(hiddenCols);
 
-        return c.filter((col) => !hideSet.has(col.path));
+        return c
+            .filter((col) => !hideSet.has(col.path))
+            .map((col) => {
+                return {
+                    ...props.baseColDef,
+                    ...col,
+                };
+            });
     }, [
         props.cols,
         hiddenCols,
-        props.actionsCol,
+        props.actions,
         props.selectable,
         props.selectAll,
         selectionSet,
@@ -335,7 +352,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
 };
 
 DataGrid.colWidth = (col: DataGridColDef<any>) => {
-    let width = col.snapshot?.width || col.width || DEFAULT_CELL_WIDTH;
+    let width = col.width || DEFAULT_CELL_WIDTH;
     if (col.maxWidth) width = Math.min(width, col.maxWidth);
     if (col.minWidth) width = Math.max(width, col.minWidth);
     return width;
@@ -506,6 +523,7 @@ const Cell: React.FC<CellProps> = ({
         return [right, fistRightCol === col];
     }, [cols, col]);
     const sticky = col.stickyLeft || col.stickyRight;
+    const isFlexCell = col.alignCenter || col.justifyCenter || col.center;
 
     /* 
     NOTE **sticky**
@@ -533,8 +551,9 @@ const Cell: React.FC<CellProps> = ({
                     "overflow-hidden px-1 w-full h-full box-border ",
                     hoverEffect && "group-hover:bg-primary/5",
                     selected && "bg-primary/10",
-                    col.alignCenter && "flex items-center",
-                    col.justifyCenter && "flex justify-center",
+                    isFlexCell && "flex",
+                    (col.alignCenter ?? col.center) && "items-center",
+                    (col.justifyCenter ?? col.center) && "justify-center",
                     col.className
                 )}
             >

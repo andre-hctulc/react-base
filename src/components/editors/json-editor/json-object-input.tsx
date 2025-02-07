@@ -107,7 +107,7 @@ export const JSONObjectInput: FC<JSONInputBaseProps> = ({ path, schema, label, f
                         <div className="flex items-center gap-3 pl-5">
                             <Input onBlur={(e) => setNewPropName(e.target.value)} />
                             <Select
-                                defaultSelectedKeys={addableSchemas.length ? ["0"] : []}
+                                defaultChoiceValues={addableSchemas.length ? ["0"] : []}
                                 onChange={({ value }) =>
                                     setNewPropSchema(addableSchemas[parseInt(value[0].value)])
                                 }

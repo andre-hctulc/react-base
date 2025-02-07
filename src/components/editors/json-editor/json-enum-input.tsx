@@ -22,7 +22,7 @@ export const JSONEnumInput: FC<JSONInputBaseProps> = ({ label, path, schema, fal
             {(id) => (
                 <>
                     <Select
-                        selectedKeys={value ? [value] : []}
+                        choiceValues={value ? [value] : []}
                         onChange={({ value }) => setValue(value[0].value)}
                         id={id}
                         readOnly={forceReadonly}

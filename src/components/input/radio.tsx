@@ -3,10 +3,8 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
-import type { PropsOf, TVCProps, StyleProps } from "../../types";
-import type { Choice } from "./select";
+import type { Choice, PropsOf, StyleProps } from "../../types";
 import { Card } from "../containers";
-import clsx from "clsx";
 
 const radio = tv({
     base: "",
@@ -30,55 +28,56 @@ export interface RadioRenderParams<D = any> {
 interface RadioProps<D = any> extends InputLikeProps<Choice<D>>, VariantProps<typeof radio>, StyleProps {
     options: Choice<D>[];
     icon?: React.ReactNode;
-    defaultSelectedKey?: string;
-    selectedKey?: string;
+    defaultChoiceValue?: string;
+    choiceValue?: string;
     renderOption: (option: RadioRenderParams<D>) => React.ReactNode;
 }
 
 /**
  * ### Props
  * - `options` - The options to display in the dropdown
- * - `selectedKey` - The key of the option to be selected (controlled)
- * - `defaultSelectedKey` - The key of the option to be selected by default
+ * - `choiceValue` - The value of the option to be selected (controlled)
+ * - `defaultChoiceValue` - The value of the option to be selected by default
  * - `renderOption` - Renders the options
  */
-export const Radio = <V,>({
+export const Radio = <D,>({
     options,
     className,
     style,
     disabled,
     readOnly,
-    defaultSelectedKey,
-    selectedKey,
+    defaultChoiceValue,
+    choiceValue,
     value,
     defaultValue,
     onChange,
     required,
     name,
     renderOption,
-}: RadioProps<V>) => {
+}: RadioProps<D>) => {
+    const controlled = choiceValue !== undefined || value !== undefined;
     // capture selected state to display in the button
-    const [selected, setSelected] = React.useState<Choice<V> | null>(() => {
-        if (defaultSelectedKey) {
-            const found = options.find(({ value: key }) => key === defaultSelectedKey);
+    const [selected, setSelected] = React.useState<Choice<D> | null>(() => {
+        if (defaultChoiceValue) {
+            const found = options.find(({ value: key }) => key === defaultChoiceValue);
             if (found) return found;
         }
         return value || defaultValue || null;
     });
 
-    const activate = (option: Choice<V>) => {
-        setSelected(option);
+    const activate = (option: Choice<D>) => {
+        if (!controlled) setSelected(option);
         onChange?.({ value: option });
     };
 
     React.useEffect(() => {
-        if (selectedKey) {
-            const newOption = options.find(({ value: key }) => key === selectedKey);
+        if (choiceValue !== undefined) {
+            const newOption = options.find(({ value: key }) => key === choiceValue);
             if (newOption) {
                 setSelected(newOption);
             }
         }
-    }, [selectedKey, options]);
+    }, [choiceValue, options]);
 
     React.useEffect(() => {
         if (value) {
@@ -89,7 +88,7 @@ export const Radio = <V,>({
     return (
         <div className={radio({ className })} style={style}>
             {/* form compatibility */}
-            <input type="hidden" name={name} value={selected?.value || ""} required={required} />
+            {name && <input type="hidden" name={name} value={selected?.value || ""} required={required} />}
             {options.map((option) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
 

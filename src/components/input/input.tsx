@@ -22,14 +22,41 @@ const input = tv({
     },
 });
 
+/**
+ * Input base properties. Each input component's props should conform this interface.
+ */
 export interface InputLikeProps<T = any, E extends object = {}> {
+    /**
+     * Default value of the input
+     */
     defaultValue?: T;
+    /**
+     * Controlled value of the input
+     */
     value?: T;
+    /**
+     * Callback when the value of the input changes
+     */
     onChange?: (value: { value: T } & E) => void;
+    /**
+     * Name of the input element
+     */
     name?: string;
+    /**
+     * Required?
+     */
     required?: boolean;
+    /**
+     * Disabled?
+     */
     disabled?: boolean;
+    /**
+     * Read only?
+     */
     readOnly?: boolean;
+    /**
+     * Id associated with the input element
+     */
     id?: string;
 }
 
@@ -38,8 +65,7 @@ interface InputProps
             TVCProps<typeof input, "input">,
             "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
         >,
-        InputLikeProps<string, React.ChangeEvent<HTMLInputElement>> {
-}
+        InputLikeProps<string, React.ChangeEvent<HTMLInputElement>> {}
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ({ size, className, style, type, name, required, defaultValue, value, onChange, ...props }, ref) => {

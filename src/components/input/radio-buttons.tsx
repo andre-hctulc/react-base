@@ -3,8 +3,7 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
-import type { StyleProps } from "../../types";
-import type { SelectOption } from "./select";
+import type { LabeledChoice, StyleProps } from "../../types";
 import { Icon } from "../icons";
 
 const radioButtons = tv({
@@ -19,19 +18,19 @@ const radioButtons = tv({
 });
 
 interface RadioButtonsProps<V = string>
-    extends InputLikeProps<SelectOption<V>>,
+    extends InputLikeProps<LabeledChoice<V>>,
         VariantProps<typeof radioButtons>,
         StyleProps {
-    options: SelectOption<V>[];
-    defaultSelectedKey?: string;
-    selectedKey?: string;
+    options: LabeledChoice<V>[];
+    defaultChoiceValue?: string;
+    choiceValue?: string;
 }
 
 /**
  * ### Props
  * - `options` - The options to display in the dropdown
- * - `defaultSelectedKey` - The key of the option to be selected by default
- * - `selectedKey` - The key of the option to be selected (controlled)
+ * - `defaultChoiceValue` - The value of the option to be selected by default
+ * - `choiceValue` - The value of the option to be selected (controlled)
  */
 export const RadioButtons = <V,>({
     options,
@@ -40,8 +39,8 @@ export const RadioButtons = <V,>({
     disabled,
     readOnly,
     required,
-    defaultSelectedKey,
-    selectedKey,
+    defaultChoiceValue,
+    choiceValue,
     value,
     defaultValue,
     onChange,
@@ -50,20 +49,20 @@ export const RadioButtons = <V,>({
 }: RadioButtonsProps<V>) => {
     const id = React.useId();
     // capture selected state to display in the button
-    const [selected, setSelected] = React.useState<SelectOption<V> | null>(() => {
-        if (defaultSelectedKey) {
-            const found = options.find(({ value: key }) => key === defaultSelectedKey);
+    const [selected, setSelected] = React.useState<LabeledChoice<V> | null>(() => {
+        if (defaultChoiceValue) {
+            const found = options.find(({ value: key }) => key === defaultChoiceValue);
             if (found) return found;
         }
         return value || defaultValue || null;
     });
 
     React.useEffect(() => {
-        if (selectedKey) {
-            const newOption = options.find(({ value: key }) => key === selectedKey);
+        if (choiceValue) {
+            const newOption = options.find(({ value: key }) => key === choiceValue);
             if (newOption) setSelected(newOption);
         }
-    }, [selectedKey, options]);
+    }, [choiceValue, options]);
 
     React.useEffect(() => {
         if (value) {

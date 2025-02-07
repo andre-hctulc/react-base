@@ -3,15 +3,22 @@
 import React from "react";
 import { hideScrollbar as hide } from "../../util";
 
-interface WheelXProps {
+interface XScrollProps {
+    /**
+     * The container element that will be scrolled horizontally.
+     * Must forward the ref.
+     */
     children: React.ReactElement;
+    /**
+     * Hide the scrollbar of the container?
+     */
     hideScrollbar?: boolean;
 }
 
 /**
  * A component that allows horizontal scrolling with the mouse wheel.
  */
-export const WheelX: React.FC<WheelXProps> = ({ children, hideScrollbar }) => {
+export const XScroll: React.FC<XScrollProps> = ({ children, hideScrollbar }) => {
     const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
 
     // Use native event listeners. This does not work with React's synthetic events.

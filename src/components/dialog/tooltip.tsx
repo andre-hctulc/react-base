@@ -32,11 +32,14 @@ interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
     reEnterDelay?: number;
     position?: Placement;
     /**
+     * Pixels
      * @default 4
      */
     gap?: number;
     /**
      * Gap to the window border
+     *
+     * Pixels
      * @default 4
      */
     frameMargin?: number;
@@ -70,6 +73,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
                     if (disabled) return;
 
+                    entered.current = true;
                     if (openTimeout.current) clearTimeout(openTimeout.current);
 
                     openTimeout.current = setTimeout(

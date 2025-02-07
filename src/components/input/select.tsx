@@ -5,11 +5,11 @@ import clsx from "clsx";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
-import type { StyleProps } from "../../types";
+import type { LabeledChoice, StyleProps } from "../../types";
 import { ChevronDownIcon } from "../icons/chevron-down";
 import { Chip } from "../data-display/chip";
 import { Checkbox } from "./checkbox";
-import { WheelX } from "../shadow/wheel-x";
+import { XScroll } from "../shadow/x-scroll";
 
 const select = tv({
     base: "min-w-32  max-w-full",
@@ -59,30 +59,23 @@ interface SelectProps<D = any>
     multiple?: boolean;
     renderSelected?: (params: RenderSelectedParams<D>) => React.ReactNode;
     loading?: boolean;
-    defaultSelectedKeys?: string[];
-    selectedKeys?: string[];
+    defaultChoiceValues?: string[];
+    choiceValues?: string[];
     /**
      * @default "Loading..."
      */
     loadingText?: string;
 }
 
-export interface Choice<D = any> {
-    value: string;
-    data?: D;
-    disabled?: boolean;
-}
-
-export interface SelectOption<D = any> extends Choice<D> {
-    label: React.ReactNode;
+export interface SelectOption<D = any> extends LabeledChoice<D> {
     defaultChecked?: boolean;
-    icon?: React.ReactNode;
 }
 
 /**
  * ### Props
  * - `options` - The options to display in the dropdown
- * - `defaultSelectedKeys` - The keys of the options to be selected by default
+ * - `defaultValues` - The values of the options to be selected by default
+ * - `values` - The values of the options to be selected (controlled)
  * - `placeholder` - The placeholder to display when no option is selected
  * - `multiple` - Allow multiple options to be selected
  * - `renderSelected` - Custom render function for the selected options
@@ -102,8 +95,8 @@ export const Select = <V,>({
     renderSelected,
     loadingText,
     loading,
-    defaultSelectedKeys,
-    selectedKeys,
+    defaultChoiceValues,
+    choiceValues,
     value,
     defaultValue,
     onChange,
@@ -111,11 +104,11 @@ export const Select = <V,>({
     name,
     id,
 }: SelectProps<V>) => {
-    const controlled = value !== undefined || selectedKeys !== undefined;
+    const controlled = value !== undefined || choiceValues !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<SelectOption<V>[]>(() => {
-        if (defaultSelectedKeys) {
-            const set = new Set(defaultSelectedKeys);
+        if (defaultChoiceValues) {
+            const set = new Set(defaultChoiceValues);
             return options.filter(({ value: key }) => set.has(key));
         }
         return value || defaultValue || [];
@@ -145,11 +138,11 @@ export const Select = <V,>({
         typeof placeholder === "string" ? <span className="text-3">{placeholder}</span> : placeholder;
 
     React.useEffect(() => {
-        if (selectedKeys) {
-            const set = new Set(selectedKeys);
+        if (choiceValues) {
+            const set = new Set(choiceValues);
             setSelected(options.filter(({ value: key }) => set.has(key)));
         }
-    }, [selectedKeys, options]);
+    }, [choiceValues, options]);
 
     React.useEffect(() => {
         if (value) {
@@ -158,7 +151,7 @@ export const Select = <V,>({
     }, [value]);
 
     return (
-        <div className={select({ className, size })} style={style}>
+        <div className={select({ className, size })} style={style} onClick={(e) => e.stopPropagation()}>
             <Listbox
                 value={selected}
                 onChange={(option) => {
@@ -173,11 +166,11 @@ export const Select = <V,>({
                 name={name}
             >
                 <ListboxButton disabled={loading || readOnly || disabled} className={selectButton({ size })}>
-                    <WheelX hideScrollbar>
+                    <XScroll hideScrollbar>
                         <div className="w-full h-full box-border overflow-x-auto flex items-center gap-1.5">
                             {loading ? loadingEl : selected.length ? selectedEl : placeholderEl}
                         </div>
-                    </WheelX>
+                    </XScroll>
                     <span className="absolute translate-y-[-50%] top-[50%] right-3 text-2 text-base">
                         {icon || <ChevronDownIcon />}
                     </span>
@@ -201,10 +194,16 @@ export const Select = <V,>({
 
                                 const checked = selected.some(({ value: key }) => key === option.value);
 
-                                if (!checked) newSelected = [...selected, option];
-                                else newSelected = selected.filter(({ value: key }) => key !== option.value);
+                                if (checked) {
+                                    newSelected = selected.filter(({ value: key }) => key !== option.value);
+                                } else {
+                                    newSelected = [...selected, option];
+                                }
 
-                                if (controlled) setSelected(newSelected);
+                                if (!controlled) {
+                                    setSelected(newSelected);
+                                }
+
                                 onChange?.({ value: newSelected });
                             }
                         };

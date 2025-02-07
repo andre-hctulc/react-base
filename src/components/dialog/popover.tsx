@@ -143,7 +143,9 @@ export const Popover: React.FC<PopoverProps> = (props) => {
                 <div
                     ref={setPopperElement}
                     style={{ ...styles.popper, ...props.style }}
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
                     {...attributes.popper}
                     className={popover({
                         minWidth: props.minWidth,

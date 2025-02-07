@@ -1,5 +1,7 @@
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types";
+import { forwardRef } from "react";
+import { withPrefix } from "../../util/system";
 
 const toolbar = tv({
     base: "flex",
@@ -7,6 +9,9 @@ const toolbar = tv({
         direction: {
             row: "flex-row",
             column: "flex-col",
+        },
+        scroll: {
+            true: "",
         },
         gap: {
             xs: "gap-1",
@@ -44,6 +49,10 @@ const toolbar = tv({
             true: "flex-wrap",
         },
     },
+    compoundVariants: [
+        { direction: "column", scroll: true, className: "overflow-y-auto" },
+        { direction: "row", scroll: true, className: "overflow-x-auto" },
+    ],
     defaultVariants: {
         gap: "md",
         align: "center",
@@ -57,44 +66,54 @@ interface ToolbarProps extends TVCProps<typeof toolbar, "div"> {
     as?: any;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({
-    children,
-    direction,
-    gap,
-    padding,
-    className,
-    justify,
-    align,
-    grow,
-    wrap,
-    stopEventPropagation,
-    ...props
-}) => {
-    const Comp: any = props.as || "div";
+export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
+    (
+        {
+            children,
+            direction,
+            gap,
+            padding,
+            className,
+            justify,
+            align,
+            grow,
+            wrap,
+            stopEventPropagation,
+            scroll,
+            ...props
+        },
+        ref
+    ) => {
+        const Comp: any = props.as || "div";
 
-    return (
-        <Comp
-            className={toolbar({
-                className,
-                direction,
-                padding,
-                grow,
-                gap,
-                align,
-                justify,
-                wrap,
-            })}
-            onClick={
-                stopEventPropagation
-                    ? (e: React.MouseEvent<any>) => {
-                          e.stopPropagation();
-                          props.onClick?.(e);
-                      }
-                    : undefined
-            }
-            {...props}
-        >
-            {children}
-        </Comp>
-    );
-};
+        return (
+            <Comp
+                className={toolbar({
+                    className,
+                    direction,
+                    padding,
+                    grow,
+                    gap,
+                    align,
+                    justify,
+                    wrap,
+                    scroll,
+                })}
+                ref={ref as any}
+                onClick={
+                    stopEventPropagation
+                        ? (e: React.MouseEvent<any>) => {
+                              e.stopPropagation();
+                              props.onClick?.(e);
+                          }
+                        : undefined
+                }
+                {...props}
+            >
+                {children}
+            </Comp>
+        );
+    }
+);
+
+Toolbar.displayName = withPrefix("Toolbar");
