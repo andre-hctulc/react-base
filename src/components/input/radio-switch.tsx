@@ -7,7 +7,7 @@ import type { LabeledChoice, StyleProps } from "../../types";
 import clsx from "clsx";
 
 const radioSwitch = tv({
-    base: "rounded-full flex border",
+    base: "rounded-full flex border overflow-hidden",
     variants: {
         size: {
             sm: "text-sm h-6",
@@ -56,8 +56,9 @@ export const RadioSwitch = <D,>({
     const controlled = choiceValue !== undefined || value !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<LabeledChoice<D> | null>(() => {
-        if (defaultChoiceValue) {
-            const found = options.find(({ value: key }) => key === defaultChoiceValue);
+        if (defaultChoiceValue !== undefined || choiceValue !== undefined) {
+            const val = choiceValue ?? defaultChoiceValue;
+            const found = options.find(({ value }) => value === val);
             if (found) return found;
         }
         return value || defaultValue || null;
@@ -100,10 +101,10 @@ export const RadioSwitch = <D,>({
                         disabled={!canActivate}
                         key={option.value}
                         className={clsx(
-                            "text-center flex items-center gap-2 px-3",
+                            "text-center flex items-center gap-2 px-4 transition",
                             !active && "!text-2",
                             !last && "border-r",
-                            canActivate && "hover:transparent-2 active:transparent-3"
+                            canActivate && "hover:bg-transparent-1 active:bg-transparent-2"
                         )}
                     >
                         {option.icon}

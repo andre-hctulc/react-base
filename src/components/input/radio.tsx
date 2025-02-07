@@ -58,8 +58,9 @@ export const Radio = <D,>({
     const controlled = choiceValue !== undefined || value !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<Choice<D> | null>(() => {
-        if (defaultChoiceValue) {
-            const found = options.find(({ value: key }) => key === defaultChoiceValue);
+        if (defaultChoiceValue !== undefined || choiceValue !== undefined) {
+            const val = choiceValue ?? defaultChoiceValue;
+            const found = options.find(({ value }) => value === val);
             if (found) return found;
         }
         return value || defaultValue || null;

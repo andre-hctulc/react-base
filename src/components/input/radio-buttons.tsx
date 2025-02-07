@@ -50,8 +50,9 @@ export const RadioButtons = <V,>({
     const id = React.useId();
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<LabeledChoice<V> | null>(() => {
-        if (defaultChoiceValue) {
-            const found = options.find(({ value: key }) => key === defaultChoiceValue);
+        if (defaultChoiceValue !== undefined || choiceValue !== undefined) {
+            const val = choiceValue ?? defaultChoiceValue;
+            const found = options.find(({ value }) => value === val);
             if (found) return found;
         }
         return value || defaultValue || null;

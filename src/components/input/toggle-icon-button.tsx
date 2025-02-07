@@ -32,7 +32,7 @@ export const ToggleIconButton = forwardRef<HTMLButtonElement, ToggleIconButtonPr
         ref
     ) => {
         const controlled = value !== undefined;
-        const [active, setActive] = useState(defaultValue ?? false);
+        const [active, setActive] = useState(value ?? defaultValue ?? false);
 
         useEffect(() => {
             if (controlled) {

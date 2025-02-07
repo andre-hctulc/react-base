@@ -107,8 +107,8 @@ export const Select = <V,>({
     const controlled = value !== undefined || choiceValues !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<SelectOption<V>[]>(() => {
-        if (defaultChoiceValues) {
-            const set = new Set(defaultChoiceValues);
+        if (defaultChoiceValues || choiceValues) {
+            const set = new Set(choiceValues || defaultChoiceValues);
             return options.filter(({ value: key }) => set.has(key));
         }
         return value || defaultValue || [];

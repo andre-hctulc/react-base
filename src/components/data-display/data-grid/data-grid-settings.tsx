@@ -62,7 +62,7 @@ export const DataGridSettings: React.FC<DataGridSettingsProps> = ({ icon, cols, 
                             Columns
                         </Subtitle>
                         <Select
-                            placeholder="Select columns to hide"
+                            placeholder="Select columns to show"
                             multiple
                             options={colOptions}
                             choiceValues={shownCols}

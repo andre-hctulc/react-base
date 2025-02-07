@@ -175,22 +175,22 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
 
     const cols = React.useMemo(() => {
         const c = [...props.cols];
+        const settingsEnabled = props.settings !== false;
 
         // Add actions col
-        if (props.actions || props.settings) {
+        if (props.actions || settingsEnabled) {
             c.push({
                 hidable: false,
-                label:
-                    props.settings !== false ? (
-                        <DataGridSettings
-                            cols={c}
-                            hiddenCols={hiddenCols}
-                            icon={props.components?.settingsIcon}
-                            onChange={(hiddenCols) => setHiddenCols(hiddenCols)}
-                        />
-                    ) : (
-                        ""
-                    ),
+                label: settingsEnabled ? (
+                    <DataGridSettings
+                        cols={c}
+                        hiddenCols={hiddenCols}
+                        icon={props.components?.settingsIcon}
+                        onChange={(hiddenCols) => setHiddenCols(hiddenCols)}
+                    />
+                ) : (
+                    ""
+                ),
                 render: (cell, row, col) =>
                     props.actions ? (
                         <DataGridActions
