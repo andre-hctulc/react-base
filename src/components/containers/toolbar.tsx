@@ -8,7 +8,7 @@ const toolbar = tv({
     variants: {
         direction: {
             row: "flex-row",
-            column: "flex-col",
+            col: "flex-col",
         },
         scroll: {
             true: "",
@@ -50,7 +50,7 @@ const toolbar = tv({
         },
     },
     compoundVariants: [
-        { direction: "column", scroll: true, className: "overflow-y-auto" },
+        { direction: "col", scroll: true, className: "overflow-y-auto" },
         { direction: "row", scroll: true, className: "overflow-x-auto" },
     ],
     defaultVariants: {

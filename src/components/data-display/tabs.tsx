@@ -5,6 +5,7 @@ import type { PropsOf, TVCProps } from "../../types";
 import { Chip } from "./chip";
 import { Icon } from "../icons";
 import clsx from "clsx";
+import type { Choice } from "../input";
 
 export const tabs = tv({
     base: "flex flex-wrap",
@@ -25,8 +26,7 @@ export const tabs = tv({
     },
 });
 
-export interface TabItem {
-    key: string;
+export interface TabItem extends Choice {
     label: string;
     icon?: React.ReactNode;
     href?: string;
@@ -35,7 +35,7 @@ export interface TabItem {
 }
 
 interface TabsProps extends Omit<TVCProps<typeof tabs, "div">, "children"> {
-    activeTab: string | ((tab: TabItem) => boolean);
+    activeTab?: string | ((tab: TabItem) => boolean);
     tabs: TabItem[];
     chipProps?: Partial<PropsOf<typeof Chip>>;
     tabProps?: Partial<PropsOf<typeof Tab>>;
@@ -64,14 +64,14 @@ export const Tabs: React.FC<TabsProps> = ({
             {tabItems.map((t) => {
                 if (t.visible === false) return null;
 
-                const isActive = typeof activeTab === "function" ? activeTab(t) : activeTab === t.key;
+                const isActive = typeof activeTab === "function" ? activeTab(t) : activeTab === t.value;
 
                 if (variant === "chips") {
                     const chip = (
                         <Chip
                             icon={t.icon}
                             as="button"
-                            key={t.key}
+                            key={t.value}
                             size={size}
                             variant={isActive ? "pale" : "outlined"}
                             {...chipProps}
@@ -88,7 +88,7 @@ export const Tabs: React.FC<TabsProps> = ({
                     if (t.href) {
                         const Link = LinkComponent || "a";
                         return (
-                            <Link key={t.key} href={t.href}>
+                            <Link key={t.value} href={t.href}>
                                 {chip}
                             </Link>
                         );
@@ -101,7 +101,7 @@ export const Tabs: React.FC<TabsProps> = ({
                     <Tab
                         bg={bg}
                         elevated={elevated}
-                        key={t.key}
+                        key={t.value}
                         size={size}
                         active={isActive}
                         icon={t.icon}
@@ -124,10 +124,7 @@ export const Tabs: React.FC<TabsProps> = ({
 };
 
 const tab = tv({
-    base: [
-        "transition flex gap-2 items-center rounded bg-2",
-        "data-[disabled=false]:hover:text-primary/80",
-    ],
+    base: ["transition flex gap-2 items-center rounded bg-2", "data-[disabled=false]:hover:text-primary/80"],
     variants: {
         disabled: {
             true: "text-3",
