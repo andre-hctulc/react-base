@@ -2,8 +2,8 @@
 
 import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
-import React from "react";
 import type { TVCProps } from "../../types";
+import { forwardRef, type ChangeEvent } from "react";
 
 const input = tv({
     base: [
@@ -65,9 +65,9 @@ interface InputProps
             TVCProps<typeof input, "input">,
             "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
         >,
-        InputLikeProps<string, React.ChangeEvent<HTMLInputElement>> {}
+        InputLikeProps<string, ChangeEvent<HTMLInputElement>> {}
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
     ({ size, className, style, type, name, required, defaultValue, value, onChange, ...props }, ref) => {
         return (
             <input

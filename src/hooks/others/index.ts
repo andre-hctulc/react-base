@@ -4,3 +4,4 @@ export * from "./use-persistent";
 export * from "./use-interval";
 export * from "./use-timeout";
 export * from "./use-breakpoints";
+export * from "./use-ref-of";

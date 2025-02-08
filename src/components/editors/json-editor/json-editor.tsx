@@ -9,7 +9,7 @@ import { getProperty, setProperty } from "dot-prop";
 import { deepCopy } from "@andre-hctulc/util";
 
 export interface JSONInputBaseProps {
-    path: string | undefined;
+    path: string;
     schema: JSONSchema7Definition;
     required: boolean;
     label: string | undefined;

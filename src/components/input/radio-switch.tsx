@@ -5,6 +5,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
 import type { LabeledChoice, StyleProps } from "../../types";
 import clsx from "clsx";
+import { HiddenInput } from "./hidden-input";
 
 const radioSwitch = tv({
     base: "rounded-full flex border overflow-hidden",
@@ -87,7 +88,7 @@ export const RadioSwitch = <D,>({
     return (
         <div className={radioSwitch({ className })} style={style}>
             {/* form compatibility */}
-            {name && <input type="hidden" name={name} value={selected?.value || ""} required={required} />}
+            {name && <HiddenInput name={name} value={selected?.value || ""} />}
             {options.map((option, i) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
                 const active = selected?.value === option.value;

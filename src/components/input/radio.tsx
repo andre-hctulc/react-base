@@ -5,6 +5,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./input";
 import type { Choice, PropsOf, StyleProps } from "../../types";
 import { Card } from "../containers";
+import { HiddenInput } from "./hidden-input";
 
 const radio = tv({
     base: "",
@@ -89,7 +90,7 @@ export const Radio = <D,>({
     return (
         <div className={radio({ className })} style={style}>
             {/* form compatibility */}
-            {name && <input type="hidden" name={name} value={selected?.value || ""} required={required} />}
+            {name && <HiddenInput name={name} value={selected?.value || ""} required={required} />}
             {options.map((option) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
 

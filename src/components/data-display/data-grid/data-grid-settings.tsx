@@ -4,9 +4,9 @@ import React, { useMemo } from "react";
 import { Card, CardBody } from "../../containers";
 import { Popover } from "../../dialog/popover";
 import { IconButton, Select, type SelectOption } from "../../input";
-import type { DataGridColDef } from "./data-grid";
 import { GearIcon } from "../../icons/gear";
 import { Subtitle } from "../../text";
+import type { DataGridColDef } from "./types";
 
 interface DataGridSettingsProps {
     icon?: React.ReactNode;

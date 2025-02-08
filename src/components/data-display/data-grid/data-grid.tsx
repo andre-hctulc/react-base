@@ -1,8 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import React from "react";
-import { useMapArray, useWindowEvent } from "../../../hooks";
+import { useRefOf, useWindowEvent } from "../../../hooks";
 import { Spinner } from "../../data-display/spinner";
 import { usePersistentState } from "../../../hooks/others/use-persistent";
 import { DataGridSettings } from "./data-grid-settings";
@@ -10,84 +9,11 @@ import { DataGridActions } from "./data-grid-actions";
 import { Checkbox } from "../../input/checkbox";
 import { withPrefix } from "../../../util/system";
 import { Placeholder } from "../../data-display/placeholder";
-import { getProperty, setProperty } from "dot-prop";
-
-const DEFAULT_CELL_WIDTH = 100;
-
-export type CellRenderer<T extends object = any> = (
-    cellValue: any,
-    row: T,
-    col: DataGridColDef<T>
-) => React.ReactNode;
-
-export type CellStringify<T extends object = any> = (
-    cellValue: any,
-    row: T,
-    col: DataGridColDef<T>
-) => string;
-
-export type OnCellClick<T extends object = any> = (
-    cellValue: any,
-    row: T,
-    col: DataGridColDef<T>,
-    e: React.MouseEvent<HTMLDivElement>
-) => void;
-
-export type OnRowClick<T extends object = any> = (row: T, e: React.MouseEvent<HTMLDivElement>) => void;
-
-export interface DataGridColDef<T extends object = any> {
-    /**
-     * Header label
-     */
-    label: React.ReactNode;
-    /**
-     * The data field. Can be a nested path.
-     *
-     * Examples: `name`, `data.user.name`
-     */
-    path: string;
-    /**
-     * @default true
-     */
-    hidable?: boolean;
-    sortable?: boolean;
-    /**
-     * @default 100
-     */
-    width?: number;
-    minWidth?: number;
-    maxWidth?: number;
-    /**
-     * Custom cell renderer.
-     * @default CellText
-     */
-    render?: CellRenderer<T>;
-    /**
-     * Determine the text value of the cell. By default null and undefined values are converted to empty string,
-     * otherwise String() is used.
-     */
-    stringify?: CellStringify<T>;
-    className?: string;
-    /**
-     * Creates flex cells with `align-items: flex-start`.
-     */
-    alignCenter?: boolean;
-    /**
-     * Creates flex cells with `justify-content: flex-start`.
-     */
-    justifyCenter?: boolean;
-    /**
-     * Creates flex cells with `justify-content: flex-start` and `align-items: center`.
-     */
-    center?: boolean;
-    /**
-     * Additional data attached to the column.
-     */
-    data?: any;
-    stickyLeft?: boolean;
-    stickyRight?: boolean;
-    headerCellClassName?: string;
-}
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import type { DataGridColDef, OnCellClick, OnRowClick } from "./types";
+import { DataGridHeaderRow } from "./data-grid-header-row";
+import { DataGridRow } from "./data-grid-row";
+import { DataGridFooter } from "./data-grid-footer";
 
 interface DataGridProps<T extends object> {
     className?: string;
@@ -152,16 +78,12 @@ interface DataGridProps<T extends object> {
     baseColDef?: Partial<DataGridColDef<T>>;
 }
 
-/**
- * ### Caveats
- * - fixed column widths
- */
 export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
-    const getRowId = props.rowId;
-    const ranId = React.useId();
+    const getRowId = useRefOf(props.rowId);
+    const ranId = useId();
     const id = props.storage?.id ?? ranId;
-    const [selection, setSelection] = React.useState<T[]>([]);
-    const selectionSet = React.useMemo(() => new Set(selection.map((row) => getRowId(row))), [selection]);
+    const [selection, setSelection] = useState<T[]>([]);
+    const selectionSet = useMemo(() => new Set(selection.map((row) => getRowId.current(row))), [selection]);
     const [hiddenCols, setHiddenCols] = usePersistentState(
         withPrefix("data-grid-hide-cols_") + id,
         props.defaultHideCols || [],
@@ -169,11 +91,11 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     );
     const len = props.rows.length;
     const empty = len === 0;
-    const [rightEnd, setRightEnd] = React.useState(true);
-    const [leftEnd, setLeftEnd] = React.useState(true);
-    const scrollXBox = React.useRef<HTMLDivElement>(null);
+    const [rightEnd, setRightEnd] = useState(true);
+    const [leftEnd, setLeftEnd] = useState(true);
+    const scrollXBox = useRef<HTMLDivElement>(null);
 
-    const cols = React.useMemo(() => {
+    const cols = useMemo(() => {
         const c = [...props.cols];
         const settingsEnabled = props.settings !== false;
 
@@ -235,11 +157,12 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                 render: (value, row, col) => (
                     <Checkbox
                         size="sm"
-                        value={selectionSet.has(getRowId(row))}
+                        value={selectionSet.has(getRowId.current(row))}
                         onChange={({ value }) => {
+                            const rowId = getRowId.current(row);
                             const newSelection = value
                                 ? [...selection, row]
-                                : selection.filter((r) => getRowId(r) !== getRowId(row));
+                                : selection.filter((r) => getRowId.current(r) !== rowId);
                             setSelection(newSelection);
                             props.onSelectionChange?.(newSelection);
                         }}
@@ -269,9 +192,10 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
         selectionSet,
         props.rows,
         props.renderActions,
+        selection,
     ]);
 
-    const updateEnds = () => {
+    const updateScrollBoundaries = () => {
         if (!scrollXBox.current) return;
 
         const isScrollBox = scrollXBox.current.scrollWidth > scrollXBox.current.clientWidth;
@@ -290,13 +214,27 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
         setRightEnd(scrollLeft + clientWidth === scrollWidth);
     };
 
-    React.useEffect(() => {
-        updateEnds();
+    useEffect(() => {
+        updateScrollBoundaries();
     }, [props.cols, props.rows]);
 
     useWindowEvent("resize", () => {
-        updateEnds();
+        updateScrollBoundaries();
     });
+
+    // Adjust selection when rows change
+    useEffect(() => {
+        const newRowIds = new Set(props.rows.map(getRowId.current));
+
+        // Unselect removed rows
+        const newSelection = selection.filter((row) => newRowIds.has(getRowId.current(row)));
+
+        // If selection changed (rows removed from selection), update
+        if (newSelection.length !== selection.length) {
+            setSelection(newSelection);
+            props.onSelectionChange?.(newSelection);
+        }
+    }, [props.rows]);
 
     const showPlaceholder = empty || props.loading;
 
@@ -319,10 +257,10 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                 className={clsx("flex-grow overflow-x-auto relative flex flex-col")}
                 style={{}}
                 ref={scrollXBox}
-                onScroll={() => updateEnds()}
+                onScroll={() => updateScrollBoundaries()}
             >
                 <div className="flex-shrink-0" style={{ minWidth: "min-content" }}>
-                    <HeaderRow
+                    <DataGridHeaderRow
                         leftEnd={leftEnd}
                         rightEnd={rightEnd}
                         cols={cols}
@@ -331,11 +269,11 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                     {!props.loading &&
                         len > 0 &&
                         props.rows.map((row) => (
-                            <Row
+                            <DataGridRow
                                 leftEnd={leftEnd}
                                 rightEnd={rightEnd}
                                 height={props.rowHeight}
-                                selected={selectionSet.has(getRowId(row))}
+                                selected={selectionSet.has(getRowId.current(row))}
                                 key={props.rowId(row)}
                                 row={row}
                                 cols={cols}
@@ -346,240 +284,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                         ))}
                 </div>
             </div>
-            <Footer />
+            <DataGridFooter />
         </div>
-    );
-};
-
-DataGrid.colWidth = (col: DataGridColDef<any>) => {
-    let width = col.width || DEFAULT_CELL_WIDTH;
-    if (col.maxWidth) width = Math.min(width, col.maxWidth);
-    if (col.minWidth) width = Math.max(width, col.minWidth);
-    return width;
-};
-
-interface FooterProps {
-    className?: string;
-}
-
-const Footer: React.FC<FooterProps> = ({ className }) => {
-    return <div className={className}></div>;
-};
-
-interface HeaderRowProps {
-    cols: DataGridColDef<any>[];
-    height: number | undefined;
-    rightEnd: boolean;
-    leftEnd: boolean;
-}
-
-const HeaderRow: React.FC<HeaderRowProps> = ({ cols, height, rightEnd, leftEnd }) => {
-    const headerCols = useMapArray<DataGridColDef, DataGridColDef>(cols, (col, index, arr) => {
-        return {
-            ...col,
-            className: clsx("text-sm text-3", col.headerCellClassName),
-            // Use label as renderValue when its nt a string, otherwise set renderValue to undefined
-            render:
-                typeof col.label === "string"
-                    ? () => <div className="py-2 truncate font-light">{col.label}</div>
-                    : () => col.label,
-        };
-    });
-    const headerRow = React.useMemo(() => {
-        const result: any = {};
-        cols.forEach((col) => {
-            setProperty(result, col.path, col.label);
-        });
-        return result;
-    }, [cols]);
-
-    return (
-        <Row
-            rightEnd={rightEnd}
-            leftEnd={leftEnd}
-            className="bg z-[2] !w-full flex rounded-t-lg !border-b top-0 sticky"
-            row={headerRow}
-            cols={headerCols}
-            hoverEffect={false}
-            selected={false}
-            height={height}
-        />
-    );
-};
-
-interface RowProps<T extends object> extends CellStyleProps {
-    row: T;
-    cols: DataGridColDef<T>[];
-    className?: string;
-    hoverEffect: boolean;
-    onClick?: OnRowClick<T>;
-    onCellClick?: OnCellClick<T>;
-    height: number | undefined;
-}
-
-const Row: React.FC<RowProps<any>> = ({
-    row,
-    cols,
-    className,
-    onCellClick,
-    onClick,
-    height,
-    ...cellStyleProps
-}) => {
-    return (
-        <div
-            className={clsx(
-                "group flex-shrink-0 flex relative border-b-[0.5px]",
-                onClick && "cursor-pointer",
-                className,
-                // sometimes the cells do not cover the whole row,
-                // so we need to defined selected and hover style also for the row
-                cellStyleProps.hoverEffect && "hover:bg-primary/5",
-                cellStyleProps.selected && "bg-primary/10"
-            )}
-            onClick={(e) => onClick?.(row, e)}
-            style={{ height: height, maxHeight: height }}
-        >
-            {cols.map((col) => (
-                <Cell
-                    cols={cols}
-                    row={row}
-                    key={col.path}
-                    col={col}
-                    onClick={onCellClick}
-                    value={getProperty(row, col.path)}
-                    {...cellStyleProps}
-                />
-            ))}
-        </div>
-    );
-};
-
-interface CellStyleProps {
-    selected: boolean;
-    hoverEffect: boolean;
-    leftEnd: boolean;
-    rightEnd: boolean;
-}
-
-interface CellProps extends CellStyleProps {
-    cols: DataGridColDef<any>[];
-    col: DataGridColDef<any>;
-    value: any;
-    row: any;
-    onClick?: OnCellClick;
-}
-
-const Cell: React.FC<CellProps> = ({
-    value,
-    col,
-    onClick,
-    cols,
-    row,
-    selected,
-    hoverEffect,
-    leftEnd,
-    rightEnd,
-}) => {
-    const width = React.useMemo(() => DataGrid.colWidth(col), [col]);
-    const [stickyLeft, lastStickyLeft] = React.useMemo<[number | undefined, boolean]>(() => {
-        if (!col.stickyLeft) return [undefined, false];
-
-        let left = 0;
-        let lastLeftCol: DataGridColDef | undefined;
-        let addLeft = true;
-
-        for (const c of cols) {
-            if (c === col) {
-                addLeft = false;
-            }
-
-            if (c.stickyLeft) {
-                if (addLeft) left += DataGrid.colWidth(c);
-                lastLeftCol = c;
-            }
-        }
-
-        return [left, lastLeftCol === col];
-    }, [cols, col]);
-    const [stickyRight, firstStickyRight] = React.useMemo<[number | undefined, boolean]>(() => {
-        if (!col.stickyRight) return [undefined, false];
-
-        let right = 0;
-        let addRight = true;
-        let fistRightCol: DataGridColDef | undefined;
-
-        for (const c of cols.reverse()) {
-            if (c === col) {
-                addRight = false;
-            }
-
-            if (c.stickyRight) {
-                if (!fistRightCol) fistRightCol = c;
-                if (addRight) right += DataGrid.colWidth(c) + 1;
-            }
-        }
-
-        return [right, fistRightCol === col];
-    }, [cols, col]);
-    const sticky = col.stickyLeft || col.stickyRight;
-    const isFlexCell = col.alignCenter || col.justifyCenter || col.center;
-
-    /* 
-    NOTE **sticky**
-    Sticky will only grasp when the element hits the edge on mount.
-    Therefore we use order to make sure the sticky elements are always on the correct edge.
-    For stickyLeft we set left 0 and order -1, for stickyRight we set right 0 and order 1.
-    The default order is 0.
-    */
-
-    return (
-        <div
-            className={clsx(
-                "bg transition-shadow",
-                sticky && "z-[1]",
-                col.stickyLeft && "sticky left-0 order-[-1]",
-                col.stickyRight && "sticky right-0 order-[1] ml-auto",
-                lastStickyLeft && !leftEnd && "shadow",
-                firstStickyRight && !rightEnd && "shadow"
-            )}
-            style={{ minWidth: width, maxWidth: width, left: stickyLeft, right: stickyRight }}
-            onClick={(e) => onClick?.(value, row, col, e)}
-        >
-            <div
-                className={clsx(
-                    "overflow-hidden px-1 w-full h-full box-border ",
-                    hoverEffect && "group-hover:bg-primary/5",
-                    selected && "bg-primary/10",
-                    isFlexCell && "flex",
-                    (col.alignCenter ?? col.center) && "items-center",
-                    (col.justifyCenter ?? col.center) && "justify-center",
-                    col.className
-                )}
-            >
-                {col.render ? (
-                    col.render(value, row, col)
-                ) : (
-                    <CellText>{col.stringify ? col.stringify(value, row, col) : value}</CellText>
-                )}
-            </div>
-        </div>
-    );
-};
-
-interface CellTextProps {
-    children?: any;
-    className?: string;
-    style?: React.CSSProperties;
-}
-
-export const CellText: React.FC<CellTextProps> = ({ children, style, className }) => {
-    return (
-        <span
-            className={clsx("inline-block py-2 truncate font-light align-middle max-w-full", className)}
-            style={style}
-        >
-            {children === undefined ? "" : String(children)}
-        </span>
     );
 };

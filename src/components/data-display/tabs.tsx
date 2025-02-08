@@ -1,11 +1,10 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types";
+import type { Choice, PropsOf, TVCProps } from "../../types";
 import { Chip } from "./chip";
 import { Icon } from "../icons";
 import clsx from "clsx";
-import type { Choice } from "../input";
 
 export const tabs = tv({
     base: "flex flex-wrap",

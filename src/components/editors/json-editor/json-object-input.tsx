@@ -3,8 +3,7 @@
 import { useMemo, useState, type FC } from "react";
 import { useJSONEditor, useJSONPathValue, type JSONInputBaseProps } from "./json-editor";
 import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
-import { Labeled } from "../../text";
-import { IconButton, Input, InputList, JSFormError, Select, type SelectOption } from "../../input";
+import { FormControl, IconButton, Input, InputList, Select, type SelectOption } from "../../input";
 import { JSONMany } from "./json-many";
 import { typeLabel } from "./json-util";
 import { PlusIcon } from "../../icons/plus";
@@ -83,90 +82,88 @@ export const JSONObjectInput: FC<JSONInputBaseProps> = ({ path, schema, label, f
     }
 
     return (
-        <Labeled
+        <FormControl
             helperTextTop
             labelProps={{ as: "span" }}
             helperText={schem.description}
             label={label ?? schem.title ?? fallbackLabel}
+            name={path}
         >
-            <div className="pl-5 pt-2">
-                <InputList<ListItem>
-                    reverse
-                    unique
-                    sort={(a, b) => a.key.localeCompare(b.key)}
-                    value={values}
-                    readOnly={
-                        forceReadonly ||
-                        (schem.additionalProperties === false && !schem.patternProperties) ||
-                        schem.readOnly
-                    }
-                    onChange={({ value }) => {
-                        setValue(value.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {}));
-                    }}
-                    renderInput={({ add }) => (
-                        <div className="flex items-center gap-3 pl-5">
-                            <Input onBlur={(e) => setNewPropName(e.target.value)} />
-                            <Select
-                                defaultChoiceValues={addableSchemas.length ? ["0"] : []}
-                                onChange={({ value }) =>
-                                    setNewPropSchema(addableSchemas[parseInt(value[0].value)])
-                                }
-                                options={addableSchemas.map<SelectOption>((as, i) => ({
-                                    label: typeLabel(as),
-                                    value: String(i),
-                                }))}
-                            />
-                            <IconButton
-                                type="button"
-                                disabled={!addableSchemas.length || !newPropName || !newPropSchema}
-                                className="ml-auto"
-                                onClick={() => {
-                                    if (!newPropName || !newPropSchema) return;
-                                    add({ key: newPropName, schemas: newPropSchema, value: undefined });
-                                    setNewPropName(undefined);
-                                }}
-                            >
-                                <PlusIcon />
-                            </IconButton>
-                        </div>
-                    )}
-                    renderValues={({ values }) => (
-                        <div className="pl-5 flex flex-col gap-2 pt-5">
-                            {values.map(({ key }) => {
-                                let subSchema: JSONSchema7Definition | JSONSchema7Definition[] | undefined;
+            <InputList<ListItem>
+                reverse
+                unique
+                sort={(a, b) => a.key.localeCompare(b.key)}
+                value={values}
+                readOnly={
+                    forceReadonly ||
+                    (schem.additionalProperties === false && !schem.patternProperties) ||
+                    schem.readOnly
+                }
+                onChange={({ value }) => {
+                    setValue(value.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {}));
+                }}
+                renderInput={({ add }) => (
+                    <div className="flex items-center gap-3 pl-5">
+                        <Input onBlur={(e) => setNewPropName(e.target.value)} />
+                        <Select
+                            defaultChoiceValues={addableSchemas.length ? ["0"] : []}
+                            onChange={({ value }) =>
+                                setNewPropSchema(addableSchemas[parseInt(value[0].value)])
+                            }
+                            options={addableSchemas.map<SelectOption>((as, i) => ({
+                                label: typeLabel(as),
+                                value: String(i),
+                            }))}
+                        />
+                        <IconButton
+                            type="button"
+                            disabled={!addableSchemas.length || !newPropName || !newPropSchema}
+                            className="ml-auto"
+                            onClick={() => {
+                                if (!newPropName || !newPropSchema) return;
+                                add({ key: newPropName, schemas: newPropSchema, value: undefined });
+                                setNewPropName(undefined);
+                            }}
+                        >
+                            <PlusIcon />
+                        </IconButton>
+                    </div>
+                )}
+                renderValues={({ values }) => (
+                    <div className="pl-5 flex flex-col gap-2 pt-5">
+                        {values.map(({ key }) => {
+                            let subSchema: JSONSchema7Definition | JSONSchema7Definition[] | undefined;
 
-                                if (schem.properties?.[key]) {
-                                    subSchema = schem.properties[key];
-                                } else if (schem.patternProperties) {
-                                    for (const [pattern, schema] of Object.entries(schem.patternProperties)) {
-                                        if (new RegExp(pattern).test(key)) {
-                                            subSchema = schema;
-                                            break;
-                                        }
+                            if (schem.properties?.[key]) {
+                                subSchema = schem.properties[key];
+                            } else if (schem.patternProperties) {
+                                for (const [pattern, schema] of Object.entries(schem.patternProperties)) {
+                                    if (new RegExp(pattern).test(key)) {
+                                        subSchema = schema;
+                                        break;
                                     }
                                 }
+                            }
 
-                                if (!subSchema && schem.additionalProperties !== false) {
-                                    subSchema = schem.additionalProperties || {};
-                                }
+                            if (!subSchema && schem.additionalProperties !== false) {
+                                subSchema = schem.additionalProperties || {};
+                            }
 
-                                return (
-                                    <JSONMany
-                                        key={key}
-                                        path={`${path}.${key}`}
-                                        fallbackLabel={key}
-                                        label={undefined}
-                                        required={!!schem.required?.includes(key)}
-                                        schemas={subSchema}
-                                        schema={false}
-                                    />
-                                );
-                            })}
-                        </div>
-                    )}
-                />
-                {path && <JSFormError name={path} />}
-            </div>
-        </Labeled>
+                            return (
+                                <JSONMany
+                                    key={key}
+                                    path={`${path}.${key}`}
+                                    fallbackLabel={key}
+                                    label={undefined}
+                                    required={!!schem.required?.includes(key)}
+                                    schemas={subSchema}
+                                    schema={false}
+                                />
+                            );
+                        })}
+                    </div>
+                )}
+            />
+        </FormControl>
     );
 };

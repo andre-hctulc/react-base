@@ -3,9 +3,8 @@
 import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
 import { useJSONEditor, type JSONInputBaseProps } from "./json-editor";
 import { useMemo, useState, type FC } from "react";
-import { Select, type SelectOption } from "../../input";
+import { FormControl, Select, type SelectOption } from "../../input";
 import { typeLabel } from "./json-util";
-import { Labeled } from "../../text";
 import { JSONInputSwitch } from "./json-input-switch";
 
 interface JSONOrInputProps extends JSONInputBaseProps {
@@ -50,27 +49,28 @@ export const JSONMany: FC<JSONOrInputProps> = ({ path, schemas, label, schema, f
     }
 
     return (
-        <Labeled helperText={schem.description} label={label ?? schem.title ?? fallbackLabel}>
-            {(id) => (
-                <>
-                    <Select
-                        id={id}
-                        defaultChoiceValues={[activeType]}
-                        onChange={({ value }) => setActiveType(value[0].value)}
-                        size="sm"
-                        required
-                        name={path}
-                        options={options}
-                    />
-                    <JSONInputSwitch
-                        required={required}
-                        path={path}
-                        fallbackLabel=""
-                        label=""
-                        schema={schems[activeIndex]}
-                    />
-                </>
-            )}
-        </Labeled>
+        <div>
+            <Select
+                defaultChoiceValues={[activeType]}
+                onChange={({ value }) => setActiveType(value[0].value)}
+                size="sm"
+                required
+                name={path}
+                options={options}
+            />
+            <FormControl
+                name={path}
+                helperText={schem.description}
+                label={label ?? schem.title ?? fallbackLabel}
+            >
+                <JSONInputSwitch
+                    required={required}
+                    path={path}
+                    fallbackLabel=""
+                    label=""
+                    schema={schems[activeIndex]}
+                />
+            </FormControl>
+        </div>
     );
 };

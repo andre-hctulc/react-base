@@ -43,7 +43,12 @@ interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
      * @default 4
      */
     frameMargin?: number;
-    zIndex?: "none" | "10" | "20" | "30" | "40" | "50";
+    zIndex?: PropsOf<typeof Popover>["zIndex"];
+    /**
+     * Portal the popover to the body
+     * @default false
+     */
+    portal?: boolean;
 }
 
 /**
@@ -57,7 +62,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
     reEnterDelay,
     content,
     disabled,
-    ...props
+    portal,
+    zIndex,
 }) => {
     const anchor = useRef<HTMLElement | null>(null);
     const [open, setOpen] = useState(false);
@@ -94,7 +100,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
                 noInteraction
                 position={position || "top"}
                 anchor={anchor.current}
-                {...props}
+                portal={portal ?? false}
+                zIndex={zIndex}
             >
                 <div
                     {...containerProps}

@@ -73,6 +73,11 @@ interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
     bg?: boolean;
     zIndex?: "none" | "10" | "20" | "30" | "40" | "50";
     noInteraction?: boolean;
+    /**
+     * Portal the popover to the body
+     * @default true
+     */
+    portal?: boolean;
 }
 
 const getOffset = (position: Placement, gap: number) => {
@@ -127,7 +132,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
                 e.stopPropagation();
                 props.onClose?.();
             }}
-            portal
+            portal={props.portal ?? true}
             zIndex={props.zIndex}
         >
             <Transition

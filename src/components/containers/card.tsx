@@ -14,6 +14,9 @@ const card = tv({
             outlined: "border",
             elevated: "shadow",
         },
+        flex: {
+            true: "flex flex-col",
+        },
         shadow: {
             none: "",
             sm: "shadow-sm",
@@ -50,6 +53,7 @@ const card = tv({
             md: "w-[350px]",
             lg: "w-[450px]",
             xl: "w-[550px]",
+            "2xl": "w-[750px]",
         },
         height: {
             none: "",
@@ -59,6 +63,7 @@ const card = tv({
             md: "h-[230px]",
             lg: "h-[300px]",
             xl: "h-[400px]",
+            "2xl": "h-[500px]",
         },
     },
     defaultVariants: {
@@ -75,7 +80,10 @@ interface CardProps extends TVCProps<typeof card, "div"> {
 }
 
 export const Card = React.forwardRef<HTMLElement, CardProps>(
-    ({ children, shadow, className, border, bg, width, height, size, variant, rounded, ...props }, ref) => {
+    (
+        { children, shadow, className, border, bg, width, height, size, variant, rounded, flex, ...props },
+        ref
+    ) => {
         const Comp = props.as || "div";
 
         return (
@@ -90,6 +98,7 @@ export const Card = React.forwardRef<HTMLElement, CardProps>(
                     width: width ?? size,
                     height: height ?? size,
                     variant,
+                    flex,
                 })}
                 {...props}
             >
@@ -173,7 +182,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
 };
 
 const cardBody = tv({
-    base: "grow",
+    base: "grow max-h-full",
     variants: {
         padding: {
             none: "",
@@ -187,6 +196,9 @@ const cardBody = tv({
         flex: {
             col: "flex flex-col",
             row: "flex",
+        },
+        scroll: {
+            true: "overflow-y-auto",
         },
         grow: {
             true: "flex-grow",
@@ -220,16 +232,18 @@ export const CardBody: React.FC<CardBodyProps> = ({
     grow,
     fullHeight,
     alignItems,
+    scroll,
 }) => {
     const Comp = as || "div";
     return (
-        <Comp className={cardBody({ className, padding, flex, grow, fullHeight, alignItems })}>
+        <Comp className={cardBody({ className, padding, flex, grow, fullHeight, alignItems, scroll })}>
             {children}
         </Comp>
     );
 };
 
 const cardFooter = tv({
+    base: "mt-auto justify-self-end",
     variants: {
         variant: {
             flex: "flex",

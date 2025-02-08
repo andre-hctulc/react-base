@@ -5,6 +5,7 @@ import type { PropsOf, StyleProps } from "../../types";
 import type { InputLikeProps } from "./input";
 import { IconButton } from "./button";
 import { withPrefix } from "../../util/system";
+import { HiddenInput } from "./hidden-input";
 
 export interface ToggleIconButtonProps extends InputLikeProps<boolean>, StyleProps {
     children: ReactElement;
@@ -42,7 +43,7 @@ export const ToggleIconButton = forwardRef<HTMLButtonElement, ToggleIconButtonPr
 
         return (
             <>
-                {name && <input id={id} type="hidden" checked={active} name={name} required={required} />}
+                {name && <HiddenInput id={id} checked={active} name={name} required={required} />}
                 <IconButton
                     ref={ref}
                     style={style}

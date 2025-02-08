@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { HiddenInput } from "./hidden-input";
 
 interface CSRFInputProps {
     /**
@@ -35,7 +36,7 @@ export const CSRFInput: React.FC<CSRFInputProps> = ({ token, name, active, debug
 
     return (
         <>
-            <input required={required} type="hidden" name={name ?? "_csrf"} value={value} />
+            <HiddenInput required={required} name={name ?? "_csrf"} value={value} />
             {debug && <pre>{value}</pre>}
         </>
     );

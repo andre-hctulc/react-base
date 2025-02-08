@@ -41,7 +41,7 @@ interface OverlayProps extends TVCProps<typeof overlay, "div"> {
     children?: React.ReactNode;
     noInteraction?: boolean;
     /**
-     * Render this overlay in the body
+     * Portal the popover to the body
      */
     portal?: boolean;
 }
