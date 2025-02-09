@@ -65,9 +65,9 @@ export const DataGridSettings: React.FC<DataGridSettingsProps> = ({ icon, cols, 
                             placeholder="Select columns to show"
                             multiple
                             options={colOptions}
-                            choiceValues={shownCols}
+                            value={shownCols}
                             onChange={({ value }) => {
-                                const shownSet = new Set(value.map((col) => col.value));
+                                const shownSet = new Set(value);
                                 onChange?.(
                                     cols
                                         .filter((col) => !shownSet.has(col.path) && col.hidable !== false)

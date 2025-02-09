@@ -4,6 +4,7 @@ import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import type { TVCProps } from "../../types";
 import { forwardRef, type ChangeEvent } from "react";
+import type { InputLikeProps } from "./types";
 
 const input = tv({
     base: [
@@ -21,44 +22,6 @@ const input = tv({
         size: "md",
     },
 });
-
-/**
- * Input base properties. Each input component's props should conform this interface.
- */
-export interface InputLikeProps<T = any, E extends object = {}> {
-    /**
-     * Default value of the input
-     */
-    defaultValue?: T;
-    /**
-     * Controlled value of the input
-     */
-    value?: T;
-    /**
-     * Callback when the value of the input changes
-     */
-    onChange?: (value: { value: T } & E) => void;
-    /**
-     * Name of the input element
-     */
-    name?: string;
-    /**
-     * Required?
-     */
-    required?: boolean;
-    /**
-     * Disabled?
-     */
-    disabled?: boolean;
-    /**
-     * Read only?
-     */
-    readOnly?: boolean;
-    /**
-     * Id associated with the input element
-     */
-    id?: string;
-}
 
 interface InputProps
     extends Omit<

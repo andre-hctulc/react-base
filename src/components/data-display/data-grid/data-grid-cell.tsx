@@ -82,7 +82,6 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
     }, [cols, col]);
     const sticky = col.stickyLeft || col.stickyRight;
     const isFlexCell = col.alignCenter || col.justifyCenter || col.center;
-
     /* 
     NOTE **sticky**
     Sticky will only grasp when the element hits the edge on mount.
@@ -97,9 +96,10 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
                 "bg transition-shadow",
                 sticky && "z-[1]",
                 col.stickyLeft && "sticky left-0 order-[-1]",
-                col.stickyRight && "sticky right-0 order-[1] ml-auto",
+                col.stickyRight && "sticky right-0 order-[1]",
+                firstStickyRight && "ml-auto",
                 lastStickyLeft && !leftEnd && "shadow",
-                firstStickyRight && !rightEnd && "shadow"
+                firstStickyRight && !rightEnd && "shadow",
             )}
             style={{ minWidth: width, maxWidth: width, left: stickyLeft, right: stickyRight }}
             onClick={(e) => onClick?.(value, row, col, e)}

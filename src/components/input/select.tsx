@@ -4,7 +4,7 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headless
 import clsx from "clsx";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { InputLikeProps } from "./input";
+import type { InputLikeProps } from "./types";
 import type { LabeledChoice, StyleProps } from "../../types";
 import { ChevronDownIcon } from "../icons/chevron-down";
 import { Chip } from "../data-display/chip";
@@ -50,7 +50,7 @@ export interface RenderSelectedParams<D = any> {
 }
 
 interface SelectProps<D = any>
-    extends InputLikeProps<SelectOption<D>[]>,
+    extends InputLikeProps<string[], { options: SelectOption<D>[] }>,
         VariantProps<typeof select>,
         StyleProps {
     options: SelectOption<D>[];
@@ -59,8 +59,6 @@ interface SelectProps<D = any>
     multiple?: boolean;
     renderSelected?: (params: RenderSelectedParams<D>) => React.ReactNode;
     loading?: boolean;
-    defaultChoiceValues?: string[];
-    choiceValues?: string[];
     /**
      * @default "Loading..."
      */
@@ -74,7 +72,6 @@ export interface SelectOption<D = any> extends LabeledChoice<D> {
 /**
  * ### Props
  * - `options` - The options to display in the dropdown
- * - `defaultValues` - The values of the options to be selected by default
  * - `values` - The values of the options to be selected (controlled)
  * - `placeholder` - The placeholder to display when no option is selected
  * - `multiple` - Allow multiple options to be selected
@@ -95,8 +92,6 @@ export const Select = <V,>({
     renderSelected,
     loadingText,
     loading,
-    defaultChoiceValues,
-    choiceValues,
     value,
     defaultValue,
     onChange,
@@ -104,11 +99,11 @@ export const Select = <V,>({
     name,
     id,
 }: SelectProps<V>) => {
-    const controlled = value !== undefined || choiceValues !== undefined;
+    const controlled = value !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<SelectOption<V>[]>(() => {
-        if (defaultChoiceValues || choiceValues) {
-            const set = new Set(choiceValues || defaultChoiceValues);
+        if (defaultValue || value) {
+            const set = new Set(defaultValue || value);
             return options.filter(({ value: key }) => set.has(key));
         }
         return value || defaultValue || [];
@@ -138,30 +133,22 @@ export const Select = <V,>({
         typeof placeholder === "string" ? <span className="text-3">{placeholder}</span> : placeholder;
 
     React.useEffect(() => {
-        if (choiceValues) {
-            const set = new Set(choiceValues);
+        if (value) {
+            const set = new Set(value);
             setSelected(options.filter(({ value: key }) => set.has(key)));
         }
-    }, [choiceValues, options]);
-
-    React.useEffect(() => {
-        if (value) {
-            setSelected(value || []);
-        }
-    }, [value]);
+    }, [value, options]);
 
     return (
         <div className={select({ className, size })} style={style} onClick={(e) => e.stopPropagation()}>
             <Listbox
                 value={selected}
-                onChange={(option) => {
+                onChange={(options) => {
                     // multiple is handled by the checkboxes exclusively
                     if (multiple) return;
 
-                    if (!Array.isArray(option)) option = [option];
-
-                    if (!controlled) setSelected(option);
-                    onChange?.({ value: option });
+                    if (!controlled) setSelected(options);
+                    onChange?.({ value: options.map(({ value }) => value), options: options });
                 }}
                 name={name}
             >
@@ -204,7 +191,10 @@ export const Select = <V,>({
                                     setSelected(newSelected);
                                 }
 
-                                onChange?.({ value: newSelected });
+                                onChange?.({
+                                    value: newSelected.map(({ value }) => value),
+                                    options: newSelected,
+                                });
                             }
                         };
 

@@ -1,12 +1,12 @@
 import { setProperty } from "dot-prop";
 import type { FormErrors, InputState, JSFormSnapshot, JSFormValidateData } from "./types";
 
-function getAllFormElements(
-    form: HTMLFormElement
-): (HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement)[] {
+type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+
+function getAllFormElements(form: HTMLFormElement): InputElement[] {
     return Array.from(form.elements).filter((element) =>
         ["INPUT", "TEXTAREA", "SELECT"].includes(element.tagName)
-    ) as (HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement)[];
+    ) as InputElement[];
 }
 
 function checkValidity(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) {
@@ -35,11 +35,35 @@ function checkValidity(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectEl
     return el.checkValidity();
 }
 
-function formDataToObject(formData: FormData) {
+/**
+ * Parses FormData into a plain object.
+ *
+ * It considers the type of the input elements to parse the values correctly.
+ */
+function formDataToObject(formData: FormData, inputElements: InputElement[]) {
     const obj: Record<string, any> = {};
+    const elementsMap = new Map(inputElements.filter((el) => !!el.name).map((el) => [el.name, el]));
 
-    for (const [key, value] of formData.entries()) {
-        setProperty(obj, key, value);
+    for (let [name, value] of formData.entries()) {
+        let val: any = value;
+        const element = elementsMap.get(name);
+
+        // Parse checkboxes as boolean
+        if (element?.type === "checkbox") {
+            val = !!(element as HTMLInputElement).checked;
+        }
+        // Parse number inputs as numbers
+        else if (element?.type === "number") {
+            const num = parseFloat(value as string);
+            val = isNaN(num) ? undefined : num;
+        }
+        // Parse date inputs as Date objects
+        else if (element?.type.includes("date")) {
+            val = value ? new Date(value as string) : undefined;
+        }
+        // else keep the value as string
+
+        setProperty(obj, name, val);
     }
 
     return obj;
@@ -58,8 +82,8 @@ export function createSnapshot(
 ) {
     let ok = true;
     const formData = new FormData(form);
-    const values: any = formDataToObject(formData);
     const elements = getAllFormElements(form);
+    const values: any = formDataToObject(formData, elements);
     const inputs: { [InputName in string]: InputState } = {};
     const invalidReason: { form: boolean; validate: boolean } = { form: false, validate: false };
 

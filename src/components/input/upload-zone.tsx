@@ -2,10 +2,10 @@
 
 import type { StyleProps } from "../../types";
 import { Droppable } from "./droppable";
-import type { InputLikeProps } from "./input";
 import React from "react";
 import { List } from "../containers";
 import clsx from "clsx";
+import type { InputLikeProps } from "./types";
 
 interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     children?: React.ReactNode;

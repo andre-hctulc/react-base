@@ -8,10 +8,8 @@ import { JSONMany } from "./json-many";
 import { typeLabel } from "./json-util";
 import { PlusIcon } from "../../icons/plus";
 
-interface ListItem {
-    key: string;
+interface ListItemData {
     schemas: JSONSchema7Definition | JSONSchema7Definition[];
-    value: any;
 }
 
 const findPatternSchemas = (key: string | null, patternProperties: JSONSchema7["patternProperties"]) => {
@@ -30,8 +28,8 @@ export const JSONObjectInput: FC<JSONInputBaseProps> = ({ path, schema, label, f
     const schem = schema as JSONSchema7;
     const { forceReadonly } = useJSONEditor();
     const { value, setValue } = useJSONPathValue(path);
-    const values = useMemo<ListItem[]>(() => {
-        const result: ListItem[] = [];
+    const values = useMemo<ListItemData[]>(() => {
+        const result: ListItemData[] = [];
 
         Object.entries(schem.properties || {}).forEach(([key, subSchema]) => {
             if (!value?.[key]) {
@@ -89,27 +87,25 @@ export const JSONObjectInput: FC<JSONInputBaseProps> = ({ path, schema, label, f
             label={label ?? schem.title ?? fallbackLabel}
             name={path}
         >
-            <InputList<ListItem>
+            <InputList<ListItemData>
                 reverse
                 unique
-                sort={(a, b) => a.key.localeCompare(b.key)}
-                value={values}
+                sort={(a, b) => a.value.localeCompare(b.value)}
+                items={values}
                 readOnly={
                     forceReadonly ||
                     (schem.additionalProperties === false && !schem.patternProperties) ||
                     schem.readOnly
                 }
                 onChange={({ value }) => {
-                    setValue(value.reduce((acc, { key, value }) => ({ ...acc, [key]: value }), {}));
+                    setValue(value.reduce((acc, { value }) => ({ ...acc, [key]: value }), {}));
                 }}
                 renderInput={({ add }) => (
                     <div className="flex items-center gap-3 pl-5">
                         <Input onBlur={(e) => setNewPropName(e.target.value)} />
                         <Select
-                            defaultChoiceValues={addableSchemas.length ? ["0"] : []}
-                            onChange={({ value }) =>
-                                setNewPropSchema(addableSchemas[parseInt(value[0].value)])
-                            }
+                            defaultValue={addableSchemas.length ? ["0"] : []}
+                            onChange={({ value }) => setNewPropSchema(addableSchemas[parseInt(value[0])])}
                             options={addableSchemas.map<SelectOption>((as, i) => ({
                                 label: typeLabel(as),
                                 value: String(i),
@@ -129,7 +125,7 @@ export const JSONObjectInput: FC<JSONInputBaseProps> = ({ path, schema, label, f
                         </IconButton>
                     </div>
                 )}
-                renderValues={({ values }) => (
+                renderValues={({ items: values }) => (
                     <div className="pl-5 flex flex-col gap-2 pt-5">
                         {values.map(({ key }) => {
                             let subSchema: JSONSchema7Definition | JSONSchema7Definition[] | undefined;

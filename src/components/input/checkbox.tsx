@@ -1,5 +1,5 @@
 import { Checkbox as BaseCheckbox, type CheckboxProps as BaseCheckboxProps } from "@headlessui/react";
-import type { InputLikeProps } from "./input";
+import type { InputLikeProps } from "./types";
 import { tv, type VariantProps } from "tailwind-variants";
 import React from "react";
 import type { StyleProps } from "../../types";

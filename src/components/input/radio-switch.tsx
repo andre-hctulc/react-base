@@ -2,7 +2,7 @@
 
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { InputLikeProps } from "./input";
+import type { InputLikeProps } from "./types";
 import type { LabeledChoice, StyleProps } from "../../types";
 import clsx from "clsx";
 import { HiddenInput } from "./hidden-input";
@@ -32,12 +32,10 @@ const radioSwitch = tv({
 });
 
 interface RadioSwitchProps<D = any>
-    extends InputLikeProps<LabeledChoice<D>>,
+    extends InputLikeProps<string, { option: LabeledChoice<D> }>,
         VariantProps<typeof radioSwitch>,
         StyleProps {
     options: LabeledChoice<D>[];
-    defaultChoiceValue?: string;
-    choiceValue?: string;
 }
 
 export const RadioSwitch = <D,>({
@@ -46,44 +44,36 @@ export const RadioSwitch = <D,>({
     style,
     disabled,
     readOnly,
-    defaultChoiceValue,
-    choiceValue,
     value,
     defaultValue,
     onChange,
     required,
     name,
 }: RadioSwitchProps<D>) => {
-    const controlled = choiceValue !== undefined || value !== undefined;
+    const controlled = value !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<LabeledChoice<D> | null>(() => {
-        if (defaultChoiceValue !== undefined || choiceValue !== undefined) {
-            const val = choiceValue ?? defaultChoiceValue;
+        if (value !== undefined || defaultValue !== undefined) {
+            const val = value ?? defaultValue;
             const found = options.find(({ value }) => value === val);
             if (found) return found;
         }
-        return value || defaultValue || null;
+        return null;
     });
 
     const activate = (option: LabeledChoice<D>) => {
         if (!controlled) setSelected(option);
-        onChange?.({ value: option });
+        onChange?.({ value: option.value, option });
     };
 
     React.useEffect(() => {
-        if (choiceValue) {
-            const newOption = options.find(({ value: key }) => key === choiceValue);
+        if (value) {
+            const newOption = options.find(({ value: val }) => val === value);
             if (newOption) {
                 setSelected(newOption);
             }
         }
-    }, [choiceValue, options]);
-
-    React.useEffect(() => {
-        if (value) {
-            setSelected(value);
-        }
-    }, [value]);
+    }, [value, options]);
 
     return (
         <div className={radioSwitch({ className })} style={style}>

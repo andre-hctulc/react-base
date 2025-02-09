@@ -3,7 +3,7 @@
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { FormErrors, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types";
-import { type JSFormContext, JSFormCtx } from "./context";
+import { type JSFormContext, JSFormCtx } from "./js-form-context";
 import { createSnapshot } from "./helpers";
 import { useRefOf } from "../../../hooks";
 import { getProperty } from "dot-prop";

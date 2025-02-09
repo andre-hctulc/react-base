@@ -80,7 +80,7 @@ export const JSONArrayInput: FC<JSONInputBaseProps> = ({ path, schema, label, fa
                         </IconButton>
                     </div>
                 )}
-                renderValues={({ values }) => (
+                renderValues={({ items: values }) => (
                     <div className="pl-5 flex flex-col gap-2 pt-5">
                         {values.map(({ value }, i) => {
                             return (

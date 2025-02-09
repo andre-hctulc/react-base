@@ -1,6 +1,5 @@
-import { cloneElement, useId, type FC, type ReactElement, type ReactNode } from "react";
-import type { InputLikeProps } from "./input";
-import { useJSForm } from "./js-form/context";
+import { cloneElement, isValidElement, useId, type FC, type ReactNode } from "react";
+import { useJSForm } from "./js-form/js-form-context";
 import { ErrorText, Label } from "../text";
 import type { PartialPropsOf, TVCProps } from "../../types";
 import { HelperText } from "./helper-text";
@@ -44,12 +43,12 @@ const formControlBody = tv({
     },
 });
 
-interface FormControlProps<T = any> extends TVCProps<typeof formControl, "div"> {
+interface FormControlProps extends TVCProps<typeof formControl, "div"> {
     /**
      * Default value of the input
      */
-    name: string;
-    children: ReactElement<InputLikeProps<T>>;
+    name?: string;
+    children: ReactNode;
     controlled?: boolean;
     label?: string;
     labelProps?: PartialPropsOf<typeof Label>;
@@ -64,6 +63,12 @@ interface FormControlProps<T = any> extends TVCProps<typeof formControl, "div"> 
      */
     noError?: boolean;
     helperTextTop?: boolean;
+    /**
+     * Indicates that the label is not labeling a valid input element (e.g. in combination with hidden inputs).
+     *
+     * In this case a span is used instead of a label element.
+     */
+    mimic?: boolean;
 }
 
 /**
@@ -88,36 +93,60 @@ export const FormControl: FC<FormControlProps> = ({
     labelWidth,
     noError,
     helperTextTop,
+    mimic: hidden,
 }) => {
+    const hasName = name !== undefined;
     const formCtx = useJSForm();
-    const isErr = formCtx?.inputs[name]?.ok === false;
-    const errText = isErr && !noError ? errorText ?? (formCtx?.inputs[name]?.error || "") : "";
+    const isErr = !noError && hasName && formCtx?.inputs[name]?.ok === false;
+    const errText = isErr ? errorText ?? (formCtx?.inputs[name]?.error || "") : "";
     const _controlled = controlled ?? formCtx?.controlled;
     const id = useId();
-    const jsFormValue = formCtx?.default(name);
+    const jsFormValue = hasName ? formCtx?.default(name) : undefined;
+    const childElement = isValidElement(children) ? children : null;
 
     // input props
-    const inpProps: any = { id, name };
+    const inpProps: any = {};
 
-    // handle js form default value
-    if (jsFormValue !== undefined) {
-        if (_controlled) {
-            inpProps.value = children.props.value ?? jsFormValue;
-        } else {
-            inpProps.defaultValue = children.props.defaultValue ?? jsFormValue;
+    // If the child is an input element (optimistic), we pass some props to it
+    if (childElement) {
+        if (!hidden) {
+            inpProps.id = id;
+        }
+
+        if (hasName) {
+            inpProps.name = name;
+        }
+
+        // handle js form default value
+        if (jsFormValue !== undefined) {
+            if (_controlled) {
+                inpProps.value =
+                    childElement?.props.value === undefined ? jsFormValue : childElement.props.value;
+            } else {
+                inpProps.defaultValue =
+                    childElement?.props.defaultValue === undefined
+                        ? jsFormValue
+                        : childElement.props.defaultValue;
+            }
         }
     }
 
     const body = (
         <>
             {helperText && helperTextTop && <HelperText {...helperTextProps}>{helperText}</HelperText>}
-            {cloneElement(children, inpProps)}
+            {childElement ? cloneElement(childElement, inpProps) : children}
             {helperText && !helperTextTop && <HelperText {...helperTextProps}>{helperText}</HelperText>}
             {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
         </>
     );
     const lbl = label && (
-        <Label htmlFor={id} {...labelProps} style={{ width: labelWidth, ...labelProps?.style }}>
+        <Label
+            htmlFor={id}
+            {...labelProps}
+            /* default to span if hidden */
+            as={labelProps?.as ?? (hidden ? "span" : undefined)}
+            style={{ width: labelWidth, ...labelProps?.style }}
+        >
             {label}
         </Label>
     );

@@ -10,7 +10,7 @@ import { Checkbox } from "../../input/checkbox";
 import { withPrefix } from "../../../util/system";
 import { Placeholder } from "../../data-display/placeholder";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import type { DataGridColDef, OnCellClick, OnRowClick } from "./types";
+import type { CellRenderer, DataGridColDef, OnCellClick, OnRowClick } from "./types";
 import { DataGridHeaderRow } from "./data-grid-header-row";
 import { DataGridRow } from "./data-grid-row";
 import { DataGridFooter } from "./data-grid-footer";
@@ -37,14 +37,17 @@ interface DataGridProps<T extends object> {
         loading?: React.ReactNode;
     };
     /**
-     * Render popover content for an actions column.
+     * Renders an action cell for each row that opens a popover with this content.
+     * 
+     * Use {@link rowActionCell} to render a custom action cell.
      */
-    renderActions?: (row: T) => React.ReactNode;
+    rowActionCellPopover?: (row: T) => React.ReactNode;
     /**
-     * Show actions column?
-     * @default false
+     * Custom row action cell. 
+     * 
+     * Use {@link rowActionCellPopover} to render a default action cell.
      */
-    actions?: boolean;
+    rowActionCell?: CellRenderer<T>;
     /**
      * Show settings column?
      * @default true
@@ -100,29 +103,27 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
         const settingsEnabled = props.settings !== false;
 
         // Add actions col
-        if (props.actions || settingsEnabled) {
+        if (props.rowActionCellPopover || props.rowActionCell || settingsEnabled) {
             c.push({
                 hidable: false,
-                label: settingsEnabled ? (
+                label: settingsEnabled && (
                     <DataGridSettings
                         cols={c}
                         hiddenCols={hiddenCols}
                         icon={props.components?.settingsIcon}
                         onChange={(hiddenCols) => setHiddenCols(hiddenCols)}
                     />
-                ) : (
-                    ""
                 ),
-                render: (cell, row, col) =>
-                    props.actions ? (
-                        <DataGridActions
-                            moreIcon={props.components?.moreIcon}
-                            render={props.renderActions}
-                            row={row}
-                        />
-                    ) : (
-                        ""
-                    ),
+                render:
+                    props.rowActionCell ||
+                    ((cell, row, col) =>
+                        props.rowActionCellPopover && (
+                            <DataGridActions
+                                moreIcon={props.components?.moreIcon}
+                                render={props.rowActionCellPopover}
+                                row={row}
+                            />
+                        )),
                 path: "$actions$",
                 width: 50,
                 className: "flex justify-center items-center",
@@ -186,12 +187,12 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     }, [
         props.cols,
         hiddenCols,
-        props.actions,
+        props.rowActionCellPopover,
+        props.rowActionCell,
         props.selectable,
         props.selectAll,
         selectionSet,
         props.rows,
-        props.renderActions,
         selection,
     ]);
 

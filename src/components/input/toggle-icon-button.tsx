@@ -2,7 +2,7 @@
 
 import { forwardRef, useEffect, useState, type ReactElement } from "react";
 import type { PropsOf, StyleProps } from "../../types";
-import type { InputLikeProps } from "./input";
+import type { InputLikeProps } from "./types";
 import { IconButton } from "./button";
 import { withPrefix } from "../../util/system";
 import { HiddenInput } from "./hidden-input";

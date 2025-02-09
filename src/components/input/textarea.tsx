@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
 import type { TVCProps } from "../../types";
-import type { InputLikeProps } from "./input";
+import type { InputLikeProps } from "./types";
 
 const textarea = tv({
     base: [

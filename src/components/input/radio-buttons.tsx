@@ -2,7 +2,7 @@
 
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { InputLikeProps } from "./input";
+import type { InputLikeProps } from "./types";
 import type { LabeledChoice, StyleProps } from "../../types";
 import { Icon } from "../icons";
 
@@ -18,12 +18,10 @@ const radioButtons = tv({
 });
 
 interface RadioButtonsProps<V = string>
-    extends InputLikeProps<LabeledChoice<V>>,
+    extends InputLikeProps<string, { option: LabeledChoice<V> }>,
         VariantProps<typeof radioButtons>,
         StyleProps {
     options: LabeledChoice<V>[];
-    defaultChoiceValue?: string;
-    choiceValue?: string;
 }
 
 /**
@@ -39,8 +37,6 @@ export const RadioButtons = <V,>({
     disabled,
     readOnly,
     required,
-    defaultChoiceValue,
-    choiceValue,
     value,
     defaultValue,
     onChange,
@@ -50,26 +46,20 @@ export const RadioButtons = <V,>({
     const id = React.useId();
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<LabeledChoice<V> | null>(() => {
-        if (defaultChoiceValue !== undefined || choiceValue !== undefined) {
-            const val = choiceValue ?? defaultChoiceValue;
+        if (value !== undefined || defaultValue !== undefined) {
+            const val = value ?? defaultValue;
             const found = options.find(({ value }) => value === val);
             if (found) return found;
         }
-        return value || defaultValue || null;
+        return null;
     });
 
     React.useEffect(() => {
-        if (choiceValue) {
-            const newOption = options.find(({ value: key }) => key === choiceValue);
+        if (value) {
+            const newOption = options.find(({ value: val }) => val === value);
             if (newOption) setSelected(newOption);
         }
-    }, [choiceValue, options]);
-
-    React.useEffect(() => {
-        if (value) {
-            setSelected(value);
-        }
-    }, [value]);
+    }, [value, options]);
 
     return (
         <div className={radioButtons({ className, orientation })} style={style}>
@@ -84,7 +74,7 @@ export const RadioButtons = <V,>({
                             type="radio"
                             id={itemId}
                             value={option.value}
-                            onChange={(e) => onChange?.({ ...e, value: option })}
+                            onChange={(e) => onChange?.({ ...e, value: option.value, option })}
                             readOnly={readOnly}
                             disabled={disabled}
                             required={required}
