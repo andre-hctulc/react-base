@@ -28,7 +28,7 @@ export const JSONObjectInput: FC<JSONInputBaseProps> = ({ path, schema, label, f
     const schem = schema as JSONSchema7;
     const { forceReadonly } = useJSONEditor();
     const { value, setValue } = useJSONPathValue(path);
-    const values = useMemo<ListItemData[]>(() => {
+    const items = useMemo<ListItemData[]>(() => {
         const result: ListItemData[] = [];
 
         Object.entries(schem.properties || {}).forEach(([key, subSchema]) => {
@@ -91,7 +91,7 @@ export const JSONObjectInput: FC<JSONInputBaseProps> = ({ path, schema, label, f
                 reverse
                 unique
                 sort={(a, b) => a.value.localeCompare(b.value)}
-                items={values}
+                items={items}
                 readOnly={
                     forceReadonly ||
                     (schem.additionalProperties === false && !schem.patternProperties) ||

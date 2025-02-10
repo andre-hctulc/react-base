@@ -42,6 +42,7 @@ export interface JSFormChange<T extends object = any> extends JSFormSnapshot<T> 
 }
 
 /**
- * Maps input names to their validation result
+ * Maps input names to their validation result:
+ * `true` for valid, `false` for invalid, and a string for an error message
  */
-export type FormErrors = Record<string, string | boolean>;
+export type JSFormValidation<T extends object = any> = { [K in keyof T]?: string | boolean };

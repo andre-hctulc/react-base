@@ -2,7 +2,7 @@
 
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { FormErrors, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types";
+import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types";
 import { type JSFormContext, JSFormCtx } from "./js-form-context";
 import { createSnapshot } from "./helpers";
 import { useRefOf } from "../../../hooks";
@@ -30,7 +30,7 @@ interface JSFormProps<T extends object = any> extends VariantProps<typeof jsForm
     onSubmit?: (snapshot: JSFormSnapshot<T>) => void;
     onChange?: (snapshot: JSFormChange<T> & { changedField: { name: string; newValue: any } }) => void;
     onInvalid?: (snapshot: JSFormSnapshot<T>) => void;
-    validate?: (data: JSFormValidateData<T>) => FormErrors | boolean | undefined | void;
+    validate?: (data: JSFormValidateData<T>) => JSFormValidation<T> | boolean | undefined | void;
     className?: ClassValue;
     /**
      * Form target attribute
