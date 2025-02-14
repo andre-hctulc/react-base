@@ -40,6 +40,12 @@ const chip = tv({
             enabled: "",
             disabled: "select-none",
         },
+        thinBorder: {
+            true: "border-[0.5px]",
+        },
+        thinText: {
+            true: "font-light",
+        },
     },
     defaultVariants: {
         size: "md",
@@ -72,6 +78,8 @@ export const Chip = React.forwardRef<HTMLElement, ChipProps>(
             icon,
             iconPosition,
             as,
+            thinBorder,
+            thinText,
             ...props
         },
         ref
@@ -82,7 +90,7 @@ export const Chip = React.forwardRef<HTMLElement, ChipProps>(
             <Comp
                 ref={ref}
                 data-clickable={clickable}
-                className={chip({ color, variant, size, className, textSelect })}
+                className={chip({ color, variant, size, className, textSelect, thinBorder, thinText })}
                 {...props}
             >
                 {icon && iconPosition === "left" && icon}

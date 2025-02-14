@@ -98,7 +98,7 @@ export const FormControl: FC<FormControlProps> = ({
     const hasName = name !== undefined;
     const formCtx = useJSForm();
     const isErr = !noError && hasName && formCtx?.inputs[name]?.ok === false;
-    const errText = isErr ? errorText ?? (formCtx?.inputs[name]?.error || "") : "";
+    const errText = isErr && formCtx.reporting ? errorText ?? (formCtx?.inputs[name]?.error || "") : "";
     const _controlled = controlled ?? formCtx?.controlled;
     const id = useId();
     const jsFormValue = hasName ? formCtx?.default(name) : undefined;
