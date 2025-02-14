@@ -1,5 +1,5 @@
 import { setProperty } from "dot-prop";
-import type { FormErrors, InputState, JSFormSnapshot, JSFormValidateData } from "./types";
+import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./types";
 
 type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
@@ -72,7 +72,7 @@ function formDataToObject(formData: FormData, inputElements: InputElement[]) {
 type SnapshotInit = {
     reportFormErrors: boolean;
     showErrors: boolean;
-    validate: ((data: JSFormValidateData) => FormErrors | boolean | undefined | void) | undefined;
+    validate: ((data: JSFormValidateData) => JSFormValidation | boolean | undefined | void) | undefined;
     onInvalid: ((snapshot: JSFormSnapshot) => void) | undefined;
 };
 
@@ -104,8 +104,10 @@ export function createSnapshot(
             ok = false;
             invalidReason.validate = true;
         } else if (validation !== true) {
-            for (const key in validation) {
-                const fieldValidation = validation[key];
+            const vals = validation || {};
+
+            for (const key in vals) {
+                const fieldValidation = vals[key];
 
                 if (fieldValidation === false || typeof fieldValidation === "string") {
                     ok = false;
