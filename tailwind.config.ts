@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import { withPrefix } from "./src/util/system";
 
 /* 
 Use RGB values, to allow for easier color manipulation
@@ -27,7 +26,7 @@ export const baseTheme: Config = {
                 // #6
                 "even-sm": "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                 // #9
-                "even": "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+                even: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
                 // #3
                 "even-md": "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                 // #10
