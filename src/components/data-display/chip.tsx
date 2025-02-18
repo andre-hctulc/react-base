@@ -6,7 +6,7 @@ import type { TVCProps } from "../../types";
 // removed: align-middle
 
 const chip = tv({
-    base: "inline-flex text-center flex-shrink-0 items-center data-[clickable=true]:cursor-pointer transition",
+    base: "inline-flex text-center shrink-0 items-center data-[clickable=true]:cursor-pointer transition",
     variants: {
         color: {
             neutral: "bg-neutral border-neutral text-neutral",
@@ -20,12 +20,12 @@ const chip = tv({
             accent: "bg-accent text-accent border-accent",
         },
         shape: {
-            rounded: "rounded",
+            rounded: "rounded-sm",
             pill: "rounded-full",
             square: "rounded-[1px]",
         },
         variant: {
-            filled: "text-contrast bg-opacity-100 data-[clickable=true]:hover:brightness-90 data-[clickable=true]:active:brightness-75",
+            filled: "text-t-contrast bg-opacity-100 data-[clickable=true]:hover:brightness-90 data-[clickable=true]:active:brightness-75",
             outlined:
                 "border bg-opacity-0 data-[clickable=true]:hover:bg-opacity-10 data-[clickable=true]:active:bg-opacity-20",
             pale: "bg-opacity-20 data-[clickable=true]:hover:bg-opacity-30 data-[clickable=true]:active:bg-opacity-40",

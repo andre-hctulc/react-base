@@ -12,30 +12,30 @@ const card = tv({
         variant: {
             custom: "",
             outlined: "border",
-            elevated: "shadow",
+            elevated: "shadow-sm",
         },
         flex: {
             true: "flex flex-col",
         },
         shadow: {
             none: "",
-            sm: "shadow-sm",
-            base: "shadow",
+            sm: "shadow-xs",
+            base: "shadow-sm",
             md: "shadow-md",
             lg: "shadow-lg",
             xl: "shadow-xl",
         },
         bg: {
-            "1": "bg",
-            "2": "bg-2",
-            "3": "bg-3",
-            "4": "bg-4",
-            "5": "bg-5",
+            "1": "bg-paper",
+            "2": "bg-paper-2",
+            "3": "bg-paper-3",
+            "4": "bg-paper-4",
+            "5": "bg-paper-5",
         },
         rounded: {
             none: "",
-            sm: "rounded-sm",
-            base: "rounded",
+            sm: "rounded-xs",
+            base: "rounded-sm",
             md: "rounded-md",
             lg: "rounded-lg",
         },
@@ -114,7 +114,7 @@ const cardHeader = tv({
     variants: {
         border: {
             true: "border-b",
-            false: "!pb-0",
+            false: "pb-0!",
         },
         padding: {
             none: "",
@@ -201,7 +201,7 @@ const cardBody = tv({
             true: "overflow-y-auto",
         },
         grow: {
-            true: "flex-grow",
+            true: "grow",
         },
         fullHeight: {
             true: "h-full",

@@ -10,7 +10,7 @@ const inputWidth = tv({
             sm: "w-32",
             md: "w-44",
             lg: "w-56",
-            grow: "flex-grow",
+            grow: "grow",
             full: "w-full",
         },
     },

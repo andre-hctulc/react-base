@@ -94,12 +94,12 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
         <div
             className={clsx(
                 "bg transition-shadow",
-                sticky && "z-[1]",
+                sticky && "z-1",
                 col.stickyLeft && "sticky left-0 order-[-1]",
-                col.stickyRight && "sticky right-0 order-[1]",
+                col.stickyRight && "sticky right-0 order-1",
                 firstStickyRight && "ml-auto",
-                lastStickyLeft && !leftEnd && "shadow",
-                firstStickyRight && !rightEnd && "shadow",
+                lastStickyLeft && !leftEnd && "shadow-sm",
+                firstStickyRight && !rightEnd && "shadow-sm",
             )}
             style={{ minWidth: width, maxWidth: width, left: stickyLeft, right: stickyRight }}
             onClick={(e) => onClick?.(value, row, col, e)}

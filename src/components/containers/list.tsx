@@ -11,12 +11,12 @@ import { Spinner } from "../data-display/spinner";
 import { withPrefix } from "../../util/system";
 
 const list = tv({
-    base: "rounded flex",
+    base: "rounded-sm flex",
     variants: {
         elevate: {
-            "1": "bg-elevate-1",
-            "2": "bg-elevate-2",
-            "3": "bg-elevate-3",
+            "1": "bg-paper-1",
+            "2": "bg-paper-2",
+            "3": "bg-paper-3",
         },
         padding: {
             none: "",
@@ -40,8 +40,8 @@ const list = tv({
             "3xl": "gap-5",
         },
         rounded: {
-            sm: "overflow-hidden rounded-sm",
-            base: "overflow-hidden rounded",
+            sm: "overflow-hidden rounded-xs",
+            base: "overflow-hidden rounded-sm",
             md: "overflow-hidden rounded-md",
             lg: "overflow-hidden rounded-lg",
         },
@@ -196,8 +196,8 @@ const listItem = tv({
     base: "w-full transition duration-75",
     variants: {
         rounded: {
-            sm: "rounded-sm",
-            base: "rounded",
+            sm: "rounded-xs",
+            base: "rounded-sm",
             md: "rounded-md",
             lg: "rounded-lg",
             xl: "rounded-xl",
@@ -229,7 +229,7 @@ const listItem = tv({
         {
             variant: "secondary",
             effects: true,
-            class: "text-2 hover:bg-neutral/5 data-[active=true]:bg-neutral/10",
+            class: "text-t2 hover:bg-neutral/5 data-[active=true]:bg-neutral/10",
         },
     ],
     defaultVariants: {
@@ -355,7 +355,7 @@ export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
                         </Icon>
                     ) : null}
                     {typeof children === "string" ? (
-                        <span className="flex-grow truncate">{children}</span>
+                        <span className="grow truncate">{children}</span>
                     ) : (
                         children
                     )}

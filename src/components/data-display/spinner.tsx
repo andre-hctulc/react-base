@@ -17,7 +17,7 @@ export const spinner = tv({
             dark: "text-black",
             white: "text-white",
             neutral: "text-neutral",
-            contrast: "text-contrast",
+            contrast: "text-t-contrast",
             inherit: "text-inherit",
         },
         size: {

@@ -8,7 +8,7 @@ import { useIsHydrated } from "../../hooks";
 import { createPortal } from "react-dom";
 
 const dialog = tv({
-    base: "relative z-10 focus:outline-none",
+    base: "relative z-10 focus:outline-hidden",
     variants: {},
     defaultVariants: {
         variant: "default",
@@ -20,7 +20,7 @@ const dialogPanel = tv({
         // use flex layout to fix overflow issues
         "flex flex-col",
         "max-w-full bg max-w-md rounded-xl backdrop-blur-2xl m-4 box-border max-h-full",
-        "duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0",
+        "duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0",
     ],
     variants: {
         width: {
@@ -44,8 +44,8 @@ const dialogPanel = tv({
             xl: "max-h-[800px]",
         },
         shadow: {
-            sm: "shadow-sm",
-            md: "shadow",
+            sm: "shadow-xs",
+            md: "shadow-sm",
             lg: "shadow-md",
             xl: "shadow-lg",
         },

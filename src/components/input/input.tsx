@@ -8,7 +8,7 @@ import type { InputLikeProps } from "./types";
 
 const input = tv({
     base: [
-        "block w-full rounded-lg border-none bg-3 py-1.5 px-3",
+        "block w-full rounded-lg border-none bg-paper-3 py-1.5 px-3",
         "transition outline-0 focus:outline-2 focus:outline-divider",
     ],
     variants: {

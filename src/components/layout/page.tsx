@@ -28,10 +28,10 @@ const page = tv({
             center: "flex items-center justify-center",
         },
         noShrink: {
-            true: "flex-shrink-0",
+            true: "shrink-0",
         },
         grow: {
-            true: "flex-grow",
+            true: "grow",
         },
         maxHeightFull: {
             true: "max-h-full",

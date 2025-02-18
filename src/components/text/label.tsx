@@ -8,8 +8,8 @@ const label = tv({
     variants: {
         variant: {
             default: "text-base",
-            secondary: "text-2 text-sm",
-            tertiary: "text-3 text-xs",
+            secondary: "text-t2 text-sm",
+            tertiary: "text-t3 text-xs",
         },
         mb: {
             none: "mb-0",

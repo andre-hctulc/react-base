@@ -29,9 +29,9 @@ const icon = tv({
             inherit: "text-inherit",
             neutral: "text-neutral",
             text: "text",
-            "text-2": "text-2",
-            "text-3": "text-3",
-            "text-4": "text-4",
+            "text-2": "text-t2",
+            "text-3": "text-t3",
+            "text-4": "text-t4",
         },
         inline: {
             true: "inline",

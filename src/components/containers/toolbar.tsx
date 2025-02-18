@@ -43,7 +43,7 @@ const toolbar = tv({
             stretch: "items-stretch",
         },
         grow: {
-            true: "flex-grow",
+            true: "grow",
         },
         wrap: {
             true: "flex-wrap",

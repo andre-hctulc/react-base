@@ -255,12 +255,12 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                 </Placeholder>
             )}
             <div
-                className={clsx("flex-grow overflow-x-auto relative flex flex-col")}
+                className={clsx("grow overflow-x-auto relative flex flex-col")}
                 style={{}}
                 ref={scrollXBox}
                 onScroll={() => updateScrollBoundaries()}
             >
-                <div className="flex-shrink-0" style={{ minWidth: "min-content" }}>
+                <div className="shrink-0" style={{ minWidth: "min-content" }}>
                     <DataGridHeaderRow
                         leftEnd={leftEnd}
                         rightEnd={rightEnd}

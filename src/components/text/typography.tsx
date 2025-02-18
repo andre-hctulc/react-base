@@ -7,10 +7,10 @@ const typography = tv({
     base: "",
     variants: {
         variant: {
-            primary: "text-base text-1",
-            secondary: "text-sm text-2",
-            tertiary: "text-sm text-3",
-            quaternary: "text-xs text-4",
+            primary: "text-base text-t1",
+            secondary: "text-sm text-t2",
+            tertiary: "text-sm text-t3",
+            quaternary: "text-xs text-t4",
         },
         size: {
             xs: "text-xs",

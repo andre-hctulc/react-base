@@ -108,7 +108,7 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
                             {icon && <span className="text-[100px] text-primary">{icon}</span>}
                             <p>{text || "Upload"}</p>
                             {secondaryText !== "" && (
-                                <p className="text-sm text-2">{secondaryText || "Select or drop a File"}</p>
+                                <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
                             )}
                         </div>
                     )}

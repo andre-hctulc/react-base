@@ -78,7 +78,7 @@ export const Tabs: React.FC<TabsProps> = ({
                                 onTabClick?.(t);
                                 chipProps?.onClick?.(e);
                             }}
-                            className={clsx(elevated && "shadow-sm", chipProps?.className as any)}
+                            className={clsx(elevated && "shadow-xs", chipProps?.className as any)}
                         >
                             {t.label}
                         </Chip>
@@ -123,14 +123,14 @@ export const Tabs: React.FC<TabsProps> = ({
 };
 
 const tab = tv({
-    base: ["transition flex gap-2 items-center rounded bg-2", "data-[disabled=false]:hover:text-primary/80"],
+    base: ["transition flex gap-2 items-center rounded-sm bg-paper-2", "data-[disabled=false]:hover:text-primary/80"],
     variants: {
         disabled: {
-            true: "text-3",
+            true: "text-t3",
         },
         active: {
             true: "text-primary",
-            false: "text-2",
+            false: "text-t2",
         },
         clickable: {
             true: "cursor-pointer",
@@ -142,13 +142,13 @@ const tab = tv({
             lg: "text-lg py-2 px-4",
         },
         bg: {
-            "1": "bg-1",
-            "2": "bg-2",
-            "3": "bg-3",
-            "4": "bg-4",
+            "1": "bg-paper-1",
+            "2": "bg-paper-2",
+            "3": "bg-paper-3",
+            "4": "bg-paper-4",
         },
         elevated: {
-            true: "shadow-sm",
+            true: "shadow-xs",
         },
     },
     defaultVariants: {

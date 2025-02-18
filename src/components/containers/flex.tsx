@@ -32,10 +32,10 @@ const flex = tv({
             reverse: "flex-wrap-reverse",
         },
         grow: {
-            true: "flex-grow",
+            true: "grow",
         },
         noShrink: {
-            true: "flex-shrink-0",
+            true: "shrink-0",
         },
         minH0: { true: "min-h-0" },
     },

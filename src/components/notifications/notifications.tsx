@@ -183,7 +183,7 @@ const NotificationsBox: React.FC<PropsOf<"ol">> = ({ className, ...props }) => {
 };
 
 const notificationBox = tv({
-    base: "box-border flex w-full max-w-full pointer-events-auto px-3 py-2 rounded overflow-hidden bg-opacity-15 shadow",
+    base: "box-border flex w-full max-w-full pointer-events-auto px-3 py-2 rounded-sm overflow-hidden bg-opacity-15 shadow-sm",
     variants: {
         severity: {
             info: "bg-info text-info",
@@ -216,7 +216,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ className, notifica
             <li {...props} className={clsx("bg", className)}>
                 <div className={notificationBox({ className, severity: notification.severity })}>
                     <span className="text-base mr-3 mt-1">{icon}</span>
-                    <div className="flex-grow">{notification.message}</div>
+                    <div className="grow">{notification.message}</div>
                 </div>
             </li>
         </Fade>

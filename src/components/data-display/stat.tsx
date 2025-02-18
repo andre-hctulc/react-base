@@ -27,7 +27,7 @@ export const Stat = React.forwardRef<HTMLDivElement, StatProps>(
             <div className={stat({ className, size })} ref={ref} {...props}>
                 {prefix}
                 {value + " "}
-                {unit && <span className="text-xs text-2">{unit}</span>}
+                {unit && <span className="text-xs text-t2">{unit}</span>}
                 {suffix}
             </div>
         );

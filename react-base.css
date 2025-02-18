@@ -1,0 +1,106 @@
+@import 'tailwindcss';
+
+/* Theme */
+
+@theme {
+  /* Colors */
+
+  --color-primary: rgb(73, 135, 243);
+  --color-primary-contrast: rgb(255, 255, 255);
+  --color-secondary: rgb(243, 73, 135);
+  --color-secondary-contrast: rgb(255, 255, 255);
+  --color-accent: rgb(184, 181, 177);
+  --color-accent-contrast: rgb(255, 255, 255);
+  --color-error: rgb(232, 59, 63);
+  --color-error-contrast: rgb(255, 255, 255);
+  --color-success: rgb(64, 163, 63);
+  --color-success-contrast: rgb(255, 255, 255);
+  --color-warning: rgb(255, 202, 40);
+  --color-warning-contrast: rgb(255, 255, 255);
+  --color-info: rgb(15, 115, 198);
+  --color-info-contrast: rgb(255, 255, 255);
+  --color-neutral: var(--text-2);
+  --color-neutral-contrast: rgb(255, 255, 255);
+  --color-black: rgb(0, 0, 0);
+  --color-white: rgb(255, 255, 255);
+  --color-transparent: transparent;
+  --color-green: rgb(0, 255, 0);
+  --color-red: rgb(255, 0, 0);
+  --color-blue: rgb(0, 0, 255);
+  --color-yellow: rgb(255, 255, 0);
+  --color-pink: rgb(255, 0, 255);
+  --color-cyan: rgb(0, 255, 255);
+  --color-gray: rgb(94, 94, 94);
+  --color-blueish-gray: rgb(107, 114, 128);
+
+  /* Background Colors */
+  
+  --color-paper: rgb(255, 255, 255);
+  --color-paper-1: rgb(255, 255, 255);
+  --color-paper-2: rgb(248, 248, 248);
+  --color-paper-3: rgb(240, 240, 240);
+  --color-paper-4: rgb(230, 230, 230);
+  --color-paper-5: rgb(218, 218, 218);
+  --color-transparent-1: rgba(128, 128, 128, 0.1);
+  --color-transparent-2: rgba(128, 128, 128, 0.2);
+  --color-transparent-3: rgba(128, 128, 128, 0.3);
+  --color-transparent-4: rgba(128, 128, 128, 0.4);
+
+  /* Text  Colors */
+
+  --color-t: rgb(0, 0, 0);
+  --color-t1: rgb(0, 0, 0);
+  --color-t2: rgb(94, 94, 94);
+  --color-t3: rgb(151, 151, 151);
+  --color-t4: rgb(178, 178, 178);
+  --color-t5: rgb(204, 204, 204);
+  --color-t-contrast: rgb(255, 255, 255);
+  --color-t-contrast-1: rgb(255, 255, 255);
+  --color-t-contrast-2: rgb(204, 204, 204);
+  --color-t-contrast-3: rgb(153, 153, 153);
+
+  /* Border Colors */
+
+  --color-divider: rgb(204, 204, 204);
+  --color-divider-light: rgb(224, 224, 224);
+  --color-divider-dark: rgb(102, 102, 102);
+
+  /* Shadows */
+
+  --shadow-even-sm: 0px 2px 8px 0px rgba(99, 99, 99, 0.2);
+  --shadow-even: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-even-md: 0px 5px 15px rgba(0, 0, 0, 0.35);
+  --shadow-even-lg:
+    0px 54px 55px rgba(0, 0, 0, 0.25), 0px -12px 30px rgba(0, 0, 0, 0.12),
+    0px 4px 6px rgba(0, 0, 0, 0.12), 0px 12px 13px rgba(0, 0, 0, 0.17),
+    0px -3px 5px rgba(0, 0, 0, 0.09);
+  --shadow-border:
+    0px 1px 3px 0px rgba(0, 0, 0, 0.02), 0px 0px 0px 1px rgba(27, 31, 35, 0.15);
+  --shadow-inset-xs: 0px 2px 4px 0px rgba(0, 0, 0, 0.06) inset;
+  --shadow-inset-sm:
+    0px 30px 60px -12px rgba(50, 50, 93, 0.25) inset,
+    0px 18px 36px -18px rgba(0, 0, 0, 0.3) inset;
+
+  /* Animations */
+
+  --animate-skeleton: skeleton 1.5s ease-in-out infinite;
+
+  @keyframes skeleton {
+    0%,
+    100% {
+      background-color: var(--bg-transparent-1);
+    }
+    50% {
+      background-color: var(--bg-transparent-2);
+    }
+  }
+}
+
+/* Base Layer */
+
+@layer base {
+    *,
+    hr {
+        border-color: var(--divider);
+    }
+}

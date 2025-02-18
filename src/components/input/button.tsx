@@ -6,7 +6,7 @@ import { Spinner } from "../data-display/spinner";
 import { Icon } from "../icons";
 
 const btn = tv({
-    base: "flex items-center justify-center transition duration-100 flex-shrink-0 truncate",
+    base: "flex items-center justify-center transition duration-100 shrink-0 truncate",
     variants: {
         color: {
             neutral: "bg-neutral",
@@ -20,8 +20,8 @@ const btn = tv({
             accent: "bg-accent",
         },
         shape: {
-            rounded_sm: "rounded-sm",
-            rounded: "rounded",
+            rounded_sm: "rounded-xs",
+            rounded: "rounded-sm",
             rounded_md: "rounded-md",
             rounded_lg: "rounded-lg",
             pill: "rounded-full",
@@ -48,7 +48,7 @@ const btn = tv({
             xl: "shadow-2xl",
         },
         disabled: {
-            true: "cursor-not-allowed !brightness-90",
+            true: "cursor-not-allowed brightness-90!",
         },
         // Used for consistent margin in forms
         mt: {
@@ -82,7 +82,7 @@ const btn = tv({
             color: "neutral",
             className: "text-neutral",
         },
-        { variant: ["filled", "floating"], color: "black", className: "text-contrast" },
+        { variant: ["filled", "floating"], color: "black", className: "text-t-contrast" },
         {
             variant: ["filled", "floating"],
             color: "primary",
@@ -252,7 +252,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = withPrefix("Button");
 
 const iconButton = tv({
-    base: "!p-0",
+    base: "p-0!",
     variants: {
         size: {
             xs: "w-5",

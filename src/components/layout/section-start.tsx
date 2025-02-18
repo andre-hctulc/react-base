@@ -28,7 +28,7 @@ const sectionStart = tv({
             none: "",
         },
         contrast: {
-            true: "bg-2 px-3 py-1.5 rounded-sm",
+            true: "bg-paper-2 px-3 py-1.5 rounded-xs",
         },
     },
     defaultVariants: {

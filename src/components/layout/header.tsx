@@ -3,17 +3,17 @@ import { tv, type VariantProps, type ClassValue } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 
 const header = tv({
-    base: "w-full max-w-full box-border flex-shrink-0",
+    base: "w-full max-w-full box-border shrink-0",
     variants: {
         variant: {
-            elevated: "bg-2",
+            elevated: "bg-paper-2",
             border: "bg border-b",
             custom: "",
         },
         shadow: {
             none: "",
-            sm: "shadow-sm",
-            base: "shadow",
+            sm: "shadow-xs",
+            base: "shadow-sm",
             md: "shadow-md",
             lg: "shadow-lg",
             xl: "shadow-xl",
@@ -35,7 +35,7 @@ interface HeaderProps extends VariantProps<typeof header> {
 /**
  * ### Props
  * - `variant`
- * - `shadow`
+ * - `shadow-sm`
  */
 export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
     ({ children, variant, className, style, sticky, shadow }, ref) => {
