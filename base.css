@@ -1,7 +1,8 @@
 @source "safelist.txt";
-@source "src";
+/* Reference compiled source! */
+@source "dist";
 
-/* Theme */
+/* #### Theme #### */
 
 @theme {
     /* Colors */
@@ -93,10 +94,10 @@
     }
 }
 
-/* Base Layer */
+/* #### Base Layer #### */
 
-/* TODO "l@ayer base" not working */
-@layer components {
+/* Default Border Color */
+@layer base {
     *,
     hr {
         border-color: var(--color-divider);
