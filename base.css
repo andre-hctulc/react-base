@@ -4,8 +4,6 @@
 /* Theme */
 
 @theme {
-    --*: initial;
-
     /* Colors */
 
     --color-primary: rgb(73, 135, 243);

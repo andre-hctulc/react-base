@@ -4,8 +4,10 @@
     "main": "dist/index.js",
     "type": "module",
     "exports": {
-        "style": "./base.css",
-        "import": "./dist/index.js"
+        ".": {
+            "style": "./base.css",
+            "import": "./dist/index.js"
+        }
     },
     "repository": "https://github.com/andre-hctulc/react-base.git",
     "scripts": {
