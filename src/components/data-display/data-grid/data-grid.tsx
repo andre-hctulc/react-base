@@ -242,7 +242,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     return (
         <div
             className={clsx(
-                "bg flex flex-col relative overflow-y-auto min-h-0",
+                "bg-paper flex flex-col relative overflow-y-auto min-h-0",
                 showPlaceholder && "min-h-40",
                 props.className
             )}

@@ -27,7 +27,7 @@ const select = tv({
 
 const selectButton = tv({
     base: [
-        "rounded-lg bg-paper-3  text-left text-sm",
+        "rounded-lg bg-paper3  text-left text-sm",
         "flex relative",
         "h-full w-full",
         "py-1.5 pr-9 pl-3 gap-3",
@@ -116,7 +116,7 @@ export const Select = <V,>({
             {selected.map((sel) => {
                 if (multiple)
                     return (
-                        <Chip size="sm" key={sel.value} className="bg-paper-2!">
+                        <Chip size="sm" key={sel.value} className="bg-paper2!">
                             {sel.label}
                         </Chip>
                     );
@@ -166,7 +166,7 @@ export const Select = <V,>({
                     anchor="bottom"
                     transition
                     className={clsx(
-                        "shadow-sm bg-paper-2 bg-opacity-100",
+                        "shadow-sm bg-paper2 bg-opacity-100",
                         "rounded-lg border border-white/5",
                         "transition duration-100 ease-in data-leave:data-closed:opacity-0 focus:outline-hidden",
                         "z-50 w-[var(--button-width)] p-1 [--anchor-gap:var(--spacing-1)]"
@@ -211,7 +211,7 @@ export const Select = <V,>({
                                 key={option.value}
                                 value={option}
                                 className={clsx(
-                                    "group flex gap-2.5 cursor-default items-center rounded-sm py-1.5 px-3 select-none data-focus:bg-paper-3",
+                                    "group flex gap-2.5 cursor-default items-center rounded-sm py-1.5 px-3 select-none data-focus:bg-paper3",
                                     disabled && "cursor-not-allowed"
                                 )}
                             >

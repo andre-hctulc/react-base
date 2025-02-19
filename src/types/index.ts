@@ -90,3 +90,19 @@ export interface LabeledChoice<D = any> extends Choice<D> {
      */
     icon?: React.ReactNode;
 }
+
+// #### Colors ####
+
+export type ThemeColorSet = {
+    bg: string;
+    /**
+     * bg alpha
+     */
+    bgA: (alpha: number) => string;
+    border: string;
+    text: string;
+    /**
+     * contrast text color
+     */
+    textC: string;
+};

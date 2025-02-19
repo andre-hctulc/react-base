@@ -95,7 +95,7 @@ export const RadioSwitch = <D,>({
                             "text-center flex items-center gap-2 px-4 transition",
                             !active && "text-t2!",
                             !last && "border-r",
-                            canActivate && "hover:bg-transparent-1 active:bg-transparent-2"
+                            canActivate && "hover:bg-transparent1 active:bg-transparent2"
                         )}
                     >
                         {option.icon}

@@ -4,24 +4,25 @@ import React from "react";
 import type { TVCProps, StyleProps } from "../../types";
 import { Spinner } from "../data-display/spinner";
 import { Icon } from "../icons";
+import { collapse } from "@andre-hctulc/util";
+import { themeColor } from "../../util";
 
 const btn = tv({
     base: "flex items-center justify-center transition duration-100 shrink-0 truncate",
     variants: {
         color: {
-            neutral: "bg-neutral",
-            black: "bg-black",
-            primary: "bg-primary",
-            secondary: "bg-secondary",
-            error: "bg-error",
-            success: "bg-success",
-            warning: "bg-warning",
-            info: "bg-info",
-            accent: "bg-accent",
+            neutral: "",
+            black: "",
+            primary: "",
+            secondary: "",
+            error: "",
+            success: "",
+            warning: "",
+            info: "",
+            accent: "",
         },
         shape: {
-            rounded_sm: "rounded-xs",
-            rounded: "rounded-sm",
+            rounded_sm: "rounded-sm",
             rounded_md: "rounded-md",
             rounded_lg: "rounded-lg",
             pill: "rounded-full",
@@ -29,10 +30,9 @@ const btn = tv({
         },
         variant: {
             filled: "",
-            outlined:
-                "border bg-opacity-0 data-[disabled=false]:hover:bg-opacity-10 data-[disabled=false]:active:bg-opacity-20",
-            pale: "bg-opacity-20 data-[disabled=false]:hover:bg-opacity-30 data-[disabled=false]:active:bg-opacity-40",
-            text: "bg-opacity-0 data-[disabled=false]:hover:bg-opacity-10 data-[disabled=false]:active:bg-opacity-20",
+            outlined: "",
+            pale: "",
+            text: "",
             floating: "shadow-md",
         },
         size: {
@@ -60,121 +60,6 @@ const btn = tv({
             xl: "mt-16",
         },
     },
-    compoundVariants: [
-        // filled like effects
-        {
-            variant: ["filled", "floating"],
-            className: "data-[disabled=false]:hover:brightness-90 data-[disabled=false]:active:brightness-75",
-        },
-        // text like colors
-        { variant: ["outlined", "pale", "text"], color: "neutral", className: "text-neutral" },
-        { variant: ["outlined", "pale", "text"], color: "black", className: "text-black" },
-        { variant: ["outlined", "pale", "text"], color: "primary", className: "text-primary" },
-        { variant: ["outlined", "pale", "text"], color: "secondary", className: "text-secondary" },
-        { variant: ["outlined", "pale", "text"], color: "error", className: "text-error" },
-        { variant: ["outlined", "pale", "text"], color: "success", className: "text-success" },
-        { variant: ["outlined", "pale", "text"], color: "warning", className: "text-warning" },
-        { variant: ["outlined", "pale", "text"], color: "info", className: "text-info" },
-        { variant: ["outlined", "pale", "text"], color: "accent", className: "text-accent" },
-        // filled like colors
-        {
-            variant: ["filled", "floating"],
-            color: "neutral",
-            className: "text-neutral",
-        },
-        { variant: ["filled", "floating"], color: "black", className: "text-t-contrast" },
-        {
-            variant: ["filled", "floating"],
-            color: "primary",
-            className: "text-primary-contrast",
-        },
-        {
-            variant: ["filled", "floating"],
-            color: "secondary",
-            className: "text-secondary-contrast",
-        },
-        {
-            variant: ["filled", "floating"],
-            color: "error",
-            className: "text-error-contrast",
-        },
-        {
-            variant: ["filled", "floating"],
-            color: "success",
-            className: "text-success-contrast",
-        },
-        {
-            variant: ["filled", "floating"],
-            color: "warning",
-            className: "text-warning-contrast",
-        },
-        {
-            variant: ["filled", "floating"],
-            color: "info",
-            className: "text-info-contrast",
-        },
-        {
-            variant: ["filled", "floating"],
-            color: "accent",
-            className: "text-accent-contrast",
-        },
-        // border like colors
-        { variant: "outlined", color: "neutral", className: "border-neutral" },
-        { variant: "outlined", color: "black", className: "border-black" },
-        { variant: "outlined", color: "primary", className: "border-primary" },
-        { variant: "outlined", color: "secondary", className: "border-secondary" },
-        { variant: "outlined", color: "error", className: "border-error" },
-        { variant: "outlined", color: "success", className: "border-success" },
-        { variant: "outlined", color: "warning", className: "border-warning" },
-        { variant: "outlined", color: "info", className: "border-info" },
-        { variant: "outlined", color: "accent", className: "border-accent" },
-        // floating shadows
-        {
-            variant: "floating",
-            color: "neutral",
-            className: "data-[disabled=false]:shadow-neutral",
-        },
-        {
-            variant: "floating",
-            color: "black",
-            className: "data-[disabled=false]:shadow-black",
-        },
-        {
-            variant: "floating",
-            color: "primary",
-            className: "data-[disabled=false]:shadow-primary",
-        },
-        {
-            variant: "floating",
-            color: "secondary",
-            className: "data-[disabled=false]:shadow-secondary",
-        },
-        {
-            variant: "floating",
-            color: "error",
-            className: "data-[disabled=false]:shadow-error",
-        },
-        {
-            variant: "floating",
-            color: "success",
-            className: "data-[disabled=false]:shadow-success",
-        },
-        {
-            variant: "floating",
-            color: "warning",
-            className: "data-[disabled=false]:shadow-warning",
-        },
-        {
-            variant: "floating",
-            color: "info",
-            className: "data-[disabled=false]:shadow-info",
-        },
-        {
-            variant: "floating",
-            color: "accent",
-            className: "data-[disabled=false]:shadow-accent",
-        },
-    ],
     defaultVariants: {
         size: "md",
         color: "primary",
@@ -214,10 +99,50 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         },
         ref
     ) => {
+        const _variant = variant || "filled";
+        const _color = color || "primary";
         const ico = loading ? <Spinner color="inherit" size="sm" /> : icon;
-        const dis = disabled || loading;
+        const _disabled = disabled || loading;
         const Comp = as || (href ? "a" : "button");
         const p: any = { ...props };
+        const { bgA, bg, border, text, textC } = themeColor(_color);
+        const { bg: hoverBg, bgA: hoverBgA } = themeColor(_color, "hover:");
+        const { bg: activeBg, bgA: activeBgA } = themeColor(_color, "active:");
+        const bgColor = collapse(_variant, {
+            filled: bg,
+            outlined: "",
+            pale: bgA(20),
+            text: "",
+            floating: bg,
+        });
+        const borderColor = collapse(_variant, {
+            filled: "",
+            outlined: border,
+            pale: bgA(20),
+            text: "",
+            floating: bg,
+        });
+        const textColor = collapse(_variant, {
+            filled: textC,
+            outlined: text,
+            pale: text,
+            text: text,
+            floating: textC,
+        });
+        const hoverBgColor = collapse(_variant, {
+            filled: hoverBgA(90),
+            outlined: hoverBgA(10),
+            pale: hoverBgA(30),
+            text: hoverBgA(10),
+            floating: hoverBg,
+        });
+        const activeBgColor = collapse(_variant, {
+            filled: activeBgA(75),
+            outlined: activeBgA(20),
+            pale: activeBgA(20),
+            text: activeBgA(20),
+            floating: activeBgA(75),
+        });
 
         if (href) {
             p.href = href;
@@ -226,19 +151,24 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         return (
             <Comp
                 ref={ref}
-                data-variant={variant || "filled"}
-                data-disabled={!!dis}
                 className={btn({
-                    className,
+                    className: [
+                        bgColor,
+                        !_disabled && hoverBgColor,
+                        !_disabled && activeBgColor,
+                        borderColor,
+                        textColor,
+                        className,
+                    ],
                     color,
                     variant,
                     size,
                     shape,
                     shadow,
                     mt,
-                    disabled: disabled || loading,
+                    disabled: _disabled,
                 })}
-                disabled={dis}
+                disabled={_disabled}
                 {...p}
             >
                 {ico && iconPosition === "left" && <Icon>{ico}</Icon>}

@@ -11,10 +11,10 @@ const avatar = tv({
             square: "rounded-sm",
         },
         bg: {
-            "1": "bg-paper-1",
-            "2": "bg-paper-2",
-            "3": "bg-paper-3",
-            "4": "bg-paper-4",
+            "1": "bg-paper1",
+            "2": "bg-paper2",
+            "3": "bg-paper3",
+            "4": "bg-paper4",
             none: "",
         },
         size: {

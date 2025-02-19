@@ -123,7 +123,10 @@ export const Tabs: React.FC<TabsProps> = ({
 };
 
 const tab = tv({
-    base: ["transition flex gap-2 items-center rounded-sm bg-paper-2", "data-[disabled=false]:hover:text-primary/80"],
+    base: [
+        "transition flex gap-2 items-center rounded-sm bg-paper2",
+        "data-[disabled=false]:hover:text-primary/80",
+    ],
     variants: {
         disabled: {
             true: "text-t3",
@@ -142,10 +145,10 @@ const tab = tv({
             lg: "text-lg py-2 px-4",
         },
         bg: {
-            "1": "bg-paper-1",
-            "2": "bg-paper-2",
-            "3": "bg-paper-3",
-            "4": "bg-paper-4",
+            "1": "bg-paper1",
+            "2": "bg-paper2",
+            "3": "bg-paper3",
+            "4": "bg-paper4",
         },
         elevated: {
             true: "shadow-xs",

@@ -93,7 +93,7 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
     return (
         <div
             className={clsx(
-                "bg transition-shadow",
+                "bg-paper transition-shadow",
                 sticky && "z-1",
                 col.stickyLeft && "sticky left-0 order-[-1]",
                 col.stickyRight && "sticky right-0 order-1",

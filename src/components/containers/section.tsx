@@ -29,16 +29,16 @@ const section = tv({
             plain: "",
             outlined: "border rounded-md",
             danger: "border-[0.5px] border-error rounded-md bg-error/5",
-            elevated: "bg-paper-2 rounded-md",
+            elevated: "bg-paper2 rounded-md",
         },
         first: {
             true: "mt-0!",
         },
         bg: {
-            "1": "bg",
-            "2": "bg-paper-2",
-            "3": "bg-paper-3",
-            "4": "bg-paper-4",
+            "1": "bg-paper1",
+            "2": "bg-paper2",
+            "3": "bg-paper3",
+            "4": "bg-paper4",
         },
         shadow: {
             none: "",

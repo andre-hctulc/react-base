@@ -36,7 +36,7 @@ export const DataGridHeaderRow: React.FC<DataGridHeaderRowProps> = ({ cols, heig
         <DataGridRow
             rightEnd={rightEnd}
             leftEnd={leftEnd}
-            className="bg z-2 w-full! flex rounded-t-lg border-b! top-0 sticky"
+            className="bg-paper z-2 w-full! flex rounded-t-lg border-b! top-0 sticky"
             row={headerRow}
             cols={headerCols}
             hoverEffect={false}

@@ -213,7 +213,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ className, notifica
 
     return (
         <Fade show unmount>
-            <li {...props} className={clsx("bg", className)}>
+            <li {...props} className={clsx("bg-paper", className)}>
                 <div className={notificationBox({ className, severity: notification.severity })}>
                     <span className="text-base mr-3 mt-1">{icon}</span>
                     <div className="grow">{notification.message}</div>

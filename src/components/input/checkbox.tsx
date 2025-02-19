@@ -15,7 +15,8 @@ const checkbox = tv({
             lg: "size-8 text-lg!",
         },
         color: {
-            default: "text-t2! ring-divider bg-paper-2 hover:bg-paper-2 data-checked:bg-paper-3 data-checked:hover:bg-paper-3/70",
+            default:
+                "text-t2! ring-divider bg-paper2 hover:bg-paper2 data-checked:bg-paper3 data-checked:hover:bg-paper3/70",
             primary:
                 "text-primary! ring-primary-500 bg-primary/10 hover:bg-primary/20 data-checked:bg-primary/20 data-checked:hover:bg-primary/15",
             secondary:

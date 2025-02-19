@@ -19,7 +19,7 @@ const dialogPanel = tv({
     base: [
         // use flex layout to fix overflow issues
         "flex flex-col",
-        "max-w-full bg max-w-md rounded-xl backdrop-blur-2xl m-4 box-border max-h-full",
+        "max-w-full bg-paper max-w-md rounded-xl backdrop-blur-2xl m-4 box-border max-h-full",
         "duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0",
     ],
     variants: {

@@ -6,8 +6,8 @@ const header = tv({
     base: "w-full max-w-full box-border shrink-0",
     variants: {
         variant: {
-            elevated: "bg-paper-2",
-            border: "bg border-b",
+            elevated: "bg-paper2",
+            border: "bg-paper border-b",
             custom: "",
         },
         shadow: {

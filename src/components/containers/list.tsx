@@ -14,9 +14,9 @@ const list = tv({
     base: "rounded-sm flex",
     variants: {
         elevate: {
-            "1": "bg-paper-1",
-            "2": "bg-paper-2",
-            "3": "bg-paper-3",
+            "1": "bg-paper1",
+            "2": "bg-paper2",
+            "3": "bg-paper3",
         },
         padding: {
             none: "",
@@ -40,8 +40,7 @@ const list = tv({
             "3xl": "gap-5",
         },
         rounded: {
-            sm: "overflow-hidden rounded-xs",
-            base: "overflow-hidden rounded-sm",
+            sm: "overflow-hidden rounded-sm",
             md: "overflow-hidden rounded-md",
             lg: "overflow-hidden rounded-lg",
         },
@@ -128,7 +127,7 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
                                 {...iconButtonProps}
                                 key={item.key}
                                 className={clsx(
-                                    active && "bg-transparent-2",
+                                    active && "bg-transparent2",
                                     iconButtonProps?.className as any
                                 )}
                                 onClick={(e) => {
@@ -196,8 +195,7 @@ const listItem = tv({
     base: "w-full transition duration-75",
     variants: {
         rounded: {
-            sm: "rounded-xs",
-            base: "rounded-sm",
+            sm: "rounded-sm",
             md: "rounded-md",
             lg: "rounded-lg",
             xl: "rounded-xl",
@@ -224,7 +222,7 @@ const listItem = tv({
         {
             variant: "default",
             effects: true,
-            class: "hover:bg-transparent-1 data-[active=true]:bg-transparent-2",
+            class: "hover:bg-transparent1 data-[active=true]:bg-transparent2",
         },
         {
             variant: "secondary",

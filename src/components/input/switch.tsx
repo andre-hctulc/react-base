@@ -8,7 +8,7 @@ import type { PropsOf, StyleProps } from "../../types";
 
 const _switch = tv({
     base: [
-        "relative flex rounded-full bg-paper-3 p-1 shrink-0",
+        "relative flex rounded-full bg-paper3 p-1 shrink-0",
         "group  cursor-pointer",
         "transition-colors duration-200 ease-in-out focus:outline-hidden data-focus:outline-1 data-focus:outline-white",
     ],
