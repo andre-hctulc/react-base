@@ -11,7 +11,8 @@
         "isolatedModules": true,
         "jsx": "react-jsx",
         "verbatimModuleSyntax": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "declaration": true
     },
     "include": ["src/**/*"],
     "exclude": ["demo", "**/json-editor"]
