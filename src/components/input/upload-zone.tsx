@@ -116,7 +116,7 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
             </Droppable>
             {props.renderFiles === "menu" && (
                 <List
-                    rounded="base"
+                    rounded="sm"
                     className="mt-2"
                     items={files.map((file) => ({
                         key: file.webkitRelativePath || file.name,

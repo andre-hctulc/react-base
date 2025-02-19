@@ -8,7 +8,7 @@ import { collapse } from "@andre-hctulc/util";
 import { themeColor } from "../../util";
 
 const btn = tv({
-    base: "flex items-center justify-center transition duration-100 shrink-0 truncate",
+    base: "flex items-center justify-center transition duration-100 shrink-0 truncate cursor-pointer",
     variants: {
         color: {
             neutral: "",
