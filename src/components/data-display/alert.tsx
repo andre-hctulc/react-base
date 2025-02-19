@@ -5,6 +5,7 @@ import { IconButton } from "../input";
 import { XIcon } from "../icons/x";
 import { Title } from "../text";
 import clsx from "clsx";
+import { withPrefix } from "../../util/system";
 
 const alert = tv({
     base: "px-3 py-2 text-t-contrast",
@@ -106,3 +107,5 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         );
     }
 );
+
+Alert.displayName = withPrefix("Alert");
