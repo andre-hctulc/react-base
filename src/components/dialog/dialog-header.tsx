@@ -42,7 +42,7 @@ export const DialogHeader: FC<DialogHeaderProps> = ({
                 </Icon>
             )}
             {(!!actions || !!title) && (
-                <div>
+                <div className="w-full flex flex-row items-center">
                     {typeof title === "string" ? (
                         <Title bold={false} variant="h3" {...titleProps}>
                             {title}
