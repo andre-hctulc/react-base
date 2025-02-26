@@ -8,13 +8,13 @@ import { IconButton } from "../input";
 import { XIcon } from "../icons/x";
 
 const menu = tv({
-    base: "bg box-border h-full flex-shrink-0 min-h-0 overflow-y-auto",
+    base: "bg-paper box-border h-full shrink-0 min-h-0 overflow-y-auto",
     variants: {
         elevated: {
-            "1": "bg",
-            "2": "bg-2",
-            "3": "bg-3",
-            "4": "bg-4",
+            "1": "bg-paper",
+            "2": "bg-paper2",
+            "3": "bg-paper3",
+            "4": "bg-paper4",
         },
         size: {
             none: "",
@@ -47,8 +47,8 @@ const menu = tv({
         },
         shadow: {
             none: "",
-            sm: "shadow-sm",
-            base: "shadow",
+            sm: "shadow-xs",
+            base: "shadow-sm",
             md: "shadow-md",
             lg: "shadow-lg",
             xl: "shadow-xl",

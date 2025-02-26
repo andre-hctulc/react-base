@@ -5,7 +5,7 @@ const root = tv({
     base: "max-w-full box-border flex",
     variants: {
         variant: {
-            grow: "flex-grow",
+            grow: "grow",
             full_width: "w-full",
         },
         direction: {
@@ -18,7 +18,7 @@ const root = tv({
             true: "min-h-0",
         },
         grow: {
-            true: "flex-grow",
+            true: "grow",
         },
         scroll: {
             true: "overflow-y-auto",

@@ -8,13 +8,13 @@ import type { TVCProps } from "../../types";
 import { Overlay } from "../layout/overlay";
 
 const drawer = tv({
-    base: "fixed z-30 bg-background shadow-lg ease-in-out duration-300 max-w-full max-h-full bg",
+    base: "fixed z-30 bg-background shadow-lg ease-in-out duration-300 max-w-full max-h-full bg-paper",
     variants: {
         position: {
-            left: "top-0 left-0 h-screen w-full md:w-80 data-[closed]:left-[-100%] data-[open]:left-0",
-            right: "top-0 right-0 h-screen w-full md:w-80 data-[closed]:right-[-100%] data-[open]:right-0",
-            bottom: "bottom-0 left-0 w-full h-screen md:h-100 max-h-full data-[closed]:bottom-[-100%] data-[open]:bottom-0",
-            top: "top-0 left-0 w-full h-screen md:h-100 max-h-full data-[closed]:bottom-[-100%] data-[open]:bottom-0",
+            left: "top-0 left-0 h-screen w-full md:w-80 data-closed:left-[-100%] data-open:left-0",
+            right: "top-0 right-0 h-screen w-full md:w-80 data-closed:right-[-100%] data-open:right-0",
+            bottom: "bottom-0 left-0 w-full h-screen md:h-100 max-h-full data-closed:bottom-[-100%] data-open:bottom-0",
+            top: "top-0 left-0 w-full h-screen md:h-100 max-h-full data-closed:bottom-[-100%] data-open:bottom-0",
         },
     },
     defaultVariants: {
@@ -34,7 +34,7 @@ export const Drawer = React.forwardRef<HTMLDivElement, DrawerProps>(
             <Overlay
                 portal
                 noInteraction={!open}
-                bg={open ? "transparent-1" : "transparent"}
+                bg={open ? "transparent1" : "transparent"}
                 onClick={() => onClose?.()}
             >
                 <Transition show={open}>

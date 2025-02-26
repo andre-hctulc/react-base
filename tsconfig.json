@@ -10,7 +10,9 @@
         "moduleResolution": "node",
         "isolatedModules": true,
         "jsx": "react-jsx",
-        "verbatimModuleSyntax": true
+        "verbatimModuleSyntax": true,
+        "outDir": "dist",
+        "declaration": true
     },
     "include": ["src/**/*"],
     "exclude": ["demo", "**/json-editor"]

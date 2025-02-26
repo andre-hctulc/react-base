@@ -13,10 +13,10 @@ const overlay = tv({
         },
         bg: {
             transparent: "",
-            "transparent-1": "bg-black/10",
-            "transparent-2": "bg-black/20",
-            "transparent-3": "bg-black/30",
-            "transparent-4": "bg-black/40",
+            transparent1: "bg-black/10",
+            transparent2: "bg-black/20",
+            transparent3: "bg-black/30",
+            transparent4: "bg-black/40",
             "transparent-5": "bg-black/50",
         },
         zIndex: {
@@ -33,7 +33,7 @@ const overlay = tv({
     },
     defaultVariants: {
         variant: "fixed",
-        bg: "transparent-1",
+        bg: "transparent1",
     },
 });
 

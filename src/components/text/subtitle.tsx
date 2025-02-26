@@ -6,7 +6,7 @@ import { Icon } from "../icons";
 import clsx from "clsx";
 
 const subtitle = tv({
-    base: "text-lg font-medium text-2",
+    base: "text-lg font-medium text-t2",
     variants: {
         variant: {
             h2: "text-lg",

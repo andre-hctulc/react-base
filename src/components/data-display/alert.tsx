@@ -5,9 +5,10 @@ import { IconButton } from "../input";
 import { XIcon } from "../icons/x";
 import { Title } from "../text";
 import clsx from "clsx";
+import { withPrefix } from "../../util/system";
 
 const alert = tv({
-    base: "px-3 py-2 text-contrast",
+    base: "px-3 py-2 text-t-contrast",
     variants: {
         type: {
             error: "bg-error/15 border-error text-error",
@@ -20,8 +21,8 @@ const alert = tv({
             false: "",
         },
         rounded: {
-            sm: "rounded-sm",
-            base: "rounded",
+            sm: "rounded-xs",
+            base: "rounded-sm",
             md: "rounded-md",
             lg: "rounded-lg",
             xl: "rounded-xl",
@@ -49,7 +50,7 @@ interface AlertProps extends TVCProps<typeof alert, "div"> {
  * ### Props
  * - `type` - The type of alert to display
  * - `outlined` - Whether the alert should have a border. Defaults to true
- * - `rounded` - The border radius of the alert. Defaults to "md"
+ * - `rounded-sm` - The border radius of the alert. Defaults to "md"
  * - `closable` - Whether the alert should have a close button
  * - `title` - The title of the alert
  * - `loading` - Controls the loading state of the close button
@@ -106,3 +107,5 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         );
     }
 );
+
+Alert.displayName = withPrefix("Alert");

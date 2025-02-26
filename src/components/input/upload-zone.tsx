@@ -108,7 +108,7 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
                             {icon && <span className="text-[100px] text-primary">{icon}</span>}
                             <p>{text || "Upload"}</p>
                             {secondaryText !== "" && (
-                                <p className="text-sm text-2">{secondaryText || "Select or drop a File"}</p>
+                                <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
                             )}
                         </div>
                     )}
@@ -116,7 +116,7 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
             </Droppable>
             {props.renderFiles === "menu" && (
                 <List
-                    rounded="base"
+                    rounded="sm"
                     className="mt-2"
                     items={files.map((file) => ({
                         key: file.webkitRelativePath || file.name,

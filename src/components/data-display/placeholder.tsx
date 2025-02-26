@@ -20,7 +20,7 @@ const placeholder = tv({
             lg: "p-10",
         },
         grow: {
-            true: "flex-grow",
+            true: "grow",
         },
         fullHeight: {
             true: "h-full",

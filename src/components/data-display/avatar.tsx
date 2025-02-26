@@ -8,13 +8,13 @@ const avatar = tv({
     variants: {
         shape: {
             circle: "rounded-full",
-            square: "rounded",
+            square: "rounded-sm",
         },
         bg: {
-            "1": "bg-1",
-            "2": "bg-2",
-            "3": "bg-3",
-            "4": "bg-4",
+            "1": "bg-paper1",
+            "2": "bg-paper2",
+            "3": "bg-paper3",
+            "4": "bg-paper4",
             none: "",
         },
         size: {
@@ -37,10 +37,10 @@ const avatar = tv({
             true: "font-medium",
         },
         textColor: {
-            "1": "text-1",
-            "2": "text-2",
-            "3": "text-3",
-            "4": "text-4",
+            "1": "text-t1",
+            "2": "text-t2",
+            "3": "text-t3",
+            "4": "text-t4",
         },
     },
     defaultVariants: {

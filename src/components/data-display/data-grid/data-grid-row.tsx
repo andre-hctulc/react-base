@@ -25,7 +25,7 @@ export const DataGridRow: React.FC<DataGridRowProps<any>> = ({
     return (
         <div
             className={clsx(
-                "group flex-shrink-0 flex relative border-b-[0.5px]",
+                "group shrink-0 flex relative border-b-[0.5px]",
                 onClick && "cursor-pointer",
                 className,
                 // sometimes the cells do not cover the whole row,

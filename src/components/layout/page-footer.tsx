@@ -12,14 +12,14 @@ const pageFooter = tv({
         },
         variant: {
             ghost: "",
-            outlined: "bg border-t",
-            elevated: "bg shadow-even-md",
+            outlined: "bg-paper border-t",
+            elevated: "bg-paper shadow-even-md",
         },
         shadow: {
-            sm: "!shadow-even-sm",
-            base: "!shadow-even",
-            md: "!shadow-even-md",
-            lg: "!shadow-even-lg",
+            sm: "shadow-even-sm!",
+            base: "shadow-even!",
+            md: "shadow-even-md!",
+            lg: "shadow-even-lg!",
         },
         noBorder: {
             true: "border-none",

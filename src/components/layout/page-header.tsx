@@ -71,7 +71,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                     {title && <Title {...titleProps}>{title}</Title>}
                     {badges && <div className="flex gap-3">{badges}</div>}
                     {actions && (
-                        <div className="flex flex-wrap flex-grow items-center justify-end">{actions}</div>
+                        <div className="flex flex-wrap grow items-center justify-end">{actions}</div>
                     )}
                 </div>
             )}

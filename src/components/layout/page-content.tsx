@@ -34,7 +34,7 @@ const pageContent = tv({
             col: "flex flex-col",
         },
         grow: {
-            true: "flex-grow",
+            true: "grow",
         },
         fullHeight: {
             true: "h-full",

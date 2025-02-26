@@ -27,11 +27,11 @@ const select = tv({
 
 const selectButton = tv({
     base: [
-        "rounded-lg bg-3  text-left text-sm",
+        "rounded-lg bg-paper3  text-left text-sm",
         "flex relative",
         "h-full w-full",
         "py-1.5 pr-9 pl-3 gap-3",
-        "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2",
+        "focus:outline-hidden data-focus:outline-2 data-focus:-outline-offset-2",
     ],
     variants: {
         size: {
@@ -116,7 +116,7 @@ export const Select = <V,>({
             {selected.map((sel) => {
                 if (multiple)
                     return (
-                        <Chip size="sm" key={sel.value} className="!bg-2">
+                        <Chip size="sm" key={sel.value} className="bg-paper2!">
                             {sel.label}
                         </Chip>
                     );
@@ -127,10 +127,10 @@ export const Select = <V,>({
         <span className="truncate">{selected[0]?.label}</span>
     );
 
-    const loadingEl = <span className="text-3 truncate">{loadingText ?? "Loading..."}</span>;
+    const loadingEl = <span className="text-t3 truncate">{loadingText ?? "Loading..."}</span>;
 
     const placeholderEl =
-        typeof placeholder === "string" ? <span className="text-3">{placeholder}</span> : placeholder;
+        typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
 
     React.useEffect(() => {
         if (value) {
@@ -166,9 +166,9 @@ export const Select = <V,>({
                     anchor="bottom"
                     transition
                     className={clsx(
-                        "shadow bg-2 bg-opacity-100",
+                        "shadow-sm bg-paper2 bg-opacity-100",
                         "rounded-lg border border-white/5",
-                        "transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0 focus:outline-none",
+                        "transition duration-100 ease-in data-leave:data-closed:opacity-0 focus:outline-hidden",
                         "z-50 w-[var(--button-width)] p-1 [--anchor-gap:var(--spacing-1)]"
                     )}
                 >
@@ -211,7 +211,7 @@ export const Select = <V,>({
                                 key={option.value}
                                 value={option}
                                 className={clsx(
-                                    "group flex gap-2.5 cursor-default items-center rounded py-1.5 px-3 select-none data-[focus]:bg-3",
+                                    "group flex gap-2.5 cursor-default items-center rounded-sm py-1.5 px-3 select-none data-focus:bg-paper3",
                                     disabled && "cursor-not-allowed"
                                 )}
                             >
@@ -223,7 +223,7 @@ export const Select = <V,>({
                                         value={selected.some(({ value: key }) => option.value === key)}
                                     />
                                 )}
-                                <span className={clsx("text-sm/6", option.disabled && "text-3")}>
+                                <span className={clsx("text-sm/6", option.disabled && "text-t3")}>
                                     {option.label}
                                 </span>
                             </ListboxOption>

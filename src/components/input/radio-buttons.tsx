@@ -82,7 +82,7 @@ export const RadioButtons = <V,>({
                         />
                         <div>
                             {option.icon && <Icon className="mb-2">{option.icon}</Icon>}
-                            <label className="text-2" htmlFor={itemId}>
+                            <label className="text-t2" htmlFor={itemId}>
                                 {option.label}
                             </label>
                         </div>

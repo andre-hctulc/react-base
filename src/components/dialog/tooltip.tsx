@@ -106,7 +106,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
                 <div
                     {...containerProps}
                     className={clsx(
-                        "bg-black/75 rounded py-1.5 px-2 text-white text-sm",
+                        "bg-black/75 rounded-sm py-1.5 px-2 text-white text-sm",
                         containerProps?.className
                     )}
                 >

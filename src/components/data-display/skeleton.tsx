@@ -7,8 +7,8 @@ const skeleton = tv({
     base: [withPrefix("Skeleton"), "animate-skeleton"],
     variants: {
         shape: {
+            rounded_xs: "rounded-xs",
             rounded_sm: "rounded-sm",
-            rounded_base: "rounded",
             rounded_md: "rounded-md",
             rounded_lg: "rounded-lg",
             rounded_xl: "rounded-xl",

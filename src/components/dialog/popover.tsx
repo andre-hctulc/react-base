@@ -127,7 +127,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
     return (
         <Overlay
             noInteraction={props.noInteraction || !props.open}
-            bg={props.bg ? "transparent-1" : "transparent"}
+            bg={props.bg ? "transparent1" : "transparent"}
             onClick={(e) => {
                 e.stopPropagation();
                 props.onClose?.();
