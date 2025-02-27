@@ -10,6 +10,11 @@ export function hideScrollbar(element: HTMLElement) {
     element.style.setProperty("::-webkit-scrollbar", "display: none");
 }
 
+/**
+ * Returns a set of classes for a theme color.
+ *
+ * These classes are dynamically created and are included by the `safelist.txt`.
+ */
 export function themeColor(color: string, prefix?: string): ThemeColorSet {
     if (!prefix) prefix = "";
 

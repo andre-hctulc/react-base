@@ -10,4 +10,3 @@ export * from "./notifications";
 export * from "./transitions";
 export * from "./icons";
 export * from "./exotic";
-export * from "./editors";

@@ -103,10 +103,10 @@ export const Select = <V,>({
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<SelectOption<V>[]>(() => {
         if (defaultValue || value) {
-            const set = new Set(defaultValue || value);
+            const set = new Set(value || defaultValue);
             return options.filter(({ value: key }) => set.has(key));
         }
-        return value || defaultValue || [];
+        return [];
     });
 
     const selectedEl = renderSelected ? (
@@ -146,6 +146,8 @@ export const Select = <V,>({
                 onChange={(options) => {
                     // multiple is handled by the checkboxes exclusively
                     if (multiple) return;
+
+                    if (!Array.isArray(options)) options = [options];
 
                     if (!controlled) setSelected(options);
                     onChange?.({ value: options.map(({ value }) => value), options: options });

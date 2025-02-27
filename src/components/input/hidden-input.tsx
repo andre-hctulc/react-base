@@ -10,10 +10,14 @@ interface HiddenInputProps extends Omit<PropsOf<"input">, "type"> {}
 /**
  * Hidden input (`type="hidden"`).
  *
- * In {@link JSForm}s this also triggers a change event on value change.
- * This way we can use {@link useJSForm} to observe live state of hidden inputs.
+ * **Remember:** Hidden inputs do not trigger any change events natively
  *
- * **Remember:** Hidden inputs do not trigger any change events
+ * ### In {@link JSForm}s
+ * some behavior is added to hidden inputs:
+ * - Hidden inputs will trigger change events when their value changes.
+ *   This way we can use {@link useJSForm} to observe live state of hidden inputs.
+ * - Validation props (e.g. *required*, *pattern*) will be used to validate the hidden input.
+ *
  */
 export const HiddenInput: React.FC<HiddenInputProps> = (props) => {
     const formCtx = useJSForm();
