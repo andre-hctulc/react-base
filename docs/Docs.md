@@ -2,53 +2,63 @@
 
 ## Conventions
 
--   `Component Props` are capitalized
+-   **Props**
 
-    ```ts
-    // Component type
-    interface Props {
-        LinkComponent?: React.ComponentType<{ href: string }>;
-    }
+    -   `renderComponent` prefixed with _render_ - Props that render a component with a factory function like this
 
-    // components
-    interface Props {
-        icon?: React.ReactNode;
-    }
+        ```ts
+        interface Props {
+            renderNotFound?: (code: string) => ReactNode;
+        }
+        ```
 
-    // many components types/components
-    interface Props {
-        components?: {
-            icon?: React.ReactNode;
-            // ...
-        };
-        Components?: {
-            Link?: React.ComponentType<{ href: string }>;
-            // ...
-        };
-    }
-    ```
+    -   `Component` capitalized - Props that provide components
 
--   ``
--   `Variants` should be snake cas. E.g. _full_screen_
--   `as` Prop defined the root element
--   Component `JS Docs`
+        ```ts
+        // Component type
+        interface Props {
+            LinkComponent?: ComponentType<{ href: string }>;
+        }
 
-    ```tsx
-    /**
-     * Component Description
-     *
-     * ### Props
-     * - `propName` - Prop description
-     * - `prop2` - Prop 2 description
-     *
-     * ### Events
-     * - `onEventName` - Event description
+        // components
+        interface Props {
+            icon?: ReactNode;
+        }
 
-     * ### Caveats
-     * Yap Yap Yap
-     */
-    export const Component: React.FC<ComponentProps> = ({ ... }) => { ... };
-    ```
+        // many components types/components
+        interface Props {
+            components?: {
+                icon?: ReactNode;
+                // ...
+            };
+            Components?: {
+                Link?: ComponentType<{ href: string }>;
+                // ...
+            };
+        }
+        ```
+
+    -   ``
+    -   `Variants` should be snake cas. E.g. _full_screen_
+    -   `as` Prop defined the root element
+    -   Component `JS Docs`
+
+        ```tsx
+        /**
+         * Component Description
+         *
+         * ### Props
+         * - `propName` - Prop description
+         * - `prop2` - Prop 2 description
+         *
+         * ### Events
+         * - `onEventName` - Event description
+
+         * ### Caveats
+         * Yap Yap Yap
+         */
+        export const Component: React.FC<ComponentProps> = ({ ... }) => { ... };
+        ```
 
 ## Storybook
 

@@ -1,9 +1,7 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types";
-import { Button } from "../input";
-import { Toolbar } from "../containers";
+import type { TVCProps } from "../../types";
 
 const dialogFooter = tv({
     base: "px-6 pb-5 pt-4 box-border",

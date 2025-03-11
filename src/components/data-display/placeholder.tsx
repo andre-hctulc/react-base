@@ -51,6 +51,10 @@ interface PlaceholderProps extends TVCProps<typeof placeholder, "div"> {
 }
 
 /**
+ * A placeholder component that can be used to show a message or icon when there is no data.
+ *
+ * The component is a flex container that centers its children.
+ *
  * ### Props
  * - `gap`
  * - `padding`

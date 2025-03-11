@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { type ComponentType } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./types";
 import type { LabeledChoice, StyleProps } from "../../types";
@@ -32,10 +32,11 @@ const radioSwitch = tv({
 });
 
 interface RadioSwitchProps<D = any>
-    extends InputLikeProps<string, { option: LabeledChoice<D> }>,
+    extends InputLikeProps<string, { option: LabeledChoice<D> } & { href?: string }>,
         VariantProps<typeof radioSwitch>,
         StyleProps {
-    options: LabeledChoice<D>[];
+    options: (LabeledChoice<D> & { href?: string })[];
+    LinkComponent?: ComponentType<{ href?: string }>;
 }
 
 export const RadioSwitch = <D,>({
@@ -48,7 +49,10 @@ export const RadioSwitch = <D,>({
     defaultValue,
     onChange,
     required,
+    size,
+    color,
     name,
+    LinkComponent,
 }: RadioSwitchProps<D>) => {
     const controlled = value !== undefined;
     // capture selected state to display in the button
@@ -76,13 +80,36 @@ export const RadioSwitch = <D,>({
     }, [value, options]);
 
     return (
-        <div className={radioSwitch({ className })} style={style}>
+        <div className={radioSwitch({ className, size, color })} style={style}>
             {/* form compatibility */}
-            {name && <HiddenInput name={name} value={selected?.value || ""} />}
+            {name && <HiddenInput required={required} name={name} value={selected?.value || ""} />}
             {options.map((option, i) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
                 const active = selected?.value === option.value;
                 const last = i === options.length - 1;
+                const classes = clsx(
+                    "text-center flex items-center gap-2 px-4 transition cursor-pointer",
+                    active && "text-t2!",
+                    last && "border-r",
+                    canActivate && "hover:bg-transparent1 active:bg-transparent2"
+                );
+
+                if (option.href) {
+                    const Link = LinkComponent || "a";
+                    return (
+                        <Link
+                            onClick={() => {
+                                activate(option);
+                            }}
+                            key={option.value}
+                            href={option.href}
+                            className={classes}
+                        >
+                            {option.icon}
+                            {option.label}
+                        </Link>
+                    );
+                }
 
                 return (
                     <button
@@ -91,12 +118,7 @@ export const RadioSwitch = <D,>({
                         }}
                         disabled={!canActivate}
                         key={option.value}
-                        className={clsx(
-                            "text-center flex items-center gap-2 px-4 transition",
-                            !active && "text-t2!",
-                            !last && "border-r",
-                            canActivate && "hover:bg-transparent1 active:bg-transparent2"
-                        )}
+                        className={classes}
                     >
                         {option.icon}
                         {option.label}

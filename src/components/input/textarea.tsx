@@ -8,7 +8,7 @@ import type { InputLikeProps } from "./types";
 
 const textarea = tv({
     base: [
-        "transition block w-full rounded-lg border-none paper3 py-1.5 px-3",
+        "transition block w-full rounded-lg border-none bg-paper3 py-1.5 px-3",
         "focus:outline-hidden focus:outline-2 focus:-outline-offset-2 focus:outline-divider",
     ],
     variants: {

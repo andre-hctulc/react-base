@@ -5,6 +5,8 @@ import type { Choice, PropsOf, TVCProps } from "../../types";
 import { Chip } from "./chip";
 import { Icon } from "../icons";
 import clsx from "clsx";
+import { RadioSwitch } from "../input";
+import type { FC, ReactNode } from "react";
 
 export const tabs = tv({
     base: "flex flex-wrap",
@@ -12,6 +14,7 @@ export const tabs = tv({
         variant: {
             chips: "",
             default: "",
+            radio: "",
         },
         size: {
             sm: "gap-2",
@@ -26,25 +29,32 @@ export const tabs = tv({
 });
 
 export interface TabItem extends Choice {
-    label: string;
-    icon?: React.ReactNode;
+    label: ReactNode;
+    icon?: ReactNode;
     href?: string;
     disabled?: boolean;
     visible?: boolean;
 }
 
 interface TabsProps extends Omit<TVCProps<typeof tabs, "div">, "children"> {
+    /**
+     * The active tab value. Must be of type _string_ or _undefined_ when used with `variant="radio"`.
+     */
     activeTab?: string | ((tab: TabItem) => boolean);
     tabs: TabItem[];
     chipProps?: Partial<PropsOf<typeof Chip>>;
     tabProps?: Partial<PropsOf<typeof Tab>>;
     LinkComponent?: any;
+    /**
+     * Only for `variant="default"`.
+     */
     bg?: "1" | "2" | "3" | "4";
     elevated?: boolean;
     onTabClick?: (tab: TabItem) => void;
+    disabled?: boolean;
 }
 
-export const Tabs: React.FC<TabsProps> = ({
+export const Tabs: FC<TabsProps> = ({
     activeTab,
     variant,
     size,
@@ -56,14 +66,31 @@ export const Tabs: React.FC<TabsProps> = ({
     LinkComponent,
     bg,
     elevated,
+    disabled,
     ...props
 }) => {
+    if (variant === "radio") {
+        return (
+            <RadioSwitch
+                className={className}
+                style={props.style}
+                size={size}
+                LinkComponent={LinkComponent}
+                readOnly={disabled}
+                onChange={({ option }) => onTabClick?.(option)}
+                options={tabItems}
+                value={typeof activeTab === "function" ? "" : activeTab}
+            />
+        );
+    }
+
     return (
         <div {...props} className={tabs({ variant, size, className })}>
             {tabItems.map((t) => {
                 if (t.visible === false) return null;
 
                 const isActive = typeof activeTab === "function" ? activeTab(t) : activeTab === t.value;
+                const _disabled = disabled || t.disabled;
 
                 if (variant === "chips") {
                     const chip = (
@@ -74,10 +101,14 @@ export const Tabs: React.FC<TabsProps> = ({
                             size={size}
                             variant={isActive ? "pale" : "outlined"}
                             {...chipProps}
-                            onClick={(e) => {
-                                onTabClick?.(t);
-                                chipProps?.onClick?.(e);
-                            }}
+                            onClick={
+                                _disabled
+                                    ? undefined
+                                    : (e) => {
+                                          onTabClick?.(t);
+                                          chipProps?.onClick?.(e);
+                                      }
+                            }
                             className={clsx(elevated && "shadow-xs", chipProps?.className as any)}
                         >
                             {t.label}
@@ -105,7 +136,7 @@ export const Tabs: React.FC<TabsProps> = ({
                         active={isActive}
                         icon={t.icon}
                         href={t.href}
-                        disabled={t.disabled}
+                        disabled={_disabled}
                         LinkComponent={LinkComponent}
                         {...tabProps}
                         clickable={!!onTabClick || !!tabProps?.onClick || !!t.href}
@@ -162,11 +193,11 @@ const tab = tv({
 interface TabProps extends TVCProps<typeof tab, "button"> {
     LinkComponent?: any;
     href?: string;
-    icon?: React.ReactNode;
+    icon?: ReactNode;
     clickable?: boolean;
 }
 
-const Tab: React.FC<TabProps> = ({
+const Tab: FC<TabProps> = ({
     children,
     className,
     size,
