@@ -4,7 +4,7 @@ import { type FC } from "react";
 import { useJSONEditor, useJSONPathValue, type JSONInputBaseProps } from "./json-editor";
 import type { JSONSchema7 } from "json-schema";
 import { FormControl, Input } from "../../input";
-import { collapse } from "@andre-hctulc/util";
+import { collapse } from "@edgeshiftlabs/util";
 
 export const JSONSimpleInput: FC<JSONInputBaseProps> = ({ path, schema, label, required, fallbackLabel }) => {
     const schem = schema as JSONSchema7;

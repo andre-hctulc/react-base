@@ -158,7 +158,7 @@ export const Select = <V,>({
                             {loading ? loadingEl : selected.length ? selectedEl : placeholderEl}
                         </div>
                     </XScroll>
-                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-2 text-base">
+                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t2 text-base">
                         {icon || <ChevronDownIcon />}
                     </span>
                 </ListboxButton>

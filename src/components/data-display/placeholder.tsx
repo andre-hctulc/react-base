@@ -80,7 +80,7 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
     return (
         <div className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth, my })} {...props}>
             {icon && (
-                <span className="text-2">
+                <span className="text-t2">
                     <Icon size="4xl" {...iconProps}>
                         {icon}
                     </Icon>

@@ -4,8 +4,8 @@ import React from "react";
 import type { TVCProps, StyleProps } from "../../types";
 import { Spinner } from "../data-display/spinner";
 import { Icon } from "../icons";
-import { collapse } from "@andre-hctulc/util";
 import { themeColor } from "../../util";
+import { collapse } from "@edgeshiftlabs/util";
 
 const btn = tv({
     base: "flex items-center justify-center transition duration-100 shrink-0 truncate cursor-pointer",

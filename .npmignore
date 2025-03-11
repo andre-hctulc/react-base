@@ -5,4 +5,6 @@ tsconfig.json
 src
 .vscode
 .DS_Store
-index.ts
+docs
+scripts
+.eslintrc.json

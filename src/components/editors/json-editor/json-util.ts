@@ -1,5 +1,5 @@
 import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
-import { capitalize } from "@andre-hctulc/util";
+import { capitalize } from "@edgeshiftlabs/util";
 
 export function typeLabel(type: JSONSchema7["type"] | boolean | JSONSchema7Definition) {
     // Boolean

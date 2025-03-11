@@ -2,11 +2,10 @@
 
 import { createContext, useCallback, useContext, useState } from "react";
 import { JSForm } from "../../input";
-import type { PropsOf } from "../../../types";
 import type { JSONSchema7, JSONSchema7Definition } from "json-schema";
 import { JSONInputSwitch } from "./json-input-switch";
 import { getProperty, setProperty } from "dot-prop";
-import { deepCopy } from "@andre-hctulc/util";
+import { deepCopy } from "@edgeshiftlabs/util";
 
 export interface JSONInputBaseProps {
     path: string;

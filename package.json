@@ -1,6 +1,6 @@
 {
-    "name": "@andre-hctulc/react-base",
-    "version": "0.0.8",
+    "name": "@edgeshiftlabs/react-base",
+    "version": "0.1.0",
     "main": "dist/index.js",
     "type": "module",
     "exports": {
@@ -13,7 +13,8 @@
     "scripts": {
         "tc": "tsc --noEmit",
         "tc:watch": "tsc --watch --noEmit",
-        "build": "rm -rf dist && tsc && copyfiles -u 1 src/**/*.css dist/",
+        "prebuild": "rm -rf dist",
+        "build": "tsc && copyfiles -u 1 src/**/*.css dist/",
         "lint": "npx eslint src",
         "demo": "npx serve -s ./demo-build -p 3065",
         "demo:prepare": "node --loader ts-node/esm scripts/build-comp-demos.ts",
@@ -22,7 +23,7 @@
         "create-safelist": "tsx scripts/safelist-gen.ts"
     },
     "dependencies": {
-        "@andre-hctulc/util": "^0.0.11",
+        "@edgeshiftlabs/util": "^0.1.0",
         "@headlessui/react": "^2.2.0",
         "clsx": "^2.1.0",
         "dot-prop": "^9.0.0",
