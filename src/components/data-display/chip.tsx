@@ -2,7 +2,7 @@ import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system";
 import React from "react";
 import type { TVCProps } from "../../types";
-import { collapse } from "@andre-hctulc/util";
+import { collapse } from "@edgeshiftlabs/util";
 import { themeColor } from "../../util";
 
 // removed: align-middle
