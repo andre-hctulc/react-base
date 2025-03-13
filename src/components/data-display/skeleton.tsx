@@ -1,5 +1,5 @@
 import React from "react";
-import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 import "./skeleton.css";
 import { withPrefix } from "../../util/system";
 
@@ -38,7 +38,7 @@ interface SkeletonProps extends VariantProps<typeof skeleton> {
     /**
      * @default true
      */
-    childrenVisible?: boolean;
+    childrenOccupySpace?: boolean;
     height?: number;
     maxHeight?: number;
     size?: number;
@@ -54,7 +54,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     className,
     shape,
     style,
-    childrenVisible,
+    childrenOccupySpace,
     height,
     width,
     maxWidth,
@@ -66,10 +66,11 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     as,
 }) => {
     const Comp = as || "div";
+    const occupy = childrenOccupySpace ?? true;
 
     return (
         <Comp
-            data-children-visible={childrenVisible ?? true}
+            data-children-occupy-space={occupy || undefined}
             className={skeleton({ className, shape, padding })}
             style={{
                 height: height ?? size,

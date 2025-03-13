@@ -8,3 +8,4 @@ src
 docs
 scripts
 .eslintrc.json
+.storybook
