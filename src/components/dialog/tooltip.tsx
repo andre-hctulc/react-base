@@ -13,7 +13,7 @@ const tooltip = tv({
     defaultVariants: {},
 });
 
-interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
+export interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
     children: React.ReactElement<{
         className?: string;
         onMouseEnter?: MouseEventHandler;
@@ -54,17 +54,7 @@ interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
 /**
  * The child must forward the ref!
  */
-export const Tooltip: React.FC<TooltipProps> = ({
-    position,
-    children,
-    containerProps,
-    enterDelay,
-    reEnterDelay,
-    content,
-    disabled,
-    portal,
-    zIndex,
-}) => {
+export const Tooltip: React.FC<TooltipProps> = ({ position, children, containerProps, enterDelay, reEnterDelay, content, disabled, portal, zIndex }) => {
     const anchor = useRef<HTMLElement | null>(null);
     const [open, setOpen] = useState(false);
     const openTimeout = useRef<any>(null);
@@ -95,21 +85,8 @@ export const Tooltip: React.FC<TooltipProps> = ({
                     setOpen(false);
                 },
             } as any)}
-            <Popover
-                open={open}
-                noInteraction
-                position={position || "top"}
-                anchor={anchor.current}
-                portal={portal ?? false}
-                zIndex={zIndex}
-            >
-                <div
-                    {...containerProps}
-                    className={clsx(
-                        "bg-black/75 rounded-sm py-1.5 px-2 text-white text-sm",
-                        containerProps?.className
-                    )}
-                >
+            <Popover open={open} noInteraction position={position || "top"} anchor={anchor.current} portal={portal ?? false} zIndex={zIndex}>
+                <div {...containerProps} className={clsx("bg-black/75 rounded-sm py-1.5 px-2 text-white text-sm", containerProps?.className)}>
                     {content}
                 </div>
             </Popover>

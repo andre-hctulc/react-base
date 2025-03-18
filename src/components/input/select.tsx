@@ -49,10 +49,7 @@ export interface RenderSelectedParams<D = any> {
     selected: SelectOption<D>[];
 }
 
-interface SelectProps<D = any>
-    extends InputLikeProps<string[], { options: SelectOption<D>[] }>,
-        VariantProps<typeof select>,
-        StyleProps {
+export interface SelectProps<D = any> extends InputLikeProps<string[], { options: SelectOption<D>[] }>, VariantProps<typeof select>, StyleProps {
     options: SelectOption<D>[];
     icon?: React.ReactNode;
     placeholder?: React.ReactNode;
@@ -113,7 +110,7 @@ export const Select = <V,>({
         renderSelected({ selected })
     ) : multiple ? (
         <>
-            {selected.map((sel) => {
+            {selected.map(sel => {
                 if (multiple)
                     return (
                         <Chip size="sm" key={sel.value} className="bg-paper2!">
@@ -129,8 +126,7 @@ export const Select = <V,>({
 
     const loadingEl = <span className="text-t3 truncate">{loadingText ?? "Loading..."}</span>;
 
-    const placeholderEl =
-        typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
+    const placeholderEl = typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
 
     React.useEffect(() => {
         if (value) {
@@ -140,10 +136,10 @@ export const Select = <V,>({
     }, [value, options]);
 
     return (
-        <div className={select({ className, size })} style={style} onClick={(e) => e.stopPropagation()}>
+        <div className={select({ className, size })} style={style} onClick={e => e.stopPropagation()}>
             <Listbox
                 value={selected}
-                onChange={(options) => {
+                onChange={options => {
                     // multiple is handled by the checkboxes exclusively
                     if (multiple) return;
 
@@ -160,9 +156,7 @@ export const Select = <V,>({
                             {loading ? loadingEl : selected.length ? selectedEl : placeholderEl}
                         </div>
                     </XScroll>
-                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t2 text-base">
-                        {icon || <ChevronDownIcon />}
-                    </span>
+                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t2 text-base">{icon || <ChevronDownIcon />}</span>
                 </ListboxButton>
                 <ListboxOptions
                     anchor="bottom"
@@ -174,7 +168,7 @@ export const Select = <V,>({
                         "z-50 w-[var(--button-width)] p-1 [--anchor-gap:var(--spacing-1)]"
                     )}
                 >
-                    {options.map((option) => {
+                    {options.map(option => {
                         const toggle = () => {
                             if (option.disabled) return;
 
@@ -203,7 +197,7 @@ export const Select = <V,>({
                         return (
                             <ListboxOption
                                 disabled={option.disabled}
-                                onClick={(e) => {
+                                onClick={e => {
                                     if (multiple) {
                                         // prevents closing the dropdown
                                         e.preventDefault();
@@ -225,9 +219,7 @@ export const Select = <V,>({
                                         value={selected.some(({ value: key }) => option.value === key)}
                                     />
                                 )}
-                                <span className={clsx("text-sm/6", option.disabled && "text-t3")}>
-                                    {option.label}
-                                </span>
+                                <span className={clsx("text-sm/6", option.disabled && "text-t3")}>{option.label}</span>
                             </ListboxOption>
                         );
                     })}

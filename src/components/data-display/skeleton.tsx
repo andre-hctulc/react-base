@@ -31,7 +31,7 @@ const skeleton = tv({
     },
 });
 
-interface SkeletonProps extends VariantProps<typeof skeleton> {
+export interface SkeletonProps extends VariantProps<typeof skeleton> {
     className?: string;
     children?: React.ReactNode;
     style?: React.CSSProperties;

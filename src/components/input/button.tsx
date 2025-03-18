@@ -68,7 +68,7 @@ const btn = tv({
     },
 });
 
-interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">, StyleProps {
+export interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">, StyleProps {
     iconPosition?: "left" | "right";
     icon?: React.ReactNode;
     children?: React.ReactNode;
@@ -79,26 +79,7 @@ interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">,
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    (
-        {
-            children,
-            color,
-            variant,
-            className,
-            size,
-            loading,
-            iconPosition,
-            icon,
-            shape,
-            disabled,
-            shadow,
-            mt,
-            as,
-            href,
-            ...props
-        },
-        ref
-    ) => {
+    ({ children, color, variant, className, size, loading, iconPosition, icon, shape, disabled, shadow, mt, as, href, ...props }, ref) => {
         const _variant = variant || "filled";
         const _color = color || "primary";
         const ico = loading ? <Spinner color="inherit" size="sm" /> : icon;
@@ -152,14 +133,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <Comp
                 ref={ref}
                 className={btn({
-                    className: [
-                        bgColor,
-                        !_disabled && hoverBgColor,
-                        !_disabled && activeBgColor,
-                        borderColor,
-                        textColor,
-                        className,
-                    ],
+                    className: [bgColor, !_disabled && hoverBgColor, !_disabled && activeBgColor, borderColor, textColor, className],
                     color,
                     variant,
                     size,
@@ -197,22 +171,12 @@ const iconButton = tv({
     },
 });
 
-export const IconButton = React.forwardRef<HTMLButtonElement, Omit<ButtonProps, "icon">>(
-    ({ children, className, loading, disabled, size, ...props }, ref) => {
-        return (
-            <Button
-                color="neutral"
-                variant="text"
-                className={iconButton({ className, size })}
-                disabled={loading || disabled}
-                ref={ref}
-                size={size}
-                {...props}
-            >
-                {loading ? <Spinner color="inherit" size="inherit" /> : children}
-            </Button>
-        );
-    }
-);
+export const IconButton = React.forwardRef<HTMLButtonElement, Omit<ButtonProps, "icon">>(({ children, className, loading, disabled, size, ...props }, ref) => {
+    return (
+        <Button color="neutral" variant="text" className={iconButton({ className, size })} disabled={loading || disabled} ref={ref} size={size} {...props}>
+            {loading ? <Spinner color="inherit" size="inherit" /> : children}
+        </Button>
+    );
+});
 
 IconButton.displayName = withPrefix("IconButton");

@@ -74,16 +74,13 @@ const card = tv({
     },
 });
 
-interface CardProps extends TVCProps<typeof card, "div"> {
+export interface CardProps extends TVCProps<typeof card, "div"> {
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     as?: any;
 }
 
 export const Card = React.forwardRef<HTMLElement, CardProps>(
-    (
-        { children, shadow, className, border, bg, width, height, size, variant, rounded, flex, ...props },
-        ref
-    ) => {
+    ({ children, shadow, className, border, bg, width, height, size, variant, rounded, flex, ...props }, ref) => {
         const Comp = props.as || "div";
 
         return (
@@ -223,23 +220,9 @@ interface CardBodyProps extends VariantProps<typeof cardBody> {
     as?: any;
 }
 
-export const CardBody: React.FC<CardBodyProps> = ({
-    children,
-    className,
-    flex,
-    as,
-    padding,
-    grow,
-    fullHeight,
-    alignItems,
-    scroll,
-}) => {
+export const CardBody: React.FC<CardBodyProps> = ({ children, className, flex, as, padding, grow, fullHeight, alignItems, scroll }) => {
     const Comp = as || "div";
-    return (
-        <Comp className={cardBody({ className, padding, flex, grow, fullHeight, alignItems, scroll })}>
-            {children}
-        </Comp>
-    );
+    return <Comp className={cardBody({ className, padding, flex, grow, fullHeight, alignItems, scroll })}>{children}</Comp>;
 };
 
 const cardFooter = tv({
@@ -275,15 +258,7 @@ interface CardFooterProps extends VariantProps<typeof cardFooter>, StyleProps {
     as?: any;
 }
 
-export const CardFooter: React.FC<CardFooterProps> = ({
-    children,
-    className,
-    border,
-    style,
-    padding,
-    as,
-    variant,
-}) => {
+export const CardFooter: React.FC<CardFooterProps> = ({ children, className, border, style, padding, as, variant }) => {
     const Comp = as || "div";
 
     return (

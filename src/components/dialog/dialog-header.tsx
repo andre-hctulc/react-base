@@ -13,7 +13,7 @@ const dialogHeader = tv({
     defaultVariants: {},
 });
 
-interface DialogHeaderProps extends Omit<TVCProps<typeof dialogHeader, "div">, "title"> {
+export interface DialogHeaderProps extends Omit<TVCProps<typeof dialogHeader, "div">, "title"> {
     closeIcon?: ReactNode;
     onClose?: () => void;
     title?: ReactNode;
@@ -23,17 +23,7 @@ interface DialogHeaderProps extends Omit<TVCProps<typeof dialogHeader, "div">, "
     actions?: ReactNode;
 }
 
-export const DialogHeader: FC<DialogHeaderProps> = ({
-    title,
-    className,
-    onClose,
-    closeIcon,
-    icon,
-    iconProps,
-    titleProps,
-    actions,
-    ...props
-}) => {
+export const DialogHeader: FC<DialogHeaderProps> = ({ title, className, onClose, closeIcon, icon, iconProps, titleProps, actions, ...props }) => {
     return (
         <div className={dialogHeader({ className })} style={props.style}>
             {icon && (

@@ -15,7 +15,7 @@ import { DataGridHeaderRow } from "./data-grid-header-row";
 import { DataGridRow } from "./data-grid-row";
 import { DataGridFooter } from "./data-grid-footer";
 
-interface DataGridProps<T extends object> {
+export interface DataGridProps<T extends object> {
     className?: string;
     style?: React.CSSProperties;
     rows: T[];
@@ -38,13 +38,13 @@ interface DataGridProps<T extends object> {
     };
     /**
      * Renders an action cell for each row that opens a popover with this content.
-     * 
+     *
      * Use {@link rowActionCell} to render a custom action cell.
      */
     rowActionCellPopover?: (row: T) => React.ReactNode;
     /**
-     * Custom row action cell. 
-     * 
+     * Custom row action cell.
+     *
      * Use {@link rowActionCellPopover} to render a default action cell.
      */
     rowActionCell?: CellRenderer<T>;
@@ -86,7 +86,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     const ranId = useId();
     const id = props.storage?.id ?? ranId;
     const [selection, setSelection] = useState<T[]>([]);
-    const selectionSet = useMemo(() => new Set(selection.map((row) => getRowId.current(row))), [selection]);
+    const selectionSet = useMemo(() => new Set(selection.map(row => getRowId.current(row))), [selection]);
     const [hiddenCols, setHiddenCols] = usePersistentState(
         withPrefix("data-grid-hide-cols_") + id,
         props.defaultHideCols || [],
@@ -107,23 +107,12 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
             c.push({
                 hidable: false,
                 label: settingsEnabled && (
-                    <DataGridSettings
-                        cols={c}
-                        hiddenCols={hiddenCols}
-                        icon={props.components?.settingsIcon}
-                        onChange={(hiddenCols) => setHiddenCols(hiddenCols)}
-                    />
+                    <DataGridSettings cols={c} hiddenCols={hiddenCols} icon={props.components?.settingsIcon} onChange={hiddenCols => setHiddenCols(hiddenCols)} />
                 ),
                 render:
                     props.rowActionCell ||
                     ((cell, row, col) =>
-                        props.rowActionCellPopover && (
-                            <DataGridActions
-                                moreIcon={props.components?.moreIcon}
-                                render={props.rowActionCellPopover}
-                                row={row}
-                            />
-                        )),
+                        props.rowActionCellPopover && <DataGridActions moreIcon={props.components?.moreIcon} render={props.rowActionCellPopover} row={row} />),
                 path: "$actions$",
                 width: 50,
                 className: "flex justify-center items-center",
@@ -147,7 +136,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                                 setSelection(newSelection);
                                 props.onSelectionChange?.(newSelection);
                             }}
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={e => e.stopPropagation()}
                         />
                     ),
                 path: "$select$",
@@ -161,13 +150,11 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                         value={selectionSet.has(getRowId.current(row))}
                         onChange={({ value }) => {
                             const rowId = getRowId.current(row);
-                            const newSelection = value
-                                ? [...selection, row]
-                                : selection.filter((r) => getRowId.current(r) !== rowId);
+                            const newSelection = value ? [...selection, row] : selection.filter(r => getRowId.current(r) !== rowId);
                             setSelection(newSelection);
                             props.onSelectionChange?.(newSelection);
                         }}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={e => e.stopPropagation()}
                     />
                 ),
                 stickyLeft: true,
@@ -177,24 +164,14 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
         const hideSet = new Set(hiddenCols);
 
         return c
-            .filter((col) => !hideSet.has(col.path))
-            .map((col) => {
+            .filter(col => !hideSet.has(col.path))
+            .map(col => {
                 return {
                     ...props.baseColDef,
                     ...col,
                 };
             });
-    }, [
-        props.cols,
-        hiddenCols,
-        props.rowActionCellPopover,
-        props.rowActionCell,
-        props.selectable,
-        props.selectAll,
-        selectionSet,
-        props.rows,
-        selection,
-    ]);
+    }, [props.cols, hiddenCols, props.rowActionCellPopover, props.rowActionCell, props.selectable, props.selectAll, selectionSet, props.rows, selection]);
 
     const updateScrollBoundaries = () => {
         if (!scrollXBox.current) return;
@@ -228,7 +205,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
         const newRowIds = new Set(props.rows.map(getRowId.current));
 
         // Unselect removed rows
-        const newSelection = selection.filter((row) => newRowIds.has(getRowId.current(row)));
+        const newSelection = selection.filter(row => newRowIds.has(getRowId.current(row)));
 
         // If selection changed (rows removed from selection), update
         if (newSelection.length !== selection.length) {
@@ -240,36 +217,18 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     const showPlaceholder = empty || props.loading;
 
     return (
-        <div
-            className={clsx(
-                "bg-paper flex flex-col relative overflow-y-auto min-h-0",
-                showPlaceholder && "min-h-40",
-                props.className
-            )}
-        >
+        <div className={clsx("bg-paper flex flex-col relative overflow-y-auto min-h-0", showPlaceholder && "min-h-40", props.className)}>
             {showPlaceholder && (
                 <Placeholder className="absolute w-full h-full left-0">
-                    {!props.loading
-                        ? empty && (props.components?.empty || "No data found")
-                        : props.components?.loading || <Spinner size="2xl" />}
+                    {!props.loading ? empty && (props.components?.empty || "No data found") : props.components?.loading || <Spinner size="2xl" />}
                 </Placeholder>
             )}
-            <div
-                className={clsx("grow overflow-x-auto relative flex flex-col")}
-                style={{}}
-                ref={scrollXBox}
-                onScroll={() => updateScrollBoundaries()}
-            >
+            <div className={clsx("grow overflow-x-auto relative flex flex-col")} style={{}} ref={scrollXBox} onScroll={() => updateScrollBoundaries()}>
                 <div className="shrink-0" style={{ minWidth: "min-content" }}>
-                    <DataGridHeaderRow
-                        leftEnd={leftEnd}
-                        rightEnd={rightEnd}
-                        cols={cols}
-                        height={props.headerRowHeight}
-                    />
+                    <DataGridHeaderRow leftEnd={leftEnd} rightEnd={rightEnd} cols={cols} height={props.headerRowHeight} />
                     {!props.loading &&
                         len > 0 &&
-                        props.rows.map((row) => (
+                        props.rows.map(row => (
                             <DataGridRow
                                 leftEnd={leftEnd}
                                 rightEnd={rightEnd}

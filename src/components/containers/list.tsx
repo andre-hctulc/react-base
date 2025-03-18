@@ -55,7 +55,7 @@ const list = tv({
     },
 });
 
-interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
+export interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
     items?: ListItem[];
     onItemClick?: (item: ListItem) => void;
@@ -112,10 +112,8 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
                 {...props}
             >
                 {children}
-                {items?.map((item) => {
-                    const active =
-                        item.active ??
-                        (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
+                {items?.map(item => {
+                    const active = item.active ?? (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
 
                     if (variant === "icons") {
                         const btn = (
@@ -126,11 +124,8 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
                                 color={active ? "black" : "neutral"}
                                 {...iconButtonProps}
                                 key={item.key}
-                                className={clsx(
-                                    active && "bg-transparent2",
-                                    iconButtonProps?.className as any
-                                )}
-                                onClick={(e) => {
+                                className={clsx(active && "bg-transparent2", iconButtonProps?.className as any)}
+                                onClick={e => {
                                     onItemClick?.(item);
                                     iconButtonProps?.onClick?.(e);
                                 }}
@@ -167,18 +162,12 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
                             variant={item.variant}
                             {...listItemProps}
                             className={clsx(item.className, listItemProps?.className as any)}
-                            onClick={(e) => {
+                            onClick={e => {
                                 item.onClick?.(e);
                                 onItemClick?.(item);
                                 listItemProps?.onClick?.(e);
                             }}
-                            clickable={
-                                item.clickable ||
-                                !!item.onClick ||
-                                !!listItemProps?.onClick ||
-                                listItemProps?.clickable ||
-                                !!item.href
-                            }
+                            clickable={item.clickable || !!item.onClick || !!listItemProps?.onClick || listItemProps?.clickable || !!item.href}
                         >
                             {item.label}
                         </ListItem>
@@ -301,27 +290,7 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
 }
 
 export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
-    (
-        {
-            children,
-            onClick,
-            className,
-            active,
-            style,
-            tools,
-            href,
-            LinkComponent,
-            loading,
-            variant,
-            size,
-            innerProps,
-            effects,
-            disabled,
-            iconProps,
-            ...props
-        },
-        ref
-    ) => {
+    ({ children, onClick, className, active, style, tools, href, LinkComponent, loading, variant, size, innerProps, effects, disabled, iconProps, ...props }, ref) => {
         const Link = LinkComponent || "a";
         const icon = loading ? <Spinner color={variant === "danger" ? "error" : "neutral"} /> : props.icon;
         const clickHandler = loading ? undefined : onClick;
@@ -352,11 +321,7 @@ export const ListItem = React.forwardRef<HTMLElement, ListItemProps>(
                             {icon}
                         </Icon>
                     ) : null}
-                    {typeof children === "string" ? (
-                        <span className="grow truncate">{children}</span>
-                    ) : (
-                        children
-                    )}
+                    {typeof children === "string" ? <span className="grow truncate">{children}</span> : children}
                     {tools?.length && (
                         <Toolbar justify="end" gap="sm">
                             {tools?.map(({ key, ...tool }) => (

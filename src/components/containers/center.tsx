@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react";
 import { withPrefix } from "../../util/system";
 
-interface CenterProps extends React.ComponentProps<"div"> {}
+export interface CenterProps extends React.ComponentProps<"div"> {}
 
 /**
  * A container that centers its children both horizontally and vertically.

@@ -36,7 +36,7 @@ const alert = tv({
     },
 });
 
-interface AlertProps extends TVCProps<typeof alert, "div"> {
+export interface AlertProps extends TVCProps<typeof alert, "div"> {
     as?: any;
     closable?: boolean;
     onClose?: () => void;
@@ -56,24 +56,7 @@ interface AlertProps extends TVCProps<typeof alert, "div"> {
  * - `loading` - Controls the loading state of the close button
  */
 export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-    (
-        {
-            children,
-            type,
-            className,
-            as,
-            outlined,
-            closable,
-            title,
-            titleProps,
-            onClose,
-            closeButtonProps,
-            rounded,
-            loading,
-            ...props
-        },
-        ref
-    ) => {
+    ({ children, type, className, as, outlined, closable, title, titleProps, onClose, closeButtonProps, rounded, loading, ...props }, ref) => {
         const Comp = as || "div";
 
         return (
@@ -84,7 +67,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
                         loading={loading}
                         {...closeButtonProps}
                         className={clsx("float-right", closeButtonProps?.className)}
-                        onClick={(e) => {
+                        onClick={e => {
                             e.stopPropagation();
                             closeButtonProps?.onClick?.(e);
                             onClose?.();
@@ -98,11 +81,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
                         {title}
                     </Title>
                 )}
-                {typeof children === "string" ? (
-                    <p className={clsx("text-sm", closable && !title && "pt-2")}>{children}</p>
-                ) : (
-                    children
-                )}
+                {typeof children === "string" ? <p className={clsx("text-sm", closable && !title && "pt-2")}>{children}</p> : children}
             </Comp>
         );
     }
