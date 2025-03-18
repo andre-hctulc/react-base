@@ -25,10 +25,7 @@ export interface RadioRenderParams<D = any> {
     activate: () => void;
 }
 
-interface RadioProps<D = any>
-    extends InputLikeProps<string, { option: Choice<D> }>,
-        VariantProps<typeof radio>,
-        StyleProps {
+export interface RadioProps<D = any> extends InputLikeProps<string, { option: Choice<D> }>, VariantProps<typeof radio>, StyleProps {
     options: Choice<D>[];
     icon?: React.ReactNode;
     renderOption: (option: RadioRenderParams<D>) => React.ReactNode;
@@ -39,19 +36,7 @@ interface RadioProps<D = any>
  * - `options` - The options to display in the dropdown
  * - `renderOption` - Renders the options
  */
-export const Radio = <D,>({
-    options,
-    className,
-    style,
-    disabled,
-    readOnly,
-    value,
-    defaultValue,
-    onChange,
-    required,
-    name,
-    renderOption,
-}: RadioProps<D>) => {
+export const Radio = <D,>({ options, className, style, disabled, readOnly, value, defaultValue, onChange, required, name, renderOption }: RadioProps<D>) => {
     const controlled = value !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<Choice<D> | null>(() => {
@@ -81,7 +66,7 @@ export const Radio = <D,>({
         <div className={radio({ className })} style={style}>
             {/* form compatibility */}
             {name && <HiddenInput name={name} value={selected?.value || ""} required={required} />}
-            {options.map((option) => {
+            {options.map(option => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
 
                 return renderOption({

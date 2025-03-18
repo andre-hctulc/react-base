@@ -7,10 +7,7 @@ import { forwardRef, type ChangeEvent } from "react";
 import type { InputLikeProps } from "./types.js";
 
 const input = tv({
-    base: [
-        "block w-full rounded-lg border-none bg-paper3 py-1.5 px-3",
-        "transition outline-0 focus:outline-2 focus:outline-divider",
-    ],
+    base: ["block w-full rounded-lg border-none bg-paper3 py-1.5 px-3", "transition outline-0 focus:outline-2 focus:outline-divider"],
     variants: {
         size: {
             sm: "h-7 text-sm",
@@ -23,31 +20,26 @@ const input = tv({
     },
 });
 
-interface InputProps
-    extends Omit<
-            TVCProps<typeof input, "input">,
-            "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
-        >,
+export interface InputProps
+    extends Omit<TVCProps<typeof input, "input">, "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked">,
         InputLikeProps<string, ChangeEvent<HTMLInputElement>> {}
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-    ({ size, className, style, type, name, required, defaultValue, value, onChange, ...props }, ref) => {
-        return (
-            <input
-                required={required}
-                ref={ref}
-                value={value}
-                defaultValue={defaultValue}
-                className={input({ size, className })}
-                name={name}
-                type={type}
-                onChange={(e) => {
-                    onChange?.({ value: e.target.value, ...e });
-                }}
-                {...props}
-            />
-        );
-    }
-);
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ size, className, style, type, name, required, defaultValue, value, onChange, ...props }, ref) => {
+    return (
+        <input
+            required={required}
+            ref={ref}
+            value={value}
+            defaultValue={defaultValue}
+            className={input({ size, className })}
+            name={name}
+            type={type}
+            onChange={e => {
+                onChange?.({ value: e.target.value, ...e });
+            }}
+            {...props}
+        />
+    );
+});
 
 Input.displayName = withPrefix("Input");

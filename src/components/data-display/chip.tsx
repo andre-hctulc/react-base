@@ -57,7 +57,7 @@ const chip = tv({
     },
 });
 
-interface ChipProps extends TVCProps<typeof chip, "span"> {
+export interface ChipProps extends TVCProps<typeof chip, "span"> {
     hoverEffect?: boolean;
     clickable?: boolean;
     /**
@@ -70,26 +70,7 @@ interface ChipProps extends TVCProps<typeof chip, "span"> {
 }
 
 export const Chip = React.forwardRef<HTMLElement, ChipProps>(
-    (
-        {
-            children,
-            color,
-            variant,
-            className,
-            size,
-            hoverEffect,
-            clickable,
-            textSelect,
-            icon,
-            iconPosition,
-            as,
-            thinBorder,
-            interactive,
-            thinText,
-            ...props
-        },
-        ref
-    ) => {
+    ({ children, color, variant, className, size, hoverEffect, clickable, textSelect, icon, iconPosition, as, thinBorder, interactive, thinText, ...props }, ref) => {
         const Comp: any = as || "span";
         const _color = color || "neutral";
         const _variant = variant || "outlined";
@@ -137,14 +118,7 @@ export const Chip = React.forwardRef<HTMLElement, ChipProps>(
                     color,
                     variant,
                     size,
-                    className: [
-                        bgColor,
-                        borderColor,
-                        textColor,
-                        _hoverEffect && hoverBgColor,
-                        _clickable && [activeBgColor, "cursor-pointer"],
-                        className,
-                    ],
+                    className: [bgColor, borderColor, textColor, _hoverEffect && hoverBgColor, _clickable && [activeBgColor, "cursor-pointer"], className],
                     textSelect,
                     thinBorder,
                     thinText,

@@ -34,30 +34,18 @@ const _switch = tv({
     },
 });
 
-interface SwitchProps
+export interface SwitchProps
     extends InputLikeProps<boolean>,
         VariantProps<typeof _switch>,
-        Omit<
-            PropsOf<typeof BaseSwitch>,
-            keyof InputLikeProps | "className" | "style" | "color" | "checked" | "defaultChecked"
-        >,
+        Omit<PropsOf<typeof BaseSwitch>, keyof InputLikeProps | "className" | "style" | "color" | "checked" | "defaultChecked">,
         StyleProps {}
 
-export const Switch: React.FC<SwitchProps> = ({
-    className,
-    onChange,
-    value,
-    defaultValue,
-    color,
-    size,
-    disabled,
-    ...props
-}) => {
+export const Switch: React.FC<SwitchProps> = ({ className, onChange, value, defaultValue, color, size, disabled, ...props }) => {
     return (
         <BaseSwitch
             checked={value}
             defaultChecked={defaultValue}
-            onChange={(checked) => onChange?.({ value: checked })}
+            onChange={checked => onChange?.({ value: checked })}
             className={_switch({ className, color, size })}
             disabled={disabled}
             {...props}

@@ -53,7 +53,7 @@ const page = tv({
     },
 });
 
-interface PageProps extends VariantProps<typeof page>, StyleProps {
+export interface PageProps extends VariantProps<typeof page>, StyleProps {
     children?: React.ReactNode;
 }
 
@@ -61,22 +61,7 @@ interface PageProps extends VariantProps<typeof page>, StyleProps {
  * A `Page` vertically centers its content. Generally there should only be one `Page` per route.
  */
 export const Page = React.forwardRef<HTMLDivElement, PageProps>(
-    (
-        {
-            children,
-            variant,
-            className,
-            grow,
-            size,
-            maxHeightFull,
-            minHeight0,
-            fullHeight,
-            style,
-            flex,
-            noShrink,
-        },
-        ref
-    ) => {
+    ({ children, variant, className, grow, size, maxHeightFull, minHeight0, fullHeight, style, flex, noShrink }, ref) => {
         return (
             <div
                 className={page({
@@ -142,7 +127,7 @@ export const PageSkeleton: React.FC<PageSkeletonProps> = ({ className, body, ...
     );
 };
 
-interface SpinnerPageProps extends Omit<PageProps, "children"> {
+export interface SpinnerPageProps extends Omit<PageProps, "children"> {
     spinnerSize?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 }
 

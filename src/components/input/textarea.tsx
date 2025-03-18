@@ -7,10 +7,7 @@ import type { TVCProps } from "../../types/index.js";
 import type { InputLikeProps } from "./types.js";
 
 const textarea = tv({
-    base: [
-        "transition block w-full rounded-lg border-none bg-paper3 py-1.5 px-3",
-        "focus:outline-hidden focus:outline-2 focus:-outline-offset-2 focus:outline-divider",
-    ],
+    base: ["transition block w-full rounded-lg border-none bg-paper3 py-1.5 px-3", "focus:outline-hidden focus:outline-2 focus:-outline-offset-2 focus:outline-divider"],
     variants: {
         size: {
             sm: "h-7 text-sm",
@@ -25,7 +22,7 @@ const textarea = tv({
     },
 });
 
-interface TextareaProps
+export interface TextareaProps
     extends Omit<TVCProps<typeof textarea, "textarea">, "defaultValue" | "value" | "onChange">,
         InputLikeProps<string, React.ChangeEvent<HTMLTextAreaElement>> {}
 
@@ -39,7 +36,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                 defaultValue={defaultValue}
                 className={textarea({ size, className })}
                 name={name}
-                onChange={(e) => {
+                onChange={e => {
                     onChange?.({ value: e.target.value, ...e });
                 }}
                 {...props}

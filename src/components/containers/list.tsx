@@ -54,7 +54,7 @@ const list = tv({
     },
 });
 
-interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
+export interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
     items?: ListItem[];
     onItemClick?: (item: ListItem) => void;
@@ -76,7 +76,6 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
         {
             className,
             items,
-            style,
             onItemClick,
             children,
             variant,

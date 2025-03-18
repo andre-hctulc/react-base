@@ -46,7 +46,7 @@ const typography = tv({
     defaultVariants: {},
 });
 
-interface TypographyProps extends TVCProps<typeof typography, "span"> {
+export interface TypographyProps extends TVCProps<typeof typography, "span"> {
     as?: any;
 }
 
@@ -58,11 +58,7 @@ export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
         const Comp = as || "p";
 
         return (
-            <Comp
-                ref={ref}
-                className={typography({ className, center, underline, size, italic, lineHeight, variant })}
-                {...props}
-            >
+            <Comp ref={ref} className={typography({ className, center, underline, size, italic, lineHeight, variant })} {...props}>
                 {children}
             </Comp>
         );

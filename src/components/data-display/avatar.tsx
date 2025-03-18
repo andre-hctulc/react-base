@@ -51,26 +51,20 @@ const avatar = tv({
     },
 });
 
-interface AvatarProps extends TVCProps<typeof avatar, "div"> {
+export interface AvatarProps extends TVCProps<typeof avatar, "div"> {
     src?: string;
     as?: any;
     alt?: string;
 }
 
-export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
-    ({ src, alt, className, size, shape, padding, children, as, bold, textColor, ...props }, ref) => {
-        const Comp: any = as || "div";
+export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({ src, alt, className, size, shape, padding, children, as, bold, textColor, ...props }, ref) => {
+    const Comp: any = as || "div";
 
-        return (
-            <Comp
-                ref={ref}
-                className={avatar({ size, shape, padding, className, textColor, bold })}
-                {...props}
-            >
-                {children}
-            </Comp>
-        );
-    }
-);
+    return (
+        <Comp ref={ref} className={avatar({ size, shape, padding, className, textColor, bold })} {...props}>
+            {children}
+        </Comp>
+    );
+});
 
 Avatar.displayName = withPrefix("Avatar");

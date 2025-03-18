@@ -55,7 +55,7 @@ const popover = tv({
     defaultVariants: {},
 });
 
-interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
+export interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
     anchor: HTMLElement | null | undefined;
     children?: React.ReactNode;
     open: boolean;
@@ -88,7 +88,7 @@ const getOffset = (position: Placement, gap: number) => {
 /**
  * The popover is portaled to the body
  */
-export const Popover: React.FC<PopoverProps> = (props) => {
+export const Popover: React.FC<PopoverProps> = props => {
     const [popperElement, setPopperElement] = React.useState<HTMLDivElement | null>(null);
     const pos = props.position ?? "bottom";
     const [isPositioned, setIsPositioned] = React.useState(false); // Track whether the popover is positioned
@@ -128,7 +128,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
         <Overlay
             noInteraction={props.noInteraction || !props.open}
             bg={props.bg ? "transparent1" : "transparent"}
-            onClick={(e) => {
+            onClick={e => {
                 e.stopPropagation();
                 props.onClose?.();
             }}
@@ -148,7 +148,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
                 <div
                     ref={setPopperElement}
                     style={{ ...styles.popper, ...props.style }}
-                    onClick={(e) => {
+                    onClick={e => {
                         e.stopPropagation();
                     }}
                     {...attributes.popper}

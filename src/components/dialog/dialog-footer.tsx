@@ -17,7 +17,7 @@ const dialogFooter = tv({
     },
 });
 
-interface DialogFooterProps extends TVCProps<typeof dialogFooter, "div"> {}
+export interface DialogFooterProps extends TVCProps<typeof dialogFooter, "div"> {}
 
 export const DialogFooter: React.FC<DialogFooterProps> = ({ children, className, variant, ...props }) => {
     return (
