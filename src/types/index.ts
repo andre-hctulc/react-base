@@ -1,5 +1,5 @@
 import type { JSXElementConstructor, ComponentProps, CSSProperties, ReactNode, ComponentType } from "react";
-import { type VariantProps } from "tailwind-variants";
+import type { VariantProps } from "tailwind-variants";
 
 // #### Props ####
 
