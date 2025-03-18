@@ -61,7 +61,7 @@ const title = tv({
     },
 });
 
-interface TitleProps extends TVCProps<typeof title, "h2"> {
+export interface TitleProps extends TVCProps<typeof title, "h2"> {
     as?: any;
     icon?: ReactNode;
     iconProps?: Partial<PropsOf<typeof Icon>>;
@@ -73,32 +73,11 @@ interface TitleProps extends TVCProps<typeof title, "h2"> {
  * - `underline`
  */
 export const Title = React.forwardRef<HTMLElement, TitleProps>(
-    (
-        {
-            children,
-            className,
-            as,
-            variant,
-            underline,
-            my,
-            mb,
-            mt,
-            lineHeight,
-            bold,
-            icon,
-            iconProps,
-            ...props
-        },
-        ref
-    ) => {
+    ({ children, className, as, variant, underline, my, mb, mt, lineHeight, bold, icon, iconProps, ...props }, ref) => {
         const Comp = as || variant || "h1";
 
         return (
-            <Comp
-                className={title({ className, variant, underline, my, mb, mt, lineHeight, bold })}
-                ref={ref as any}
-                {...props}
-            >
+            <Comp className={title({ className, variant, underline, my, mb, mt, lineHeight, bold })} ref={ref as any} {...props}>
                 {icon && (
                     <Icon size="none" inline {...iconProps} className={clsx("mr-3", iconProps?.className)}>
                         {icon}

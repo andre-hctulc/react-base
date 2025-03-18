@@ -3,7 +3,7 @@ import type { PropsOf } from "../../types";
 
 interface CollapseVProps extends PropsOf<typeof Transition> {}
 
-export const CollapseVScreen: React.FC<CollapseVProps> = (props) => {
+export const CollapseVScreen: React.FC<CollapseVProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -19,7 +19,7 @@ export const CollapseVScreen: React.FC<CollapseVProps> = (props) => {
     );
 };
 
-export const CollapseV500: React.FC<CollapseVProps> = (props) => {
+export const CollapseV500: React.FC<CollapseVProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -35,7 +35,7 @@ export const CollapseV500: React.FC<CollapseVProps> = (props) => {
     );
 };
 
-export const CollapseV750: React.FC<CollapseVProps> = (props) => {
+export const CollapseV750: React.FC<CollapseVProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -51,7 +51,7 @@ export const CollapseV750: React.FC<CollapseVProps> = (props) => {
     );
 };
 
-export const CollapseV300: React.FC<CollapseVProps> = (props) => {
+export const CollapseV300: React.FC<CollapseVProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -67,7 +67,7 @@ export const CollapseV300: React.FC<CollapseVProps> = (props) => {
     );
 };
 
-export const CollapseV100: React.FC<CollapseVProps> = (props) => {
+export const CollapseV100: React.FC<CollapseVProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -83,7 +83,7 @@ export const CollapseV100: React.FC<CollapseVProps> = (props) => {
     );
 };
 
-export const CollapseV1000: React.FC<CollapseVProps> = (props) => {
+export const CollapseV1000: React.FC<CollapseVProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-500 ease-out"}
@@ -99,7 +99,7 @@ export const CollapseV1000: React.FC<CollapseVProps> = (props) => {
     );
 };
 
-export const CollapseV2000: React.FC<CollapseVProps> = (props) => {
+export const CollapseV2000: React.FC<CollapseVProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-700 ease-out"}
@@ -115,9 +115,9 @@ export const CollapseV2000: React.FC<CollapseVProps> = (props) => {
     );
 };
 
-interface CollapseHProps extends PropsOf<typeof Transition> {}
+export interface CollapseHProps extends PropsOf<typeof Transition> {}
 
-export const CollapseHScreen: React.FC<CollapseHProps> = (props) => {
+export const CollapseHScreen: React.FC<CollapseHProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -133,7 +133,7 @@ export const CollapseHScreen: React.FC<CollapseHProps> = (props) => {
     );
 };
 
-export const CollapseH500: React.FC<CollapseHProps> = (props) => {
+export const CollapseH500: React.FC<CollapseHProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -149,7 +149,7 @@ export const CollapseH500: React.FC<CollapseHProps> = (props) => {
     );
 };
 
-export const CollapseH750: React.FC<CollapseHProps> = (props) => {
+export const CollapseH750: React.FC<CollapseHProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -165,7 +165,7 @@ export const CollapseH750: React.FC<CollapseHProps> = (props) => {
     );
 };
 
-export const CollapseH300: React.FC<CollapseHProps> = (props) => {
+export const CollapseH300: React.FC<CollapseHProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -181,7 +181,7 @@ export const CollapseH300: React.FC<CollapseHProps> = (props) => {
     );
 };
 
-export const CollapseH100: React.FC<CollapseHProps> = (props) => {
+export const CollapseH100: React.FC<CollapseHProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-300 ease-out"}
@@ -197,7 +197,7 @@ export const CollapseH100: React.FC<CollapseHProps> = (props) => {
     );
 };
 
-export const CollapseH1000: React.FC<CollapseHProps> = (props) => {
+export const CollapseH1000: React.FC<CollapseHProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-500 ease-out"}
@@ -213,7 +213,7 @@ export const CollapseH1000: React.FC<CollapseHProps> = (props) => {
     );
 };
 
-export const CollapseH2000: React.FC<CollapseHProps> = (props) => {
+export const CollapseH2000: React.FC<CollapseHProps> = props => {
     return (
         <Transition
             enter={"transition-all duration-700 ease-out"}
