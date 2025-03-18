@@ -30,6 +30,7 @@ interface HeaderProps extends VariantProps<typeof header> {
     children?: React.ReactNode;
     className?: ClassValue;
     style?: React.CSSProperties;
+    as?: any;
 }
 
 /**
@@ -38,11 +39,12 @@ interface HeaderProps extends VariantProps<typeof header> {
  * - `shadow-sm`
  */
 export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
-    ({ children, variant, className, style, sticky, shadow }, ref) => {
+    ({ children, variant, className, style, sticky, shadow, as }, ref) => {
+        const Comp = as || "div";
         return (
-            <div ref={ref} className={header({ className, variant, shadow, sticky })} style={style}>
+            <Comp ref={ref} className={header({ className, variant, shadow, sticky })} style={style}>
                 {children}
-            </div>
+            </Comp>
         );
     }
 );

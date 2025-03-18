@@ -1,4 +1,11 @@
-import type { JSXElementConstructor, ComponentProps, CSSProperties, ReactNode, ComponentType } from "react";
+import type {
+    JSXElementConstructor,
+    ComponentProps,
+    CSSProperties,
+    ReactNode,
+    ComponentType,
+    ReactElement,
+} from "react";
 import type { VariantProps } from "tailwind-variants";
 
 // #### Props ####
@@ -50,6 +57,7 @@ export type TVCProps<
     T extends (...args: any) => any,
     R extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> | never = never
 > = VariantProps<T> & Omit<ComponentProps<R>, "className"> & StyleProps;
+
 
 // #### Components ####
 

@@ -1,20 +1,27 @@
-import React from "react";
+import {
+    Children,
+    cloneElement,
+    isValidElement,
+    type ComponentProps,
+    type ElementType,
+    type ForwardedRef,
+    type LegacyRef,
+    type ReactElement,
+    type ReactNode,
+} from "react";
 
-export function findChildren<P>(
-    children: React.ReactNode,
-    type: React.ElementType<P>
-): React.ReactElement<P>[] {
+export function findChildren<P>(children: ReactNode, type: ElementType<P>): ReactElement<P>[] {
     if (Array.isArray(children)) {
         return children.filter((child) => child.type === type);
     } else {
-        return typeof children === "object" && (children as any)?.type === type ? ([children] as any) : null;
+        return typeof children === "object" && (children as any)?.type === type ? ([children] as any) : [];
     }
 }
 
 /** Sets the value of one or more references */
 export function setRef<T = any>(
     refValue: T,
-    ...targetRefs: (React.ForwardedRef<T> | React.LegacyRef<T> | undefined | null)[]
+    ...targetRefs: (ForwardedRef<T> | LegacyRef<T> | undefined | null)[]
 ) {
     for (const ref of targetRefs) {
         if (typeof ref === "function") ref(refValue);
@@ -22,7 +29,22 @@ export function setRef<T = any>(
     }
 }
 
-export function hasChildren(children: React.ReactNode) {
+export function hasChildren(children: ReactNode) {
     if (!children) return false;
-    return React.Children.count(children) !== 0;
+    return Children.count(children) !== 0;
+}
+
+export function populateProps<P extends object>(
+    children: ReactNode,
+    props: P,
+    populateIf?: (element: ReactElement) => boolean
+): ReactNode[] {
+    const arr = Children.toArray(children);
+    return arr.map((child) => {
+        if (!isValidElement(child)) return child;
+        if (!populateIf || populateIf(child)) {
+            return cloneElement(child, props);
+        }
+        return child;
+    });
 }

@@ -51,7 +51,7 @@ interface RootProps extends VariantProps<typeof root> {
 }
 
 /**
- * A flex container. Use it for the general layout.
+ * A flex container. Use it as contextual root container for your layout.
  */
 export const Root: React.FC<RootProps> = ({
     children,

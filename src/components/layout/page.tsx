@@ -57,6 +57,9 @@ interface PageProps extends VariantProps<typeof page>, StyleProps {
     children?: React.ReactNode;
 }
 
+/**
+ * A `Page` vertically centers its content. Generally there should only be one `Page` per route.
+ */
 export const Page = React.forwardRef<HTMLDivElement, PageProps>(
     (
         {

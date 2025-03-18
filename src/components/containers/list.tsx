@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { withPrefix } from "../../util/system.js";
 import { IconButton } from "../input/icon-button.js";
 import { ListItem } from "./list-item.js";
+import { populateProps } from "../../util/react.js";
 
 const list = tv({
     base: "rounded-sm flex",
@@ -95,6 +96,7 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
         ref
     ) => {
         const Comp: any = as || "ul";
+        const linkItemProps = { LinkComponent, ...listItemProps };
 
         return (
             <Comp
@@ -109,7 +111,7 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
                 })}
                 {...props}
             >
-                {children}
+                {populateProps(children, linkItemProps, (el) => el.type === ListItem)}
                 {items?.map((item) => {
                     const active =
                         item.active ??
@@ -154,7 +156,6 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
                         <ListItem
                             as="li"
                             loading={item.loading}
-                            LinkComponent={LinkComponent}
                             size={size || "md"}
                             key={item.key}
                             disabled={item.disabled}
@@ -163,7 +164,7 @@ export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListPr
                             tools={item.tools}
                             href={item.href}
                             variant={item.variant}
-                            {...listItemProps}
+                            {...linkItemProps}
                             className={clsx(item.className, listItemProps?.className as any)}
                             onClick={(e) => {
                                 item.onClick?.(e);
