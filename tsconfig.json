@@ -7,13 +7,13 @@
         "forceConsistentCasingInFileNames": true,
         "esModuleInterop": true,
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "isolatedModules": true,
         "jsx": "react-jsx",
         "verbatimModuleSyntax": true,
         "outDir": "dist",
         "declaration": true
     },
-    "include": ["src/**/*", "../../src/components/editors"],
+    "include": ["src/**/*"],
     "exclude": ["demo", "**/json-editor"]
 }
