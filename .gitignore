@@ -1,10 +1,22 @@
-.vscode
-.DS_Store
-*.code-workspace
+#### Code ####
+
 node_modules
-Todo.md
-Dev.md
-*storybook.log
-package-lock.json
 dist
+
+#### Docs ####
+
+docs
+
+#### VS Code ####
+
+.vscode
+*.code-workspace
+
+#### Disk ####
+
+.DS_Store
+
+#### Storybook ####
+
 storybook-static
+*storybook.log

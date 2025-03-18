@@ -1,15 +1,28 @@
-test
-babel.config.js
-*.code-workspace
-tsconfig.json
-src
+#### VS Code ####
+
 .vscode
-.DS_Store
-docs
+*.code-workspace
+
+#### Code/Configs ####
+
+test
 scripts
+src
+tsconfig.json
 .eslintrc.json
+
+#### Docs ####
+
+docs
+
+#### Disk ####
+
+.DS_Store
+
+#### Storybook ####
+
+vitest.config.js
 .storybook
 storybook-static
-public
-.next
-vitest.config.js
+*storybook.log
+postcss.config.js
