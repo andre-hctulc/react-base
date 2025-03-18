@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import type { StyleProps } from "../../types";
+import type { StyleProps } from "../../types/index.js";
 import clsx from "clsx";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 
 interface DroppableProps extends StyleProps {
     children?: React.ReactNode;

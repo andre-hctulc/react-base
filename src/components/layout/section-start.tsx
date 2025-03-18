@@ -1,7 +1,7 @@
-import { Subtitle } from "../text";
+import { Subtitle } from "../text/subtitle.js";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types";
-import { Icon } from "../icons";
+import type { PropsOf, TVCProps } from "../../types/index.js";
+import { Icon } from "../icons/icon.js";
 
 const sectionStart = tv({
     base: "flex flex-col",

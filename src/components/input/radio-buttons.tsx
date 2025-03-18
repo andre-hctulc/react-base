@@ -2,9 +2,9 @@
 
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { InputLikeProps } from "./types";
-import type { LabeledChoice, StyleProps } from "../../types";
-import { Icon } from "../icons";
+import type { InputLikeProps } from "./types.js";
+import type { LabeledChoice, StyleProps } from "../../types/index.js";
+import { Icon } from "../icons/icon.js";
 
 const radioButtons = tv({
     base: "",

@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system";
-import type { TVCProps } from "../../types";
+import { withPrefix } from "../../util/system.js";
+import type { TVCProps } from "../../types/index.js";
 import { forwardRef } from "react";
 
 const label = tv({

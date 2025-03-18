@@ -2,10 +2,10 @@
 
 import React from "react";
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 import { Transition } from "@headlessui/react";
-import type { TVCProps } from "../../types";
-import { Overlay } from "../layout/overlay";
+import type { TVCProps } from "../../types/index.js";
+import { Overlay } from "../layout/overlay.js";
 
 const drawer = tv({
     base: "fixed z-30 bg-background shadow-lg ease-in-out duration-300 max-w-full max-h-full bg-paper",

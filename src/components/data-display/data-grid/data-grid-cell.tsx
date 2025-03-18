@@ -1,8 +1,7 @@
 import { useMemo } from "react";
-import type { DataGridColDef, OnCellClick } from "./types";
-import { DataGrid } from "./data-grid";
+import type { DataGridColDef, OnCellClick } from "./types.js";
 import clsx from "clsx";
-import { DataGridCellText } from "./data-grid-cell-text";
+import { DataGridCellText } from "./data-grid-cell-text.js";
 
 const DEFAULT_CELL_WIDTH = 100;
 

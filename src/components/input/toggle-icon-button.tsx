@@ -1,11 +1,11 @@
 "use client";
 
 import { forwardRef, useEffect, useState, type ReactElement } from "react";
-import type { PropsOf, StyleProps } from "../../types";
-import type { InputLikeProps } from "./types";
-import { IconButton } from "./button";
-import { withPrefix } from "../../util/system";
-import { HiddenInput } from "./hidden-input";
+import type { PropsOf, StyleProps } from "../../types/index.js";
+import type { InputLikeProps } from "./types.js";
+import { IconButton } from "./icon-button.js";
+import { withPrefix } from "../../util/system.js";
+import { HiddenInput } from "./hidden-input.js";
 
 export interface ToggleIconButtonProps extends InputLikeProps<boolean>, StyleProps {
     children: ReactElement;

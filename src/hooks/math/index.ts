@@ -1,2 +1,2 @@
-export * from "./use-min";
-export * from "./use-max";
+export * from "./use-min.js";
+export * from "./use-max.js";

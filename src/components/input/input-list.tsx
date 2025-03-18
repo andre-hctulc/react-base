@@ -2,8 +2,8 @@
 
 import clsx from "clsx";
 import React, { useCallback, useMemo, useRef } from "react";
-import type { InputLikeProps, InputValue, InputValueArray } from "./types";
-import type { Choice, StyleProps } from "../../types";
+import type { InputLikeProps, InputValue, InputValueArray } from "./types.js";
+import type { Choice, StyleProps } from "../../types/index.js";
 
 type SingleInputValue = Extract<InputValue, any[]>;
 

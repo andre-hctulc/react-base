@@ -1,11 +1,11 @@
 "use client";
 
 import { tv, type VariantProps } from "tailwind-variants";
-import type { PropsOf, StyleProps } from "../../types";
+import type { PropsOf, StyleProps } from "../../types/index.js";
 import type { Placement } from "@popperjs/core";
 import { cloneElement, useRef, useState, type MouseEventHandler } from "react";
 import clsx from "clsx";
-import { Popover } from "./popover";
+import { Popover } from "./popover.js";
 
 const tooltip = tv({
     base: "",

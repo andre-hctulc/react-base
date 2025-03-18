@@ -1,19 +1,20 @@
 "use client";
 
 import clsx from "clsx";
-import { useRefOf, useWindowEvent } from "../../../hooks";
-import { Spinner } from "../../data-display/spinner";
-import { usePersistentState } from "../../../hooks/others/use-persistent";
-import { DataGridSettings } from "./data-grid-settings";
-import { DataGridActions } from "./data-grid-actions";
-import { Checkbox } from "../../input/checkbox";
-import { withPrefix } from "../../../util/system";
-import { Placeholder } from "../../data-display/placeholder";
+import { Spinner } from "../../data-display/spinner.js";
+import { usePersistentState } from "../../../hooks/others/use-persistent-state.js";
+import { DataGridSettings } from "./data-grid-settings.js";
+import { DataGridActions } from "./data-grid-actions.js";
+import { Checkbox } from "../../input/checkbox.js";
+import { withPrefix } from "../../../util/system.js";
+import { Placeholder } from "../../data-display/placeholder.js";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import type { CellRenderer, DataGridColDef, OnCellClick, OnRowClick } from "./types";
-import { DataGridHeaderRow } from "./data-grid-header-row";
-import { DataGridRow } from "./data-grid-row";
-import { DataGridFooter } from "./data-grid-footer";
+import type { CellRenderer, DataGridColDef, OnCellClick, OnRowClick } from "./types.js";
+import { DataGridHeaderRow } from "./data-grid-header-row.js";
+import { DataGridRow } from "./data-grid-row.js";
+import { DataGridFooter } from "./data-grid-footer.js";
+import { useRefOf } from "../../../hooks/others/use-ref-of.js";
+import { useWindowEvent } from "../../../hooks/document/use-window-event.js";
 
 export interface DataGridProps<T extends object> {
     className?: string;

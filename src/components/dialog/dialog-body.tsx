@@ -1,9 +1,9 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types";
+import type { TVCProps } from "../../types/index.js";
 import React from "react";
-import { useWindowEvent } from "../../hooks";
+import { useWindowEvent } from "../../hooks/document/use-window-event.js";
 
 const dialogBody = tv({
     // grow and scroll when content is too long

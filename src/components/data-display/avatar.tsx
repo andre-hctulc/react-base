@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types";
-import { withPrefix } from "../../util/system";
+import type { TVCProps } from "../../types/index.js";
+import { withPrefix } from "../../util/system.js";
 import { forwardRef } from "react";
 
 const avatar = tv({

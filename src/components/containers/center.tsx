@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 
 export interface CenterProps extends React.ComponentProps<"div"> {}
 

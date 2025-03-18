@@ -1,5 +1,5 @@
 import React from "react";
-import type { Falsy } from "../../types";
+import type { Falsy } from "../../types/index.js";
 
 export function useElementById(id: string | Falsy, deps?: React.DependencyList) {
     const [element, setElement] = React.useState<HTMLElement | null>(null);

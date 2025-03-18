@@ -4,12 +4,12 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headless
 import clsx from "clsx";
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { InputLikeProps } from "./types";
-import type { LabeledChoice, StyleProps } from "../../types";
-import { ChevronDownIcon } from "../icons/chevron-down";
-import { Chip } from "../data-display/chip";
-import { Checkbox } from "./checkbox";
-import { XScroll } from "../shadow/x-scroll";
+import type { InputLikeProps } from "./types.js";
+import type { LabeledChoice, StyleProps } from "../../types/index.js";
+import { ChevronDownIcon } from "../icons/chevron-down.js";
+import { Chip } from "../data-display/chip.js";
+import { Checkbox } from "./checkbox.js";
+import { XScroll } from "../shadow/x-scroll.js";
 
 const select = tv({
     base: "min-w-32  max-w-full",

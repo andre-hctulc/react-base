@@ -1,8 +1,8 @@
 "use client";
 
-import { usePromise } from "../../hooks";
-import type { PropsOf } from "../../types";
-import { IconButton } from "./button";
+import { usePromise } from "../../hooks/index.js";
+import type { PropsOf } from "../../types/index.js";
+import { IconButton } from "./icon-button.js";
 import React from "react";
 
 export interface ToolItem<T = any> {

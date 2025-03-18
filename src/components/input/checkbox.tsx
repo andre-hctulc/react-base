@@ -1,10 +1,10 @@
 import { Checkbox as BaseCheckbox, type CheckboxProps as BaseCheckboxProps } from "@headlessui/react";
-import type { InputLikeProps } from "./types";
+import type { InputLikeProps } from "./types.js";
 import { tv, type VariantProps } from "tailwind-variants";
 import React from "react";
-import type { StyleProps } from "../../types";
-import { Icon } from "../icons";
-import { CheckFactIcon } from "../icons/check-fat";
+import type { StyleProps } from "../../types/index.js";
+import { Icon } from "../icons/icon.js";
+import { CheckFactIcon } from "../icons/check-fat.js";
 
 const checkbox = tv({
     base: "shrink-0 group block rounded-md ring-[1.5px] ring-inset",

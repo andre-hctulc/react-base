@@ -1,7 +1,7 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import "./skeleton.css";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 
 const skeleton = tv({
     base: [withPrefix("Skeleton"), "animate-skeleton"],

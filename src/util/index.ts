@@ -1,3 +1,3 @@
-export * from "./react";
-export * from "./style";
-export * from "./reexports";
+export * from "./react.js";
+export * from "./style.js";
+export * from "./reexports.js";

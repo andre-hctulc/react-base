@@ -1,9 +1,9 @@
 "use client";
 
-import { useNotifications } from "../notifications";
-import { IconButton } from "../input";
-import type { PropsOf } from "../../types";
-import { CopyIcon } from "../icons/copy";
+import type { PropsOf } from "../../types/index.js";
+import { CopyIcon } from "../icons/copy.js";
+import { IconButton } from "../input/icon-button.js";
+import { useNotifications } from "../notifications/notifications.js";
 
 interface CopyIconButtonProps extends PropsOf<typeof IconButton> {
     textToCopy: string | null;

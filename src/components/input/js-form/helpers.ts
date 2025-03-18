@@ -1,5 +1,5 @@
 import { setProperty } from "dot-prop";
-import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./types";
+import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./types.js";
 
 type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 

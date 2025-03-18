@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import type React from "react";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
-import { Title } from "../text/title";
-import type { PropsOf } from "../../types";
-import type { Page } from "./page";
+import { Title } from "../text/title.js";
+import type { PropsOf } from "../../types/index.js";
+import type { Page } from "./page.js";
 
 const pageHeader = tv({
     base: "w-full",
@@ -70,9 +70,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                 <div className={clsx("flex gap-3 py-2", center && "justify-center")}>
                     {title && <Title {...titleProps}>{title}</Title>}
                     {badges && <div className="flex gap-3">{badges}</div>}
-                    {actions && (
-                        <div className="flex flex-wrap grow items-center justify-end">{actions}</div>
-                    )}
+                    {actions && <div className="flex flex-wrap grow items-center justify-end">{actions}</div>}
                 </div>
             )}
             {children}

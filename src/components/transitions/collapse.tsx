@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import type { PropsOf } from "../../types";
+import type { PropsOf } from "../../types/index.js";
 
 interface CollapseVProps extends PropsOf<typeof Transition> {}
 

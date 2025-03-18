@@ -1,7 +1,7 @@
 import React from "react";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types";
+import type { TVCProps } from "../../types/index.js";
 
 export const spinner = tv({
     base: "animate-spin origin-center",

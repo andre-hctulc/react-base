@@ -2,9 +2,9 @@
 
 import { Dialog as BaseDialog, DialogPanel } from "@headlessui/react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { StyleProps } from "../../types";
+import type { StyleProps } from "../../types/index.js";
 import clsx from "clsx";
-import { useIsHydrated } from "../../hooks";
+import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
 import { createPortal } from "react-dom";
 
 const dialog = tv({

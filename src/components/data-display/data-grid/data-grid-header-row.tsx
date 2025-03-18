@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import { useMapArray } from "../../../hooks";
-import type { DataGridColDef } from "./types";
+import { useMapArray } from "../../../hooks/iterables/use-map-array.js";
+import type { DataGridColDef } from "./types.js";
 import { useMemo } from "react";
 import { setProperty } from "dot-prop";
-import { DataGridRow } from "./data-grid-row";
+import { DataGridRow } from "./data-grid-row.js";
 
 interface DataGridHeaderRowProps {
     cols: DataGridColDef<any>[];

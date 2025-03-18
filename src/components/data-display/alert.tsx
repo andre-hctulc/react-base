@@ -1,11 +1,11 @@
 import React from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types";
-import { IconButton } from "../input";
-import { XIcon } from "../icons/x";
-import { Title } from "../text";
+import type { PropsOf, TVCProps } from "../../types/index.js";
+import { IconButton } from "../input/icon-button.js";
+import { XIcon } from "../icons/x.js";
+import { Title } from "../text/title.js";
 import clsx from "clsx";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 
 const alert = tv({
     base: "px-3 py-2 text-t-contrast",

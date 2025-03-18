@@ -1,14 +1,15 @@
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types";
-import { Subtitle } from "../text";
-import { Icon } from "../icons";
-import { Button, IconButton } from "../input";
-import { PencilIcon } from "../icons/pencil";
+import type { PropsOf, TVCProps } from "../../types/index.js";
+import { Subtitle } from "../text/subtitle.js";
+import { Icon } from "../icons/icon.js";
+import { Button } from "../input/button.js";
+import { PencilIcon } from "../icons/pencil.js";
 import clsx from "clsx";
-import { Placeholder } from "../data-display";
-import { Spinner } from "../data-display/spinner";
+import { Placeholder } from "../data-display/placeholder.js";
+import { Spinner } from "../data-display/spinner.js";
 import React from "react";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
+import { IconButton } from "../input/icon-button.js";
 
 const section = tv({
     base: "py-4 box-border",

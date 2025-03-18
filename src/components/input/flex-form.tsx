@@ -1,5 +1,5 @@
 import { tv, type ClassValue } from "tailwind-variants";
-import type { TVCProps } from "../../types";
+import type { TVCProps } from "../../types/index.js";
 
 const flexForm = tv({
     base: "flex",

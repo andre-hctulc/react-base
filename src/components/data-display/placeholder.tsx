@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types";
-import { Typography } from "../text";
-import { Icon } from "../icons";
+import type { PropsOf, TVCProps } from "../../types/index.js";
+import { Typography } from "../text/typography.js";
+import { Icon } from "../icons/icon.js";
 import React from "react";
 
 const placeholder = tv({

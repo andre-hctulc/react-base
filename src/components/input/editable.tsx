@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { InputLikeProps, InputValue } from "./types";
+import type { InputLikeProps, InputValue } from "./types.js";
 
 interface EditableContext {
     editMode: boolean;

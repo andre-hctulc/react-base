@@ -1,3 +1,3 @@
-export * from "./data-grid";
-export * from "./types";
-export * from "./data-grid-cell-text";
+export * from "./data-grid.js";
+export * from "./types.js";
+export * from "./data-grid-cell-text.js";

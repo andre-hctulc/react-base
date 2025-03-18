@@ -1,11 +1,11 @@
 "use client";
 
-import type { StyleProps } from "../../types";
-import { Droppable } from "./droppable";
+import type { StyleProps } from "../../types/index.js";
+import { Droppable } from "./droppable.js";
 import React from "react";
-import { List } from "../containers";
+import { List } from "../containers/list.js";
 import clsx from "clsx";
-import type { InputLikeProps } from "./types";
+import type { InputLikeProps } from "./types.js";
 
 interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     children?: React.ReactNode;
