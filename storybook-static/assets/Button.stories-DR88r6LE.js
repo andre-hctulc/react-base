@@ -1,0 +1,6 @@
+import"./jsx-runtime-ClZEHPQQ.js";import"./index-Cqyox1Tj.js";import"./radio-switch-CSN_3WMT.js";import"./radio-card-D5XAqI8e.js";import{B as a}from"./icon-button-CnPy7BkC.js";import"./select-wEauhckA.js";import"./list-Bmluy5VR.js";import"./title-zhG8nq35.js";import"./use-persistent-state-3RrTVDUf.js";import"./error-text-BfoGhFWp.js";import"./use-server-handoff-complete-C_kQSZrK.js";import"./portal-BBuXlrqJ.js";import"./index-C2TgfdXk.js";import"./index-D-LGQApf.js";const B={title:"input/button",component:a,parameters:{layout:"centered"},argTypes:{variant:{control:"select",options:["filled","floating","outlined","text","pale"]},color:{control:"select",options:["error","accent","black","info","pale","neutral","secondary","primary"]},loading:{control:"boolean"},disabled:{control:"boolean"},children:{control:"text"}},args:{color:"error"}},o={args:{variant:"filled",children:"Button"}};var t,r,e;o.parameters={...o.parameters,docs:{...(t=o.parameters)==null?void 0:t.docs,source:{originalSource:`{
+  args: {
+    variant: "filled",
+    children: "Button"
+  }
+}`,...(e=(r=o.parameters)==null?void 0:r.docs)==null?void 0:e.source}}};const h=["Default"];export{o as Default,h as __namedExportsOrder,B as default};

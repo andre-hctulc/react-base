@@ -1,0 +1,4 @@
+import{j as p}from"./jsx-runtime-ClZEHPQQ.js";import{S as a}from"./page-footer-apFlSg9j.js";import"./overlay-CjZRi9OS.js";import"./index-Cqyox1Tj.js";import"./title-zhG8nq35.js";import"./skeleton-DxUlrKsM.js";import"./icon-button-CnPy7BkC.js";import"./subtitle-B8FNKHlk.js";import"./collapse-ObtXIaOQ.js";import"./transition-BwOSbcON.js";import"./use-server-handoff-complete-C_kQSZrK.js";import"./index-C2TgfdXk.js";import"./index-D-LGQApf.js";const P={title:"layout/SpinnerPage",component:a,parameters:{layout:"centered"},argTypes:{}},r={render:s=>p.jsx(a,{}),args:{}};var e,t,o;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:`{
+  render: args => <SpinnerPage />,
+  args: {}
+}`,...(o=(t=r.parameters)==null?void 0:t.docs)==null?void 0:o.source}}};const D=["Default"];export{r as Default,D as __namedExportsOrder,P as default};

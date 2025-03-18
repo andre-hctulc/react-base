@@ -1,0 +1,6 @@
+import{j as t}from"./jsx-runtime-ClZEHPQQ.js";import"./tabs-Dt_5sjoR.js";import{C as m}from"./select-wEauhckA.js";import"./placeholder-CvNBklpY.js";import"./skeleton-DxUlrKsM.js";import"./data-grid-CNvmxVWS.js";import"./icon-button-CnPy7BkC.js";import"./index-Cqyox1Tj.js";import"./title-zhG8nq35.js";import"./radio-switch-CSN_3WMT.js";import"./portal-BBuXlrqJ.js";import"./use-server-handoff-complete-C_kQSZrK.js";import"./index-C2TgfdXk.js";import"./index-D-LGQApf.js";import"./typography-CWMdkZL3.js";import"./use-persistent-state-3RrTVDUf.js";import"./popover-GB_-jwkC.js";import"./overlay-CjZRi9OS.js";import"./transition-BwOSbcON.js";import"./subtitle-B8FNKHlk.js";const T={title:"data-display/chip",component:m,parameters:{layout:"centered"},argTypes:{},args:{}},r={render:s=>t.jsx(m,{children:t.jsx("span",{children:"some content"})}),args:{}};var o,p,e;r.parameters={...r.parameters,docs:{...(o=r.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  render: args => <Chip>
+            <span>some content</span>
+        </Chip>,
+  args: {}
+}`,...(e=(p=r.parameters)==null?void 0:p.docs)==null?void 0:e.source}}};const b=["Default"];export{r as Default,b as __namedExportsOrder,T as default};

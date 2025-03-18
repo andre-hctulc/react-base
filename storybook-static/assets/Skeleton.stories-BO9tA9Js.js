@@ -1,0 +1,6 @@
+import{j as t}from"./jsx-runtime-ClZEHPQQ.js";import"./tabs-Dt_5sjoR.js";import"./select-wEauhckA.js";import"./placeholder-CvNBklpY.js";import{S as m}from"./skeleton-DxUlrKsM.js";import"./data-grid-CNvmxVWS.js";import"./icon-button-CnPy7BkC.js";import"./index-Cqyox1Tj.js";import"./title-zhG8nq35.js";import"./radio-switch-CSN_3WMT.js";import"./portal-BBuXlrqJ.js";import"./use-server-handoff-complete-C_kQSZrK.js";import"./index-C2TgfdXk.js";import"./index-D-LGQApf.js";import"./typography-CWMdkZL3.js";import"./use-persistent-state-3RrTVDUf.js";import"./popover-GB_-jwkC.js";import"./overlay-CjZRi9OS.js";import"./transition-BwOSbcON.js";import"./subtitle-B8FNKHlk.js";const T={title:"data-display/skeleton",component:m,parameters:{layout:"centered"},argTypes:{}},r={render:s=>t.jsx(m,{children:t.jsx("span",{children:"some content"})}),args:{}};var o,e,p;r.parameters={...r.parameters,docs:{...(o=r.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  render: args => <Skeleton>
+            <span>some content</span>
+        </Skeleton>,
+  args: {}
+}`,...(p=(e=r.parameters)==null?void 0:e.docs)==null?void 0:p.source}}};const b=["Default"];export{r as Default,b as __namedExportsOrder,T as default};

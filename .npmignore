@@ -9,3 +9,7 @@ docs
 scripts
 .eslintrc.json
 .storybook
+storybook-static
+public
+.next
+vitest.config.js
