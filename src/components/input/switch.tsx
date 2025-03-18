@@ -1,10 +1,10 @@
 "use client";
 
 import { Switch as BaseSwitch } from "@headlessui/react";
-import type { InputLikeProps } from "./types";
+import type { InputLikeProps } from "./types.js";
 import { tv, type VariantProps } from "tailwind-variants";
 import React from "react";
-import type { PropsOf, StyleProps } from "../../types";
+import type { PropsOf, StyleProps } from "../../types/index.js";
 
 const _switch = tv({
     base: [

@@ -1,10 +1,10 @@
 import { tv, type VariantProps } from "tailwind-variants";
-import type { PropsOf, StyleProps, TVCProps } from "../../types";
-import { withPrefix } from "../../util/system";
+import type { PropsOf, StyleProps, TVCProps } from "../../types/index.js";
+import { withPrefix } from "../../util/system.js";
 import React from "react";
 import clsx from "clsx";
-import { Icon } from "../icons";
-import { Title } from "../text";
+import { Icon } from "../icons/icon.js";
+import { Title } from "../text/title.js";
 
 const card = tv({
     base: "overflow-hidden",

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { hideScrollbar as hide } from "../../util";
+import { hideScrollbar as hide } from "../../util/style.js";
 
 interface XScrollProps {
     /**

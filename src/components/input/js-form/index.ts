@@ -1,3 +1,3 @@
-export { useJSForm, type JSFormContext } from "./js-form-context";
-export * from "./js-form";
-export * from "./types";
+export { useJSForm, type JSFormContext } from "./js-form-context.js";
+export * from "./js-form.js";
+export * from "./types.js";

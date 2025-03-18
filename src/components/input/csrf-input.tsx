@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { HiddenInput } from "./hidden-input";
+import { HiddenInput } from "./hidden-input.js";
 
 interface CSRFInputProps {
     /**

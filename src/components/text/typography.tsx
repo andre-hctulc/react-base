@@ -1,6 +1,6 @@
-import type { TVCProps } from "../../types";
+import type { TVCProps } from "../../types/index.js";
 import React from "react";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 import { tv } from "tailwind-variants";
 
 const typography = tv({

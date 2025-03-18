@@ -1,6 +1,6 @@
 import React from "react";
 import { tv, type VariantProps, type ClassValue } from "tailwind-variants";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 
 const header = tv({
     base: "w-full max-w-full box-border shrink-0",

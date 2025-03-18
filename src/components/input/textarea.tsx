@@ -1,10 +1,10 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 import React from "react";
-import type { TVCProps } from "../../types";
-import type { InputLikeProps } from "./types";
+import type { TVCProps } from "../../types/index.js";
+import type { InputLikeProps } from "./types.js";
 
 const textarea = tv({
     base: [

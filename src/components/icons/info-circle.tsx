@@ -1,7 +1,7 @@
 import React from "react";
-import type { PropsOf } from "../../types";
-import { Icon } from "./icon";
-import { withPrefix } from "../../util/system";
+import type { PropsOf } from "../../types/index.js";
+import { Icon } from "./icon.js";
+import { withPrefix } from "../../util/system.js";
 
 interface InfoCircleIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 

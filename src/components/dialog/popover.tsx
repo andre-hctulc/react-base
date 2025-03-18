@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
-import type { StyleProps } from "../../types";
+import { tv, type VariantProps } from "tailwind-variants";
+import type { StyleProps } from "../../types/index.js";
 import { usePopper } from "react-popper";
 import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
-import { Overlay } from "../layout";
+import { Overlay } from "../layout/overlay.js";
 
 const popover = tv({
     base: "absolute",

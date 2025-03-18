@@ -1,8 +1,8 @@
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 import React, { type ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types";
-import { Icon } from "../icons";
+import type { PropsOf, TVCProps } from "../../types/index.js";
+import { Icon } from "../icons/icon.js";
 import clsx from "clsx";
 
 const subtitle = tv({

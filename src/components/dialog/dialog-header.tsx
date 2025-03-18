@@ -1,10 +1,10 @@
 "use client";
 
-import type { PropsOf, TVCProps } from "../../types";
-import { Icon } from "../icons";
-import { IconButton } from "../input";
+import type { PropsOf, TVCProps } from "../../types/index.js";
+import { Icon } from "../icons/icon.js";
+import { IconButton } from "../input/icon-button.js";
 import { tv } from "tailwind-variants";
-import { Title } from "../text";
+import { Title } from "../text/title.js";
 import type { FC, ReactNode } from "react";
 
 const dialogHeader = tv({

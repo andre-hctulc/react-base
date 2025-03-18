@@ -2,10 +2,10 @@
 
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { StyleProps } from "../../types";
-import { CollapseH1000, CollapseVScreen } from "../transitions";
-import { IconButton } from "../input";
-import { XIcon } from "../icons/x";
+import type { StyleProps } from "../../types/index.js";
+import { CollapseH1000, CollapseVScreen } from "../transitions/collapse.js";
+import { IconButton } from "../input/icon-button.js";
+import { XIcon } from "../icons/x.js";
 
 const menu = tv({
     base: "bg-paper box-border h-full shrink-0 min-h-0 overflow-y-auto",

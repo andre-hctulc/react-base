@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types";
+import type { TVCProps } from "../../types/index.js";
 import React from "react";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 
 const errorText = tv({
     base: "text-error",

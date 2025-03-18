@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 import React from "react";
-import type { TVCProps, StyleProps } from "../../types";
+import type { TVCProps, StyleProps } from "../../types/index.js";
 
 const helperText = tv({
     base: "text-sm text-t2 leading-4",

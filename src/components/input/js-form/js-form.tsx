@@ -2,11 +2,11 @@
 
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types";
-import { type JSFormContext, JSFormCtx } from "./js-form-context";
-import { createSnapshot } from "./helpers";
-import { useRefOf } from "../../../hooks";
+import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types.js";
+import { type JSFormContext, JSFormCtx } from "./js-form-context.js";
+import { createSnapshot } from "./helpers.js";
 import { getProperty } from "dot-prop";
+import { useRefOf } from "../../../hooks/index.js";
 
 const jsForm = tv({
     variants: {

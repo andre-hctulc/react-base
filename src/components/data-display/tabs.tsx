@@ -1,11 +1,11 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import type { Choice, PropsOf, TVCProps } from "../../types";
-import { Chip } from "./chip";
-import { Icon } from "../icons";
+import type { Choice, PropsOf, TVCProps } from "../../types/index.js";
+import { Chip } from "./chip.js";
+import { Icon } from "../icons/icon.js";
 import clsx from "clsx";
-import { RadioSwitch } from "../input";
+import { RadioSwitch } from "../input/radio-switch.js";
 import type { FC, ReactNode } from "react";
 
 export const tabs = tv({

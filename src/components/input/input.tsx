@@ -1,10 +1,10 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system";
-import type { TVCProps } from "../../types";
+import { withPrefix } from "../../util/system.js";
+import type { TVCProps } from "../../types/index.js";
 import { forwardRef, type ChangeEvent } from "react";
-import type { InputLikeProps } from "./types";
+import type { InputLikeProps } from "./types.js";
 
 const input = tv({
     base: [

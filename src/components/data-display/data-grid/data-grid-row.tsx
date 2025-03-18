@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { DataGridCell, type DataGridCellStyleProps } from "./data-grid-cell";
-import type { DataGridColDef, OnCellClick, OnRowClick } from "./types";
+import { DataGridCell, type DataGridCellStyleProps } from "./data-grid-cell.js";
+import type { DataGridColDef, OnCellClick, OnRowClick } from "./types.js";
 import { getProperty } from "dot-prop";
 
 interface DataGridRowProps<T extends object> extends DataGridCellStyleProps {

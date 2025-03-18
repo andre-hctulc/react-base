@@ -1,10 +1,10 @@
 import { cloneElement, isValidElement, useId, type FC, type ReactNode } from "react";
-import { useJSForm } from "./js-form/js-form-context";
-import { ErrorText, Label } from "../text";
-import type { PartialPropsOf, TVCProps } from "../../types";
-import { HelperText } from "./helper-text";
-import type { JSFormContext, JSForm } from "./js-form";
+import { useJSForm } from "./js-form/js-form-context.js";
+import type { PartialPropsOf, TVCProps } from "../../types/index.js";
+import { HelperText } from "./helper-text.js";
 import { tv } from "tailwind-variants";
+import { Label } from "../text/label.js";
+import { ErrorText } from "../text/error-text.js";
 
 const formControl = tv({
     base: "flex",

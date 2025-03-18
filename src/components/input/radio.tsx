@@ -2,9 +2,9 @@
 
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { InputLikeProps } from "./types";
-import type { Choice, StyleProps } from "../../types";
-import { HiddenInput } from "./hidden-input";
+import type { InputLikeProps } from "./types.js";
+import type { Choice, StyleProps } from "../../types/index.js";
+import { HiddenInput } from "./hidden-input.js";
 
 const radio = tv({
     base: "",

@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
-import type { PropsOf } from "../../types";
-import { Card } from "../containers";
-import type { RadioRenderParams } from "./radio";
+import type { PropsOf } from "../../types/index.js";
+import { Card } from "../containers/card.js";
+import type { RadioRenderParams } from "./radio.js";
 
 const radioCard = tv({
     base: "transition border-[1.5px]",

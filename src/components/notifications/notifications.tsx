@@ -2,15 +2,15 @@
 
 import React from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf } from "../../types";
-import { useIsHydrated } from "../../hooks";
+import type { PropsOf } from "../../types/index.js";
 import { createPortal } from "react-dom";
 import clsx from "clsx";
-import { Fade } from "../transitions/fade";
-import { InfoCircleIcon } from "../icons/info-circle";
-import { CheckCircleIcon } from "../icons/check-cirlce";
-import { ExclamationMarkIcon } from "../icons/exclamation-mark";
-import { QuestionCircleIcon } from "../icons/question-circle";
+import { Fade } from "../transitions/fade.js";
+import { InfoCircleIcon } from "../icons/info-circle.js";
+import { CheckCircleIcon } from "../icons/check-circle.js";
+import { ExclamationMarkIcon } from "../icons/exclamation-mark.js";
+import { QuestionCircleIcon } from "../icons/question-circle.js";
+import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
 
 const DEFAULT_DURATION: number = 3000;
 

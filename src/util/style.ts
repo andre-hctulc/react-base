@@ -1,4 +1,4 @@
-import type { ThemeColorSet } from "../types";
+import type { ThemeColorSet } from "../types/index.js";
 
 export function hideScrollbar(element: HTMLElement) {
     element.style.overflow = "scroll"; // Ensure it's scrollable

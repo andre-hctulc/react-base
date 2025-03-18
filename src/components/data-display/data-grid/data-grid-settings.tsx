@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Card, CardBody } from "../../containers";
-import { Popover } from "../../dialog/popover";
-import { IconButton, Select, type SelectOption } from "../../input";
-import { GearIcon } from "../../icons/gear";
-import { Subtitle } from "../../text";
-import type { DataGridColDef } from "./types";
+import { Card, CardBody } from "../../containers/card.js";
+import { Popover } from "../../dialog/popover.js";
+import { GearIcon } from "../../icons/gear.js";
+import { Subtitle } from "../../text/subtitle.js";
+import type { DataGridColDef } from "./types.js";
+import { Select, type SelectOption } from "../../input/select.js";
+import { IconButton } from "../../input/icon-button.js";
 
 interface DataGridSettingsProps {
     icon?: React.ReactNode;

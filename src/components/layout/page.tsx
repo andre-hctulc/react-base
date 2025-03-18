@@ -1,11 +1,11 @@
 import React from "react";
-import { withPrefix } from "../../util/system";
+import { withPrefix } from "../../util/system.js";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { StyleProps } from "../../types";
-import { Skeleton } from "../data-display";
-import { PageContent } from "./page-content";
-import type { Root } from "./root";
-import { Spinner } from "../data-display/spinner";
+import type { StyleProps } from "../../types/index.js";
+import { Skeleton } from "../data-display/skeleton.js";
+import { PageContent } from "./page-content.js";
+import type { Root } from "./root.js";
+import { Spinner } from "../data-display/spinner.js";
 
 const page = tv({
     base: "box-border w-full min-h-0 ",

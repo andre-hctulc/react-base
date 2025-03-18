@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps, StyleProps } from "../../types";
-import { withPrefix } from "../../util/system";
+import type { TVCProps, StyleProps } from "../../types/index.js";
+import { withPrefix } from "../../util/system.js";
 import React from "react";
 
 const stat = tv({

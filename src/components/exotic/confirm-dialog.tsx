@@ -1,13 +1,13 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types";
-import { Dialog } from "../dialog/dialog";
-import { DialogHeader } from "../dialog/dialog-header";
-import { DialogBody } from "../dialog/dialog-body";
-import { DialogFooter } from "../dialog/dialog-footer";
+import type { PropsOf, TVCProps } from "../../types/index.js";
+import { Dialog } from "../dialog/dialog.js";
+import { DialogHeader } from "../dialog/dialog-header.js";
+import { DialogBody } from "../dialog/dialog-body.js";
+import { DialogFooter } from "../dialog/dialog-footer.js";
 import React from "react";
-import { CancelConfirm, type CancelButton, type ConfirmButton } from "./dialog-actions";
+import { CancelConfirm, type CancelButton, type ConfirmButton } from "./dialog-actions.js";
 
 interface ConfirmOptions {
     /**

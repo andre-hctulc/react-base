@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import type { JSFormSnapshot } from "./types";
-import type { JSForm } from "./js-form";
+import type { JSFormSnapshot } from "./types.js";
+import type { JSForm } from "./js-form.js";
 
 export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T> {
     reset: () => void;

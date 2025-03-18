@@ -1,6 +1,6 @@
-import type { PropsOf } from "../../types";
-import { Toolbar } from "../containers";
-import { Button } from "../input";
+import type { PropsOf } from "../../types/index.js";
+import { Toolbar } from "../containers/toolbar.js";
+import { Button } from "../input/button.js";
 
 interface CancelConfirmProps {
     className?: string;
