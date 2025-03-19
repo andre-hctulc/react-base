@@ -21,24 +21,14 @@ const iconButton = tv({
     },
 });
 
-interface IconButtonProps extends Omit<PropsOf<typeof Button>, "icon"> {}
+export interface IconButtonProps extends Omit<PropsOf<typeof Button>, "icon"> {}
 
-export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-    ({ children, className, loading, disabled, size, ...props }, ref) => {
-        return (
-            <Button
-                color="neutral"
-                variant="text"
-                className={iconButton({ className, size })}
-                disabled={loading || disabled}
-                ref={ref}
-                size={size}
-                {...props}
-            >
-                {loading ? <Spinner color="inherit" size="inherit" /> : children}
-            </Button>
-        );
-    }
-);
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({ children, className, loading, disabled, size, ...props }, ref) => {
+    return (
+        <Button color="neutral" variant="text" className={iconButton({ className, size })} disabled={loading || disabled} ref={ref} size={size} {...props}>
+            {loading ? <Spinner color="inherit" size="inherit" /> : children}
+        </Button>
+    );
+});
 
 IconButton.displayName = withPrefix("IconButton");
