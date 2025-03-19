@@ -8,9 +8,22 @@ const meta = {
     title: "dialog/popover",
     component: Popover,
     parameters: {
-        //layout: "centered",
+        layout: "centered",
     },
-    argTypes: { open: { control: "boolean" } },
+    argTypes: {
+        open: { control: "boolean" },
+        // TODO position
+        // remove from ui
+        style: { table: { disable: true } },
+        anchor: { table: { disable: true } },
+        className: { table: { disable: true } },
+        children: { table: { disable: true } },
+        frameMargin: { table: { disable: true } },
+        onClose: { table: { disable: true } },
+        zIndex: { table: { disable: true } },
+        portal: { table: { disable: true } },
+    },
+    args: { className: "bg-red" },
 } satisfies Meta<typeof Popover>;
 
 export default meta;
@@ -23,12 +36,10 @@ export const Default: Story = {
     render: args => (
         <>
             {/* // ? TODO how to set an anchor */}
-            <IconButton>
+            <IconButton variant="filled">
                 <InfoCircleIcon />
             </IconButton>
-            <Popover open={args.open} anchor={args.anchor}>
-                popover content
-            </Popover>
+            <Popover {...args}>popover content</Popover>
         </>
     ),
     args: { anchor: undefined, open: true },

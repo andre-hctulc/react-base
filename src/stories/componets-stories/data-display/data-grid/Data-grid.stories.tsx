@@ -8,7 +8,25 @@ const meta = {
     parameters: {
         layout: "centered",
     },
-    argTypes: {},
+    argTypes: {
+        // remove from ui
+        style: { table: { disable: true } },
+        className: { table: { disable: true } },
+        rowId: { table: { disable: true } },
+        loading: { table: { disable: true } },
+        onRowClick: { table: { disable: true } },
+        onCellClick: { table: { disable: true } },
+        onSelectionChange: { table: { disable: true } },
+        rowHeight: { table: { disable: true } },
+        headerRowHeight: { table: { disable: true } },
+        components: { table: { disable: true } },
+        rowActionCellPopover: { table: { disable: true } },
+        rowActionCell: { table: { disable: true } },
+        settings: { table: { disable: true } },
+        defaultHideCols: { table: { disable: true } },
+        storage: { table: { disable: true } },
+        baseColDef: { table: { disable: true } },
+    },
 } satisfies Meta<typeof DataGrid>;
 
 export default meta;
@@ -26,6 +44,7 @@ const data: { id: string; text: string; value: number }[] = [
 ];
 
 export const Default: Story = {
+    render: args => <DataGrid {...args} />,
     args: {
         cols: [
             { label: "ID", path: "id" },

@@ -8,7 +8,11 @@ const meta = {
     parameters: {
         layout: "centered",
     },
-    argTypes: {},
+    argTypes: {
+        // remove from ui
+        style: { table: { disable: true } },
+        className: { table: { disable: true } },
+    },
 } satisfies Meta<typeof Spinner>;
 
 export default meta;

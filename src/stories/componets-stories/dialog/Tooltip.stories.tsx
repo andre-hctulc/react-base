@@ -8,7 +8,7 @@ const meta = {
     title: "dialog/tooltip",
     component: Tooltip,
     parameters: {
-        //layout: "centered",
+        layout: "centered",
     },
     argTypes: {},
 } satisfies Meta<typeof Tooltip>;
