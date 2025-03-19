@@ -36,7 +36,7 @@ type Story = StoryObj<typeof meta>;
 const items: ListItem[] = Array.from({ length: 10 }, (_, i) => ({ key: (i + 1).toString(), label: `Item${i + 1}` }));
 
 export const Default: Story = {
-    render: args => <List items={items} />,
+    render: args => <List {...args} />,
     args: { items },
 };
 // ---- STORIES ----
