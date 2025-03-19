@@ -14,6 +14,5 @@
         "outDir": "dist",
         "declaration": true
     },
-    "include": ["src/**/*"],
-    "exclude": ["demo", "**/json-editor", "src/stories"]
+    "include": ["src/**/*"]
 }

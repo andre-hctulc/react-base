@@ -12,17 +12,17 @@
     },
     "repository": "https://github.com/andre-hctulc/react-base.git",
     "scripts": {
-        "tc": "tsc --noEmit",
-        "tc:watch": "tsc --watch --noEmit",
+        "tc": "tsc --noEmit -p tsconfig.build.json",
+        "tc:watch": "tsc --watch --noEmit -p tsconfig.build.json",
         "prebuild": "rm -rf dist",
-        "build": "tsc && copyfiles -u 1 src/**/*.css dist/",
+        "build": "tsc -p tsconfig.build.json && copyfiles -u 1 src/**/*.css dist/",
         "lint": "npx eslint src",
         "demo": "npx serve -s ./demo-build -p 3065",
         "demo:prepare": "node --loader ts-node/esm scripts/build-comp-demos.ts",
         "create-safelist": "tsx scripts/safelist-gen.ts",
         "storybook": "storybook dev -p 6006",
         "storybook:build": "storybook build",
-        "build-storybook": "storybook build"
+        "storybook:tc": "tsc --noEmit"
     },
     "dependencies": {
         "@edgeshiftlabs/util": "^0.1.0",
