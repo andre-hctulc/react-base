@@ -8,6 +8,16 @@ const meta = {
     parameters: {
         layout: "centered",
     },
+    argTypes: {
+        children: { control: "text", name: "Title" },
+        // remove from ui
+        style: { table: { disable: true } },
+        className: { table: { disable: true } },
+        as: { table: { disable: true } },
+        icon: { table: { disable: true } },
+        iconProps: { table: { disable: true } },
+        content: { table: { disable: true } },
+    },
 } satisfies Meta<typeof Title>;
 
 export default meta;
@@ -17,6 +27,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    args: { content: "I am a Title", children: "children" },
+    args: { children: "I am a Title" },
 };
 // ---- STORIES ----
