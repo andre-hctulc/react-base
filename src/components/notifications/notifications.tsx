@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { tv } from "tailwind-variants";
 import type { PropsOf } from "../../types/index.js";
 import { createPortal } from "react-dom";
@@ -11,13 +10,16 @@ import { CheckCircleIcon } from "../icons/check-circle.js";
 import { ExclamationMarkIcon } from "../icons/exclamation-mark.js";
 import { QuestionCircleIcon } from "../icons/question-circle.js";
 import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { Icon } from "../icons/icon.js";
 
 const DEFAULT_DURATION: number = 3000;
 
 export type NotificationPosition = "top_left" | "top_center" | "top_right" | "bottom_right" | "bottom_left";
 
 export interface Notification {
-    message: React.ReactNode;
+    message: ReactNode;
+    title?: ReactNode;
     severity?: "info" | "success" | "warning" | "error";
     id: string;
     /**
@@ -39,10 +41,10 @@ interface NotificationsContext {
     removeNotification: (notificationId: string) => void;
 }
 
-const NotificationsContext = React.createContext<NotificationsContext | null>(null);
+const NotificationsContext = createContext<NotificationsContext | null>(null);
 
 export function useNotifications() {
-    const context = React.useContext(NotificationsContext);
+    const context = useContext(NotificationsContext);
     if (!context) {
         throw new Error("`useNotifications` must be used within a `NotificationsProvider`");
     }
@@ -54,9 +56,9 @@ interface NotificationsProviderProps {
 }
 
 export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ children }) => {
-    const [notifications, setNotifications] = React.useState<Notification[]>([]);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
     const isMounted = useIsHydrated();
-    const { top_center, top_right, bottom_left, bottom_right, top_left } = React.useMemo(() => {
+    const { top_center, top_right, bottom_left, bottom_right, top_left } = useMemo(() => {
         const result = {
             top_center: [] as Notification[],
             top_right: [] as Notification[],
@@ -76,11 +78,11 @@ export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ ch
         return result;
     }, [notifications]);
 
-    const removeNotification = React.useCallback((notificationId: string) => {
+    const removeNotification = useCallback((notificationId: string) => {
         setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
     }, []);
 
-    const notify = React.useCallback((notification: NotificationInput) => {
+    const notify = useCallback((notification: NotificationInput) => {
         // insert id if not provided
         if (notification.id === undefined) notification.id = Date.now() + "";
         const notificationWithId: Notification = notification as Notification;
@@ -202,7 +204,7 @@ interface NotificationItemProps extends PropsOf<"li"> {
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ className, notification, ...props }) => {
-    const icon = React.useMemo(() => {
+    const icon = useMemo(() => {
         if (notification.icon) return notification.icon;
         else if (!notification.severity || notification.severity === "info") return <InfoCircleIcon />;
         else if (notification.severity === "success") return <CheckCircleIcon />;
@@ -210,13 +212,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ className, notifica
         else if (notification.severity === "warning") return <QuestionCircleIcon />;
         return <QuestionCircleIcon />;
     }, [notification.severity]);
+    const MainComp = typeof notification.message === "string" ? "p" : "div";
 
     return (
         <Fade show unmount>
             <li {...props} className={clsx("bg-paper", className)}>
                 <div className={notificationBox({ className, severity: notification.severity })}>
-                    <span className="text-base mr-3 mt-1">{icon}</span>
-                    <div className="grow">{notification.message}</div>
+                    <Icon className="mr-3 mt-1">{icon}</Icon>
+                    {notification.title && <h3 className="text-lg my-0.5">{notification.title}</h3>}
+                    <MainComp className="grow">{notification.message}</MainComp>
                 </div>
             </li>
         </Fade>

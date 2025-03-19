@@ -56,7 +56,10 @@ const dialogPanel = tv({
     },
 });
 
-export interface DialogProps extends VariantProps<typeof dialog>, VariantProps<typeof dialogPanel>, StyleProps {
+export interface DialogProps
+    extends VariantProps<typeof dialog>,
+        VariantProps<typeof dialogPanel>,
+        StyleProps {
     open: boolean;
     onClose?: () => void;
     children?: React.ReactNode;
@@ -68,7 +71,20 @@ export interface DialogProps extends VariantProps<typeof dialog>, VariantProps<t
     closable?: boolean;
 }
 
-export const Dialog: React.FC<DialogProps> = ({ open, children, className, loading, variant, closable, onClose, width, height, shadow, style }) => {
+// TODO loading
+export const Dialog: React.FC<DialogProps> = ({
+    open,
+    children,
+    className,
+    loading,
+    variant,
+    closable,
+    onClose,
+    width,
+    height,
+    shadow,
+    style,
+}) => {
     const mounted = useIsHydrated();
     const cl = closable !== false;
 
@@ -88,7 +104,11 @@ export const Dialog: React.FC<DialogProps> = ({ open, children, className, loadi
                 data-open={open}
                 className={clsx(
                     "fixed inset-0 z-40 w-screen overflow-y-auto transition-all duration-500 ease-out",
-                    variant == "transparent" ? "" : open ? "data-[open=true]:bg-black/10" : "data-[open=false]:bg-black/0"
+                    variant == "transparent"
+                        ? ""
+                        : open
+                        ? "data-[open=true]:bg-black/10"
+                        : "data-[open=false]:bg-black/0"
                 )}
             >
                 <div className="flex h-screen items-center justify-center p-4 box-border">

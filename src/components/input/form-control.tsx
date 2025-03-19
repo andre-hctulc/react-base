@@ -1,4 +1,4 @@
-import { cloneElement, isValidElement, useId, type FC, type ReactNode } from "react";
+import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
 import { useJSForm } from "./js-form/js-form-context.js";
 import type { PartialPropsOf, TVCProps } from "../../types/index.js";
 import { HelperText } from "./helper-text.js";
@@ -102,7 +102,7 @@ export const FormControl: FC<FormControlProps> = ({
     const _controlled = controlled ?? formCtx?.controlled;
     const id = useId();
     const jsFormValue = hasName ? formCtx?.default(name) : undefined;
-    const childElement = isValidElement(children) ? children : null;
+    const childElement: ReactElement<any> | null = isValidElement(children) ? children : null;
 
     // input props
     const inpProps: any = {};

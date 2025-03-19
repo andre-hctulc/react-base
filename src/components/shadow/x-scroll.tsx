@@ -8,7 +8,7 @@ interface XScrollProps {
      * The container element that will be scrolled horizontally.
      * Must forward the ref.
      */
-    children: React.ReactElement;
+    children: React.ReactElement<any>;
     /**
      * Hide the scrollbar of the container?
      */

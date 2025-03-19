@@ -6,8 +6,8 @@ import { Dialog } from "../dialog/dialog.js";
 import { DialogHeader } from "../dialog/dialog-header.js";
 import { DialogBody } from "../dialog/dialog-body.js";
 import { DialogFooter } from "../dialog/dialog-footer.js";
-import React from "react";
 import { CancelConfirm, type CancelButton, type ConfirmButton } from "./dialog-actions.js";
+import { useCallback, useRef, useState, type ReactNode } from "react";
 
 interface ConfirmOptions {
     /**
@@ -21,19 +21,18 @@ interface ConfirmOptions {
 }
 
 interface Confirmation {
-    confirm: (message: React.ReactNode, confirmOptions: ConfirmOptions) => Promise<boolean>;
+    confirm: (message: ReactNode, confirmOptions: ConfirmOptions) => Promise<boolean>;
     /**
      * Must be rendered.
      */
-    dialog: React.ReactNode;
+    dialog: ReactNode;
 }
 
 export function useConfirmDialog(): Confirmation {
-    const [open, setOpen] = React.useState(false);
-    const [params, setParams] = React.useState<{ message: React.ReactNode; options: ConfirmOptions } | null>(
-        null
-    );
-    const closeListener = React.useRef<(confirmed: boolean) => void>();
+    const [open, setOpen] = useState(false);
+    const [params, setParams] = useState<{ message: React.ReactNode; options: ConfirmOptions } | null>(null);
+    const closeListener = useRef<(confirmed: boolean) => void>(undefined);
+
     const dialog = (
         <ConfirmDialog
             danger={params?.options.danger}
@@ -52,7 +51,7 @@ export function useConfirmDialog(): Confirmation {
         </ConfirmDialog>
     );
 
-    const confirm = React.useCallback<Confirmation["confirm"]>(async (message, options) => {
+    const confirm = useCallback<Confirmation["confirm"]>(async (message, options) => {
         setParams({ message, options });
         setOpen(true);
 

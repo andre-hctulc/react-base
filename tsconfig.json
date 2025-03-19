@@ -15,5 +15,5 @@
         "declaration": true
     },
     "include": ["src/**/*"],
-    "exclude": ["demo", "**/json-editor"]
+    "exclude": ["demo", "**/json-editor", "src/stories"]
 }
