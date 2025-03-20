@@ -22,7 +22,7 @@ docs
 
 #### Storybook ####
 
-vitest.config.js
+vitest.*
 .storybook
 storybook-static
 *storybook.log

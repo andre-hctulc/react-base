@@ -69,3 +69,7 @@ We use [Storybook](https://storybook.js.org/docs) for **documentation** and **te
 We use icons from [here](https://phosphoricons.com/?q=%22x%22&weight=%22bold%22). Only Icons that are used internally are included in _components/icons_.
 
 All icon svg should use `fill="currentColor"`
+
+## Build
+
+We build with typescript. See tsconfig.build.json and build script.
