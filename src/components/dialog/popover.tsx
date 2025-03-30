@@ -7,7 +7,7 @@ import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
 import { Overlay } from "../layout/overlay.js";
 import type { Falsy } from "@edgeshiftlabs/util";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 
 const popover = tv({
     base: "absolute",
@@ -94,41 +94,45 @@ const getOffset = (position: Placement, gap: number) => {
  * The popover is portaled to the body
  */
 export const Popover: React.FC<PopoverProps> = (props) => {
-    const popperElement = useRef<HTMLDivElement | null>(null);
+    const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
     const pos = props.position ?? "bottom";
     const [isPositioned, setIsPositioned] = useState(false); // Track whether the popover is positioned
-    const modifiers: (Modifier<unknown, object> | Falsy)[] = [
-        {
-            name: "offset",
-            options: {
-                offset: getOffset(pos, props.gap ?? 4) as [number, number], // Adjust the offset of the popover
+    const modifiers: Modifier<unknown, object>[] = useMemo(() => {
+        const mods: (Modifier<unknown, object> | Falsy)[] = [
+            {
+                name: "offset",
+                options: {
+                    offset: getOffset(pos, props.gap ?? 4) as [number, number], // Adjust the offset of the popover
+                },
             },
-        },
-        {
-            name: "preventOverflow",
-            options: {
-                boundary: document.body,
-                padding: props.frameMargin ?? 4, // Adds gap from the window border
+            {
+                name: "preventOverflow",
+                options: {
+                    boundary: document.body,
+                    padding: props.frameMargin ?? 4, // Adds gap from the window border
+                },
             },
-        },
-        props.width === "anchor" && {
-            name: "sameWidth",
-            enabled: true,
-            phase: "beforeWrite",
-            requires: ["computeStyles"],
-            fn({ state }) {
-                state.styles.popper.width = `${state.rects.reference.width}px`;
+            props.width === "anchor" && {
+                name: "sameWidth",
+                enabled: true,
+                phase: "beforeWrite",
+                requires: ["computeStyles"],
+                fn({ state }) {
+                    state.styles.popper.width = `${state.rects.reference.width}px`;
+                },
             },
-        },
-        // {
-        //     name: "flip",
-        //     options: {
-        //         boundary: document.body,
-        //         fallbackPlacements: ["top", "right", "left", "bottom"], // Define fallback placements if flipping is needed
-        //     },
-        // },
-    ];
-    const { styles, attributes } = usePopper(props.anchor, popperElement.current, {
+            // {
+            //     name: "flip",
+            //     options: {
+            //         boundary: document.body,
+            //         fallbackPlacements: ["top", "right", "left", "bottom"], // Define fallback placements if flipping is needed
+            //     },
+            // },
+        ];
+
+        return mods.filter(Boolean) as Modifier<unknown, object>[];
+    }, [pos, props.gap, props.frameMargin, props.width]);
+    const { styles, attributes } = usePopper(props.anchor, popperElement, {
         placement: pos,
         modifiers: modifiers.filter(Boolean) as Partial<Modifier<unknown, object>>[],
         strategy: props.strategy, // default is "absolute"
@@ -162,7 +166,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
                 leaveTo="opacity-0 "
             >
                 <div
-                    ref={popperElement}
+                    ref={setPopperElement}
                     style={{ ...styles.popper, ...props.style }}
                     onClick={(e) => {
                         e.stopPropagation();
