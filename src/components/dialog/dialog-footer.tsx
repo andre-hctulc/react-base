@@ -19,6 +19,11 @@ const dialogFooter = tv({
 
 export interface DialogFooterProps extends TVCProps<typeof dialogFooter, "div"> {}
 
+/**
+ * The footer of a dialog.
+ * 
+ * Use it with `Dialog` or `Popover`.
+ */
 export const DialogFooter: React.FC<DialogFooterProps> = ({ children, className, variant, ...props }) => {
     return (
         <div className={dialogFooter({ className, variant })} {...props}>

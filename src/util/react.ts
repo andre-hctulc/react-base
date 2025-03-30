@@ -29,7 +29,7 @@ export function setRef<T = any>(
     }
 }
 
-export function hasChildren(children: ReactNode) {
+export function nodeIsEmpty(children: ReactNode) {
     if (!children) return false;
     return Children.count(children) !== 0;
 }

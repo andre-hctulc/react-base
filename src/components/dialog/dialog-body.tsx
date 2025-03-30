@@ -26,11 +26,16 @@ const dialogBody = tv({
 
 export interface DialogBodyProps extends TVCProps<typeof dialogBody, "div"> {}
 
+/**
+ * The body of a dialog.
+ * 
+ * Use it with `Dialog` or `Popover`.
+ */
 export const DialogBody: React.FC<DialogBodyProps> = ({ children, className, flex, ...props }) => {
     const [scrolling, setScrolling] = React.useState(false);
     const root = React.useRef<HTMLDivElement>(null);
 
-    useWindowEvent("resize", e => {
+    useWindowEvent("resize", (e) => {
         checkScrolling();
     });
 
@@ -44,7 +49,7 @@ export const DialogBody: React.FC<DialogBodyProps> = ({ children, className, fle
             ref={root}
             className={dialogBody({ className, flex, scrolling })}
             {...props}
-            onScroll={e => {
+            onScroll={(e) => {
                 checkScrolling();
                 props.onScroll?.(e);
             }}

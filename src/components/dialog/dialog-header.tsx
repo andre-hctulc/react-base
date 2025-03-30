@@ -23,7 +23,22 @@ export interface DialogHeaderProps extends Omit<TVCProps<typeof dialogHeader, "d
     actions?: ReactNode;
 }
 
-export const DialogHeader: FC<DialogHeaderProps> = ({ title, className, onClose, closeIcon, icon, iconProps, titleProps, actions, ...props }) => {
+/**
+ * The header of a dialog.
+ *
+ * Use it with `Dialog` or `Popover`.
+ */
+export const DialogHeader: FC<DialogHeaderProps> = ({
+    title,
+    className,
+    onClose,
+    closeIcon,
+    icon,
+    iconProps,
+    titleProps,
+    actions,
+    ...props
+}) => {
     return (
         <div className={dialogHeader({ className })} style={props.style}>
             {icon && (

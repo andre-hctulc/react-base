@@ -1,8 +1,5 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
-/**
- * Use `usePersistentState.memoryStorage` to use an in-memory storage.
- */
 export function usePersistentState<T>(
     key: string,
     defaultValue?: T,
@@ -17,43 +14,26 @@ export function usePersistentState<T>(
         }
         return defaultValue as T;
     };
+    const [state, setState] = useState<T>(getStoredValue);
 
-    const [state, setState] = React.useState<T>(getStoredValue);
-
-    React.useEffect(() => {
+    useEffect(() => {
         if (!storage) storage = localStorage;
         storage.setItem(key, JSON.stringify(state));
     }, [key, state, storage]);
 
+    useEffect(() => {
+        const handleStorage = (event: StorageEvent) => {
+            if (event.storageArea === storage && event.key === key) {
+                setState(event.newValue ? JSON.parse(event.newValue) : undefined);
+            }
+        };
+
+        window.addEventListener("storage", handleStorage);
+
+        return () => {
+            window.removeEventListener("storage", handleStorage);
+        };
+    }, [key, storage]);
+
     return [state, setState];
 }
-
-class MemoryStorage implements Storage {
-    private data: Record<string, string> = {};
-
-    get length(): number {
-        return Object.keys(this.data).length;
-    }
-
-    clear(): void {
-        this.data = {};
-    }
-
-    getItem(key: string): string | null {
-        return this.data[key] ?? null;
-    }
-
-    key(index: number): string | null {
-        return Object.keys(this.data)[index] ?? null;
-    }
-
-    removeItem(key: string): void {
-        delete this.data[key];
-    }
-
-    setItem(key: string, value: string): void {
-        this.data[key] = value;
-    }
-}
-
-usePersistentState.memoryStorage = new MemoryStorage();
