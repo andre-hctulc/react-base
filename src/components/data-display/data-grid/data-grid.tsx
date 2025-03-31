@@ -228,7 +228,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     useEffect(() => {
         const newRowIds = new Set(props.rows.map(getRowId.current));
 
-        // Unselect removed rows
+        // Deselect removed rows
         const newSelection = selection.filter((row) => newRowIds.has(getRowId.current(row)));
 
         // If selection changed (rows removed from selection), update

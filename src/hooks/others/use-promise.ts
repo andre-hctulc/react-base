@@ -5,10 +5,19 @@ interface PromiseListeners {
     onSuccess?: (result: any) => void;
 }
 
+export interface UsePromiseResult<T = any, E = Error> {
+    data: T | undefined;
+    isPending: boolean;
+    resolved: boolean;
+    error: E | null;
+    promise: (prom: Promise<T>) => void;
+    isError: boolean;
+}
+
 /**
- * A hook to handle promises.
+ * A hook to handle promises. The hook always represents the state of the latest promise.
  */
-export function usePromise<T = any, E = Error>(listeners?: PromiseListeners) {
+export function usePromise<T = any, E = Error>(listeners?: PromiseListeners): UsePromiseResult<T, E> {
     const [data, setData] = React.useState<T>();
     const [isPending, setIsPending] = React.useState(false);
     const [resolved, setResolved] = React.useState(false);
@@ -55,5 +64,12 @@ export function usePromise<T = any, E = Error>(listeners?: PromiseListeners) {
         };
     }, [currentPromise]);
 
-    return { data, isPending, resolved, error, promise, isError: error !== null };
+    return {
+        data,
+        isPending,
+        resolved,
+        error,
+        promise: promise,
+        isError: error !== null,
+    };
 }

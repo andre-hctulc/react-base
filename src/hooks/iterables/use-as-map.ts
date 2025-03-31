@@ -1,30 +1,14 @@
 import React from "react";
 import { useRefOf } from "../others/use-ref-of.js";
 
-class AsMap<K, V> extends Map<K, V> {
-    mapEntries<U>(callbackfn: (key: K, value: V, index: number, array: [K, V][]) => U): U[] {
-        return (
-            Array.from(this.entries()).map(([key, value], index, array) =>
-                callbackfn(key, value, index, array)
-            ) || []
-        );
-    }
-
-    mapKeys<U>(callbackfn: (key: K, value: V, index: number, array: K[]) => U): U[] {
-        return Array.from(this.keys()).map((key, index, array) =>
-            callbackfn(key, this.get(key)!, index, array)
-        );
-    }
-}
-
 /**
  * Use `map.mapKeys` or `map.mapEntries` to map over the keys or entries of the map.
  */
-export function useAsMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): AsMap<K, V> {
+export function useAsMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): Map<K, V> {
     const keyRef = useRefOf(key);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const map = React.useMemo(() => {
-        return new AsMap(Array.from(iterable).map((value) => [keyRef.current(value), value] as [K, V]));
+        return new Map(Array.from(iterable).map((value) => [keyRef.current(value), value] as [K, V]));
     }, [iterable]);
     return map;
 }
@@ -32,11 +16,11 @@ export function useAsMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): AsM
 /**
  * Use `map.mapKeys` or `map.mapEntries` to map over the keys or entries of the map.
  */
-export function useAsArrayMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): AsMap<K, V[]> {
+export function useAsArrayMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): Map<K, V[]> {
     const keyRef = useRefOf(key);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const map = React.useMemo(() => {
-        const map = new AsMap<K, V[]>();
+        const map = new Map<K, V[]>();
         for (const value of iterable) {
             const k = keyRef.current(value);
             if (!map.has(k)) map.set(k, []);

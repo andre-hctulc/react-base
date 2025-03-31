@@ -4,25 +4,34 @@ import React from "react";
 import type { TVCProps, StyleProps } from "../../types/index.js";
 
 const helperText = tv({
-    base: "text-sm text-t2 leading-4",
+    base: "",
     variants: {
         italic: {
             true: "italic",
         },
+        variant: {
+            default: "text-sm text-t2 leading-4",
+            secondary: "text-xs text-t2 leading-4",
+        },
     },
-    defaultVariants: {},
+    defaultVariants: {
+        variant: "default",
+    },
 });
 
 interface HelperTextProps extends Omit<TVCProps<typeof helperText, "p">, "className">, StyleProps {
     children?: React.ReactNode;
+    as?: any;
 }
 
 export const HelperText = React.forwardRef<HTMLParagraphElement, HelperTextProps>(
-    ({ children, className, italic, ...props }, ref) => {
+    ({ children, className, italic, variant, as, ...props }, ref) => {
+        const Comp = as || "p";
+
         return (
-            <p ref={ref} className={helperText({ className, italic })} {...props}>
+            <Comp ref={ref} className={helperText({ className, italic, variant })} {...props}>
                 {children}
-            </p>
+            </Comp>
         );
     }
 );
