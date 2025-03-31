@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 import { withPrefix } from "../../util/system.js";
-import React from "react";
+import React, { type FC } from "react";
 import type { TVCProps } from "../../types/index.js";
 import { collapse } from "@edgeshiftlabs/util";
 import { themeColor } from "../../util/style.js";
@@ -69,68 +69,88 @@ export interface ChipProps extends TVCProps<typeof chip, "span"> {
     as?: any;
 }
 
-export const Chip = React.forwardRef<HTMLElement, ChipProps>(
-    ({ children, color, variant, className, size, hoverEffect, clickable, textSelect, icon, iconPosition, as, thinBorder, interactive, thinText, ...props }, ref) => {
-        const Comp: any = as || "span";
-        const _color = color || "neutral";
-        const _variant = variant || "outlined";
-        const { bgA, bg, border, text, textC } = themeColor(_color);
-        const { bg: hoverBg, bgA: hoverBgA } = themeColor(_color, "hover:");
-        const { bg: activeBg, bgA: activeBgA } = themeColor(_color, "active:");
-        const bgColor = collapse(_variant, {
-            filled: bg,
-            outlined: "",
-            pale: bgA(20),
-            text: "",
-        });
-        const borderColor = collapse(_variant, {
-            filled: "",
-            outlined: border,
-            pale: bgA(20),
-            text: "",
-        });
-        const textColor = collapse(_variant, {
-            filled: textC,
-            outlined: text,
-            pale: text,
-            text: text,
-        });
-        const hoverBgColor = collapse(_variant, {
-            filled: hoverBgA(90),
-            outlined: hoverBgA(10),
-            pale: hoverBgA(30),
-            text: hoverBgA(10),
-        });
-        const activeBgColor = collapse(_variant, {
-            filled: activeBgA(75),
-            outlined: activeBgA(20),
-            pale: activeBgA(20),
-            text: activeBgA(20),
-        });
-        const _clickable = clickable ?? interactive ?? props.onClick;
-        const _hoverEffect = hoverEffect ?? interactive ?? props.onClick;
+export const Chip: FC<ChipProps> = ({
+    children,
+    color,
+    variant,
+    className,
+    size,
+    hoverEffect,
+    clickable,
+    textSelect,
+    icon,
+    iconPosition,
+    as,
+    thinBorder,
+    interactive,
+    thinText,
+    ref,
+    ...props
+}) => {
+    const Comp: any = as || "span";
+    const _color = color || "neutral";
+    const _variant = variant || "outlined";
+    const { bgA, bg, border, text, textC } = themeColor(_color);
+    const { bg: hoverBg, bgA: hoverBgA } = themeColor(_color, "hover:");
+    const { bg: activeBg, bgA: activeBgA } = themeColor(_color, "active:");
+    const bgColor = collapse(_variant, {
+        filled: bg,
+        outlined: "",
+        pale: bgA(20),
+        text: "",
+    });
+    const borderColor = collapse(_variant, {
+        filled: "",
+        outlined: border,
+        pale: bgA(20),
+        text: "",
+    });
+    const textColor = collapse(_variant, {
+        filled: textC,
+        outlined: text,
+        pale: text,
+        text: text,
+    });
+    const hoverBgColor = collapse(_variant, {
+        filled: hoverBgA(90),
+        outlined: hoverBgA(10),
+        pale: hoverBgA(30),
+        text: hoverBgA(10),
+    });
+    const activeBgColor = collapse(_variant, {
+        filled: activeBgA(75),
+        outlined: activeBgA(20),
+        pale: activeBgA(20),
+        text: activeBgA(20),
+    });
+    const _clickable = clickable ?? interactive ?? props.onClick;
+    const _hoverEffect = hoverEffect ?? interactive ?? props.onClick;
 
-        return (
-            <Comp
-                ref={ref}
-                data-clickable={clickable}
-                className={chip({
-                    color,
-                    variant,
-                    size,
-                    className: [bgColor, borderColor, textColor, _hoverEffect && hoverBgColor, _clickable && [activeBgColor, "cursor-pointer"], className],
-                    textSelect,
-                    thinBorder,
-                    thinText,
-                })}
-                {...props}
-            >
-                {icon && iconPosition === "left" && icon}
-                {children}
-                {icon && iconPosition !== "left" && icon}
-            </Comp>
-        );
-    }
-);
-
-Chip.displayName = withPrefix("Chip");
+    return (
+        <Comp
+            ref={ref}
+            data-clickable={clickable}
+            className={chip({
+                color,
+                variant,
+                size,
+                className: [
+                    bgColor,
+                    borderColor,
+                    textColor,
+                    _hoverEffect && hoverBgColor,
+                    _clickable && [activeBgColor, "cursor-pointer"],
+                    className,
+                ],
+                textSelect,
+                thinBorder,
+                thinText,
+            })}
+            {...props}
+        >
+            {icon && iconPosition === "left" && icon}
+            {children}
+            {icon && iconPosition !== "left" && icon}
+        </Comp>
+    );
+};

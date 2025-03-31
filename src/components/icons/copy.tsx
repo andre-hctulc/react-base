@@ -1,13 +1,12 @@
-import React from "react";
+import { type FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Icon } from "./icon.js";
-import { withPrefix } from "../../util/system.js";
 
 interface CopyIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 
-export const CopyIcon = React.forwardRef<HTMLElement, CopyIconProps>((props, ref) => {
+export const CopyIcon: FC<CopyIconProps> = (props) => {
     return (
-        <Icon ref={ref} {...props}>
+        <Icon {...props}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -19,6 +18,4 @@ export const CopyIcon = React.forwardRef<HTMLElement, CopyIconProps>((props, ref
             </svg>
         </Icon>
     );
-});
-
-CopyIcon.displayName = withPrefix("CopyIcon");
+};

@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
 import { withPrefix } from "../../util/system.js";
@@ -46,18 +46,28 @@ const flex = tv({
 
 interface FlexProps extends TVCProps<typeof flex, "div"> {}
 
-export const Flex = React.forwardRef<HTMLDivElement, FlexProps>(
-    ({ children, className, direction, align, justify, wrap, grow, noShrink, minH0, ...props }, ref) => {
-        return (
-            <div
-                ref={ref}
-                className={flex({ className, direction, align, noShrink, justify, wrap, grow, minH0 })}
-                {...props}
-            >
-                {children}
-            </div>
-        );
-    }
-);
+export const Flex: FC<FlexProps> = ({
+    children,
+    className,
+    direction,
+    align,
+    justify,
+    wrap,
+    grow,
+    noShrink,
+    minH0,
+    ref,
+    ...props
+}) => {
+    return (
+        <div
+            ref={ref}
+            className={flex({ className, direction, align, noShrink, justify, wrap, grow, minH0 })}
+            {...props}
+        >
+            {children}
+        </div>
+    );
+};
 
 Flex.displayName = withPrefix("Flex");

@@ -1,13 +1,12 @@
-import React from "react";
+import { type FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Icon } from "./icon.js";
-import { withPrefix } from "../../util/system.js";
 
 interface XIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 
-export const XIcon = React.forwardRef<HTMLElement, XIconProps>((props, ref) => {
+export const XIcon: FC<XIconProps> = (props) => {
     return (
-        <Icon ref={ref} {...props}>
+        <Icon {...props}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -19,6 +18,4 @@ export const XIcon = React.forwardRef<HTMLElement, XIconProps>((props, ref) => {
             </svg>
         </Icon>
     );
-});
-
-XIcon.displayName = withPrefix("XIcon");
+};

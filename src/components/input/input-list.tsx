@@ -2,12 +2,10 @@
 
 import clsx from "clsx";
 import React, { useCallback, useMemo, useRef } from "react";
-import type { InputLikeProps, InputValue, InputValueArray } from "./types.js";
+import type { InputLikeProps, InputValueArray, SingleInputValue } from "./types.js";
 import type { Choice, StyleProps } from "../../types/index.js";
 
-type SingleInputValue = Extract<InputValue, any[]>;
-
-type InputListInputProps<T extends InputValue = InputValue> = Pick<
+type InputListInputProps<T extends SingleInputValue = SingleInputValue> = Pick<
     InputLikeProps<T>,
     "readOnly" | "disabled" | "name" | "defaultValue"
 >;

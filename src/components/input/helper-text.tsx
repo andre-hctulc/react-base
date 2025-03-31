@@ -1,6 +1,5 @@
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system.js";
-import React from "react";
+import React, { type FC } from "react";
 import type { TVCProps, StyleProps } from "../../types/index.js";
 
 const helperText = tv({
@@ -24,16 +23,20 @@ interface HelperTextProps extends Omit<TVCProps<typeof helperText, "p">, "classN
     as?: any;
 }
 
-export const HelperText = React.forwardRef<HTMLParagraphElement, HelperTextProps>(
-    ({ children, className, italic, variant, as, ...props }, ref) => {
-        const Comp = as || "p";
+export const HelperText: FC<HelperTextProps> = ({
+    children,
+    className,
+    italic,
+    variant,
+    as,
+    ref,
+    ...props
+}) => {
+    const Comp = as || "p";
 
-        return (
-            <Comp ref={ref} className={helperText({ className, italic, variant })} {...props}>
-                {children}
-            </Comp>
-        );
-    }
-);
-
-HelperText.displayName = withPrefix("HelperText");
+    return (
+        <Comp ref={ref} className={helperText({ className, italic, variant })} {...props}>
+            {children}
+        </Comp>
+    );
+};

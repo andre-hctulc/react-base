@@ -1,13 +1,12 @@
-import React from "react";
+import { type FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Icon } from "./icon.js";
-import { withPrefix } from "../../util/system.js";
 
 interface GearIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 
-export const GearIcon = React.forwardRef<HTMLElement, GearIconProps>((props, ref) => {
+export const GearIcon: FC<GearIconProps> = (props) => {
     return (
-        <Icon ref={ref} {...props}>
+        <Icon {...props}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -19,6 +18,4 @@ export const GearIcon = React.forwardRef<HTMLElement, GearIconProps>((props, ref
             </svg>
         </Icon>
     );
-});
-
-GearIcon.displayName = withPrefix("GearIcon");
+};

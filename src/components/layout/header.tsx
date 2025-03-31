@@ -1,6 +1,5 @@
-import React from "react";
+import React, { type FC, type Ref } from "react";
 import { tv, type VariantProps, type ClassValue } from "tailwind-variants";
-import { withPrefix } from "../../util/system.js";
 
 const header = tv({
     base: "w-full max-w-full box-border shrink-0",
@@ -31,6 +30,7 @@ interface HeaderProps extends VariantProps<typeof header> {
     className?: ClassValue;
     style?: React.CSSProperties;
     as?: any;
+    ref?: Ref<HTMLElement>;
 }
 
 /**
@@ -38,15 +38,11 @@ interface HeaderProps extends VariantProps<typeof header> {
  * - `variant`
  * - `shadow-sm`
  */
-export const Header = React.forwardRef<HTMLDivElement, HeaderProps>(
-    ({ children, variant, className, style, sticky, shadow, as }, ref) => {
-        const Comp = as || "div";
-        return (
-            <Comp ref={ref} className={header({ className, variant, shadow, sticky })} style={style}>
-                {children}
-            </Comp>
-        );
-    }
-);
-
-Header.displayName = withPrefix("Header");
+export const Header: FC<HeaderProps> = ({ children, variant, className, style, sticky, shadow, as, ref }) => {
+    const Comp = as || "div";
+    return (
+        <Comp ref={ref} className={header({ className, variant, shadow, sticky })} style={style}>
+            {children}
+        </Comp>
+    );
+};

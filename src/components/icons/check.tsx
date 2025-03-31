@@ -1,13 +1,13 @@
-import React from "react";
+import React, { type FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Icon } from "./icon.js";
 import { withPrefix } from "../../util/system.js";
 
 interface CheckIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 
-export const CheckIcon = React.forwardRef<HTMLElement, CheckIconProps>((props, ref) => {
+export const CheckIcon: FC<CheckIconProps> = (props) => {
     return (
-        <Icon ref={ref} {...props}>
+        <Icon {...props}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -22,6 +22,4 @@ export const CheckIcon = React.forwardRef<HTMLElement, CheckIconProps>((props, r
             </svg>
         </Icon>
     );
-});
-
-CheckIcon.displayName = withPrefix("CheckIcon");
+};

@@ -1,7 +1,6 @@
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system.js";
 import type { TVCProps } from "../../types/index.js";
-import { forwardRef } from "react";
+import { type FC } from "react";
 
 const label = tv({
     base: "inline-block",
@@ -43,22 +42,29 @@ interface LabelProps extends TVCProps<typeof label, "label"> {
     as?: any;
 }
 
-export const Label = forwardRef<HTMLElement, LabelProps>(
-    ({ children, className, requiredHint, mb, mt, my, as, variant, ...props }, ref) => {
-        const Comp = as || "label";
-        const p = { ...props };
+export const Label: FC<LabelProps> = ({
+    children,
+    className,
+    requiredHint,
+    mb,
+    mt,
+    my,
+    as,
+    variant,
+    ref,
+    ...props
+}) => {
+    const Comp = as || "label";
+    const p = { ...props };
 
-        if (as && as !== "label") {
-            delete p.htmlFor;
-        }
-
-        return (
-            <Comp ref={ref as any} className={label({ className, mb, mt, my, variant })} {...p}>
-                {children}
-                {requiredHint && <span>{" *"}</span>}
-            </Comp>
-        );
+    if (as && as !== "label") {
+        delete p.htmlFor;
     }
-);
 
-Label.displayName = withPrefix("Label");
+    return (
+        <Comp ref={ref as any} className={label({ className, mb, mt, my, variant })} {...p}>
+            {children}
+            {requiredHint && <span>{" *"}</span>}
+        </Comp>
+    );
+};

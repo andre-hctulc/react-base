@@ -1,6 +1,5 @@
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system.js";
-import React from "react";
+import React, { type FC } from "react";
 import type { TVCProps, StyleProps } from "../../types/index.js";
 import { Spinner } from "../data-display/spinner.js";
 import { Icon } from "../icons/icon.js";
@@ -78,79 +77,99 @@ export interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "class
     href?: string;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ children, color, variant, className, size, loading, iconPosition, icon, shape, disabled, shadow, mt, as, href, ...props }, ref) => {
-        const _variant = variant || "filled";
-        const _color = color || "primary";
-        const ico = loading ? <Spinner color="inherit" size="sm" /> : icon;
-        const _disabled = disabled || loading;
-        const Comp = as || (href ? "a" : "button");
-        const p: any = { ...props };
-        const { bgA, bg, border, text, textC } = themeColor(_color);
-        const { bg: hoverBg, bgA: hoverBgA } = themeColor(_color, "hover:");
-        const { bg: activeBg, bgA: activeBgA } = themeColor(_color, "active:");
-        const bgColor = collapse(_variant, {
-            filled: bg,
-            outlined: "",
-            pale: bgA(20),
-            text: "",
-            floating: bg,
-        });
-        const borderColor = collapse(_variant, {
-            filled: "",
-            outlined: border,
-            pale: bgA(20),
-            text: "",
-            floating: bg,
-        });
-        const textColor = collapse(_variant, {
-            filled: textC,
-            outlined: text,
-            pale: text,
-            text: text,
-            floating: textC,
-        });
-        const hoverBgColor = collapse(_variant, {
-            filled: hoverBgA(90),
-            outlined: hoverBgA(10),
-            pale: hoverBgA(30),
-            text: hoverBgA(10),
-            floating: hoverBg,
-        });
-        const activeBgColor = collapse(_variant, {
-            filled: activeBgA(75),
-            outlined: activeBgA(20),
-            pale: activeBgA(20),
-            text: activeBgA(20),
-            floating: activeBgA(75),
-        });
+export const Button: FC<ButtonProps> = ({
+    children,
+    color,
+    variant,
+    className,
+    size,
+    loading,
+    iconPosition,
+    icon,
+    shape,
+    disabled,
+    shadow,
+    mt,
+    as,
+    href,
+    ref,
+    ...props
+}) => {
+    const _variant = variant || "filled";
+    const _color = color || "primary";
+    const ico = loading ? <Spinner color="inherit" size="sm" /> : icon;
+    const _disabled = disabled || loading;
+    const Comp = as || (href ? "a" : "button");
+    const p: any = { ...props };
+    const { bgA, bg, border, text, textC } = themeColor(_color);
+    const { bg: hoverBg, bgA: hoverBgA } = themeColor(_color, "hover:");
+    const { bg: activeBg, bgA: activeBgA } = themeColor(_color, "active:");
+    const bgColor = collapse(_variant, {
+        filled: bg,
+        outlined: "",
+        pale: bgA(20),
+        text: "",
+        floating: bg,
+    });
+    const borderColor = collapse(_variant, {
+        filled: "",
+        outlined: border,
+        pale: bgA(20),
+        text: "",
+        floating: bg,
+    });
+    const textColor = collapse(_variant, {
+        filled: textC,
+        outlined: text,
+        pale: text,
+        text: text,
+        floating: textC,
+    });
+    const hoverBgColor = collapse(_variant, {
+        filled: hoverBgA(90),
+        outlined: hoverBgA(10),
+        pale: hoverBgA(30),
+        text: hoverBgA(10),
+        floating: hoverBg,
+    });
+    const activeBgColor = collapse(_variant, {
+        filled: activeBgA(75),
+        outlined: activeBgA(20),
+        pale: activeBgA(20),
+        text: activeBgA(20),
+        floating: activeBgA(75),
+    });
 
-        if (href) {
-            p.href = href;
-        }
-
-        return (
-            <Comp
-                ref={ref}
-                className={btn({
-                    className: [bgColor, !_disabled && hoverBgColor, !_disabled && activeBgColor, borderColor, textColor, className],
-                    color,
-                    variant,
-                    size,
-                    shape,
-                    shadow,
-                    mt,
-                    disabled: _disabled,
-                })}
-                disabled={_disabled}
-                {...p}
-            >
-                {ico && iconPosition === "left" && <Icon>{ico}</Icon>}
-                {children}
-                {ico && iconPosition !== "left" && <Icon>{ico}</Icon>}
-            </Comp>
-        );
+    if (href) {
+        p.href = href;
     }
-);
 
-Button.displayName = withPrefix("Button");
+    return (
+        <Comp
+            ref={ref}
+            className={btn({
+                className: [
+                    bgColor,
+                    !_disabled && hoverBgColor,
+                    !_disabled && activeBgColor,
+                    borderColor,
+                    textColor,
+                    className,
+                ],
+                color,
+                variant,
+                size,
+                shape,
+                shadow,
+                mt,
+                disabled: _disabled,
+            })}
+            disabled={_disabled}
+            {...p}
+        >
+            {ico && iconPosition === "left" && <Icon>{ico}</Icon>}
+            {children}
+            {ico && iconPosition !== "left" && <Icon>{ico}</Icon>}
+        </Comp>
+    );
+};

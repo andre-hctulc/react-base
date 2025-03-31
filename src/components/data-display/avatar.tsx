@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
 import { withPrefix } from "../../util/system.js";
-import { forwardRef } from "react";
+import { forwardRef, type FC } from "react";
 
 const avatar = tv({
     base: "flex items-center justify-center overflow-hidden shrink-0 aspect-square",
@@ -57,7 +57,20 @@ export interface AvatarProps extends TVCProps<typeof avatar, "div"> {
     alt?: string;
 }
 
-export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({ src, alt, className, size, shape, padding, children, as, bold, textColor, ...props }, ref) => {
+export const Avatar: FC<AvatarProps> = ({
+    src,
+    alt,
+    className,
+    size,
+    shape,
+    padding,
+    children,
+    as,
+    bold,
+    textColor,
+    ref,
+    ...props
+}) => {
     const Comp: any = as || "div";
 
     return (
@@ -65,6 +78,4 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(({ src, alt, class
             {children}
         </Comp>
     );
-});
-
-Avatar.displayName = withPrefix("Avatar");
+};

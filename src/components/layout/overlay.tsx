@@ -1,7 +1,6 @@
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
-import React from "react";
-import { withPrefix } from "../../util/system.js";
+import { type FC } from "react";
 import { createPortal } from "react-dom";
 
 const overlay = tv({
@@ -50,27 +49,33 @@ interface OverlayProps extends TVCProps<typeof overlay, "div"> {
  * ### Props
  * - `portal` - Render this overlay in the body
  */
-export const Overlay = React.forwardRef<HTMLDivElement, OverlayProps>(
-    ({ children, className, variant, noInteraction, bg, portal, zIndex, ...props }, ref) => {
-        const over = (
-            <div
-                ref={ref}
-                className={overlay({
-                    className,
-                    variant,
-                    bg,
-                    zIndex,
-                    noInteraction,
-                })}
-                {...props}
-            >
-                {children}
-            </div>
-        );
+export const Overlay: FC<OverlayProps> = ({
+    children,
+    className,
+    variant,
+    noInteraction,
+    bg,
+    portal,
+    zIndex,
+    ref,
+    ...props
+}) => {
+    const over = (
+        <div
+            ref={ref}
+            className={overlay({
+                className,
+                variant,
+                bg,
+                zIndex,
+                noInteraction,
+            })}
+            {...props}
+        >
+            {children}
+        </div>
+    );
 
-        if (portal) return createPortal(over, document.body);
-        return over;
-    }
-);
-
-Overlay.displayName = withPrefix("Overlay");
+    if (portal) return createPortal(over, document.body);
+    return over;
+};

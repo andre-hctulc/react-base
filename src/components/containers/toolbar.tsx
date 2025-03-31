@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
-import { forwardRef } from "react";
+import { forwardRef, type FC } from "react";
 import { withPrefix } from "../../util/system.js";
 
 const toolbar = tv({
@@ -66,54 +66,48 @@ interface ToolbarProps extends TVCProps<typeof toolbar, "div"> {
     as?: any;
 }
 
-export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
-    (
-        {
-            children,
-            direction,
-            gap,
-            padding,
-            className,
-            justify,
-            align,
-            grow,
-            wrap,
-            stopEventPropagation,
-            scroll,
-            ...props
-        },
-        ref
-    ) => {
-        const Comp: any = props.as || "div";
+export const Toolbar: FC<ToolbarProps> = ({
+    children,
+    direction,
+    gap,
+    padding,
+    className,
+    justify,
+    align,
+    grow,
+    wrap,
+    stopEventPropagation,
+    scroll,
+    ref,
+    ...props
+}) => {
+    const Comp: any = props.as || "div";
 
-        return (
-            <Comp
-                className={toolbar({
-                    className,
-                    direction,
-                    padding,
-                    grow,
-                    gap,
-                    align,
-                    justify,
-                    wrap,
-                    scroll,
-                })}
-                ref={ref as any}
-                onClick={
-                    stopEventPropagation
-                        ? (e: React.MouseEvent<any>) => {
-                              e.stopPropagation();
-                              props.onClick?.(e);
-                          }
-                        : undefined
-                }
-                {...props}
-            >
-                {children}
-            </Comp>
-        );
-    }
-);
-
-Toolbar.displayName = withPrefix("Toolbar");
+    return (
+        <Comp
+            className={toolbar({
+                className,
+                direction,
+                padding,
+                grow,
+                gap,
+                align,
+                justify,
+                wrap,
+                scroll,
+            })}
+            ref={ref as any}
+            onClick={
+                stopEventPropagation
+                    ? (e: React.MouseEvent<any>) => {
+                          e.stopPropagation();
+                          props.onClick?.(e);
+                      }
+                    : undefined
+            }
+            {...props}
+        >
+            {children}
+        </Comp>
+    );
+};

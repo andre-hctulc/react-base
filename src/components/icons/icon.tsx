@@ -1,7 +1,6 @@
-import React from "react";
+import { cloneElement, isValidElement, type FC } from "react";
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
-import { withPrefix } from "../../util/system.js";
 
 const icon = tv({
     base: "",
@@ -29,9 +28,9 @@ const icon = tv({
             inherit: "text-inherit",
             neutral: "text-neutral",
             text: "text",
-            "text2": "text-t2",
-            "text3": "text-t3",
-            "text4": "text-t4",
+            text2: "text-t2",
+            text3: "text-t3",
+            text4: "text-t4",
         },
         inline: {
             true: "inline",
@@ -51,30 +50,38 @@ interface IconProps extends TVCProps<typeof icon, "span"> {
     fill?: string;
 }
 
-export const Icon = React.forwardRef<HTMLElement, IconProps>(
-    ({ className, children, size, color, inline, strokeWidth, height, width, fill, ...props }, ref) => {
-        const classes = icon({ className, size, color, inline });
-        let additionalProps: any = {};
+export const Icon: FC<IconProps> = ({
+    className,
+    children,
+    size,
+    color,
+    inline,
+    strokeWidth,
+    height,
+    width,
+    fill,
+    ref,
+    ...props
+}) => {
+    const classes = icon({ className, size, color, inline });
+    let additionalProps: any = {};
 
-        if (!React.isValidElement(children))
-            return (
-                <span ref={ref} className={classes}>
-                    {children}
-                </span>
-            );
+    if (!isValidElement(children))
+        return (
+            <span ref={ref} className={classes}>
+                {children}
+            </span>
+        );
 
-        if (strokeWidth !== undefined) additionalProps.strokeWidth = strokeWidth;
-        if (height !== undefined) additionalProps.height = height;
-        if (width !== undefined) additionalProps.width = width;
-        if (fill !== undefined) additionalProps.fill = fill;
+    if (strokeWidth !== undefined) additionalProps.strokeWidth = strokeWidth;
+    if (height !== undefined) additionalProps.height = height;
+    if (width !== undefined) additionalProps.width = width;
+    if (fill !== undefined) additionalProps.fill = fill;
 
-        return React.cloneElement(children as React.ReactElement, {
-            ref,
-            className: classes,
-            ...additionalProps,
-            ...props,
-        });
-    }
-);
-
-Icon.displayName = withPrefix("Icon");
+    return cloneElement(children as React.ReactElement, {
+        ref,
+        className: classes,
+        ...additionalProps,
+        ...props,
+    });
+};

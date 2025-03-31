@@ -1,5 +1,4 @@
-import { withPrefix } from "../../util/system.js";
-import React, { type ReactNode } from "react";
+import { type FC, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import type { PropsOf, TVCProps } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
@@ -66,21 +65,35 @@ export interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
  * - `variant`
  * - `underline`
  */
-export const Subtitle = React.forwardRef<HTMLElement, SubtitleProps>(
-    ({ children, className, as, variant, underline, my, mt, mb, lineHeight, icon, iconProps, ...props }, ref) => {
-        const Comp = as || variant || "h2";
+export const Subtitle: FC<SubtitleProps> = ({
+    children,
+    className,
+    as,
+    variant,
+    underline,
+    my,
+    mt,
+    mb,
+    lineHeight,
+    icon,
+    iconProps,
+    ref,
+    ...props
+}) => {
+    const Comp = as || variant || "h2";
 
-        return (
-            <Comp className={subtitle({ className, underline, variant, my, mb, mt, lineHeight })} ref={ref as any} {...props}>
-                {icon && (
-                    <Icon size="none" inline {...iconProps} className={clsx("mr-2", iconProps?.className)}>
-                        {icon}
-                    </Icon>
-                )}
-                {children}
-            </Comp>
-        );
-    }
-);
-
-Subtitle.displayName = withPrefix("Subtitle");
+    return (
+        <Comp
+            className={subtitle({ className, underline, variant, my, mb, mt, lineHeight })}
+            ref={ref as any}
+            {...props}
+        >
+            {icon && (
+                <Icon size="none" inline {...iconProps} className={clsx("mr-2", iconProps?.className)}>
+                    {icon}
+                </Icon>
+            )}
+            {children}
+        </Comp>
+    );
+};

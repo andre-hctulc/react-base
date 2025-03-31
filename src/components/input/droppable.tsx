@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { type FC, type Ref } from "react";
 import type { StyleProps } from "../../types/index.js";
 import clsx from "clsx";
-import { withPrefix } from "../../util/system.js";
 
 interface DroppableProps extends StyleProps {
     children?: React.ReactNode;
@@ -12,31 +11,40 @@ interface DroppableProps extends StyleProps {
     onDragEnter?: (e: React.DragEvent<HTMLDivElement>) => void;
     onDragLeave?: (e: React.DragEvent<HTMLDivElement>) => void;
     disabled?: boolean;
+    ref?: Ref<HTMLDivElement>;
 }
 
-export const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props, ref) => {
-    const disabled = props.disabled;
-
+export const Droppable: FC<DroppableProps> = ({
+    className,
+    style,
+    children,
+    disabled,
+    ref,
+    onDragEnter,
+    onDragLeave,
+    onDragOver,
+    onDrop,
+}) => {
     function handleDrop(e: React.DragEvent<HTMLDivElement>) {
         if (disabled) return;
         e.preventDefault();
-        props.onDrop?.(e);
+        onDrop?.(e);
     }
 
     function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
         if (disabled) return;
         e.preventDefault();
-        props.onDragOver?.(e);
+        onDragOver?.(e);
     }
 
     function handleDragEnter(e: React.DragEvent<HTMLDivElement>) {
         if (disabled) return;
-        props.onDragEnter?.(e);
+        onDragEnter?.(e);
     }
 
     function handleDragLeave(e: React.DragEvent<HTMLDivElement>) {
         if (disabled) return;
-        props.onDragLeave?.(e);
+        onDragLeave?.(e);
     }
 
     return (
@@ -46,12 +54,10 @@ export const Droppable = React.forwardRef<HTMLDivElement, DroppableProps>((props
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDragEnter={handleDragEnter}
-            className={clsx(props.className)}
-            style={props.style}
+            className={clsx(className)}
+            style={style}
         >
-            {props.children}
+            {children}
         </div>
     );
-});
-
-Droppable.displayName = withPrefix("Droppable");
+};

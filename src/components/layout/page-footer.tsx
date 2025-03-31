@@ -1,5 +1,4 @@
-import React from "react";
-import { withPrefix } from "../../util/system.js";
+import { type FC, type Ref } from "react";
 import { type ClassValue, tv, type VariantProps } from "tailwind-variants";
 
 const pageFooter = tv({
@@ -66,6 +65,7 @@ interface PageFooterProps extends VariantProps<typeof pageFooter>, VariantProps<
     children?: React.ReactNode;
     className?: ClassValue;
     as?: any;
+    ref?: Ref<HTMLElement>;
 }
 
 /**
@@ -73,24 +73,31 @@ interface PageFooterProps extends VariantProps<typeof pageFooter>, VariantProps<
  * - `position` - Position of the footer
  * - `innerSize` - Inner size of the footer
  */
-export const PageFooter = React.forwardRef<HTMLElement, PageFooterProps>(
-    ({ children, className, as, position, innerSize, padding, variant, shadow, flex }, ref) => {
-        const Comp = as || "div";
+export const PageFooter: FC<PageFooterProps> = ({
+    children,
+    className,
+    as,
+    position,
+    innerSize,
+    padding,
+    variant,
+    shadow,
+    flex,
+    ref,
+}) => {
+    const Comp = as || "div";
 
-        return (
-            <Comp
-                className={pageFooter({
-                    className,
-                    position,
-                    shadow,
-                    variant,
-                })}
-                ref={ref}
-            >
-                <div className={pageFooterInner({ innerSize, padding, flex })}>{children}</div>
-            </Comp>
-        );
-    }
-);
-
-PageFooter.displayName = withPrefix("PageFooter");
+    return (
+        <Comp
+            className={pageFooter({
+                className,
+                position,
+                shadow,
+                variant,
+            })}
+            ref={ref}
+        >
+            <div className={pageFooterInner({ innerSize, padding, flex })}>{children}</div>
+        </Comp>
+    );
+};

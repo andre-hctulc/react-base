@@ -1,13 +1,16 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system.js";
 import type { TVCProps } from "../../types/index.js";
-import { forwardRef, type ChangeEvent } from "react";
-import type { InputLikeProps } from "./types.js";
+import { type ChangeEvent } from "react";
+import type { InputLikeProps, InputValue } from "./types.js";
+import { inputEventToValue } from "../../util/react.js";
 
 const input = tv({
-    base: ["block w-full rounded-lg border-none bg-paper3 py-1.5 px-3", "transition outline-0 focus:outline-2 focus:outline-divider"],
+    base: [
+        "block w-full rounded-lg border-none bg-paper3 py-1.5 px-3",
+        "transition outline-0 focus:outline-2 focus:outline-divider",
+    ],
     variants: {
         size: {
             sm: "h-7 text-sm",
@@ -20,26 +23,39 @@ const input = tv({
     },
 });
 
-export interface InputProps
-    extends Omit<TVCProps<typeof input, "input">, "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked">,
-        InputLikeProps<string, ChangeEvent<HTMLInputElement>> {}
+export interface InputProps<T extends InputValue = string>
+    extends Omit<
+            TVCProps<typeof input, "input">,
+            "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
+        >,
+        InputLikeProps<T, ChangeEvent<HTMLInputElement>> {}
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ size, className, style, type, name, required, defaultValue, value, onChange, ...props }, ref) => {
+export const Input = <T extends InputValue = string>({
+    size,
+    className,
+    style,
+    type,
+    name,
+    required,
+    defaultValue,
+    value,
+    onChange,
+    ref,
+    ...props
+}: InputProps<T>) => {
     return (
         <input
             required={required}
             ref={ref}
-            value={value}
-            defaultValue={defaultValue}
+            value={value as any}
+            defaultValue={defaultValue as any}
             className={input({ size, className })}
             name={name}
             type={type}
-            onChange={e => {
-                onChange?.({ value: e.target.value, ...e });
+            onChange={(e) => {
+                onChange?.({ ...e, value: inputEventToValue(e, type || "text") });
             }}
             {...props}
         />
     );
-});
-
-Input.displayName = withPrefix("Input");
+};

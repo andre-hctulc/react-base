@@ -7,3 +7,6 @@ export * from "./overlay.js";
 export * from "./section-start.js";
 export * from "./menu.js";
 export * from "./page-footer.js";
+export * from "./page-skeleton.js";
+export * from "./spinner-page.js";
+export * from "./page-like.js";

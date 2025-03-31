@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type FC } from "react";
 import { tv } from "tailwind-variants";
 import type { PropsOf, TVCProps } from "../../types/index.js";
 import { IconButton } from "../input/icon-button.js";
@@ -55,36 +55,51 @@ export interface AlertProps extends TVCProps<typeof alert, "div"> {
  * - `title` - The title of the alert
  * - `loading` - Controls the loading state of the close button
  */
-export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-    ({ children, type, className, as, outlined, closable, title, titleProps, onClose, closeButtonProps, rounded, loading, ...props }, ref) => {
-        const Comp = as || "div";
+export const Alert: FC<AlertProps> = ({
+    children,
+    type,
+    className,
+    as,
+    outlined,
+    closable,
+    title,
+    titleProps,
+    onClose,
+    closeButtonProps,
+    rounded,
+    loading,
+    ref,
+    ...props
+}) => {
+    const Comp = as || "div";
 
-        return (
-            <Comp ref={ref} className={alert({ type, className, outlined, rounded })} {...props}>
-                {closable && (
-                    <IconButton
-                        color={type || "info"}
-                        loading={loading}
-                        {...closeButtonProps}
-                        className={clsx("float-right", closeButtonProps?.className)}
-                        onClick={e => {
-                            e.stopPropagation();
-                            closeButtonProps?.onClick?.(e);
-                            onClose?.();
-                        }}
-                    >
-                        <XIcon />
-                    </IconButton>
-                )}
-                {title && (
-                    <Title variant="h4" {...titleProps}>
-                        {title}
-                    </Title>
-                )}
-                {typeof children === "string" ? <p className={clsx("text-sm", closable && !title && "pt-2")}>{children}</p> : children}
-            </Comp>
-        );
-    }
-);
-
-Alert.displayName = withPrefix("Alert");
+    return (
+        <Comp ref={ref} className={alert({ type, className, outlined, rounded })} {...props}>
+            {closable && (
+                <IconButton
+                    color={type || "info"}
+                    loading={loading}
+                    {...closeButtonProps}
+                    className={clsx("float-right", closeButtonProps?.className)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        closeButtonProps?.onClick?.(e);
+                        onClose?.();
+                    }}
+                >
+                    <XIcon />
+                </IconButton>
+            )}
+            {title && (
+                <Title variant="h4" {...titleProps}>
+                    {title}
+                </Title>
+            )}
+            {typeof children === "string" ? (
+                <p className={clsx("text-sm", closable && !title && "pt-2")}>{children}</p>
+            ) : (
+                children
+            )}
+        </Comp>
+    );
+};

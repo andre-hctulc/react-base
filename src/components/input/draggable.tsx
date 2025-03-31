@@ -1,36 +1,42 @@
-import React from "react";
+import React, { type FC, type Ref } from "react";
 import type { StyleProps } from "../../types/index.js";
 import clsx from "clsx";
-import { withPrefix } from "../../util/system.js";
 
 interface DraggableProps extends StyleProps {
     children?: React.ReactNode;
     disabled?: boolean;
     onDragStart?: React.DragEventHandler<HTMLDivElement>;
     onDragEnd?: React.DragEventHandler<HTMLDivElement>;
+    ref?: Ref<HTMLDivElement>;
 }
 
-export const Draggable = React.forwardRef<HTMLDivElement, DraggableProps>((props, ref) => {
+export const Draggable: FC<DraggableProps> = ({
+    disabled,
+    className,
+    style,
+    children,
+    ref,
+    onDragEnd,
+    onDragStart,
+}) => {
     function handleDragStart(e: React.DragEvent<HTMLDivElement>) {
-        props.onDragStart?.(e);
+        onDragStart?.(e);
     }
 
     function handleDragEnd(e: React.DragEvent<HTMLDivElement>) {
-        props.onDragEnd?.(e);
+        onDragEnd?.(e);
     }
 
     return (
         <div
             ref={ref}
-            draggable={!props.disabled}
+            draggable={!disabled}
             onDragEnd={handleDragEnd}
             onDragStart={handleDragStart}
-            className={clsx("inline-block", props.className)}
-            style={props.style}
+            className={clsx("inline-block", className)}
+            style={style}
         >
-            {props.children}
+            {children}
         </div>
     );
-});
-
-Draggable.displayName = withPrefix("Draggable");
+};

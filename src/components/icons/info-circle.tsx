@@ -1,13 +1,12 @@
-import React from "react";
+import { type FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Icon } from "./icon.js";
-import { withPrefix } from "../../util/system.js";
 
 interface InfoCircleIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 
-export const InfoCircleIcon = React.forwardRef<HTMLElement, InfoCircleIconProps>((props, ref) => {
+export const InfoCircleIcon: FC<InfoCircleIconProps> = (props) => {
     return (
-        <Icon ref={ref} {...props}>
+        <Icon {...props}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -22,6 +21,4 @@ export const InfoCircleIcon = React.forwardRef<HTMLElement, InfoCircleIconProps>
             </svg>
         </Icon>
     );
-});
-
-InfoCircleIcon.displayName = withPrefix("InfoCircleIcon");
+};

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { type FC } from "react";
 import { tv } from "tailwind-variants";
 import type { LinkComponent, PropsOf, TVCProps } from "../../types/index.js";
 import clsx from "clsx";
@@ -71,120 +71,113 @@ export interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
     as?: "ol" | "ul";
 }
 
-export const List = React.forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(
-    (
-        {
-            className,
-            items,
-            onItemClick,
-            children,
-            variant,
-            activeKey,
-            size,
-            LinkComponent,
-            rounded,
-            direction,
-            as,
-            iconButtonProps,
-            listItemProps,
-            elevate,
-            gap,
-            padding,
-            ...props
-        },
-        ref
-    ) => {
-        const Comp: any = as || "ul";
-        const linkItemProps = { LinkComponent, ...listItemProps };
+export const List: FC<ListProps> = ({
+    className,
+    items,
+    onItemClick,
+    children,
+    variant,
+    activeKey,
+    size,
+    LinkComponent,
+    rounded,
+    direction,
+    as,
+    iconButtonProps,
+    listItemProps,
+    elevate,
+    gap,
+    padding,
+    ref,
+    ...props
+}) => {
+    const Comp: any = as || "ul";
+    const linkItemProps = { LinkComponent, ...listItemProps };
 
-        return (
-            <Comp
-                ref={ref}
-                className={list({
-                    className,
-                    direction,
-                    padding: padding ?? (size || "md"),
-                    elevate,
-                    rounded,
-                    gap,
-                })}
-                {...props}
-            >
-                {populateProps(children, linkItemProps, (el) => el.type === ListItem)}
-                {items?.map((item) => {
-                    const active =
-                        item.active ??
-                        (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
+    return (
+        <Comp
+            ref={ref}
+            className={list({
+                className,
+                direction,
+                padding: padding ?? (size || "md"),
+                elevate,
+                rounded,
+                gap,
+            })}
+            {...props}
+        >
+            {populateProps(children, linkItemProps, (el) => el.type === ListItem)}
+            {items?.map((item) => {
+                const active =
+                    item.active ??
+                    (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
 
-                    if (variant === "icons") {
-                        const btn = (
-                            <IconButton
-                                size={size === "xl" ? "lg" : size}
-                                loading={item.loading}
-                                variant="text"
-                                color={active ? "black" : "neutral"}
-                                {...iconButtonProps}
-                                key={item.key}
-                                className={clsx(
-                                    active && "bg-transparent2",
-                                    iconButtonProps?.className as any
-                                )}
-                                onClick={(e) => {
-                                    onItemClick?.(item);
-                                    iconButtonProps?.onClick?.(e);
-                                }}
-                                disabled={item.disabled}
-                            >
-                                {item.icon}
-                            </IconButton>
+                if (variant === "icons") {
+                    const btn = (
+                        <IconButton
+                            size={size === "xl" ? "lg" : size}
+                            loading={item.loading}
+                            variant="text"
+                            color={active ? "black" : "neutral"}
+                            {...iconButtonProps}
+                            key={item.key}
+                            className={clsx(active && "bg-transparent2", iconButtonProps?.className as any)}
+                            onClick={(e) => {
+                                onItemClick?.(item);
+                                iconButtonProps?.onClick?.(e);
+                            }}
+                            disabled={item.disabled}
+                        >
+                            {item.icon}
+                        </IconButton>
+                    );
+
+                    if (item.href) {
+                        const Link = LinkComponent || "a";
+                        return (
+                            <Link key={item.key} href={item.href}>
+                                {btn}
+                            </Link>
                         );
-
-                        if (item.href) {
-                            const Link = LinkComponent || "a";
-                            return (
-                                <Link key={item.key} href={item.href}>
-                                    {btn}
-                                </Link>
-                            );
-                        }
-
-                        return btn;
                     }
 
-                    return (
-                        <ListItem
-                            as="li"
-                            loading={item.loading}
-                            size={size || "md"}
-                            key={item.key}
-                            disabled={item.disabled}
-                            icon={item.icon}
-                            active={active}
-                            tools={item.tools}
-                            href={item.href}
-                            variant={item.variant}
-                            {...linkItemProps}
-                            className={clsx(item.className, listItemProps?.className as any)}
-                            onClick={(e) => {
-                                item.onClick?.(e);
-                                onItemClick?.(item);
-                                listItemProps?.onClick?.(e);
-                            }}
-                            clickable={
-                                item.clickable ||
-                                !!item.onClick ||
-                                !!listItemProps?.onClick ||
-                                listItemProps?.clickable ||
-                                !!item.href
-                            }
-                        >
-                            {item.label}
-                        </ListItem>
-                    );
-                })}
-            </Comp>
-        );
-    }
-);
+                    return btn;
+                }
+
+                return (
+                    <ListItem
+                        as="li"
+                        loading={item.loading}
+                        size={size || "md"}
+                        key={item.key}
+                        disabled={item.disabled}
+                        icon={item.icon}
+                        active={active}
+                        tools={item.tools}
+                        href={item.href}
+                        variant={item.variant}
+                        {...linkItemProps}
+                        className={clsx(item.className, listItemProps?.className as any)}
+                        onClick={(e) => {
+                            item.onClick?.(e);
+                            onItemClick?.(item);
+                            listItemProps?.onClick?.(e);
+                        }}
+                        clickable={
+                            item.clickable ||
+                            !!item.onClick ||
+                            !!listItemProps?.onClick ||
+                            listItemProps?.clickable ||
+                            !!item.href
+                        }
+                    >
+                        {item.label}
+                    </ListItem>
+                );
+            })}
+        </Comp>
+    );
+};
 
 List.displayName = withPrefix("List");

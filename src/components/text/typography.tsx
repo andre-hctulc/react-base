@@ -1,5 +1,5 @@
 import type { TVCProps } from "../../types/index.js";
-import React from "react";
+import React, { type FC } from "react";
 import { withPrefix } from "../../util/system.js";
 import { tv } from "tailwind-variants";
 
@@ -53,16 +53,28 @@ export interface TypographyProps extends TVCProps<typeof typography, "span"> {
 /**
  * Text. Used across components to consistently style text.
  */
-export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
-    ({ children, className, center, underline, italic, as, size, lineHeight, variant, ...props }, ref) => {
-        const Comp = as || "p";
+export const Typography: FC<TypographyProps> = ({
+    children,
+    className,
+    center,
+    underline,
+    italic,
+    as,
+    size,
+    lineHeight,
+    variant,
+    ref,
+    ...props
+}) => {
+    const Comp = as || "p";
 
-        return (
-            <Comp ref={ref} className={typography({ className, center, underline, size, italic, lineHeight, variant })} {...props}>
-                {children}
-            </Comp>
-        );
-    }
-);
-
-Typography.displayName = withPrefix("Typography");
+    return (
+        <Comp
+            ref={ref}
+            className={typography({ className, center, underline, size, italic, lineHeight, variant })}
+            {...props}
+        >
+            {children}
+        </Comp>
+    );
+};

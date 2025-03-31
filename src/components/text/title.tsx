@@ -1,5 +1,4 @@
-import React, { type ReactNode } from "react";
-import { withPrefix } from "../../util/system.js";
+import { type FC, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import type { PropsOf, TVCProps } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
@@ -72,21 +71,36 @@ export interface TitleProps extends TVCProps<typeof title, "h2"> {
  * - `variant`
  * - `underline`
  */
-export const Title = React.forwardRef<HTMLElement, TitleProps>(
-    ({ children, className, as, variant, underline, my, mb, mt, lineHeight, bold, icon, iconProps, ...props }, ref) => {
-        const Comp = as || variant || "h1";
+export const Title: FC<TitleProps> = ({
+    children,
+    className,
+    as,
+    variant,
+    underline,
+    my,
+    mb,
+    mt,
+    lineHeight,
+    bold,
+    icon,
+    iconProps,
+    ref,
+    ...props
+}) => {
+    const Comp = as || variant || "h1";
 
-        return (
-            <Comp className={title({ className, variant, underline, my, mb, mt, lineHeight, bold })} ref={ref as any} {...props}>
-                {icon && (
-                    <Icon size="none" inline {...iconProps} className={clsx("mr-3", iconProps?.className)}>
-                        {icon}
-                    </Icon>
-                )}
-                {children}
-            </Comp>
-        );
-    }
-);
-
-Title.displayName = withPrefix("Title");
+    return (
+        <Comp
+            className={title({ className, variant, underline, my, mb, mt, lineHeight, bold })}
+            ref={ref as any}
+            {...props}
+        >
+            {icon && (
+                <Icon size="none" inline {...iconProps} className={clsx("mr-3", iconProps?.className)}>
+                    {icon}
+                </Icon>
+            )}
+            {children}
+        </Comp>
+    );
+};

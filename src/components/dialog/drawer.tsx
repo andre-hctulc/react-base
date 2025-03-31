@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { type FC } from "react";
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system.js";
 import { Transition } from "@headlessui/react";
 import type { TVCProps } from "../../types/index.js";
 import { Overlay } from "../layout/overlay.js";
@@ -28,28 +27,33 @@ interface DrawerProps extends TVCProps<typeof drawer, "div"> {
     onClose?: () => void;
 }
 
-export const Drawer = React.forwardRef<HTMLDivElement, DrawerProps>(
-    ({ children, position, className, style, open, onClose, ...props }, ref) => {
-        return (
-            <Overlay
-                portal
-                noInteraction={!open}
-                bg={open ? "transparent1" : "transparent"}
-                onClick={() => onClose?.()}
-            >
-                <Transition show={open}>
-                    <div
-                        ref={ref}
-                        className={drawer({ position, className })}
-                        style={style}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        {children}
-                    </div>
-                </Transition>
-            </Overlay>
-        );
-    }
-);
-
-Drawer.displayName = withPrefix("Drawer");
+export const Drawer: FC<DrawerProps> = ({
+    children,
+    position,
+    className,
+    style,
+    open,
+    onClose,
+    ref,
+    ...props
+}) => {
+    return (
+        <Overlay
+            portal
+            noInteraction={!open}
+            bg={open ? "transparent1" : "transparent"}
+            onClick={() => onClose?.()}
+        >
+            <Transition show={open}>
+                <div
+                    ref={ref}
+                    className={drawer({ position, className })}
+                    style={style}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {children}
+                </div>
+            </Transition>
+        </Overlay>
+    );
+};

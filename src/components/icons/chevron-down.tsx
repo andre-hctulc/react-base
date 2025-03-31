@@ -1,13 +1,12 @@
-import React from "react";
+import { type FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Icon } from "./icon.js";
-import { withPrefix } from "../../util/system.js";
 
 interface ChevronDownIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 
-export const ChevronDownIcon = React.forwardRef<HTMLElement, ChevronDownIconProps>((props, ref) => {
+export const ChevronDownIcon: FC<ChevronDownIconProps> = (props) => {
     return (
-        <Icon ref={ref} {...props}>
+        <Icon {...props}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -19,6 +18,4 @@ export const ChevronDownIcon = React.forwardRef<HTMLElement, ChevronDownIconProp
             </svg>
         </Icon>
     );
-});
-
-ChevronDownIcon.displayName = withPrefix("ChevronDownIcon");
+};

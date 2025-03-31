@@ -2,7 +2,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { Tool, type ToolItem } from "../input/tool.js";
 import type { LinkComponent, PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
-import { forwardRef } from "react";
+import { forwardRef, type FC, type Ref } from "react";
 import { Toolbar } from "./toolbar.js";
 import { withPrefix } from "../../util/system.js";
 import { Spinner } from "../data-display/spinner.js";
@@ -113,76 +113,67 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
      */
     clickable?: boolean;
     iconProps?: PropsOf<typeof Icon>;
+    ref?: Ref<HTMLElement>;
 }
 
-export const ListItem = forwardRef<HTMLElement, ListItemProps>(
-    (
-        {
-            children,
-            onClick,
-            className,
-            active,
-            style,
-            tools,
-            href,
-            LinkComponent,
-            loading,
-            variant,
-            size,
-            innerProps,
-            effects,
-            disabled,
-            iconProps,
-            ...props
-        },
-        ref
-    ) => {
-        const Link = LinkComponent || "a";
-        const icon = loading ? <Spinner color={variant === "danger" ? "error" : "neutral"} /> : props.icon;
-        const clickHandler = loading ? undefined : onClick;
-        const Comp: any = props.as || "div";
-        const Inner: any = href ? Link : "div";
-        const _innerProps = href ? { ...innerProps, href } : innerProps;
-        const _disabled = loading || disabled;
-        const interactive = _disabled ? false : props.clickable ?? (!!onClick || !!href);
-        const iconSize = size === "sm" ? "sm" : size === "lg" || size === "xl" ? "xl" : "md";
+export const ListItem: FC<ListItemProps> = ({
+    children,
+    onClick,
+    className,
+    active,
+    style,
+    tools,
+    href,
+    LinkComponent,
+    loading,
+    variant,
+    size,
+    innerProps,
+    effects,
+    disabled,
+    iconProps,
+    ref,
+    ...props
+}) => {
+    const Link = LinkComponent || "a";
+    const icon = loading ? <Spinner color={variant === "danger" ? "error" : "neutral"} /> : props.icon;
+    const clickHandler = loading ? undefined : onClick;
+    const Comp: any = props.as || "div";
+    const Inner: any = href ? Link : "div";
+    const _innerProps = href ? { ...innerProps, href } : innerProps;
+    const _disabled = loading || disabled;
+    const interactive = _disabled ? false : props.clickable ?? (!!onClick || !!href);
+    const iconSize = size === "sm" ? "sm" : size === "lg" || size === "xl" ? "xl" : "md";
 
-        return (
-            <Comp
-                ref={ref}
-                data-active={active}
-                className={listItem({
-                    effects,
-                    variant,
-                    className,
-                    clickable: interactive,
-                })}
-                data-reactive={true}
-                onClick={_disabled ? undefined : clickHandler}
-                style={style}
-            >
-                <Inner className={listItemInner({ size })} {..._innerProps}>
-                    {icon ? (
-                        <Icon className="self-center" size={iconSize}>
-                            {icon}
-                        </Icon>
-                    ) : null}
-                    {typeof children === "string" ? (
-                        <span className="grow truncate">{children}</span>
-                    ) : (
-                        children
-                    )}
-                    {tools?.length && (
-                        <Toolbar justify="end" gap="sm">
-                            {tools?.map(({ key, ...tool }) => (
-                                <Tool variant="text" size="sm" color="neutral" key={key} {...tool} />
-                            ))}
-                        </Toolbar>
-                    )}
-                </Inner>
-            </Comp>
-        );
-    }
-);
-
-ListItem.displayName = withPrefix("ListItem");
+    return (
+        <Comp
+            ref={ref}
+            data-active={active}
+            className={listItem({
+                effects,
+                variant,
+                className,
+                clickable: interactive,
+            })}
+            data-reactive={true}
+            onClick={_disabled ? undefined : clickHandler}
+            style={style}
+        >
+            <Inner className={listItemInner({ size })} {..._innerProps}>
+                {icon ? (
+                    <Icon className="self-center" size={iconSize}>
+                        {icon}
+                    </Icon>
+                ) : null}
+                {typeof children === "string" ? <span className="grow truncate">{children}</span> : children}
+                {tools?.length && (
+                    <Toolbar justify="end" gap="sm">
+                        {tools?.map(({ key, ...tool }) => (
+                            <Tool variant="text" size="sm" color="neutral" key={key} {...tool} />
+                        ))}
+                    </Toolbar>
+                )}
+            </Inner>
+        </Comp>
+    );
+};

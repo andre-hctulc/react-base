@@ -7,7 +7,7 @@ import { PencilIcon } from "../icons/pencil.js";
 import clsx from "clsx";
 import { Placeholder } from "../data-display/placeholder.js";
 import { Spinner } from "../data-display/spinner.js";
-import React from "react";
+import React, { type FC } from "react";
 import { withPrefix } from "../../util/system.js";
 import { IconButton } from "../input/icon-button.js";
 
@@ -76,60 +76,56 @@ interface SectionProps extends TVCProps<typeof section, "section"> {
  * - `loading` - Show a loading spinner
  * - `first` - Remove top margin
  */
-export const Section = React.forwardRef<HTMLElement, SectionProps>(
-    (
-        {
-            children,
-            className,
-            margin,
-            variant,
-            padding,
-            title,
-            titleProps,
-            icon,
-            iconProps,
-            loading,
-            first,
-            bg,
-            flex,
-            ...props
-        },
-        ref
-    ) => {
-        const isDanger = variant === "danger";
+export const Section: FC<SectionProps> = ({
+    children,
+    className,
+    margin,
+    variant,
+    padding,
+    title,
+    titleProps,
+    icon,
+    iconProps,
+    loading,
+    first,
+    bg,
+    flex,
+    ref,
+    ...props
+}) => {
+    const isDanger = variant === "danger";
 
-        return (
-            <section
-                ref={ref}
-                className={section({ className, margin, variant, padding, first, bg, flex })}
-                {...props}
-            >
-                {loading && (
-                    <Placeholder my="md">
-                        <Spinner size="2xl" />
-                    </Placeholder>
-                )}
-                {(title || icon) && !loading && (
-                    <div className="flex gap-3 items-center pb-5">
-                        {icon && (
-                            <Icon color={isDanger ? "error" : "neutral"} {...iconProps}>
-                                {icon}
-                            </Icon>
-                        )}
-                        <Subtitle
-                            variant="h3"
-                            {...titleProps}
-                            className={clsx(isDanger && "text-error", titleProps?.className as any)}
-                        >
-                            {title}
-                        </Subtitle>
-                    </div>
-                )}
-                {!loading && children}
-            </section>
-        );
-    }
-);
+    return (
+        <section
+            ref={ref}
+            className={section({ className, margin, variant, padding, first, bg, flex })}
+            {...props}
+        >
+            {loading && (
+                <Placeholder my="md">
+                    <Spinner size="2xl" />
+                </Placeholder>
+            )}
+            {(title || icon) && !loading && (
+                <div className="flex gap-3 items-center pb-5">
+                    {icon && (
+                        <Icon color={isDanger ? "error" : "neutral"} {...iconProps}>
+                            {icon}
+                        </Icon>
+                    )}
+                    <Subtitle
+                        variant="h3"
+                        {...titleProps}
+                        className={clsx(isDanger && "text-error", titleProps?.className as any)}
+                    >
+                        {title}
+                    </Subtitle>
+                </div>
+            )}
+            {!loading && children}
+        </section>
+    );
+};
 
 const sectionFooter = tv({
     base: "mt-auto p-2 pt-4",

@@ -1,5 +1,4 @@
-import React from "react";
-import { withPrefix } from "../../util/system.js";
+import { type FC, type Ref } from "react";
 import { type ClassValue, tv, type VariantProps } from "tailwind-variants";
 
 const pageContent = tv({
@@ -52,48 +51,43 @@ const pageContent = tv({
 interface PageContentProps extends VariantProps<typeof pageContent> {
     children?: React.ReactNode;
     className?: ClassValue;
+    ref?: Ref<HTMLElement>;
 }
 
 /**
  * Use this inside a `Page` component to display page content.
  */
-export const PageContent = React.forwardRef<HTMLElement, PageContentProps>(
-    (
-        {
-            children,
-            className,
-            padding,
-            fullHeight,
-            maxHeightFull,
-            flex,
-            width,
-            grow,
-            minHeight0,
-            alignItems,
-            justifyContent,
-        },
-        ref
-    ) => {
-        return (
-            <main
-                className={pageContent({
-                    className,
-                    alignItems,
-                    justifyContent,
-                    width,
-                    padding,
-                    flex,
-                    maxHeightFull,
-                    fullHeight,
-                    grow,
-                    minHeight0,
-                })}
-                ref={ref}
-            >
-                {children}
-            </main>
-        );
-    }
-);
-
-PageContent.displayName = withPrefix("PageContent");
+export const PageContent: FC<PageContentProps> = ({
+    children,
+    className,
+    padding,
+    fullHeight,
+    maxHeightFull,
+    flex,
+    width,
+    grow,
+    minHeight0,
+    alignItems,
+    justifyContent,
+    ref,
+}) => {
+    return (
+        <main
+            className={pageContent({
+                className,
+                alignItems,
+                justifyContent,
+                width,
+                padding,
+                flex,
+                maxHeightFull,
+                fullHeight,
+                grow,
+                minHeight0,
+            })}
+            ref={ref}
+        >
+            {children}
+        </main>
+    );
+};

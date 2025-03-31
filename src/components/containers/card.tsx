@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from "tailwind-variants";
 import type { PropsOf, StyleProps, TVCProps } from "../../types/index.js";
 import { withPrefix } from "../../util/system.js";
-import React from "react";
+import React, { type FC, type Ref } from "react";
 import clsx from "clsx";
 import { Icon } from "../icons/icon.js";
 import { Title } from "../text/title.js";
@@ -74,38 +74,48 @@ const card = tv({
     },
 });
 
-export interface CardProps extends TVCProps<typeof card, "div"> {
+interface CardProps extends TVCProps<typeof card, "div"> {
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     as?: any;
 }
 
-export const Card = React.forwardRef<HTMLElement, CardProps>(
-    ({ children, shadow, className, border, bg, width, height, size, variant, rounded, flex, ...props }, ref) => {
-        const Comp = props.as || "div";
+export const Card: FC<CardProps> = ({
+    children,
+    shadow,
+    className,
+    border,
+    bg,
+    width,
+    height,
+    size,
+    variant,
+    rounded,
+    flex,
+    ref,
+    ...props
+}) => {
+    const Comp = props.as || "div";
 
-        return (
-            <Comp
-                ref={ref as any}
-                className={card({
-                    shadow,
-                    rounded,
-                    bg,
-                    className,
-                    border,
-                    width: width ?? size,
-                    height: height ?? size,
-                    variant,
-                    flex,
-                })}
-                {...props}
-            >
-                {children}
-            </Comp>
-        );
-    }
-);
-
-Card.displayName = withPrefix("Card");
+    return (
+        <Comp
+            ref={ref as any}
+            className={card({
+                shadow,
+                rounded,
+                bg,
+                className,
+                border,
+                width: width ?? size,
+                height: height ?? size,
+                variant,
+                flex,
+            })}
+            {...props}
+        >
+            {children}
+        </Comp>
+    );
+};
 
 const cardHeader = tv({
     variants: {
@@ -220,9 +230,23 @@ interface CardBodyProps extends VariantProps<typeof cardBody> {
     as?: any;
 }
 
-export const CardBody: React.FC<CardBodyProps> = ({ children, className, flex, as, padding, grow, fullHeight, alignItems, scroll }) => {
+export const CardBody: React.FC<CardBodyProps> = ({
+    children,
+    className,
+    flex,
+    as,
+    padding,
+    grow,
+    fullHeight,
+    alignItems,
+    scroll,
+}) => {
     const Comp = as || "div";
-    return <Comp className={cardBody({ className, padding, flex, grow, fullHeight, alignItems, scroll })}>{children}</Comp>;
+    return (
+        <Comp className={cardBody({ className, padding, flex, grow, fullHeight, alignItems, scroll })}>
+            {children}
+        </Comp>
+    );
 };
 
 const cardFooter = tv({
@@ -258,7 +282,15 @@ interface CardFooterProps extends VariantProps<typeof cardFooter>, StyleProps {
     as?: any;
 }
 
-export const CardFooter: React.FC<CardFooterProps> = ({ children, className, border, style, padding, as, variant }) => {
+export const CardFooter: React.FC<CardFooterProps> = ({
+    children,
+    className,
+    border,
+    style,
+    padding,
+    as,
+    variant,
+}) => {
     const Comp = as || "div";
 
     return (

@@ -1,5 +1,4 @@
-import React from "react";
-import { withPrefix } from "../../util/system.js";
+import { type FC } from "react";
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
 
@@ -41,7 +40,7 @@ export const spinner = tv({
 
 export interface SpinnerProps extends TVCProps<typeof spinner, "svg"> {}
 
-export const Spinner = React.forwardRef<SVGElement, SpinnerProps>(({ className, size, color, ...props }, ref) => {
+export const Spinner: FC<SpinnerProps> = ({ className, size, color, ref, ...props }) => {
     return (
         <svg
             width="1em"
@@ -59,6 +58,4 @@ export const Spinner = React.forwardRef<SVGElement, SpinnerProps>(({ className, 
             />
         </svg>
     );
-});
-
-Spinner.displayName = withPrefix("Spinner");
+};

@@ -1,7 +1,8 @@
-import {
+import React, {
     Children,
     cloneElement,
     isValidElement,
+    type ChangeEvent,
     type ComponentProps,
     type ElementType,
     type ForwardedRef,
@@ -47,4 +48,22 @@ export function populateProps<P extends object>(
         }
         return child;
     });
+}
+
+export function inputEventToValue(event: ChangeEvent<HTMLInputElement>, type: string): any {
+    if (event.currentTarget.files) {
+        return event.currentTarget.files;
+    }
+
+    if (type === "checkbox") {
+        return event.currentTarget.checked;
+    }
+    if (type.includes("date")) {
+        return event.currentTarget.valueAsDate;
+    }
+    if (type === "number") {
+        return event.currentTarget.valueAsNumber;
+    }
+
+    return event.currentTarget.value;
 }

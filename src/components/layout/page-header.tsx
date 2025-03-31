@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import type React from "react";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { Title } from "../text/title.js";
 import type { PropsOf } from "../../types/index.js";
