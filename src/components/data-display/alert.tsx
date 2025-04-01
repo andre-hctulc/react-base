@@ -37,16 +37,17 @@ const alert = tv({
     },
 });
 
-export interface AlertProps extends TVCProps<typeof alert, "div"> {
+export interface AlertProps extends Omit<TVCProps<typeof alert, "div">, "title"> {
     as?: any;
     closable?: boolean;
     onClose?: () => void;
     closeButtonProps?: PropsOf<typeof IconButton>;
-    title?: string;
+    title?: ReactNode;
     titleProps?: PropsOf<typeof Title>;
     loading?: boolean;
     actions?: ReactNode;
     toolBarProps?: PropsOf<typeof Toolbar>;
+    icon?: ReactNode;
 }
 
 /**
@@ -74,6 +75,7 @@ export const Alert: FC<AlertProps> = ({
     ref,
     actions,
     toolBarProps,
+    icon,
     ...props
 }) => {
     const Comp = as || "div";
@@ -102,8 +104,8 @@ export const Alert: FC<AlertProps> = ({
                     </IconButton>
                 </Toolbar>
             )}
-            {title && (
-                <Title variant="h4" {...titleProps}>
+            {(title || icon) && (
+                <Title icon={icon} variant="h4" {...titleProps}>
                     {title}
                 </Title>
             )}

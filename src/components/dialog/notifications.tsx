@@ -1,6 +1,5 @@
 "use client";
 
-import { tv } from "tailwind-variants";
 import type { PropsOf } from "../../types/index.js";
 import { createPortal } from "react-dom";
 import clsx from "clsx";
@@ -11,7 +10,7 @@ import { ExclamationMarkIcon } from "../icons/exclamation-mark.js";
 import { QuestionCircleIcon } from "../icons/question-circle.js";
 import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
 import { createContext, useCallback, useContext, useMemo, useState, type FC, type ReactNode } from "react";
-import { Icon } from "../icons/icon.js";
+import { Alert } from "../data-display/alert.js";
 
 const DEFAULT_DURATION: number = 3000;
 
@@ -32,6 +31,11 @@ export interface Notification {
      */
     duration?: number;
     icon?: React.ReactNode;
+    /**
+     * Class name for the alert
+     */
+    className?: string;
+    closable?: boolean;
 }
 
 export type NotificationInput = Omit<Notification, "id"> & { id?: string };
@@ -184,44 +188,33 @@ const NotificationsBox: React.FC<PropsOf<"ol">> = ({ className, ...props }) => {
     );
 };
 
-const notificationBox = tv({
-    base: "box-border flex w-full max-w-full pointer-events-auto px-3 py-2 rounded-sm overflow-hidden bg-opacity-15 shadow-sm",
-    variants: {
-        severity: {
-            info: "bg-info text-info",
-            success: "bg-success text-success",
-            warning: "bg-warning text-warning",
-            error: "bg-error text-error",
-        },
-    },
-    defaultVariants: {
-        severity: "info",
-    },
-});
-
-interface NotificationItemProps extends PropsOf<"li"> {
+interface NotificationItemProps {
     notification: Notification;
+    className?: string;
 }
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ className, notification, ...props }) => {
-    const icon = useMemo(() => {
+const NotificationItem: React.FC<NotificationItemProps> = ({ className, notification }) => {
+    const getIcon = () => {
         if (notification.icon) return notification.icon;
         else if (!notification.severity || notification.severity === "info") return <InfoCircleIcon />;
         else if (notification.severity === "success") return <CheckCircleIcon />;
         else if (notification.severity === "error") return <ExclamationMarkIcon />;
         else if (notification.severity === "warning") return <QuestionCircleIcon />;
         return <QuestionCircleIcon />;
-    }, [notification.severity]);
-    const MainComp = typeof notification.message === "string" ? "p" : "div";
+    };
 
     return (
         <Fade show unmount>
-            <li {...props} className={clsx("bg-paper", className)}>
-                <div className={notificationBox({ className, severity: notification.severity })}>
-                    <Icon className="mr-3 mt-1">{icon}</Icon>
-                    {notification.title && <h3 className="text-lg my-0.5">{notification.title}</h3>}
-                    <MainComp className="grow">{notification.message}</MainComp>
-                </div>
+            <li className={clsx("bg-paper", className)}>
+                <Alert
+                    icon={getIcon()}
+                    title={notification.title}
+                    type={notification.severity}
+                    className={notification.className}
+                    closable={notification.closable}
+                >
+                    {notification.message}
+                </Alert>
             </li>
         </Fade>
     );
