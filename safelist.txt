@@ -1,6 +1,8 @@
 bg-primary
 bg-primary/0
+bg-primary/5
 bg-primary/10
+bg-primary/15
 bg-primary/20
 bg-primary/30
 bg-primary/40
@@ -10,7 +12,9 @@ bg-primary/90
 bg-primary/100
 bg-primary-contrast
 bg-primary-contrast/0
+bg-primary-contrast/5
 bg-primary-contrast/10
+bg-primary-contrast/15
 bg-primary-contrast/20
 bg-primary-contrast/30
 bg-primary-contrast/40
@@ -20,7 +24,9 @@ bg-primary-contrast/90
 bg-primary-contrast/100
 bg-secondary
 bg-secondary/0
+bg-secondary/5
 bg-secondary/10
+bg-secondary/15
 bg-secondary/20
 bg-secondary/30
 bg-secondary/40
@@ -30,7 +36,9 @@ bg-secondary/90
 bg-secondary/100
 bg-secondary-contrast
 bg-secondary-contrast/0
+bg-secondary-contrast/5
 bg-secondary-contrast/10
+bg-secondary-contrast/15
 bg-secondary-contrast/20
 bg-secondary-contrast/30
 bg-secondary-contrast/40
@@ -40,7 +48,9 @@ bg-secondary-contrast/90
 bg-secondary-contrast/100
 bg-error
 bg-error/0
+bg-error/5
 bg-error/10
+bg-error/15
 bg-error/20
 bg-error/30
 bg-error/40
@@ -50,7 +60,9 @@ bg-error/90
 bg-error/100
 bg-error-contrast
 bg-error-contrast/0
+bg-error-contrast/5
 bg-error-contrast/10
+bg-error-contrast/15
 bg-error-contrast/20
 bg-error-contrast/30
 bg-error-contrast/40
@@ -60,7 +72,9 @@ bg-error-contrast/90
 bg-error-contrast/100
 bg-success
 bg-success/0
+bg-success/5
 bg-success/10
+bg-success/15
 bg-success/20
 bg-success/30
 bg-success/40
@@ -70,7 +84,9 @@ bg-success/90
 bg-success/100
 bg-success-contrast
 bg-success-contrast/0
+bg-success-contrast/5
 bg-success-contrast/10
+bg-success-contrast/15
 bg-success-contrast/20
 bg-success-contrast/30
 bg-success-contrast/40
@@ -80,7 +96,9 @@ bg-success-contrast/90
 bg-success-contrast/100
 bg-warning
 bg-warning/0
+bg-warning/5
 bg-warning/10
+bg-warning/15
 bg-warning/20
 bg-warning/30
 bg-warning/40
@@ -90,7 +108,9 @@ bg-warning/90
 bg-warning/100
 bg-warning-contrast
 bg-warning-contrast/0
+bg-warning-contrast/5
 bg-warning-contrast/10
+bg-warning-contrast/15
 bg-warning-contrast/20
 bg-warning-contrast/30
 bg-warning-contrast/40
@@ -100,7 +120,9 @@ bg-warning-contrast/90
 bg-warning-contrast/100
 bg-info
 bg-info/0
+bg-info/5
 bg-info/10
+bg-info/15
 bg-info/20
 bg-info/30
 bg-info/40
@@ -110,7 +132,9 @@ bg-info/90
 bg-info/100
 bg-info-contrast
 bg-info-contrast/0
+bg-info-contrast/5
 bg-info-contrast/10
+bg-info-contrast/15
 bg-info-contrast/20
 bg-info-contrast/30
 bg-info-contrast/40
@@ -120,7 +144,9 @@ bg-info-contrast/90
 bg-info-contrast/100
 bg-accent
 bg-accent/0
+bg-accent/5
 bg-accent/10
+bg-accent/15
 bg-accent/20
 bg-accent/30
 bg-accent/40
@@ -130,7 +156,9 @@ bg-accent/90
 bg-accent/100
 bg-accent-contrast
 bg-accent-contrast/0
+bg-accent-contrast/5
 bg-accent-contrast/10
+bg-accent-contrast/15
 bg-accent-contrast/20
 bg-accent-contrast/30
 bg-accent-contrast/40
@@ -140,7 +168,9 @@ bg-accent-contrast/90
 bg-accent-contrast/100
 bg-neutral
 bg-neutral/0
+bg-neutral/5
 bg-neutral/10
+bg-neutral/15
 bg-neutral/20
 bg-neutral/30
 bg-neutral/40
@@ -150,7 +180,9 @@ bg-neutral/90
 bg-neutral/100
 bg-neutral-contrast
 bg-neutral-contrast/0
+bg-neutral-contrast/5
 bg-neutral-contrast/10
+bg-neutral-contrast/15
 bg-neutral-contrast/20
 bg-neutral-contrast/30
 bg-neutral-contrast/40
@@ -160,7 +192,9 @@ bg-neutral-contrast/90
 bg-neutral-contrast/100
 border-primary
 border-primary/0
+border-primary/5
 border-primary/10
+border-primary/15
 border-primary/20
 border-primary/30
 border-primary/40
@@ -170,7 +204,9 @@ border-primary/90
 border-primary/100
 border-primary-contrast
 border-primary-contrast/0
+border-primary-contrast/5
 border-primary-contrast/10
+border-primary-contrast/15
 border-primary-contrast/20
 border-primary-contrast/30
 border-primary-contrast/40
@@ -180,7 +216,9 @@ border-primary-contrast/90
 border-primary-contrast/100
 border-secondary
 border-secondary/0
+border-secondary/5
 border-secondary/10
+border-secondary/15
 border-secondary/20
 border-secondary/30
 border-secondary/40
@@ -190,7 +228,9 @@ border-secondary/90
 border-secondary/100
 border-secondary-contrast
 border-secondary-contrast/0
+border-secondary-contrast/5
 border-secondary-contrast/10
+border-secondary-contrast/15
 border-secondary-contrast/20
 border-secondary-contrast/30
 border-secondary-contrast/40
@@ -200,7 +240,9 @@ border-secondary-contrast/90
 border-secondary-contrast/100
 border-error
 border-error/0
+border-error/5
 border-error/10
+border-error/15
 border-error/20
 border-error/30
 border-error/40
@@ -210,7 +252,9 @@ border-error/90
 border-error/100
 border-error-contrast
 border-error-contrast/0
+border-error-contrast/5
 border-error-contrast/10
+border-error-contrast/15
 border-error-contrast/20
 border-error-contrast/30
 border-error-contrast/40
@@ -220,7 +264,9 @@ border-error-contrast/90
 border-error-contrast/100
 border-success
 border-success/0
+border-success/5
 border-success/10
+border-success/15
 border-success/20
 border-success/30
 border-success/40
@@ -230,7 +276,9 @@ border-success/90
 border-success/100
 border-success-contrast
 border-success-contrast/0
+border-success-contrast/5
 border-success-contrast/10
+border-success-contrast/15
 border-success-contrast/20
 border-success-contrast/30
 border-success-contrast/40
@@ -240,7 +288,9 @@ border-success-contrast/90
 border-success-contrast/100
 border-warning
 border-warning/0
+border-warning/5
 border-warning/10
+border-warning/15
 border-warning/20
 border-warning/30
 border-warning/40
@@ -250,7 +300,9 @@ border-warning/90
 border-warning/100
 border-warning-contrast
 border-warning-contrast/0
+border-warning-contrast/5
 border-warning-contrast/10
+border-warning-contrast/15
 border-warning-contrast/20
 border-warning-contrast/30
 border-warning-contrast/40
@@ -260,7 +312,9 @@ border-warning-contrast/90
 border-warning-contrast/100
 border-info
 border-info/0
+border-info/5
 border-info/10
+border-info/15
 border-info/20
 border-info/30
 border-info/40
@@ -270,7 +324,9 @@ border-info/90
 border-info/100
 border-info-contrast
 border-info-contrast/0
+border-info-contrast/5
 border-info-contrast/10
+border-info-contrast/15
 border-info-contrast/20
 border-info-contrast/30
 border-info-contrast/40
@@ -280,7 +336,9 @@ border-info-contrast/90
 border-info-contrast/100
 border-accent
 border-accent/0
+border-accent/5
 border-accent/10
+border-accent/15
 border-accent/20
 border-accent/30
 border-accent/40
@@ -290,7 +348,9 @@ border-accent/90
 border-accent/100
 border-accent-contrast
 border-accent-contrast/0
+border-accent-contrast/5
 border-accent-contrast/10
+border-accent-contrast/15
 border-accent-contrast/20
 border-accent-contrast/30
 border-accent-contrast/40
@@ -300,7 +360,9 @@ border-accent-contrast/90
 border-accent-contrast/100
 border-neutral
 border-neutral/0
+border-neutral/5
 border-neutral/10
+border-neutral/15
 border-neutral/20
 border-neutral/30
 border-neutral/40
@@ -310,7 +372,9 @@ border-neutral/90
 border-neutral/100
 border-neutral-contrast
 border-neutral-contrast/0
+border-neutral-contrast/5
 border-neutral-contrast/10
+border-neutral-contrast/15
 border-neutral-contrast/20
 border-neutral-contrast/30
 border-neutral-contrast/40
@@ -320,7 +384,9 @@ border-neutral-contrast/90
 border-neutral-contrast/100
 text-primary
 text-primary/0
+text-primary/5
 text-primary/10
+text-primary/15
 text-primary/20
 text-primary/30
 text-primary/40
@@ -330,7 +396,9 @@ text-primary/90
 text-primary/100
 text-primary-contrast
 text-primary-contrast/0
+text-primary-contrast/5
 text-primary-contrast/10
+text-primary-contrast/15
 text-primary-contrast/20
 text-primary-contrast/30
 text-primary-contrast/40
@@ -340,7 +408,9 @@ text-primary-contrast/90
 text-primary-contrast/100
 text-secondary
 text-secondary/0
+text-secondary/5
 text-secondary/10
+text-secondary/15
 text-secondary/20
 text-secondary/30
 text-secondary/40
@@ -350,7 +420,9 @@ text-secondary/90
 text-secondary/100
 text-secondary-contrast
 text-secondary-contrast/0
+text-secondary-contrast/5
 text-secondary-contrast/10
+text-secondary-contrast/15
 text-secondary-contrast/20
 text-secondary-contrast/30
 text-secondary-contrast/40
@@ -360,7 +432,9 @@ text-secondary-contrast/90
 text-secondary-contrast/100
 text-error
 text-error/0
+text-error/5
 text-error/10
+text-error/15
 text-error/20
 text-error/30
 text-error/40
@@ -370,7 +444,9 @@ text-error/90
 text-error/100
 text-error-contrast
 text-error-contrast/0
+text-error-contrast/5
 text-error-contrast/10
+text-error-contrast/15
 text-error-contrast/20
 text-error-contrast/30
 text-error-contrast/40
@@ -380,7 +456,9 @@ text-error-contrast/90
 text-error-contrast/100
 text-success
 text-success/0
+text-success/5
 text-success/10
+text-success/15
 text-success/20
 text-success/30
 text-success/40
@@ -390,7 +468,9 @@ text-success/90
 text-success/100
 text-success-contrast
 text-success-contrast/0
+text-success-contrast/5
 text-success-contrast/10
+text-success-contrast/15
 text-success-contrast/20
 text-success-contrast/30
 text-success-contrast/40
@@ -400,7 +480,9 @@ text-success-contrast/90
 text-success-contrast/100
 text-warning
 text-warning/0
+text-warning/5
 text-warning/10
+text-warning/15
 text-warning/20
 text-warning/30
 text-warning/40
@@ -410,7 +492,9 @@ text-warning/90
 text-warning/100
 text-warning-contrast
 text-warning-contrast/0
+text-warning-contrast/5
 text-warning-contrast/10
+text-warning-contrast/15
 text-warning-contrast/20
 text-warning-contrast/30
 text-warning-contrast/40
@@ -420,7 +504,9 @@ text-warning-contrast/90
 text-warning-contrast/100
 text-info
 text-info/0
+text-info/5
 text-info/10
+text-info/15
 text-info/20
 text-info/30
 text-info/40
@@ -430,7 +516,9 @@ text-info/90
 text-info/100
 text-info-contrast
 text-info-contrast/0
+text-info-contrast/5
 text-info-contrast/10
+text-info-contrast/15
 text-info-contrast/20
 text-info-contrast/30
 text-info-contrast/40
@@ -440,7 +528,9 @@ text-info-contrast/90
 text-info-contrast/100
 text-accent
 text-accent/0
+text-accent/5
 text-accent/10
+text-accent/15
 text-accent/20
 text-accent/30
 text-accent/40
@@ -450,7 +540,9 @@ text-accent/90
 text-accent/100
 text-accent-contrast
 text-accent-contrast/0
+text-accent-contrast/5
 text-accent-contrast/10
+text-accent-contrast/15
 text-accent-contrast/20
 text-accent-contrast/30
 text-accent-contrast/40
@@ -460,7 +552,9 @@ text-accent-contrast/90
 text-accent-contrast/100
 text-neutral
 text-neutral/0
+text-neutral/5
 text-neutral/10
+text-neutral/15
 text-neutral/20
 text-neutral/30
 text-neutral/40
@@ -470,7 +564,9 @@ text-neutral/90
 text-neutral/100
 text-neutral-contrast
 text-neutral-contrast/0
+text-neutral-contrast/5
 text-neutral-contrast/10
+text-neutral-contrast/15
 text-neutral-contrast/20
 text-neutral-contrast/30
 text-neutral-contrast/40
@@ -480,7 +576,9 @@ text-neutral-contrast/90
 text-neutral-contrast/100
 hover:bg-primary
 hover:bg-primary/0
+hover:bg-primary/5
 hover:bg-primary/10
+hover:bg-primary/15
 hover:bg-primary/20
 hover:bg-primary/30
 hover:bg-primary/40
@@ -490,7 +588,9 @@ hover:bg-primary/90
 hover:bg-primary/100
 hover:bg-primary-contrast
 hover:bg-primary-contrast/0
+hover:bg-primary-contrast/5
 hover:bg-primary-contrast/10
+hover:bg-primary-contrast/15
 hover:bg-primary-contrast/20
 hover:bg-primary-contrast/30
 hover:bg-primary-contrast/40
@@ -500,7 +600,9 @@ hover:bg-primary-contrast/90
 hover:bg-primary-contrast/100
 hover:bg-secondary
 hover:bg-secondary/0
+hover:bg-secondary/5
 hover:bg-secondary/10
+hover:bg-secondary/15
 hover:bg-secondary/20
 hover:bg-secondary/30
 hover:bg-secondary/40
@@ -510,7 +612,9 @@ hover:bg-secondary/90
 hover:bg-secondary/100
 hover:bg-secondary-contrast
 hover:bg-secondary-contrast/0
+hover:bg-secondary-contrast/5
 hover:bg-secondary-contrast/10
+hover:bg-secondary-contrast/15
 hover:bg-secondary-contrast/20
 hover:bg-secondary-contrast/30
 hover:bg-secondary-contrast/40
@@ -520,7 +624,9 @@ hover:bg-secondary-contrast/90
 hover:bg-secondary-contrast/100
 hover:bg-error
 hover:bg-error/0
+hover:bg-error/5
 hover:bg-error/10
+hover:bg-error/15
 hover:bg-error/20
 hover:bg-error/30
 hover:bg-error/40
@@ -530,7 +636,9 @@ hover:bg-error/90
 hover:bg-error/100
 hover:bg-error-contrast
 hover:bg-error-contrast/0
+hover:bg-error-contrast/5
 hover:bg-error-contrast/10
+hover:bg-error-contrast/15
 hover:bg-error-contrast/20
 hover:bg-error-contrast/30
 hover:bg-error-contrast/40
@@ -540,7 +648,9 @@ hover:bg-error-contrast/90
 hover:bg-error-contrast/100
 hover:bg-success
 hover:bg-success/0
+hover:bg-success/5
 hover:bg-success/10
+hover:bg-success/15
 hover:bg-success/20
 hover:bg-success/30
 hover:bg-success/40
@@ -550,7 +660,9 @@ hover:bg-success/90
 hover:bg-success/100
 hover:bg-success-contrast
 hover:bg-success-contrast/0
+hover:bg-success-contrast/5
 hover:bg-success-contrast/10
+hover:bg-success-contrast/15
 hover:bg-success-contrast/20
 hover:bg-success-contrast/30
 hover:bg-success-contrast/40
@@ -560,7 +672,9 @@ hover:bg-success-contrast/90
 hover:bg-success-contrast/100
 hover:bg-warning
 hover:bg-warning/0
+hover:bg-warning/5
 hover:bg-warning/10
+hover:bg-warning/15
 hover:bg-warning/20
 hover:bg-warning/30
 hover:bg-warning/40
@@ -570,7 +684,9 @@ hover:bg-warning/90
 hover:bg-warning/100
 hover:bg-warning-contrast
 hover:bg-warning-contrast/0
+hover:bg-warning-contrast/5
 hover:bg-warning-contrast/10
+hover:bg-warning-contrast/15
 hover:bg-warning-contrast/20
 hover:bg-warning-contrast/30
 hover:bg-warning-contrast/40
@@ -580,7 +696,9 @@ hover:bg-warning-contrast/90
 hover:bg-warning-contrast/100
 hover:bg-info
 hover:bg-info/0
+hover:bg-info/5
 hover:bg-info/10
+hover:bg-info/15
 hover:bg-info/20
 hover:bg-info/30
 hover:bg-info/40
@@ -590,7 +708,9 @@ hover:bg-info/90
 hover:bg-info/100
 hover:bg-info-contrast
 hover:bg-info-contrast/0
+hover:bg-info-contrast/5
 hover:bg-info-contrast/10
+hover:bg-info-contrast/15
 hover:bg-info-contrast/20
 hover:bg-info-contrast/30
 hover:bg-info-contrast/40
@@ -600,7 +720,9 @@ hover:bg-info-contrast/90
 hover:bg-info-contrast/100
 hover:bg-accent
 hover:bg-accent/0
+hover:bg-accent/5
 hover:bg-accent/10
+hover:bg-accent/15
 hover:bg-accent/20
 hover:bg-accent/30
 hover:bg-accent/40
@@ -610,7 +732,9 @@ hover:bg-accent/90
 hover:bg-accent/100
 hover:bg-accent-contrast
 hover:bg-accent-contrast/0
+hover:bg-accent-contrast/5
 hover:bg-accent-contrast/10
+hover:bg-accent-contrast/15
 hover:bg-accent-contrast/20
 hover:bg-accent-contrast/30
 hover:bg-accent-contrast/40
@@ -620,7 +744,9 @@ hover:bg-accent-contrast/90
 hover:bg-accent-contrast/100
 hover:bg-neutral
 hover:bg-neutral/0
+hover:bg-neutral/5
 hover:bg-neutral/10
+hover:bg-neutral/15
 hover:bg-neutral/20
 hover:bg-neutral/30
 hover:bg-neutral/40
@@ -630,7 +756,9 @@ hover:bg-neutral/90
 hover:bg-neutral/100
 hover:bg-neutral-contrast
 hover:bg-neutral-contrast/0
+hover:bg-neutral-contrast/5
 hover:bg-neutral-contrast/10
+hover:bg-neutral-contrast/15
 hover:bg-neutral-contrast/20
 hover:bg-neutral-contrast/30
 hover:bg-neutral-contrast/40
@@ -640,7 +768,9 @@ hover:bg-neutral-contrast/90
 hover:bg-neutral-contrast/100
 hover:border-primary
 hover:border-primary/0
+hover:border-primary/5
 hover:border-primary/10
+hover:border-primary/15
 hover:border-primary/20
 hover:border-primary/30
 hover:border-primary/40
@@ -650,7 +780,9 @@ hover:border-primary/90
 hover:border-primary/100
 hover:border-primary-contrast
 hover:border-primary-contrast/0
+hover:border-primary-contrast/5
 hover:border-primary-contrast/10
+hover:border-primary-contrast/15
 hover:border-primary-contrast/20
 hover:border-primary-contrast/30
 hover:border-primary-contrast/40
@@ -660,7 +792,9 @@ hover:border-primary-contrast/90
 hover:border-primary-contrast/100
 hover:border-secondary
 hover:border-secondary/0
+hover:border-secondary/5
 hover:border-secondary/10
+hover:border-secondary/15
 hover:border-secondary/20
 hover:border-secondary/30
 hover:border-secondary/40
@@ -670,7 +804,9 @@ hover:border-secondary/90
 hover:border-secondary/100
 hover:border-secondary-contrast
 hover:border-secondary-contrast/0
+hover:border-secondary-contrast/5
 hover:border-secondary-contrast/10
+hover:border-secondary-contrast/15
 hover:border-secondary-contrast/20
 hover:border-secondary-contrast/30
 hover:border-secondary-contrast/40
@@ -680,7 +816,9 @@ hover:border-secondary-contrast/90
 hover:border-secondary-contrast/100
 hover:border-error
 hover:border-error/0
+hover:border-error/5
 hover:border-error/10
+hover:border-error/15
 hover:border-error/20
 hover:border-error/30
 hover:border-error/40
@@ -690,7 +828,9 @@ hover:border-error/90
 hover:border-error/100
 hover:border-error-contrast
 hover:border-error-contrast/0
+hover:border-error-contrast/5
 hover:border-error-contrast/10
+hover:border-error-contrast/15
 hover:border-error-contrast/20
 hover:border-error-contrast/30
 hover:border-error-contrast/40
@@ -700,7 +840,9 @@ hover:border-error-contrast/90
 hover:border-error-contrast/100
 hover:border-success
 hover:border-success/0
+hover:border-success/5
 hover:border-success/10
+hover:border-success/15
 hover:border-success/20
 hover:border-success/30
 hover:border-success/40
@@ -710,7 +852,9 @@ hover:border-success/90
 hover:border-success/100
 hover:border-success-contrast
 hover:border-success-contrast/0
+hover:border-success-contrast/5
 hover:border-success-contrast/10
+hover:border-success-contrast/15
 hover:border-success-contrast/20
 hover:border-success-contrast/30
 hover:border-success-contrast/40
@@ -720,7 +864,9 @@ hover:border-success-contrast/90
 hover:border-success-contrast/100
 hover:border-warning
 hover:border-warning/0
+hover:border-warning/5
 hover:border-warning/10
+hover:border-warning/15
 hover:border-warning/20
 hover:border-warning/30
 hover:border-warning/40
@@ -730,7 +876,9 @@ hover:border-warning/90
 hover:border-warning/100
 hover:border-warning-contrast
 hover:border-warning-contrast/0
+hover:border-warning-contrast/5
 hover:border-warning-contrast/10
+hover:border-warning-contrast/15
 hover:border-warning-contrast/20
 hover:border-warning-contrast/30
 hover:border-warning-contrast/40
@@ -740,7 +888,9 @@ hover:border-warning-contrast/90
 hover:border-warning-contrast/100
 hover:border-info
 hover:border-info/0
+hover:border-info/5
 hover:border-info/10
+hover:border-info/15
 hover:border-info/20
 hover:border-info/30
 hover:border-info/40
@@ -750,7 +900,9 @@ hover:border-info/90
 hover:border-info/100
 hover:border-info-contrast
 hover:border-info-contrast/0
+hover:border-info-contrast/5
 hover:border-info-contrast/10
+hover:border-info-contrast/15
 hover:border-info-contrast/20
 hover:border-info-contrast/30
 hover:border-info-contrast/40
@@ -760,7 +912,9 @@ hover:border-info-contrast/90
 hover:border-info-contrast/100
 hover:border-accent
 hover:border-accent/0
+hover:border-accent/5
 hover:border-accent/10
+hover:border-accent/15
 hover:border-accent/20
 hover:border-accent/30
 hover:border-accent/40
@@ -770,7 +924,9 @@ hover:border-accent/90
 hover:border-accent/100
 hover:border-accent-contrast
 hover:border-accent-contrast/0
+hover:border-accent-contrast/5
 hover:border-accent-contrast/10
+hover:border-accent-contrast/15
 hover:border-accent-contrast/20
 hover:border-accent-contrast/30
 hover:border-accent-contrast/40
@@ -780,7 +936,9 @@ hover:border-accent-contrast/90
 hover:border-accent-contrast/100
 hover:border-neutral
 hover:border-neutral/0
+hover:border-neutral/5
 hover:border-neutral/10
+hover:border-neutral/15
 hover:border-neutral/20
 hover:border-neutral/30
 hover:border-neutral/40
@@ -790,7 +948,9 @@ hover:border-neutral/90
 hover:border-neutral/100
 hover:border-neutral-contrast
 hover:border-neutral-contrast/0
+hover:border-neutral-contrast/5
 hover:border-neutral-contrast/10
+hover:border-neutral-contrast/15
 hover:border-neutral-contrast/20
 hover:border-neutral-contrast/30
 hover:border-neutral-contrast/40
@@ -800,7 +960,9 @@ hover:border-neutral-contrast/90
 hover:border-neutral-contrast/100
 hover:text-primary
 hover:text-primary/0
+hover:text-primary/5
 hover:text-primary/10
+hover:text-primary/15
 hover:text-primary/20
 hover:text-primary/30
 hover:text-primary/40
@@ -810,7 +972,9 @@ hover:text-primary/90
 hover:text-primary/100
 hover:text-primary-contrast
 hover:text-primary-contrast/0
+hover:text-primary-contrast/5
 hover:text-primary-contrast/10
+hover:text-primary-contrast/15
 hover:text-primary-contrast/20
 hover:text-primary-contrast/30
 hover:text-primary-contrast/40
@@ -820,7 +984,9 @@ hover:text-primary-contrast/90
 hover:text-primary-contrast/100
 hover:text-secondary
 hover:text-secondary/0
+hover:text-secondary/5
 hover:text-secondary/10
+hover:text-secondary/15
 hover:text-secondary/20
 hover:text-secondary/30
 hover:text-secondary/40
@@ -830,7 +996,9 @@ hover:text-secondary/90
 hover:text-secondary/100
 hover:text-secondary-contrast
 hover:text-secondary-contrast/0
+hover:text-secondary-contrast/5
 hover:text-secondary-contrast/10
+hover:text-secondary-contrast/15
 hover:text-secondary-contrast/20
 hover:text-secondary-contrast/30
 hover:text-secondary-contrast/40
@@ -840,7 +1008,9 @@ hover:text-secondary-contrast/90
 hover:text-secondary-contrast/100
 hover:text-error
 hover:text-error/0
+hover:text-error/5
 hover:text-error/10
+hover:text-error/15
 hover:text-error/20
 hover:text-error/30
 hover:text-error/40
@@ -850,7 +1020,9 @@ hover:text-error/90
 hover:text-error/100
 hover:text-error-contrast
 hover:text-error-contrast/0
+hover:text-error-contrast/5
 hover:text-error-contrast/10
+hover:text-error-contrast/15
 hover:text-error-contrast/20
 hover:text-error-contrast/30
 hover:text-error-contrast/40
@@ -860,7 +1032,9 @@ hover:text-error-contrast/90
 hover:text-error-contrast/100
 hover:text-success
 hover:text-success/0
+hover:text-success/5
 hover:text-success/10
+hover:text-success/15
 hover:text-success/20
 hover:text-success/30
 hover:text-success/40
@@ -870,7 +1044,9 @@ hover:text-success/90
 hover:text-success/100
 hover:text-success-contrast
 hover:text-success-contrast/0
+hover:text-success-contrast/5
 hover:text-success-contrast/10
+hover:text-success-contrast/15
 hover:text-success-contrast/20
 hover:text-success-contrast/30
 hover:text-success-contrast/40
@@ -880,7 +1056,9 @@ hover:text-success-contrast/90
 hover:text-success-contrast/100
 hover:text-warning
 hover:text-warning/0
+hover:text-warning/5
 hover:text-warning/10
+hover:text-warning/15
 hover:text-warning/20
 hover:text-warning/30
 hover:text-warning/40
@@ -890,7 +1068,9 @@ hover:text-warning/90
 hover:text-warning/100
 hover:text-warning-contrast
 hover:text-warning-contrast/0
+hover:text-warning-contrast/5
 hover:text-warning-contrast/10
+hover:text-warning-contrast/15
 hover:text-warning-contrast/20
 hover:text-warning-contrast/30
 hover:text-warning-contrast/40
@@ -900,7 +1080,9 @@ hover:text-warning-contrast/90
 hover:text-warning-contrast/100
 hover:text-info
 hover:text-info/0
+hover:text-info/5
 hover:text-info/10
+hover:text-info/15
 hover:text-info/20
 hover:text-info/30
 hover:text-info/40
@@ -910,7 +1092,9 @@ hover:text-info/90
 hover:text-info/100
 hover:text-info-contrast
 hover:text-info-contrast/0
+hover:text-info-contrast/5
 hover:text-info-contrast/10
+hover:text-info-contrast/15
 hover:text-info-contrast/20
 hover:text-info-contrast/30
 hover:text-info-contrast/40
@@ -920,7 +1104,9 @@ hover:text-info-contrast/90
 hover:text-info-contrast/100
 hover:text-accent
 hover:text-accent/0
+hover:text-accent/5
 hover:text-accent/10
+hover:text-accent/15
 hover:text-accent/20
 hover:text-accent/30
 hover:text-accent/40
@@ -930,7 +1116,9 @@ hover:text-accent/90
 hover:text-accent/100
 hover:text-accent-contrast
 hover:text-accent-contrast/0
+hover:text-accent-contrast/5
 hover:text-accent-contrast/10
+hover:text-accent-contrast/15
 hover:text-accent-contrast/20
 hover:text-accent-contrast/30
 hover:text-accent-contrast/40
@@ -940,7 +1128,9 @@ hover:text-accent-contrast/90
 hover:text-accent-contrast/100
 hover:text-neutral
 hover:text-neutral/0
+hover:text-neutral/5
 hover:text-neutral/10
+hover:text-neutral/15
 hover:text-neutral/20
 hover:text-neutral/30
 hover:text-neutral/40
@@ -950,7 +1140,9 @@ hover:text-neutral/90
 hover:text-neutral/100
 hover:text-neutral-contrast
 hover:text-neutral-contrast/0
+hover:text-neutral-contrast/5
 hover:text-neutral-contrast/10
+hover:text-neutral-contrast/15
 hover:text-neutral-contrast/20
 hover:text-neutral-contrast/30
 hover:text-neutral-contrast/40
@@ -960,7 +1152,9 @@ hover:text-neutral-contrast/90
 hover:text-neutral-contrast/100
 focus:bg-primary
 focus:bg-primary/0
+focus:bg-primary/5
 focus:bg-primary/10
+focus:bg-primary/15
 focus:bg-primary/20
 focus:bg-primary/30
 focus:bg-primary/40
@@ -970,7 +1164,9 @@ focus:bg-primary/90
 focus:bg-primary/100
 focus:bg-primary-contrast
 focus:bg-primary-contrast/0
+focus:bg-primary-contrast/5
 focus:bg-primary-contrast/10
+focus:bg-primary-contrast/15
 focus:bg-primary-contrast/20
 focus:bg-primary-contrast/30
 focus:bg-primary-contrast/40
@@ -980,7 +1176,9 @@ focus:bg-primary-contrast/90
 focus:bg-primary-contrast/100
 focus:bg-secondary
 focus:bg-secondary/0
+focus:bg-secondary/5
 focus:bg-secondary/10
+focus:bg-secondary/15
 focus:bg-secondary/20
 focus:bg-secondary/30
 focus:bg-secondary/40
@@ -990,7 +1188,9 @@ focus:bg-secondary/90
 focus:bg-secondary/100
 focus:bg-secondary-contrast
 focus:bg-secondary-contrast/0
+focus:bg-secondary-contrast/5
 focus:bg-secondary-contrast/10
+focus:bg-secondary-contrast/15
 focus:bg-secondary-contrast/20
 focus:bg-secondary-contrast/30
 focus:bg-secondary-contrast/40
@@ -1000,7 +1200,9 @@ focus:bg-secondary-contrast/90
 focus:bg-secondary-contrast/100
 focus:bg-error
 focus:bg-error/0
+focus:bg-error/5
 focus:bg-error/10
+focus:bg-error/15
 focus:bg-error/20
 focus:bg-error/30
 focus:bg-error/40
@@ -1010,7 +1212,9 @@ focus:bg-error/90
 focus:bg-error/100
 focus:bg-error-contrast
 focus:bg-error-contrast/0
+focus:bg-error-contrast/5
 focus:bg-error-contrast/10
+focus:bg-error-contrast/15
 focus:bg-error-contrast/20
 focus:bg-error-contrast/30
 focus:bg-error-contrast/40
@@ -1020,7 +1224,9 @@ focus:bg-error-contrast/90
 focus:bg-error-contrast/100
 focus:bg-success
 focus:bg-success/0
+focus:bg-success/5
 focus:bg-success/10
+focus:bg-success/15
 focus:bg-success/20
 focus:bg-success/30
 focus:bg-success/40
@@ -1030,7 +1236,9 @@ focus:bg-success/90
 focus:bg-success/100
 focus:bg-success-contrast
 focus:bg-success-contrast/0
+focus:bg-success-contrast/5
 focus:bg-success-contrast/10
+focus:bg-success-contrast/15
 focus:bg-success-contrast/20
 focus:bg-success-contrast/30
 focus:bg-success-contrast/40
@@ -1040,7 +1248,9 @@ focus:bg-success-contrast/90
 focus:bg-success-contrast/100
 focus:bg-warning
 focus:bg-warning/0
+focus:bg-warning/5
 focus:bg-warning/10
+focus:bg-warning/15
 focus:bg-warning/20
 focus:bg-warning/30
 focus:bg-warning/40
@@ -1050,7 +1260,9 @@ focus:bg-warning/90
 focus:bg-warning/100
 focus:bg-warning-contrast
 focus:bg-warning-contrast/0
+focus:bg-warning-contrast/5
 focus:bg-warning-contrast/10
+focus:bg-warning-contrast/15
 focus:bg-warning-contrast/20
 focus:bg-warning-contrast/30
 focus:bg-warning-contrast/40
@@ -1060,7 +1272,9 @@ focus:bg-warning-contrast/90
 focus:bg-warning-contrast/100
 focus:bg-info
 focus:bg-info/0
+focus:bg-info/5
 focus:bg-info/10
+focus:bg-info/15
 focus:bg-info/20
 focus:bg-info/30
 focus:bg-info/40
@@ -1070,7 +1284,9 @@ focus:bg-info/90
 focus:bg-info/100
 focus:bg-info-contrast
 focus:bg-info-contrast/0
+focus:bg-info-contrast/5
 focus:bg-info-contrast/10
+focus:bg-info-contrast/15
 focus:bg-info-contrast/20
 focus:bg-info-contrast/30
 focus:bg-info-contrast/40
@@ -1080,7 +1296,9 @@ focus:bg-info-contrast/90
 focus:bg-info-contrast/100
 focus:bg-accent
 focus:bg-accent/0
+focus:bg-accent/5
 focus:bg-accent/10
+focus:bg-accent/15
 focus:bg-accent/20
 focus:bg-accent/30
 focus:bg-accent/40
@@ -1090,7 +1308,9 @@ focus:bg-accent/90
 focus:bg-accent/100
 focus:bg-accent-contrast
 focus:bg-accent-contrast/0
+focus:bg-accent-contrast/5
 focus:bg-accent-contrast/10
+focus:bg-accent-contrast/15
 focus:bg-accent-contrast/20
 focus:bg-accent-contrast/30
 focus:bg-accent-contrast/40
@@ -1100,7 +1320,9 @@ focus:bg-accent-contrast/90
 focus:bg-accent-contrast/100
 focus:bg-neutral
 focus:bg-neutral/0
+focus:bg-neutral/5
 focus:bg-neutral/10
+focus:bg-neutral/15
 focus:bg-neutral/20
 focus:bg-neutral/30
 focus:bg-neutral/40
@@ -1110,7 +1332,9 @@ focus:bg-neutral/90
 focus:bg-neutral/100
 focus:bg-neutral-contrast
 focus:bg-neutral-contrast/0
+focus:bg-neutral-contrast/5
 focus:bg-neutral-contrast/10
+focus:bg-neutral-contrast/15
 focus:bg-neutral-contrast/20
 focus:bg-neutral-contrast/30
 focus:bg-neutral-contrast/40
@@ -1120,7 +1344,9 @@ focus:bg-neutral-contrast/90
 focus:bg-neutral-contrast/100
 focus:border-primary
 focus:border-primary/0
+focus:border-primary/5
 focus:border-primary/10
+focus:border-primary/15
 focus:border-primary/20
 focus:border-primary/30
 focus:border-primary/40
@@ -1130,7 +1356,9 @@ focus:border-primary/90
 focus:border-primary/100
 focus:border-primary-contrast
 focus:border-primary-contrast/0
+focus:border-primary-contrast/5
 focus:border-primary-contrast/10
+focus:border-primary-contrast/15
 focus:border-primary-contrast/20
 focus:border-primary-contrast/30
 focus:border-primary-contrast/40
@@ -1140,7 +1368,9 @@ focus:border-primary-contrast/90
 focus:border-primary-contrast/100
 focus:border-secondary
 focus:border-secondary/0
+focus:border-secondary/5
 focus:border-secondary/10
+focus:border-secondary/15
 focus:border-secondary/20
 focus:border-secondary/30
 focus:border-secondary/40
@@ -1150,7 +1380,9 @@ focus:border-secondary/90
 focus:border-secondary/100
 focus:border-secondary-contrast
 focus:border-secondary-contrast/0
+focus:border-secondary-contrast/5
 focus:border-secondary-contrast/10
+focus:border-secondary-contrast/15
 focus:border-secondary-contrast/20
 focus:border-secondary-contrast/30
 focus:border-secondary-contrast/40
@@ -1160,7 +1392,9 @@ focus:border-secondary-contrast/90
 focus:border-secondary-contrast/100
 focus:border-error
 focus:border-error/0
+focus:border-error/5
 focus:border-error/10
+focus:border-error/15
 focus:border-error/20
 focus:border-error/30
 focus:border-error/40
@@ -1170,7 +1404,9 @@ focus:border-error/90
 focus:border-error/100
 focus:border-error-contrast
 focus:border-error-contrast/0
+focus:border-error-contrast/5
 focus:border-error-contrast/10
+focus:border-error-contrast/15
 focus:border-error-contrast/20
 focus:border-error-contrast/30
 focus:border-error-contrast/40
@@ -1180,7 +1416,9 @@ focus:border-error-contrast/90
 focus:border-error-contrast/100
 focus:border-success
 focus:border-success/0
+focus:border-success/5
 focus:border-success/10
+focus:border-success/15
 focus:border-success/20
 focus:border-success/30
 focus:border-success/40
@@ -1190,7 +1428,9 @@ focus:border-success/90
 focus:border-success/100
 focus:border-success-contrast
 focus:border-success-contrast/0
+focus:border-success-contrast/5
 focus:border-success-contrast/10
+focus:border-success-contrast/15
 focus:border-success-contrast/20
 focus:border-success-contrast/30
 focus:border-success-contrast/40
@@ -1200,7 +1440,9 @@ focus:border-success-contrast/90
 focus:border-success-contrast/100
 focus:border-warning
 focus:border-warning/0
+focus:border-warning/5
 focus:border-warning/10
+focus:border-warning/15
 focus:border-warning/20
 focus:border-warning/30
 focus:border-warning/40
@@ -1210,7 +1452,9 @@ focus:border-warning/90
 focus:border-warning/100
 focus:border-warning-contrast
 focus:border-warning-contrast/0
+focus:border-warning-contrast/5
 focus:border-warning-contrast/10
+focus:border-warning-contrast/15
 focus:border-warning-contrast/20
 focus:border-warning-contrast/30
 focus:border-warning-contrast/40
@@ -1220,7 +1464,9 @@ focus:border-warning-contrast/90
 focus:border-warning-contrast/100
 focus:border-info
 focus:border-info/0
+focus:border-info/5
 focus:border-info/10
+focus:border-info/15
 focus:border-info/20
 focus:border-info/30
 focus:border-info/40
@@ -1230,7 +1476,9 @@ focus:border-info/90
 focus:border-info/100
 focus:border-info-contrast
 focus:border-info-contrast/0
+focus:border-info-contrast/5
 focus:border-info-contrast/10
+focus:border-info-contrast/15
 focus:border-info-contrast/20
 focus:border-info-contrast/30
 focus:border-info-contrast/40
@@ -1240,7 +1488,9 @@ focus:border-info-contrast/90
 focus:border-info-contrast/100
 focus:border-accent
 focus:border-accent/0
+focus:border-accent/5
 focus:border-accent/10
+focus:border-accent/15
 focus:border-accent/20
 focus:border-accent/30
 focus:border-accent/40
@@ -1250,7 +1500,9 @@ focus:border-accent/90
 focus:border-accent/100
 focus:border-accent-contrast
 focus:border-accent-contrast/0
+focus:border-accent-contrast/5
 focus:border-accent-contrast/10
+focus:border-accent-contrast/15
 focus:border-accent-contrast/20
 focus:border-accent-contrast/30
 focus:border-accent-contrast/40
@@ -1260,7 +1512,9 @@ focus:border-accent-contrast/90
 focus:border-accent-contrast/100
 focus:border-neutral
 focus:border-neutral/0
+focus:border-neutral/5
 focus:border-neutral/10
+focus:border-neutral/15
 focus:border-neutral/20
 focus:border-neutral/30
 focus:border-neutral/40
@@ -1270,7 +1524,9 @@ focus:border-neutral/90
 focus:border-neutral/100
 focus:border-neutral-contrast
 focus:border-neutral-contrast/0
+focus:border-neutral-contrast/5
 focus:border-neutral-contrast/10
+focus:border-neutral-contrast/15
 focus:border-neutral-contrast/20
 focus:border-neutral-contrast/30
 focus:border-neutral-contrast/40
@@ -1280,7 +1536,9 @@ focus:border-neutral-contrast/90
 focus:border-neutral-contrast/100
 focus:text-primary
 focus:text-primary/0
+focus:text-primary/5
 focus:text-primary/10
+focus:text-primary/15
 focus:text-primary/20
 focus:text-primary/30
 focus:text-primary/40
@@ -1290,7 +1548,9 @@ focus:text-primary/90
 focus:text-primary/100
 focus:text-primary-contrast
 focus:text-primary-contrast/0
+focus:text-primary-contrast/5
 focus:text-primary-contrast/10
+focus:text-primary-contrast/15
 focus:text-primary-contrast/20
 focus:text-primary-contrast/30
 focus:text-primary-contrast/40
@@ -1300,7 +1560,9 @@ focus:text-primary-contrast/90
 focus:text-primary-contrast/100
 focus:text-secondary
 focus:text-secondary/0
+focus:text-secondary/5
 focus:text-secondary/10
+focus:text-secondary/15
 focus:text-secondary/20
 focus:text-secondary/30
 focus:text-secondary/40
@@ -1310,7 +1572,9 @@ focus:text-secondary/90
 focus:text-secondary/100
 focus:text-secondary-contrast
 focus:text-secondary-contrast/0
+focus:text-secondary-contrast/5
 focus:text-secondary-contrast/10
+focus:text-secondary-contrast/15
 focus:text-secondary-contrast/20
 focus:text-secondary-contrast/30
 focus:text-secondary-contrast/40
@@ -1320,7 +1584,9 @@ focus:text-secondary-contrast/90
 focus:text-secondary-contrast/100
 focus:text-error
 focus:text-error/0
+focus:text-error/5
 focus:text-error/10
+focus:text-error/15
 focus:text-error/20
 focus:text-error/30
 focus:text-error/40
@@ -1330,7 +1596,9 @@ focus:text-error/90
 focus:text-error/100
 focus:text-error-contrast
 focus:text-error-contrast/0
+focus:text-error-contrast/5
 focus:text-error-contrast/10
+focus:text-error-contrast/15
 focus:text-error-contrast/20
 focus:text-error-contrast/30
 focus:text-error-contrast/40
@@ -1340,7 +1608,9 @@ focus:text-error-contrast/90
 focus:text-error-contrast/100
 focus:text-success
 focus:text-success/0
+focus:text-success/5
 focus:text-success/10
+focus:text-success/15
 focus:text-success/20
 focus:text-success/30
 focus:text-success/40
@@ -1350,7 +1620,9 @@ focus:text-success/90
 focus:text-success/100
 focus:text-success-contrast
 focus:text-success-contrast/0
+focus:text-success-contrast/5
 focus:text-success-contrast/10
+focus:text-success-contrast/15
 focus:text-success-contrast/20
 focus:text-success-contrast/30
 focus:text-success-contrast/40
@@ -1360,7 +1632,9 @@ focus:text-success-contrast/90
 focus:text-success-contrast/100
 focus:text-warning
 focus:text-warning/0
+focus:text-warning/5
 focus:text-warning/10
+focus:text-warning/15
 focus:text-warning/20
 focus:text-warning/30
 focus:text-warning/40
@@ -1370,7 +1644,9 @@ focus:text-warning/90
 focus:text-warning/100
 focus:text-warning-contrast
 focus:text-warning-contrast/0
+focus:text-warning-contrast/5
 focus:text-warning-contrast/10
+focus:text-warning-contrast/15
 focus:text-warning-contrast/20
 focus:text-warning-contrast/30
 focus:text-warning-contrast/40
@@ -1380,7 +1656,9 @@ focus:text-warning-contrast/90
 focus:text-warning-contrast/100
 focus:text-info
 focus:text-info/0
+focus:text-info/5
 focus:text-info/10
+focus:text-info/15
 focus:text-info/20
 focus:text-info/30
 focus:text-info/40
@@ -1390,7 +1668,9 @@ focus:text-info/90
 focus:text-info/100
 focus:text-info-contrast
 focus:text-info-contrast/0
+focus:text-info-contrast/5
 focus:text-info-contrast/10
+focus:text-info-contrast/15
 focus:text-info-contrast/20
 focus:text-info-contrast/30
 focus:text-info-contrast/40
@@ -1400,7 +1680,9 @@ focus:text-info-contrast/90
 focus:text-info-contrast/100
 focus:text-accent
 focus:text-accent/0
+focus:text-accent/5
 focus:text-accent/10
+focus:text-accent/15
 focus:text-accent/20
 focus:text-accent/30
 focus:text-accent/40
@@ -1410,7 +1692,9 @@ focus:text-accent/90
 focus:text-accent/100
 focus:text-accent-contrast
 focus:text-accent-contrast/0
+focus:text-accent-contrast/5
 focus:text-accent-contrast/10
+focus:text-accent-contrast/15
 focus:text-accent-contrast/20
 focus:text-accent-contrast/30
 focus:text-accent-contrast/40
@@ -1420,7 +1704,9 @@ focus:text-accent-contrast/90
 focus:text-accent-contrast/100
 focus:text-neutral
 focus:text-neutral/0
+focus:text-neutral/5
 focus:text-neutral/10
+focus:text-neutral/15
 focus:text-neutral/20
 focus:text-neutral/30
 focus:text-neutral/40
@@ -1430,7 +1716,9 @@ focus:text-neutral/90
 focus:text-neutral/100
 focus:text-neutral-contrast
 focus:text-neutral-contrast/0
+focus:text-neutral-contrast/5
 focus:text-neutral-contrast/10
+focus:text-neutral-contrast/15
 focus:text-neutral-contrast/20
 focus:text-neutral-contrast/30
 focus:text-neutral-contrast/40
@@ -1440,7 +1728,9 @@ focus:text-neutral-contrast/90
 focus:text-neutral-contrast/100
 active:bg-primary
 active:bg-primary/0
+active:bg-primary/5
 active:bg-primary/10
+active:bg-primary/15
 active:bg-primary/20
 active:bg-primary/30
 active:bg-primary/40
@@ -1450,7 +1740,9 @@ active:bg-primary/90
 active:bg-primary/100
 active:bg-primary-contrast
 active:bg-primary-contrast/0
+active:bg-primary-contrast/5
 active:bg-primary-contrast/10
+active:bg-primary-contrast/15
 active:bg-primary-contrast/20
 active:bg-primary-contrast/30
 active:bg-primary-contrast/40
@@ -1460,7 +1752,9 @@ active:bg-primary-contrast/90
 active:bg-primary-contrast/100
 active:bg-secondary
 active:bg-secondary/0
+active:bg-secondary/5
 active:bg-secondary/10
+active:bg-secondary/15
 active:bg-secondary/20
 active:bg-secondary/30
 active:bg-secondary/40
@@ -1470,7 +1764,9 @@ active:bg-secondary/90
 active:bg-secondary/100
 active:bg-secondary-contrast
 active:bg-secondary-contrast/0
+active:bg-secondary-contrast/5
 active:bg-secondary-contrast/10
+active:bg-secondary-contrast/15
 active:bg-secondary-contrast/20
 active:bg-secondary-contrast/30
 active:bg-secondary-contrast/40
@@ -1480,7 +1776,9 @@ active:bg-secondary-contrast/90
 active:bg-secondary-contrast/100
 active:bg-error
 active:bg-error/0
+active:bg-error/5
 active:bg-error/10
+active:bg-error/15
 active:bg-error/20
 active:bg-error/30
 active:bg-error/40
@@ -1490,7 +1788,9 @@ active:bg-error/90
 active:bg-error/100
 active:bg-error-contrast
 active:bg-error-contrast/0
+active:bg-error-contrast/5
 active:bg-error-contrast/10
+active:bg-error-contrast/15
 active:bg-error-contrast/20
 active:bg-error-contrast/30
 active:bg-error-contrast/40
@@ -1500,7 +1800,9 @@ active:bg-error-contrast/90
 active:bg-error-contrast/100
 active:bg-success
 active:bg-success/0
+active:bg-success/5
 active:bg-success/10
+active:bg-success/15
 active:bg-success/20
 active:bg-success/30
 active:bg-success/40
@@ -1510,7 +1812,9 @@ active:bg-success/90
 active:bg-success/100
 active:bg-success-contrast
 active:bg-success-contrast/0
+active:bg-success-contrast/5
 active:bg-success-contrast/10
+active:bg-success-contrast/15
 active:bg-success-contrast/20
 active:bg-success-contrast/30
 active:bg-success-contrast/40
@@ -1520,7 +1824,9 @@ active:bg-success-contrast/90
 active:bg-success-contrast/100
 active:bg-warning
 active:bg-warning/0
+active:bg-warning/5
 active:bg-warning/10
+active:bg-warning/15
 active:bg-warning/20
 active:bg-warning/30
 active:bg-warning/40
@@ -1530,7 +1836,9 @@ active:bg-warning/90
 active:bg-warning/100
 active:bg-warning-contrast
 active:bg-warning-contrast/0
+active:bg-warning-contrast/5
 active:bg-warning-contrast/10
+active:bg-warning-contrast/15
 active:bg-warning-contrast/20
 active:bg-warning-contrast/30
 active:bg-warning-contrast/40
@@ -1540,7 +1848,9 @@ active:bg-warning-contrast/90
 active:bg-warning-contrast/100
 active:bg-info
 active:bg-info/0
+active:bg-info/5
 active:bg-info/10
+active:bg-info/15
 active:bg-info/20
 active:bg-info/30
 active:bg-info/40
@@ -1550,7 +1860,9 @@ active:bg-info/90
 active:bg-info/100
 active:bg-info-contrast
 active:bg-info-contrast/0
+active:bg-info-contrast/5
 active:bg-info-contrast/10
+active:bg-info-contrast/15
 active:bg-info-contrast/20
 active:bg-info-contrast/30
 active:bg-info-contrast/40
@@ -1560,7 +1872,9 @@ active:bg-info-contrast/90
 active:bg-info-contrast/100
 active:bg-accent
 active:bg-accent/0
+active:bg-accent/5
 active:bg-accent/10
+active:bg-accent/15
 active:bg-accent/20
 active:bg-accent/30
 active:bg-accent/40
@@ -1570,7 +1884,9 @@ active:bg-accent/90
 active:bg-accent/100
 active:bg-accent-contrast
 active:bg-accent-contrast/0
+active:bg-accent-contrast/5
 active:bg-accent-contrast/10
+active:bg-accent-contrast/15
 active:bg-accent-contrast/20
 active:bg-accent-contrast/30
 active:bg-accent-contrast/40
@@ -1580,7 +1896,9 @@ active:bg-accent-contrast/90
 active:bg-accent-contrast/100
 active:bg-neutral
 active:bg-neutral/0
+active:bg-neutral/5
 active:bg-neutral/10
+active:bg-neutral/15
 active:bg-neutral/20
 active:bg-neutral/30
 active:bg-neutral/40
@@ -1590,7 +1908,9 @@ active:bg-neutral/90
 active:bg-neutral/100
 active:bg-neutral-contrast
 active:bg-neutral-contrast/0
+active:bg-neutral-contrast/5
 active:bg-neutral-contrast/10
+active:bg-neutral-contrast/15
 active:bg-neutral-contrast/20
 active:bg-neutral-contrast/30
 active:bg-neutral-contrast/40
@@ -1600,7 +1920,9 @@ active:bg-neutral-contrast/90
 active:bg-neutral-contrast/100
 active:border-primary
 active:border-primary/0
+active:border-primary/5
 active:border-primary/10
+active:border-primary/15
 active:border-primary/20
 active:border-primary/30
 active:border-primary/40
@@ -1610,7 +1932,9 @@ active:border-primary/90
 active:border-primary/100
 active:border-primary-contrast
 active:border-primary-contrast/0
+active:border-primary-contrast/5
 active:border-primary-contrast/10
+active:border-primary-contrast/15
 active:border-primary-contrast/20
 active:border-primary-contrast/30
 active:border-primary-contrast/40
@@ -1620,7 +1944,9 @@ active:border-primary-contrast/90
 active:border-primary-contrast/100
 active:border-secondary
 active:border-secondary/0
+active:border-secondary/5
 active:border-secondary/10
+active:border-secondary/15
 active:border-secondary/20
 active:border-secondary/30
 active:border-secondary/40
@@ -1630,7 +1956,9 @@ active:border-secondary/90
 active:border-secondary/100
 active:border-secondary-contrast
 active:border-secondary-contrast/0
+active:border-secondary-contrast/5
 active:border-secondary-contrast/10
+active:border-secondary-contrast/15
 active:border-secondary-contrast/20
 active:border-secondary-contrast/30
 active:border-secondary-contrast/40
@@ -1640,7 +1968,9 @@ active:border-secondary-contrast/90
 active:border-secondary-contrast/100
 active:border-error
 active:border-error/0
+active:border-error/5
 active:border-error/10
+active:border-error/15
 active:border-error/20
 active:border-error/30
 active:border-error/40
@@ -1650,7 +1980,9 @@ active:border-error/90
 active:border-error/100
 active:border-error-contrast
 active:border-error-contrast/0
+active:border-error-contrast/5
 active:border-error-contrast/10
+active:border-error-contrast/15
 active:border-error-contrast/20
 active:border-error-contrast/30
 active:border-error-contrast/40
@@ -1660,7 +1992,9 @@ active:border-error-contrast/90
 active:border-error-contrast/100
 active:border-success
 active:border-success/0
+active:border-success/5
 active:border-success/10
+active:border-success/15
 active:border-success/20
 active:border-success/30
 active:border-success/40
@@ -1670,7 +2004,9 @@ active:border-success/90
 active:border-success/100
 active:border-success-contrast
 active:border-success-contrast/0
+active:border-success-contrast/5
 active:border-success-contrast/10
+active:border-success-contrast/15
 active:border-success-contrast/20
 active:border-success-contrast/30
 active:border-success-contrast/40
@@ -1680,7 +2016,9 @@ active:border-success-contrast/90
 active:border-success-contrast/100
 active:border-warning
 active:border-warning/0
+active:border-warning/5
 active:border-warning/10
+active:border-warning/15
 active:border-warning/20
 active:border-warning/30
 active:border-warning/40
@@ -1690,7 +2028,9 @@ active:border-warning/90
 active:border-warning/100
 active:border-warning-contrast
 active:border-warning-contrast/0
+active:border-warning-contrast/5
 active:border-warning-contrast/10
+active:border-warning-contrast/15
 active:border-warning-contrast/20
 active:border-warning-contrast/30
 active:border-warning-contrast/40
@@ -1700,7 +2040,9 @@ active:border-warning-contrast/90
 active:border-warning-contrast/100
 active:border-info
 active:border-info/0
+active:border-info/5
 active:border-info/10
+active:border-info/15
 active:border-info/20
 active:border-info/30
 active:border-info/40
@@ -1710,7 +2052,9 @@ active:border-info/90
 active:border-info/100
 active:border-info-contrast
 active:border-info-contrast/0
+active:border-info-contrast/5
 active:border-info-contrast/10
+active:border-info-contrast/15
 active:border-info-contrast/20
 active:border-info-contrast/30
 active:border-info-contrast/40
@@ -1720,7 +2064,9 @@ active:border-info-contrast/90
 active:border-info-contrast/100
 active:border-accent
 active:border-accent/0
+active:border-accent/5
 active:border-accent/10
+active:border-accent/15
 active:border-accent/20
 active:border-accent/30
 active:border-accent/40
@@ -1730,7 +2076,9 @@ active:border-accent/90
 active:border-accent/100
 active:border-accent-contrast
 active:border-accent-contrast/0
+active:border-accent-contrast/5
 active:border-accent-contrast/10
+active:border-accent-contrast/15
 active:border-accent-contrast/20
 active:border-accent-contrast/30
 active:border-accent-contrast/40
@@ -1740,7 +2088,9 @@ active:border-accent-contrast/90
 active:border-accent-contrast/100
 active:border-neutral
 active:border-neutral/0
+active:border-neutral/5
 active:border-neutral/10
+active:border-neutral/15
 active:border-neutral/20
 active:border-neutral/30
 active:border-neutral/40
@@ -1750,7 +2100,9 @@ active:border-neutral/90
 active:border-neutral/100
 active:border-neutral-contrast
 active:border-neutral-contrast/0
+active:border-neutral-contrast/5
 active:border-neutral-contrast/10
+active:border-neutral-contrast/15
 active:border-neutral-contrast/20
 active:border-neutral-contrast/30
 active:border-neutral-contrast/40
@@ -1760,7 +2112,9 @@ active:border-neutral-contrast/90
 active:border-neutral-contrast/100
 active:text-primary
 active:text-primary/0
+active:text-primary/5
 active:text-primary/10
+active:text-primary/15
 active:text-primary/20
 active:text-primary/30
 active:text-primary/40
@@ -1770,7 +2124,9 @@ active:text-primary/90
 active:text-primary/100
 active:text-primary-contrast
 active:text-primary-contrast/0
+active:text-primary-contrast/5
 active:text-primary-contrast/10
+active:text-primary-contrast/15
 active:text-primary-contrast/20
 active:text-primary-contrast/30
 active:text-primary-contrast/40
@@ -1780,7 +2136,9 @@ active:text-primary-contrast/90
 active:text-primary-contrast/100
 active:text-secondary
 active:text-secondary/0
+active:text-secondary/5
 active:text-secondary/10
+active:text-secondary/15
 active:text-secondary/20
 active:text-secondary/30
 active:text-secondary/40
@@ -1790,7 +2148,9 @@ active:text-secondary/90
 active:text-secondary/100
 active:text-secondary-contrast
 active:text-secondary-contrast/0
+active:text-secondary-contrast/5
 active:text-secondary-contrast/10
+active:text-secondary-contrast/15
 active:text-secondary-contrast/20
 active:text-secondary-contrast/30
 active:text-secondary-contrast/40
@@ -1800,7 +2160,9 @@ active:text-secondary-contrast/90
 active:text-secondary-contrast/100
 active:text-error
 active:text-error/0
+active:text-error/5
 active:text-error/10
+active:text-error/15
 active:text-error/20
 active:text-error/30
 active:text-error/40
@@ -1810,7 +2172,9 @@ active:text-error/90
 active:text-error/100
 active:text-error-contrast
 active:text-error-contrast/0
+active:text-error-contrast/5
 active:text-error-contrast/10
+active:text-error-contrast/15
 active:text-error-contrast/20
 active:text-error-contrast/30
 active:text-error-contrast/40
@@ -1820,7 +2184,9 @@ active:text-error-contrast/90
 active:text-error-contrast/100
 active:text-success
 active:text-success/0
+active:text-success/5
 active:text-success/10
+active:text-success/15
 active:text-success/20
 active:text-success/30
 active:text-success/40
@@ -1830,7 +2196,9 @@ active:text-success/90
 active:text-success/100
 active:text-success-contrast
 active:text-success-contrast/0
+active:text-success-contrast/5
 active:text-success-contrast/10
+active:text-success-contrast/15
 active:text-success-contrast/20
 active:text-success-contrast/30
 active:text-success-contrast/40
@@ -1840,7 +2208,9 @@ active:text-success-contrast/90
 active:text-success-contrast/100
 active:text-warning
 active:text-warning/0
+active:text-warning/5
 active:text-warning/10
+active:text-warning/15
 active:text-warning/20
 active:text-warning/30
 active:text-warning/40
@@ -1850,7 +2220,9 @@ active:text-warning/90
 active:text-warning/100
 active:text-warning-contrast
 active:text-warning-contrast/0
+active:text-warning-contrast/5
 active:text-warning-contrast/10
+active:text-warning-contrast/15
 active:text-warning-contrast/20
 active:text-warning-contrast/30
 active:text-warning-contrast/40
@@ -1860,7 +2232,9 @@ active:text-warning-contrast/90
 active:text-warning-contrast/100
 active:text-info
 active:text-info/0
+active:text-info/5
 active:text-info/10
+active:text-info/15
 active:text-info/20
 active:text-info/30
 active:text-info/40
@@ -1870,7 +2244,9 @@ active:text-info/90
 active:text-info/100
 active:text-info-contrast
 active:text-info-contrast/0
+active:text-info-contrast/5
 active:text-info-contrast/10
+active:text-info-contrast/15
 active:text-info-contrast/20
 active:text-info-contrast/30
 active:text-info-contrast/40
@@ -1880,7 +2256,9 @@ active:text-info-contrast/90
 active:text-info-contrast/100
 active:text-accent
 active:text-accent/0
+active:text-accent/5
 active:text-accent/10
+active:text-accent/15
 active:text-accent/20
 active:text-accent/30
 active:text-accent/40
@@ -1890,7 +2268,9 @@ active:text-accent/90
 active:text-accent/100
 active:text-accent-contrast
 active:text-accent-contrast/0
+active:text-accent-contrast/5
 active:text-accent-contrast/10
+active:text-accent-contrast/15
 active:text-accent-contrast/20
 active:text-accent-contrast/30
 active:text-accent-contrast/40
@@ -1900,7 +2280,9 @@ active:text-accent-contrast/90
 active:text-accent-contrast/100
 active:text-neutral
 active:text-neutral/0
+active:text-neutral/5
 active:text-neutral/10
+active:text-neutral/15
 active:text-neutral/20
 active:text-neutral/30
 active:text-neutral/40
@@ -1910,7 +2292,9 @@ active:text-neutral/90
 active:text-neutral/100
 active:text-neutral-contrast
 active:text-neutral-contrast/0
+active:text-neutral-contrast/5
 active:text-neutral-contrast/10
+active:text-neutral-contrast/15
 active:text-neutral-contrast/20
 active:text-neutral-contrast/30
 active:text-neutral-contrast/40
@@ -1920,7 +2304,9 @@ active:text-neutral-contrast/90
 active:text-neutral-contrast/100
 disabled:bg-primary
 disabled:bg-primary/0
+disabled:bg-primary/5
 disabled:bg-primary/10
+disabled:bg-primary/15
 disabled:bg-primary/20
 disabled:bg-primary/30
 disabled:bg-primary/40
@@ -1930,7 +2316,9 @@ disabled:bg-primary/90
 disabled:bg-primary/100
 disabled:bg-primary-contrast
 disabled:bg-primary-contrast/0
+disabled:bg-primary-contrast/5
 disabled:bg-primary-contrast/10
+disabled:bg-primary-contrast/15
 disabled:bg-primary-contrast/20
 disabled:bg-primary-contrast/30
 disabled:bg-primary-contrast/40
@@ -1940,7 +2328,9 @@ disabled:bg-primary-contrast/90
 disabled:bg-primary-contrast/100
 disabled:bg-secondary
 disabled:bg-secondary/0
+disabled:bg-secondary/5
 disabled:bg-secondary/10
+disabled:bg-secondary/15
 disabled:bg-secondary/20
 disabled:bg-secondary/30
 disabled:bg-secondary/40
@@ -1950,7 +2340,9 @@ disabled:bg-secondary/90
 disabled:bg-secondary/100
 disabled:bg-secondary-contrast
 disabled:bg-secondary-contrast/0
+disabled:bg-secondary-contrast/5
 disabled:bg-secondary-contrast/10
+disabled:bg-secondary-contrast/15
 disabled:bg-secondary-contrast/20
 disabled:bg-secondary-contrast/30
 disabled:bg-secondary-contrast/40
@@ -1960,7 +2352,9 @@ disabled:bg-secondary-contrast/90
 disabled:bg-secondary-contrast/100
 disabled:bg-error
 disabled:bg-error/0
+disabled:bg-error/5
 disabled:bg-error/10
+disabled:bg-error/15
 disabled:bg-error/20
 disabled:bg-error/30
 disabled:bg-error/40
@@ -1970,7 +2364,9 @@ disabled:bg-error/90
 disabled:bg-error/100
 disabled:bg-error-contrast
 disabled:bg-error-contrast/0
+disabled:bg-error-contrast/5
 disabled:bg-error-contrast/10
+disabled:bg-error-contrast/15
 disabled:bg-error-contrast/20
 disabled:bg-error-contrast/30
 disabled:bg-error-contrast/40
@@ -1980,7 +2376,9 @@ disabled:bg-error-contrast/90
 disabled:bg-error-contrast/100
 disabled:bg-success
 disabled:bg-success/0
+disabled:bg-success/5
 disabled:bg-success/10
+disabled:bg-success/15
 disabled:bg-success/20
 disabled:bg-success/30
 disabled:bg-success/40
@@ -1990,7 +2388,9 @@ disabled:bg-success/90
 disabled:bg-success/100
 disabled:bg-success-contrast
 disabled:bg-success-contrast/0
+disabled:bg-success-contrast/5
 disabled:bg-success-contrast/10
+disabled:bg-success-contrast/15
 disabled:bg-success-contrast/20
 disabled:bg-success-contrast/30
 disabled:bg-success-contrast/40
@@ -2000,7 +2400,9 @@ disabled:bg-success-contrast/90
 disabled:bg-success-contrast/100
 disabled:bg-warning
 disabled:bg-warning/0
+disabled:bg-warning/5
 disabled:bg-warning/10
+disabled:bg-warning/15
 disabled:bg-warning/20
 disabled:bg-warning/30
 disabled:bg-warning/40
@@ -2010,7 +2412,9 @@ disabled:bg-warning/90
 disabled:bg-warning/100
 disabled:bg-warning-contrast
 disabled:bg-warning-contrast/0
+disabled:bg-warning-contrast/5
 disabled:bg-warning-contrast/10
+disabled:bg-warning-contrast/15
 disabled:bg-warning-contrast/20
 disabled:bg-warning-contrast/30
 disabled:bg-warning-contrast/40
@@ -2020,7 +2424,9 @@ disabled:bg-warning-contrast/90
 disabled:bg-warning-contrast/100
 disabled:bg-info
 disabled:bg-info/0
+disabled:bg-info/5
 disabled:bg-info/10
+disabled:bg-info/15
 disabled:bg-info/20
 disabled:bg-info/30
 disabled:bg-info/40
@@ -2030,7 +2436,9 @@ disabled:bg-info/90
 disabled:bg-info/100
 disabled:bg-info-contrast
 disabled:bg-info-contrast/0
+disabled:bg-info-contrast/5
 disabled:bg-info-contrast/10
+disabled:bg-info-contrast/15
 disabled:bg-info-contrast/20
 disabled:bg-info-contrast/30
 disabled:bg-info-contrast/40
@@ -2040,7 +2448,9 @@ disabled:bg-info-contrast/90
 disabled:bg-info-contrast/100
 disabled:bg-accent
 disabled:bg-accent/0
+disabled:bg-accent/5
 disabled:bg-accent/10
+disabled:bg-accent/15
 disabled:bg-accent/20
 disabled:bg-accent/30
 disabled:bg-accent/40
@@ -2050,7 +2460,9 @@ disabled:bg-accent/90
 disabled:bg-accent/100
 disabled:bg-accent-contrast
 disabled:bg-accent-contrast/0
+disabled:bg-accent-contrast/5
 disabled:bg-accent-contrast/10
+disabled:bg-accent-contrast/15
 disabled:bg-accent-contrast/20
 disabled:bg-accent-contrast/30
 disabled:bg-accent-contrast/40
@@ -2060,7 +2472,9 @@ disabled:bg-accent-contrast/90
 disabled:bg-accent-contrast/100
 disabled:bg-neutral
 disabled:bg-neutral/0
+disabled:bg-neutral/5
 disabled:bg-neutral/10
+disabled:bg-neutral/15
 disabled:bg-neutral/20
 disabled:bg-neutral/30
 disabled:bg-neutral/40
@@ -2070,7 +2484,9 @@ disabled:bg-neutral/90
 disabled:bg-neutral/100
 disabled:bg-neutral-contrast
 disabled:bg-neutral-contrast/0
+disabled:bg-neutral-contrast/5
 disabled:bg-neutral-contrast/10
+disabled:bg-neutral-contrast/15
 disabled:bg-neutral-contrast/20
 disabled:bg-neutral-contrast/30
 disabled:bg-neutral-contrast/40
@@ -2080,7 +2496,9 @@ disabled:bg-neutral-contrast/90
 disabled:bg-neutral-contrast/100
 disabled:border-primary
 disabled:border-primary/0
+disabled:border-primary/5
 disabled:border-primary/10
+disabled:border-primary/15
 disabled:border-primary/20
 disabled:border-primary/30
 disabled:border-primary/40
@@ -2090,7 +2508,9 @@ disabled:border-primary/90
 disabled:border-primary/100
 disabled:border-primary-contrast
 disabled:border-primary-contrast/0
+disabled:border-primary-contrast/5
 disabled:border-primary-contrast/10
+disabled:border-primary-contrast/15
 disabled:border-primary-contrast/20
 disabled:border-primary-contrast/30
 disabled:border-primary-contrast/40
@@ -2100,7 +2520,9 @@ disabled:border-primary-contrast/90
 disabled:border-primary-contrast/100
 disabled:border-secondary
 disabled:border-secondary/0
+disabled:border-secondary/5
 disabled:border-secondary/10
+disabled:border-secondary/15
 disabled:border-secondary/20
 disabled:border-secondary/30
 disabled:border-secondary/40
@@ -2110,7 +2532,9 @@ disabled:border-secondary/90
 disabled:border-secondary/100
 disabled:border-secondary-contrast
 disabled:border-secondary-contrast/0
+disabled:border-secondary-contrast/5
 disabled:border-secondary-contrast/10
+disabled:border-secondary-contrast/15
 disabled:border-secondary-contrast/20
 disabled:border-secondary-contrast/30
 disabled:border-secondary-contrast/40
@@ -2120,7 +2544,9 @@ disabled:border-secondary-contrast/90
 disabled:border-secondary-contrast/100
 disabled:border-error
 disabled:border-error/0
+disabled:border-error/5
 disabled:border-error/10
+disabled:border-error/15
 disabled:border-error/20
 disabled:border-error/30
 disabled:border-error/40
@@ -2130,7 +2556,9 @@ disabled:border-error/90
 disabled:border-error/100
 disabled:border-error-contrast
 disabled:border-error-contrast/0
+disabled:border-error-contrast/5
 disabled:border-error-contrast/10
+disabled:border-error-contrast/15
 disabled:border-error-contrast/20
 disabled:border-error-contrast/30
 disabled:border-error-contrast/40
@@ -2140,7 +2568,9 @@ disabled:border-error-contrast/90
 disabled:border-error-contrast/100
 disabled:border-success
 disabled:border-success/0
+disabled:border-success/5
 disabled:border-success/10
+disabled:border-success/15
 disabled:border-success/20
 disabled:border-success/30
 disabled:border-success/40
@@ -2150,7 +2580,9 @@ disabled:border-success/90
 disabled:border-success/100
 disabled:border-success-contrast
 disabled:border-success-contrast/0
+disabled:border-success-contrast/5
 disabled:border-success-contrast/10
+disabled:border-success-contrast/15
 disabled:border-success-contrast/20
 disabled:border-success-contrast/30
 disabled:border-success-contrast/40
@@ -2160,7 +2592,9 @@ disabled:border-success-contrast/90
 disabled:border-success-contrast/100
 disabled:border-warning
 disabled:border-warning/0
+disabled:border-warning/5
 disabled:border-warning/10
+disabled:border-warning/15
 disabled:border-warning/20
 disabled:border-warning/30
 disabled:border-warning/40
@@ -2170,7 +2604,9 @@ disabled:border-warning/90
 disabled:border-warning/100
 disabled:border-warning-contrast
 disabled:border-warning-contrast/0
+disabled:border-warning-contrast/5
 disabled:border-warning-contrast/10
+disabled:border-warning-contrast/15
 disabled:border-warning-contrast/20
 disabled:border-warning-contrast/30
 disabled:border-warning-contrast/40
@@ -2180,7 +2616,9 @@ disabled:border-warning-contrast/90
 disabled:border-warning-contrast/100
 disabled:border-info
 disabled:border-info/0
+disabled:border-info/5
 disabled:border-info/10
+disabled:border-info/15
 disabled:border-info/20
 disabled:border-info/30
 disabled:border-info/40
@@ -2190,7 +2628,9 @@ disabled:border-info/90
 disabled:border-info/100
 disabled:border-info-contrast
 disabled:border-info-contrast/0
+disabled:border-info-contrast/5
 disabled:border-info-contrast/10
+disabled:border-info-contrast/15
 disabled:border-info-contrast/20
 disabled:border-info-contrast/30
 disabled:border-info-contrast/40
@@ -2200,7 +2640,9 @@ disabled:border-info-contrast/90
 disabled:border-info-contrast/100
 disabled:border-accent
 disabled:border-accent/0
+disabled:border-accent/5
 disabled:border-accent/10
+disabled:border-accent/15
 disabled:border-accent/20
 disabled:border-accent/30
 disabled:border-accent/40
@@ -2210,7 +2652,9 @@ disabled:border-accent/90
 disabled:border-accent/100
 disabled:border-accent-contrast
 disabled:border-accent-contrast/0
+disabled:border-accent-contrast/5
 disabled:border-accent-contrast/10
+disabled:border-accent-contrast/15
 disabled:border-accent-contrast/20
 disabled:border-accent-contrast/30
 disabled:border-accent-contrast/40
@@ -2220,7 +2664,9 @@ disabled:border-accent-contrast/90
 disabled:border-accent-contrast/100
 disabled:border-neutral
 disabled:border-neutral/0
+disabled:border-neutral/5
 disabled:border-neutral/10
+disabled:border-neutral/15
 disabled:border-neutral/20
 disabled:border-neutral/30
 disabled:border-neutral/40
@@ -2230,7 +2676,9 @@ disabled:border-neutral/90
 disabled:border-neutral/100
 disabled:border-neutral-contrast
 disabled:border-neutral-contrast/0
+disabled:border-neutral-contrast/5
 disabled:border-neutral-contrast/10
+disabled:border-neutral-contrast/15
 disabled:border-neutral-contrast/20
 disabled:border-neutral-contrast/30
 disabled:border-neutral-contrast/40
@@ -2240,7 +2688,9 @@ disabled:border-neutral-contrast/90
 disabled:border-neutral-contrast/100
 disabled:text-primary
 disabled:text-primary/0
+disabled:text-primary/5
 disabled:text-primary/10
+disabled:text-primary/15
 disabled:text-primary/20
 disabled:text-primary/30
 disabled:text-primary/40
@@ -2250,7 +2700,9 @@ disabled:text-primary/90
 disabled:text-primary/100
 disabled:text-primary-contrast
 disabled:text-primary-contrast/0
+disabled:text-primary-contrast/5
 disabled:text-primary-contrast/10
+disabled:text-primary-contrast/15
 disabled:text-primary-contrast/20
 disabled:text-primary-contrast/30
 disabled:text-primary-contrast/40
@@ -2260,7 +2712,9 @@ disabled:text-primary-contrast/90
 disabled:text-primary-contrast/100
 disabled:text-secondary
 disabled:text-secondary/0
+disabled:text-secondary/5
 disabled:text-secondary/10
+disabled:text-secondary/15
 disabled:text-secondary/20
 disabled:text-secondary/30
 disabled:text-secondary/40
@@ -2270,7 +2724,9 @@ disabled:text-secondary/90
 disabled:text-secondary/100
 disabled:text-secondary-contrast
 disabled:text-secondary-contrast/0
+disabled:text-secondary-contrast/5
 disabled:text-secondary-contrast/10
+disabled:text-secondary-contrast/15
 disabled:text-secondary-contrast/20
 disabled:text-secondary-contrast/30
 disabled:text-secondary-contrast/40
@@ -2280,7 +2736,9 @@ disabled:text-secondary-contrast/90
 disabled:text-secondary-contrast/100
 disabled:text-error
 disabled:text-error/0
+disabled:text-error/5
 disabled:text-error/10
+disabled:text-error/15
 disabled:text-error/20
 disabled:text-error/30
 disabled:text-error/40
@@ -2290,7 +2748,9 @@ disabled:text-error/90
 disabled:text-error/100
 disabled:text-error-contrast
 disabled:text-error-contrast/0
+disabled:text-error-contrast/5
 disabled:text-error-contrast/10
+disabled:text-error-contrast/15
 disabled:text-error-contrast/20
 disabled:text-error-contrast/30
 disabled:text-error-contrast/40
@@ -2300,7 +2760,9 @@ disabled:text-error-contrast/90
 disabled:text-error-contrast/100
 disabled:text-success
 disabled:text-success/0
+disabled:text-success/5
 disabled:text-success/10
+disabled:text-success/15
 disabled:text-success/20
 disabled:text-success/30
 disabled:text-success/40
@@ -2310,7 +2772,9 @@ disabled:text-success/90
 disabled:text-success/100
 disabled:text-success-contrast
 disabled:text-success-contrast/0
+disabled:text-success-contrast/5
 disabled:text-success-contrast/10
+disabled:text-success-contrast/15
 disabled:text-success-contrast/20
 disabled:text-success-contrast/30
 disabled:text-success-contrast/40
@@ -2320,7 +2784,9 @@ disabled:text-success-contrast/90
 disabled:text-success-contrast/100
 disabled:text-warning
 disabled:text-warning/0
+disabled:text-warning/5
 disabled:text-warning/10
+disabled:text-warning/15
 disabled:text-warning/20
 disabled:text-warning/30
 disabled:text-warning/40
@@ -2330,7 +2796,9 @@ disabled:text-warning/90
 disabled:text-warning/100
 disabled:text-warning-contrast
 disabled:text-warning-contrast/0
+disabled:text-warning-contrast/5
 disabled:text-warning-contrast/10
+disabled:text-warning-contrast/15
 disabled:text-warning-contrast/20
 disabled:text-warning-contrast/30
 disabled:text-warning-contrast/40
@@ -2340,7 +2808,9 @@ disabled:text-warning-contrast/90
 disabled:text-warning-contrast/100
 disabled:text-info
 disabled:text-info/0
+disabled:text-info/5
 disabled:text-info/10
+disabled:text-info/15
 disabled:text-info/20
 disabled:text-info/30
 disabled:text-info/40
@@ -2350,7 +2820,9 @@ disabled:text-info/90
 disabled:text-info/100
 disabled:text-info-contrast
 disabled:text-info-contrast/0
+disabled:text-info-contrast/5
 disabled:text-info-contrast/10
+disabled:text-info-contrast/15
 disabled:text-info-contrast/20
 disabled:text-info-contrast/30
 disabled:text-info-contrast/40
@@ -2360,7 +2832,9 @@ disabled:text-info-contrast/90
 disabled:text-info-contrast/100
 disabled:text-accent
 disabled:text-accent/0
+disabled:text-accent/5
 disabled:text-accent/10
+disabled:text-accent/15
 disabled:text-accent/20
 disabled:text-accent/30
 disabled:text-accent/40
@@ -2370,7 +2844,9 @@ disabled:text-accent/90
 disabled:text-accent/100
 disabled:text-accent-contrast
 disabled:text-accent-contrast/0
+disabled:text-accent-contrast/5
 disabled:text-accent-contrast/10
+disabled:text-accent-contrast/15
 disabled:text-accent-contrast/20
 disabled:text-accent-contrast/30
 disabled:text-accent-contrast/40
@@ -2380,7 +2856,9 @@ disabled:text-accent-contrast/90
 disabled:text-accent-contrast/100
 disabled:text-neutral
 disabled:text-neutral/0
+disabled:text-neutral/5
 disabled:text-neutral/10
+disabled:text-neutral/15
 disabled:text-neutral/20
 disabled:text-neutral/30
 disabled:text-neutral/40
@@ -2390,7 +2868,9 @@ disabled:text-neutral/90
 disabled:text-neutral/100
 disabled:text-neutral-contrast
 disabled:text-neutral-contrast/0
+disabled:text-neutral-contrast/5
 disabled:text-neutral-contrast/10
+disabled:text-neutral-contrast/15
 disabled:text-neutral-contrast/20
 disabled:text-neutral-contrast/30
 disabled:text-neutral-contrast/40

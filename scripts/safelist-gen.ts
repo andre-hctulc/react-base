@@ -5,7 +5,7 @@ const themeColors = ["primary", "secondary", "error", "success", "warning", "inf
     .flat();
 const variants = ["hover:", "focus:", "active:", "disabled:"];
 const styles = ["bg", "border", "text"];
-const alpha = [0, 10, 20, 30, 40, 50, 75, 90, 100];
+const alpha = [0, 5, 10, 15, 20, 30, 40, 50, 75, 90, 100];
 
 const out = "safelist.txt";
 

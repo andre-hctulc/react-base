@@ -3,7 +3,7 @@
 import type { PropsOf } from "../../types/index.js";
 import { CopyIcon } from "../icons/copy.js";
 import { IconButton } from "../input/icon-button.js";
-import { useNotifications } from "../notifications/notifications.js";
+import { useNotifications } from "../dialog/notifications.js";
 
 interface CopyIconButtonProps extends PropsOf<typeof IconButton> {
     textToCopy: string | null;

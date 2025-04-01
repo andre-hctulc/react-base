@@ -6,7 +6,6 @@ export * from "./input/index.js";
 export * from "./containers/index.js";
 export * from "./dialog/index.js";
 export * from "./text/index.js";
-export * from "./notifications/index.js";
 export * from "./transitions/index.js";
 export * from "./icons/index.js";
 export * from "./exotic/index.js";

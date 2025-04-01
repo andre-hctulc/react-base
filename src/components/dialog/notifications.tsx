@@ -10,7 +10,7 @@ import { CheckCircleIcon } from "../icons/check-circle.js";
 import { ExclamationMarkIcon } from "../icons/exclamation-mark.js";
 import { QuestionCircleIcon } from "../icons/question-circle.js";
 import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useState, type FC, type ReactNode } from "react";
 import { Icon } from "../icons/icon.js";
 
 const DEFAULT_DURATION: number = 3000;
@@ -52,10 +52,10 @@ export function useNotifications() {
 }
 
 interface NotificationsProviderProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-export const NotificationsProvider: React.FC<NotificationsProviderProps> = ({ children }) => {
+export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children }) => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const isMounted = useIsHydrated();
     const { top_center, top_right, bottom_left, bottom_right, top_left } = useMemo(() => {

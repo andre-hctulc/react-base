@@ -1,20 +1,21 @@
-import React, { type FC } from "react";
+import { type FC, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import type { PropsOf, TVCProps } from "../../types/index.js";
 import { IconButton } from "../input/icon-button.js";
 import { XIcon } from "../icons/x.js";
 import { Title } from "../text/title.js";
 import clsx from "clsx";
-import { withPrefix } from "../../util/system.js";
+import { themeColor } from "../../util/style.js";
+import { Toolbar } from "../containers/toolbar.js";
 
 const alert = tv({
-    base: "px-3 py-2 text-t-contrast",
+    base: "px-3 py-2",
     variants: {
         type: {
-            error: "bg-error/15 border-error text-error",
-            success: "bg-success/15 border-success text-success",
-            warning: "bg-warning/15 border-warning text.warning",
-            info: "bg-info/15 border-info text-info",
+            error: "",
+            success: "",
+            warning: "",
+            info: "",
         },
         outlined: {
             true: "border",
@@ -44,6 +45,8 @@ export interface AlertProps extends TVCProps<typeof alert, "div"> {
     title?: string;
     titleProps?: PropsOf<typeof Title>;
     loading?: boolean;
+    actions?: ReactNode;
+    toolBarProps?: PropsOf<typeof Toolbar>;
 }
 
 /**
@@ -69,26 +72,35 @@ export const Alert: FC<AlertProps> = ({
     rounded,
     loading,
     ref,
+    actions,
+    toolBarProps,
     ...props
 }) => {
     const Comp = as || "div";
+    const { bgA, border, textC } = themeColor(type || "info");
 
     return (
-        <Comp ref={ref} className={alert({ type, className, outlined, rounded })} {...props}>
-            {closable && (
-                <IconButton
-                    color={type || "info"}
-                    loading={loading}
-                    {...closeButtonProps}
-                    className={clsx("float-right", closeButtonProps?.className)}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        closeButtonProps?.onClick?.(e);
-                        onClose?.();
-                    }}
-                >
-                    <XIcon />
-                </IconButton>
+        <Comp
+            ref={ref}
+            className={alert({ type, className: [bgA(15), border, textC, className], outlined, rounded })}
+            {...props}
+        >
+            {(actions || closable) && (
+                <Toolbar gap="xs" {...toolBarProps} className={clsx("float-right", toolBarProps?.className)}>
+                    {actions}
+                    <IconButton
+                        color={type || "info"}
+                        loading={loading}
+                        {...closeButtonProps}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            closeButtonProps?.onClick?.(e);
+                            onClose?.();
+                        }}
+                    >
+                        <XIcon />
+                    </IconButton>
+                </Toolbar>
             )}
             {title && (
                 <Title variant="h4" {...titleProps}>
