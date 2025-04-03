@@ -29,7 +29,7 @@ const btn = tv({
         },
         variant: {
             filled: "",
-            outlined: "",
+            outlined: "border",
             pale: "",
             text: "",
             floating: "shadow-md",
