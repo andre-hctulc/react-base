@@ -22,8 +22,7 @@ const alert = tv({
             false: "",
         },
         rounded: {
-            sm: "rounded-xs",
-            base: "rounded-sm",
+            sm: "rounded-sm",
             md: "rounded-md",
             lg: "rounded-lg",
             xl: "rounded-xl",

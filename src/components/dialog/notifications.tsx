@@ -36,13 +36,14 @@ export interface Notification {
      */
     className?: string;
     closable?: boolean;
+    onClose?: (notificationId: string) => void;
 }
 
 export type NotificationInput = Omit<Notification, "id"> & { id?: string };
 
 interface NotificationsContext {
     notify: (notification: NotificationInput) => string;
-    removeNotification: (notificationId: string) => void;
+    close: (notificationId: string) => void;
 }
 
 const NotificationsContext = createContext<NotificationsContext | null>(null);
@@ -82,7 +83,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
         return result;
     }, [notifications]);
 
-    const removeNotification = useCallback((notificationId: string) => {
+    const close = useCallback((notificationId: string) => {
         setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
     }, []);
 
@@ -100,7 +101,8 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
 
         if (duration > 0 && duration !== Infinity) {
             setTimeout(() => {
-                removeNotification(notificationWithId.id);
+                close(notificationWithId.id);
+                notification.onClose?.(notificationWithId.id);
             }, duration);
         }
 
@@ -119,7 +121,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
     if (!isMounted) return null;
 
     return (
-        <NotificationsContext.Provider value={{ notify, removeNotification }}>
+        <NotificationsContext.Provider value={{ notify, close }}>
             {/* top_left */}
             {createPortal(
                 <ol {...listProps} className={clsx("fixed top-0 left-0", listProps.className)}>
@@ -205,7 +207,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ className, notifica
 
     return (
         <Fade show unmount>
-            <li className={clsx("bg-paper pointer-events-auto rounded", className)}>
+            <li className={clsx("bg-paper pointer-events-auto rounded-md", className)}>
                 <Alert
                     icon={getIcon()}
                     title={notification.title}
