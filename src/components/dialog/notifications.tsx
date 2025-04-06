@@ -84,6 +84,11 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
     }, [notifications]);
 
     const close = useCallback((notificationId: string) => {
+        const notification = notifications.find((n) => n.id === notificationId);
+
+        if (!notification) return;
+
+        notification.onClose?.(notificationId);
         setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
     }, []);
 
