@@ -84,7 +84,7 @@ export const Alert: FC<AlertProps> = ({
     return (
         <Comp
             ref={ref}
-            className={alert({ type, className: [bgA(15), border, textC, className], outlined, rounded })}
+            className={alert({ type, className: [bgA(30), border, textC, className], outlined, rounded })}
             {...props}
         >
             {(actions || closable) && (

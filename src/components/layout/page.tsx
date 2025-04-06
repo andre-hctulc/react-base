@@ -3,7 +3,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import type { StyleProps } from "../../types/index.js";
 
 const page = tv({
-    base: "box-border w-full min-h-0 ",
+    base: "box-border w-full min-h-0",
     variants: {
         size: {
             "4xs": "max-w-xl mx-auto",
@@ -22,8 +22,9 @@ const page = tv({
             flex_col: "flex flex-col",
             center: "flex items-center justify-center",
         },
-        noShrink: {
-            true: "shrink-0",
+        shrink: {
+            true: "shrink-1",
+            false: "shrink-0",
         },
         grow: {
             true: "grow",
@@ -45,6 +46,7 @@ const page = tv({
     defaultVariants: {
         size: "lg",
         variant: "default",
+        shrink: false,
     },
 });
 
@@ -67,7 +69,7 @@ export const Page: FC<PageProps> = ({
     fullHeight,
     style,
     flex,
-    noShrink,
+    shrink,
     ref,
 }) => {
     return (
@@ -75,7 +77,7 @@ export const Page: FC<PageProps> = ({
             className={page({
                 size,
                 flex,
-                noShrink,
+                shrink,
                 className,
                 grow,
                 maxHeightFull,

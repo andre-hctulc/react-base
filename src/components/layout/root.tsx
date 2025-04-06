@@ -1,5 +1,5 @@
 import React from "react";
-import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 
 const root = tv({
     base: "max-w-full box-border flex",
@@ -47,7 +47,7 @@ const root = tv({
 
 interface RootProps extends VariantProps<typeof root> {
     children?: React.ReactNode;
-    className?: ClassValue;
+    className?: string;
 }
 
 /**

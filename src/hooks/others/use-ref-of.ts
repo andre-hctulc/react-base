@@ -10,5 +10,7 @@ export function useRefOf<T>(value: T) {
     useEffect(() => {
         ref.current = value;
     }, [value]);
+    // We cannot return the ref directly, because it would cause scope issues,
+    // which is why one would use this hook in the first place.
     return ref;
 }

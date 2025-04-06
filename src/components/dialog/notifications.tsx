@@ -205,7 +205,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ className, notifica
 
     return (
         <Fade show unmount>
-            <li className={clsx("bg-paper", className)}>
+            <li className={clsx("bg-paper pointer-events-auto", className)}>
                 <Alert
                     icon={getIcon()}
                     title={notification.title}
