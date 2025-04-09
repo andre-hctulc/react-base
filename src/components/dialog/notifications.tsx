@@ -12,7 +12,7 @@ import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
 import { createContext, useCallback, useContext, useMemo, useState, type FC, type ReactNode } from "react";
 import { Alert } from "../data-display/alert.js";
 
-const DEFAULT_DURATION: number = 3000;
+const DEFAULT_DURATION: number = 3500;
 
 export type NotificationPosition = "top_left" | "top_center" | "top_right" | "bottom_right" | "bottom_left";
 
@@ -37,6 +37,7 @@ export interface Notification {
     className?: string;
     closable?: boolean;
     onClose?: (notificationId: string) => void;
+    alertProps?: PropsOf<typeof Alert>;
 }
 
 export type NotificationInput = Omit<Notification, "id"> & { id?: string };
@@ -84,12 +85,16 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
     }, [notifications]);
 
     const close = useCallback((notificationId: string) => {
-        const notification = notifications.find((n) => n.id === notificationId);
+        setNotifications((prev) => {
+            const index = prev.findIndex((n) => n.id === notificationId);
 
-        if (!notification) return;
+            if (index === -1) return prev;
 
-        notification.onClose?.(notificationId);
-        setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
+            const notification = prev[index];
+            notification.onClose?.(notificationId);
+
+            return [...prev.slice(0, index), ...prev.slice(index + 1)];
+        });
     }, []);
 
     const notify = useCallback((notification: NotificationInput) => {
@@ -114,33 +119,22 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
         return notificationWithId.id;
     }, []);
 
-    const listProps: PropsOf<"ol"> = {
-        className: clsx(
-            "fixed max-w-full w-[350px] max-h-[600px] overflow-auto pointer-events-none z-50",
-            "p-4 box-border",
-            "flex flex-col gap-3"
-        ),
-        style: { scrollbarWidth: "none", msOverflowStyle: "none" },
-    };
-
     if (!isMounted) return null;
 
     return (
         <NotificationsContext.Provider value={{ notify, close }}>
             {/* top_left */}
             {createPortal(
-                <ol {...listProps} className={clsx("fixed top-0 left-0", listProps.className)}>
+                <NotificationsBox className={"fixed top-0 left-0"}>
                     {top_left.map((notification) => (
                         <NotificationItem key={notification.id} notification={notification} />
                     ))}
-                </ol>,
+                </NotificationsBox>,
                 document.body
             )}
             {/* top_center */}
             {createPortal(
-                <NotificationsBox
-                    className={clsx("top-0 left-[50%] translate-x-[-50%]", listProps.className)}
-                >
+                <NotificationsBox className={"top-0 left-[50%] translate-x-[-50%]"}>
                     {top_center.map((notification) => (
                         <NotificationItem key={notification.id} notification={notification} />
                     ))}
@@ -149,7 +143,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
             )}
             {/* top_right */}
             {createPortal(
-                <NotificationsBox className={clsx("fixed top-0 right-0", listProps.className)}>
+                <NotificationsBox className={"fixed top-0 right-0"}>
                     {top_right.map((notification) => (
                         <NotificationItem key={notification.id} notification={notification} />
                     ))}
@@ -158,7 +152,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
             )}
             {/* bottom_right */}
             {createPortal(
-                <NotificationsBox className={clsx("fixed bottom-0 right-0", listProps.className)}>
+                <NotificationsBox className={"fixed bottom-0 right-0"}>
                     {bottom_right.map((notification) => (
                         <NotificationItem key={notification.id} notification={notification} />
                     ))}
@@ -167,7 +161,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
             )}
             {/* bottom_left */}
             {createPortal(
-                <NotificationsBox className={clsx("fixed bottom-0 left-0", listProps.className)}>
+                <NotificationsBox className={"fixed bottom-0 left-0"}>
                     {bottom_left.map((notification) => (
                         <NotificationItem key={notification.id} notification={notification} />
                     ))}
@@ -217,8 +211,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ className, notifica
                     icon={getIcon()}
                     title={notification.title}
                     type={notification.severity}
-                    className={notification.className}
                     closable={notification.closable}
+                    {...notification.alertProps}
+                    className={clsx(notification.className, notification.alertProps?.className)}
                 >
                     {notification.message}
                 </Alert>
