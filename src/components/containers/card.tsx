@@ -134,7 +134,7 @@ const cardHeader = tv({
         },
     },
     defaultVariants: {
-        padding: "md",
+        size: "md",
         border: true,
     },
 });
@@ -271,7 +271,7 @@ const cardFooter = tv({
         },
     },
     defaultVariants: {
-        padding: "md",
+        size: "md",
         border: false,
         variant: "default",
     },
