@@ -7,15 +7,12 @@ import { Icon } from "../icons/icon.js";
 import { Title } from "../text/title.js";
 
 const card = tv({
-    base: "overflow-hidden",
+    base: "overflow-hidden flex flex-col",
     variants: {
         variant: {
             custom: "",
             outlined: "border",
             elevated: "shadow-sm",
-        },
-        flex: {
-            true: "flex flex-col",
         },
         shadow: {
             none: "",
@@ -90,7 +87,6 @@ export const Card: FC<CardProps> = ({
     size,
     variant,
     rounded,
-    flex,
     ref,
     ...props
 }) => {
@@ -108,7 +104,6 @@ export const Card: FC<CardProps> = ({
                 width: width ?? size,
                 height: height ?? size,
                 variant,
-                flex,
             })}
             {...props}
         >
@@ -250,7 +245,7 @@ export const CardBody: React.FC<CardBodyProps> = ({
 };
 
 const cardFooter = tv({
-    base: "mt-auto justify-self-end",
+    base: "",
     variants: {
         variant: {
             flex: "flex",
@@ -258,7 +253,8 @@ const cardFooter = tv({
             actions: "flex justify-end",
         },
         border: {
-            true: "border-t",
+            true: "border-b",
+            false: "pb-0!",
         },
         size: {
             none: "",
@@ -272,7 +268,7 @@ const cardFooter = tv({
     },
     defaultVariants: {
         size: "md",
-        border: false,
+        border: true,
         variant: "default",
     },
 });
