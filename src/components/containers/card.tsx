@@ -1,7 +1,6 @@
 import { tv, type VariantProps } from "tailwind-variants";
 import type { PropsOf, StyleProps, TVCProps } from "../../types/index.js";
-import { withPrefix } from "../../util/system.js";
-import React, { type FC, type Ref } from "react";
+import React, { type FC } from "react";
 import clsx from "clsx";
 import { Icon } from "../icons/icon.js";
 import { Title } from "../text/title.js";
@@ -253,8 +252,8 @@ const cardFooter = tv({
             actions: "flex justify-end",
         },
         border: {
-            true: "border-b",
-            false: "pb-0!",
+            true: "border-t",
+            false: "pt-0!",
         },
         size: {
             none: "",
