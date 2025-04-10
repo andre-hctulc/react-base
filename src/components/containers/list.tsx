@@ -107,7 +107,7 @@ export const List: FC<ListProps> = ({
             })}
             {...props}
         >
-            {populateProps(children, linkItemProps, (el) => el.type === ListItem)}
+            {populateProps(children, linkItemProps, "left", (el) => el.type === ListItem)}
             {items?.map((item) => {
                 const active =
                     item.active ??

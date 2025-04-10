@@ -11,6 +11,7 @@ const dialogHeader = tv({
     base: "flex items-center gap-2 box-border",
     variants: {
         size: {
+            none: "",
             xs: "px-2 pt-2",
             sm: "px-4 pt-3",
             md: "px-6 pt-5",

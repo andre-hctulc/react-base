@@ -123,7 +123,7 @@ const cardHeader = tv({
             true: "border-b",
             false: "pb-0!",
         },
-        padding: {
+        size: {
             none: "",
             xs: "p-1.5",
             sm: "p-2 ",
@@ -157,7 +157,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
     children,
     className,
     title,
-    padding,
+    size,
     border,
     badges,
     actions,
@@ -172,7 +172,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
     const Comp = as || "div";
 
     return (
-        <Comp className={cardHeader({ className, padding, border })} style={props.style}>
+        <Comp className={cardHeader({ className, size, border })} style={props.style}>
             {renderInner && (
                 <div {...innerProps} className={clsx("flex items-center gap-3", innerProps?.className)}>
                     {icon && <Icon {...iconProps}>{icon}</Icon>}
@@ -191,7 +191,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
 const cardBody = tv({
     base: "grow max-h-full",
     variants: {
-        padding: {
+        size: {
             none: "",
             xs: "p-1.5",
             sm: "py-2 px-2.5",
@@ -220,7 +220,7 @@ const cardBody = tv({
         },
     },
     defaultVariants: {
-        padding: "md",
+        size: "md",
     },
 });
 
@@ -235,7 +235,7 @@ export const CardBody: React.FC<CardBodyProps> = ({
     className,
     flex,
     as,
-    padding,
+    size,
     grow,
     fullHeight,
     alignItems,
@@ -243,7 +243,7 @@ export const CardBody: React.FC<CardBodyProps> = ({
 }) => {
     const Comp = as || "div";
     return (
-        <Comp className={cardBody({ className, padding, flex, grow, fullHeight, alignItems, scroll })}>
+        <Comp className={cardBody({ className, size, flex, grow, fullHeight, alignItems, scroll })}>
             {children}
         </Comp>
     );
@@ -260,14 +260,14 @@ const cardFooter = tv({
         border: {
             true: "border-t",
         },
-        padding: {
+        size: {
             none: "",
             xs: "p-1.5",
-            sm: "py-2 ",
-            md: "py-3",
-            lg: "py-5",
-            xl: "py-7",
-            "2xl": "py-10",
+            sm: "p-2 ",
+            md: "p-3",
+            lg: "p-5",
+            xl: "p-7",
+            "2xl": "p-10",
         },
     },
     defaultVariants: {
@@ -287,14 +287,14 @@ export const CardFooter: React.FC<CardFooterProps> = ({
     className,
     border,
     style,
-    padding,
+    size,
     as,
     variant,
 }) => {
     const Comp = as || "div";
 
     return (
-        <Comp className={cardFooter({ className, border, padding, variant })} style={style}>
+        <Comp className={cardFooter({ className, border, size, variant })} style={style}>
             {children}
         </Comp>
     );

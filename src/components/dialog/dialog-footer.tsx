@@ -12,6 +12,7 @@ const dialogFooter = tv({
             flex: "flex",
         },
         size: {
+            none: "",
             xs: "px-2 pb-2",
             sm: "px-4 pb-3",
             md: "px-6 pb-5",

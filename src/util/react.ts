@@ -35,16 +35,26 @@ export function nodeIsEmpty(children: ReactNode) {
     return Children.count(children) !== 0;
 }
 
+/**
+ * @param mergeStrategy "left": element props take precedence over `props`, "right": `props` overwrite element props (default)
+ */
 export function populateProps<P extends object>(
     children: ReactNode,
     props: P,
+    mergeStrategy: "left" | "right" = "right",
     populateIf?: (element: ReactElement) => boolean
 ): ReactNode[] {
     const arr = Children.toArray(children);
     return arr.map((child) => {
         if (!isValidElement(child)) return child;
         if (!populateIf || populateIf(child)) {
-            return cloneElement(child, props);
+            return cloneElement(
+                child,
+                mergeStrategy === "left"
+                    ? { ...props, ...(child.props as any) }
+                    : // default
+                      props
+            );
         }
         return child;
     });
