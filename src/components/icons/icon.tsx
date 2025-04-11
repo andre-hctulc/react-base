@@ -1,6 +1,7 @@
 import { cloneElement, isValidElement, type FC } from "react";
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
+import clsx from "clsx";
 
 const icon = tv({
     base: "",
@@ -80,7 +81,7 @@ export const Icon: FC<IconProps> = ({
 
     return cloneElement(children as React.ReactElement, {
         ref,
-        className: classes,
+        className: clsx(classes, ((children as React.ReactElement).props as any)?.className),
         ...additionalProps,
         ...props,
     });

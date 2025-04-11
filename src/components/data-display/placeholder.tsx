@@ -48,6 +48,7 @@ interface PlaceholderProps extends TVCProps<typeof placeholder, "div"> {
     helperText?: string;
     helperTextProps?: PropsOf<typeof Typography>;
     textProps?: PropsOf<typeof Typography>;
+    italic?: boolean;
 }
 
 /**
@@ -78,6 +79,7 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
     textProps,
     fullHeight,
     fullWidth,
+    italic,
     my,
     ...props
 }) => {
@@ -91,7 +93,7 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
                 </span>
             )}
             {typeof children === "string" ? (
-                <Typography variant="secondary" {...textProps}>
+                <Typography italic={italic} variant="secondary" {...textProps}>
                     {children ?? "Empty"}
                 </Typography>
             ) : (
