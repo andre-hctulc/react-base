@@ -17,7 +17,7 @@ const radioButtons = tv({
     defaultVariants: {},
 });
 
-interface RadioButtonsProps<V = string, D = any>
+export interface RadioButtonsProps<V = string, D = any>
     extends InputLikeProps<V, { option: LabeledChoice<V, D> }>,
         VariantProps<typeof radioButtons>,
         StyleProps {

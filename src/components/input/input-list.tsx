@@ -12,7 +12,7 @@ type InputListInputProps<V = string, D = any> = Pick<
 
 export interface InputListItem<V = string, D = any> extends Choice<V, D> {}
 
-interface InputListProps<V = string, D = any>
+export interface InputListProps<V = string, D = any>
     extends InputLikeProps<V[], { items: InputListItem<V, D>[] }>,
         StyleProps {
     items: InputListItem<V, D>[];

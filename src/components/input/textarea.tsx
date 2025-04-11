@@ -24,7 +24,7 @@ const textarea = tv({
     },
 });
 
-export interface TextareaProps
+interface TextareaProps
     extends Omit<TVCProps<typeof textarea, "textarea">, "defaultValue" | "value" | "onChange">,
         InputLikeProps<string, React.ChangeEvent<HTMLTextAreaElement>> {}
 

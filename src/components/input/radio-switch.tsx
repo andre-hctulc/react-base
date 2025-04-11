@@ -31,7 +31,7 @@ const radioSwitch = tv({
     },
 });
 
-interface RadioSwitchProps<V = string, D = any>
+export interface RadioSwitchProps<V = string, D = any>
     extends InputLikeProps<V, { option: LabeledChoice<V, D> & { href?: string } }>,
         VariantProps<typeof radioSwitch>,
         StyleProps {
