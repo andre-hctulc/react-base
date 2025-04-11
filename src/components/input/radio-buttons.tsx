@@ -30,7 +30,7 @@ interface RadioButtonsProps<V = string, D = any>
  * - `defaultChoiceValue` - The value of the option to be selected by default
  * - `choiceValue` - The value of the option to be selected (controlled)
  */
-export const RadioButtons = <V,>({
+export const RadioButtons = <V = string, D = any>({
     options,
     className,
     style,
@@ -42,10 +42,10 @@ export const RadioButtons = <V,>({
     onChange,
     name,
     orientation,
-}: RadioButtonsProps<V>) => {
+}: RadioButtonsProps<V, D>) => {
     const id = React.useId();
     // capture selected state to display in the button
-    const [selected, setSelected] = React.useState<LabeledChoice<V> | null>(() => {
+    const [selected, setSelected] = React.useState<LabeledChoice<V, D> | null>(() => {
         if (value !== undefined || defaultValue !== undefined) {
             const val = value ?? defaultValue;
             const found = options.find(({ value }) => value === val);

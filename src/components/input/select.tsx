@@ -79,7 +79,7 @@ export interface SelectOption<V = string, D = any> extends LabeledChoice<V, D> {
  * - `loading` - Show a loading text
  * - `loadingText` - The text to display when loading
  */
-export const Select = <V, D>({
+export const Select = <V = string, D = any>({
     options,
     className,
     style,

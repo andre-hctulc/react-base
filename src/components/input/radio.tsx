@@ -39,7 +39,7 @@ export interface RadioProps<V = string, D = any>
  * - `options` - The options to display in the dropdown
  * - `renderOption` - Renders the options
  */
-export const Radio = <V, D>({
+export const Radio = <V = string, D = any>({
     options,
     className,
     style,

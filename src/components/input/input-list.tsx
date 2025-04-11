@@ -52,7 +52,7 @@ interface InputListProps<V = string, D = any>
  * - `unique` - Only allow unique values
  * - `sort` - Sort function for the values
  */
-export const InputList = <D = any,>({
+export const InputList = <V = string, D = any>({
     className,
     renderInput,
     renderValues,
@@ -69,7 +69,7 @@ export const InputList = <D = any,>({
     items,
     defaultInputValue,
     ...inputProps
-}: InputListProps<D>) => {
+}: InputListProps<V, D>) => {
     const findItems = useCallback(
         (values: any[]) => {
             const activeSet = new Set<any>(values);
@@ -77,12 +77,12 @@ export const InputList = <D = any,>({
         },
         [items]
     );
-    const [values, setValues] = React.useState<InputListItem<D>[]>(() => {
+    const [values, setValues] = React.useState<InputListItem<V, D>[]>(() => {
         return findItems(value || defaultValue || []);
     });
     const Comp = as || "div";
-    const [candidate, setCandidate] = React.useState<InputListItem<D>>();
-    const change = (mutator: (currentValues: InputListItem<D>[]) => InputListItem<D>[]) => {
+    const [candidate, setCandidate] = React.useState<InputListItem<V, D>>();
+    const change = (mutator: (currentValues: InputListItem<V, D>[]) => InputListItem<V, D>[]) => {
         setValues(mutator as any);
     };
 
@@ -92,7 +92,7 @@ export const InputList = <D = any,>({
         }
     }, [value, findItems]);
 
-    const add = (newItem?: InputListItem<D>) => {
+    const add = (newItem?: InputListItem<V, D>) => {
         if (newItem === undefined) {
             if (candidate === undefined) {
                 return;
@@ -109,7 +109,7 @@ export const InputList = <D = any,>({
         setCandidate(undefined);
     };
 
-    const remove = () => (item: InputListItem<D>, index?: number) => {
+    const remove = () => (item: InputListItem<V, D>, index?: number) => {
         const newItems = values.filter(
             (it, i) => it.value !== item.value && (index === undefined || index === i)
         );
@@ -117,7 +117,7 @@ export const InputList = <D = any,>({
         onChange?.({ value: newItems.map(({ value }) => value), items: newItems });
     };
 
-    const changeCandidate = useCallback((neItem: InputListItem<D>) => {
+    const changeCandidate = useCallback((neItem: InputListItem<V, D>) => {
         setCandidate(neItem);
     }, []);
 
