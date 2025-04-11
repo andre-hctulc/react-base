@@ -28,7 +28,7 @@ export const tabs = tv({
     },
 });
 
-export interface TabItem extends Choice {
+export interface TabItem<V = string, D = any> extends Choice<V, D> {
     label: ReactNode;
     icon?: ReactNode;
     href?: string;
@@ -36,11 +36,11 @@ export interface TabItem extends Choice {
     visible?: boolean;
 }
 
-interface TabsProps extends Omit<TVCProps<typeof tabs, "div">, "children"> {
+interface TabsProps<V = string, D = any> extends Omit<TVCProps<typeof tabs, "div">, "children"> {
     /**
      * The active tab value. Must be of type _string_ or _undefined_ when used with `variant="radio"`.
      */
-    activeTab?: string | ((tab: TabItem) => boolean);
+    activeTab?: string | ((tab: TabItem<V, D>) => boolean);
     tabs: TabItem[];
     chipProps?: Partial<PropsOf<typeof Chip>>;
     tabProps?: Partial<PropsOf<typeof Tab>>;
@@ -50,7 +50,7 @@ interface TabsProps extends Omit<TVCProps<typeof tabs, "div">, "children"> {
      */
     bg?: "1" | "2" | "3" | "4";
     elevated?: boolean;
-    onTabClick?: (tab: TabItem) => void;
+    onTabClick?: (tab: TabItem<V, D>) => void;
     disabled?: boolean;
 }
 

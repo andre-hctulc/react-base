@@ -17,18 +17,21 @@ const radio = tv({
     defaultVariants: {},
 });
 
-export interface RadioRenderParams<D = any> {
-    option: Choice<D>;
+export interface RadioRenderParams<V = string, D = any> {
+    option: Choice<V, D>;
     active: boolean;
     readOnly: boolean;
     disabled: boolean;
     activate: () => void;
 }
 
-export interface RadioProps<D = any> extends InputLikeProps<string, { option: Choice<D> }>, VariantProps<typeof radio>, StyleProps {
-    options: Choice<D>[];
+export interface RadioProps<V = string, D = any>
+    extends InputLikeProps<V, { option: Choice<V, D> }>,
+        VariantProps<typeof radio>,
+        StyleProps {
+    options: Choice<V, D>[];
     icon?: React.ReactNode;
-    renderOption: (option: RadioRenderParams<D>) => React.ReactNode;
+    renderOption: (option: RadioRenderParams<V, D>) => React.ReactNode;
 }
 
 /**
@@ -36,10 +39,22 @@ export interface RadioProps<D = any> extends InputLikeProps<string, { option: Ch
  * - `options` - The options to display in the dropdown
  * - `renderOption` - Renders the options
  */
-export const Radio = <D,>({ options, className, style, disabled, readOnly, value, defaultValue, onChange, required, name, renderOption }: RadioProps<D>) => {
+export const Radio = <V, D>({
+    options,
+    className,
+    style,
+    disabled,
+    readOnly,
+    value,
+    defaultValue,
+    onChange,
+    required,
+    name,
+    renderOption,
+}: RadioProps<V, D>) => {
     const controlled = value !== undefined;
     // capture selected state to display in the button
-    const [selected, setSelected] = React.useState<Choice<D> | null>(() => {
+    const [selected, setSelected] = React.useState<Choice<V, D> | null>(() => {
         if (defaultValue !== undefined || value !== undefined) {
             const val = value ?? defaultValue;
             const found = options.find(({ value }) => value === val);
@@ -48,7 +63,7 @@ export const Radio = <D,>({ options, className, style, disabled, readOnly, value
         return null;
     });
 
-    const activate = (option: Choice<D>) => {
+    const activate = (option: Choice<V, D>) => {
         if (!controlled) setSelected(option);
         onChange?.({ value: option.value, option });
     };
@@ -65,8 +80,8 @@ export const Radio = <D,>({ options, className, style, disabled, readOnly, value
     return (
         <div className={radio({ className })} style={style}>
             {/* form compatibility */}
-            {name && <HiddenInput name={name} value={selected?.value || ""} required={required} />}
-            {options.map(option => {
+            {name && <HiddenInput name={name} value={String(selected?.value || "")} required={required} />}
+            {options.map((option) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
 
                 return renderOption({

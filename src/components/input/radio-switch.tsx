@@ -31,15 +31,15 @@ const radioSwitch = tv({
     },
 });
 
-interface RadioSwitchProps<D = any>
-    extends InputLikeProps<string, { option: LabeledChoice<D> } & { href?: string }>,
+interface RadioSwitchProps<V = any, D = any>
+    extends InputLikeProps<V, { option: LabeledChoice<V, D> & { href?: string } }>,
         VariantProps<typeof radioSwitch>,
         StyleProps {
-    options: (LabeledChoice<D> & { href?: string })[];
+    options: (LabeledChoice<V, D> & { href?: string })[];
     LinkComponent?: ComponentType<{ href?: string }>;
 }
 
-export const RadioSwitch = <D,>({
+export const RadioSwitch = <V, D>({
     options,
     className,
     style,
@@ -53,10 +53,10 @@ export const RadioSwitch = <D,>({
     color,
     name,
     LinkComponent,
-}: RadioSwitchProps<D>) => {
+}: RadioSwitchProps<V, D>) => {
     const controlled = value !== undefined;
     // capture selected state to display in the button
-    const [selected, setSelected] = React.useState<LabeledChoice<D> | null>(() => {
+    const [selected, setSelected] = React.useState<LabeledChoice<V, D> | null>(() => {
         if (value !== undefined || defaultValue !== undefined) {
             const val = value ?? defaultValue;
             const found = options.find(({ value }) => value === val);
@@ -65,7 +65,7 @@ export const RadioSwitch = <D,>({
         return null;
     });
 
-    const activate = (option: LabeledChoice<D>) => {
+    const activate = (option: LabeledChoice<V, D>) => {
         if (!controlled) setSelected(option);
         onChange?.({ value: option.value, option });
     };
@@ -82,7 +82,7 @@ export const RadioSwitch = <D,>({
     return (
         <div className={radioSwitch({ className, size, color })} style={style}>
             {/* form compatibility */}
-            {name && <HiddenInput required={required} name={name} value={selected?.value || ""} />}
+            {name && <HiddenInput required={required} name={name} value={String(selected?.value || "")} />}
             {options.map((option, i) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
                 const active = selected?.value === option.value;
@@ -101,7 +101,7 @@ export const RadioSwitch = <D,>({
                             onClick={() => {
                                 activate(option);
                             }}
-                            key={option.value}
+                            key={String(option.value)}
                             href={option.href}
                             className={classes}
                         >
@@ -117,7 +117,7 @@ export const RadioSwitch = <D,>({
                             activate(option);
                         }}
                         disabled={!canActivate}
-                        key={option.value}
+                        key={String(option.value)}
                         className={classes}
                     >
                         {option.icon}

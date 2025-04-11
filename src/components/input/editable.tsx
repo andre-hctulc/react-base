@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { InputLikeProps, InputValue } from "./types.js";
+import type { InputLikeProps } from "./types.js";
 
 interface EditableContext {
     editMode: boolean;
@@ -29,7 +29,7 @@ export const Editable: React.FC<EditableProps> = ({ children, editMode }) => {
  * @template I Input props (edit mode enabled)
  * @template D Display props (edit mode disabled)
  */
-export interface EditEffectProps<T extends InputValue> extends InputLikeProps<T> {
+export interface EditEffectProps<T> extends InputLikeProps<T> {
     renderInput: (params: { value: T | undefined }) => React.ReactElement<InputLikeProps<T>>;
     renderValue: (params: { value: T | undefined }) => React.ReactNode;
     /**
@@ -43,7 +43,7 @@ export interface EditEffectProps<T extends InputValue> extends InputLikeProps<T>
  *
  * The edit mode can also be handled manually with `useEditMode`.
  */
-export const EditEffect = <T extends InputValue>({
+export const EditEffect = <T,>({
     renderInput,
     renderValue,
     editMode,

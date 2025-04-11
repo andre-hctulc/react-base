@@ -33,13 +33,13 @@ export default meta;
 // ---- STORIES ----
 type Story = StoryObj<typeof meta>;
 
-const options: Choice<unknown>[] = [{ value: "choice1", data: "data" }, { value: "choice2" }];
+const options: Choice[] = [{ value: "choice1", data: "data" }, { value: "choice2" }];
 
 export const Default: Story = {
-    render: args => (
+    render: (args) => (
         <>
             <span className="text-red">TODO</span>
-            <Radio options={options} renderOption={opt => <span>{opt.option.value}</span>} />
+            <Radio options={options} renderOption={(opt) => <span>{opt.option.value}</span>} />
         </>
     ),
     args: { options, renderOption: () => <></> },

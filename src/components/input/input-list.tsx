@@ -2,20 +2,20 @@
 
 import clsx from "clsx";
 import React, { useCallback, useMemo, useRef } from "react";
-import type { InputLikeProps, InputValueArray, SingleInputValue } from "./types.js";
+import type { InputLikeProps } from "./types.js";
 import type { Choice, StyleProps } from "../../types/index.js";
 
-type InputListInputProps<T extends SingleInputValue = SingleInputValue> = Pick<
-    InputLikeProps<T>,
+type InputListInputProps<V = string, D = any> = Pick<
+    InputLikeProps<V, { item: InputListItem<V, D> }>,
     "readOnly" | "disabled" | "name" | "defaultValue"
 >;
 
-export interface InputListItem<D = any> extends Choice<D> {}
+export interface InputListItem<V = string, D = any> extends Choice<V, D> {}
 
-interface InputListProps<D = any>
-    extends InputLikeProps<InputValueArray, { items: InputListItem<D>[] }>,
+interface InputListProps<V = string, D = any>
+    extends InputLikeProps<V[], { items: InputListItem<V, D>[] }>,
         StyleProps {
-    items: InputListItem[];
+    items: InputListItem<V, D>[];
     /**
      * Passed to {@link renderInput} as default value for the input
      */
@@ -24,25 +24,25 @@ interface InputListProps<D = any>
         /**
          * @param newItem - The value of the new item. Id not provided the current candidate is used
          */
-        add: (newItem?: InputListItem<D>) => void;
+        add: (newItem?: InputListItem<V, D>) => void;
         /**
          * Sets the given item as the candidate for the next `add`
          */
-        candidate: (item: InputListItem<D>) => void;
+        candidate: (item: InputListItem<V, D>) => void;
         items: InputListItem<D>[];
-        inputProps: InputListInputProps<SingleInputValue>;
+        inputProps: InputListInputProps<V, D>;
     }) => React.ReactNode;
     renderValues: (params: {
-        items: InputListItem<D>[];
-        change: (mutator: (items: InputListItem<D>[]) => InputListItem<D>[]) => void;
-        remove: (item: InputListItem<D>) => void;
-        inputProps: InputListInputProps<SingleInputValue>;
+        items: InputListItem<V, D>[];
+        change: (mutator: (items: InputListItem<V, D>[]) => InputListItem<V, D>[]) => void;
+        remove: (item: InputListItem<V, D>) => void;
+        inputProps: InputListInputProps<V, D>;
     }) => React.ReactNode;
     addIcon?: React.ReactNode;
     as?: any;
     reverse?: boolean;
     unique?: boolean;
-    sort?: (a: InputListItem<D>, b: InputListItem<D>) => number;
+    sort?: (a: InputListItem<V, D>, b: InputListItem<V, D>) => number;
 }
 
 /**

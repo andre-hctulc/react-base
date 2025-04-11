@@ -1,21 +1,22 @@
-/**
- * Single input value
- */
-export type SingleInputValue = string | number | boolean | File;
+// /**
+//  * Single input value
+//  */
+// export type SingleInputValue = string | number | boolean | File;
 
-/**
- * Array of valid input value types
- */
-export type InputValueArray = string[] | number[] | boolean[] | File[];
+// /**
+//  * Array of valid input value types
+//  */
+// export type InputValueArray = string[] | number[] | boolean[] | File[];
 
-/**
- * Valid input value types
- */
-export type InputValue = SingleInputValue | InputValueArray;
+// /**
+//  * Valid input value types
+//  */
+// export type InputValue = SingleInputValue | InputValueArray;
+
 /**
  * Input base properties. Each input component's props should conform this interface.
  */
-export interface InputLikeProps<T extends InputValue = InputValue, E extends object = {}> {
+export interface InputLikeProps<T = any, E extends object = {}> {
     /**
      * Default value of the input
      */

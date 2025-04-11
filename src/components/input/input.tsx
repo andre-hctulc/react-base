@@ -3,7 +3,7 @@
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
 import { type ChangeEvent } from "react";
-import type { InputLikeProps, InputValue } from "./types.js";
+import type { InputLikeProps } from "./types.js";
 import { inputEventToValue } from "../../util/react.js";
 
 const input = tv({
@@ -23,14 +23,14 @@ const input = tv({
     },
 });
 
-export interface InputProps<T extends InputValue = string>
+export interface InputProps<T = string>
     extends Omit<
             TVCProps<typeof input, "input">,
             "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
         >,
         InputLikeProps<T, ChangeEvent<HTMLInputElement>> {}
 
-export const Input = <T extends InputValue = string>({
+export const Input = <T = string,>({
     size,
     className,
     style,

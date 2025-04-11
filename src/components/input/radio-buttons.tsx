@@ -17,11 +17,11 @@ const radioButtons = tv({
     defaultVariants: {},
 });
 
-interface RadioButtonsProps<V = string>
-    extends InputLikeProps<string, { option: LabeledChoice<V> }>,
+interface RadioButtonsProps<V = string, D = any>
+    extends InputLikeProps<V, { option: LabeledChoice<V, D> }>,
         VariantProps<typeof radioButtons>,
         StyleProps {
-    options: LabeledChoice<V>[];
+    options: LabeledChoice<V, D>[];
 }
 
 /**
@@ -66,14 +66,15 @@ export const RadioButtons = <V,>({
             {options.map((option, i) => {
                 const itemId = `${id}_${i}`;
                 const active = selected?.value === option.value;
+                const value = String(option.value);
 
                 return (
-                    <div key={option.value}>
+                    <div key={value}>
                         <input
                             checked={active}
                             type="radio"
                             id={itemId}
-                            value={option.value}
+                            value={value}
                             onChange={(e) => onChange?.({ ...e, value: option.value, option })}
                             readOnly={readOnly}
                             disabled={disabled}

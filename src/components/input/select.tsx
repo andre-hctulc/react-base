@@ -45,16 +45,19 @@ const selectButton = tv({
     },
 });
 
-export interface RenderSelectedParams<D = any> {
-    selected: SelectOption<D>[];
+export interface RenderSelectedParams<V = string, D = any> {
+    selected: SelectOption<V, D>[];
 }
 
-export interface SelectProps<D = any> extends InputLikeProps<string[], { options: SelectOption<D>[] }>, VariantProps<typeof select>, StyleProps {
-    options: SelectOption<D>[];
+export interface SelectProps<V = string, D = any>
+    extends InputLikeProps<V[], { options: SelectOption<V, D>[] }>,
+        VariantProps<typeof select>,
+        StyleProps {
+    options: SelectOption<V, D>[];
     icon?: React.ReactNode;
     placeholder?: React.ReactNode;
     multiple?: boolean;
-    renderSelected?: (params: RenderSelectedParams<D>) => React.ReactNode;
+    renderSelected?: (params: RenderSelectedParams<V, D>) => React.ReactNode;
     loading?: boolean;
     /**
      * @default "Loading..."
@@ -62,7 +65,7 @@ export interface SelectProps<D = any> extends InputLikeProps<string[], { options
     loadingText?: string;
 }
 
-export interface SelectOption<D = any> extends LabeledChoice<D> {
+export interface SelectOption<V = string, D = any> extends LabeledChoice<V, D> {
     defaultChecked?: boolean;
 }
 
@@ -76,7 +79,7 @@ export interface SelectOption<D = any> extends LabeledChoice<D> {
  * - `loading` - Show a loading text
  * - `loadingText` - The text to display when loading
  */
-export const Select = <V,>({
+export const Select = <V, D>({
     options,
     className,
     style,
@@ -95,10 +98,10 @@ export const Select = <V,>({
     icon,
     name,
     id,
-}: SelectProps<V>) => {
+}: SelectProps<V, D>) => {
     const controlled = value !== undefined;
     // capture selected state to display in the button
-    const [selected, setSelected] = React.useState<SelectOption<V>[]>(() => {
+    const [selected, setSelected] = React.useState<SelectOption<V, D>[]>(() => {
         if (defaultValue || value) {
             const set = new Set(value || defaultValue);
             return options.filter(({ value: key }) => set.has(key));
@@ -110,14 +113,14 @@ export const Select = <V,>({
         renderSelected({ selected })
     ) : multiple ? (
         <>
-            {selected.map(sel => {
+            {selected.map((sel) => {
                 if (multiple)
                     return (
-                        <Chip size="sm" key={sel.value} className="bg-paper2!">
+                        <Chip size="sm" key={String(sel.value)} className="bg-paper2!">
                             {sel.label}
                         </Chip>
                     );
-                return <span key={sel.value}></span>;
+                return <span key={String(sel.value)}></span>;
             })}
         </>
     ) : (
@@ -126,7 +129,8 @@ export const Select = <V,>({
 
     const loadingEl = <span className="text-t3 truncate">{loadingText ?? "Loading..."}</span>;
 
-    const placeholderEl = typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
+    const placeholderEl =
+        typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
 
     React.useEffect(() => {
         if (value) {
@@ -136,10 +140,10 @@ export const Select = <V,>({
     }, [value, options]);
 
     return (
-        <div className={select({ className, size })} style={style} onClick={e => e.stopPropagation()}>
+        <div className={select({ className, size })} style={style} onClick={(e) => e.stopPropagation()}>
             <Listbox
                 value={selected}
-                onChange={options => {
+                onChange={(options) => {
                     // multiple is handled by the checkboxes exclusively
                     if (multiple) return;
 
@@ -156,7 +160,9 @@ export const Select = <V,>({
                             {loading ? loadingEl : selected.length ? selectedEl : placeholderEl}
                         </div>
                     </XScroll>
-                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t2 text-base">{icon || <ChevronDownIcon />}</span>
+                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t2 text-base">
+                        {icon || <ChevronDownIcon />}
+                    </span>
                 </ListboxButton>
                 <ListboxOptions
                     anchor="bottom"
@@ -168,7 +174,7 @@ export const Select = <V,>({
                         "z-50 w-[var(--button-width)] p-1 [--anchor-gap:var(--spacing-1)]"
                     )}
                 >
-                    {options.map(option => {
+                    {options.map((option) => {
                         const toggle = () => {
                             if (option.disabled) return;
 
@@ -197,14 +203,14 @@ export const Select = <V,>({
                         return (
                             <ListboxOption
                                 disabled={option.disabled}
-                                onClick={e => {
+                                onClick={(e) => {
                                     if (multiple) {
                                         // prevents closing the dropdown
                                         e.preventDefault();
                                         toggle();
                                     }
                                 }}
-                                key={option.value}
+                                key={String(option.value)}
                                 value={option}
                                 className={clsx(
                                     "group flex gap-2.5 cursor-default items-center rounded-sm py-1.5 px-3 select-none data-focus:bg-paper3",
@@ -219,7 +225,9 @@ export const Select = <V,>({
                                         value={selected.some(({ value: key }) => option.value === key)}
                                     />
                                 )}
-                                <span className={clsx("text-sm/6", option.disabled && "text-t3")}>{option.label}</span>
+                                <span className={clsx("text-sm/6", option.disabled && "text-t3")}>
+                                    {option.label}
+                                </span>
                             </ListboxOption>
                         );
                     })}

@@ -69,11 +69,11 @@ export type Falsy = null | undefined | "" | 0 | false;
 /**
  * General purpose choice type
  */
-export interface Choice<D = any> {
+export interface Choice<V = string, D = any> {
     /**
      * The value of the choice. Should be unique among the choices
      */
-    value: string;
+    value: V;
     /**
      * Data associated with the choice
      */
@@ -87,7 +87,7 @@ export interface Choice<D = any> {
 /**
  * Choice with a label
  */
-export interface LabeledChoice<D = any> extends Choice<D> {
+export interface LabeledChoice<V = string, D = any> extends Choice<V, D> {
     /**
      * The label to display
      */
