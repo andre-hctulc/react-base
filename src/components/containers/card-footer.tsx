@@ -12,7 +12,7 @@ const cardFooter = tv({
         },
         border: {
             true: "border-t",
-            false: "pt-1.5!",
+            false: "pt-1.5",
         },
         size: {
             none: "",

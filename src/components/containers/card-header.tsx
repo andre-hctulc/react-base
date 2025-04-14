@@ -9,7 +9,7 @@ const cardHeader = tv({
     variants: {
         border: {
             true: "border-b",
-            false: "pb-1.5!",
+            false: "pb-1.5",
         },
         size: {
             none: "",
