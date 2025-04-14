@@ -12,11 +12,11 @@ const dialogHeader = tv({
     variants: {
         size: {
             none: "",
-            xs: "px-2 pt-2",
-            sm: "px-4 pt-3",
-            md: "px-6 pt-5",
-            lg: "px-8 pt-6",
-            xl: "px-10 pt-8",
+            xs: "px-2 pt-2 pb-1",
+            sm: "px-4 pt-3 pb-1.5",
+            md: "px-6 pt-5 pb-2",
+            lg: "px-8 pt-6 pb-2",
+            xl: "px-10 pt-8 pb-3",
         },
     },
     defaultVariants: {

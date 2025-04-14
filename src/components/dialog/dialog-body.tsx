@@ -1,9 +1,6 @@
-"use client";
-
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
-import React from "react";
-import { useWindowEvent } from "../../hooks/document/use-window-event.js";
+import { type FC } from "react";
 
 const dialogBody = tv({
     // grow and scroll when content is too long
@@ -12,9 +9,6 @@ const dialogBody = tv({
         flex: {
             col: "flex flex-col",
             row: "flex flex-row",
-        },
-        scrolling: {
-            true: "shadow-inner",
         },
         size: {
             none: "",
@@ -37,29 +31,9 @@ export interface DialogBodyProps extends TVCProps<typeof dialogBody, "div"> {}
  *
  * Use it with `Dialog` or `Popover`.
  */
-export const DialogBody: React.FC<DialogBodyProps> = ({ children, className, flex, size, ...props }) => {
-    const [scrolling, setScrolling] = React.useState(false);
-    const root = React.useRef<HTMLDivElement>(null);
-
-    useWindowEvent("resize", (e) => {
-        checkScrolling();
-    });
-
-    const checkScrolling = () => {
-        if (!root.current) return;
-        setScrolling(root.current.scrollHeight > root.current.clientHeight);
-    };
-
+export const DialogBody: FC<DialogBodyProps> = ({ children, className, flex, size, ...props }) => {
     return (
-        <div
-            ref={root}
-            className={dialogBody({ className, flex, scrolling, size })}
-            {...props}
-            onScroll={(e) => {
-                checkScrolling();
-                props.onScroll?.(e);
-            }}
-        >
+        <div className={dialogBody({ className, flex, size })} {...props}>
             {children}
         </div>
     );
