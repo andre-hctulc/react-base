@@ -10,6 +10,7 @@ import { ChevronDownIcon } from "../icons/chevron-down.js";
 import { Chip } from "../data-display/chip.js";
 import { Checkbox } from "./checkbox.js";
 import { XScroll } from "../shadow/x-scroll.js";
+import { Icon } from "../icons/icon.js";
 
 const select = tv({
     base: "min-w-32  max-w-full",
@@ -108,23 +109,29 @@ export const Select = <V = string, D = any>({
         }
         return [];
     });
+    const firstSelected: SelectOption<V, D> | undefined = selected[0];
 
     const selectedEl = renderSelected ? (
         renderSelected({ selected })
     ) : multiple ? (
         <>
             {selected.map((sel) => {
-                if (multiple)
-                    return (
-                        <Chip size="sm" key={String(sel.value)} className="bg-paper2!">
-                            {sel.label}
-                        </Chip>
-                    );
-                return <span key={String(sel.value)}></span>;
+                return (
+                    <Chip size="sm" key={String(sel.value)} className="bg-paper2!" icon={sel.icon}>
+                        {sel.label}
+                    </Chip>
+                );
             })}
         </>
     ) : (
-        <span className="truncate">{selected[0]?.label}</span>
+        <span className="truncate inline-flex items-center">
+            {firstSelected?.icon && (
+                <Icon color="neutral" className="mr-2">
+                    {firstSelected?.icon}
+                </Icon>
+            )}
+            {firstSelected?.label}
+        </span>
     );
 
     const loadingEl = <span className="text-t3 truncate">{loadingText ?? "Loading..."}</span>;
@@ -225,6 +232,7 @@ export const Select = <V = string, D = any>({
                                         value={selected.some(({ value: key }) => option.value === key)}
                                     />
                                 )}
+                                {option.icon && <Icon color="neutral">{option.icon}</Icon>}
                                 <span className={clsx("text-sm/6", option.disabled && "text-t3")}>
                                     {option.label}
                                 </span>

@@ -37,7 +37,7 @@ export interface DialogBodyProps extends TVCProps<typeof dialogBody, "div"> {}
  * Use it with `Dialog` or `Popover`.
  *
  * ### Props
- * - `embedded` - Do not apply vertical padding, to embed with dialog footer or header.
+ * - `embedded` - Controls vertical padding. Use it in combination with dialog header and footer
  */
 export const DialogBody: FC<DialogBodyProps> = ({ children, className, flex, size, embedded, ...props }) => {
     return (

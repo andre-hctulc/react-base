@@ -50,7 +50,7 @@ interface CardBodyProps extends VariantProps<typeof cardBody> {
 
 /**
  * ### Props
- * - `embedded` - Do not apply vertical padding, to embed with card footer or header.
+ * - `embedded` - Controls vertical padding. Use it in combination with card header and footer
  */
 export const CardBody: FC<CardBodyProps> = ({
     children,
