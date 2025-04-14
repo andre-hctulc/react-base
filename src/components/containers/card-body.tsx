@@ -2,7 +2,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { type FC, type ReactNode } from "react";
 
 const cardBody = tv({
-    base: "grow max-h-full",
+    base: "grow max-h-full min-h-0 overflow-auto",
     variants: {
         size: {
             none: "",
