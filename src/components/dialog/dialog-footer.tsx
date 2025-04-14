@@ -13,11 +13,14 @@ const dialogFooter = tv({
         },
         size: {
             none: "",
-            xs: "px-2 pb-2 pt-1",
-            sm: "px-4 pb-3 pt-1.5",
-            md: "px-6 pb-5 pt-2",
-            lg: "px-8 pb-6 pt-2",
-            xl: "px-10 pb-8 pt-3",
+            xs: "px-2 py-2",
+            sm: "px-4 py-3",
+            md: "px-6 py-5",
+            lg: "px-8 py-6",
+            xl: "px-10 py-8",
+        },
+        border: {
+            true: "border-t",
         },
     },
     defaultVariants: {
@@ -38,10 +41,11 @@ export const DialogFooter: React.FC<DialogFooterProps> = ({
     className,
     variant,
     size,
+    border,
     ...props
 }) => {
     return (
-        <div className={dialogFooter({ className, variant, size })} {...props}>
+        <div className={dialogFooter({ className, variant, size, border })} {...props}>
             {children}
         </div>
     );

@@ -13,6 +13,11 @@ const cardBody = tv({
             xl: "py-7 px-8",
             "2xl": "p-12",
         },
+        embedded: {
+            true: "!py-0",
+            footer: "!pb-0",
+            header: "!pt-0",
+        },
         flex: {
             col: "flex flex-col",
             row: "flex",
@@ -43,6 +48,10 @@ interface CardBodyProps extends VariantProps<typeof cardBody> {
     as?: any;
 }
 
+/**
+ * ### Props
+ * - `embedded` - Do not apply vertical padding, to embed with card footer or header.
+ */
 export const CardBody: FC<CardBodyProps> = ({
     children,
     className,
@@ -53,10 +62,11 @@ export const CardBody: FC<CardBodyProps> = ({
     fullHeight,
     alignItems,
     scroll,
+    embedded,
 }) => {
     const Comp = as || "div";
     return (
-        <Comp className={cardBody({ className, size, flex, grow, fullHeight, alignItems, scroll })}>
+        <Comp className={cardBody({ className, size, flex, grow, fullHeight, alignItems, scroll, embedded })}>
             {children}
         </Comp>
     );

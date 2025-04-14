@@ -18,6 +18,11 @@ const dialogBody = tv({
             lg: "px-8 py-6",
             xl: "px-10 py-8",
         },
+        embedded: {
+            true: "!py-0",
+            footer: "!pb-0",
+            header: "!pt-0",
+        },
     },
     defaultVariants: {
         size: "md",
@@ -30,10 +35,13 @@ export interface DialogBodyProps extends TVCProps<typeof dialogBody, "div"> {}
  * The body of a dialog.
  *
  * Use it with `Dialog` or `Popover`.
+ *
+ * ### Props
+ * - `embedded` - Do not apply vertical padding, to embed with dialog footer or header.
  */
-export const DialogBody: FC<DialogBodyProps> = ({ children, className, flex, size, ...props }) => {
+export const DialogBody: FC<DialogBodyProps> = ({ children, className, flex, size, embedded, ...props }) => {
     return (
-        <div className={dialogBody({ className, flex, size })} {...props}>
+        <div className={dialogBody({ className, flex, size, embedded })} {...props}>
             {children}
         </div>
     );

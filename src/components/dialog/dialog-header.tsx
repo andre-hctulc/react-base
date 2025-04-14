@@ -12,11 +12,14 @@ const dialogHeader = tv({
     variants: {
         size: {
             none: "",
-            xs: "px-2 pt-2 pb-1",
-            sm: "px-4 pt-3 pb-1.5",
-            md: "px-6 pt-5 pb-2",
-            lg: "px-8 pt-6 pb-2",
-            xl: "px-10 pt-8 pb-3",
+            xs: "px-2 py-2",
+            sm: "px-4 py-3",
+            md: "px-6 py-5",
+            lg: "px-8 py-6",
+            xl: "px-10 py-8",
+        },
+        border: {
+            true: "border-b",
         },
     },
     defaultVariants: {
@@ -49,10 +52,11 @@ export const DialogHeader: FC<DialogHeaderProps> = ({
     titleProps,
     size,
     actions,
+    border,
     ...props
 }) => {
     return (
-        <div className={dialogHeader({ className, size })} style={props.style}>
+        <div className={dialogHeader({ className, size, border })} style={props.style}>
             {icon && (
                 <Icon size="lg" {...iconProps}>
                     {icon}
