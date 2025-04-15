@@ -2,7 +2,7 @@
 
 import React, { type FC } from "react";
 import { tv } from "tailwind-variants";
-import type { LinkComponent, PropsOf, TVCProps } from "../../types/index.js";
+import type { LinkComponent, PartialPropsOf, PropsOf, TVCProps } from "../../types/index.js";
 import clsx from "clsx";
 import { withPrefix } from "../../util/system.js";
 import { IconButton } from "../input/icon-button.js";
@@ -59,13 +59,17 @@ export type ListItemDef = {
     label: React.ReactNode;
     data?: any;
     /**
-     * Used for {@link ListItem}s (variant "default")
+     * Used for {@link ListItem}s and  {@link IconButton}s
      */
-    props?: PropsOf<typeof ListItem>;
+    props?: PartialPropsOf<typeof ListItem> & PartialPropsOf<typeof IconButton>;
     /**
      * Used for {@link IconButton}s  (variant "icons")
      */
-    buttonProps?: PropsOf<typeof IconButton>;
+    buttonProps?: PartialPropsOf<typeof IconButton>;
+    /**
+     * Used for {@link ListItem}s  (variant "default")
+     */
+    listItemProps?: PartialPropsOf<typeof ListItem>;
     href?: string;
 };
 
@@ -135,11 +139,20 @@ export const List: FC<ListProps> = ({
                             variant="text"
                             color={active ? "black" : "neutral"}
                             {...iconButtonProps}
+                            {...item.props}
+                            {...item.buttonProps}
                             key={item.key}
-                            className={clsx(active && "bg-transparent2", iconButtonProps?.className as any)}
+                            className={clsx(
+                                active && "bg-transparent2",
+                                item.props?.className,
+                                item.buttonProps?.className,
+                                iconButtonProps?.className
+                            )}
                             onClick={(e) => {
-                                onItemClick?.(item);
+                                item.buttonProps?.onClick?.(e);
+                                item.props?.onClick?.(e);
                                 iconButtonProps?.onClick?.(e);
+                                onItemClick?.(item);
                             }}
                         >
                             {item.props?.icon}
@@ -162,22 +175,27 @@ export const List: FC<ListProps> = ({
                     <ListItem
                         as="li"
                         size={size || "md"}
-                        key={item.key}
                         {...linkItemProps}
+                        {...item.listItemProps}
                         {...item.props}
+                        key={item.key}
                         active={active}
                         className={clsx(item.props?.className, listItemProps?.className as any)}
                         onClick={(e) => {
+                            item.listItemProps?.onClick?.(e);
                             item.props?.onClick?.(e);
                             listItemProps?.onClick?.(e);
                             onItemClick?.(item);
                         }}
                         clickable={
-                            item.props?.clickable ||
+                            !!item.props?.clickable ||
                             !!item.props?.onClick ||
+                            !!item.listItemProps?.onClick ||
+                            !!item.listItemProps?.clickable ||
                             !!listItemProps?.onClick ||
-                            listItemProps?.clickable ||
-                            !!item.props?.href
+                            !!listItemProps?.clickable ||
+                            !!item.props?.href ||
+                            !!item.listItemProps?.href
                         }
                     >
                         {item.label}
