@@ -48,9 +48,10 @@ export interface SkeletonProps extends VariantProps<typeof skeleton> {
     minWidth?: number;
     as?: any;
     /**
-     * Render children without any skeleton
+     * `false`: Render children without any skeleton
+     * @default true
      */
-    inactive?: boolean;
+    active?: boolean;
 }
 
 export const Skeleton: FC<SkeletonProps> = ({
@@ -68,15 +69,15 @@ export const Skeleton: FC<SkeletonProps> = ({
     padding,
     size,
     as,
-    inactive,
+    active,
 }) => {
     const Comp = as || "div";
     const occupy = childrenOccupySpace ?? true;
 
-    if (inactive) {
+    if (active === false) {
         return children;
     }
-    
+
     return (
         <Comp
             data-children-occupy-space={occupy || undefined}
