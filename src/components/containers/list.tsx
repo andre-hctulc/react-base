@@ -54,7 +54,7 @@ const list = tv({
     },
 });
 
-export type ListItem = {
+export type ListItemDef = {
     key: string;
     label: React.ReactNode;
     data?: any;
@@ -71,9 +71,9 @@ export type ListItem = {
 
 export interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
-    items?: ListItem[];
-    onItemClick?: (item: ListItem) => void;
-    activeKey?: string | ((item: ListItem) => boolean);
+    items?: ListItemDef[];
+    onItemClick?: (item: ListItemDef) => void;
+    activeKey?: string | ((item: ListItemDef) => boolean);
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     LinkComponent?: LinkComponent;
     loading?: boolean;
