@@ -27,6 +27,9 @@ const listItem = tv({
         effects: {
             true: "",
         },
+        disabled: {
+            true: "cursor-not-allowed opacity-50",
+        }
     },
     compoundVariants: [
         {
@@ -132,6 +135,7 @@ export const ListItem: FC<ListItemProps> = ({
                 variant,
                 className,
                 clickable: interactive,
+                disabled: _disabled,
             })}
             data-reactive={true}
             onClick={_disabled ? undefined : clickHandler}
