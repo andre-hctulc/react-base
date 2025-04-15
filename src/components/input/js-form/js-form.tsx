@@ -24,7 +24,7 @@ const jsForm = tv({
     },
 });
 
-interface JSFormProps<T extends object = any> extends VariantProps<typeof jsForm> {
+export interface JSFormProps<T extends object = any> extends VariantProps<typeof jsForm> {
     id?: string;
     children?: React.ReactNode;
     onSubmit?: (snapshot: JSFormSnapshot<T>) => void;

@@ -37,6 +37,7 @@ export interface RadioSwitchProps<V = string, D = any>
         StyleProps {
     options: (LabeledChoice<V, D> & { href?: string })[];
     LinkComponent?: ComponentType<{ href?: string }>;
+    dense?: boolean;
 }
 
 export const RadioSwitch = <V = string, D = any>({
@@ -53,6 +54,7 @@ export const RadioSwitch = <V = string, D = any>({
     color,
     name,
     LinkComponent,
+    dense,
 }: RadioSwitchProps<V, D>) => {
     const controlled = value !== undefined;
     // capture selected state to display in the button
@@ -88,8 +90,9 @@ export const RadioSwitch = <V = string, D = any>({
                 const active = selected?.value === option.value;
                 const last = i === options.length - 1;
                 const classes = clsx(
-                    "text-center flex items-center gap-2 px-4 transition cursor-pointer",
-                    active && "text-t2!",
+                    "text-center flex items-center gap-2 transition cursor-pointer",
+                    dense ? "px-2" : "px-4",
+                    !active && "text-t2",
                     last && "border-r",
                     canActivate && "hover:bg-transparent1 active:bg-transparent2"
                 );
