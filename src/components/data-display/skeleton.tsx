@@ -1,7 +1,7 @@
-import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import "./skeleton.css";
 import { withPrefix } from "../../util/system.js";
+import type { FC } from "react";
 
 const skeleton = tv({
     base: [withPrefix("Skeleton"), "animate-skeleton"],
@@ -47,9 +47,13 @@ export interface SkeletonProps extends VariantProps<typeof skeleton> {
     maxWidth?: number;
     minWidth?: number;
     as?: any;
+    /**
+     * Render children without any skeleton
+     */
+    inactive?: boolean;
 }
 
-export const Skeleton: React.FC<SkeletonProps> = ({
+export const Skeleton: FC<SkeletonProps> = ({
     children,
     className,
     shape,
@@ -64,10 +68,15 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     padding,
     size,
     as,
+    inactive,
 }) => {
     const Comp = as || "div";
     const occupy = childrenOccupySpace ?? true;
 
+    if (inactive) {
+        return children;
+    }
+    
     return (
         <Comp
             data-children-occupy-space={occupy || undefined}
