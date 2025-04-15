@@ -20,7 +20,7 @@ const iconButton = tv({
     },
 });
 
-export interface IconButtonProps extends Omit<PropsOf<typeof Button>, "icon"> {}
+export interface IconButtonProps extends Omit<PropsOf<typeof Button>, "icon" | "iconPosition"> {}
 
 export const IconButton: FC<IconButtonProps> = ({
     children,
@@ -38,6 +38,7 @@ export const IconButton: FC<IconButtonProps> = ({
             disabled={loading || disabled}
             size={size}
             {...props}
+            icon={undefined}
         >
             {loading ? <Spinner color="inherit" size="inherit" /> : children}
         </Button>

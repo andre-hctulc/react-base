@@ -2,9 +2,8 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { Tool, type ToolItem } from "../input/tool.js";
 import type { LinkComponent, PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
-import { forwardRef, type FC, type Ref } from "react";
+import { type FC, type Ref } from "react";
 import { Toolbar } from "./toolbar.js";
-import { withPrefix } from "../../util/system.js";
 import { Spinner } from "../data-display/spinner.js";
 
 const listItem = tv({
@@ -21,9 +20,9 @@ const listItem = tv({
             true: "cursor-pointer active:brightness-50",
         },
         variant: {
-            danger: "",
+            danger: "text-error",
             default: "",
-            secondary: "",
+            secondary: "text-t2",
         },
         effects: {
             true: "",
@@ -33,7 +32,7 @@ const listItem = tv({
         {
             variant: "danger",
             effects: true,
-            class: "text-error hover:bg-error/5 data-[active=true]:bg-error/10",
+            class: "hover:bg-error/5 data-[active=true]:bg-error/10",
         },
         {
             variant: "default",
@@ -43,7 +42,7 @@ const listItem = tv({
         {
             variant: "secondary",
             effects: true,
-            class: "text-t2 hover:bg-neutral/5 data-[active=true]:bg-neutral/10",
+            class: "hover:bg-neutral/5 data-[active=true]:bg-neutral/10",
         },
     ],
     defaultVariants: {
@@ -57,8 +56,9 @@ const listItemInner = tv({
     base: "w-full flex box-border transition duration-100",
     variants: {
         size: {
-            sm: "text-xs px-2 gap-2 py-1",
-            md: "text-[15px] px-3 gap-3 py-1.5",
+            xs: "text-xs px-2 gap-1.5 py-1",
+            sm: "text-[14px] px-2 gap-2 py-1",
+            md: "text-[15px] px-3 gap-2.5 py-1.5",
             lg: "text-[15px] px-4 gap-4 py-2",
             xl: "text-[15px] px-5 gap-4 py-3",
         },
@@ -67,28 +67,6 @@ const listItemInner = tv({
         size: "md",
     },
 });
-export interface ListItem {
-    key: string;
-    label: React.ReactNode;
-    className?: string;
-    data?: any;
-    icon?: React.ReactNode;
-    /**
-     * Takes precedence over `activeKey` in `List`
-     */
-    active?: boolean;
-    tools?: ToolItem[];
-    color?: string;
-    loading?: boolean;
-    href?: string;
-    variant?: "danger" | "default";
-    disabled?: boolean;
-    onClick?: React.MouseEventHandler<HTMLLIElement>;
-    /**
-     * @default !!onClick
-     */
-    clickable?: boolean;
-}
 
 interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<typeof listItemInner> {
     children?: React.ReactNode;
@@ -143,14 +121,14 @@ export const ListItem: FC<ListItemProps> = ({
     const _innerProps = href ? { ...innerProps, href } : innerProps;
     const _disabled = loading || disabled;
     const interactive = _disabled ? false : props.clickable ?? (!!onClick || !!href);
-    const iconSize = size === "sm" ? "sm" : size === "lg" || size === "xl" ? "xl" : "md";
+    const iconSize = size === "xs" ? "sm" : size === "lg" || size === "xl" ? "xl" : "md";
 
     return (
         <Comp
             ref={ref}
             data-active={active}
             className={listItem({
-                effects,
+                effects: interactive && effects,
                 variant,
                 className,
                 clickable: interactive,

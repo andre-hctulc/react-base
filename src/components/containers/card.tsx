@@ -24,6 +24,7 @@ const card = tv({
             "3": "bg-paper3",
             "4": "bg-paper4",
             "5": "bg-paper5",
+            transparent: "",
         },
         rounded: {
             none: "",

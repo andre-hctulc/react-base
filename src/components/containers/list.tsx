@@ -54,12 +54,27 @@ const list = tv({
     },
 });
 
+export type ListItem = {
+    key: string;
+    label: React.ReactNode;
+    data?: any;
+    /**
+     * Used for {@link ListItem}s (variant "default")
+     */
+    props?: PropsOf<typeof ListItem>;
+    /**
+     * Used for {@link IconButton}s  (variant "icons")
+     */
+    buttonProps?: PropsOf<typeof IconButton>;
+    href?: string;
+};
+
 export interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
     items?: ListItem[];
     onItemClick?: (item: ListItem) => void;
     activeKey?: string | ((item: ListItem) => boolean);
-    size?: "sm" | "md" | "lg" | "xl";
+    size?: "xs" | "sm" | "md" | "lg" | "xl";
     LinkComponent?: LinkComponent;
     loading?: boolean;
     variant?: "icons" | "default";
@@ -110,14 +125,13 @@ export const List: FC<ListProps> = ({
             {populateProps(children, linkItemProps, "left", (el) => el.type === ListItem)}
             {items?.map((item) => {
                 const active =
-                    item.active ??
+                    item.props?.active ??
                     (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
 
                 if (variant === "icons") {
                     const btn = (
                         <IconButton
                             size={size === "xl" ? "lg" : size}
-                            loading={item.loading}
                             variant="text"
                             color={active ? "black" : "neutral"}
                             {...iconButtonProps}
@@ -127,13 +141,12 @@ export const List: FC<ListProps> = ({
                                 onItemClick?.(item);
                                 iconButtonProps?.onClick?.(e);
                             }}
-                            disabled={item.disabled}
                         >
-                            {item.icon}
+                            {item.props?.icon}
                         </IconButton>
                     );
 
-                    if (item.href) {
+                    if (item?.href) {
                         const Link = LinkComponent || "a";
                         return (
                             <Link key={item.key} href={item.href}>
@@ -148,28 +161,23 @@ export const List: FC<ListProps> = ({
                 return (
                     <ListItem
                         as="li"
-                        loading={item.loading}
                         size={size || "md"}
                         key={item.key}
-                        disabled={item.disabled}
-                        icon={item.icon}
-                        active={active}
-                        tools={item.tools}
-                        href={item.href}
-                        variant={item.variant}
                         {...linkItemProps}
-                        className={clsx(item.className, listItemProps?.className as any)}
+                        {...item.props}
+                        active={active}
+                        className={clsx(item.props?.className, listItemProps?.className as any)}
                         onClick={(e) => {
-                            item.onClick?.(e);
-                            onItemClick?.(item);
+                            item.props?.onClick?.(e);
                             listItemProps?.onClick?.(e);
+                            onItemClick?.(item);
                         }}
                         clickable={
-                            item.clickable ||
-                            !!item.onClick ||
+                            item.props?.clickable ||
+                            !!item.props?.onClick ||
                             !!listItemProps?.onClick ||
                             listItemProps?.clickable ||
-                            !!item.href
+                            !!item.props?.href
                         }
                     >
                         {item.label}
