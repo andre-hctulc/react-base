@@ -123,8 +123,8 @@ export const Chip: FC<ChipProps> = ({
         pale: activeBgA(20),
         text: activeBgA(20),
     });
-    const _clickable = clickable ?? interactive ?? props.onClick;
-    const _hoverEffect = hoverEffect ?? interactive ?? props.onClick;
+    const _clickable = clickable ?? interactive ?? !!props.onClick;
+    const _hoverEffect = hoverEffect ?? interactive ?? !!props.onClick;
 
     return (
         <Comp

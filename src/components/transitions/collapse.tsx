@@ -26,7 +26,7 @@ export const CollapseV500: React.FC<CollapseVProps> = props => {
             enterFrom="max-h-0"
             enterTo="max-h-[500px]"
             leave={"transition-all duration-300 ease-in"}
-            leaveFrom="max-h-screen"
+            leaveFrom="max-h-[500px]"
             leaveTo="max-h-[500px]"
             {...props}
         >

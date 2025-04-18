@@ -10,6 +10,10 @@ import { HiddenInput } from "./hidden-input.js";
 const radioSwitch = tv({
     base: "rounded-full flex border overflow-hidden",
     variants: {
+        bg: {
+            paper: "bg-paper",
+            transparent: "",
+        },
         size: {
             sm: "text-sm h-6",
             md: "text-base h-8",
@@ -28,6 +32,7 @@ const radioSwitch = tv({
     defaultVariants: {
         color: "primary",
         size: "md",
+        bg: "paper",
     },
 });
 
@@ -55,6 +60,7 @@ export const RadioSwitch = <V = string, D = any>({
     name,
     LinkComponent,
     dense,
+    bg,
 }: RadioSwitchProps<V, D>) => {
     const controlled = value !== undefined;
     // capture selected state to display in the button
@@ -82,7 +88,7 @@ export const RadioSwitch = <V = string, D = any>({
     }, [value, options]);
 
     return (
-        <div className={radioSwitch({ className, size, color })} style={style}>
+        <div className={radioSwitch({ className, size, color, bg })} style={style}>
             {/* form compatibility */}
             {name && <HiddenInput required={required} name={name} value={String(selected?.value || "")} />}
             {options.map((option, i) => {

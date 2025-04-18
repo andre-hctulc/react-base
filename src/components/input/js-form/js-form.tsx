@@ -7,6 +7,7 @@ import { type JSFormContext, JSFormCtx } from "./js-form-context.js";
 import { createSnapshot } from "./helpers.js";
 import { getProperty } from "dot-prop";
 import { useRefOf } from "../../../hooks/index.js";
+import type { PropsOf } from "../../../types/index.js";
 
 const jsForm = tv({
     variants: {
@@ -55,10 +56,14 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
      * Default controlled state for form controls
      */
     controlled?: boolean;
+    nested?: boolean;
 }
 
 /**
  * Input names are interpreted as dot prop paths
+ *
+ * ### Props
+ * - `nested` - If true, a div instead of a form is rendered. This is useful for nested forms.
  */
 export const JSForm = <T extends object = any>({
     children,
@@ -74,6 +79,7 @@ export const JSForm = <T extends object = any>({
     gap,
     reportStrategy,
     onInit,
+    nested,
     controlled,
 }: JSFormProps<T>) => {
     const form = useRef<HTMLFormElement>(null);
@@ -100,6 +106,7 @@ export const JSForm = <T extends object = any>({
      */
     const reporting = useRef(false);
     const inited = useRef(false);
+    const Comp: any = nested ? "div" : "form";
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         // Prevents form routing and posting
@@ -184,16 +191,18 @@ export const JSForm = <T extends object = any>({
         }
     }, [snapshot]);
 
+    let formProps: PropsOf<"form"> = {};
+
+    if (!nested) {
+        formProps.onSubmit = handleSubmit;
+        formProps.target = target;
+        formProps.onChange = handleChange;
+        formProps.ref = form;
+    }
+
     return (
-        <form
-            id={id}
-            onSubmit={handleSubmit}
-            className={jsForm({ flex, gap, className })}
-            target={target}
-            onChange={handleChange}
-            ref={form}
-        >
+        <Comp id={id} className={jsForm({ flex, gap, className })} {...formProps}>
             <JSFormCtx.Provider value={ctx}>{children}</JSFormCtx.Provider>
-        </form>
+        </Comp>
     );
 };

@@ -22,3 +22,4 @@ export * from "./radio-switch.js";
 export * from "./radio-card.js";
 export * from "./types.js";
 export * from "./icon-button.js";
+export * from "./range-input.js";

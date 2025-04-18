@@ -54,7 +54,17 @@ export interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
 /**
  * The child must forward the ref!
  */
-export const Tooltip: React.FC<TooltipProps> = ({ position, children, containerProps, enterDelay, reEnterDelay, content, disabled, portal, zIndex }) => {
+export const Tooltip: React.FC<TooltipProps> = ({
+    position,
+    children,
+    containerProps,
+    enterDelay,
+    reEnterDelay,
+    content,
+    disabled,
+    portal,
+    zIndex,
+}) => {
     const anchor = useRef<HTMLElement | null>(null);
     const [open, setOpen] = useState(false);
     const openTimeout = useRef<any>(null);
@@ -76,7 +86,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ position, children, containerP
                         () => {
                             setOpen(true);
                         },
-                        entered.current ? reEnterDelay ?? 200 : enterDelay ?? 200
+                        entered.current ? reEnterDelay ?? enterDelay ?? 200 : enterDelay ?? 200
                     );
                 },
                 onMouseLeave: (e: any) => {
@@ -85,8 +95,21 @@ export const Tooltip: React.FC<TooltipProps> = ({ position, children, containerP
                     setOpen(false);
                 },
             } as any)}
-            <Popover open={open} noInteraction position={position || "top"} anchor={anchor.current} portal={portal ?? false} zIndex={zIndex}>
-                <div {...containerProps} className={clsx("bg-black/75 rounded-sm py-1.5 px-2 text-white text-sm", containerProps?.className)}>
+            <Popover
+                open={open}
+                noInteraction
+                position={position || "top"}
+                anchor={anchor.current}
+                portal={portal ?? false}
+                zIndex={zIndex}
+            >
+                <div
+                    {...containerProps}
+                    className={clsx(
+                        "bg-black/75 rounded-sm py-1.5 px-2 text-white text-sm",
+                        containerProps?.className
+                    )}
+                >
                     {content}
                 </div>
             </Popover>

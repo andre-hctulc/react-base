@@ -70,7 +70,6 @@ export type ListItemDef = {
      * Used for {@link ListItem}s  (variant "default")
      */
     listItemProps?: PartialPropsOf<typeof ListItem>;
-    href?: string;
 };
 
 export interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
@@ -133,7 +132,7 @@ export const List: FC<ListProps> = ({
                     (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
 
                 if (variant === "icons") {
-                    const btn = (
+                    return (
                         <IconButton
                             size={size === "xl" ? "lg" : size}
                             variant="text"
@@ -158,17 +157,6 @@ export const List: FC<ListProps> = ({
                             {item.props?.icon}
                         </IconButton>
                     );
-
-                    if (item?.href) {
-                        const Link = LinkComponent || "a";
-                        return (
-                            <Link key={item.key} href={item.href}>
-                                {btn}
-                            </Link>
-                        );
-                    }
-
-                    return btn;
                 }
 
                 return (

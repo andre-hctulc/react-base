@@ -1,8 +1,13 @@
 import React from "react";
 
-export function useMap<K, V>(source?: Map<K, V> | (() => Map<K, V>), resetOnSourceChange = false) {
+type MapSource<K, V> = Map<K, V> | Iterable<[K, V]>;
+
+export function useMap<K, V>(
+    source?: MapSource<K, V> | (() => MapSource<K, V>),
+    resetOnSourceChange = false
+) {
     const [map, setMap] = React.useState<Map<K, V>>(() => {
-        return source instanceof Map ? source : source ? source() : new Map();
+        return new Map<K, V>(typeof source === "object" ? source : source ? source() : []);
     });
     const resetActive = React.useRef(false);
 
@@ -12,7 +17,9 @@ export function useMap<K, V>(source?: Map<K, V> | (() => Map<K, V>), resetOnSour
             return;
         }
 
-        if (resetOnSourceChange) setMap(source instanceof Map ? source : source ? source() : new Map());
+        if (resetOnSourceChange) {
+            setMap(new Map(typeof source === "object" ? source : source ? source() : []));
+        }
     }, [source]);
 
     const set = React.useCallback((key: K, value: V) => {
