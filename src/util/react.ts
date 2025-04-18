@@ -40,7 +40,7 @@ export function nodeIsEmpty(children: ReactNode) {
  */
 export function populateProps<P extends object>(
     children: ReactNode,
-    props: P,
+    props: P | ((element: ReactElement) => P),
     mergeStrategy: "left" | "right" = "right",
     populateIf?: (element: ReactElement) => boolean
 ): ReactNode[] {
@@ -48,10 +48,11 @@ export function populateProps<P extends object>(
     return arr.map((child) => {
         if (!isValidElement(child)) return child;
         if (!populateIf || populateIf(child)) {
+            const addProps = typeof props === "function" ? props(child) : props;
             return cloneElement(
                 child,
                 mergeStrategy === "left"
-                    ? { ...props, ...(child.props as any) }
+                    ? { ...addProps, ...(child.props as any) }
                     : // default
                       props
             );

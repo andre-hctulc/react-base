@@ -8,6 +8,7 @@ import { createSnapshot } from "./helpers.js";
 import { getProperty } from "dot-prop";
 import { useRefOf } from "../../../hooks/index.js";
 import type { PropsOf } from "../../../types/index.js";
+import { populateProps } from "../../../util/react.js";
 
 const jsForm = tv({
     variants: {
@@ -57,6 +58,7 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
      */
     controlled?: boolean;
     nested?: boolean;
+    prefixKeys?: string[];
 }
 
 /**
@@ -81,6 +83,7 @@ export const JSForm = <T extends object = any>({
     onInit,
     nested,
     controlled,
+    prefixKeys,
 }: JSFormProps<T>) => {
     const form = useRef<HTMLFormElement>(null);
     const defValue = useMemo<Partial<T>>(() => defaultValue || {}, [defaultValue]);
@@ -202,7 +205,13 @@ export const JSForm = <T extends object = any>({
 
     return (
         <Comp id={id} className={jsForm({ flex, gap, className })} {...formProps}>
-            <JSFormCtx.Provider value={ctx}>{children}</JSFormCtx.Provider>
+            <JSFormCtx.Provider value={ctx}>
+                {prefixKeys
+                    ? populateProps(children, (el) => ({
+                          name: "name" in el && el.name ? `${prefixKeys}${el.name}` : undefined,
+                      }))
+                    : children}
+            </JSFormCtx.Provider>
         </Comp>
     );
 };

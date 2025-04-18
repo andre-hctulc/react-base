@@ -1,5 +1,6 @@
 import { setProperty } from "dot-prop";
 import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./types.js";
+import type { ZodType } from "zod";
 
 type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
@@ -138,4 +139,29 @@ export function createSnapshot(
     }
 
     return snapshot;
+}
+
+/**
+ * Use this in `FormProps.validate` to validate a form using Zod.
+ */
+export function zodValidate<T extends object>(schema: ZodType<T>) {
+    return () => (data: JSFormValidateData<T>) => {
+        const { values } = data;
+        const validation: JSFormValidation = {};
+
+        const result = schema.safeParse(values);
+
+        if (!result.success) {
+            result.error.errors.forEach((error) => {
+                // Parse field path to `dot-prop` format
+                const field = error.path
+                    .map((segment) => (typeof segment === "number" ? `[${segment}]` : segment))
+                    .join(".");
+                const message = error.message;
+                validation[field] = message;
+            });
+        }
+
+        return validation;
+    };
 }
