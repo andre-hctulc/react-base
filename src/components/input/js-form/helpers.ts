@@ -54,7 +54,7 @@ function formDataToObject(formData: FormData, inputElements: InputElement[]) {
             val = !!(element as HTMLInputElement).checked;
         }
         // Parse number inputs as numbers
-        else if (element?.type === "number") {
+        else if (element?.type === "number" || element?.type === "range") {
             const num = parseFloat(value as string);
             val = isNaN(num) ? undefined : num;
         }

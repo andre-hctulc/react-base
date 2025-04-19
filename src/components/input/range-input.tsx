@@ -89,7 +89,7 @@ export const RangeInput: FC<RangeInputProps> = ({
     return (
         <div className={rangeInput({ className })} ref={ref} {...props}>
             {labeled !== false && (
-                <div className="flex items-center mb-[2px] text-xs text-t3">
+                <div className="flex items-center text-xs text-t3 px-0.5">
                     {min !== undefined && <span>{numText(min)}</span>}
                     <b className="ml-2 text-t2">{val}</b>
                     {max !== undefined && <span className="ml-auto">{numText(max)}</span>}
@@ -118,7 +118,7 @@ export const RangeInput: FC<RangeInputProps> = ({
             {markerPositions && (
                 <datalist id={listId}>
                     {markerPositions.map((pos) => (
-                        <option value={pos} label={String(pos)} />
+                        <option key={pos} value={pos} label={String(pos)} />
                     ))}
                 </datalist>
             )}
