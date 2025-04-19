@@ -159,9 +159,10 @@ export const Select = <V = string, D = any>({
     };
 
     return (
-        <div className={className}>
+        <div className={className} style={style}>
             <HiddenInput id={id} name={name} value={val} required={required} />
             <button
+                type="button"
                 ref={btn}
                 disabled={_disabled}
                 onClick={() => setOpen(true)}
