@@ -54,7 +54,7 @@ export function populateProps<P extends object>(
                 mergeStrategy === "left"
                     ? { ...addProps, ...(child.props as any) }
                     : // default
-                      props
+                      addProps
             );
         }
         return child;
