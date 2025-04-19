@@ -7,7 +7,7 @@ import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
 import { Overlay } from "../layout/overlay.js";
 import type { Falsy } from "@edgeshiftlabs/util";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useMemo, useState } from "react";
 
 const popover = tv({
     base: "absolute",
@@ -99,7 +99,6 @@ export const Popover: React.FC<PopoverProps> = (props) => {
     const [isPositioned, setIsPositioned] = useState(false); // Track whether the popover is positioned
     const modifiers: Modifier<unknown, object>[] = useMemo(() => {
         const mods: (Modifier<unknown, object> | Falsy)[] = [
-            ,
             props.width === "anchor" && {
                 name: "sameWidth",
                 enabled: true,
@@ -133,20 +132,15 @@ export const Popover: React.FC<PopoverProps> = (props) => {
 
         return mods.filter(Boolean) as Modifier<unknown, object>[];
     }, [pos, props.gap, props.frameMargin, props.width, props.anchor, isPositioned]);
+    const onFirstUpdate = useCallback(() => {
+        setIsPositioned(true);
+    }, [setIsPositioned]);
     const { styles, attributes } = usePopper(props.anchor, popperElement, {
         placement: pos,
         modifiers,
         strategy: props.strategy, // default is "absolute"
-        onFirstUpdate: () => {
-            setIsPositioned(true);
-        },
+        onFirstUpdate,
     });
-
-    // useEffect(() => {
-    //     if (styles.popper?.top && styles.popper?.left) {
-    //         setIsPositioned(true);
-    //     }
-    // }, [styles.popper?.top, styles.popper?.left]);
 
     return (
         <Overlay
