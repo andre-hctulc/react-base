@@ -127,7 +127,7 @@ export const Select = <V = string, D = any>({
         </span>
     );
     const val = useMemo(() => {
-        return selected.map((s) => String(s.value));
+        return selected.map(({ value }) => String(value));
     }, [selected]);
 
     const loadingEl = <span className="text-t3 truncate">{loadingText ?? "Loading..."}</span>;
