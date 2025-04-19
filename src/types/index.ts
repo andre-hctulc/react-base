@@ -7,6 +7,7 @@ import type {
     JSX,
 } from "react";
 import type { VariantProps } from "tailwind-variants";
+import type { ListItem } from "../components/index.js";
 
 // #### Props ####
 
@@ -82,6 +83,7 @@ export interface Choice<V = string, D = any> {
      * Choice disabled?
      */
     disabled?: boolean;
+    listItemProps?: PartialPropsOf<typeof ListItem>;
 }
 
 /**

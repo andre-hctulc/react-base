@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type FC } from "react";
+import React, { type FC, type MouseEvent } from "react";
 import { tv } from "tailwind-variants";
 import type { LinkComponent, PartialPropsOf, PropsOf, TVCProps } from "../../types/index.js";
 import clsx from "clsx";
@@ -54,10 +54,10 @@ const list = tv({
     },
 });
 
-export type ListItemDef = {
+export type ListItemDef<D = any> = {
     key: string;
     label: React.ReactNode;
-    data?: any;
+    data?: D;
     /**
      * Used for {@link ListItem}s and  {@link IconButton}s
      */
@@ -75,7 +75,7 @@ export type ListItemDef = {
 export interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
     items?: ListItemDef[];
-    onItemClick?: (item: ListItemDef) => void;
+    onItemClick?: (item: ListItemDef, e: MouseEvent) => void;
     activeKey?: string | ((item: ListItemDef) => boolean);
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     LinkComponent?: LinkComponent;
@@ -151,7 +151,7 @@ export const List: FC<ListProps> = ({
                                 item.buttonProps?.onClick?.(e);
                                 item.props?.onClick?.(e);
                                 iconButtonProps?.onClick?.(e);
-                                onItemClick?.(item);
+                                onItemClick?.(item, e);
                             }}
                         >
                             {item.props?.icon}
@@ -173,7 +173,7 @@ export const List: FC<ListProps> = ({
                             item.listItemProps?.onClick?.(e);
                             item.props?.onClick?.(e);
                             listItemProps?.onClick?.(e);
-                            onItemClick?.(item);
+                            onItemClick?.(item, e);
                         }}
                         clickable={
                             !!item.props?.clickable ||
