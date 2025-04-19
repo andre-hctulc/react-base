@@ -58,7 +58,7 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
      */
     controlled?: boolean;
     nested?: boolean;
-    prefixKeys?: string[];
+    prefixNames?: string;
 }
 
 /**
@@ -66,6 +66,7 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
  *
  * ### Props
  * - `nested` - If true, a div instead of a form is rendered. This is useful for nested forms.
+ * - `prefixNames` - If set, the input names are prefixed with this string.
  */
 export const JSForm = <T extends object = any>({
     children,
@@ -83,7 +84,7 @@ export const JSForm = <T extends object = any>({
     onInit,
     nested,
     controlled,
-    prefixKeys,
+    prefixNames,
 }: JSFormProps<T>) => {
     const form = useRef<HTMLFormElement>(null);
     const defValue = useMemo<Partial<T>>(() => defaultValue || {}, [defaultValue]);
@@ -206,9 +207,9 @@ export const JSForm = <T extends object = any>({
     return (
         <Comp id={id} className={jsForm({ flex, gap, className })} {...formProps}>
             <JSFormCtx.Provider value={ctx}>
-                {prefixKeys
+                {prefixNames
                     ? populateProps(children, (el) => ({
-                          name: "name" in el && el.name ? `${prefixKeys}${el.name}` : undefined,
+                          name: "name" in el && el.name ? `${prefixNames}${el.name}` : undefined,
                       }))
                     : children}
             </JSFormCtx.Provider>

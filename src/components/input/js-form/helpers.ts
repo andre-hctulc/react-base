@@ -142,7 +142,7 @@ export function createSnapshot(
 }
 
 /**
- * Use this in `FormProps.validate` to validate a form using Zod.
+ * Use this in `JSFormProps.validate` to validate a form using Zod.
  */
 export function zodValidate<T extends object>(schema: ZodType<T>) {
     return () => (data: JSFormValidateData<T>) => {
