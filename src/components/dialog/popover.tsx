@@ -99,6 +99,16 @@ export const Popover: React.FC<PopoverProps> = (props) => {
     const [isPositioned, setIsPositioned] = useState(false); // Track whether the popover is positioned
     const modifiers: Modifier<unknown, object>[] = useMemo(() => {
         const mods: (Modifier<unknown, object> | Falsy)[] = [
+            ,
+            props.width === "anchor" && {
+                name: "sameWidth",
+                enabled: true,
+                phase: "beforeWrite",
+                requires: ["computeStyles"],
+                fn({ state }) {
+                    state.styles.popper.width = `${state.rects.reference.width}px`;
+                },
+            },
             {
                 name: "offset",
                 options: {
@@ -110,15 +120,6 @@ export const Popover: React.FC<PopoverProps> = (props) => {
                 options: {
                     boundary: document.body,
                     padding: props.frameMargin ?? 4, // Adds gap from the window border
-                },
-            },
-            props.width === "anchor" && {
-                name: "sameWidth",
-                enabled: true,
-                phase: "beforeWrite",
-                requires: ["computeStyles"],
-                fn({ state }) {
-                    state.styles.popper.width = `${state.rects.reference.width}px`;
                 },
             },
             // {
@@ -134,15 +135,18 @@ export const Popover: React.FC<PopoverProps> = (props) => {
     }, [pos, props.gap, props.frameMargin, props.width, props.anchor, isPositioned]);
     const { styles, attributes } = usePopper(props.anchor, popperElement, {
         placement: pos,
-        modifiers: modifiers.filter(Boolean) as Partial<Modifier<unknown, object>>[],
+        modifiers,
         strategy: props.strategy, // default is "absolute"
+        onFirstUpdate: () => {
+            setIsPositioned(true);
+        },
     });
 
-    useEffect(() => {
-        if (styles.popper?.top) {
-            setIsPositioned(true);
-        }
-    }, [styles.popper?.top]);
+    // useEffect(() => {
+    //     if (styles.popper?.top && styles.popper?.left) {
+    //         setIsPositioned(true);
+    //     }
+    // }, [styles.popper?.top, styles.popper?.left]);
 
     return (
         <Overlay
