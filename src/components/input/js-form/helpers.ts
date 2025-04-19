@@ -154,9 +154,13 @@ export function zodValidate<T extends object>(schema: ZodType<T>) {
         if (!result.success) {
             result.error.errors.forEach((error) => {
                 // Parse field path to `dot-prop` format
-                const field = error.path
-                    .map((segment) => (typeof segment === "number" ? `[${segment}]` : segment))
-                    .join(".");
+                const field = error.path.reduce((acc, curr) => {
+                    if (typeof acc === "string") {
+                        return `${acc}.${curr}`;
+                    } else {
+                        return `${acc}[${curr}]`;
+                    }
+                }, "");
                 const message = error.message;
                 validation[field] = message;
             });
