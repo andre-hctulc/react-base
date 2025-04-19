@@ -6,9 +6,10 @@ import type { InputLikeProps } from "./types.js";
 import type { LabeledChoice, StyleProps } from "../../types/index.js";
 import clsx from "clsx";
 import { HiddenInput } from "./hidden-input.js";
+import { themeColor } from "../../util/style.js";
 
 const radioSwitch = tv({
-    base: "rounded-full flex border overflow-hidden",
+    base: "rounded-full flex border overflow-hidden w-fit",
     variants: {
         bg: {
             paper: "bg-paper",
@@ -27,6 +28,7 @@ const radioSwitch = tv({
             warning: "text-warning",
             info: "text-info",
             neutral: "text-neutral",
+            accent: "text-accent",
         },
     },
     defaultVariants: {
@@ -72,7 +74,7 @@ export const RadioSwitch = <V = string, D = any>({
         }
         return null;
     });
-
+    const { bgA } = themeColor(color || "primary");
     const activate = (option: LabeledChoice<V, D>) => {
         if (!controlled) setSelected(option);
         onChange?.({ value: option.value, option });
@@ -94,12 +96,10 @@ export const RadioSwitch = <V = string, D = any>({
             {options.map((option, i) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
                 const active = selected?.value === option.value;
-                const last = i === options.length - 1;
                 const classes = clsx(
                     "text-center flex items-center gap-2 transition cursor-pointer",
                     dense ? "px-2" : "px-4",
-                    !active && "text-t2",
-                    last && "border-r",
+                    active ? ["", bgA(15)] : "text-t2",
                     canActivate && "hover:bg-transparent1 active:bg-transparent2"
                 );
 

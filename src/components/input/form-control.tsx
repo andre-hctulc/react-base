@@ -69,6 +69,7 @@ interface FormControlProps extends TVCProps<typeof formControl, "div"> {
      * In this case a span is used instead of a label element.
      */
     mimic?: boolean;
+    requiredHint?: boolean;
 }
 
 /**
@@ -93,7 +94,8 @@ export const FormControl: FC<FormControlProps> = ({
     labelWidth,
     noError,
     helperTextTop,
-    mimic: hidden,
+    mimic,
+    requiredHint,
 }) => {
     const hasName = name !== undefined;
     const formCtx = useJSForm();
@@ -109,7 +111,7 @@ export const FormControl: FC<FormControlProps> = ({
 
     // If the child is an input element (optimistic), we pass some props to it
     if (childElement) {
-        if (!hidden) {
+        if (!mimic) {
             inpProps.id = id;
         }
 
@@ -141,10 +143,11 @@ export const FormControl: FC<FormControlProps> = ({
     );
     const lbl = label && (
         <Label
+            requiredHint={requiredHint}
             htmlFor={id}
             {...labelProps}
             /* default to span if hidden */
-            as={labelProps?.as ?? (hidden ? "span" : undefined)}
+            as={labelProps?.as ?? (mimic ? "span" : undefined)}
             style={{ width: labelWidth, ...labelProps?.style }}
         >
             {label}
