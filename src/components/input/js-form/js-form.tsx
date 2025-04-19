@@ -208,9 +208,17 @@ export const JSForm = <T extends object = any>({
         <Comp id={id} className={jsForm({ flex, gap, className })} {...formProps}>
             <JSFormCtx.Provider value={ctx}>
                 {prefixNames
-                    ? populateProps(children, (el) => ({
-                          name: "name" in el && el.name ? `${prefixNames}${el.name}` : undefined,
-                      }))
+                    ? populateProps(children, (el) => {
+                          const formControlProps: any = el.props;
+
+                          if ("name" in formControlProps && formControlProps.name) {
+                              return {
+                                  name: `${prefixNames}${formControlProps.name}`,
+                              };
+                          }
+
+                          return {};
+                      })
                     : children}
             </JSFormCtx.Provider>
         </Comp>

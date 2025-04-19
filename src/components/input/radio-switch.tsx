@@ -99,7 +99,7 @@ export const RadioSwitch = <V = string, D = any>({
                 const classes = clsx(
                     "text-center flex items-center gap-2 transition cursor-pointer",
                     dense ? "px-2" : "px-4",
-                    active ? ["", bgA(15)] : "text-t2",
+                    active ? ["", bgA(5)] : "text-t2",
                     canActivate && "hover:bg-transparent1 active:bg-transparent2"
                 );
 
