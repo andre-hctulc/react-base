@@ -32,6 +32,7 @@ const formControlBody = tv({
     variants: {
         gap: {
             none: "none",
+            xs: "gap-0.5",
             sm: "gap-1",
             md: "gap-2",
             lg: "gap-3",
@@ -39,7 +40,7 @@ const formControlBody = tv({
         },
     },
     defaultVariants: {
-        gap: "md",
+        gap: "sm",
     },
 });
 

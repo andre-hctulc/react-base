@@ -2,10 +2,6 @@
 /* Reference compiled source! */
 @source "dist";
 
-body {
-    /* border: 4px solid red; */
-}
-
 /* #### Theme #### */
 
 @theme {
@@ -41,8 +37,8 @@ body {
 
     /* Background Colors */
 
-    --color-paper: rgb(255, 255, 255);
     --color-paper1: rgb(255, 255, 255);
+    --color-paper: var(--color-paper1);
     --color-paper2: rgb(248, 248, 248);
     --color-paper3: rgb(240, 240, 240);
     --color-paper4: rgb(230, 230, 230);
@@ -59,17 +55,19 @@ body {
     --color-t3: rgb(151, 151, 151);
     --color-t4: rgb(178, 178, 178);
     --color-t5: rgb(204, 204, 204);
-    --color-t-contrast: rgb(255, 255, 255);
-    --color-t-contrast1: rgb(255, 255, 255);
-    --color-t-contrast2: rgb(204, 204, 204);
-    --color-t-contrast3: rgb(153, 153, 153);
+
+    /* tc=text-contrast */
+    --color-tc1: rgb(255, 255, 255);
+    --color-tc: var(--color-tc1);
+    --color-tc2: rgb(204, 204, 204);
+    --color-tc3: rgb(153, 153, 153);
 
     /* Border Colors */
 
     --color-divider: rgb(204, 204, 204);
     --color-divider-light: rgb(224, 224, 224);
     --color-divider-dark: rgb(102, 102, 102);
-    --border-current: rgb(204, 204, 204);
+    --border-current: var(--color-divider);
 
     /* Shadows */
 
@@ -105,5 +103,10 @@ body {
     *,
     hr {
         border-color: var(--color-divider);
+    }
+
+    body {
+        background-color: var(--color-paper);
+        color: var(--color-t1);
     }
 }
