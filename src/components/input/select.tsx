@@ -11,10 +11,11 @@ import { Icon } from "../icons/icon.js";
 import { Popover } from "../dialog/popover.js";
 import { List, type ListItemDef } from "../containers/list.js";
 import { HiddenInput } from "./hidden-input.js";
+import { Card } from "../containers/card.js";
 
 const select = tv({
     base: [
-        "rounded-lg bg-paper3 text-left text-sm",
+        "w-full rounded-lg bg-paper3 text-left text-sm",
         "flex relative",
         "h-full w-full",
         "py-1.5 pr-9 pl-3 gap-3",
@@ -158,13 +159,13 @@ export const Select = <V = string, D = any>({
     };
 
     return (
-        <>
+        <div className={className}>
             <HiddenInput id={id} name={name} value={val} required={required} />
             <button
                 ref={btn}
                 disabled={_disabled}
                 onClick={() => setOpen(true)}
-                className={select({ size, disabled: _disabled, className })}
+                className={select({ size, disabled: _disabled })}
             >
                 <XScroll hideScrollbar>
                     <div className="w-full h-full box-border overflow-x-auto flex items-center gap-1.5">
@@ -176,38 +177,41 @@ export const Select = <V = string, D = any>({
                 </span>
             </button>
             <Popover
+                portal={false}
                 width="anchor"
                 anchor={btn.current}
                 open={open}
                 onClose={() => setOpen(false)}
                 position="bottom"
             >
-                <List
-                    items={getListItems(options)}
-                    onItemClick={(listItem) => {
-                        const option: SelectOption<V, D> = listItem.data;
+                <Card>
+                    <List
+                        items={getListItems(options)}
+                        onItemClick={(listItem) => {
+                            const option: SelectOption<V, D> = listItem.data;
 
-                        if (!option || option.disabled) return;
+                            if (!option || option.disabled) return;
 
-                        let newValue: SelectOption<V, D>[];
+                            let newValue: SelectOption<V, D>[];
 
-                        if (multiple) {
-                            newValue = selected.some((s) => s.value === option.value)
-                                ? selected.filter((s) => s.value !== option.value)
-                                : [...selected, option];
-                        } else {
-                            newValue = [option];
-                            setOpen(false);
-                        }
+                            if (multiple) {
+                                newValue = selected.some((s) => s.value === option.value)
+                                    ? selected.filter((s) => s.value !== option.value)
+                                    : [...selected, option];
+                            } else {
+                                newValue = [option];
+                                setOpen(false);
+                            }
 
-                        if (!controlled) {
-                            setSelected(newValue);
-                        }
+                            if (!controlled) {
+                                setSelected(newValue);
+                            }
 
-                        onChange?.({ value: newValue.map((s) => s.value), options });
-                    }}
-                />
+                            onChange?.({ value: newValue.map((s) => s.value), options });
+                        }}
+                    />
+                </Card>
             </Popover>
-        </>
+        </div>
     );
 };
