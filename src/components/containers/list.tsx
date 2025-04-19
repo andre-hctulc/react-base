@@ -177,6 +177,7 @@ export const List: FC<ListProps> = ({
                         }}
                         clickable={
                             !!item.props?.clickable ||
+                            !onItemClick ||
                             !!item.props?.onClick ||
                             !!item.listItemProps?.onClick ||
                             !!item.listItemProps?.clickable ||

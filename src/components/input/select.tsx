@@ -90,7 +90,7 @@ export const Select = <V = string, D = any>({
     name,
     id,
 }: SelectProps<V, D>) => {
-    const btn = useRef<HTMLButtonElement>(null);
+    const [btn, setBtn] = useState<HTMLButtonElement | null>(null);
     const [open, setOpen] = useState(false);
     const controlled = value !== undefined;
     // capture selected state to display in the button
@@ -163,7 +163,7 @@ export const Select = <V = string, D = any>({
             <HiddenInput id={id} name={name} value={val} required={required} />
             <button
                 type="button"
-                ref={btn}
+                ref={setBtn}
                 disabled={_disabled}
                 onClick={() => setOpen(true)}
                 className={select({ size, disabled: _disabled })}
@@ -180,13 +180,15 @@ export const Select = <V = string, D = any>({
             <Popover
                 portal={false}
                 width="anchor"
-                anchor={btn.current}
+                anchor={btn}
                 open={open}
                 onClose={() => setOpen(false)}
                 position="bottom"
+                gap={1}
             >
-                <Card>
+                <Card shadow="md">
                     <List
+                        padding="sm"
                         items={getListItems(options)}
                         onItemClick={(listItem) => {
                             const option: SelectOption<V, D> = listItem.data;

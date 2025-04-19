@@ -29,7 +29,7 @@ const listItem = tv({
         },
         disabled: {
             true: "cursor-not-allowed opacity-50",
-        }
+        },
     },
     compoundVariants: [
         {
@@ -118,7 +118,6 @@ export const ListItem: FC<ListItemProps> = ({
 }) => {
     const Link = LinkComponent || "a";
     const icon = loading ? <Spinner color={variant === "danger" ? "error" : "neutral"} /> : props.icon;
-    const clickHandler = loading ? undefined : onClick;
     const Comp: any = props.as || "div";
     const Inner: any = href ? Link : "div";
     const _innerProps = href ? { ...innerProps, href } : innerProps;
@@ -138,7 +137,7 @@ export const ListItem: FC<ListItemProps> = ({
                 disabled: _disabled,
             })}
             data-reactive={true}
-            onClick={_disabled ? undefined : clickHandler}
+            onClick={_disabled ? undefined : onClick}
             style={style}
         >
             <Inner className={listItemInner({ size })} {..._innerProps}>
