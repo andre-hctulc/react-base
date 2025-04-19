@@ -4,6 +4,7 @@ import { tv } from "tailwind-variants";
 import React, { useId, useMemo, useState, type FC } from "react";
 import type { PropsOf, TVCProps } from "../../types/index.js";
 import type { InputLikeProps } from "./types.js";
+import clsx from "clsx";
 
 const rangeInput = tv({
     base: "",
@@ -88,7 +89,7 @@ export const RangeInput: FC<RangeInputProps> = ({
     return (
         <div className={rangeInput({ className })} ref={ref} {...props}>
             {labeled !== false && (
-                <div className="flex items-center mb-0.5 text-sm text-t3">
+                <div className="flex items-center mb-[2px] text-xs text-t3">
                     {min !== undefined && <span>{numText(min)}</span>}
                     <b className="ml-2 text-t2">{val}</b>
                     {max !== undefined && <span className="ml-auto">{numText(max)}</span>}
@@ -107,6 +108,7 @@ export const RangeInput: FC<RangeInputProps> = ({
                 value={value}
                 defaultValue={defaultValue}
                 name={name}
+                className={clsx("w-full", inputProps?.className)}
                 onChange={(e) => {
                     inputProps?.onChange?.(e);
                     setValue(e.target.valueAsNumber);
