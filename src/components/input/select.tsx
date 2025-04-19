@@ -15,7 +15,7 @@ import { Card } from "../containers/card.js";
 
 const select = tv({
     base: [
-        "w-full rounded-lg bg-paper3 text-left text-sm",
+        "w-full rounded-lg bg-paper3 text-left text-sm cursor-pointer",
         "flex relative",
         "h-full w-full",
         "py-1.5 pr-9 pl-3 gap-3",
@@ -90,7 +90,7 @@ export const Select = <V = string, D = any>({
     name,
     id,
 }: SelectProps<V, D>) => {
-    const [btn, setBtn] = useState<HTMLButtonElement | null>(null);
+    const [root, setRoot] = useState<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
     const controlled = value !== undefined;
     // capture selected state to display in the button
@@ -159,11 +159,10 @@ export const Select = <V = string, D = any>({
     };
 
     return (
-        <div className={className} style={style}>
+        <div className={className} style={style} ref={setRoot}>
             <HiddenInput id={id} name={name} value={val} required={required} />
             <button
                 type="button"
-                ref={setBtn}
                 disabled={_disabled}
                 onClick={() => setOpen(true)}
                 className={select({ size, disabled: _disabled })}
@@ -180,13 +179,13 @@ export const Select = <V = string, D = any>({
             <Popover
                 portal={false}
                 width="anchor"
-                anchor={btn}
+                anchor={root}
                 open={open}
                 onClose={() => setOpen(false)}
                 position="bottom"
                 gap={1}
             >
-                <Card shadow="md">
+                <Card variant="custom" shadow="md">
                     <List
                         padding="sm"
                         items={getListItems(options)}
