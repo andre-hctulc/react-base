@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./types.js";
-import type { LabeledChoice, StyleProps } from "../../types/index.js";
+import type { LabeledChoice, PartialPropsOf, StyleProps } from "../../types/index.js";
 import { ChevronDownIcon } from "../icons/chevron-down.js";
 import { Chip } from "../data-display/chip.js";
 import { XScroll } from "../shadow/x-scroll.js";
@@ -54,6 +54,7 @@ export interface SelectProps<V = string, D = any>
      * @default "Loading..."
      */
     loadingText?: string;
+    popoverProps?: PartialPropsOf<typeof Popover>;
 }
 
 export interface SelectOption<V = string, D = any> extends LabeledChoice<V, D> {
@@ -89,6 +90,7 @@ export const Select = <V = string, D = any>({
     icon,
     name,
     id,
+    popoverProps,
 }: SelectProps<V, D>) => {
     const [root, setRoot] = useState<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
@@ -177,13 +179,13 @@ export const Select = <V = string, D = any>({
                 </span>
             </button>
             <Popover
-                portal={false}
                 width="anchor"
                 anchor={root}
                 open={open}
                 onClose={() => setOpen(false)}
                 position="bottom"
                 gap={1}
+                {...popoverProps}
             >
                 <Card variant="custom" shadow="md">
                     <List

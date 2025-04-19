@@ -17,6 +17,7 @@ const cardBody = tv({
             true: "!py-0",
             footer: "!pb-0",
             header: "!pt-0",
+            false: "",
         },
         flex: {
             col: "flex flex-col",
@@ -39,6 +40,7 @@ const cardBody = tv({
     },
     defaultVariants: {
         size: "md",
+        embedded: false,
     },
 });
 

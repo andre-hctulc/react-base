@@ -96,11 +96,13 @@ export const RadioSwitch = <V = string, D = any>({
             {options.map((option, i) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
                 const active = selected?.value === option.value;
+                const last = i === options.length - 1;
                 const classes = clsx(
                     "text-center flex items-center gap-2 transition cursor-pointer",
                     dense ? "px-2" : "px-4",
+                    !last && "border-r border-divider/50",
                     active ? ["", bgA(5)] : "text-t2",
-                    canActivate && "hover:bg-transparent1 active:bg-transparent2"
+                    canActivate && !active && "hover:bg-transparent1 active:bg-transparent2"
                 );
 
                 if (option.href) {
@@ -122,6 +124,7 @@ export const RadioSwitch = <V = string, D = any>({
 
                 return (
                     <button
+                        type="button"
                         onClick={() => {
                             activate(option);
                         }}

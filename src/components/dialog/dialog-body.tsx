@@ -26,6 +26,7 @@ const dialogBody = tv({
     },
     defaultVariants: {
         size: "md",
+        embedded: false,
     },
 });
 

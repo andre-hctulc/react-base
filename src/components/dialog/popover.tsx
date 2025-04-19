@@ -131,7 +131,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
         ];
 
         return mods.filter(Boolean) as Modifier<unknown, object>[];
-    }, [pos, props.gap, props.frameMargin, props.width]);
+    }, [pos, props.gap, props.frameMargin, props.width, props.anchor, isPositioned]);
     const { styles, attributes } = usePopper(props.anchor, popperElement, {
         placement: pos,
         modifiers: modifiers.filter(Boolean) as Partial<Modifier<unknown, object>>[],
