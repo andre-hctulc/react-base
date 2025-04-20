@@ -102,13 +102,14 @@ export const FormControl: FC<FormControlProps> = ({
     mimic,
     requiredHint,
 }) => {
-    const hasName = name !== undefined;
     const formCtx = useJSForm();
-    const isErr = !noError && hasName && formCtx?.inputs[name]?.ok === false;
-    const errText = isErr && formCtx.reporting ? errorText ?? (formCtx?.inputs[name]?.error || "") : "";
+    const _name = name !== undefined ? `${formCtx?.prefixNames ?? ""}${name}` : undefined;
+    const hasName = _name !== undefined;
+    const isErr = !noError && hasName && formCtx?.inputs[_name]?.ok === false;
+    const errText = isErr && formCtx.reporting ? errorText ?? (formCtx?.inputs[_name]?.error || "") : "";
     const _controlled = controlled ?? formCtx?.controlled;
     const id = useId();
-    const jsFormValue = hasName ? formCtx?.default(name) : undefined;
+    const jsFormValue = hasName ? formCtx?.default(_name) : undefined;
     const childElement: ReactElement<any> | null = isValidElement(children) ? children : null;
 
     // input props
@@ -121,7 +122,7 @@ export const FormControl: FC<FormControlProps> = ({
         }
 
         if (hasName) {
-            inpProps.name = formCtx?.prefixNames ? `${formCtx.prefixNames}${name}` : name;
+            inpProps.name = _name;
         }
 
         // handle js form default value
