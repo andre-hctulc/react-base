@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 
-type SetPersistentStateDispatch<T> = (value: (T | undefined) | ((previousValue: T | undefined) => T)) => void;
+type SetPersistentStateDispatch<T> = (value: (T | undefined) | ((previousValue: T) => T)) => void;
 
 export function usePersistentState<T>(
     key: string,
-    defaultValue?: T,
+    defaultValue: T,
     storage?: Storage
-): [T | undefined, SetPersistentStateDispatch<T>] {
-    const [state, setState] = useState<T | undefined>(() => {
+): [T, SetPersistentStateDispatch<T>] {
+    const [state, setState] = useState<T>(() => {
         // Get initial state from storage or use the default value
         if (!storage) storage = localStorage;
         const storedValue = storage.getItem(key);
@@ -17,22 +17,25 @@ export function usePersistentState<T>(
         return defaultValue;
     });
 
-    const setValue = useCallback((value: Parameters<SetPersistentStateDispatch<T>>[0]) => {
-        // If the value is a function, pass it as is. It must always return a value.
-        if (typeof value === "function") {
-            setState(value);
-            return;
-        }
+    const setValue = useCallback(
+        (value: Parameters<SetPersistentStateDispatch<T>>[0]) => {
+            // If the value is a function, pass it as is. It must always return a value.
+            if (typeof value === "function") {
+                setState(value);
+                return;
+            }
 
-        // When explicitly setting undefined, remove the item from storage
-        if (value === undefined) {
-            if (!storage) storage = localStorage;
-            storage.removeItem(key);
-            setState(undefined);
-        } else {
-            setState(value);
-        }
-    }, []);
+            // When explicitly setting undefined, remove the item from storage
+            if (value === undefined) {
+                if (!storage) storage = localStorage;
+                storage.removeItem(key);
+                setState(defaultValue);
+            } else {
+                setState(value);
+            }
+        },
+        [defaultValue, storage, key]
+    );
 
     useEffect(() => {
         if (!storage) storage = localStorage;

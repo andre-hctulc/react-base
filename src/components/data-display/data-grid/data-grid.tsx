@@ -110,7 +110,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                 label: settingsEnabled && (
                     <DataGridSettings
                         cols={c}
-                        hiddenCols={hiddenCols || []}
+                        hiddenCols={hiddenCols}
                         icon={props.components?.settingsIcon}
                         onChange={(hiddenCols) => setHiddenCols(hiddenCols || [])}
                     />
