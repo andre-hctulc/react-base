@@ -50,6 +50,10 @@ interface FormControlProps extends TVCProps<typeof formControl, "div"> {
      */
     name?: string;
     children: ReactNode;
+    /**
+     * Whether the input is controlled or not.
+     * By default, this is derived from the {@link JSFormContext}.
+     */
     controlled?: boolean;
     label?: string;
     labelProps?: PartialPropsOf<typeof Label>;
@@ -76,7 +80,7 @@ interface FormControlProps extends TVCProps<typeof formControl, "div"> {
 /**
  * Wraps an input element with a label, error message and helper text.
  *
- * Consumes {@link JSFormContext} for handling {@link JSForm} default value state.
+ * Consumes {@link JSFormContext}, to handle {@link JSForm} default value state.
  */
 export const FormControl: FC<FormControlProps> = ({
     children,
@@ -117,7 +121,7 @@ export const FormControl: FC<FormControlProps> = ({
         }
 
         if (hasName) {
-            inpProps.name = name;
+            inpProps.name = formCtx?.prefixNames ? `${formCtx.prefixNames}${name}` : name;
         }
 
         // handle js form default value

@@ -8,7 +8,6 @@ import { createSnapshot } from "./helpers.js";
 import { getProperty } from "dot-prop";
 import { useRefOf } from "../../../hooks/index.js";
 import type { PropsOf } from "../../../types/index.js";
-import { populateProps } from "../../../util/react.js";
 
 const jsForm = tv({
     variants: {
@@ -44,20 +43,25 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
      */
     reportStrategy?: "on_submit" | "on_change";
     /**
-     * The default value of the form. This is consumed by form controls.
-     *
-     * Use {@link controlled} to interpret this as a controlled value.
+     * Default value of the form. 
+     * 
+     * Consumed by {@link FormControl}s.
      */
-    defaultValue?: Partial<T>;
+    defaultValues?: Partial<T>;
+    /**
+     * Value of the form. 
+     * 
+     * Consumed by {@link FormControl}s.
+     */
+    values?: Partial<T>;
     /**
      * Callback when the form is initialized
      */
     onInit?: (snapshot: JSFormSnapshot<T>) => void;
-    /**
-     * Default controlled state for form controls
-     */
-    controlled?: boolean;
     nested?: boolean;
+    /**
+     * Consumed by {@link FormControl}s
+     */
     prefixNames?: string;
 }
 
@@ -76,23 +80,23 @@ export const JSForm = <T extends object = any>({
     target,
     validate,
     id,
-    defaultValue,
+    defaultValues,
+    values,
     onChange,
     flex,
     gap,
     reportStrategy,
     onInit,
     nested,
-    controlled,
     prefixNames,
 }: JSFormProps<T>) => {
     const form = useRef<HTMLFormElement>(null);
-    const defValue = useMemo<Partial<T>>(() => defaultValue || {}, [defaultValue]);
+    const emptyValue = useMemo(() => ({}), []);
     const def = useCallback(
         (name: string) => {
-            return getProperty(defValue, name);
+            return getProperty(defaultValues, name);
         },
-        [defValue]
+        [defaultValues]
     );
     const [snapshot, setSnapshot] = useState<JSFormSnapshot<T>>(() => {
         return {
@@ -181,11 +185,12 @@ export const JSForm = <T extends object = any>({
             ...snapshot,
             reset,
             triggerChange,
-            defaultValue: defValue,
+            defaultValues: defaultValues ?? emptyValue,
             default: def,
-            controlled: controlled ?? false,
+            controlled: values !== undefined,
+            prefixNames,
         }),
-        [snapshot, triggerChange, reset, def, defaultValue, controlled]
+        [snapshot, triggerChange, reset, def, values, prefixNames]
     );
 
     useEffect(() => {
@@ -206,21 +211,7 @@ export const JSForm = <T extends object = any>({
 
     return (
         <Comp id={id} className={jsForm({ flex, gap, className })} {...formProps}>
-            <JSFormCtx.Provider value={ctx}>
-                {prefixNames
-                    ? populateProps(children, (el) => {
-                          const formControlProps: any = el.props;
-
-                          if ("name" in formControlProps && formControlProps.name) {
-                              return {
-                                  name: `${prefixNames}${formControlProps.name}`,
-                              };
-                          }
-
-                          return {};
-                      })
-                    : children}
-            </JSFormCtx.Provider>
+            <JSFormCtx.Provider value={ctx}>{children}</JSFormCtx.Provider>
         </Comp>
     );
 };

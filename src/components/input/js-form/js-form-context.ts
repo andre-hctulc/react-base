@@ -13,7 +13,7 @@ export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T>
     /**
      * Form default value. Can be consumed by {@link default}
      */
-    defaultValue: Partial<T>;
+    defaultValues: Partial<T>;
     /**
      * Gets the default value of an input
      */
@@ -22,6 +22,7 @@ export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T>
      * Sets the default controlled state for form controls
      */
     controlled: boolean;
+    prefixNames: string | undefined;
 }
 
 export const JSFormCtx = createContext<JSFormContext | null>(null);
