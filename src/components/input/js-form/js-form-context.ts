@@ -7,7 +7,9 @@ import type { JSForm } from "./js-form.js";
 export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T> {
     reset: () => void;
     /**
-     * Triggers {@link JSForm} change event
+     * Manually trigger {@link JSForm} change event.
+     *
+     * Also used by {@link HiddenInput}s to trigger change events.
      */
     triggerChange: (target?: { name: string | undefined; value: any }) => void;
     /**

@@ -34,16 +34,14 @@ export const HiddenInput: React.FC<HiddenInputProps> = (props) => {
 
     // Trigger JSForm change event on value change
     useEffect(() => {
-        if (inpValue !== undefined) {
-            // Only trigger change event if the value was already initialized
-            if (inited.current && preValue.current !== inpValue) {
-                formCtx?.triggerChange({ name: props.name, value: inpValue });
-            } else {
-                inited.current = true;
-            }
-
-            preValue.current = inpValue;
+        // Only trigger change event if the value was already initialized
+        if (inited.current && preValue.current !== inpValue) {
+            formCtx?.triggerChange({ name: props.name, value: inpValue });
+        } else {
+            inited.current = true;
         }
+
+        preValue.current = inpValue;
     }, [inpValue]);
 
     return <input {...props} type="hidden" />;

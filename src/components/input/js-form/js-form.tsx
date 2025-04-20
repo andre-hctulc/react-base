@@ -3,7 +3,7 @@
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types.js";
-import { type JSFormContext, JSFormCtx } from "./js-form-context.js";
+import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
 import { createSnapshot } from "./helpers.js";
 import { getProperty } from "dot-prop";
 import { useRefOf } from "../../../hooks/index.js";
@@ -43,14 +43,14 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
      */
     reportStrategy?: "on_submit" | "on_change";
     /**
-     * Default value of the form. 
-     * 
+     * Default value of the form.
+     *
      * Consumed by {@link FormControl}s.
      */
     defaultValues?: Partial<T>;
     /**
-     * Value of the form. 
-     * 
+     * Value of the form.
+     *
      * Consumed by {@link FormControl}s.
      */
     values?: Partial<T>;
@@ -91,6 +91,7 @@ export const JSForm = <T extends object = any>({
     prefixNames,
 }: JSFormProps<T>) => {
     const form = useRef<HTMLFormElement>(null);
+    const parentFormCtx = useJSForm();
     const emptyValue = useMemo(() => ({}), []);
     const def = useCallback(
         (name: string) => {
@@ -140,6 +141,10 @@ export const JSForm = <T extends object = any>({
     const onInvalidRef = useRefOf(onInvalid);
     const onChangeRef = useRefOf(onChange);
 
+    /**
+     * Manually trigger change event
+     * Used by hidden inputs
+     */
     const handleChange = useCallback((e: { currentTarget: HTMLFormElement; target: any }) => {
         const form = e.currentTarget;
 
@@ -172,12 +177,18 @@ export const JSForm = <T extends object = any>({
 
     const triggerChange = useCallback(
         (target?: { name: string | undefined; value: any }) => {
+            // For nested forms the form ref is not present!
+            // We bubble the change event to the parent form
+            if (nested) {
+                parentFormCtx?.triggerChange(target);
+                return;
+            }
+
             const _form = form.current;
             if (!_form) return;
-
             handleChange({ currentTarget: _form, target });
         },
-        [handleChange]
+        [handleChange, nested, parentFormCtx]
     );
 
     const ctx = useMemo<JSFormContext>(
