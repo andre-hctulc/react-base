@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-type SetPersistentStateDispatch<T> =
-    | ((value: T | undefined) => void)
-    | ((callback: (previousValue: T | undefined) => T) => void);
+type SetPersistentStateDispatch<T> = (value: (T | undefined) | ((previousValue: T | undefined) => T)) => void;
 
 export function usePersistentState<T>(
     key: string,
