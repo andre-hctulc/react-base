@@ -58,6 +58,12 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
      * Callback when the form is initialized
      */
     onInit?: (snapshot: JSFormSnapshot<T>) => void;
+    /**
+     * ### nested: true
+     * - Renders div instead of form
+     * - bubbles up manually triggered change events
+     * - Uses default values from parent form if not provided in this form
+     */
     nested?: boolean;
     /**
      * Consumed by {@link FormControl}s
@@ -69,8 +75,8 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
  * Input names are interpreted as dot prop paths
  *
  * ### Props
- * - `nested` - If true, a div instead of a form is rendered. This is useful for nested forms.
- * - `prefixNames` - If set, the input names are prefixed with this string.
+ * - `nested`
+ * - `prefixNames`
  */
 export const JSForm = <T extends object = any>({
     children,
@@ -95,9 +101,14 @@ export const JSForm = <T extends object = any>({
     const emptyValue = useMemo(() => ({}), []);
     const def = useCallback(
         (name: string) => {
-            return getProperty(defaultValues, name);
+            if (defaultValues) {
+                return getProperty(defaultValues, name);
+            } else if (nested && parentFormCtx) {
+                return parentFormCtx.default(name);
+            }
+            return undefined;
         },
-        [defaultValues]
+        [defaultValues, parentFormCtx, nested]
     );
     const [snapshot, setSnapshot] = useState<JSFormSnapshot<T>>(() => {
         return {
