@@ -46,7 +46,7 @@ export function useChoices<C extends Choice<any, any>>(
             def = defaultValue;
         }
 
-        if (multiple !== false) {
+        if (multiple) {
             return def;
         }
 
@@ -114,12 +114,12 @@ export function useChoices<C extends Choice<any, any>>(
         [currentValuesSet]
     );
     const toggleChoice = useCallback(
-        (v: ChoiceValue<C>) => {
+        (toggleValue: ChoiceValue<C>) => {
             let newValue: ChoiceValue<C>[];
-            if (value.includes(v)) {
-                newValue = value.filter((v) => v !== v);
+            if (value.includes(toggleValue)) {
+                newValue = value.filter((v) => v !== toggleValue);
             } else {
-                newValue = [v, ...value];
+                newValue = [toggleValue, ...value];
             }
             if (!multiple) {
                 newValue = newValue.slice(0, 1);

@@ -95,14 +95,17 @@ export const Select = <V = string, D = any>({
 }: SelectProps<V, D>) => {
     const [root, setRoot] = useState<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
-    const { isActiveChoice, toggleChoice, choices, activeChoices, rawValues } = useChoices(options, {
-        multiple,
-        onChange: (value, choices) => {
-            onChange?.({ value, options: choices });
-        },
-        value,
-        defaultValue,
-    });
+    const { isActiveChoice, toggleChoice, choices, activeChoices, rawValues, activateChoice } = useChoices(
+        options,
+        {
+            multiple,
+            onChange: (value, choices) => {
+                onChange?.({ value, options: choices });
+            },
+            value,
+            defaultValue,
+        }
+    );
     const firstSelected: SelectOption<V, D> | undefined = activeChoices[0];
     const selectedEl = renderSelected ? (
         renderSelected({ selected: activeChoices })
@@ -185,7 +188,13 @@ export const Select = <V = string, D = any>({
                         onItemClick={(listItem) => {
                             const option: SelectOption<V, D> = listItem.data;
                             if (!option || option.disabled) return;
-                            toggleChoice(option.value);
+
+                            if (multiple) {
+                                toggleChoice(option.value);
+                            } else {
+                                activateChoice(option.value);
+                                setOpen(false);
+                            }
                         }}
                     />
                 </Card>
