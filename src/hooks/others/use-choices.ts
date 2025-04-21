@@ -118,12 +118,15 @@ export function useChoices<C extends Choice<any, any>>(
             } else {
                 newValue = [v, ...value];
             }
+            if (!multiple) {
+                newValue = newValue.slice(0, 1);
+            }
             if (!controlled) {
                 setValue(newValue);
             }
             onChangeRef.current?.(newValue, findChoices(newValue));
         },
-        [value, controlled]
+        [value, controlled, multiple]
     );
     const rawValues = useMemo(() => {
         return value.map((v) => String(v));
@@ -134,6 +137,12 @@ export function useChoices<C extends Choice<any, any>>(
             setValue(controlledValue);
         }
     }, [controlledValue, controlled]);
+
+    useEffect(() => {
+        if (!multiple && value.length > 1) {
+            setValue([value[0]]);
+        }
+    }, [multiple]);
 
     return {
         choices,

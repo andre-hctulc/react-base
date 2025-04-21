@@ -6,7 +6,7 @@ import { Chip } from "./chip.js";
 import { Icon } from "../icons/icon.js";
 import clsx from "clsx";
 import { RadioSwitch } from "../input/radio-switch.js";
-import type { FC, ReactNode } from "react";
+import { useMemo, type FC, type ReactNode } from "react";
 
 export const tabs = tv({
     base: "flex flex-wrap",
@@ -69,6 +69,11 @@ export const Tabs: FC<TabsProps> = ({
     disabled,
     ...props
 }) => {
+    const switchValue = useMemo(() => {
+        if (typeof activeTab === "string") return [activeTab];
+        return [];
+    }, [activeTab, tabItems]);
+
     if (variant === "radio") {
         return (
             <RadioSwitch
@@ -77,9 +82,9 @@ export const Tabs: FC<TabsProps> = ({
                 size={size}
                 LinkComponent={LinkComponent}
                 readOnly={disabled}
-                onChange={({ options: option }) => onTabClick?.(option)}
+                onChange={({ options: [option] }) => onTabClick?.(option)}
                 options={tabItems}
-                value={typeof activeTab === "function" ? "" : activeTab}
+                value={switchValue}
             />
         );
     }
