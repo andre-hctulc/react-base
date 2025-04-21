@@ -40,7 +40,7 @@ export const ToggleIconButton: FC<ToggleIconButtonProps> = ({
 
     return (
         <>
-            {name && <HiddenInput id={id} checked={active} name={name} required={required} />}
+            {name && <HiddenInput id={id} value={active} name={name} required={required} />}
             <IconButton
                 ref={ref}
                 style={style}
