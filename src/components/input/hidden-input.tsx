@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { PropsOf } from "../../types/index.js";
 import type { JSForm } from "./js-form/js-form.js";
 import { useJSForm } from "./js-form/js-form-context.js";
 
-interface HiddenInputProps extends Omit<PropsOf<"input">, "type"> {}
+interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "value"> {
+    value: T;
+}
 
 /**
  * Hidden input (`type="hidden"`).
+ * Uses JSON stringification to store objects in the value. Strings or numbers are stored as is.
  *
  * **Remember:** Hidden inputs do not trigger any change events natively
  *
@@ -19,13 +22,16 @@ interface HiddenInputProps extends Omit<PropsOf<"input">, "type"> {}
  * - Validation props (e.g. *required*, *pattern*) will be used to validate the hidden input.
  *
  */
-export const HiddenInput: React.FC<HiddenInputProps> = (props) => {
+export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => {
     const formCtx = useJSForm();
     const inited = useRef(false);
-    /**
-     * Value of the input
-     */
-    const inpValue = props.checked !== undefined ? (props.checked ? "on" : "off") : props.value;
+    const [val, isJson] = useMemo(() => {
+        const isJson = typeof value === "object";
+        if (isJson) {
+            return JSON.stringify(value);
+        }
+        return value || "";
+    }, [value]);
     /**
      * Previous value.
      * Used to check if the value has changed and if we should trigger a change event
@@ -35,14 +41,16 @@ export const HiddenInput: React.FC<HiddenInputProps> = (props) => {
     // Trigger JSForm change event on value change
     useEffect(() => {
         // Only trigger change event if the value was already initialized
-        if (inited.current && preValue.current !== inpValue) {
-            formCtx?.triggerChange({ name: props.name, value: inpValue });
+        if (inited.current && preValue.current !== val) {
+            formCtx?.triggerChange({ name: props.name, value: val });
         } else {
             inited.current = true;
         }
 
-        preValue.current = inpValue;
-    }, [inpValue]);
+        preValue.current = val;
+    }, [val]);
 
-    return <input {...props} type="hidden" />;
+    // IMP mark as json input with data attribute. Ths is handled accordingly in js forms
+    // SEE inputEventToValue
+    return <input data-rbjsoninp={isJson ? true : undefined} value={val} {...props} type="hidden" />;
 };

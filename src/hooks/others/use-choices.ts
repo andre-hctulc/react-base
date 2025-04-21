@@ -49,7 +49,7 @@ export function useChoices<C extends Choice<any, any>>(
         if (multiple !== false) {
             return def;
         }
-        
+
         return def.length ? [def[0]] : [];
     });
     const currentValuesSet = useMemo(() => new Set(value), [value]);

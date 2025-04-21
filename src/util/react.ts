@@ -62,6 +62,14 @@ export function populateProps<P extends object>(
 }
 
 export function inputEventToValue(event: ChangeEvent<HTMLInputElement>, type: string): any {
+    // SEE HiddenInput
+    if (event.currentTarget.dataset.rbjsoninp) {
+        if (!event.currentTarget.value) {
+            return undefined;
+        }
+        return JSON.parse(event.currentTarget.value);
+    }
+
     if (event.currentTarget.files) {
         return event.currentTarget.files;
     }
