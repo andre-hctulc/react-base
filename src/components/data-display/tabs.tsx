@@ -77,7 +77,7 @@ export const Tabs: FC<TabsProps> = ({
                 size={size}
                 LinkComponent={LinkComponent}
                 readOnly={disabled}
-                onChange={({ option }) => onTabClick?.(option)}
+                onChange={({ options: option }) => onTabClick?.(option)}
                 options={tabItems}
                 value={typeof activeTab === "function" ? "" : activeTab}
             />

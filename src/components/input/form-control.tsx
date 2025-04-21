@@ -131,10 +131,7 @@ export const FormControl: FC<FormControlProps> = ({
                 inpProps.value =
                     childElement?.props.value === undefined ? jsFormValue : childElement.props.value;
             } else {
-                inpProps.defaultValue =
-                    childElement?.props.defaultValue === undefined
-                        ? jsFormValue
-                        : childElement.props.defaultValue;
+                inpProps.defaultValue = jsFormValue;
             }
         }
     }

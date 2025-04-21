@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./types.js";
 import type { LabeledChoice, PartialPropsOf, StyleProps } from "../../types/index.js";
@@ -12,6 +12,7 @@ import { Popover } from "../dialog/popover.js";
 import { List, type ListItemDef } from "../containers/list.js";
 import { HiddenInput } from "./hidden-input.js";
 import { Card } from "../containers/card.js";
+import { useChoices } from "../../hooks/others/use-choices.js";
 
 const select = tv({
     base: [
@@ -94,21 +95,26 @@ export const Select = <V = string, D = any>({
 }: SelectProps<V, D>) => {
     const [root, setRoot] = useState<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
-    const controlled = value !== undefined;
-    // capture selected state to display in the button
-    const [selected, setSelected] = useState<SelectOption<V, D>[]>(() => {
-        if (defaultValue || value) {
-            const set = new Set(value || defaultValue);
-            return options.filter(({ value: key }) => set.has(key));
-        }
-        return [];
+    const {
+        isActiveChoice,
+        toggleChoice,
+        choices,
+        activeChoices,
+        rawValues: choicesValues,
+    } = useChoices(options, {
+        multiple,
+        onChange: (value, choices) => {
+            onChange?.({ value, options: choices });
+        },
+        value,
+        defaultValue,
     });
-    const firstSelected: SelectOption<V, D> | undefined = selected[0];
+    const firstSelected: SelectOption<V, D> | undefined = activeChoices[0];
     const selectedEl = renderSelected ? (
-        renderSelected({ selected })
+        renderSelected({ selected: activeChoices })
     ) : multiple ? (
         <>
-            {selected.map((sel) => {
+            {activeChoices.map((sel) => {
                 return (
                     <Chip size="sm" key={String(sel.value)} className="bg-paper2!" icon={sel.icon}>
                         {sel.label}
@@ -126,9 +132,6 @@ export const Select = <V = string, D = any>({
             {firstSelected?.label}
         </span>
     );
-    const val = useMemo(() => {
-        return selected.map(({ value }) => String(value));
-    }, [selected]);
 
     const loadingEl = <span className="text-t3 truncate">{loadingText ?? "Loading..."}</span>;
 
@@ -136,15 +139,8 @@ export const Select = <V = string, D = any>({
         typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
     const _disabled = loading || readOnly || !!disabled;
 
-    useEffect(() => {
-        if (value) {
-            const set = new Set(value);
-            setSelected(options.filter(({ value: key }) => set.has(key)));
-        }
-    }, [value, options]);
-
     const getListItems = (options: SelectOption<V, D>[]) => {
-        return options.map<ListItemDef<SelectOption<V, D>>>((option) => {
+        return choices.map<ListItemDef<SelectOption<V, D>>>((option) => {
             return {
                 label: option.label,
                 listItemProps: {
@@ -152,7 +148,7 @@ export const Select = <V = string, D = any>({
                     icon: option.icon,
                     ...option.listItemProps,
                     // TODO optimize
-                    active: multiple && selected.some((s) => s.value === option.value),
+                    active: multiple && isActiveChoice(option.value),
                 },
                 key: String(option.value),
                 data: option,
@@ -162,7 +158,7 @@ export const Select = <V = string, D = any>({
 
     return (
         <div className={className} style={style} ref={setRoot}>
-            <HiddenInput id={id} name={name} value={val} required={required} />
+            <HiddenInput id={id} name={name} value={choicesValues} required={required} />
             <button
                 type="button"
                 disabled={_disabled}
@@ -171,7 +167,7 @@ export const Select = <V = string, D = any>({
             >
                 <XScroll hideScrollbar>
                     <div className="w-full h-full box-border overflow-x-auto flex items-center gap-1.5">
-                        {loading ? loadingEl : selected.length ? selectedEl : placeholderEl}
+                        {loading ? loadingEl : activeChoices.length ? selectedEl : placeholderEl}
                     </div>
                 </XScroll>
                 <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t2 text-base">
@@ -194,25 +190,8 @@ export const Select = <V = string, D = any>({
                         items={getListItems(options)}
                         onItemClick={(listItem) => {
                             const option: SelectOption<V, D> = listItem.data;
-
                             if (!option || option.disabled) return;
-
-                            let newValue: SelectOption<V, D>[];
-
-                            if (multiple) {
-                                newValue = selected.some((s) => s.value === option.value)
-                                    ? selected.filter((s) => s.value !== option.value)
-                                    : [...selected, option];
-                            } else {
-                                newValue = [option];
-                                setOpen(false);
-                            }
-
-                            if (!controlled) {
-                                setSelected(newValue);
-                            }
-
-                            onChange?.({ value: newValue.map((s) => s.value), options });
+                            toggleChoice(option.value);
                         }}
                     />
                 </Card>

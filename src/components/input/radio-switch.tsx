@@ -1,12 +1,13 @@
 "use client";
 
-import React, { type ComponentType } from "react";
+import { type ComponentType } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./types.js";
 import type { LabeledChoice, StyleProps } from "../../types/index.js";
 import clsx from "clsx";
 import { HiddenInput } from "./hidden-input.js";
 import { themeColor } from "../../util/style.js";
+import { useChoices } from "../../hooks/others/use-choices.js";
 
 const radioSwitch = tv({
     base: "rounded-full flex border overflow-hidden w-fit",
@@ -39,12 +40,14 @@ const radioSwitch = tv({
 });
 
 export interface RadioSwitchProps<V = string, D = any>
-    extends InputLikeProps<V, { option: LabeledChoice<V, D> & { href?: string } }>,
+    extends InputLikeProps<V[], { options: (LabeledChoice<V, D> & { href?: string })[] }>,
         VariantProps<typeof radioSwitch>,
         StyleProps {
     options: (LabeledChoice<V, D> & { href?: string })[];
     LinkComponent?: ComponentType<{ href?: string }>;
     dense?: boolean;
+    toggleMode?: boolean;
+    multiple?: boolean;
 }
 
 export const RadioSwitch = <V = string, D = any>({
@@ -63,39 +66,26 @@ export const RadioSwitch = <V = string, D = any>({
     LinkComponent,
     dense,
     bg,
+    toggleMode,
+    multiple,
 }: RadioSwitchProps<V, D>) => {
-    const controlled = value !== undefined;
-    // capture selected state to display in the button
-    const [selected, setSelected] = React.useState<LabeledChoice<V, D> | null>(() => {
-        if (value !== undefined || defaultValue !== undefined) {
-            const val = value ?? defaultValue;
-            const found = options.find(({ value }) => value === val);
-            if (found) return found;
-        }
-        return null;
+    const { isActiveChoice, toggleChoice, activateChoice, choices, rawValues } = useChoices(options, {
+        multiple,
+        onChange: (value, choices) => {
+            onChange?.({ value, options: choices });
+        },
+        value,
+        defaultValue,
     });
     const { bgA } = themeColor(color || "primary");
-    const activate = (option: LabeledChoice<V, D>) => {
-        if (!controlled) setSelected(option);
-        onChange?.({ value: option.value, option });
-    };
-
-    React.useEffect(() => {
-        if (value) {
-            const newOption = options.find(({ value: val }) => val === value);
-            if (newOption) {
-                setSelected(newOption);
-            }
-        }
-    }, [value, options]);
 
     return (
         <div className={radioSwitch({ className, size, color, bg })} style={style}>
             {/* form compatibility */}
-            {name && <HiddenInput required={required} name={name} value={String(selected?.value || "")} />}
-            {options.map((option, i) => {
+            {name && <HiddenInput required={required} name={name} value={rawValues} />}
+            {choices.map((option, i) => {
                 const canActivate = !disabled && !readOnly && !option.disabled;
-                const active = selected?.value === option.value;
+                const active = isActiveChoice(option.value);
                 const last = i === options.length - 1;
                 const classes = clsx(
                     "text-center flex items-center gap-2 transition cursor-pointer",
@@ -110,7 +100,8 @@ export const RadioSwitch = <V = string, D = any>({
                     return (
                         <Link
                             onClick={() => {
-                                activate(option);
+                                if (toggleMode) toggleChoice(option.value);
+                                else activateChoice(option.value);
                             }}
                             key={String(option.value)}
                             href={option.href}
@@ -126,7 +117,8 @@ export const RadioSwitch = <V = string, D = any>({
                     <button
                         type="button"
                         onClick={() => {
-                            activate(option);
+                            if (toggleMode) toggleChoice(option.value);
+                            else activateChoice(option.value);
                         }}
                         disabled={!canActivate}
                         key={String(option.value)}
