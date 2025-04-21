@@ -98,7 +98,6 @@ export const JSForm = <T extends object = any>({
 }: JSFormProps<T>) => {
     const form = useRef<HTMLFormElement>(null);
     const parentFormCtx = useJSForm();
-    const emptyValue = useMemo(() => ({}), []);
     const def = useCallback(
         (name: string) => {
             if (defaultValues) {
@@ -207,7 +206,7 @@ export const JSForm = <T extends object = any>({
             ...snapshot,
             reset,
             triggerChange,
-            defaultValues: defaultValues ?? emptyValue,
+            defaultValues: defaultValues,
             default: def,
             controlled: values !== undefined,
             prefixNames,

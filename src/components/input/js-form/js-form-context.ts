@@ -15,7 +15,7 @@ export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T>
     /**
      * Form default value. Can be consumed by {@link default}
      */
-    defaultValues: Partial<T>;
+    defaultValues: Partial<T> | undefined;
     /**
      * Gets the default value of an input
      */
