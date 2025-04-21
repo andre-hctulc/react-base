@@ -49,8 +49,19 @@ function formDataToObject(formData: FormData, inputElements: InputElement[]) {
         let val: any = value;
         const element = elementsMap.get(name);
 
+        if (element?.dataset.rbjsoninp) {
+            if (!value) {
+                val = undefined;
+            } else if (typeof value === "string") {
+                try {
+                    val = JSON.parse(value);
+                } catch (e) {
+                    val = undefined;
+                }
+            }
+        }
         // Parse checkboxes as boolean
-        if (element?.type === "checkbox") {
+        else if (element?.type === "checkbox") {
             val = !!(element as HTMLInputElement).checked;
         }
         // Parse number inputs as numbers
