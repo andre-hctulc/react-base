@@ -38,16 +38,19 @@ export function useChoices<C extends Choice<any, any>>(
     const onChangeRef = useRefOf(onChange);
     const controlled = controlledValue !== undefined;
     const [value, setValue] = useState<ChoiceValue<C>[]>(() => {
+        let def: ChoiceValue<C>[] = [];
+
         if (controlledValue) {
-            return controlledValue;
+            def = controlledValue;
+        } else if (defaultValue) {
+            def = defaultValue;
         }
-        if (!defaultValue) {
-            return [];
+
+        if (multiple !== false) {
+            return def;
         }
-        if (multiple) {
-            return defaultValue;
-        }
-        return defaultValue.length ? [defaultValue[0]] : [];
+        
+        return def.length ? [def[0]] : [];
     });
     const currentValuesSet = useMemo(() => new Set(value), [value]);
     const activeChoices = useMemo(() => {
@@ -136,7 +139,7 @@ export function useChoices<C extends Choice<any, any>>(
         if (controlled) {
             setValue(controlledValue);
         }
-    }, [controlledValue, controlled]);
+    }, [controlledValue]);
 
     useEffect(() => {
         if (!multiple && value.length > 1) {

@@ -95,13 +95,7 @@ export const Select = <V = string, D = any>({
 }: SelectProps<V, D>) => {
     const [root, setRoot] = useState<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
-    const {
-        isActiveChoice,
-        toggleChoice,
-        choices,
-        activeChoices,
-        rawValues: choicesValues,
-    } = useChoices(options, {
+    const { isActiveChoice, toggleChoice, choices, activeChoices, rawValues } = useChoices(options, {
         multiple,
         onChange: (value, choices) => {
             onChange?.({ value, options: choices });
@@ -158,7 +152,7 @@ export const Select = <V = string, D = any>({
 
     return (
         <div className={className} style={style} ref={setRoot}>
-            <HiddenInput id={id} name={name} value={choicesValues} required={required} />
+            <HiddenInput id={id} name={name} value={rawValues} required={required} />
             <button
                 type="button"
                 disabled={_disabled}
