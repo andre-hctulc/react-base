@@ -25,9 +25,9 @@ interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "val
 export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => {
     const formCtx = useJSForm();
     const inited = useRef(false);
-    const [val, isJson] = useMemo(() => {
+    const [val, isJson] = useMemo<[string, boolean]>(() => {
         if (value === undefined) {
-            return "";
+            return ["", false];
         }
         const isJson = typeof value !== "string";
         if (isJson) {
