@@ -26,11 +26,14 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => 
     const formCtx = useJSForm();
     const inited = useRef(false);
     const [val, isJson] = useMemo(() => {
-        const isJson = typeof value === "object";
-        if (isJson) {
-            return JSON.stringify(value);
+        if (value === undefined) {
+            return "";
         }
-        return value || "";
+        const isJson = typeof value !== "string";
+        if (isJson) {
+            return [JSON.stringify(value), true];
+        }
+        return [value, false];
     }, [value]);
     /**
      * Previous value.
