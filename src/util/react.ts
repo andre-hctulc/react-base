@@ -31,7 +31,7 @@ export function setRef<T = any>(
 }
 
 export function nodeIsEmpty(children: ReactNode) {
-    if (!children) return false;
+    if (!children) return true;
     return Children.count(children) !== 0;
 }
 
@@ -41,22 +41,30 @@ export function nodeIsEmpty(children: ReactNode) {
 export function populateProps<P extends object>(
     children: ReactNode,
     props: P | ((element: ReactElement) => P),
-    mergeStrategy: "left" | "right" = "right",
+    mergeStrategy: "left" | "right" | "merge" | { merge: MergePropsOptions } = "right",
     populateIf?: (element: ReactElement) => boolean
 ): ReactNode[] {
     const arr = Children.toArray(children);
     return arr.map((child) => {
         if (!isValidElement(child)) return child;
+
         if (!populateIf || populateIf(child)) {
             const addProps = typeof props === "function" ? props(child) : props;
-            return cloneElement(
-                child,
-                mergeStrategy === "left"
-                    ? { ...addProps, ...(child.props as any) }
-                    : // default
-                      addProps
-            );
+            let newProps: any;
+
+            if (mergeStrategy === "merge") {
+                newProps = mergeProps([child.props as any, addProps]);
+            } else if (mergeStrategy === "left") {
+                newProps = { ...addProps, ...(child.props as any) };
+            } else if (typeof mergeStrategy === "object") {
+                newProps = mergeProps([child.props as any, addProps], mergeStrategy.merge);
+            } else {
+                newProps = addProps;
+            }
+
+            return cloneElement(child, newProps);
         }
+
         return child;
     });
 }

@@ -45,7 +45,7 @@ const list = tv({
         },
         direction: {
             row: "flex-row",
-            col: "flex-col items-center",
+            col: "flex-col",
         },
     },
     defaultVariants: {
@@ -142,7 +142,6 @@ export const List: FC<ListProps> = ({
                         item.props,
                         item.buttonProps,
                         {
-                            key: item.key,
                             className: clsx(active && "bg-transparent2"),
                             onClick: (e) => {
                                 onItemClick?.(item, e);
@@ -150,7 +149,11 @@ export const List: FC<ListProps> = ({
                         },
                     ]);
 
-                    return <IconButton {..._buttonProps}>{item.props?.icon}</IconButton>;
+                    return (
+                        <IconButton {..._buttonProps} key={item.key}>
+                            {item.props?.icon}
+                        </IconButton>
+                    );
                 }
 
                 const _itemProps = mergeProps<PropsOf<typeof ListItem>>([
@@ -172,11 +175,14 @@ export const List: FC<ListProps> = ({
                             !!listItemProps?.clickable ||
                             !!item.props?.href ||
                             !!item.listItemProps?.href,
-                        key: item.key,
                     },
                 ]);
 
-                return <ListItem {..._itemProps}>{item.label}</ListItem>;
+                return (
+                    <ListItem {..._itemProps} key={item.key}>
+                        {item.label}
+                    </ListItem>
+                );
             })}
         </Comp>
     );
