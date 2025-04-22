@@ -66,6 +66,10 @@ interface ToolbarProps extends TVCProps<typeof toolbar, "div"> {
     as?: any;
 }
 
+/**
+ * ### Props
+ * - `stopEventPropagation`
+ */
 export const Toolbar: FC<ToolbarProps> = ({
     children,
     direction,

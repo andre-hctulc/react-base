@@ -1,7 +1,7 @@
 "use client";
 
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type Ref } from "react";
 import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types.js";
 import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
 import { createSnapshot } from "./helpers.js";
@@ -69,6 +69,8 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
      * Consumed by {@link FormControl}s
      */
     prefixNames?: string;
+    onContextChange?: (ctx: JSFormContext<T>) => void;
+    ref?: Ref<HTMLFormElement>;
 }
 
 /**
@@ -95,6 +97,8 @@ export const JSForm = <T extends object = any>({
     onInit,
     nested,
     prefixNames,
+    ref,
+    onContextChange,
 }: JSFormProps<T>) => {
     const form = useRef<HTMLFormElement>(null);
     const parentFormCtx = useJSForm();
@@ -213,6 +217,7 @@ export const JSForm = <T extends object = any>({
         }),
         [snapshot, triggerChange, reset, def, values, prefixNames]
     );
+    const onContextChangeRef = useRefOf(onContextChange);
 
     useEffect(() => {
         if (!inited.current && snapshot.form) {
@@ -220,6 +225,10 @@ export const JSForm = <T extends object = any>({
             onInit?.(snapshot);
         }
     }, [snapshot]);
+
+    useEffect(() => {
+        onContextChangeRef.current?.(ctx);
+    }, [ctx]);
 
     let formProps: PropsOf<"form"> = {};
 
@@ -231,7 +240,20 @@ export const JSForm = <T extends object = any>({
     }
 
     return (
-        <Comp id={id} className={jsForm({ flex, gap, className })} {...formProps}>
+        <Comp
+            id={id}
+            ref={(form: any) => {
+                form.current = form;
+
+                if (typeof ref === "function") {
+                    ref(form);
+                } else if (ref) {
+                    ref.current = form;
+                }
+            }}
+            className={jsForm({ flex, gap, className })}
+            {...formProps}
+        >
             <JSFormCtx.Provider value={ctx}>{children}</JSFormCtx.Provider>
         </Comp>
     );

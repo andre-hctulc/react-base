@@ -21,6 +21,9 @@ export interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
     }>;
     content: React.ReactNode;
     containerProps?: PropsOf<"div">;
+    /**
+     * Disable the tooltip
+     */
     disabled?: boolean;
     /**
      * @default 200
@@ -53,6 +56,9 @@ export interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
 
 /**
  * The child must forward the ref!
+ *
+ * ### Props
+ * - `disabled`
  */
 export const Tooltip: React.FC<TooltipProps> = ({
     position,
@@ -106,7 +112,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
                 <div
                     {...containerProps}
                     className={clsx(
-                        "bg-black/75 rounded-sm py-1.5 px-2 text-white text-sm",
+                        "bg-black/75 rounded-sm py-1.5 px-2 text-white text-sm text-center",
                         containerProps?.className
                     )}
                 >
