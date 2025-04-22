@@ -135,9 +135,6 @@ export const FormControl: FC<FormControlProps> = ({
 
         // ## Handle JSForm support here
         if (formCtx) {
-            // Use reset signal as key, to force rerenders on reset
-            inpProps.key = formCtx.resetSignal;
-
             const jsFormValue = hasName ? formCtx.default(_name) : undefined;
 
             // handle js form default value

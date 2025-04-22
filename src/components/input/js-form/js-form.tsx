@@ -249,6 +249,7 @@ export const JSForm = <T extends object = any>({
     return (
         <Comp
             id={id}
+            key={resetSignal}
             ref={(f: any) => {
                 form.current = f;
 
