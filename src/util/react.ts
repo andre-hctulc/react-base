@@ -1,9 +1,9 @@
-import React, {
+import clsx from "clsx";
+import {
     Children,
     cloneElement,
     isValidElement,
     type ChangeEvent,
-    type ComponentProps,
     type ElementType,
     type ForwardedRef,
     type LegacyRef,
@@ -85,4 +85,49 @@ export function inputEventToValue(event: ChangeEvent<HTMLInputElement>, type: st
     }
 
     return event.currentTarget.value;
+}
+
+/**
+ * Latter props overwrite former ones
+ *
+ * By default events, styles, and classes are merged. Control this with {@link mergeOptions}
+ *
+ * @param props List of props to merge
+ * @param mergeOptions Merge options
+ */
+export function mergeProps<P extends object>(
+    props: (Partial<P> | undefined | null | false)[],
+    {
+        mergeClasses = true,
+        mergeStyles = true,
+        mergeEvents = true,
+    }: { mergeEvents?: boolean; mergeStyles?: boolean; mergeClasses?: boolean } = {}
+): P {
+    const mergedProps: any = {};
+
+    for (const propsItem of props) {
+        if (!propsItem) continue;
+
+        for (const key in propsItem) {
+            const value: any = propsItem[key];
+
+            if (mergeClasses && key === "className") {
+                mergedProps[key] = mergedProps[key] ? clsx(mergedProps[key], value) : value;
+            } else if (mergeStyles && key === "style") {
+                mergedProps[key] = { ...mergedProps[key], ...value };
+            } else if (mergeEvents && /^on[A-Z]/.test(key)) {
+                const existingHandler = mergedProps[key];
+                mergedProps[key] = existingHandler
+                    ? (...args: any[]) => {
+                          existingHandler(...args);
+                          value?.(...args);
+                      }
+                    : value;
+            } else {
+                mergedProps[key] = value;
+            }
+        }
+    }
+
+    return mergedProps;
 }

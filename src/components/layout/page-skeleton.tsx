@@ -1,8 +1,9 @@
+import type { PropsOf } from "../../types/index.js";
 import { Skeleton } from "../data-display/skeleton.js";
 import { PageContent } from "./page-content.js";
-import { Page, type PageProps } from "./page.js";
+import { Page } from "./page.js";
 
-interface PageSkeletonProps extends Omit<PageProps, "children"> {
+interface PageSkeletonProps extends Omit<PropsOf<typeof Page>, "children"> {
     body?: React.ReactNode;
 }
 

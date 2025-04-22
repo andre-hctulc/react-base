@@ -2,7 +2,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { Tool, type ToolItem } from "../input/tool.js";
 import type { LinkComponent, PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
-import { type FC, type Ref } from "react";
+import { type FC, type ReactNode, type Ref } from "react";
 import { Toolbar } from "./toolbar.js";
 import { Spinner } from "../data-display/spinner.js";
 
@@ -95,6 +95,7 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
     clickable?: boolean;
     iconProps?: PropsOf<typeof Icon>;
     ref?: Ref<HTMLElement>;
+    pre?: ReactNode;
 }
 
 export const ListItem: FC<ListItemProps> = ({
@@ -114,11 +115,12 @@ export const ListItem: FC<ListItemProps> = ({
     disabled,
     iconProps,
     ref,
+    pre,
     ...props
 }) => {
     const Link = LinkComponent || "a";
     const icon = loading ? <Spinner color={variant === "danger" ? "error" : "neutral"} /> : props.icon;
-    const Comp: any = props.as || "div";
+    const Comp: any = props.as || "li";
     const Inner: any = href ? Link : "div";
     const _innerProps = href ? { ...innerProps, href } : innerProps;
     const _disabled = loading || disabled;
@@ -141,6 +143,7 @@ export const ListItem: FC<ListItemProps> = ({
             style={style}
         >
             <Inner className={listItemInner({ size })} {..._innerProps}>
+                {pre}
                 {icon ? (
                     <Icon className="self-center" size={iconSize}>
                         {icon}

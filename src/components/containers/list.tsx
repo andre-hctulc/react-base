@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { withPrefix } from "../../util/system.js";
 import { IconButton } from "../input/icon-button.js";
 import { ListItem } from "./list-item.js";
-import { populateProps } from "../../util/react.js";
+import { mergeProps, populateProps } from "../../util/react.js";
 
 const list = tv({
     base: "rounded-sm flex",
@@ -72,11 +72,11 @@ export type ListItemDef<D = any> = {
     listItemProps?: PartialPropsOf<typeof ListItem>;
 };
 
-export interface ListProps extends TVCProps<typeof list, "ol" | "ul"> {
+export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
-    items?: ListItemDef[];
+    items?: ListItemDef<D>[];
     onItemClick?: (item: ListItemDef, e: MouseEvent) => void;
-    activeKey?: string | ((item: ListItemDef) => boolean);
+    activeKey?: string | ((item: ListItemDef<D>) => boolean);
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     LinkComponent?: LinkComponent;
     loading?: boolean;
@@ -110,7 +110,7 @@ export const List: FC<ListProps> = ({
     ...props
 }) => {
     const Comp: any = as || "ul";
-    const linkItemProps = { LinkComponent, ...listItemProps };
+    const globalItemProps = { LinkComponent, ...listItemProps };
 
     return (
         <Comp
@@ -125,57 +125,44 @@ export const List: FC<ListProps> = ({
             })}
             {...props}
         >
-            {populateProps(children, linkItemProps, "left", (el) => el.type === ListItem)}
+            {populateProps(children, globalItemProps, "left", (el) => el.type === ListItem)}
             {items?.map((item) => {
                 const active =
                     item.props?.active ??
                     (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
 
                 if (variant === "icons") {
-                    return (
-                        <IconButton
-                            size={size === "xl" ? "lg" : size}
-                            variant="text"
-                            color={active ? "black" : "neutral"}
-                            {...iconButtonProps}
-                            {...item.props}
-                            {...item.buttonProps}
-                            key={item.key}
-                            className={clsx(
-                                active && "bg-transparent2",
-                                item.props?.className,
-                                item.buttonProps?.className,
-                                iconButtonProps?.className
-                            )}
-                            onClick={(e) => {
-                                item.buttonProps?.onClick?.(e);
-                                item.props?.onClick?.(e);
-                                iconButtonProps?.onClick?.(e);
+                    const _buttonProps = mergeProps<PropsOf<typeof IconButton>>([
+                        {
+                            size: size === "xl" ? "lg" : size,
+                            variant: "text",
+                            color: active ? "black" : "neutral",
+                        },
+                        iconButtonProps,
+                        item.props,
+                        item.buttonProps,
+                        {
+                            key: item.key,
+                            className: clsx(active && "bg-transparent2"),
+                            onClick: (e) => {
                                 onItemClick?.(item, e);
-                            }}
-                        >
-                            {item.props?.icon}
-                        </IconButton>
-                    );
+                            },
+                        },
+                    ]);
+
+                    return <IconButton {..._buttonProps}>{item.props?.icon}</IconButton>;
                 }
 
-                return (
-                    <ListItem
-                        as="li"
-                        size={size || "md"}
-                        {...linkItemProps}
-                        {...item.listItemProps}
-                        {...item.props}
-                        key={item.key}
-                        active={active}
-                        className={clsx(item.props?.className, listItemProps?.className as any)}
-                        onClick={(e) => {
-                            item.listItemProps?.onClick?.(e);
-                            item.props?.onClick?.(e);
-                            listItemProps?.onClick?.(e);
-                            onItemClick?.(item, e);
-                        }}
-                        clickable={
+                const _itemProps = mergeProps<PropsOf<typeof ListItem>>([
+                    { size: "md" },
+                    { size },
+                    globalItemProps,
+                    item.listItemProps,
+                    item.props,
+                    {
+                        // We define onClick which implicitly sets clickable to true
+                        // So we need to explicitly set clickable
+                        clickable:
                             !!item.props?.clickable ||
                             !!onItemClick ||
                             !!item.props?.onClick ||
@@ -184,12 +171,12 @@ export const List: FC<ListProps> = ({
                             !!listItemProps?.onClick ||
                             !!listItemProps?.clickable ||
                             !!item.props?.href ||
-                            !!item.listItemProps?.href
-                        }
-                    >
-                        {item.label}
-                    </ListItem>
-                );
+                            !!item.listItemProps?.href,
+                        key: item.key,
+                    },
+                ]);
+
+                return <ListItem {..._itemProps}>{item.label}</ListItem>;
             })}
         </Comp>
     );

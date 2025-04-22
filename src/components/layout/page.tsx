@@ -50,7 +50,7 @@ const page = tv({
     },
 });
 
-export interface PageProps extends VariantProps<typeof page>, StyleProps {
+interface PageProps extends VariantProps<typeof page>, StyleProps {
     children?: React.ReactNode;
     ref?: Ref<HTMLDivElement>;
 }
@@ -92,3 +92,8 @@ export const Page: FC<PageProps> = ({
         </div>
     );
 };
+
+/**
+ * {@link Page} alias
+ */
+export const PageLike = Page;
