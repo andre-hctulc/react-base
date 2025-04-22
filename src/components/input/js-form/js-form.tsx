@@ -242,13 +242,13 @@ export const JSForm = <T extends object = any>({
     return (
         <Comp
             id={id}
-            ref={(form: any) => {
-                form.current = form;
+            ref={(f: any) => {
+                form.current = f;
 
                 if (typeof ref === "function") {
-                    ref(form);
+                    ref(f);
                 } else if (ref) {
-                    ref.current = form;
+                    ref.current = f;
                 }
             }}
             className={jsForm({ flex, gap, className })}
