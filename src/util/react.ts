@@ -87,6 +87,13 @@ export function inputEventToValue(event: ChangeEvent<HTMLInputElement>, type: st
     return event.currentTarget.value;
 }
 
+interface MergePropsOptions {
+    mergeClasses?: boolean;
+    mergeStyles?: boolean;
+    mergeEvents?: boolean;
+    omitUndefined?: boolean;
+}
+
 /**
  * Latter props overwrite former ones
  *
@@ -101,7 +108,8 @@ export function mergeProps<P extends object>(
         mergeClasses = true,
         mergeStyles = true,
         mergeEvents = true,
-    }: { mergeEvents?: boolean; mergeStyles?: boolean; mergeClasses?: boolean } = {}
+        omitUndefined = true,
+    }: MergePropsOptions = {}
 ): P {
     const mergedProps: any = {};
 
@@ -110,6 +118,10 @@ export function mergeProps<P extends object>(
 
         for (const key in propsItem) {
             const value: any = propsItem[key];
+
+            if (omitUndefined && value === undefined) {
+                continue;
+            }
 
             if (mergeClasses && key === "className") {
                 mergedProps[key] = mergedProps[key] ? clsx(mergedProps[key], value) : value;
