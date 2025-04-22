@@ -1,4 +1,13 @@
-import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
+import {
+    cloneElement,
+    isValidElement,
+    useEffect,
+    useId,
+    useState,
+    type FC,
+    type ReactElement,
+    type ReactNode,
+} from "react";
 import { useJSForm } from "./js-form/js-form-context.js";
 import type { PartialPropsOf, TVCProps } from "../../types/index.js";
 import { HelperText } from "./helper-text.js";
@@ -109,7 +118,6 @@ export const FormControl: FC<FormControlProps> = ({
     const errText = isErr && formCtx.reporting ? errorText ?? (formCtx?.inputs[_name]?.error || "") : "";
     const _controlled = controlled ?? formCtx?.controlled;
     const id = useId();
-    const jsFormValue = hasName ? formCtx?.default(_name) : undefined;
     const childElement: ReactElement<any> | null = isValidElement(children) ? children : null;
 
     // input props
@@ -125,13 +133,21 @@ export const FormControl: FC<FormControlProps> = ({
             inpProps.name = _name;
         }
 
-        // handle js form default value
-        if (jsFormValue !== undefined) {
-            if (_controlled) {
-                inpProps.value =
-                    childElement?.props.value === undefined ? jsFormValue : childElement.props.value;
-            } else {
-                inpProps.defaultValue = jsFormValue;
+        // ## Handle JSForm support here
+        if (formCtx) {
+            // Use reset signal as key, to force rerenders on reset
+            inpProps.key = formCtx.resetSignal;
+
+            const jsFormValue = hasName ? formCtx.default(_name) : undefined;
+
+            // handle js form default value
+            if (jsFormValue !== undefined) {
+                if (_controlled) {
+                    inpProps.value =
+                        childElement?.props.value === undefined ? jsFormValue : childElement.props.value;
+                } else {
+                    inpProps.defaultValue = jsFormValue;
+                }
             }
         }
     }

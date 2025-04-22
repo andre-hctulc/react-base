@@ -184,9 +184,16 @@ export const JSForm = <T extends object = any>({
         });
     }, []);
 
+    const [resetSignal, setResetSignal] = useState(0);
     const reset = useCallback(() => {
         if (form.current) form.current.reset();
         reporting.current = false;
+        setResetSignal((s) => {
+            if (s > 1000) {
+                return 1;
+            }
+            return s + 1;
+        });
     }, []);
 
     const triggerChange = useCallback(
@@ -204,7 +211,6 @@ export const JSForm = <T extends object = any>({
         },
         [handleChange, nested, parentFormCtx]
     );
-
     const ctx = useMemo<JSFormContext>(
         () => ({
             ...snapshot,
@@ -214,8 +220,9 @@ export const JSForm = <T extends object = any>({
             default: def,
             controlled: values !== undefined,
             prefixNames,
+            resetSignal,
         }),
-        [snapshot, triggerChange, reset, def, values, prefixNames]
+        [snapshot, triggerChange, reset, def, values, prefixNames, resetSignal]
     );
     const onContextChangeRef = useRefOf(onContextChange);
 

@@ -25,6 +25,7 @@ export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T>
      */
     controlled: boolean;
     prefixNames: string | undefined;
+    resetSignal: number;
 }
 
 export const JSFormCtx = createContext<JSFormContext | null>(null);
