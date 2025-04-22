@@ -7,7 +7,7 @@ import { Toolbar } from "./toolbar.js";
 import { Spinner } from "../data-display/spinner.js";
 
 const listItem = tv({
-    base: "transition duration-75",
+    base: "transition duration-75 min-w-0",
     variants: {
         rounded: {
             sm: "rounded-sm",

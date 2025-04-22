@@ -163,18 +163,11 @@ export const List: FC<ListProps> = ({
                     item.listItemProps,
                     item.props,
                     {
-                        // We define onClick which implicitly sets clickable to true
-                        // So we need to explicitly set clickable
-                        clickable:
-                            !!item.props?.clickable ||
-                            !!onItemClick ||
-                            !!item.props?.onClick ||
-                            !!item.listItemProps?.onClick ||
-                            !!item.listItemProps?.clickable ||
-                            !!listItemProps?.onClick ||
-                            !!listItemProps?.clickable ||
-                            !!item.props?.href ||
-                            !!item.listItemProps?.href,
+                        onClick: onItemClick
+                            ? (e) => {
+                                  onItemClick?.(item, e);
+                              }
+                            : undefined,
                     },
                 ]);
 
