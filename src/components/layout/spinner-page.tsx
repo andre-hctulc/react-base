@@ -1,8 +1,9 @@
+import type { PropsOf } from "../../types/index.js";
 import { Spinner } from "../data-display/spinner.js";
 import { PageContent } from "./page-content.js";
-import { Page, type PageProps } from "./page.js";
+import { Page } from "./page.js";
 
-export interface SpinnerPageProps extends Omit<PageProps, "children"> {
+export interface SpinnerPageProps extends Omit<PropsOf<typeof Page>, "children"> {
     spinnerSize?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 }
 
