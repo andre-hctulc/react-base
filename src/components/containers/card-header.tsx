@@ -67,7 +67,7 @@ export const CardHeader: FC<CardHeaderProps> = ({
                     <Title variant="h4" {...titleProps}>
                         {title}
                     </Title>
-                    {actions && <div className="ml-auto">{actions}</div>}
+                    {actions && <div className="ml-auto min-w-0">{actions}</div>}
                 </div>
             )}
             {children}

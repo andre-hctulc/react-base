@@ -31,16 +31,21 @@ export const spinner = tv({
             "5xl": "text-5xl",
             inherit: "",
         },
+        block: {
+            false: "inline-block",
+            true: "block",
+        },
     },
     defaultVariants: {
         color: "primary",
         size: "md",
+        block: false,
     },
 });
 
 export interface SpinnerProps extends TVCProps<typeof spinner, "svg"> {}
 
-export const Spinner: FC<SpinnerProps> = ({ className, size, color, ref, ...props }) => {
+export const Spinner: FC<SpinnerProps> = ({ className, size, color, ref, block, ...props }) => {
     return (
         <svg
             width="1em"
@@ -49,7 +54,7 @@ export const Spinner: FC<SpinnerProps> = ({ className, size, color, ref, ...prop
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
             ref={ref as any}
-            className={spinner({ className, size, color })}
+            className={spinner({ className, size, color, block })}
             {...props}
         >
             <path

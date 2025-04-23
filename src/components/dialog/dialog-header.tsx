@@ -71,7 +71,7 @@ export const DialogHeader: FC<DialogHeaderProps> = ({
                     ) : (
                         title
                     )}
-                    {actions && <div className="ml-auto">{actions}</div>}
+                    {actions && <div className="ml-auto min-w-0">{actions}</div>}
                 </div>
             )}
             {onClose && (
