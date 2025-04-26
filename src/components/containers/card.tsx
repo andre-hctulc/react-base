@@ -49,6 +49,7 @@ const card = tv({
             lg: "w-[450px]",
             xl: "w-[550px]",
             "2xl": "w-[750px]",
+            fit: "w-fit",
         },
         height: {
             none: "",
@@ -59,6 +60,7 @@ const card = tv({
             lg: "h-[300px]",
             xl: "h-[400px]",
             "2xl": "h-[500px]",
+            fit: "h-fit",
         },
     },
     defaultVariants: {
@@ -70,7 +72,7 @@ const card = tv({
 });
 
 interface CardProps extends TVCProps<typeof card, "div"> {
-    size?: "xs" | "sm" | "md" | "lg" | "xl";
+    size?: "xs" | "sm" | "md" | "lg" | "xl" | "fit" | "none" | "2xl" | "auto";
     as?: any;
 }
 
