@@ -8,13 +8,12 @@ const card = tv({
         variant: {
             custom: "",
             outlined: "border bg-paper",
-            elevated: "shadow-sm bg-paper",
+            elevated: "shadow-md bg-paper",
             contrast: "bg-paper2",
         },
         shadow: {
             none: "",
-            sm: "shadow-xs",
-            base: "shadow-sm",
+            sm: "shadow-sm",
             md: "shadow-md",
             lg: "shadow-lg",
             xl: "shadow-xl",

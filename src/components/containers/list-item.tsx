@@ -35,23 +35,22 @@ const listItem = tv({
     compoundVariants: [
         {
             variant: "danger",
-            effects: true,
+            hoverEffect: true,
             class: "hover:bg-error/5 data-[active=true]:bg-error/10",
         },
         {
             variant: "default",
-            effects: true,
+            hoverEffect: true,
             class: "hover:bg-transparent1 data-[active=true]:bg-transparent2",
         },
         {
             variant: "secondary",
-            effects: true,
+            hoverEffect: true,
             class: "hover:bg-neutral/5 data-[active=true]:bg-neutral/10",
         },
     ],
     defaultVariants: {
         variant: "default",
-        effects: true,
         rounded: "md",
     },
 });
@@ -139,7 +138,7 @@ export const ListItem: FC<ListItemProps> = ({
             ref={ref}
             data-active={active}
             className={listItem({
-                hoverEffect: interactive || hoverEffect,
+                hoverEffect: interactive || !!hoverEffect,
                 variant,
                 className,
                 clickable: interactive,
