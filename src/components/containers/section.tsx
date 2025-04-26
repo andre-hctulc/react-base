@@ -1,37 +1,27 @@
+"use client";
+
 import { tv } from "tailwind-variants";
+import { type FC, type ReactNode, useEffect, useState } from "react";
 import type { PropsOf, TVCProps } from "../../types/index.js";
-import { Subtitle } from "../text/subtitle.js";
-import { Icon } from "../icons/icon.js";
-import { Button } from "../input/button.js";
-import { PencilIcon } from "../icons/pencil.js";
-import clsx from "clsx";
+import { SectionStart } from "./section-start.js";
+import { Toolbar } from "./toolbar.js";
+import { IconButton } from "../input/icon-button.js";
 import { Placeholder } from "../data-display/placeholder.js";
 import { Spinner } from "../data-display/spinner.js";
-import React, { type FC } from "react";
-import { withPrefix } from "../../util/system.js";
-import { IconButton } from "../input/icon-button.js";
+import { CollapseVScreen } from "../transitions/collapse.js";
+import clsx from "clsx";
+import { ChevronRightIcon } from "../icons/chevron-right.js";
 
 const section = tv({
-    base: "py-4 box-border",
+    base: "",
     variants: {
-        padding: {
-            none: "",
-            sm: "px-3 py-2.5",
-            md: "py-5 px-6",
-            lg: "py-8 px-8",
-        },
         margin: {
             none: "",
             sm: "my-4",
             md: "my-8",
             lg: "my-12",
         },
-        variant: {
-            plain: "",
-            outlined: "border rounded-md",
-            danger: "border-[0.5px] border-error rounded-md bg-error/5",
-            elevated: "bg-paper2 rounded-md",
-        },
+        variant: {},
         first: {
             true: "mt-0!",
         },
@@ -55,18 +45,41 @@ const section = tv({
         },
     },
     defaultVariants: {
-        variant: "outlined",
-        margin: "md",
+        margin: "none",
         padding: "md",
     },
 });
 
 interface SectionProps extends TVCProps<typeof section, "section"> {
     title?: string;
-    titleProps?: PropsOf<typeof Subtitle>;
-    icon?: React.ReactNode;
-    iconProps?: PropsOf<typeof Icon>;
-    loading?: boolean;
+    icon?: ReactNode;
+    sectionStartProps?: PropsOf<typeof SectionStart>;
+    as?: any;
+    /**
+     * Actions are wrapped in a {@link Toolbar}. These are passed to the toolbar.
+     */
+    toolbarProps?: PropsOf<typeof Toolbar>;
+    /**
+     * @default true
+     */
+    openOnStartClick?: boolean;
+    open?: boolean;
+    /**
+     * @default true
+     */
+    defaultOpen?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    /**
+     * Props of children wrapper
+     */
+    wrapperProps?: PropsOf<"div">;
+    wrapperClassName?: string;
+    loading?: ReactNode;
+    /**
+     * @default true
+     */
+    canClose?: boolean;
+    openButtonProps?: PropsOf<typeof IconButton>;
 }
 
 /**
@@ -75,119 +88,104 @@ interface SectionProps extends TVCProps<typeof section, "section"> {
  * - `icon` - The icon to display next to the title
  * - `loading` - Show a loading spinner
  * - `first` - Remove top margin
+ * - `openOnStartClick` - If true, clicking the section start will open the section
+ * - `open` - Controlled open state
+ * - `defaultOpen` - Default open state
+ * - `loading` - Set to true, to show a loading spinner, or pass a loading component
  */
 export const Section: FC<SectionProps> = ({
     children,
     className,
     margin,
     variant,
-    padding,
-    title,
-    titleProps,
-    icon,
-    iconProps,
     loading,
     first,
     bg,
     flex,
     ref,
+    sectionStartProps,
+    as,
+    title,
+    toolbarProps,
+    icon,
+    openOnStartClick,
+    defaultOpen,
+    open,
+    onOpenChange,
+    wrapperProps,
+    canClose,
+    openButtonProps,
+    wrapperClassName,
     ...props
 }) => {
-    const isDanger = variant === "danger";
+    const [isOpen, setOpen] = useState(defaultOpen ?? true);
+    const Comp: any = as || "section";
+    const _openOnStartClick = openOnStartClick !== false;
+    const _canClose = canClose !== false;
+
+    useEffect(() => {
+        if (open !== undefined) {
+            setOpen(open);
+        }
+    }, [open]);
+
+    function handleOpenChange() {
+        if (!_canClose) {
+            return;
+        }
+
+        if (open === undefined) {
+            setOpen((prev) => !prev);
+        }
+
+        onOpenChange?.(!isOpen);
+    }
 
     return (
-        <section
-            ref={ref}
-            className={section({ className, margin, variant, padding, first, bg, flex })}
-            {...props}
-        >
+        <Comp ref={ref} className={section({ className, margin, variant, first, bg, flex })} {...props}>
             {loading && (
                 <Placeholder my="md">
                     <Spinner size="2xl" />
                 </Placeholder>
             )}
-            {(title || icon) && !loading && (
-                <div className="flex gap-3 items-center pb-5">
-                    {icon && (
-                        <Icon color={isDanger ? "error" : "neutral"} {...iconProps}>
-                            {icon}
-                        </Icon>
-                    )}
-                    <Subtitle
-                        variant="h3"
-                        {...titleProps}
-                        className={clsx(isDanger && "text-error", titleProps?.className as any)}
-                    >
-                        {title}
-                    </Subtitle>
-                </div>
-            )}
-            {!loading && children}
-        </section>
-    );
-};
-
-const sectionFooter = tv({
-    base: "mt-auto p-2 pt-4",
-    variants: {
-        variant: {
-            actions: "flex justify-end",
-            default: "",
-            flex: "flex",
-        },
-    },
-    defaultVariants: {},
-});
-
-Section.displayName = withPrefix("Section");
-
-interface SectionFooterProps extends TVCProps<typeof sectionFooter, "div"> {
-    actions?: React.ReactNode;
-    /**
-     * use this in combination with `variant: "actions"` to show an edit button
-     */
-    editable?: boolean;
-    editDisabled?: boolean;
-    onEditClick?: (e: React.MouseEvent) => void;
-    editIcon?: React.ReactNode;
-    editButtonProps?: PropsOf<typeof Button>;
-    editLoading?: boolean;
-}
-
-export const SectionFooter: React.FC<SectionFooterProps> = ({
-    children,
-    className,
-    actions,
-    editable,
-    editDisabled,
-    onEditClick,
-    editIcon,
-    editLoading,
-    editButtonProps,
-    variant,
-    ...props
-}) => {
-    return (
-        <div className={sectionFooter({ className, variant })} {...props}>
-            {children}
-            {(actions || editable) && (
-                <div className="ml-auto pl-3">
-                    {actions}
-                    {editable && (
+            <SectionStart
+                {...sectionStartProps}
+                onClick={(e) => {
+                    // default true
+                    if (_openOnStartClick) {
+                        handleOpenChange();
+                    }
+                    sectionStartProps?.onClick?.(e);
+                }}
+                title={title ?? sectionStartProps?.title}
+                icon={icon ?? sectionStartProps?.icon}
+                className={clsx(sectionStartProps?.className, _openOnStartClick && "cursor-pointer")}
+                actions={
+                    <Toolbar stopEventPropagation {...toolbarProps}>
+                        {sectionStartProps?.actions}
                         <IconButton
-                            color="primary"
-                            loading={editLoading}
-                            disabled={editDisabled}
-                            onClick={onEditClick}
-                            variant="text"
-                            {...editButtonProps}
-                            className={clsx("ml-4", editButtonProps?.className as any)}
+                            {...openButtonProps}
+                            onClick={(e) => {
+                                handleOpenChange();
+                                openButtonProps?.onClick?.(e);
+                            }}
                         >
-                            {editIcon || <PencilIcon />}
+                            <ChevronRightIcon className={clsx("transition", isOpen && "rotate-90")} />
                         </IconButton>
+                    </Toolbar>
+                }
+            />
+            <CollapseVScreen show={isOpen}>
+                <div {...wrapperProps} className={clsx("pt-7", wrapperProps?.className, wrapperClassName)}>
+                    {loading === true ? (
+                        <Placeholder my="lg">
+                            <Spinner size="2xl" />
+                        </Placeholder>
+                    ) : (
+                        loading ?? children
                     )}
                 </div>
-            )}
-        </div>
+            </CollapseVScreen>
+        </Comp>
     );
 };

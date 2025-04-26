@@ -8,10 +8,10 @@ const subtitle = tv({
     base: "text-lg font-medium text-t2",
     variants: {
         variant: {
-            h2: "text-lg",
-            h3: "text-base",
-            h4: "text-sm",
-            h5: "text-xs",
+            h2: "text-xl",
+            h3: "text-lg",
+            h4: "text-base",
+            h5: "text-sm",
         },
         underline: {
             true: "underline",

@@ -110,7 +110,7 @@ export const List: FC<ListProps> = ({
     ...props
 }) => {
     const Comp: any = as || "ul";
-    const globalItemProps = { LinkComponent, ...listItemProps };
+    const globalItemProps = { LinkComponent, size, ...listItemProps };
 
     return (
         <Comp
@@ -158,7 +158,6 @@ export const List: FC<ListProps> = ({
 
                 const _itemProps = mergeProps<PropsOf<typeof ListItem>>([
                     { size: "md" },
-                    { size },
                     globalItemProps,
                     item.listItemProps,
                     item.props,

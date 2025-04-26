@@ -9,3 +9,4 @@ export * from "./list.js";
 export * from "./flex.js";
 export * from "./section.js";
 export * from "./list-item.js";
+export * from "./section-start.js";

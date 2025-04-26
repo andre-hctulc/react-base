@@ -56,7 +56,7 @@ const listItem = tv({
 });
 
 const listItemInner = tv({
-    base: "w-full flex box-border transition duration-100",
+    base: "w-full flex items-center box-border transition duration-100",
     variants: {
         size: {
             xs: "text-xs px-2 gap-1.5 py-1",
