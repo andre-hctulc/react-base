@@ -24,8 +24,9 @@ const listItem = tv({
             default: "",
             secondary: "text-t2",
         },
-        effects: {
+        hoverEffect: {
             true: "",
+            false: "",
         },
         disabled: {
             true: "cursor-not-allowed opacity-50",
@@ -98,6 +99,12 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
     pre?: ReactNode;
 }
 
+/**
+ * ### Props
+ * - `icon`
+ * - `onClick`
+ * - `hoverEffect` - Enforce hover effect even if not clickable
+ */
 export const ListItem: FC<ListItemProps> = ({
     children,
     onClick,
@@ -111,11 +118,11 @@ export const ListItem: FC<ListItemProps> = ({
     variant,
     size,
     innerProps,
-    effects,
     disabled,
     iconProps,
     ref,
     pre,
+    hoverEffect,
     ...props
 }) => {
     const Link = LinkComponent || "a";
@@ -132,7 +139,7 @@ export const ListItem: FC<ListItemProps> = ({
             ref={ref}
             data-active={active}
             className={listItem({
-                effects: interactive && effects,
+                hoverEffect: interactive || hoverEffect,
                 variant,
                 className,
                 clickable: interactive,

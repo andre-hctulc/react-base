@@ -7,8 +7,9 @@ const card = tv({
     variants: {
         variant: {
             custom: "",
-            outlined: "border",
-            elevated: "shadow-sm",
+            outlined: "border bg-paper",
+            elevated: "shadow-sm bg-paper",
+            contrast: "bg-paper2",
         },
         shadow: {
             none: "",
@@ -24,7 +25,8 @@ const card = tv({
             "3": "bg-paper3",
             "4": "bg-paper4",
             "5": "bg-paper5",
-            transparent: "",
+            transparent: "transparent",
+            auto: "",
         },
         rounded: {
             none: "",
@@ -64,7 +66,7 @@ const card = tv({
         elevated: "0",
         rounded: "lg",
         variant: "outlined",
-        bg: "1",
+        bg: "auto",
     },
 });
 
