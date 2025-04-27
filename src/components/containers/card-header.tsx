@@ -1,5 +1,5 @@
 import { tv, type VariantProps } from "tailwind-variants";
-import type { PropsOf } from "../../types/index.js";
+import type { PartialPropsOf, PropsOf } from "../../types/index.js";
 import clsx from "clsx";
 import { Icon } from "../icons/icon.js";
 import { Title } from "../text/title.js";
@@ -30,13 +30,13 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
     children?: ReactNode;
     className?: string;
     title?: ReactNode;
-    titleProps?: PropsOf<typeof Title>;
+    titleProps?: PartialPropsOf<typeof Title>;
     badges?: ReactNode;
     actions?: ReactNode;
     style?: CSSProperties;
     innerProps?: PropsOf<"div">;
     icon?: ReactNode;
-    iconProps?: PropsOf<typeof Icon>;
+    iconProps?: PartialPropsOf<typeof Icon>;
     as?: any;
 }
 

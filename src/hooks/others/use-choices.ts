@@ -139,7 +139,8 @@ export function useChoices<C extends Choice<any, any>>(
         if (controlled) {
             setValue(controlledValue);
         }
-    }, [controlledValue]);
+        // Use items as deps, so one can provide values without memoizing them
+    }, [...(controlledValue || [])]);
 
     useEffect(() => {
         if (!multiple && value.length > 1) {
