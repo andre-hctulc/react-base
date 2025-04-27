@@ -9,6 +9,7 @@ const card = tv({
             custom: "",
             outlined: "border bg-paper",
             elevated: "shadow-md bg-paper",
+            elevated_sm: "shadow-sm bg-paper",
             contrast: "bg-paper2",
         },
         shadow: {
