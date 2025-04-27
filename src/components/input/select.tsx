@@ -181,7 +181,7 @@ export const Select = <V = string, D = any>({
                 gap={1}
                 {...popoverProps}
             >
-                <Card variant="elevated">
+                <Card variant="custom" bg="1" shadow="sm">
                     <List
                         padding="sm"
                         items={getListItems(options)}
