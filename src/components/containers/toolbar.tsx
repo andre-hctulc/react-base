@@ -1,10 +1,9 @@
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
-import { forwardRef, type FC } from "react";
-import { withPrefix } from "../../util/system.js";
+import { type FC } from "react";
 
 const toolbar = tv({
-    base: "flex",
+    base: "flex min-w-0",
     variants: {
         direction: {
             row: "flex-row",

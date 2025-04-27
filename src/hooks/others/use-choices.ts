@@ -134,7 +134,7 @@ export function useChoices<C extends Choice<any, any>>(
     const rawValues = useMemo(() => {
         return value.map((v) => String(v));
     }, [value]);
-    // Use "hash" as controlled value trigger, so one can provide values without memoizing them
+    // Use "hash" of value as controlled value trigger, so one can provide values without memoizing them
     const controlledTrigger = useMemo(() => JSON.stringify(controlledValue), [controlledValue]);
 
     useEffect(() => {

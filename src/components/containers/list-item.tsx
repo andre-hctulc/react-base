@@ -1,9 +1,7 @@
 import { tv, type VariantProps } from "tailwind-variants";
-import { Tool, type ToolItem } from "../input/tool.js";
 import type { LinkComponent, PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { type FC, type ReactNode, type Ref } from "react";
-import { Toolbar } from "./toolbar.js";
 import { Spinner } from "../data-display/spinner.js";
 
 const listItem = tv({
@@ -79,7 +77,6 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
     active?: boolean;
     icon?: React.ReactNode;
     key?: string;
-    tools?: ToolItem[];
     href?: string;
     LinkComponent?: LinkComponent;
     innerProps?: any;
@@ -95,7 +92,8 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
     clickable?: boolean;
     iconProps?: PropsOf<typeof Icon>;
     ref?: Ref<HTMLElement>;
-    pre?: ReactNode;
+    start?: ReactNode;
+    end?: ReactNode;
 }
 
 /**
@@ -103,6 +101,8 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
  * - `icon`
  * - `onClick`
  * - `hoverEffect` - Enforce hover effect even if not clickable
+ * - `start` - Prepend content
+ * - `end` - Append content
  */
 export const ListItem: FC<ListItemProps> = ({
     children,
@@ -110,7 +110,6 @@ export const ListItem: FC<ListItemProps> = ({
     className,
     active,
     style,
-    tools,
     href,
     LinkComponent,
     loading,
@@ -120,8 +119,9 @@ export const ListItem: FC<ListItemProps> = ({
     disabled,
     iconProps,
     ref,
-    pre,
+    start,
     hoverEffect,
+    end,
     ...props
 }) => {
     const Link = LinkComponent || "a";
@@ -149,20 +149,14 @@ export const ListItem: FC<ListItemProps> = ({
             style={style}
         >
             <Inner className={listItemInner({ size })} {..._innerProps}>
-                {pre}
+                {start}
                 {icon ? (
                     <Icon className="self-center" size={iconSize}>
                         {icon}
                     </Icon>
                 ) : null}
                 {typeof children === "string" ? <span className="grow truncate">{children}</span> : children}
-                {tools?.length && (
-                    <Toolbar justify="end" gap="sm">
-                        {tools?.map(({ key, ...tool }) => (
-                            <Tool variant="text" size="sm" color="neutral" key={key} {...tool} />
-                        ))}
-                    </Toolbar>
-                )}
+                {end}
             </Inner>
         </Comp>
     );

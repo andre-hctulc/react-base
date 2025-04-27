@@ -1,31 +1,34 @@
-import React from "react";
+import { useCallback, useRef, useState } from "react";
+import { useRefOf } from "./use-ref-of.js";
 
-interface PromiseListeners {
-    onError?: (error: any) => void;
-    onSuccess?: (result: any) => void;
+interface PromiseListeners<T = any, E = unknown> {
+    onError?: (error: E) => void;
+    onSuccess?: (result: T) => void;
 }
 
-export interface UsePromiseResult<T = any, E = Error> {
+export interface UsePromiseResult<T = any, E = unknown> {
     data: T | undefined;
     isPending: boolean;
-    resolved: boolean;
-    error: E | null;
-    promise: (prom: Promise<T>) => void;
+    isResolved: boolean;
     isError: boolean;
+    error: E | null;
+    promise: (promise: Promise<T>) => void;
 }
 
 /**
  * A hook to handle promises. The hook always represents the state of the latest promise.
  */
-export function usePromise<T = any, E = Error>(listeners?: PromiseListeners): UsePromiseResult<T, E> {
-    const [data, setData] = React.useState<T>();
-    const [isPending, setIsPending] = React.useState(false);
-    const [resolved, setResolved] = React.useState(false);
-    const [error, setError] = React.useState<E | null>(null);
-    const [currentPromise, promise] = React.useState<Promise<T>>();
+export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T, E>): UsePromiseResult<T, E> {
+    const [data, setData] = useState<T>();
+    const [isPending, setIsPending] = useState(false);
+    const [resolved, setResolved] = useState(false);
+    const [error, setError] = useState<E | null>(null);
+    const currentPromise = useRef<Promise<T> | null>(null);
+    const errorListener = useRefOf(listeners?.onError);
+    const successListener = useRefOf(listeners?.onSuccess);
 
-    React.useEffect(() => {
-        let interrupted = false;
+    const promise = useCallback((newPromise: Promise<T>) => {
+        currentPromise.current = newPromise;
 
         if (!currentPromise) {
             setData(undefined);
@@ -36,38 +39,33 @@ export function usePromise<T = any, E = Error>(listeners?: PromiseListeners): Us
         }
 
         setIsPending(true);
+        setResolved(false);
+        setError(null);
+        setData(undefined);
 
-        currentPromise
+        newPromise
             .then((data) => {
-                if (interrupted) return;
+                successListener.current?.(data);
+                if (currentPromise.current !== newPromise) return;
                 setIsPending(false);
                 setData(data);
                 setResolved(true);
                 setError(null);
-                if (listeners?.onSuccess) {
-                    listeners.onSuccess(data);
-                }
             })
             .catch((err) => {
-                if (interrupted) return;
+                errorListener.current?.(err);
+                if (currentPromise.current !== newPromise) return;
                 setIsPending(false);
                 setData(undefined);
                 setResolved(true);
                 setError(err);
-                if (listeners?.onError && error) {
-                    listeners.onError(error);
-                }
             });
-
-        return () => {
-            interrupted = true;
-        };
-    }, [currentPromise]);
+    }, []);
 
     return {
         data,
         isPending,
-        resolved,
+        isResolved: resolved,
         error,
         promise: promise,
         isError: error !== null,
