@@ -16,6 +16,9 @@ export const DataGridHeaderRow: React.FC<DataGridHeaderRowProps> = ({ cols, heig
     const headerCols = useMapArray<DataGridColDef, DataGridColDef>(cols, (col, index, arr) => {
         return {
             ...col,
+            center: false,
+            alignCenter: false,
+            justifyCenter: false,
             className: clsx("text-sm text-t3", col.headerCellClassName),
             // Use label as renderValue when its nt a string, otherwise set renderValue to undefined
             render:

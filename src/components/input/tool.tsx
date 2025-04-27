@@ -18,6 +18,9 @@ export interface ToolBaseProps {
  * @template E - The type of the error passed to the onError callback
  */
 export interface ToolProps<T = any, D = any, E = unknown> {
+    /**
+     * The action to be performed. Errors are caught and handled by the {@link onError} callback.
+     */
     action: Action<T>;
     tooltip?: ReactNode;
     tooltipProps?: PartialPropsOf<typeof Tooltip>;
@@ -29,6 +32,7 @@ export interface ToolProps<T = any, D = any, E = unknown> {
 
 /**
  * ### Props
+ * - `action` - The action to be performed. Errors are caught and handled by the `onError` callback.
  * - `onSuccess` - Callback when the action is successful
  * - `onError` - Callback when the action fails
  *
