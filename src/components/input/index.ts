@@ -23,3 +23,4 @@ export * from "./radio-card.js";
 export * from "./types.js";
 export * from "./icon-button.js";
 export * from "./range-input.js";
+export * from "./hidden-input.js";

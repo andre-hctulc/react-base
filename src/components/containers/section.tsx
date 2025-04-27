@@ -78,7 +78,7 @@ interface SectionProps extends TVCProps<typeof section, "section"> {
     /**
      * @default true
      */
-    canClose?: boolean;
+    closeable?: boolean;
     openButtonProps?: PropsOf<typeof IconButton>;
 }
 
@@ -113,7 +113,7 @@ export const Section: FC<SectionProps> = ({
     open,
     onOpenChange,
     wrapperProps,
-    canClose,
+    closeable,
     openButtonProps,
     wrapperClassName,
     ...props
@@ -121,7 +121,7 @@ export const Section: FC<SectionProps> = ({
     const [isOpen, setOpen] = useState(defaultOpen ?? true);
     const Comp: any = as || "section";
     const _openOnStartClick = openOnStartClick !== false;
-    const _canClose = canClose !== false;
+    const canClose = closeable !== false;
 
     useEffect(() => {
         if (open !== undefined) {
@@ -130,7 +130,7 @@ export const Section: FC<SectionProps> = ({
     }, [open]);
 
     function handleOpenChange() {
-        if (!_canClose) {
+        if (!canClose) {
             return;
         }
 
@@ -161,12 +161,12 @@ export const Section: FC<SectionProps> = ({
                 icon={icon ?? sectionStartProps?.icon}
                 className={clsx(
                     sectionStartProps?.className,
-                    _canClose && _openOnStartClick && "cursor-pointer"
+                    canClose && _openOnStartClick && "cursor-pointer"
                 )}
                 actions={
                     <Toolbar stopEventPropagation {...toolbarProps}>
                         {sectionStartProps?.actions}
-                        {_canClose && (
+                        {canClose && (
                             <IconButton
                                 {...openButtonProps}
                                 onClick={(e) => {

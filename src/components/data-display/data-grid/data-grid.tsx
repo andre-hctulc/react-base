@@ -67,7 +67,7 @@ export interface DataGridProps<T extends object> {
     storage?: {
         /**
          * @default
-         * usePersistentState.memoryStorage
+         * SessionStorage
          */
         engine?: Storage;
         /**
@@ -91,7 +91,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     const [hiddenCols, setHiddenCols] = usePersistentState(
         withPrefix("data-grid-hide-cols_") + id,
         props.defaultHideCols || [],
-        props.storage?.engine
+        props.storage?.engine ?? sessionStorage
     );
     const len = props.rows.length;
     const empty = len === 0;
