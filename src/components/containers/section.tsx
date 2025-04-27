@@ -159,19 +159,24 @@ export const Section: FC<SectionProps> = ({
                 }}
                 title={title ?? sectionStartProps?.title}
                 icon={icon ?? sectionStartProps?.icon}
-                className={clsx(sectionStartProps?.className, _openOnStartClick && "cursor-pointer")}
+                className={clsx(
+                    sectionStartProps?.className,
+                    _canClose && _openOnStartClick && "cursor-pointer"
+                )}
                 actions={
                     <Toolbar stopEventPropagation {...toolbarProps}>
                         {sectionStartProps?.actions}
-                        <IconButton
-                            {...openButtonProps}
-                            onClick={(e) => {
-                                handleOpenChange();
-                                openButtonProps?.onClick?.(e);
-                            }}
-                        >
-                            <ChevronRightIcon className={clsx("transition", isOpen && "rotate-90")} />
-                        </IconButton>
+                        {_canClose && (
+                            <IconButton
+                                {...openButtonProps}
+                                onClick={(e) => {
+                                    handleOpenChange();
+                                    openButtonProps?.onClick?.(e);
+                                }}
+                            >
+                                <ChevronRightIcon className={clsx("transition", isOpen && "rotate-90")} />
+                            </IconButton>
+                        )}
                     </Toolbar>
                 }
             />

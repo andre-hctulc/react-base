@@ -41,8 +41,6 @@ interface SectionStartProps extends TVCProps<typeof sectionStart, "div"> {
  * - `title` - Section title
  * - `mt` - Margin top
  * - `mb` - Margin bottom
- *
- * @deprecated use react-base
  */
 export const SectionStart: React.FC<SectionStartProps> = ({
     children,
