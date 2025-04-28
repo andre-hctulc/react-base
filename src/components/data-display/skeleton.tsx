@@ -48,7 +48,10 @@ export interface SkeletonProps extends VariantProps<typeof skeleton> {
     minWidth?: number;
     as?: any;
     /**
-     * `false`: Render children without any skeleton
+     * Is skeleton active?
+     *
+     * `false`: Render children as received
+     *
      * @default true
      */
     active?: boolean;

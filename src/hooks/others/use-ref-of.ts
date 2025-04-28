@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
 /**
  * Returns a ref that always points to the latest value
  */
-export function useRefOf<T>(value: T) {
+export function useRefOf<T>(value: T): RefObject<T> {
     const ref = useRef<T>(value);
     useEffect(() => {
         ref.current = value;

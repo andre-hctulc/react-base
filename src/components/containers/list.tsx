@@ -89,7 +89,7 @@ export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
     as?: "ol" | "ul";
 }
 
-export const List: FC<ListProps> = ({
+export const List = <D = any,>({
     className,
     items,
     onItemClick,
@@ -108,7 +108,7 @@ export const List: FC<ListProps> = ({
     padding,
     ref,
     ...props
-}) => {
+}: ListProps<D>) => {
     const Comp: any = as || "ul";
     const globalItemProps = { LinkComponent, size, ...listItemProps };
 

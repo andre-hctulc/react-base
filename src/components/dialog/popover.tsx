@@ -7,7 +7,7 @@ import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
 import { Overlay } from "../layout/overlay.js";
 import type { Falsy } from "@edgeshiftlabs/util";
-import { Fragment, useCallback, useMemo, useState } from "react";
+import { Fragment, useCallback, useMemo, useState, type MouseEvent } from "react";
 
 const popover = tv({
     base: "absolute",
@@ -73,7 +73,7 @@ export interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
      * @default 4
      */
     frameMargin?: number;
-    onClose?: () => void;
+    onClose?: (e: MouseEvent) => void;
     bg?: boolean;
     zIndex?: "none" | "10" | "20" | "30" | "40" | "50";
     noInteraction?: boolean;
@@ -148,7 +148,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
             bg={props.bg ? "transparent1" : "transparent"}
             onClick={(e) => {
                 e.stopPropagation();
-                props.onClose?.();
+                props.onClose?.(e);
             }}
             portal={props.portal ?? true}
             zIndex={props.zIndex}

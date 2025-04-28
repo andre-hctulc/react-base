@@ -30,6 +30,8 @@ const placeholder = tv({
         },
         my: {
             none: "",
+            "2xs": "my-1",
+            xs: "my-2",
             sm: "my-4",
             md: "my-8",
             lg: "my-12",
