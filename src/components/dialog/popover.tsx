@@ -1,7 +1,7 @@
 "use client";
 
 import { tv, type VariantProps } from "tailwind-variants";
-import type { StyleProps } from "../../types/index.js";
+import type { PartialPropsOf, StyleProps } from "../../types/index.js";
 import { usePopper, type Modifier } from "react-popper";
 import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
@@ -83,6 +83,7 @@ export interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
      */
     portal?: boolean;
     strategy?: "absolute" | "fixed";
+    overlayProps?: PartialPropsOf<typeof Overlay>;
 }
 
 const getOffset = (position: Placement, gap: number) => {
@@ -144,14 +145,16 @@ export const Popover: React.FC<PopoverProps> = (props) => {
 
     return (
         <Overlay
-            noInteraction={props.noInteraction || !props.open}
+            {...props.overlayProps}
+            noInteraction={props.overlayProps?.noInteraction || props.noInteraction || !props.open}
             bg={props.bg ? "transparent1" : "transparent"}
             onClick={(e) => {
+                props.overlayProps?.onClick?.(e);
                 e.stopPropagation();
                 props.onClose?.(e);
             }}
-            portal={props.portal ?? true}
-            zIndex={props.zIndex}
+            portal={props.portal ?? props.overlayProps?.portal ?? true}
+            zIndex={props.zIndex ?? props.overlayProps?.zIndex}
         >
             <Transition
                 as={Fragment}
