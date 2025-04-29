@@ -45,14 +45,6 @@ const title = tv({
             lg: "mb-7",
             xl: "mb-12",
         },
-        lineHeight: {
-            none: "",
-            tight: "leading-tight",
-            snug: "leading-snug",
-            normal: "leading-normal",
-            relaxed: "leading-relaxed",
-            loose: "leading-loose",
-        },
     },
     defaultVariants: {
         variant: "h1",
@@ -80,7 +72,6 @@ export const Title: FC<TitleProps> = ({
     my,
     mb,
     mt,
-    lineHeight,
     bold,
     icon,
     iconProps,
@@ -91,7 +82,7 @@ export const Title: FC<TitleProps> = ({
 
     return (
         <Comp
-            className={title({ className, variant, underline, my, mb, mt, lineHeight, bold })}
+            className={title({ className, variant, underline, my, mb, mt, bold })}
             ref={ref as any}
             {...props}
         >

@@ -41,7 +41,7 @@ const section = tv({
         },
         variant: {
             default: "",
-            outlined: "bg border rounded",
+            outlined: "bg border rounded-lg",
         },
         danger: {
             true: "border-error bg-error/10",

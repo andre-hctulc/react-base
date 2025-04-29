@@ -5,7 +5,7 @@ import { Icon } from "../icons/icon.js";
 import clsx from "clsx";
 
 const subtitle = tv({
-    base: "text-lg font-medium text-t2",
+    base: "text-lg text-t2",
     variants: {
         variant: {
             h2: "text-xl",
@@ -40,17 +40,14 @@ const subtitle = tv({
             lg: "mb-7",
             xl: "mb-12",
         },
-        lineHeight: {
-            none: "",
-            tight: "leading-tight",
-            snug: "leading-snug",
-            normal: "leading-normal",
-            relaxed: "leading-relaxed",
-            loose: "leading-loose",
+        bold: {
+            true: "font-semibold",
+            false: "font-medium",
         },
     },
     defaultVariants: {
         variant: "h2",
+        bold: false,
     },
 });
 
@@ -74,17 +71,17 @@ export const Subtitle: FC<SubtitleProps> = ({
     my,
     mt,
     mb,
-    lineHeight,
     icon,
     iconProps,
     ref,
+    bold,
     ...props
 }) => {
     const Comp = as || variant || "h2";
 
     return (
         <Comp
-            className={subtitle({ className, underline, variant, my, mb, mt, lineHeight })}
+            className={subtitle({ className, underline, variant, my, mb, mt, bold })}
             ref={ref as any}
             {...props}
         >
