@@ -68,7 +68,9 @@ const section = tv({
             row: "flex",
         },
     },
-    defaultVariants: {},
+    defaultVariants: {
+        variant: "default",
+    },
 });
 
 interface SectionProps extends TVCProps<typeof section, "section"> {
@@ -101,6 +103,7 @@ interface SectionProps extends TVCProps<typeof section, "section"> {
      */
     closeable?: boolean;
     openButtonProps?: PropsOf<typeof IconButton>;
+    noBorder?: boolean;
 }
 
 /**
@@ -142,6 +145,7 @@ export const Section: FC<SectionProps> = ({
     wrapperClassName,
     danger,
     padding,
+    noBorder,
     ...props
 }) => {
     const [isOpen, setOpen] = useState(defaultOpen ?? true);
@@ -185,7 +189,7 @@ export const Section: FC<SectionProps> = ({
             {...props}
         >
             <SectionStart
-                variant={outlined ? "default" : "divider"}
+                variant={outlined ? "default" : closeable ? (noBorder ? "default" : "divider") : "default"}
                 {...sectionStartProps}
                 onClick={(e) => {
                     // default true
