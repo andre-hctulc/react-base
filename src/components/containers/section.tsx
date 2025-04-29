@@ -35,9 +35,9 @@ const section = tv({
         },
         padding: {
             none: "",
-            sm: "p-3",
-            md: "p-5",
-            lg: "p-8",
+            sm: "p-2",
+            md: "p-4",
+            lg: "p-6",
         },
         variant: {
             default: "",
@@ -216,12 +216,13 @@ export const Section: FC<SectionProps> = ({
                         )}
                     </Toolbar>
                 }
+                subtitleProps={{
+                    ...sectionStartProps?.subtitleProps,
+                    className: clsx(danger && "!text-error", sectionStartProps?.subtitleProps?.className),
+                }}
             />
             <CollapseVScreen show={isOpen}>
-                <div
-                    {...wrapperProps}
-                    className={clsx(outlined ? "" : "pt-6", wrapperProps?.className, wrapperClassName)}
-                >
+                <div {...wrapperProps} className={clsx("pt-6", wrapperProps?.className, wrapperClassName)}>
                     {loading === true ? (
                         <Placeholder my="lg">
                             <Spinner size="2xl" />
