@@ -6,7 +6,7 @@ import { PencilIcon } from "../icons/pencil.js";
 import clsx from "clsx";
 
 const sectionFooter = tv({
-    base: "mt-auto p-2 pt-4",
+    base: "mt-auto pt-5",
     variants: {
         variant: {
             actions: "flex justify-end",

@@ -8,13 +8,13 @@ _globals.css_
 
 ```css
 @import "tailwindcss";
-@import "@edgeshiftlabs/react-base";
+@import "@dre44/react-base";
 ```
 
 _LoginButton.tsx_
 
 ```tsx
-import { Button } from "@edgeshiftlabs/react-base";
+import { Button } from "@dre44/react-base";
 
 interface LoginButtonProps {
     className?: string;
