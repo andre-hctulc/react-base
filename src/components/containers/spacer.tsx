@@ -1,4 +1,4 @@
-import { tv } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
 
 const spacer = tv({
@@ -26,11 +26,16 @@ const spacer = tv({
     },
     defaultVariants: {
         spacing: "md",
+        variant: "col",
     },
 });
 
 interface SpacerProps extends TVCProps<typeof spacer, "div"> {
     as?: any;
+    /**
+     * NOT IMPLEMENTED
+     */
+    dynSpacing?: () => VariantProps<typeof spacer>["spacing"];
 }
 
 /**
@@ -41,8 +46,9 @@ interface SpacerProps extends TVCProps<typeof spacer, "div"> {
  * - `spacing`
  * - `variant`
  * - `as`
+ * - `dynSpacing`
  */
-export const Spacer = ({ className, spacing, variant, wrap, as, ...props }: SpacerProps) => {
+export const Spacer = ({ className, spacing, variant, wrap, as, dynSpacing, ...props }: SpacerProps) => {
     const Comp = as || "div";
     return <Comp className={spacer({ className, spacing, variant, wrap })} {...props} />;
 };

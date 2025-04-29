@@ -11,3 +11,4 @@ export * from "./section.js";
 export * from "./section-footer.js";
 export * from "./list-item.js";
 export * from "./section-start.js";
+export * from "./spacer.js";
