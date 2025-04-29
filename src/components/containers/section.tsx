@@ -35,16 +35,16 @@ const section = tv({
         },
         padding: {
             none: "",
-            sm: "p-2",
-            md: "p-4",
-            lg: "p-6",
+            sm: "px-2.5 p-2",
+            md: "px-5 p-4",
+            lg: "px-7 p-6",
         },
         variant: {
             default: "",
             outlined: "bg border rounded",
         },
         danger: {
-            true: "border-error bg-error/10 text-error",
+            true: "border-error bg-error/10",
         },
         first: {
             true: "mt-0!",
@@ -216,6 +216,10 @@ export const Section: FC<SectionProps> = ({
                         )}
                     </Toolbar>
                 }
+                iconProps={{
+                    color: danger ? "error" : undefined,
+                    ...sectionStartProps?.iconProps,
+                }}
                 subtitleProps={{
                     ...sectionStartProps?.subtitleProps,
                     className: clsx(danger && "!text-error", sectionStartProps?.subtitleProps?.className),

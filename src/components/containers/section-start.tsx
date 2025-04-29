@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { PartialPropsOf, PropsOf, TVCProps } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { Subtitle } from "../text/subtitle.js";
 
@@ -41,9 +41,10 @@ const sectionStart = tv({
 
 interface SectionStartProps extends TVCProps<typeof sectionStart, "div"> {
     icon?: React.ReactNode;
-    iconProps?: PropsOf<typeof Icon>;
+    iconProps?: PartialPropsOf<typeof Icon>;
     subtitleProps?: PropsOf<typeof Subtitle>;
     end?: ReactNode;
+    subtitleVariant?: PropsOf<typeof Subtitle>["variant"];
 }
 
 /**
@@ -66,6 +67,7 @@ export const SectionStart: React.FC<SectionStartProps> = ({
     subtitleProps,
     variant,
     end,
+    subtitleVariant,
     ...props
 }) => {
     const defaultVariant = variant === "default" || !variant;
@@ -79,7 +81,10 @@ export const SectionStart: React.FC<SectionStartProps> = ({
                             {icon}
                         </Icon>
                     )}
-                    <Subtitle variant={defaultVariant ? "h2" : "h3"} {...subtitleProps}>
+                    <Subtitle
+                        {...subtitleProps}
+                        variant={subtitleVariant ?? subtitleProps?.variant ?? (defaultVariant ? "h2" : "h3")}
+                    >
                         {title}
                     </Subtitle>
                     {end && <div className="min-w-0 ml-auto">{end}</div>}
