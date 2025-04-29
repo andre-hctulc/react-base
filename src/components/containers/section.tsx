@@ -33,9 +33,15 @@ const section = tv({
             md: "mb-8",
             lg: "mb-12",
         },
+        padding: {
+            none: "",
+            sm: "p-3",
+            md: "p-5",
+            lg: "p-8",
+        },
         variant: {
             default: "",
-            outlined: "border rounded",
+            outlined: "bg border rounded",
         },
         danger: {
             true: "border-error bg-error/10 text-error",
@@ -134,12 +140,14 @@ export const Section: FC<SectionProps> = ({
     closeable,
     openButtonProps,
     wrapperClassName,
+    danger,
+    padding,
     ...props
 }) => {
     const [isOpen, setOpen] = useState(defaultOpen ?? true);
     const Comp: any = as || "section";
     const _openOnStartClick = openOnStartClick !== false;
-    const canClose = closeable !== false;
+    const outlined = variant === "outlined";
 
     useEffect(() => {
         if (open !== undefined) {
@@ -148,7 +156,7 @@ export const Section: FC<SectionProps> = ({
     }, [open]);
 
     function handleOpenChange() {
-        if (!canClose) {
+        if (!closeable) {
             return;
         }
 
@@ -160,9 +168,24 @@ export const Section: FC<SectionProps> = ({
     }
 
     return (
-        <Comp ref={ref} className={section({ className, mt, my, mb, variant, first, bg, flex })} {...props}>
+        <Comp
+            ref={ref}
+            className={section({
+                className,
+                mt,
+                my,
+                mb,
+                variant,
+                first,
+                bg,
+                flex,
+                danger,
+                padding: padding ?? (outlined ? "md" : "none"),
+            })}
+            {...props}
+        >
             <SectionStart
-                variant={variant === "outlined" ? "default" : "divider"}
+                variant={outlined ? "default" : "divider"}
                 {...sectionStartProps}
                 onClick={(e) => {
                     // default true
@@ -175,12 +198,12 @@ export const Section: FC<SectionProps> = ({
                 icon={icon ?? sectionStartProps?.icon}
                 className={clsx(
                     sectionStartProps?.className,
-                    canClose && _openOnStartClick && "cursor-pointer"
+                    closeable && _openOnStartClick && "cursor-pointer"
                 )}
                 end={
                     <Toolbar stopEventPropagation {...toolbarProps}>
                         {sectionStartProps?.end}
-                        {canClose && (
+                        {closeable && (
                             <IconButton
                                 {...openButtonProps}
                                 onClick={(e) => {
@@ -195,7 +218,10 @@ export const Section: FC<SectionProps> = ({
                 }
             />
             <CollapseVScreen show={isOpen}>
-                <div {...wrapperProps} className={clsx("pt-7", wrapperProps?.className, wrapperClassName)}>
+                <div
+                    {...wrapperProps}
+                    className={clsx(outlined ? "" : "pt-6", wrapperProps?.className, wrapperClassName)}
+                >
                     {loading === true ? (
                         <Placeholder my="lg">
                             <Spinner size="2xl" />
