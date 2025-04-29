@@ -5,35 +5,45 @@ import { Icon } from "../icons/icon.js";
 import { Subtitle } from "../text/subtitle.js";
 
 const sectionStart = tv({
-    base: "flex flex-col",
+    base: "",
     variants: {
-        margin: {
+        my: {
             xs: "my-1",
             sm: "my-3",
             md: "my-5",
             lg: "my-8",
             none: "",
         },
-        border: {
-            true: "border-b pb-3",
-            false: "",
+        mt: {
+            xs: "mt-1",
+            sm: "mt-3",
+            md: "mt-5",
+            lg: "mt-8",
+            none: "",
         },
-        contrast: {
-            true: "bg-paper2 px-3 py-1.5 rounded-xs",
+        mb: {
+            xs: "mb-1",
+            sm: "mb-3",
+            md: "mb-5",
+            lg: "mb-8",
+            none: "",
+        },
+        variant: {
+            default: "",
+            divider: "border-b pb-3",
+            contrast: "bg-paper2 px-3 py-1.5 rounded-xs",
         },
     },
     defaultVariants: {
-        margin: "none",
-        border: true,
+        variant: "default",
     },
 });
 
 interface SectionStartProps extends TVCProps<typeof sectionStart, "div"> {
     icon?: React.ReactNode;
     iconProps?: PropsOf<typeof Icon>;
-    variant?: "default" | "secondary";
     subtitleProps?: PropsOf<typeof Subtitle>;
-    actions?: ReactNode;
+    end?: ReactNode;
 }
 
 /**
@@ -41,25 +51,27 @@ interface SectionStartProps extends TVCProps<typeof sectionStart, "div"> {
  * - `title` - Section title
  * - `mt` - Margin top
  * - `mb` - Margin bottom
+ * - `my` - Margin y
+ * - `variant`
  */
 export const SectionStart: React.FC<SectionStartProps> = ({
     children,
     className,
-    margin,
+    mt,
+    mb,
+    my,
     title,
     icon,
     iconProps,
-    variant,
-    contrast,
     subtitleProps,
-    border,
-    actions,
+    variant,
+    end,
     ...props
 }) => {
     const defaultVariant = variant === "default" || !variant;
 
     return (
-        <div className={sectionStart({ className, margin, contrast, border })} {...props}>
+        <div className={sectionStart({ className, my, mt, mb, variant })} {...props}>
             {(title || icon) && (
                 <div className="flex items-center gap-3">
                     {icon && (
@@ -70,7 +82,7 @@ export const SectionStart: React.FC<SectionStartProps> = ({
                     <Subtitle variant={defaultVariant ? "h2" : "h3"} {...subtitleProps}>
                         {title}
                     </Subtitle>
-                    {actions && <div className="min-w-0 ml-auto">{actions}</div>}
+                    {end && <div className="min-w-0 ml-auto">{end}</div>}
                 </div>
             )}
             {children}

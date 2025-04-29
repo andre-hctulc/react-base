@@ -15,13 +15,31 @@ import { ChevronRightIcon } from "../icons/chevron-right.js";
 const section = tv({
     base: "",
     variants: {
-        margin: {
+        my: {
             none: "",
             sm: "my-4",
             md: "my-8",
             lg: "my-12",
         },
-        variant: {},
+        mt: {
+            none: "",
+            sm: "mt-4",
+            md: "mt-8",
+            lg: "mt-12",
+        },
+        mb: {
+            none: "",
+            sm: "mb-4",
+            md: "mb-8",
+            lg: "mb-12",
+        },
+        variant: {
+            default: "",
+            outlined: "border rounded",
+        },
+        danger: {
+            true: "border-error bg-error/10 text-error",
+        },
         first: {
             true: "mt-0!",
         },
@@ -44,10 +62,7 @@ const section = tv({
             row: "flex",
         },
     },
-    defaultVariants: {
-        margin: "none",
-        padding: "md",
-    },
+    defaultVariants: {},
 });
 
 interface SectionProps extends TVCProps<typeof section, "section"> {
@@ -91,12 +106,15 @@ interface SectionProps extends TVCProps<typeof section, "section"> {
  * - `openOnStartClick` - If true, clicking the section start will open the section
  * - `open` - Controlled open state
  * - `defaultOpen` - Default open state
- * - `loading` - Set to true, to show a loading spinner, or pass a loading component
+ * - `loading`
+ * - `closeable`
  */
 export const Section: FC<SectionProps> = ({
     children,
     className,
-    margin,
+    my,
+    mt,
+    mb,
     variant,
     loading,
     first,
@@ -142,13 +160,9 @@ export const Section: FC<SectionProps> = ({
     }
 
     return (
-        <Comp ref={ref} className={section({ className, margin, variant, first, bg, flex })} {...props}>
-            {loading && (
-                <Placeholder my="md">
-                    <Spinner size="2xl" />
-                </Placeholder>
-            )}
+        <Comp ref={ref} className={section({ className, mt, my, mb, variant, first, bg, flex })} {...props}>
             <SectionStart
+                variant={variant === "outlined" ? "default" : "divider"}
                 {...sectionStartProps}
                 onClick={(e) => {
                     // default true
@@ -163,9 +177,9 @@ export const Section: FC<SectionProps> = ({
                     sectionStartProps?.className,
                     canClose && _openOnStartClick && "cursor-pointer"
                 )}
-                actions={
+                end={
                     <Toolbar stopEventPropagation {...toolbarProps}>
-                        {sectionStartProps?.actions}
+                        {sectionStartProps?.end}
                         {canClose && (
                             <IconButton
                                 {...openButtonProps}
