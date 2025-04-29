@@ -8,5 +8,6 @@ export * from "./card-header.js";
 export * from "./list.js";
 export * from "./flex.js";
 export * from "./section.js";
+export * from "./section-footer.js";
 export * from "./list-item.js";
 export * from "./section-start.js";
