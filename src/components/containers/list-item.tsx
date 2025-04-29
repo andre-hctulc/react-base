@@ -155,7 +155,11 @@ export const ListItem: FC<ListItemProps> = ({
                         {icon}
                     </Icon>
                 ) : null}
-                {typeof children === "string" ? <span className="grow truncate">{children}</span> : children}
+                {typeof children === "string" ? (
+                    <span className="truncate">{children}</span>
+                ) : (
+                    <div className="grow">{children}</div>
+                )}
                 {end}
             </Inner>
         </Comp>
