@@ -10,8 +10,9 @@ const cardFooter = tv({
             default: "",
             actions: "flex justify-end",
         },
-        border: {
-            true: "border-t",
+        noBorder: {
+            false: "border-t",
+            true: "",
         },
         size: {
             none: "",
@@ -25,7 +26,7 @@ const cardFooter = tv({
     },
     defaultVariants: {
         size: "md",
-        border: true,
+        noBorder: false,
         variant: "default",
     },
 });
@@ -38,7 +39,7 @@ interface CardFooterProps extends VariantProps<typeof cardFooter>, StyleProps {
 export const CardFooter: FC<CardFooterProps> = ({
     children,
     className,
-    border,
+    noBorder,
     style,
     size,
     as,
@@ -47,7 +48,7 @@ export const CardFooter: FC<CardFooterProps> = ({
     const Comp = as || "div";
 
     return (
-        <Comp className={cardFooter({ className, border, size, variant })} style={style}>
+        <Comp className={cardFooter({ className, noBorder, size, variant })} style={style}>
             {children}
         </Comp>
     );
