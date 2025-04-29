@@ -7,9 +7,9 @@ import type { CSSProperties, FC, ReactNode } from "react";
 
 const cardHeader = tv({
     variants: {
-        noBorder: {
-            false: "border-b",
-            true: "",
+        border: {
+            true: "border-b",
+            false: "",
         },
         size: {
             none: "",
@@ -23,7 +23,7 @@ const cardHeader = tv({
     },
     defaultVariants: {
         size: "md",
-        noBorder: false,
+        border: false,
     },
 });
 
@@ -46,7 +46,7 @@ export const CardHeader: FC<CardHeaderProps> = ({
     className,
     title,
     size,
-    noBorder,
+    border,
     badges,
     actions,
     innerProps,
@@ -60,7 +60,7 @@ export const CardHeader: FC<CardHeaderProps> = ({
     const Comp = as || "div";
 
     return (
-        <Comp className={cardHeader({ className, size, noBorder })} style={props.style}>
+        <Comp className={cardHeader({ className, size, border })} style={props.style}>
             {renderInner && (
                 <div {...innerProps} className={clsx("flex items-center gap-3", innerProps?.className)}>
                     {icon && <Icon {...iconProps}>{icon}</Icon>}

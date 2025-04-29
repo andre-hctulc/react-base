@@ -22,6 +22,7 @@ const dialogBody = tv({
             true: "!py-0",
             footer: "!pb-0",
             header: "!pt-0",
+            false: "",
         },
     },
     defaultVariants: {
