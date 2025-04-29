@@ -158,7 +158,7 @@ export const ListItem: FC<ListItemProps> = ({
                 {typeof children === "string" ? (
                     <span className="truncate">{children}</span>
                 ) : (
-                    <div className="grow">{children}</div>
+                    <div className="grow min-w-0">{children}</div>
                 )}
                 {end}
             </Inner>
