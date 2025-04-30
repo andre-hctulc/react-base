@@ -193,7 +193,7 @@ export const Select = <V = string, D = any>({
                 <Card variant="custom" bg="1" shadow="sm">
                     {!options.length &&
                         (empty ?? (
-                            <Placeholder my="xs" {...placeholderProps}>
+                            <Placeholder my="2xs" {...placeholderProps}>
                                 {emptyText ?? "No options available"}
                             </Placeholder>
                         ))}

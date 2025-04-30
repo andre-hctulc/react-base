@@ -3,6 +3,7 @@ import type { LinkComponent, PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { type FC, type ReactNode, type Ref } from "react";
 import { Spinner } from "../data-display/spinner.js";
+import clsx from "clsx";
 
 const listItem = tv({
     base: "transition duration-75 min-w-0",
@@ -94,6 +95,7 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
     ref?: Ref<HTMLElement>;
     start?: ReactNode;
     end?: ReactNode;
+    wrapperProps?: PropsOf<"div" | "span">;
 }
 
 /**
@@ -122,6 +124,7 @@ export const ListItem: FC<ListItemProps> = ({
     start,
     hoverEffect,
     end,
+    wrapperProps,
     ...props
 }) => {
     const Link = LinkComponent || "a";
@@ -156,9 +159,13 @@ export const ListItem: FC<ListItemProps> = ({
                     </Icon>
                 ) : null}
                 {typeof children === "string" ? (
-                    <span className="truncate">{children}</span>
+                    <span {...(wrapperProps as any)} className={clsx("truncate", wrapperProps?.className)}>
+                        {children}
+                    </span>
                 ) : (
-                    <div className="grow min-w-0">{children}</div>
+                    <div {...(wrapperProps as any)} className={clsx("grow min-w-0", wrapperProps?.className)}>
+                        {children}
+                    </div>
                 )}
                 {end}
             </Inner>
