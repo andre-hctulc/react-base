@@ -182,6 +182,7 @@ export const Select = <V = string, D = any>({
             </button>
             <Popover
                 width="anchor"
+                portal={false}
                 anchor={root}
                 open={open}
                 onClose={() => setOpen(false)}
