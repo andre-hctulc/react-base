@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./types.js";
 import type { LabeledChoice, PartialPropsOf, StyleProps } from "../../types/index.js";
@@ -13,6 +13,7 @@ import { List, type ListItemDef } from "../containers/list.js";
 import { HiddenInput } from "./hidden-input.js";
 import { Card } from "../containers/card.js";
 import { useChoices } from "../../hooks/others/use-choices.js";
+import { Placeholder } from "../data-display/placeholder.js";
 
 const select = tv({
     base: [
@@ -55,7 +56,10 @@ export interface SelectProps<V = string, D = any>
      * @default "Loading..."
      */
     loadingText?: string;
+    emptyText?: string;
+    empty?: ReactNode;
     popoverProps?: PartialPropsOf<typeof Popover>;
+    placeholderProps?: PartialPropsOf<typeof Placeholder>;
 }
 
 export interface SelectOption<V = string, D = any> extends LabeledChoice<V, D> {
@@ -71,6 +75,8 @@ export interface SelectOption<V = string, D = any> extends LabeledChoice<V, D> {
  * - `renderSelected` - Custom render function for the selected options
  * - `loading` - Show a loading text
  * - `loadingText` - The text to display when loading
+ * - `empty`
+ * - `emptyText`
  */
 export const Select = <V = string, D = any>({
     options,
@@ -91,7 +97,10 @@ export const Select = <V = string, D = any>({
     icon,
     name,
     id,
+    emptyText,
+    empty,
     popoverProps,
+    placeholderProps,
 }: SelectProps<V, D>) => {
     const [root, setRoot] = useState<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
@@ -173,7 +182,6 @@ export const Select = <V = string, D = any>({
             </button>
             <Popover
                 width="anchor"
-                portal={false}
                 anchor={root}
                 open={open}
                 onClose={() => setOpen(false)}
@@ -182,21 +190,29 @@ export const Select = <V = string, D = any>({
                 {...popoverProps}
             >
                 <Card variant="custom" bg="1" shadow="sm">
-                    <List
-                        padding="sm"
-                        items={getListItems(options)}
-                        onItemClick={(listItem) => {
-                            const option: SelectOption<V, D> = listItem.data;
-                            if (!option || option.disabled) return;
+                    {!options.length &&
+                        (empty ?? (
+                            <Placeholder my="xs" {...placeholderProps}>
+                                {emptyText ?? "No options available"}
+                            </Placeholder>
+                        ))}
+                    {!!options.length && (
+                        <List
+                            padding="sm"
+                            items={getListItems(options)}
+                            onItemClick={(listItem) => {
+                                const option: SelectOption<V, D> = listItem.data;
+                                if (!option || option.disabled) return;
 
-                            if (multiple) {
-                                toggleChoice(option.value);
-                            } else {
-                                activateChoice(option.value);
-                                setOpen(false);
-                            }
-                        }}
-                    />
+                                if (multiple) {
+                                    toggleChoice(option.value);
+                                } else {
+                                    activateChoice(option.value);
+                                    setOpen(false);
+                                }
+                            }}
+                        />
+                    )}
                 </Card>
             </Popover>
         </div>
