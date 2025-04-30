@@ -47,6 +47,9 @@ const toolbar = tv({
         wrap: {
             true: "flex-wrap",
         },
+        noShrink: {
+            true: "shrink-0",
+        },
     },
     compoundVariants: [
         { direction: "col", scroll: true, className: "overflow-y-auto" },
@@ -82,6 +85,7 @@ export const Toolbar: FC<ToolbarProps> = ({
     stopEventPropagation,
     scroll,
     ref,
+    noShrink,
     ...props
 }) => {
     const Comp: any = props.as || "div";
@@ -98,6 +102,7 @@ export const Toolbar: FC<ToolbarProps> = ({
                 justify,
                 wrap,
                 scroll,
+                noShrink,
             })}
             ref={ref as any}
             onClick={

@@ -1,9 +1,9 @@
 import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system.js";
 import React, { type FC } from "react";
 import type { TVCProps } from "../../types/index.js";
 import { collapse } from "@dre44/util";
 import { themeColor } from "../../util/style.js";
+import { Icon } from "../icons/icon.js";
 
 // removed: align-middle
 
@@ -125,6 +125,7 @@ export const Chip: FC<ChipProps> = ({
     });
     const _clickable = clickable ?? interactive ?? !!props.onClick;
     const _hoverEffect = hoverEffect ?? interactive ?? !!props.onClick;
+    const ico = icon && <Icon size={size === "lg" ? "md" : size === "sm" ? "xs" : "sm"}>{icon}</Icon>;
 
     return (
         <Comp
@@ -148,9 +149,9 @@ export const Chip: FC<ChipProps> = ({
             })}
             {...props}
         >
-            {icon && iconPosition === "left" && icon}
+            {iconPosition === "left" && ico}
             {children}
-            {icon && iconPosition !== "left" && icon}
+            {iconPosition !== "left" && ico}
         </Comp>
     );
 };
