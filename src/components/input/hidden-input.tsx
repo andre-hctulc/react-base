@@ -25,16 +25,31 @@ interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "val
 export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => {
     const formCtx = useJSForm();
     const inited = useRef(false);
-    const [val, isJson] = useMemo<[string, boolean]>(() => {
+    const [val, isJson] = useMemo<[string | number | string[], boolean]>(() => {
         if (value === undefined) {
             return ["", false];
         }
-        const isJson = typeof value !== "string";
+
+        // Not in a JSForm context: Parse to inp value
+        if (!formCtx) {
+            if (Array.isArray(value)) {
+                return [value.map((v) => String(v)), true];
+            } else if (typeof value === "string" || typeof value === "number") {
+                return [value, false];
+            } else {
+                return [String(value), false];
+            }
+        }
+
+        const isJson = typeof value !== "string" && typeof value !== "number";
+
+        // If in a JSForm context and json data: Use json stringification (rbjsoninp)
         if (isJson) {
             return [JSON.stringify(value), true];
         }
+
         return [value, false];
-    }, [value]);
+    }, [value, formCtx]);
     /**
      * Previous value.
      * Used to check if the value has changed and if we should trigger a change event

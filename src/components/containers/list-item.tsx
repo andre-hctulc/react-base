@@ -22,6 +22,7 @@ const listItem = tv({
             danger: "text-error",
             default: "",
             secondary: "text-t2",
+            warning: "text-warning",
         },
         hoverEffect: {
             true: "",
@@ -36,6 +37,11 @@ const listItem = tv({
             variant: "danger",
             hoverEffect: true,
             class: "hover:bg-error/5 data-[active=true]:bg-error/10",
+        },
+        {
+            variant: "warning",
+            hoverEffect: true,
+            class: "hover:bg-warning/5 data-[active=true]:bg-warning/10",
         },
         {
             variant: "default",
