@@ -24,7 +24,7 @@ const dialogPanel = tv({
     ],
     variants: {
         width: {
-            sm: "w-[300px]",
+            sm: "w-[400px]",
             md: "w-[500px]",
             lg: "w-[700px]",
             none: "",
