@@ -35,29 +35,51 @@ export function nodeIsEmpty(children: ReactNode) {
     return Children.count(children) !== 0;
 }
 
+export function deepFlatChildren(children: ReactNode): ReactNode[] {
+    const arr = Children.toArray(children);
+    const flatChildren: ReactNode[] = [];
+    for (const child of arr) {
+        if (Array.isArray(child)) {
+            flatChildren.push(...deepFlatChildren(child));
+        } else {
+            flatChildren.push(child);
+        }
+    }
+    return flatChildren;
+}
+
+interface PopulatePropsOptions {
+    mergeStrategy?: "left" | "right" | "merge" | { merge: MergePropsOptions };
+    populateIf?: (element: ReactElement) => boolean;
+    /**
+     * @default true
+     */
+    deepFlatChildren?: boolean;
+}
+
 /**
  * @param mergeStrategy "left": element props take precedence over `props`, "right": `props` overwrite element props (default)
  */
 export function populateProps<P extends object>(
     children: ReactNode,
     props: P | ((element: ReactElement) => P),
-    mergeStrategy: "left" | "right" | "merge" | { merge: MergePropsOptions } = "right",
-    populateIf?: (element: ReactElement) => boolean
+    options: PopulatePropsOptions = {}
 ): ReactNode[] {
-    const arr = Children.toArray(children);
+    const arr = options.deepFlatChildren === false ? Children.toArray(children) : deepFlatChildren(children);
+
     return arr.map((child) => {
         if (!isValidElement(child)) return child;
 
-        if (!populateIf || populateIf(child)) {
+        if (!options.populateIf || options.populateIf(child)) {
             const addProps = typeof props === "function" ? props(child) : props;
             let newProps: any;
 
-            if (mergeStrategy === "merge") {
+            if (options.mergeStrategy === "merge") {
                 newProps = mergeProps([child.props as any, addProps]);
-            } else if (mergeStrategy === "left") {
+            } else if (options.mergeStrategy === "left") {
                 newProps = { ...addProps, ...(child.props as any) };
-            } else if (typeof mergeStrategy === "object") {
-                newProps = mergeProps([child.props as any, addProps], mergeStrategy.merge);
+            } else if (typeof options.mergeStrategy === "object") {
+                newProps = mergeProps([child.props as any, addProps], options.mergeStrategy.merge);
             } else {
                 newProps = addProps;
             }
