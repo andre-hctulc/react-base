@@ -82,15 +82,17 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
                     if (disabled) return;
 
-                    entered.current = true;
+                    const hasEntered = entered.current;
+
                     if (openTimeout.current) clearTimeout(openTimeout.current);
 
                     openTimeout.current = setTimeout(
                         () => {
                             setOpen(true);
                         },
-                        entered.current ? reEnterDelay ?? enterDelay ?? 200 : enterDelay ?? 200
+                        hasEntered ? reEnterDelay ?? enterDelay ?? 200 : enterDelay ?? 200
                     );
+                    entered.current = true;
                 },
                 onMouseLeave: (e: any) => {
                     children.props?.onMouseLeave?.(e);
