@@ -3,11 +3,12 @@
 import { tv } from "tailwind-variants";
 import type { PropsOf, TVCProps } from "../../types/index.js";
 import { Dialog } from "../dialog/dialog.js";
-import { DialogHeader } from "../dialog/dialog-header.js";
-import { DialogBody } from "../dialog/dialog-body.js";
-import { DialogFooter } from "../dialog/dialog-footer.js";
 import { CancelConfirm, type CancelButton, type ConfirmButton } from "./dialog-actions.js";
 import { useCallback, useRef, useState, type ReactNode } from "react";
+import { CardHeader } from "../containers/card-header.js";
+import { CardBody } from "../containers/card-body.js";
+import { CardFooter } from "../containers/card-footer.js";
+import { Toolbar } from "../containers/toolbar.js";
 
 interface ConfirmOptions {
     /**
@@ -117,20 +118,22 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             }}
             {...props}
         >
-            {heading && <DialogHeader title={heading} />}
-            <DialogBody>{children}</DialogBody>
-            <DialogFooter variant="actions">
-                <CancelConfirm
-                    showCancel={showCancel}
-                    cancelText={cancelButtonText}
-                    confirmText={confirmButtonText}
-                    danger={danger}
-                    onCancel={onCancel}
-                    onConfirm={onConfirm}
-                    cancelButtonProps={cancelButtonProps}
-                    confirmButtonProps={confirmButtonProps}
-                />
-            </DialogFooter>
+            {heading && <CardHeader title={heading} />}
+            <CardBody>{children}</CardBody>
+            <CardFooter variant="actions">
+                <Toolbar>
+                    <CancelConfirm
+                        showCancel={showCancel}
+                        cancelText={cancelButtonText}
+                        confirmText={confirmButtonText}
+                        danger={danger}
+                        onCancel={onCancel}
+                        onConfirm={onConfirm}
+                        cancelButtonProps={cancelButtonProps}
+                        confirmButtonProps={confirmButtonProps}
+                    />
+                </Toolbar>
+            </CardFooter>
         </Dialog>
     );
 };

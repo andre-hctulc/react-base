@@ -32,8 +32,22 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
     className?: string;
     title?: ReactNode;
     titleProps?: PartialPropsOf<typeof Title>;
+    /**
+     * Rendered before the title and after the icon
+     */
     badges?: ReactNode;
-    actions?: ReactNode;
+    /**
+     * Rendered before the title
+     */
+    start?: ReactNode;
+    /**
+     * Rendered after the title
+     */
+    end?: ReactNode;
+    /**
+     * Rendered at the top of the card header
+     */
+    pre?: ReactNode;
     style?: CSSProperties;
     innerProps?: PropsOf<"div">;
     icon?: ReactNode;
@@ -41,6 +55,16 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
     as?: any;
 }
 
+/**
+ * ### Props
+ * - `title`: Title of the card
+ * - `size`: Padding size
+ * - `border`: Whether to show a border
+ * - `badges`: Content rendered before the title and after the icon
+ * - `start`: Rendered before the title
+ * - `end`: Rendered after the title
+ * - `pre`: Rendered at the top of the card header
+ */
 export const CardHeader: FC<CardHeaderProps> = ({
     children,
     className,
@@ -48,27 +72,31 @@ export const CardHeader: FC<CardHeaderProps> = ({
     size,
     border,
     badges,
-    actions,
+    end,
     innerProps,
     iconProps,
     icon,
+    start,
     titleProps,
     as,
+    pre,
     ...props
 }) => {
-    const renderInner = !!title || !!actions || !!badges || !!icon;
+    const renderInner = !!title || !!end || !!badges || !!icon;
     const Comp = as || "div";
 
     return (
         <Comp className={cardHeader({ className, size, border })} style={props.style}>
+            {pre}
             {renderInner && (
                 <div {...innerProps} className={clsx("flex items-center gap-3", innerProps?.className)}>
+                    {start}
                     {icon && <Icon {...iconProps}>{icon}</Icon>}
                     {badges}
                     <Title variant="h4" {...titleProps}>
                         {title}
                     </Title>
-                    {actions && <div className="ml-auto min-w-0">{actions}</div>}
+                    {end && <div className="ml-auto min-w-0">{end}</div>}
                 </div>
             )}
             {children}

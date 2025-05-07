@@ -17,6 +17,7 @@ const icon = tv({
             "4xl": "text-4xl",
             "5xl": "text-5xl",
             none: "",
+            inherit: "",
         },
         color: {
             primary: "text-primary",

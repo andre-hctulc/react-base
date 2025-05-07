@@ -18,9 +18,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    render: args => (
+    render: (args) => (
         <Dialog open={args.open}>
-            <DialogHeader title="Dialog Title" actions={<span>actions</span>} />
+            <DialogHeader title="Dialog Title" end={<span>actions</span>} />
             <DialogBody>Dialog body</DialogBody>
             <DialogFooter>footer</DialogFooter>
         </Dialog>
