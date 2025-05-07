@@ -5,7 +5,7 @@ import { Icon } from "../icons/icon.js";
 import clsx from "clsx";
 
 const subtitle = tv({
-    base: "text-lg text-t2",
+    base: "text-t2",
     variants: {
         variant: {
             h2: "text-xl",
@@ -81,7 +81,15 @@ export const Subtitle: FC<SubtitleProps> = ({
 
     return (
         <Comp
-            className={subtitle({ className, underline, variant, my, mb, mt, bold })}
+            className={subtitle({
+                className: [icon && "flex items-center", className],
+                underline,
+                variant,
+                my,
+                mb,
+                mt,
+                bold,
+            })}
             ref={ref as any}
             {...props}
         >

@@ -82,12 +82,20 @@ export const Title: FC<TitleProps> = ({
 
     return (
         <Comp
-            className={title({ className, variant, underline, my, mb, mt, bold })}
+            className={title({
+                className: [icon && "flex items-center gap-2", className],
+                variant,
+                underline,
+                my,
+                mb,
+                mt,
+                bold,
+            })}
             ref={ref as any}
             {...props}
         >
             {icon && (
-                <Icon size="none" inline {...iconProps} className={clsx("mr-3", iconProps?.className)}>
+                <Icon size="none" inline {...iconProps}>
                     {icon}
                 </Icon>
             )}
