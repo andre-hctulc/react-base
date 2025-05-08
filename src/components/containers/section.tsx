@@ -42,6 +42,7 @@ const section = tv({
         variant: {
             default: "",
             outlined: "bg-paper border rounded-lg",
+            divider: "",
         },
         danger: {
             true: "border-error bg-error/10",
@@ -152,6 +153,13 @@ export const Section: FC<SectionProps> = ({
     const Comp: any = as || "section";
     const _openOnStartClick = openOnStartClick !== false;
     const outlined = variant === "outlined";
+    let sectionStartVariant: PropsOf<typeof SectionStart>["variant"];
+
+    if (variant === "divider") {
+        sectionStartVariant = noBorder ? "default" : "divider";
+    } else {
+        sectionStartVariant = closeable ? (noBorder ? "default" : "divider") : "default";
+    }
 
     useEffect(() => {
         if (open !== undefined) {
@@ -189,7 +197,7 @@ export const Section: FC<SectionProps> = ({
             {...props}
         >
             <SectionStart
-                variant={outlined ? "default" : closeable ? (noBorder ? "default" : "divider") : "default"}
+                variant={sectionStartVariant}
                 {...sectionStartProps}
                 onClick={(e) => {
                     // default true
