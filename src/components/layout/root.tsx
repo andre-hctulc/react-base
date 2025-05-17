@@ -1,4 +1,4 @@
-import React from "react";
+import type { CSSProperties, FC, ReactNode } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const root = tv({
@@ -46,14 +46,15 @@ const root = tv({
 });
 
 interface RootProps extends VariantProps<typeof root> {
-    children?: React.ReactNode;
+    children?: ReactNode;
+    style?: CSSProperties;
     className?: string;
 }
 
 /**
  * A flex container. Use it as contextual root container for your layout.
  */
-export const Root: React.FC<RootProps> = ({
+export const Root: FC<RootProps> = ({
     children,
     className,
     direction,
@@ -65,6 +66,7 @@ export const Root: React.FC<RootProps> = ({
     grow,
     minHeight0,
     relative,
+    style,
 }) => {
     return (
         <div
@@ -80,6 +82,7 @@ export const Root: React.FC<RootProps> = ({
                 minHeight0,
                 relative,
             })}
+            style={style}
         >
             {children}
         </div>
