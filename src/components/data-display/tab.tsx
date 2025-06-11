@@ -10,7 +10,7 @@ const tab = tv({
     ],
     variants: {
         disabled: {
-            true: "text-t3",
+            true: "text-t3 cursor-not-allowed",
         },
         active: {
             true: "text-primary",
@@ -18,7 +18,6 @@ const tab = tv({
         },
         clickable: {
             true: "cursor-pointer",
-            false: "cursor-not-allowed",
         },
         size: {
             sm: "text-sm py-1 px-2",

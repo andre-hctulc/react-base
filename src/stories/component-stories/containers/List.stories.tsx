@@ -16,7 +16,7 @@ const meta = {
         className: { table: { disable: true } },
         onItemClick: { table: { disable: true } },
         children: { table: { disable: true } },
-        activeKey: { table: { disable: true } },
+        activeItems: { table: { disable: true } },
         LinkComponent: { table: { disable: true } },
         loading: { table: { disable: true } },
         variant: { table: { disable: true } },
@@ -33,10 +33,13 @@ export default meta;
 // ---- STORIES ----
 type Story = StoryObj<typeof meta>;
 
-const items: ListItem[] = Array.from({ length: 10 }, (_, i) => ({ key: (i + 1).toString(), label: `Item${i + 1}` }));
+const items: ListItem[] = Array.from({ length: 10 }, (_, i) => ({
+    key: (i + 1).toString(),
+    label: `Item${i + 1}`,
+}));
 
 export const Default: Story = {
-    render: args => <List {...args} />,
+    render: (args) => <List {...args} />,
     args: { items },
 };
 // ---- STORIES ----

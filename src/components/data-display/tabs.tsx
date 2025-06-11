@@ -34,13 +34,11 @@ export interface TabItem<V = string, D = any> extends Choice<V, D> {
     href?: string;
     disabled?: boolean;
     visible?: boolean;
+    active?: boolean;
 }
 
 interface TabsProps<V = string, D = any> extends Omit<TVCProps<typeof tabs, "div">, "children"> {
-    /**
-     * The active tab value. Must be of type _string_ or _undefined_ when used with `variant="radio"`.
-     */
-    activeTab?: string | ((tab: TabItem<V, D>) => boolean);
+    activeTabs?: string | string[] | ((tab: TabItem<V, D>) => boolean);
     tabs: TabItem[];
     chipProps?: Partial<PropsOf<typeof Chip>>;
     tabProps?: Partial<PropsOf<typeof Tab>>;
@@ -55,7 +53,7 @@ interface TabsProps<V = string, D = any> extends Omit<TVCProps<typeof tabs, "div
 }
 
 export const Tabs: FC<TabsProps> = ({
-    activeTab,
+    activeTabs,
     variant,
     size,
     className,
@@ -70,9 +68,20 @@ export const Tabs: FC<TabsProps> = ({
     ...props
 }) => {
     const switchValue = useMemo(() => {
-        if (typeof activeTab === "string") return [activeTab];
+        if (typeof activeTabs === "string") return [activeTabs];
         return [];
-    }, [activeTab, tabItems]);
+    }, [activeTabs, tabItems]);
+
+    const isTabActive = (item: TabItem) => {
+        return (
+            item?.active ??
+            (typeof activeTabs === "function"
+                ? activeTabs(item)
+                : Array.isArray(activeTabs)
+                ? activeTabs.includes(item.value)
+                : item.value === activeTabs)
+        );
+    };
 
     if (variant === "switch") {
         return (
@@ -94,7 +103,7 @@ export const Tabs: FC<TabsProps> = ({
             {tabItems.map((t) => {
                 if (t.visible === false) return null;
 
-                const isActive = typeof activeTab === "function" ? activeTab(t) : activeTab === t.value;
+                const isActive = isTabActive(t);
                 const _disabled = disabled || t.disabled;
 
                 if (variant === "chips") {

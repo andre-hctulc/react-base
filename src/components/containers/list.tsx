@@ -76,7 +76,7 @@ export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
     items?: ListItemDef<D>[];
     onItemClick?: (item: ListItemDef<D>, e: MouseEvent) => void;
-    activeKey?: string | ((item: ListItemDef<D>) => boolean);
+    activeItems?: string | string[] | ((item: ListItemDef<D>) => boolean);
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     LinkComponent?: LinkComponent;
     loading?: boolean;
@@ -88,14 +88,13 @@ export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
      */
     as?: "ol" | "ul";
 }
-
 export const List = <D = any,>({
     className,
     items,
     onItemClick,
     children,
     variant,
-    activeKey,
+    activeItems,
     size,
     LinkComponent,
     rounded,
@@ -111,6 +110,17 @@ export const List = <D = any,>({
 }: ListProps<D>) => {
     const Comp: any = as || "ul";
     const globalItemProps = { LinkComponent, size, ...listItemProps };
+
+    const isItemActive = (item: ListItemDef<D>) => {
+        return (
+            item.props?.active ??
+            (typeof activeItems === "function"
+                ? activeItems(item)
+                : Array.isArray(activeItems)
+                ? activeItems.includes(item.key)
+                : item.key === activeItems)
+        );
+    };
 
     return (
         <Comp
@@ -130,9 +140,7 @@ export const List = <D = any,>({
                 populateIf: (el) => el.type === ListItem,
             })}
             {items?.map((item) => {
-                const active =
-                    item.props?.active ??
-                    (typeof activeKey === "function" ? activeKey(item) : item.key === activeKey);
+                const active = isItemActive(item);
 
                 if (variant === "icons") {
                     const _buttonProps = mergeProps<PropsOf<typeof IconButton>>([
