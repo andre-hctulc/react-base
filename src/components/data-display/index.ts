@@ -7,3 +7,5 @@ export * from "./skeleton.js";
 export * from "./tabs.js";
 export * from "./data-grid/index.js";
 export * from "./spinner.js";
+export * from "./divider.js";
+export * from "./tab.js";

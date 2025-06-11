@@ -75,7 +75,7 @@ export type ListItemDef<D = any> = {
 export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
     children?: React.ReactNode;
     items?: ListItemDef<D>[];
-    onItemClick?: (item: ListItemDef, e: MouseEvent) => void;
+    onItemClick?: (item: ListItemDef<D>, e: MouseEvent) => void;
     activeKey?: string | ((item: ListItemDef<D>) => boolean);
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     LinkComponent?: LinkComponent;

@@ -3,10 +3,10 @@
 import { tv } from "tailwind-variants";
 import type { Choice, PropsOf, TVCProps } from "../../types/index.js";
 import { Chip } from "./chip.js";
-import { Icon } from "../icons/icon.js";
 import clsx from "clsx";
 import { RadioSwitch } from "../input/radio-switch.js";
 import { useMemo, type FC, type ReactNode } from "react";
+import { Tab } from "./tab.js";
 
 export const tabs = tv({
     base: "flex flex-wrap",
@@ -14,7 +14,7 @@ export const tabs = tv({
         variant: {
             chips: "",
             default: "",
-            radio: "",
+            switch: "",
         },
         size: {
             sm: "gap-2",
@@ -74,7 +74,7 @@ export const Tabs: FC<TabsProps> = ({
         return [];
     }, [activeTab, tabItems]);
 
-    if (variant === "radio") {
+    if (variant === "switch") {
         return (
             <RadioSwitch
                 className={className}
@@ -155,83 +155,5 @@ export const Tabs: FC<TabsProps> = ({
                 );
             })}
         </div>
-    );
-};
-
-const tab = tv({
-    base: [
-        "transition flex gap-2 items-center rounded-sm bg-paper2",
-        "data-[disabled=false]:hover:text-primary/80",
-    ],
-    variants: {
-        disabled: {
-            true: "text-t3",
-        },
-        active: {
-            true: "text-primary",
-            false: "text-t2",
-        },
-        clickable: {
-            true: "cursor-pointer",
-            false: "cursor-not-allowed",
-        },
-        size: {
-            sm: "text-sm py-1 px-2",
-            md: "text-base py-1.5 px-3",
-            lg: "text-lg py-2 px-4",
-        },
-        bg: {
-            "1": "bg-paper1",
-            "2": "bg-paper2",
-            "3": "bg-paper3",
-            "4": "bg-paper4",
-        },
-        elevated: {
-            true: "shadow-xs",
-        },
-    },
-    defaultVariants: {
-        size: "md",
-    },
-});
-
-interface TabProps extends TVCProps<typeof tab, "button"> {
-    LinkComponent?: any;
-    href?: string;
-    icon?: ReactNode;
-    clickable?: boolean;
-}
-
-const Tab: FC<TabProps> = ({
-    children,
-    className,
-    size,
-    active,
-    LinkComponent,
-    href,
-    icon,
-    disabled,
-    onClick,
-    clickable,
-    bg,
-    elevated,
-    ...props
-}) => {
-    const Comp = href && !disabled ? LinkComponent || "a" : "button";
-    const p = { ...props, href };
-    const canClick = !disabled && (clickable ?? (!!onClick || !!href));
-
-    if (!href) delete p.href;
-
-    return (
-        <Comp
-            {...p}
-            data-disabled={!!disabled}
-            onClick={disabled ? undefined : onClick}
-            className={tab({ className, size, active, elevated, clickable: canClick, disabled, bg })}
-        >
-            {icon && <Icon>{icon}</Icon>}
-            {children}
-        </Comp>
     );
 };
