@@ -202,7 +202,7 @@ export const Select = <V = string, D = any>({
                             padding="sm"
                             items={getListItems(options)}
                             onItemClick={(listItem) => {
-                                const option: SelectOption<V, D> = listItem.data;
+                                const option: SelectOption<V, D> | undefined = listItem.data;
                                 if (!option || option.disabled) return;
 
                                 if (multiple) {
