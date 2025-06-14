@@ -38,6 +38,9 @@ export interface TabItem<V = string, D = any> extends Choice<V, D> {
 }
 
 interface TabsProps<V = string, D = any> extends Omit<TVCProps<typeof tabs, "div">, "children"> {
+    /**
+     * Must be a string if used with variant "switch".
+     */
     activeTabs?: string | string[] | ((tab: TabItem<V, D>) => boolean);
     tabs: TabItem[];
     chipProps?: Partial<PropsOf<typeof Chip>>;
