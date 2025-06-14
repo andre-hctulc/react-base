@@ -4,6 +4,7 @@ import { Icon } from "../icons/icon.js";
 import { type FC, type ReactNode, type Ref } from "react";
 import { Spinner } from "../data-display/spinner.js";
 import clsx from "clsx";
+import { themeColor } from "../../util/style.js";
 
 const listItem = tv({
     base: "transition duration-75 min-w-0",
@@ -20,9 +21,20 @@ const listItem = tv({
         },
         variant: {
             danger: "text-error",
+            warning: "text-warning",
             default: "",
             secondary: "text-t2",
-            warning: "text-warning",
+        },
+        color: {
+            neutral: "",
+            black: "",
+            primary: "",
+            secondary: "",
+            error: "",
+            success: "",
+            warning: "",
+            info: "",
+            accent: "",
         },
         hoverEffect: {
             true: "",
@@ -36,27 +48,28 @@ const listItem = tv({
         {
             variant: "danger",
             hoverEffect: true,
-            class: "hover:bg-error/5 data-[active=true]:bg-error/10",
+            class: "hover:bg-error/5",
         },
         {
             variant: "warning",
             hoverEffect: true,
-            class: "hover:bg-warning/5 data-[active=true]:bg-warning/10",
+            class: "hover:bg-warning/5",
         },
         {
             variant: "default",
             hoverEffect: true,
-            class: "hover:bg-transparent1 data-[active=true]:bg-transparent2",
+            class: "hover:bg-transparent1",
         },
         {
             variant: "secondary",
             hoverEffect: true,
-            class: "hover:bg-neutral/5 data-[active=true]:bg-neutral/10",
+            class: "hover:bg-neutral/5",
         },
     ],
     defaultVariants: {
         variant: "default",
         rounded: "md",
+        color: "neutral",
     },
 });
 
@@ -131,6 +144,7 @@ export const ListItem: FC<ListItemProps> = ({
     hoverEffect,
     end,
     wrapperProps,
+    color,
     ...props
 }) => {
     const Link = LinkComponent || "a";
@@ -141,15 +155,19 @@ export const ListItem: FC<ListItemProps> = ({
     const _disabled = loading || disabled;
     const interactive = _disabled ? false : props.clickable ?? (!!onClick || !!href);
     const iconSize = size === "xs" ? "sm" : size === "lg" || size === "xl" ? "xl" : "md";
+    const { bgA, text } = themeColor(
+        variant === "warning" ? "warning" : variant === "danger" ? "error" : color || "neutral"
+    );
+    const activeClasses = active && [bgA(15), text];
 
     return (
         <Comp
             ref={ref}
             data-active={active}
             className={listItem({
-                hoverEffect: interactive || !!hoverEffect,
+                hoverEffect: !active && (interactive || !!hoverEffect),
                 variant,
-                className,
+                className: clsx(activeClasses, className),
                 clickable: interactive,
                 disabled: _disabled,
             })}
