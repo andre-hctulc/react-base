@@ -1,6 +1,6 @@
 import { setProperty } from "dot-prop";
 import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./types.js";
-import type { ZodType } from "zod";
+import type { ZodType } from "zod/v4";
 
 type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 

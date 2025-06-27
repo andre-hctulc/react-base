@@ -31,30 +31,8 @@ export function setRef<T = any>(
 }
 
 export function nodeIsEmpty(children: ReactNode) {
-    if (!children) return true;
+    if (!children) return false;
     return Children.count(children) !== 0;
-}
-
-export function deepFlatChildren(children: ReactNode): ReactNode[] {
-    const arr = Children.toArray(children);
-    const flatChildren: ReactNode[] = [];
-    for (const child of arr) {
-        if (Array.isArray(child)) {
-            flatChildren.push(...deepFlatChildren(child));
-        } else {
-            flatChildren.push(child);
-        }
-    }
-    return flatChildren;
-}
-
-interface PopulatePropsOptions {
-    mergeStrategy?: "left" | "right" | "merge" | { merge: MergePropsOptions };
-    populateIf?: (element: ReactElement) => boolean;
-    /**
-     * @default true
-     */
-    deepFlatChildren?: boolean;
 }
 
 /**
@@ -63,30 +41,22 @@ interface PopulatePropsOptions {
 export function populateProps<P extends object>(
     children: ReactNode,
     props: P | ((element: ReactElement) => P),
-    options: PopulatePropsOptions = {}
+    mergeStrategy: "left" | "right" = "right",
+    populateIf?: (element: ReactElement) => boolean
 ): ReactNode[] {
-    const arr = options.deepFlatChildren === false ? Children.toArray(children) : deepFlatChildren(children);
-
+    const arr = Children.toArray(children);
     return arr.map((child) => {
         if (!isValidElement(child)) return child;
-
-        if (!options.populateIf || options.populateIf(child)) {
+        if (!populateIf || populateIf(child)) {
             const addProps = typeof props === "function" ? props(child) : props;
-            let newProps: any;
-
-            if (options.mergeStrategy === "merge") {
-                newProps = mergeProps([child.props as any, addProps]);
-            } else if (options.mergeStrategy === "left") {
-                newProps = { ...addProps, ...(child.props as any) };
-            } else if (typeof options.mergeStrategy === "object") {
-                newProps = mergeProps([child.props as any, addProps], options.mergeStrategy.merge);
-            } else {
-                newProps = addProps;
-            }
-
-            return cloneElement(child, newProps);
+            return cloneElement(
+                child,
+                mergeStrategy === "left"
+                    ? { ...addProps, ...(child.props as any) }
+                    : // default
+                      addProps
+            );
         }
-
         return child;
     });
 }
@@ -117,17 +87,10 @@ export function inputEventToValue(event: ChangeEvent<HTMLInputElement>, type: st
     return event.currentTarget.value;
 }
 
-interface MergePropsOptions {
-    mergeClasses?: boolean;
-    mergeStyles?: boolean;
-    mergeEvents?: boolean;
-    omitUndefined?: boolean;
-}
-
 /**
  * Latter props overwrite former ones
  *
- * By default events, styles, and classes are merged. Control this with {@link mergeOptions}
+ * By default events, styles and classes are merged. Control this with {@link mergeOptions}
  *
  * @param props List of props to merge
  * @param mergeOptions Merge options
@@ -135,41 +98,35 @@ interface MergePropsOptions {
 export function mergeProps<P extends object>(
     props: (Partial<P> | undefined | null | false)[],
     {
-        mergeClasses = true,
-        mergeStyles = true,
-        mergeEvents = true,
-        omitUndefined = true,
-    }: MergePropsOptions = {}
+        mergeClasses,
+        mergeStyles,
+        mergeEvents,
+    }: { mergeEvents?: boolean; mergeStyles?: boolean; mergeClasses?: boolean } = {}
 ): P {
     const mergedProps: any = {};
-
     for (const propsItem of props) {
         if (!propsItem) continue;
 
         for (const key in propsItem) {
-            const value: any = propsItem[key];
+            if (mergeClasses !== false && key === "className") {
+                mergedProps[key] = mergedProps[key]
+                    ? clsx(mergedProps[key], (propsItem as any)[key])
+                    : propsItem[key];
+            } else if (mergeStyles !== false && key === "style") {
+                mergedProps[key] = { ...mergedProps[key], ...propsItem[key] };
+            } else if (mergeEvents !== false && /^on[A-Z]+.*$/.test(key)) {
+                const preHandler = mergedProps[key];
 
-            if (omitUndefined && value === undefined) {
-                continue;
-            }
-
-            if (mergeClasses && key === "className") {
-                mergedProps[key] = mergedProps[key] ? clsx(mergedProps[key], value) : value;
-            } else if (mergeStyles && key === "style") {
-                mergedProps[key] = { ...mergedProps[key], ...value };
-            } else if (mergeEvents && /^on[A-Z]/.test(key)) {
-                const existingHandler = mergedProps[key];
-                mergedProps[key] = existingHandler
+                mergedProps[key] = mergedProps[key]
                     ? (...args: any[]) => {
-                          existingHandler(...args);
-                          value?.(...args);
+                          preHandler?.(...args);
+                          (propsItem as any)[key](...args);
                       }
-                    : value;
+                    : propsItem[key];
             } else {
-                mergedProps[key] = value;
+                mergedProps[key] = propsItem[key];
             }
         }
     }
-
     return mergedProps;
 }

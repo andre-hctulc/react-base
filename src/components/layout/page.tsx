@@ -5,6 +5,9 @@ import type { StyleProps } from "../../types/index.js";
 const page = tv({
     base: "box-border w-full min-h-0",
     variants: {
+        sticky: {
+            true: "sticky top-0 z-10",
+        },
         size: {
             "4xs": "max-w-xl mx-auto",
             "3xs": "max-w-2xl mx-auto",
@@ -71,6 +74,7 @@ export const Page: FC<PageProps> = ({
     flex,
     shrink,
     ref,
+    sticky,
 }) => {
     return (
         <div
@@ -84,6 +88,7 @@ export const Page: FC<PageProps> = ({
                 minHeight0,
                 fullHeight,
                 variant,
+                sticky,
             })}
             ref={ref}
             style={style}

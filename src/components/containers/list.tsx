@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type FC, type MouseEvent } from "react";
+import React, { type MouseEvent } from "react";
 import { tv } from "tailwind-variants";
 import type { LinkComponent, PartialPropsOf, PropsOf, TVCProps } from "../../types/index.js";
 import clsx from "clsx";

@@ -9,3 +9,5 @@ export * from "./data-grid/index.js";
 export * from "./spinner.js";
 export * from "./divider.js";
 export * from "./tab.js";
+export * from "./badge.js";
+export * from "./badgify.js";

@@ -33,7 +33,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => 
         // Not in a JSForm context: Parse to inp value
         if (!formCtx) {
             if (Array.isArray(value)) {
-                return [value.map((v) => String(v)), true];
+                return [value.map((v) => String(v)), false];
             } else if (typeof value === "string" || typeof value === "number") {
                 return [value, false];
             } else {

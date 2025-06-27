@@ -17,7 +17,7 @@ const listItem = tv({
             full: "rounded-full",
         },
         clickable: {
-            true: "cursor-pointer active:brightness-50",
+            true: "cursor-pointer active:brightness-75",
         },
         variant: {
             danger: "text-error",
@@ -115,15 +115,22 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
     start?: ReactNode;
     end?: ReactNode;
     wrapperProps?: PropsOf<"div" | "span">;
+    /**
+     * Show color background when active
+     * @default true
+     */
+    activeBg?: boolean;
 }
 
 /**
  * ### Props
  * - `icon`
  * - `onClick`
- * - `hoverEffect` - Enforce hover effect even if not clickable
- * - `start` - Prepend content
- * - `end` - Append content
+ * - `hoverEffect`
+ * - `start`
+ * - `end`
+ * - `activeBg`
+ * - `active`
  */
 export const ListItem: FC<ListItemProps> = ({
     children,
@@ -145,6 +152,7 @@ export const ListItem: FC<ListItemProps> = ({
     end,
     wrapperProps,
     color,
+    activeBg,
     ...props
 }) => {
     const Link = LinkComponent || "a";
@@ -158,7 +166,7 @@ export const ListItem: FC<ListItemProps> = ({
     const { bgA, text } = themeColor(
         variant === "warning" ? "warning" : variant === "danger" ? "error" : color || "neutral"
     );
-    const activeClasses = active && [bgA(15), text];
+    const activeClasses = active && [activeBg !== false && bgA(15), text];
 
     return (
         <Comp

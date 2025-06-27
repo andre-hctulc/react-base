@@ -29,7 +29,7 @@ const pageHeader = tv({
             lg: "mt-16",
             xl: "mt-20",
         },
-        sticky: { true: "sticky top-0" },
+        sticky: { true: "sticky top-0 z-10" },
         relative: {
             true: "relative",
         },
@@ -67,9 +67,10 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     padding,
     sticky,
     relative,
+    mt,
 }) => {
     return (
-        <div className={pageHeader({ className, mb, padding, sticky, relative })}>
+        <div className={pageHeader({ className, mb, mt, padding, sticky, relative })}>
             {pre}
             {(badges || actions || title) && (
                 <div className={clsx("flex gap-3 py-2", center && "justify-center")}>

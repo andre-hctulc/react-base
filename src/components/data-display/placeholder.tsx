@@ -96,7 +96,7 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
             )}
             {typeof children === "string" ? (
                 <Typography italic={italic} variant="secondary" {...textProps}>
-                    {children ?? "Empty"}
+                    {children}
                 </Typography>
             ) : (
                 children
