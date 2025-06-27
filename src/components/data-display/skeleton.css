@@ -1,3 +1,7 @@
 .RB_Skeleton[data-children-occupy-space] > * {
     visibility: hidden;
 }
+
+.RB_Skeleton:not([data-children-occupy-space]) > * {
+    display: none;
+}

@@ -11,7 +11,7 @@ import { HelperText } from "../input/helper-text.js";
 import { Skeleton } from "./skeleton.js";
 
 const stat = tv({
-    base: "w-fit",
+    base: "",
     variants: {
         size: {
             xs: "rounded p-1 text-base",
@@ -85,7 +85,7 @@ export const Stat: FC<StatProps> = ({
                         {icon}
                     </Icon>
                 )}
-                {loading ? <Skeleton>{val}</Skeleton> : val}
+                {loading ? <Skeleton as="span">{val}</Skeleton> : val}
             </p>
             {description && (
                 <HelperText
