@@ -1,4 +1,3 @@
-export * from "./csrf-input.js";
 export * from "./js-form/index.js";
 export * from "./input.js";
 export * from "./button.js";

@@ -1,29 +1,24 @@
 "use client";
 
-import React, { type FC, type Ref } from "react";
-import type { StyleProps } from "../../types/index.js";
-import clsx from "clsx";
+import React, { type FC } from "react";
+import type { PropsOf } from "../../types/index.js";
 
-interface DroppableProps extends StyleProps {
-    children?: React.ReactNode;
-    onDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
-    onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
-    onDragEnter?: (e: React.DragEvent<HTMLDivElement>) => void;
-    onDragLeave?: (e: React.DragEvent<HTMLDivElement>) => void;
+interface DroppableProps extends PropsOf<"div"> {
     disabled?: boolean;
-    ref?: Ref<HTMLDivElement>;
 }
 
+/**
+ * ### Props
+ * - `disabled`
+ */
 export const Droppable: FC<DroppableProps> = ({
-    className,
-    style,
-    children,
     disabled,
-    ref,
     onDragEnter,
     onDragLeave,
     onDragOver,
     onDrop,
+    children,
+    ...props
 }) => {
     function handleDrop(e: React.DragEvent<HTMLDivElement>) {
         if (disabled) return;
@@ -49,13 +44,11 @@ export const Droppable: FC<DroppableProps> = ({
 
     return (
         <div
-            ref={ref}
+            {...props}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDragEnter={handleDragEnter}
-            className={clsx(className)}
-            style={style}
         >
             {children}
         </div>

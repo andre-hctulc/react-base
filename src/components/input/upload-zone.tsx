@@ -95,31 +95,29 @@ export const UploadZone: FC<UploadZoneProps> = ({
                 }}
             />
             <Droppable
+                {...mainProps}
                 onDrop={(e) => {
                     if (!e.dataTransfer.files.length) return;
                     setFiles(Array.from(e.dataTransfer.files));
+                    mainProps?.onDrop?.(e);
+                }}
+                className={clsx(
+                    "grow min-h-0 overflow-y-auto",
+                    !props.disabled && "cursor-pointer",
+                    "border-[1.5px] rounded-lg border-dashed transition hover:bg-primary/5 hover:border-info",
+                    mainProps?.className
+                )}
+                onClick={(e) => {
+                    input.current?.click();
+                    mainProps?.onClick?.(e);
                 }}
             >
-                <div
-                    {...mainProps}
-                    className={clsx(
-                        "grow min-h-0 overflow-y-auto",
-                        !props.disabled && "cursor-pointer",
-                        "border-[1.5px] rounded-lg border-dashed transition hover:bg-primary/5 hover:border-info",
-                        mainProps?.className
+                <div className="flex flex-col items-center justify-center gap-3 p-5">
+                    {icon && <span className="text-[100px] text-primary">{icon}</span>}
+                    <p>{text || "Upload"}</p>
+                    {secondaryText !== "" && (
+                        <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
                     )}
-                    onClick={(e) => {
-                        input.current?.click();
-                        mainProps?.onClick?.(e);
-                    }}
-                >
-                    <div className="flex flex-col items-center justify-center gap-3 p-5">
-                        {icon && <span className="text-[100px] text-primary">{icon}</span>}
-                        <p>{text || "Upload"}</p>
-                        {secondaryText !== "" && (
-                            <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
-                        )}
-                    </div>
                 </div>
             </Droppable>
             {props.renderFiles === "menu" && (
