@@ -85,7 +85,13 @@ export const Stat: FC<StatProps> = ({
                         {icon}
                     </Icon>
                 )}
-                {loading ? <Skeleton as="span">{<span>{val}</span>}</Skeleton> : val}
+                {loading ? (
+                    <Skeleton as="span" occupy>
+                        {<span>{val}</span>}
+                    </Skeleton>
+                ) : (
+                    val
+                )}
             </p>
             {description && (
                 <HelperText

@@ -38,7 +38,7 @@ export interface SkeletonProps extends VariantProps<typeof skeleton> {
     /**
      * The content is always rendered, but hidden.
      * Does not work for text nodes.
-     * @default false
+     * @default true
      */
     occupy?: boolean;
     height?: number;
@@ -101,7 +101,7 @@ export const Skeleton: FC<SkeletonProps> = ({
                 ...style,
             }}
         >
-            {occupy && children}
+            {occupy !== false && children}
         </Comp>
     );
 };
