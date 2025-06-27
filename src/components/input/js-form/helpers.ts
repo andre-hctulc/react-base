@@ -163,13 +163,13 @@ export function zodValidate<T extends object>(schema: ZodType<T>) {
         const result = schema.safeParse(values);
 
         if (!result.success) {
-            result.error.errors.forEach((error) => {
+            result.error.issues.forEach((error) => {
                 // Parse field path to `dot-prop` format
-                const field = error.path.reduce((acc, curr) => {
+                const field: string = error.path.reduce<string>((acc, curr) => {
                     if (typeof acc === "string") {
-                        return `${acc}.${curr}`;
+                        return `${acc}.${String(curr)}`;
                     } else {
-                        return `${acc}[${curr}]`;
+                        return `${String(acc)}[${String(curr)}]`;
                     }
                 }, "");
                 const message = error.message;

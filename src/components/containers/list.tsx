@@ -135,10 +135,7 @@ export const List = <D = any,>({
             })}
             {...props}
         >
-            {populateProps(children, globalItemProps, {
-                mergeStrategy: "left",
-                populateIf: (el) => el.type === ListItem,
-            })}
+            {populateProps(children, globalItemProps, "left", (el) => el.type === ListItem)}
             {items?.map((item) => {
                 const active = isItemActive(item);
 
