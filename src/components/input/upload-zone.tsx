@@ -112,7 +112,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
                     mainProps?.onClick?.(e);
                 }}
             >
-                <div className="flex flex-col items-center justify-center gap-3 p-5">
+                <div className="flex flex-col items-center justify-center gap-3 p-5 grow">
                     {icon && <span className="text-[100px] text-primary">{icon}</span>}
                     <p>{text || "Upload"}</p>
                     {secondaryText !== "" && (
