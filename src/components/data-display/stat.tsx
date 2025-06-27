@@ -14,10 +14,10 @@ const stat = tv({
     base: "",
     variants: {
         size: {
-            "2xs": "rounded p-0.5 text-xl",
-            xs: "rounded p-2.5 text-3xl",
-            sm: "rounded p-3 text-4xl",
-            md: "rounded-lg p-5 text-5xl",
+            "2xs": "rounded p-2.5 text-xl",
+            xs: "rounded p-3 text-3xl",
+            sm: "rounded p-4 text-4xl",
+            md: "rounded-lg p-6 text-5xl",
             lg: "rounded-xl p-8 text-6xl",
             xl: "rounded-2xl p-12 text-7xl",
         },
