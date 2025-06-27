@@ -14,7 +14,8 @@ const stat = tv({
     base: "",
     variants: {
         size: {
-            xs: "rounded p-1 text-3xl",
+            "2xs": "rounded p-0.5 text-xl",
+            xs: "rounded p-2.5 text-3xl",
             sm: "rounded p-3 text-4xl",
             md: "rounded-lg p-5 text-5xl",
             lg: "rounded-xl p-8 text-6xl",
@@ -70,12 +71,13 @@ export const Stat: FC<StatProps> = ({
         return valueParserRef.current ? valueParserRef.current(children) : String(children);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [children]);
-    const [gap, iconGap, iconSize] = collapse(size || "md", {
-        xs: ["mt-2", "mr-1", "text-xl"],
-        sm: ["mt-4", "mr-2", "text-2xl"],
-        md: ["mt-6", "mr-3", "text-3xl"],
-        lg: ["mt-8", "mr-4", "text-4xl"],
-        xl: ["mt-10", "mr-5", "text-5xl"],
+    const [gap, iconGap, iconSize, helperTextSize] = collapse(size || "md", {
+        "2xs": ["mt-1", "mr-1", "text-lg", "text-sm"],
+        xs: ["mt-2", "mr-1.5", "text-xl", "text-base"],
+        sm: ["mt-4", "mr-2", "text-2xl", "text-base"],
+        md: ["mt-6", "mr-3", "text-3xl", "text-xl"],
+        lg: ["mt-8", "mr-4", "text-4xl", "text-xl"],
+        xl: ["mt-10", "mr-5", "text-5xl", "text-xl"],
     });
 
     return (
@@ -91,7 +93,7 @@ export const Stat: FC<StatProps> = ({
             {description && (
                 <HelperText
                     {...descriptionProps}
-                    className={clsx("font-normal", gap, descriptionProps?.className)}
+                    className={clsx("font-normal", gap, helperTextSize, descriptionProps?.className)}
                 >
                     {description}
                 </HelperText>
