@@ -59,6 +59,11 @@ export interface SkeletonProps extends VariantProps<typeof skeleton> {
     active?: boolean;
 }
 
+/***
+ * ### Props
+ * - `occupy`
+ * - `active`
+ */
 export const Skeleton: FC<SkeletonProps> = ({
     children,
     className,
