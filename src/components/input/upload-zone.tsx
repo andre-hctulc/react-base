@@ -9,6 +9,7 @@ import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
 import { XIcon } from "../icons/x.js";
 import { Toolbar } from "../containers/toolbar.js";
 import { IconButton } from "./icon-button.js";
+import { Icon } from "../icons/icon.js";
 
 interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     children?: ReactNode;
@@ -19,13 +20,17 @@ interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     renderFiles?: ((files: File[]) => ReactNode) | "menu";
     accept?: string;
     mainProps?: PropsOf<"div">;
+    iconProps?: PropsOf<typeof Icon>;
 }
 
 const fileId = (file: File) => file.webkitRelativePath || file.name;
 
 /**
  * ### Props
- * `required` - **Not supported** due to use of hidden input
+ *
+ * - `required` - **Not supported** due to use of hidden input
+ * - `accept`
+ * - `multiple`
  */
 export const UploadZone: FC<UploadZoneProps> = ({
     className,
@@ -37,6 +42,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
     style,
     onChange,
     mainProps,
+    iconProps,
     ...props
 }) => {
     const [files, setFiles] = useState<File[]>(value || props.defaultValue || []);
@@ -102,7 +108,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
                     mainProps?.onDrop?.(e);
                 }}
                 className={clsx(
-                    "grow min-h-0 overflow-y-auto",
+                    "grow min-h-0 overflow-y-auto flex flex-col items-center justify-center gap-3 p-5",
                     !props.disabled && "cursor-pointer",
                     "border-[1.5px] rounded-lg border-dashed transition hover:bg-primary/5 hover:border-info",
                     mainProps?.className
@@ -112,13 +118,15 @@ export const UploadZone: FC<UploadZoneProps> = ({
                     mainProps?.onClick?.(e);
                 }}
             >
-                <div className="flex flex-col items-center justify-center gap-3 p-5 grow">
-                    {icon && <span className="text-[100px] text-primary">{icon}</span>}
-                    <p>{text || "Upload"}</p>
-                    {secondaryText !== "" && (
-                        <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
-                    )}
-                </div>
+                {icon && (
+                    <Icon size="2xl" {...iconProps}>
+                        {icon}
+                    </Icon>
+                )}
+                <p>{text || "Upload"}</p>
+                {secondaryText !== "" && (
+                    <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
+                )}
             </Droppable>
             {props.renderFiles === "menu" && (
                 <List
