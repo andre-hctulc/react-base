@@ -1,21 +1,24 @@
 "use client";
 
-import type { StyleProps } from "../../types/index.js";
+import type { PropsOf, StyleProps } from "../../types/index.js";
 import { Droppable } from "./droppable.js";
-import React from "react";
-import { List } from "../containers/list.js";
+import { List, type ListItemDef } from "../containers/list.js";
 import clsx from "clsx";
 import type { InputLikeProps } from "./types.js";
+import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
+import { XIcon } from "../icons/x.js";
+import { Toolbar } from "../containers/toolbar.js";
+import { IconButton } from "./icon-button.js";
 
 interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
-    children?: React.ReactNode;
+    children?: ReactNode;
     secondaryText?: string;
     text?: string;
     multiple?: boolean;
-    icon?: React.ReactNode;
-    renderFiles?: ((files: File[]) => React.ReactNode) | "menu";
-    removeIcon?: React.ReactNode;
+    icon?: ReactNode;
+    renderFiles?: ((files: File[]) => ReactNode) | "menu";
     accept?: string;
+    mainProps?: PropsOf<"div">;
 }
 
 const fileId = (file: File) => file.webkitRelativePath || file.name;
@@ -24,7 +27,7 @@ const fileId = (file: File) => file.webkitRelativePath || file.name;
  * ### Props
  * `required` - **Not supported** due to use of hidden input
  */
-export const UploadZone: React.FC<UploadZoneProps> = ({
+export const UploadZone: FC<UploadZoneProps> = ({
     className,
     children,
     text,
@@ -35,11 +38,11 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
     onChange,
     ...props
 }) => {
-    const [files, setFiles] = React.useState<File[]>(value || props.defaultValue || []);
-    const valueInited = React.useRef(false);
-    const input = React.useRef<HTMLInputElement>(null);
+    const [files, setFiles] = useState<File[]>(value || props.defaultValue || []);
+    const valueInited = useRef(false);
+    const input = useRef<HTMLInputElement>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (value === undefined) return;
 
         if (!valueInited.current) {
@@ -50,7 +53,7 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
         updateFiles(value, false, true);
     }, [value]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.defaultValue) updateFiles(props.defaultValue, false, false);
     }, []);
 
@@ -75,7 +78,7 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
     };
 
     return (
-        <div className={className} style={style}>
+        <div className={clsx("flex flex-col", className)} style={style}>
             <input
                 ref={input}
                 accept={props.accept}
@@ -98,42 +101,42 @@ export const UploadZone: React.FC<UploadZoneProps> = ({
             >
                 <div
                     className={clsx(
+                        "grow min-h-0 overflow-y-auto",
                         !props.disabled && "cursor-pointer",
                         "border-[1.5px] rounded-lg border-dashed transition hover:bg-primary/5 hover:border-info"
                     )}
                     onClick={() => input.current?.click()}
                 >
-                    {children || (
-                        <div className="flex flex-col items-center justify-center gap-3 p-5">
-                            {icon && <span className="text-[100px] text-primary">{icon}</span>}
-                            <p>{text || "Upload"}</p>
-                            {secondaryText !== "" && (
-                                <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
-                            )}
-                        </div>
-                    )}
+                    <div className="flex flex-col items-center justify-center gap-3 p-5">
+                        {icon && <span className="text-[100px] text-primary">{icon}</span>}
+                        <p>{text || "Upload"}</p>
+                        {secondaryText !== "" && (
+                            <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
+                        )}
+                    </div>
                 </div>
             </Droppable>
             {props.renderFiles === "menu" && (
                 <List
                     rounded="sm"
                     className="mt-2"
-                    items={files.map((file) => ({
+                    items={files.map<ListItemDef>((file) => ({
                         key: file.webkitRelativePath || file.name,
                         label: file.name,
-                        tools: [
-                            {
-                                icon: props.removeIcon || "❌",
-                                action: () => removeFile(file),
-                                tooltip: "Remove",
-                                color: "error",
-                                key: "remove_toll",
-                            },
-                        ],
+                        listItemProps: {
+                            end: (
+                                <Toolbar>
+                                    <IconButton color="error" onClick={() => removeFile(file)}>
+                                        <XIcon />
+                                    </IconButton>
+                                </Toolbar>
+                            ),
+                        },
                     }))}
                 />
             )}
             {typeof props.renderFiles === "function" && props.renderFiles(files)}
+            {children}
         </div>
     );
 };

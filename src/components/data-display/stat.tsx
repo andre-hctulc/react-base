@@ -51,6 +51,16 @@ interface StatProps extends TVCProps<typeof stat, "div"> {
     href?: string;
 }
 
+/**
+ * ### Props
+ * - `value`
+ * - `description`
+ * - `valueParser`
+ * - `loading`
+ * - `as`
+ * - `href`
+ * - `LinkComponent`
+ */
 export const Stat: FC<StatProps> = ({
     valueParser,
     value,
