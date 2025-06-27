@@ -14,11 +14,11 @@ const stat = tv({
     base: "",
     variants: {
         size: {
-            xs: "rounded p-1 text-base",
-            sm: "rounded p-3 text-lg",
-            md: "rounded-lg p-5 text-2xl",
-            lg: "rounded-xl p-8 text-3xl",
-            xl: "rounded-2xl p-12 text-4xl",
+            xs: "rounded p-1 text-3xl",
+            sm: "rounded p-3 text-4xl",
+            md: "rounded-lg p-5 text-5xl",
+            lg: "rounded-xl p-8 text-6xl",
+            xl: "rounded-2xl p-12 text-7xl",
         },
         variant: {
             outlined: "border",
@@ -63,35 +63,30 @@ export const Stat: FC<StatProps> = ({
     loading,
     ...props
 }) => {
+    <span className="text"></span>;
     const Comp = as || "div";
     const valueParserRef = useRefOf(valueParser);
     const val = useMemo(() => {
         return valueParserRef.current ? valueParserRef.current(children) : String(children);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [children]);
-    const [gap, iconGap] = collapse(size || "md", {
-        xs: ["mt-2", "mr-1"],
-        sm: ["mt-4", "mr-2"],
-        md: ["mt-6", "mr-3"],
-        lg: ["mt-8", "mr-4"],
-        xl: ["mt-10", "mr-5"],
+    const [gap, iconGap, iconSize] = collapse(size || "md", {
+        xs: ["mt-2", "mr-1", "text-xl"],
+        sm: ["mt-4", "mr-2", "text-2xl"],
+        md: ["mt-6", "mr-3", "text-3xl"],
+        lg: ["mt-8", "mr-4", "text-4xl"],
+        xl: ["mt-10", "mr-5", "text-5xl"],
     });
 
     return (
         <Comp className={stat({ className, size, variant, shadow })} {...props}>
             <p {...textProps} className={clsx("font-medium", textProps?.className)}>
                 {icon && (
-                    <Icon inline className={clsx(iconGap)}>
+                    <Icon inline className={clsx(iconGap, iconSize)}>
                         {icon}
                     </Icon>
                 )}
-                {loading ? (
-                    <Skeleton as="span" occupy>
-                        {<span>{val}</span>}
-                    </Skeleton>
-                ) : (
-                    val
-                )}
+                {loading ? <Skeleton as="span">{<span>{val}</span>}</Skeleton> : val}
             </p>
             {description && (
                 <HelperText
