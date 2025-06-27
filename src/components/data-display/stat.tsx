@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { useMemo, type FC, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import { useRefOf } from "../../hooks/index.js";
-import type { TVCProps, PropsOf } from "../../types/index.js";
+import type { TVCProps, PropsOf, LinkComponent } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { HelperText } from "../input/helper-text.js";
 import { Skeleton } from "./skeleton.js";
@@ -14,9 +14,9 @@ const stat = tv({
     base: "",
     variants: {
         size: {
-            "2xs": "rounded p-2.5 text-xl",
-            xs: "rounded p-3 text-3xl",
-            sm: "rounded p-4 text-4xl",
+            "2xs": "rounded p-3 text-xl",
+            xs: "rounded p-4 text-3xl",
+            sm: "rounded p-5 text-4xl",
             md: "rounded-lg p-6 text-5xl",
             lg: "rounded-xl p-8 text-6xl",
             xl: "rounded-2xl p-12 text-7xl",
@@ -41,17 +41,19 @@ const stat = tv({
 interface StatProps extends TVCProps<typeof stat, "div"> {
     as?: any;
     valueParser?: (value: any) => string;
-    children?: any;
+    value: any;
     description?: string;
     descriptionProps?: PropsOf<typeof HelperText>;
     textProps?: PropsOf<"p">;
     icon?: ReactNode;
     loading?: boolean;
+    LinkComponent?: LinkComponent;
+    href?: string;
 }
 
 export const Stat: FC<StatProps> = ({
     valueParser,
-    children,
+    value,
     as,
     className,
     size,
@@ -62,15 +64,18 @@ export const Stat: FC<StatProps> = ({
     textProps,
     icon,
     loading,
+    children,
+    href,
+    LinkComponent,
     ...props
 }) => {
-    <span className="text"></span>;
+    const MainComp: any = href ? LinkComponent || "a" : "div";
     const Comp = as || "div";
     const valueParserRef = useRefOf(valueParser);
     const val = useMemo(() => {
-        return valueParserRef.current ? valueParserRef.current(children) : String(children);
+        return valueParserRef.current ? valueParserRef.current(value) : String(value);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [children]);
+    }, [value]);
     const [gap, iconGap, iconSize, helperTextSize] = collapse(size || "md", {
         "2xs": ["mt-1", "mr-1", "text-lg", "text-sm"],
         xs: ["mt-2", "mr-1.5", "text-xl", "text-base"],
@@ -80,16 +85,22 @@ export const Stat: FC<StatProps> = ({
         xl: ["mt-10", "mr-5", "text-5xl", "text-xl"],
     });
 
+    const mainProps: any = { ...textProps };
+
+    if (href) {
+        mainProps.href = href;
+    }
+
     return (
         <Comp className={stat({ className, size, variant, shadow })} {...props}>
-            <p {...textProps} className={clsx("font-medium", textProps?.className)}>
+            <MainComp {...mainProps} className={clsx("font-medium", textProps?.className)}>
                 {icon && (
                     <Icon inline className={clsx(iconGap, iconSize)}>
                         {icon}
                     </Icon>
                 )}
                 {loading ? <Skeleton as="span">{<span>{val}</span>}</Skeleton> : val}
-            </p>
+            </MainComp>
             {description && (
                 <HelperText
                     {...descriptionProps}
@@ -98,6 +109,7 @@ export const Stat: FC<StatProps> = ({
                     {description}
                 </HelperText>
             )}
+            {children}
         </Comp>
     );
 };
