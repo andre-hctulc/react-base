@@ -36,6 +36,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
     value,
     style,
     onChange,
+    mainProps,
     ...props
 }) => {
     const [files, setFiles] = useState<File[]>(value || props.defaultValue || []);
@@ -100,12 +101,17 @@ export const UploadZone: FC<UploadZoneProps> = ({
                 }}
             >
                 <div
+                    {...mainProps}
                     className={clsx(
                         "grow min-h-0 overflow-y-auto",
                         !props.disabled && "cursor-pointer",
-                        "border-[1.5px] rounded-lg border-dashed transition hover:bg-primary/5 hover:border-info"
+                        "border-[1.5px] rounded-lg border-dashed transition hover:bg-primary/5 hover:border-info",
+                        mainProps?.className
                     )}
-                    onClick={() => input.current?.click()}
+                    onClick={(e) => {
+                        input.current?.click();
+                        mainProps?.onClick?.(e);
+                    }}
                 >
                     <div className="flex flex-col items-center justify-center gap-3 p-5">
                         {icon && <span className="text-[100px] text-primary">{icon}</span>}
