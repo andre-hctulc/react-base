@@ -1,6 +1,6 @@
 "use client";
 
-import type { PropsOf, StyleProps } from "../../types/index.js";
+import type { PartialPropsOf, PropsOf, StyleProps } from "../../types/index.js";
 import { Droppable } from "./droppable.js";
 import { List, type ListItemDef } from "../containers/list.js";
 import clsx from "clsx";
@@ -20,7 +20,8 @@ interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     renderFiles?: ((files: File[]) => ReactNode) | "menu";
     accept?: string;
     mainProps?: PropsOf<"div">;
-    iconProps?: PropsOf<typeof Icon>;
+    iconProps?: PartialPropsOf<typeof Icon>;
+    textProps?: PropsOf<"p">;
 }
 
 const fileId = (file: File) => file.webkitRelativePath || file.name;
@@ -43,6 +44,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
     onChange,
     mainProps,
     iconProps,
+    textProps,
     ...props
 }) => {
     const [files, setFiles] = useState<File[]>(value || props.defaultValue || []);
@@ -119,11 +121,11 @@ export const UploadZone: FC<UploadZoneProps> = ({
                 }}
             >
                 {icon && (
-                    <Icon size="2xl" {...iconProps}>
+                    <Icon size="4xl" {...iconProps} className={clsx("mb-2", iconProps?.className)}>
                         {icon}
                     </Icon>
                 )}
-                <p>{text || "Upload"}</p>
+                <p {...textProps}>{text || "Upload"}</p>
                 {secondaryText !== "" && (
                     <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
                 )}
