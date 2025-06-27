@@ -36,9 +36,11 @@ export interface SkeletonProps extends VariantProps<typeof skeleton> {
     children?: React.ReactNode;
     style?: React.CSSProperties;
     /**
-     * @default true
+     * The content is always rendered, but hidden.
+     * Does not work for text nodes.
+     * @default false
      */
-    childrenOccupySpace?: boolean;
+    occupy?: boolean;
     height?: number;
     maxHeight?: number;
     size?: number;
@@ -62,7 +64,7 @@ export const Skeleton: FC<SkeletonProps> = ({
     className,
     shape,
     style,
-    childrenOccupySpace,
+    occupy,
     height,
     width,
     maxWidth,
@@ -75,7 +77,6 @@ export const Skeleton: FC<SkeletonProps> = ({
     active,
 }) => {
     const Comp = as || "div";
-    const occupy = childrenOccupySpace ?? true;
 
     if (active === false) {
         return children;
@@ -83,7 +84,7 @@ export const Skeleton: FC<SkeletonProps> = ({
 
     return (
         <Comp
-            data-children-occupy-space={occupy || undefined}
+            data-children-occupy-space={occupy}
             className={skeleton({ className, shape, padding })}
             style={{
                 height: height ?? size,
@@ -95,7 +96,7 @@ export const Skeleton: FC<SkeletonProps> = ({
                 ...style,
             }}
         >
-            {children}
+            {occupy && children}
         </Comp>
     );
 };
