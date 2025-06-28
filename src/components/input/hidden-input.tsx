@@ -16,7 +16,9 @@ interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "val
  * **Remember:** Hidden inputs do not trigger any change events natively
  *
  * ### In {@link JSForm}s
+ * 
  * some behavior is added to hidden inputs:
+ * 
  * - Hidden inputs will trigger change events when their value changes.
  *   This way we can use {@link useJSForm} to observe live state of hidden inputs.
  * - Validation props (e.g. *required*, *pattern*) will be used to validate the hidden input.
