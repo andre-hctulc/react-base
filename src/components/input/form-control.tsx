@@ -125,16 +125,19 @@ export const FormControl: FC<FormControlProps> = ({
         }
 
         // ## Handle JSForm support here
-        if (formCtx) {
-            const jsFormValue = hasName ? formCtx.default(_name) : undefined;
+        if (formCtx && _name) {
+            if (_controlled) {
+                const controlledValue = formCtx.value(_name);
 
-            // handle js form default value
-            if (jsFormValue !== undefined) {
-                if (_controlled) {
-                    inpProps.value =
-                        childElement?.props.value === undefined ? jsFormValue : childElement.props.value;
-                } else {
-                    inpProps.defaultValue = jsFormValue;
+                if (controlledValue !== undefined && childElement?.props.value === undefined) {
+                    inpProps.value = controlledValue;
+                }
+            } else {
+                const defaultValue = formCtx.default(_name);
+
+                // handle js form default value
+                if (defaultValue !== undefined && childElement?.props.defaultValue === undefined) {
+                    inpProps.defaultValue = defaultValue;
                 }
             }
         }

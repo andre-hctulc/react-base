@@ -113,6 +113,17 @@ export const JSForm = <T extends object = any>({
         },
         [defaultValues, parentFormCtx, nested]
     );
+    const val = useCallback(
+        (name: string) => {
+            if (defaultValues) {
+                return getProperty(values, name);
+            } else if (nested && parentFormCtx) {
+                return parentFormCtx.value(name);
+            }
+            return undefined;
+        },
+        [values, parentFormCtx, nested]
+    );
     const [snapshot, setSnapshot] = useState<JSFormSnapshot<T>>(() => {
         return {
             ok: true,
@@ -218,11 +229,12 @@ export const JSForm = <T extends object = any>({
             triggerChange,
             defaultValues: defaultValues,
             default: def,
+            value: val,
             controlled: values !== undefined,
             prefixNames,
             resetSignal,
         }),
-        [snapshot, triggerChange, reset, def, values, prefixNames, resetSignal]
+        [snapshot, triggerChange, reset, def, val, values, prefixNames, resetSignal]
     );
     const onContextChangeRef = useRefOf(onContextChange);
 

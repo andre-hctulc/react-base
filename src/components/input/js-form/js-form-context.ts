@@ -21,6 +21,10 @@ export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T>
      */
     default: (name: string) => any;
     /**
+     * Gets the controlled value of an input
+     */
+    value: (name: string) => any;
+    /**
      * Sets the default controlled state for form controls
      */
     controlled: boolean;
