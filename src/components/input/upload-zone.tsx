@@ -121,7 +121,12 @@ export const UploadZone: FC<UploadZoneProps> = ({
                 }}
             >
                 {icon && (
-                    <Icon size="4xl" {...iconProps} className={clsx("mb-2", iconProps?.className)}>
+                    <Icon
+                        size="4xl"
+                        color="neutral"
+                        {...iconProps}
+                        className={clsx("mb-2", iconProps?.className)}
+                    >
                         {icon}
                     </Icon>
                 )}

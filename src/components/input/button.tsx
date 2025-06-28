@@ -33,6 +33,7 @@ const btn = tv({
             pale: "",
             text: "",
             floating: "shadow-md",
+            mix: "border",
         },
         size: {
             xs: "h-5 text-xs px-2 gap-1.5",
@@ -110,6 +111,7 @@ export const Button: FC<ButtonProps> = ({
         pale: bgA(20),
         text: "",
         floating: bg,
+        mix: "bg-paper",
     });
     const borderColor = collapse(_variant, {
         filled: "",
@@ -117,6 +119,7 @@ export const Button: FC<ButtonProps> = ({
         pale: bgA(20),
         text: "",
         floating: bg,
+        mix: "",
     });
     const textColor = collapse(_variant, {
         filled: textC,
@@ -124,6 +127,7 @@ export const Button: FC<ButtonProps> = ({
         pale: text,
         text: text,
         floating: textC,
+        mix: text,
     });
     const hoverBgColor = collapse(_variant, {
         filled: hoverBgA(90),
@@ -131,6 +135,7 @@ export const Button: FC<ButtonProps> = ({
         pale: hoverBgA(30),
         text: hoverBgA(10),
         floating: hoverBg,
+        mix: "bg-paper2",
     });
     const activeBgColor = collapse(_variant, {
         filled: activeBgA(75),
@@ -138,6 +143,7 @@ export const Button: FC<ButtonProps> = ({
         pale: activeBgA(20),
         text: activeBgA(20),
         floating: activeBgA(75),
+        mix: "bg-paper3",
     });
 
     if (href) {

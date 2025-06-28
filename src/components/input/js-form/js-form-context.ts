@@ -13,7 +13,7 @@ export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T>
      */
     triggerChange: (target?: { name: string | undefined; value: any }) => void;
     /**
-     * Form default value. Can be consumed by {@link default}
+     * Form default value.
      */
     defaultValues: Partial<T> | undefined;
     /**
