@@ -119,7 +119,7 @@ export const Button: FC<ButtonProps> = ({
         pale: bgA(20),
         text: "",
         floating: bg,
-        mix: "",
+        mix: "border-[1.5px]",
     });
     const textColor = collapse(_variant, {
         filled: textC,
@@ -135,7 +135,7 @@ export const Button: FC<ButtonProps> = ({
         pale: hoverBgA(30),
         text: hoverBgA(10),
         floating: hoverBg,
-        mix: "bg-paper2",
+        mix: "hover:bg-paper2",
     });
     const activeBgColor = collapse(_variant, {
         filled: activeBgA(75),
@@ -143,7 +143,7 @@ export const Button: FC<ButtonProps> = ({
         pale: activeBgA(20),
         text: activeBgA(20),
         floating: activeBgA(75),
-        mix: "bg-paper3",
+        mix: "active:bg-paper3",
     });
 
     if (href) {
