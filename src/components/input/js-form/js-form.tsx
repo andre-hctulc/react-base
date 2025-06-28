@@ -115,7 +115,7 @@ export const JSForm = <T extends object = any>({
     );
     const val = useCallback(
         (name: string) => {
-            if (defaultValues) {
+            if (values) {
                 return getProperty(values, name);
             } else if (nested && parentFormCtx) {
                 return parentFormCtx.value(name);
