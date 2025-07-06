@@ -1,7 +1,7 @@
 "use client";
 
 import { tv, type VariantProps } from "tailwind-variants";
-import type { PartialPropsOf, StyleProps } from "../../types/index.js";
+import type { PartialPropsOf, PropsOf, StyleProps } from "../../types/index.js";
 import { usePopper, type Modifier } from "react-popper";
 import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
@@ -74,7 +74,7 @@ export interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
      */
     frameMargin?: number;
     onClose?: (e: MouseEvent) => void;
-    bg?: boolean;
+    bg?: PropsOf<typeof Overlay>["bg"];
     zIndex?: "none" | "10" | "20" | "30" | "40" | "50";
     noInteraction?: boolean;
     /**
@@ -147,7 +147,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
         <Overlay
             {...props.overlayProps}
             noInteraction={props.overlayProps?.noInteraction || props.noInteraction || !props.open}
-            variant={props.bg ? "transparent1" : "transparent"}
+            bg={props.bg}
             onClick={(e) => {
                 props.overlayProps?.onClick?.(e);
                 e.stopPropagation();

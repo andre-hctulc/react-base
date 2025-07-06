@@ -4,13 +4,13 @@ import { type FC } from "react";
 import { createPortal } from "react-dom";
 
 const overlay = tv({
-    base: "w-full h-full transition",
+    base: "w-full h-full transition-all",
     variants: {
-        position: {
+        variant: {
             fixed: "fixed inset-0",
             absolute: "absolute",
         },
-        variant: {
+        bg: {
             transparent: "",
             transparent1: "bg-black/10",
             transparent2: "bg-black/20",
@@ -35,8 +35,8 @@ const overlay = tv({
         },
     },
     defaultVariants: {
-        position: "fixed",
-        variant: "transparent1",
+        variant: "fixed",
+        bg: "transparent1",
     },
 });
 
@@ -56,9 +56,9 @@ interface OverlayProps extends TVCProps<typeof overlay, "div"> {
 export const Overlay: FC<OverlayProps> = ({
     children,
     className,
-    position,
-    noInteraction,
     variant,
+    noInteraction,
+    bg,
     portal,
     zIndex,
     ref,
@@ -69,7 +69,7 @@ export const Overlay: FC<OverlayProps> = ({
             ref={ref}
             className={overlay({
                 className,
-                position,
+                bg,
                 variant,
                 zIndex,
                 noInteraction,
