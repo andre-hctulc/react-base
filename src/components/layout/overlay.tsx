@@ -11,6 +11,7 @@ const overlay = tv({
             absolute: "absolute",
         },
         variant: {
+            transparent: "",
             transparent1: "bg-black/10",
             transparent2: "bg-black/20",
             transparent3: "bg-black/30",
