@@ -76,13 +76,9 @@ export const SectionStart: React.FC<SectionStartProps> = ({
         <div className={sectionStart({ className, my, mt, mb, variant })} {...props}>
             {(title || icon) && (
                 <div className="flex items-center gap-3">
-                    {icon && (
-                        <Icon size={defaultVariant ? "md" : "sm"} {...iconProps}>
-                            {icon}
-                        </Icon>
-                    )}
                     <Subtitle
                         {...subtitleProps}
+                        icon={icon}
                         variant={subtitleVariant ?? subtitleProps?.variant ?? (defaultVariant ? "h2" : "h3")}
                     >
                         {title}

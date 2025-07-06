@@ -94,7 +94,7 @@ export const Subtitle: FC<SubtitleProps> = ({
             {...props}
         >
             {icon && (
-                <Icon size="none" inline {...iconProps} className={clsx("mr-2", iconProps?.className)}>
+                <Icon size="inherit" inline {...iconProps} className={clsx("mr-2", iconProps?.className)}>
                     {icon}
                 </Icon>
             )}

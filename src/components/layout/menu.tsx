@@ -3,9 +3,7 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { StyleProps } from "../../types/index.js";
-import { CollapseH1000, CollapseVScreen } from "../transitions/collapse.js";
-import { IconButton } from "../input/icon-button.js";
-import { XIcon } from "../icons/x.js";
+import { CollapseH750 } from "../transitions/collapse.js";
 
 const menu = tv({
     base: "bg-paper box-border h-full shrink-0 min-h-0 overflow-y-auto",
@@ -23,24 +21,27 @@ const menu = tv({
             md: "w-[350px]",
             lg: "w-[450px]",
             xl: "w-[600px]",
+            full: "w-full",
         },
         flex: {
-            true: "flex flex-col",
+            col: "flex flex-col",
+            row: "flex flex-row",
         },
         variant: {
             embedded: "",
-            overlay: "w-full absolute h-full z-30 shadow-lg",
+            absolute: "absolute",
         },
         sticky: {
             // height must be auto and align must be start for sticky to work (especially in flex context)
             true: "sticky top-0 h-auto",
         },
-        heightScreen: {
-            true: "h-screen",
+        height: {
+            full: "h-full",
+            screen: "h-screen",
         },
         position: {
-            left: "left-0 self-start",
-            right: "right-0 ml-auto self-end",
+            left: "left-0",
+            right: "right-0",
         },
         border: {
             true: "",
@@ -62,7 +63,7 @@ const menu = tv({
             class: "border-l",
         },
         {
-            position: ["left"],
+            position: "left",
             border: true,
             class: "border-r",
         },
@@ -71,16 +72,19 @@ const menu = tv({
         size: "md",
         position: "left",
         border: true,
+        variant: "embedded",
     },
 });
 
 interface MenuProps extends VariantProps<typeof menu>, StyleProps {
     children?: React.ReactNode;
-    closable?: boolean;
-    /** @default true */
+    /**
+     * @default true
+     * */
     open?: boolean;
     as?: any;
     onClose?: () => void;
+    animationDirection?: "vertical" | "horizontal";
 }
 
 export const Menu: React.FC<MenuProps> = ({
@@ -90,58 +94,37 @@ export const Menu: React.FC<MenuProps> = ({
     size,
     as,
     open,
-    closable,
     position,
     shadow,
     border,
     sticky,
-    heightScreen,
-    onClose,
+    height,
     variant,
     elevated,
     flex,
 }) => {
     const Comp = as || "div";
-
-    const main = (
-        <Comp
-            className={menu({
-                className,
-                size,
-                position,
-                shadow,
-                border,
-                sticky,
-                heightScreen,
-                variant,
-                elevated,
-                flex,
-            })}
-            style={style}
-        >
-            {closable && (
-                <div className="p-3">
-                    <IconButton className="ml-auto" onClick={() => onClose?.()}>
-                        <XIcon />
-                    </IconButton>
-                </div>
-            )}
-            {children}
-        </Comp>
-    );
     const show = open ?? true;
 
-    if (variant === "overlay") {
-        return (
-            <CollapseVScreen appear={false} show={show}>
-                {main}
-            </CollapseVScreen>
-        );
-    }
-
     return (
-        <CollapseH1000 appear={false} show={show}>
-            {main}
-        </CollapseH1000>
+        <CollapseH750 appear={false} show={show}>
+            <Comp
+                className={menu({
+                    className,
+                    size,
+                    position,
+                    shadow,
+                    border,
+                    sticky,
+                    height,
+                    variant,
+                    elevated,
+                    flex,
+                })}
+                style={style}
+            >
+                {children}
+            </Comp>
+        </CollapseH750>
     );
 };

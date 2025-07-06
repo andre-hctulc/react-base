@@ -1,4 +1,5 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
+import { capitalizeFirstLetter } from "../../util/system.js";
 
 type Breakpoints = Record<string, string>;
 
@@ -18,26 +19,25 @@ export type BreakpointsSnapshot = {
     breakpoint: string;
 };
 
+const defaultBreakpoints: Breakpoints = {
+    sm: "(min-width: 640px)",
+    md: "(min-width: 768px)",
+    lg: "(min-width: 1024px)",
+    xl: "(min-width: 1280px)",
+    "2xl": "(min-width: 1536px)",
+};
+
 export function useBreakpoints(customBreakpoints?: Breakpoints): BreakpointsSnapshot {
-    const defaultBreakpoints: Breakpoints = {
-        sm: "(min-width: 640px)",
-        md: "(min-width: 768px)",
-        lg: "(min-width: 1024px)",
-        xl: "(min-width: 1280px)",
-        "2xl": "(min-width: 1536px)",
-    };
+    const breakpoints = useRef(customBreakpoints || defaultBreakpoints);
+    const [state, setState] = useState<BreakpointsSnapshot>({ breakpoint: "" } as any);
 
-    const breakpoints = React.useRef(customBreakpoints || defaultBreakpoints);
-
-    const [state, setState] = React.useState<BreakpointsSnapshot>({ breakpoint: "" } as any);
-
-    React.useEffect(() => {
+    useEffect(() => {
         if (customBreakpoints) {
             breakpoints.current = customBreakpoints;
         }
     }, [customBreakpoints]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const mediaQueryLists = Object.entries(breakpoints.current).map(([key, query]) => ({
             key,
             mediaQuery: window.matchMedia(query),
@@ -48,7 +48,7 @@ export function useBreakpoints(customBreakpoints?: Breakpoints): BreakpointsSnap
                 (acc, { key, mediaQuery }) => ({
                     ...acc,
                     [key]: mediaQuery.matches,
-                    [`min${capitalize(key)}`]: mediaQuery.matches,
+                    [`min${capitalizeFirstLetter(key)}`]: mediaQuery.matches,
                 }),
                 {}
             );
@@ -88,8 +88,4 @@ export function useBreakpoints(customBreakpoints?: Breakpoints): BreakpointsSnap
     }, []);
 
     return state;
-}
-
-function capitalize(str: string): string {
-    return str.charAt(0).toUpperCase() + str.slice(1);
 }
