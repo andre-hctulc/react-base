@@ -42,12 +42,12 @@ const tab = tv({
         {
             variant: "default",
             active: true,
-            className: "!border-b-primary ",
+            className: "rounded-t-sm",
         },
         {
-            variant: "elevated",
-            active: true,
-            className: "text-primary ",
+            variant: "default",
+            active: false,
+            className: "rounded-sm",
         },
     ],
     defaultVariants: {
