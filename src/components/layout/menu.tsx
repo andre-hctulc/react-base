@@ -69,10 +69,10 @@ const menu = tv({
         },
         bg: {
             none: "",
-            paper: "bg-paper",
-            paper2: "bg-paper2",
-            paper3: "bg-paper3",
-            paper4: "bg-paper4",
+            "1": "bg-paper",
+            "2": "bg-paper2",
+            "3": "bg-paper3",
+            "5": "bg-paper4",
         },
     },
     compoundVariants: [
