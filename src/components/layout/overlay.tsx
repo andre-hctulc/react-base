@@ -17,9 +17,10 @@ const overlay = tv({
             transparent3: "bg-black/30",
             transparent4: "bg-black/40",
             transparent5: "bg-black/50",
-            blur_sm: "backdrop-blur-sm",
-            blur: "backdrop-blur-md",
-            blur_lg: "backdrop-blur-lg",
+            blur_xs: "bg-black/10 backdrop-blur-xs",
+            blur_sm: "bg-black/10 backdrop-blur-sm",
+            blur: "bg-black/10 backdrop-blur-md",
+            blur_lg: "bg-black/10 backdrop-blur-lg",
         },
         zIndex: {
             "10": "z-10",
@@ -35,7 +36,7 @@ const overlay = tv({
     },
     defaultVariants: {
         position: "fixed",
-        bg: "transparent1",
+        variant: "transparent1",
     },
 });
 
