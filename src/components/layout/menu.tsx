@@ -47,6 +47,17 @@ const menu = tv({
         border: {
             true: "",
         },
+        padding: {
+            none: "",
+            "2xs": "p-0.5",
+            xs: "p-1",
+            sm: "p-1.5",
+            md: "p-2",
+            lg: "p-4",
+            xl: "p-6",
+            "2xl": "p-8",
+            "3xl": "p-10",
+        },
         shadow: {
             none: "",
             sm: "shadow-xs",
@@ -103,6 +114,7 @@ export const Menu: React.FC<MenuProps> = ({
     variant,
     elevated,
     flex,
+    padding,
     animationDirection,
 }) => {
     const Comp = as || "div";
@@ -114,6 +126,7 @@ export const Menu: React.FC<MenuProps> = ({
             <Comp
                 className={menu({
                     className,
+                    padding,
                     size,
                     position,
                     shadow,
