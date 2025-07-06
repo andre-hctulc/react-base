@@ -1,7 +1,6 @@
 import { tv } from "tailwind-variants";
 import type { TVCProps } from "../../types/index.js";
-import { withPrefix } from "../../util/system.js";
-import { forwardRef, type FC } from "react";
+import { type FC } from "react";
 
 const avatar = tv({
     base: "flex items-center justify-center overflow-hidden shrink-0 aspect-square",
@@ -52,13 +51,11 @@ const avatar = tv({
 });
 
 export interface AvatarProps extends TVCProps<typeof avatar, "div"> {
-    src?: string;
     as?: any;
     alt?: string;
 }
 
 export const Avatar: FC<AvatarProps> = ({
-    src,
     alt,
     className,
     size,

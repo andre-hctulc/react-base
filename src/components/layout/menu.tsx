@@ -3,7 +3,7 @@
 import React from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { StyleProps } from "../../types/index.js";
-import { CollapseH750 } from "../transitions/collapse.js";
+import { CollapseH750, CollapseVScreen } from "../transitions/collapse.js";
 
 const menu = tv({
     base: "bg-paper box-border h-full shrink-0 min-h-0 overflow-y-auto",
@@ -42,6 +42,7 @@ const menu = tv({
         position: {
             left: "left-0",
             right: "right-0",
+            none: "",
         },
         border: {
             true: "",
@@ -70,7 +71,7 @@ const menu = tv({
     ],
     defaultVariants: {
         size: "md",
-        position: "left",
+        position: "none",
         border: true,
         variant: "embedded",
     },
@@ -102,12 +103,14 @@ export const Menu: React.FC<MenuProps> = ({
     variant,
     elevated,
     flex,
+    animationDirection,
 }) => {
     const Comp = as || "div";
     const show = open ?? true;
+    const Transition = animationDirection === "horizontal" ? CollapseH750 : CollapseVScreen;
 
     return (
-        <CollapseH750 appear={false} show={show}>
+        <Transition appear={false} show={show}>
             <Comp
                 className={menu({
                     className,
@@ -125,6 +128,6 @@ export const Menu: React.FC<MenuProps> = ({
             >
                 {children}
             </Comp>
-        </CollapseH750>
+        </Transition>
     );
 };

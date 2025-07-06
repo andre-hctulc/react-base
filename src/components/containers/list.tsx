@@ -24,9 +24,9 @@ const list = tv({
             sm: "p-1.5",
             md: "p-2",
             lg: "p-4",
-            xl: "p-3",
-            "2xl": "p-4",
-            "3xl": "p-5",
+            xl: "p-6",
+            "2xl": "p-8",
+            "3xl": "p-10",
         },
         gap: {
             none: "",
