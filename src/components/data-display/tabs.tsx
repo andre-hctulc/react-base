@@ -7,19 +7,21 @@ import clsx from "clsx";
 import { RadioSwitch } from "../input/radio-switch.js";
 import { useMemo, type FC, type ReactNode } from "react";
 import { Tab } from "./tab.js";
+import { collapse } from "@dre44/util";
 
 export const tabs = tv({
-    base: "flex flex-wrap",
+    base: "",
     variants: {
         variant: {
-            chips: "",
-            default: "",
-            switch: "",
+            chips: "flex flex-wrap",
+            default: "flex overflow-x-auto",
+            switch: "flex flex-wrap",
+            elevated: "flex flex-wrap",
         },
         size: {
-            sm: "gap-2",
-            md: "gap-3",
-            lg: "gap-4",
+            sm: "",
+            md: "",
+            lg: "",
         },
     },
     defaultVariants: {
@@ -74,7 +76,6 @@ export const Tabs: FC<TabsProps> = ({
         if (typeof activeTabs === "string") return [activeTabs];
         return [];
     }, [activeTabs, tabItems]);
-
     const isTabActive = (item: TabItem) => {
         return (
             item?.active ??
@@ -85,6 +86,14 @@ export const Tabs: FC<TabsProps> = ({
                 : item.value === activeTabs)
         );
     };
+    const gap =
+        variant !== "default"
+            ? collapse(size || "md", {
+                  sm: "gap-2",
+                  md: "gap-3",
+                  lg: "gap-4",
+              })
+            : undefined;
 
     if (variant === "switch") {
         return (
@@ -102,7 +111,7 @@ export const Tabs: FC<TabsProps> = ({
     }
 
     return (
-        <div {...props} className={tabs({ variant, size, className })}>
+        <div {...props} className={tabs({ variant, size, className: [className, gap] })}>
             {tabItems.map((t) => {
                 if (t.visible === false) return null;
 
@@ -147,6 +156,7 @@ export const Tabs: FC<TabsProps> = ({
                 return (
                     <Tab
                         bg={bg}
+                        variant={variant === "elevated" ? "elevated" : "default"}
                         elevated={elevated}
                         key={t.value}
                         size={size}

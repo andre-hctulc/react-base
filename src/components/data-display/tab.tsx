@@ -4,25 +4,29 @@ import { tv } from "tailwind-variants";
 import { Icon } from "../icons/icon.js";
 
 const tab = tv({
-    base: [
-        "transition flex gap-2 items-center rounded-sm bg-paper2 h-min",
-        "data-[disabled=false]:hover:text-primary/80",
-    ],
+    base: "transition flex items-center",
     variants: {
+        variant: {
+            elevated: "rounded-sm bg-paper2 h-min data-[disabled=false]:hover:text-primary/80",
+            default:
+                "border-y-2 border-transparent data-[disabled=false]:hover:bg-paper2  data-[disabled=false]:active:bg-paper3",
+        },
         disabled: {
             true: "text-t3 cursor-not-allowed",
         },
+        size: {
+            xs: "h-5 text-xs px-2 gap-1.5",
+            sm: "h-7 text-sm px-3 gap-2",
+            md: "h-9 text-base px-3.5 gap-2.5",
+            lg: "h-[42px] text-lg px-3 gap-3",
+            xl: "h-12 text-xl px-4 gap-3",
+        },
         active: {
-            true: "text-primary",
+            true: "text-primary border-b-primary",
             false: "text-t2",
         },
         clickable: {
             true: "cursor-pointer",
-        },
-        size: {
-            sm: "text-sm py-1 px-2",
-            md: "text-base py-1.5 px-3",
-            lg: "text-lg py-2 px-4",
         },
         bg: {
             "1": "bg-paper1",
