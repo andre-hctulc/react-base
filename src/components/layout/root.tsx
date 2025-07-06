@@ -36,6 +36,13 @@ const root = tv({
         relative: {
             true: "relative",
         },
+        bg: {
+            none: "",
+            paper: "bg-paper",
+            paper2: "bg-paper2",
+            paper3: "bg-paper3",
+            paper4: "bg-paper4",
+        },
     },
     defaultVariants: {
         direction: "col",
@@ -67,6 +74,7 @@ export const Root: FC<RootProps> = ({
     minHeight0,
     relative,
     style,
+    bg,
 }) => {
     return (
         <div
@@ -81,6 +89,7 @@ export const Root: FC<RootProps> = ({
                 maxHeightFull,
                 minHeight0,
                 relative,
+                bg,
             })}
             style={style}
         >

@@ -45,6 +45,13 @@ const page = tv({
             row: "flex",
             col: "flex flex-col",
         },
+        bg: {
+            none: "",
+            paper: "bg-paper",
+            paper2: "bg-paper2",
+            paper3: "bg-paper3",
+            paper4: "bg-paper4",
+        },
     },
     defaultVariants: {
         size: "lg",
@@ -75,6 +82,7 @@ export const Page: FC<PageProps> = ({
     shrink,
     ref,
     sticky,
+    bg,
 }) => {
     return (
         <div
@@ -89,6 +97,7 @@ export const Page: FC<PageProps> = ({
                 fullHeight,
                 variant,
                 sticky,
+                bg,
             })}
             ref={ref}
             style={style}

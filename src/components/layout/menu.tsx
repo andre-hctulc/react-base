@@ -67,6 +67,13 @@ const menu = tv({
             xl: "shadow-xl",
             "2xl": "shadow-2xl",
         },
+        bg: {
+            none: "",
+            paper: "bg-paper",
+            paper2: "bg-paper2",
+            paper3: "bg-paper3",
+            paper4: "bg-paper4",
+        },
     },
     compoundVariants: [
         {
@@ -116,6 +123,7 @@ export const Menu: React.FC<MenuProps> = ({
     flex,
     padding,
     animationDirection,
+    bg,
 }) => {
     const Comp = as || "div";
     const show = open ?? true;
@@ -136,6 +144,7 @@ export const Menu: React.FC<MenuProps> = ({
                     variant,
                     elevated,
                     flex,
+                    bg,
                 })}
                 style={style}
             >
