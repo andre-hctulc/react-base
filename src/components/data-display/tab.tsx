@@ -9,7 +9,7 @@ const tab = tv({
         variant: {
             elevated: "rounded-sm bg-paper2 h-min data-[disabled=false]:hover:text-primary/80",
             default:
-                "border-y-2 border-transparent data-[disabled=false]:hover:bg-paper2  data-[disabled=false]:active:bg-paper3",
+                "border-y-2 border-transparent data-[disabled=false]:hover:bg-paper2 data-[disabled=false]:active:bg-paper3",
         },
         disabled: {
             true: "text-t3 cursor-not-allowed",
@@ -38,8 +38,21 @@ const tab = tv({
             true: "shadow-xs",
         },
     },
+    compoundVariants: [
+        {
+            variant: "default",
+            active: true,
+            className: "!border-b-primary ",
+        },
+        {
+            variant: "elevated",
+            active: true,
+            className: "text-primary ",
+        },
+    ],
     defaultVariants: {
         size: "md",
+        variant: "default",
     },
 });
 
