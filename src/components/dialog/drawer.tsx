@@ -8,7 +8,7 @@ import type { PropsOf, TVCProps } from "../../types/index.js";
 import { Overlay } from "../layout/overlay.js";
 
 const drawer = tv({
-    base: "fixed z-50 bg-white transition-transform duration-300 ease-in-out",
+    base: "fixed bg-white transition-transform duration-300 ease-in-out",
     variants: {
         position: {
             left: "top-0 left-0 h-full",
@@ -67,8 +67,8 @@ export interface DrawerProps extends TVCProps<typeof drawer, "div"> {
 export const Drawer: React.FC<DrawerProps> = ({
     open,
     onClose,
-    position = "right",
-    size,
+    position = "left",
+    size = "md",
     shadow,
     children,
     className,
@@ -77,15 +77,14 @@ export const Drawer: React.FC<DrawerProps> = ({
     bg,
     ...props
 }) => {
-    const _size = size || "md";
     const isVert = position === "top" || position === "bottom";
     const sizeClasses = isVert
-        ? collapse(_size, {
+        ? collapse(size, {
               sm: "h-32",
               md: "h-48",
               lg: "h-64",
           })
-        : collapse(_size, {
+        : collapse(size, {
               sm: "w-64",
               md: "w-80",
               lg: "w-[28rem]",
@@ -111,34 +110,34 @@ export const Drawer: React.FC<DrawerProps> = ({
 
     return (
         <>
-            {open && (
-                <Overlay
-                    noInteraction={!open}
-                    zIndex="40"
-                    bg="blur_xs"
-                    variant="fixed"
-                    onClick={() => onClose?.()}
-                    {...overlayProps}
-                />
-            )}
-            <div
-                {...props}
-                className={clsx(
-                    drawer({
-                        position,
-                        size,
-                        shadow,
-                        open,
-                        bg,
-                        padding,
-                        className: [className, sizeClasses],
-                    }),
-                    open ? transformClasses.open : transformClasses.closed,
-                    className
-                )}
+            <Overlay
+                noInteraction={!open}
+                zIndex="40"
+                bg={open ? "blur_xs" : "transparent"}
+                variant="fixed"
+                onClick={() => onClose?.()}
+                {...overlayProps}
             >
-                {children}
-            </div>
+                <div
+                    {...props}
+                    onClick={(e) => e.stopPropagation()}
+                    className={clsx(
+                        drawer({
+                            position,
+                            size,
+                            shadow,
+                            open,
+                            bg,
+                            padding,
+                            className: [className, sizeClasses],
+                        }),
+                        open ? transformClasses.open : transformClasses.closed,
+                        className
+                    )}
+                >
+                    {children}
+                </div>
+            </Overlay>
         </>
     );
 };

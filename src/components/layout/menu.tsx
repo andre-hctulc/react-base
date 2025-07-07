@@ -6,7 +6,7 @@ import type { StyleProps } from "../../types/index.js";
 import { CollapseH750, CollapseVScreen } from "../transitions/collapse.js";
 
 const menu = tv({
-    base: "bg-paper box-border h-full shrink-0 min-h-0 overflow-y-auto",
+    base: "bg-paper box-border h-full shrink-0 min-h-0 overflow-y-auto border-transparent",
     variants: {
         elevated: {
             "1": "bg-paper",
@@ -40,12 +40,13 @@ const menu = tv({
             screen: "h-screen",
         },
         position: {
-            left: "left-0",
-            right: "right-0",
-            none: "",
+            left: "left-0 border-r-divider",
+            right: "right-0 border-l-divider",
+            none: "border-r-divider",
         },
         border: {
-            true: "",
+            thin: "border-[0.5px]",
+            base: "border",
         },
         padding: {
             none: "",
@@ -75,22 +76,9 @@ const menu = tv({
             "5": "bg-paper4",
         },
     },
-    compoundVariants: [
-        {
-            position: "right",
-            border: true,
-            class: "border-l",
-        },
-        {
-            position: "left",
-            border: true,
-            class: "border-r",
-        },
-    ],
     defaultVariants: {
         size: "md",
         position: "none",
-        border: true,
         variant: "embedded",
     },
 });

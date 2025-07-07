@@ -59,7 +59,7 @@ interface TabsProps<V = string, D = any> extends Omit<TVCProps<typeof tabs, "div
 
 export const Tabs: FC<TabsProps> = ({
     activeTabs,
-    variant,
+    variant = "default",
     size,
     className,
     tabs: tabItems,
