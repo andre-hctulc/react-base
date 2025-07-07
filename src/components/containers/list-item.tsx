@@ -191,7 +191,10 @@ export const ListItem: FC<ListItemProps> = ({
                     </Icon>
                 ) : null}
                 {typeof children === "string" ? (
-                    <span {...(wrapperProps as any)} className={clsx("truncate", wrapperProps?.className)}>
+                    <span
+                        {...(wrapperProps as any)}
+                        className={clsx("grow truncate", wrapperProps?.className)}
+                    >
                         {children}
                     </span>
                 ) : (
