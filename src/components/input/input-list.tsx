@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { InputLikeProps } from "./types.js";
 import type { StyleProps } from "../../types/index.js";
 import { useRefOf } from "../../hooks/index.js";
@@ -12,7 +12,6 @@ type InputListInputProps<V = string> = Pick<
 >;
 
 export interface InputListProps<T = string> extends InputLikeProps<T[]>, StyleProps {
-    items: T[];
     /**
      * Passed to {@link renderInput} as default value for the input
      */
@@ -26,11 +25,11 @@ export interface InputListProps<T = string> extends InputLikeProps<T[]>, StylePr
          * Sets the given item as the candidate for the next `add`
          */
         candidate: (item: T) => void;
-        items: T[];
+        values: T[];
         inputProps: InputListInputProps<T>;
     }) => React.ReactNode;
     renderValues: (params: {
-        items: T[];
+        values: T[];
         change: (mutator: (items: T[]) => T[]) => void;
         remove: (item: T) => void;
         inputProps: InputListInputProps<T>;
@@ -66,7 +65,6 @@ export const InputList = <T = string,>({
     sort,
     defaultValue,
     readOnly,
-    items,
     defaultInputValue,
     compareValues,
     ...inputProps
@@ -74,27 +72,12 @@ export const InputList = <T = string,>({
     const sortRef = useRefOf(sort);
     const compareRef = useRefOf(compareValues || compare);
     const onChangeRef = useRefOf(onChange);
-    const findItems = useCallback(
-        (values: any[]) => {
-            const activeSet = new Set<any>(values);
-            return items.filter((v) => activeSet.has(v));
-        },
-        [items]
-    );
-    const [values, setValues] = useState<T[]>(() => {
-        return findItems(value || defaultValue || []);
-    });
+    const [values, setValues] = useState<T[]>(value || defaultValue || []);
     const Comp = as || "div";
     const [candidate, setCandidate] = useState<T>();
     const change = (mutator: (currentValues: T[]) => T[]) => {
         setValues(mutator as any);
     };
-
-    useEffect(() => {
-        if (value) {
-            setValues(findItems(value));
-        }
-    }, [value, findItems]);
 
     const add = useCallback(
         (newItem?: T) => {
@@ -139,7 +122,7 @@ export const InputList = <T = string,>({
     }, [values]);
 
     const valuesEl = renderValues({
-        items: sortedValues,
+        values: sortedValues,
         change,
         remove,
         inputProps: { ...inputProps, defaultValue: undefined },
@@ -147,7 +130,7 @@ export const InputList = <T = string,>({
     const inpEl =
         !readOnly &&
         renderInput({
-            items: sortedValues,
+            values: sortedValues,
             add,
             candidate: changeCandidate,
             inputProps: { ...inputProps, defaultValue: defaultInputValue },
