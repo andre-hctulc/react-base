@@ -73,6 +73,7 @@ export const InputList = <T = string,>({
 }: InputListProps<T>) => {
     const sortRef = useRefOf(sort);
     const compareRef = useRefOf(compareValues || compare);
+    const onChangeRef = useRefOf(onChange);
     const findItems = useCallback(
         (values: any[]) => {
             const activeSet = new Set<any>(values);
@@ -95,30 +96,36 @@ export const InputList = <T = string,>({
         }
     }, [value, findItems]);
 
-    const add = (newItem?: T) => {
-        if (newItem === undefined) {
-            if (candidate === undefined) {
-                return;
+    const add = useCallback(
+        (newItem?: T) => {
+            if (newItem === undefined) {
+                if (candidate === undefined) {
+                    return;
+                }
+                newItem = candidate;
             }
-            newItem = candidate;
-        }
-        let newItems = [...values];
-        if (unique) {
-            newItems = newItems.filter((item) => !compareRef.current(item, newItem as any));
-        }
-        newItems.push(newItem);
-        if (value === undefined) setValues(newItems);
-        onChange?.({ value: newItems });
-        setCandidate(undefined);
-    };
+            let newItems = [...values];
+            if (unique) {
+                newItems = newItems.filter((item) => !compareRef.current(item, newItem as any));
+            }
+            newItems.push(newItem);
+            if (value === undefined) setValues(newItems);
+            onChangeRef.current?.({ value: newItems });
+            setCandidate(undefined);
+        },
+        [values, unique, candidate]
+    );
 
-    const remove = () => (item: T, index?: number) => {
-        const newItems = values.filter(
-            (it, i) => !compareRef.current(it, item) && (index === undefined || index === i)
-        );
-        if (value === undefined) setValues(newItems);
-        onChange?.({ value: newItems });
-    };
+    const remove = useCallback(
+        () => (item: T, index?: number) => {
+            const newItems = values.filter(
+                (it, i) => !compareRef.current(it, item) && (index === undefined || index === i)
+            );
+            if (value === undefined) setValues(newItems);
+            onChangeRef.current?.({ value: newItems });
+        },
+        [value]
+    );
 
     const changeCandidate = useCallback((neItem: T) => {
         setCandidate(neItem);
