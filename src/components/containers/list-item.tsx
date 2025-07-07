@@ -183,7 +183,7 @@ export const ListItem: FC<ListItemProps> = ({
             onClick={_disabled ? undefined : onClick}
             style={style}
         >
-            <Inner className={listItemInner({ size })} {..._innerProps}>
+            <Inner {..._innerProps} className={listItemInner({ size, className: innerProps?.className })}>
                 {start}
                 {icon ? (
                     <Icon className="self-center" size={iconSize}>
