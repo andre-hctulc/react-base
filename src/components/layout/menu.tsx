@@ -46,7 +46,7 @@ const menu = tv({
         },
         border: {
             thin: "border-[0.5px]",
-            base: "border",
+            true: "border",
         },
         padding: {
             none: "",

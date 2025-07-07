@@ -73,9 +73,6 @@ export const InputList = <T = string,>({
 }: InputListProps<T>) => {
     const sortRef = useRefOf(sort);
     const compareRef = useRefOf(compareValues || compare);
-    const [values, setValues] = useState<T[]>(() => {
-        return findItems(value || defaultValue || []);
-    });
     const findItems = useCallback(
         (values: any[]) => {
             const activeSet = new Set<any>(values);
@@ -83,6 +80,9 @@ export const InputList = <T = string,>({
         },
         [items]
     );
+    const [values, setValues] = useState<T[]>(() => {
+        return findItems(value || defaultValue || []);
+    });
     const Comp = as || "div";
     const [candidate, setCandidate] = useState<T>();
     const change = (mutator: (currentValues: T[]) => T[]) => {
