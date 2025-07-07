@@ -165,7 +165,7 @@ export const List = <D = any,>({
                 }
 
                 const _itemProps = mergeProps<PropsOf<typeof ListItem>>([
-                    { size: "md" },
+                    { size: "md", active },
                     globalItemProps,
                     item.listItemProps,
                     item.props,
