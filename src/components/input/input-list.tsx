@@ -100,7 +100,7 @@ export const InputList = <T = string,>({
     );
 
     const remove = useCallback(
-        () => (item: T, index?: number) => {
+        (item: T, index?: number) => {
             const newItems = values.filter(
                 (it, i) => !compareRef.current(it, item) && (index === undefined || index === i)
             );
