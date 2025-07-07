@@ -1,4 +1,4 @@
-import { setProperty } from "dot-prop";
+import { getProperty, setProperty } from "dot-prop";
 import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./types.js";
 import type { ZodType } from "zod/v4";
 
@@ -44,10 +44,12 @@ function checkValidity(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectEl
 function formDataToObject(formData: FormData, inputElements: InputElement[]) {
     const obj: Record<string, any> = {};
     const elementsMap = new Map(inputElements.filter((el) => !!el.name).map((el) => [el.name, el]));
+    const paths = new Set<string>();
 
     for (let [name, value] of formData.entries()) {
         let val: any = value;
         const element = elementsMap.get(name);
+        paths.add(name);
 
         if (element?.dataset.rbjsoninp) {
             if (!value) {
@@ -73,9 +75,18 @@ function formDataToObject(formData: FormData, inputElements: InputElement[]) {
         else if (element?.type.includes("date")) {
             val = value ? new Date(value as string) : undefined;
         }
-        // else keep the value as string
 
-        setProperty(obj, name, val);
+        // Store in array to implement multiple inputs with the same name
+        const currentVal = getProperty(obj, name);
+        setProperty(obj, name, currentVal ? [...currentVal, val] : [val]);
+    }
+
+    // flatten single-item arrays
+    for (const path of paths) {
+        const value: any = getProperty(obj, path);
+        if (Array.isArray(value) && value.length === 1) {
+            setProperty(obj, path, value[0]);
+        }
     }
 
     return obj;
