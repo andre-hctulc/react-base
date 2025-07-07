@@ -166,7 +166,7 @@ export const ListItem: FC<ListItemProps> = ({
     const { bgA, text } = themeColor(
         variant === "warning" ? "warning" : variant === "danger" ? "error" : color || "neutral"
     );
-    const activeClasses = active && [activeBg && bgA(15), text];
+    const activeClasses = active && [activeBg && bgA(10), text];
 
     return (
         <Comp

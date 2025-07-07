@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type MouseEvent } from "react";
+import { type MouseEvent, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import type { LinkComponent, PartialPropsOf, PropsOf, TVCProps } from "../../types/index.js";
 import clsx from "clsx";
@@ -73,7 +73,7 @@ export type ListItemDef<D = any> = {
 };
 
 export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
-    children?: React.ReactNode;
+    children?: ReactNode;
     items?: ListItemDef<D>[];
     onItemClick?: (item: ListItemDef<D>, e: MouseEvent) => void;
     activeItems?: string | string[] | ((item: ListItemDef<D>) => boolean);
@@ -87,6 +87,7 @@ export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
      * @default "ul"
      */
     as?: "ol" | "ul";
+    color?: PropsOf<typeof ListItem>["color"];
 }
 export const List = <D = any,>({
     className,
@@ -106,10 +107,11 @@ export const List = <D = any,>({
     gap,
     padding,
     ref,
+    color,
     ...props
 }: ListProps<D>) => {
     const Comp: any = as || "ul";
-    const globalItemProps = { LinkComponent, size, ...listItemProps };
+    const globalItemProps = { LinkComponent, size, color, ...listItemProps };
 
     const isItemActive = (item: ListItemDef<D>) => {
         return (
