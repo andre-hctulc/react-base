@@ -1,21 +1,18 @@
 "use client";
 
 import clsx from "clsx";
-import React, { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { InputLikeProps } from "./types.js";
-import type { Choice, StyleProps } from "../../types/index.js";
+import type { StyleProps } from "../../types/index.js";
+import { useRefOf } from "../../hooks/index.js";
 
-type InputListInputProps<V = string, D = any> = Pick<
-    InputLikeProps<V, { item: InputListItem<V, D> }>,
+type InputListInputProps<V = string> = Pick<
+    InputLikeProps<V>,
     "readOnly" | "disabled" | "name" | "defaultValue"
 >;
 
-export interface InputListItem<V = string, D = any> extends Choice<V, D> {}
-
-export interface InputListProps<V = string, D = any>
-    extends InputLikeProps<V[], { items: InputListItem<V, D>[] }>,
-        StyleProps {
-    items: InputListItem<V, D>[];
+export interface InputListProps<T = string> extends InputLikeProps<T[]>, StyleProps {
+    items: T[];
     /**
      * Passed to {@link renderInput} as default value for the input
      */
@@ -24,26 +21,29 @@ export interface InputListProps<V = string, D = any>
         /**
          * @param newItem - The value of the new item. Id not provided the current candidate is used
          */
-        add: (newItem?: InputListItem<V, D>) => void;
+        add: (newItem?: T) => void;
         /**
          * Sets the given item as the candidate for the next `add`
          */
-        candidate: (item: InputListItem<V, D>) => void;
-        items: InputListItem<D>[];
-        inputProps: InputListInputProps<V, D>;
+        candidate: (item: T) => void;
+        items: T[];
+        inputProps: InputListInputProps<T>;
     }) => React.ReactNode;
     renderValues: (params: {
-        items: InputListItem<V, D>[];
-        change: (mutator: (items: InputListItem<V, D>[]) => InputListItem<V, D>[]) => void;
-        remove: (item: InputListItem<V, D>) => void;
-        inputProps: InputListInputProps<V, D>;
+        items: T[];
+        change: (mutator: (items: T[]) => T[]) => void;
+        remove: (item: T) => void;
+        inputProps: InputListInputProps<T>;
     }) => React.ReactNode;
     addIcon?: React.ReactNode;
     as?: any;
     reverse?: boolean;
     unique?: boolean;
-    sort?: (a: InputListItem<V, D>, b: InputListItem<V, D>) => number;
+    sort?: (a: T, b: T) => number;
+    compareValues?: (a: T, b: T) => boolean;
 }
+
+const compare = (a: any, b: any) => a === b;
 
 /**
  * ### Props
@@ -52,7 +52,7 @@ export interface InputListProps<V = string, D = any>
  * - `unique` - Only allow unique values
  * - `sort` - Sort function for the values
  */
-export const InputList = <V = string, D = any>({
+export const InputList = <T = string,>({
     className,
     renderInput,
     renderValues,
@@ -68,31 +68,34 @@ export const InputList = <V = string, D = any>({
     readOnly,
     items,
     defaultInputValue,
+    compareValues,
     ...inputProps
-}: InputListProps<V, D>) => {
+}: InputListProps<T>) => {
+    const sortRef = useRefOf(sort);
+    const compareRef = useRefOf(compareValues || compare);
+    const [values, setValues] = useState<T[]>(() => {
+        return findItems(value || defaultValue || []);
+    });
     const findItems = useCallback(
         (values: any[]) => {
             const activeSet = new Set<any>(values);
-            return items.filter((v) => activeSet.has(v.value));
+            return items.filter((v) => activeSet.has(v));
         },
         [items]
     );
-    const [values, setValues] = React.useState<InputListItem<V, D>[]>(() => {
-        return findItems(value || defaultValue || []);
-    });
     const Comp = as || "div";
-    const [candidate, setCandidate] = React.useState<InputListItem<V, D>>();
-    const change = (mutator: (currentValues: InputListItem<V, D>[]) => InputListItem<V, D>[]) => {
+    const [candidate, setCandidate] = useState<T>();
+    const change = (mutator: (currentValues: T[]) => T[]) => {
         setValues(mutator as any);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (value) {
             setValues(findItems(value));
         }
     }, [value, findItems]);
 
-    const add = (newItem?: InputListItem<V, D>) => {
+    const add = (newItem?: T) => {
         if (newItem === undefined) {
             if (candidate === undefined) {
                 return;
@@ -101,37 +104,32 @@ export const InputList = <V = string, D = any>({
         }
         let newItems = [...values];
         if (unique) {
-            newItems = newItems.filter((item) => item.value !== newItem?.value);
+            newItems = newItems.filter((item) => !compareRef.current(item, newItem as any));
         }
         newItems.push(newItem);
         if (value === undefined) setValues(newItems);
-        onChange?.({ value: newItems.map((v) => v.value), items: newItems });
+        onChange?.({ value: newItems });
         setCandidate(undefined);
     };
 
-    const remove = () => (item: InputListItem<V, D>, index?: number) => {
+    const remove = () => (item: T, index?: number) => {
         const newItems = values.filter(
-            (it, i) => it.value !== item.value && (index === undefined || index === i)
+            (it, i) => !compareRef.current(it, item) && (index === undefined || index === i)
         );
         if (value === undefined) setValues(newItems);
-        onChange?.({ value: newItems.map(({ value }) => value), items: newItems });
+        onChange?.({ value: newItems });
     };
 
-    const changeCandidate = useCallback((neItem: InputListItem<V, D>) => {
+    const changeCandidate = useCallback((neItem: T) => {
         setCandidate(neItem);
     }, []);
 
-    const sorter = useRef(sort);
     const sortedValues = useMemo(() => {
-        if (sorter.current) {
-            return (values as any[]).sort(sorter.current);
+        if (sortRef.current) {
+            return (values as any[]).sort(sortRef.current);
         }
         return values;
     }, [values]);
-
-    React.useEffect(() => {
-        sorter.current = sort;
-    }, [sort]);
 
     const valuesEl = renderValues({
         items: sortedValues,
