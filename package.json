@@ -1,6 +1,6 @@
 {
     "name": "@dre44/react-base",
-    "version": "0.4.30",
+    "version": "0.4.31",
     "main": "dist/index.js",
     "type": "module",
     "exports": {
