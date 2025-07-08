@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 type MapSource<K, V> = Map<K, V> | Iterable<[K, V]>;

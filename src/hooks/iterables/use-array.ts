@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 export function useArray<T = any>(source?: T[] | (() => T[]), resetOnSourceChange = false) {

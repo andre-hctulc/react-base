@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 export function useRange<T = number>(length: number, map?: (index: number) => T): T[] {

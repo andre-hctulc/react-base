@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 export function useMin(...values: number[]): number {

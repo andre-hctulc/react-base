@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 export function useAsSet<T>(iterable: Iterable<T>): Set<T> {

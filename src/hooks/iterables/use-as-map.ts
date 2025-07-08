@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useRefOf } from "../others/use-ref-of.js";
 

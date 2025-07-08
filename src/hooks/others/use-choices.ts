@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Choice } from "../../types/index.js";
 import { useRefOf } from "./use-ref-of.js";

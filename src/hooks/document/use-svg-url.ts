@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 export function useSvgUrl(svg: SVGElement | undefined | null) {

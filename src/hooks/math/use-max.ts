@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 export function useMax(...values: number[]): number {
