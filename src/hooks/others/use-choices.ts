@@ -46,6 +46,10 @@ export function useChoices<C extends Choice<any, any>>(
             def = defaultValue;
         }
 
+        if (!Array.isArray(def)) {
+            def = [def];
+        }
+
         if (multiple) {
             return def;
         }
@@ -133,7 +137,7 @@ export function useChoices<C extends Choice<any, any>>(
 
     useEffect(() => {
         if (controlled) {
-            setValue(controlledValue);
+            setValue(Array.isArray(controlledValue) ? controlledValue : [controlledValue]);
         }
     }, [controlledTrigger]);
 
