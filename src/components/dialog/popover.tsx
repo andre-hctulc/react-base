@@ -86,11 +86,6 @@ export interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
     overlayProps?: PartialPropsOf<typeof Overlay>;
 }
 
-const getOffset = (position: Placement, gap: number) => {
-    if (position.startsWith("left") || position.startsWith("right")) return [gap, 0];
-    return [0, gap];
-};
-
 /**
  * The popover is portaled to the body
  */
@@ -112,14 +107,14 @@ export const Popover: React.FC<PopoverProps> = (props) => {
             {
                 name: "offset",
                 options: {
-                    offset: getOffset(pos, props.gap ?? 4) as [number, number], // Adjust the offset of the popover
+                    offset: [0, props.gap], // Adjust the offset of the popover
                 },
             },
             {
-                name: "preventOverflow",
+                name: "windowMargin",
                 options: {
                     boundary: document.body,
-                    padding: props.frameMargin ?? 4, // Adds gap from the window border
+                    padding: props.frameMargin ?? 4, // Adds gap to the window border
                 },
             },
             // {

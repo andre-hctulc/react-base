@@ -16,7 +16,7 @@ interface UseChoicesResult<C extends Choice> {
     isActiveChoice: (value: ChoiceValue<C>) => boolean;
     areActiveChoices: (value: ChoiceValue<C>[]) => boolean;
     controlled: boolean;
-    rawValues: string[];
+    rawValues: string | string[];
     activeValues: ChoiceValue<C>[];
 }
 
@@ -126,7 +126,7 @@ export function useChoices<C extends Choice<any, any>>(
         [value, controlled, multiple]
     );
     const rawValues = useMemo(() => {
-        return value.map((v) => String(v));
+        return multiple ? value.map((v) => String(v)) : value.length ? String(value[0]) : "";
     }, [value, controlled]);
     // Use "hash" of value as controlled value trigger, so one can provide values without memoizing them
     const controlledTrigger = useMemo(() => JSON.stringify(controlledValue), [controlledValue]);

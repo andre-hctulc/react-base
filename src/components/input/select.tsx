@@ -43,7 +43,7 @@ export interface RenderSelectedParams<V = string, D = any> {
 }
 
 export interface SelectProps<V = string, D = any>
-    extends InputLikeProps<V[], { options: SelectOption<V, D>[] }>,
+    extends InputLikeProps<V[], { options: SelectOption<V, D>[]; singleValue: V }>,
         VariantProps<typeof select>,
         StyleProps {
     options: SelectOption<V, D>[];
@@ -109,7 +109,7 @@ export const Select = <V = string, D = any>({
         {
             multiple,
             onChange: (value, choices) => {
-                onChange?.({ value, options: choices });
+                onChange?.({ value, options: choices, singleValue: value[0] });
             },
             value,
             defaultValue,

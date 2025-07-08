@@ -39,11 +39,15 @@ const radioSwitch = tv({
     },
 });
 
+export type RadioSwitchOption<V = string, D = any> = LabeledChoice<V, D> & {
+    href?: string;
+};
+
 export interface RadioSwitchProps<V = string, D = any>
-    extends InputLikeProps<V[], { options: (LabeledChoice<V, D> & { href?: string })[] }>,
+    extends InputLikeProps<V[], { options: RadioSwitchOption<V, D>[]; singleValue: V }>,
         VariantProps<typeof radioSwitch>,
         StyleProps {
-    options: (LabeledChoice<V, D> & { href?: string })[];
+    options: RadioSwitchOption<V, D>[];
     LinkComponent?: ComponentType<{ href?: string }>;
     dense?: boolean;
     toggleMode?: boolean;
@@ -72,7 +76,7 @@ export const RadioSwitch = <V = string, D = any>({
     const { isActiveChoice, toggleChoice, activateChoice, choices, rawValues } = useChoices(options, {
         multiple,
         onChange: (value, choices) => {
-            onChange?.({ value, options: choices });
+            onChange?.({ value, options: choices, singleValue: value[0] });
         },
         value,
         defaultValue,
