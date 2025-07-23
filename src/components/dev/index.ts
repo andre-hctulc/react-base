@@ -1,2 +1,2 @@
-export * from "./xdev.js";
+export * from "./dev.js";
 export * from "./dev-provider.js";
