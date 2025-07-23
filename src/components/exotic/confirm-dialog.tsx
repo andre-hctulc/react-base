@@ -95,7 +95,6 @@ interface ConfirmDialogProps extends TVCProps<typeof confirmDialog, typeof Dialo
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     heading,
     className,
-    variant,
     children,
     onCancel,
     onConfirm,

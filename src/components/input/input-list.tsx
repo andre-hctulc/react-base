@@ -107,7 +107,7 @@ export const InputList = <T = string,>({
             if (value === undefined) setValues(newItems);
             onChangeRef.current?.({ value: newItems });
         },
-        [value]
+        [value, values]
     );
 
     const changeCandidate = useCallback((neItem: T) => {

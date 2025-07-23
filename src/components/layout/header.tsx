@@ -18,7 +18,14 @@ const header = tv({
             xl: "shadow-xl",
             "2xl": "shadow-2xl",
         },
-        sticky: { true: "sticky top-0 z-10" },
+        sticky: { true: "sticky top-0" },
+        zIndex: {
+            "10": "z-10",
+            "20": "z-20",
+            "30": "z-30",
+            "40": "z-40",
+            "50": "z-50",
+        },
     },
     defaultVariants: {
         variant: "elevated",
@@ -38,10 +45,20 @@ interface HeaderProps extends VariantProps<typeof header> {
  * - `variant`
  * - `shadow-sm`
  */
-export const Header: FC<HeaderProps> = ({ children, variant, className, style, sticky, shadow, as, ref }) => {
+export const Header: FC<HeaderProps> = ({
+    children,
+    variant,
+    className,
+    style,
+    sticky,
+    shadow,
+    as,
+    ref,
+    zIndex,
+}) => {
     const Comp = as || "div";
     return (
-        <Comp ref={ref} className={header({ className, variant, shadow, sticky })} style={style}>
+        <Comp ref={ref} className={header({ className, variant, shadow, sticky, zIndex })} style={style}>
             {children}
         </Comp>
     );

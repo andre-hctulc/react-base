@@ -3,7 +3,7 @@
 import { tv, type VariantProps } from "tailwind-variants";
 import type { PropsOf, StyleProps } from "../../types/index.js";
 import type { Placement } from "@popperjs/core";
-import { cloneElement, useRef, useState, type MouseEventHandler } from "react";
+import { cloneElement, useRef, useState, type FC, type MouseEventHandler, type ReactElement } from "react";
 import clsx from "clsx";
 import { Popover } from "./popover.js";
 
@@ -14,7 +14,7 @@ const tooltip = tv({
 });
 
 export interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
-    children: React.ReactElement<{
+    children: ReactElement<{
         className?: string;
         onMouseEnter?: MouseEventHandler;
         onMouseLeave?: MouseEventHandler;
@@ -56,7 +56,7 @@ export interface TooltipProps extends VariantProps<typeof tooltip>, StyleProps {
  * ### Props
  * - `disabled`
  */
-export const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip: FC<TooltipProps> = ({
     position,
     children,
     containerProps,
@@ -90,7 +90,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
                         () => {
                             setOpen(true);
                         },
-                        hasEntered ? reEnterDelay ?? enterDelay ?? 200 : enterDelay ?? 200
+                        hasEntered ? (reEnterDelay ?? enterDelay ?? 200) : (enterDelay ?? 200)
                     );
                     entered.current = true;
                 },

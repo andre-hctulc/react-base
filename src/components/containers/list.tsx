@@ -83,6 +83,8 @@ export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
     variant?: "icons" | "default";
     iconButtonProps?: Partial<PropsOf<typeof IconButton>>;
     listItemProps?: Partial<PropsOf<typeof ListItem>>;
+    activeListItemProps?: Partial<PropsOf<typeof ListItem>>;
+    activeIconButtonProps?: Partial<PropsOf<typeof IconButton>>;
     /**
      * @default "ul"
      */
@@ -108,6 +110,8 @@ export const List = <D = any,>({
     padding,
     ref,
     color,
+    activeIconButtonProps,
+    activeListItemProps,
     ...props
 }: ListProps<D>) => {
     const Comp: any = as || "ul";
@@ -119,8 +123,8 @@ export const List = <D = any,>({
             (typeof activeItems === "function"
                 ? activeItems(item)
                 : Array.isArray(activeItems)
-                ? activeItems.includes(item.key)
-                : item.key === activeItems)
+                  ? activeItems.includes(item.key)
+                  : item.key === activeItems)
         );
     };
 
@@ -157,6 +161,7 @@ export const List = <D = any,>({
                                 onItemClick?.(item, e);
                             },
                         },
+                        active && activeIconButtonProps,
                     ]);
 
                     return (
@@ -178,6 +183,7 @@ export const List = <D = any,>({
                               }
                             : undefined,
                     },
+                    active && activeListItemProps,
                 ]);
 
                 return (

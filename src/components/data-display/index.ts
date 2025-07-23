@@ -11,3 +11,4 @@ export * from "./divider.js";
 export * from "./tab.js";
 export * from "./badge.js";
 export * from "./badgify.js";
+export * from "./summary.js";

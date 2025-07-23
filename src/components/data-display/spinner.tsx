@@ -6,6 +6,7 @@ export const spinner = tv({
     base: "animate-spin origin-center",
     variants: {
         color: {
+            default: "",
             primary: "text-primary",
             secondary: "text-secondary",
             success: "text-success",
@@ -18,6 +19,8 @@ export const spinner = tv({
             neutral: "text-neutral",
             contrast: "text-t-contrast",
             inherit: "text-inherit",
+            black: "text-black",
+            accent: "text-accent",
         },
         size: {
             xs: "text-xs",

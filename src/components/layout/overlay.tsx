@@ -4,11 +4,15 @@ import { type FC } from "react";
 import { createPortal } from "react-dom";
 
 const overlay = tv({
-    base: "w-full h-full transition-all",
+    base: "w-full h-full transition-all transition-100",
     variants: {
         variant: {
             fixed: "fixed inset-0",
             absolute: "absolute",
+        },
+        centerContent: {
+            true: "flex justify-center items-center",
+            false: "",
         },
         bg: {
             transparent: "",
@@ -60,6 +64,7 @@ export const Overlay: FC<OverlayProps> = ({
     noInteraction,
     bg,
     portal,
+    centerContent,
     zIndex,
     ref,
     ...props
@@ -73,6 +78,7 @@ export const Overlay: FC<OverlayProps> = ({
                 variant,
                 zIndex,
                 noInteraction,
+                centerContent,
             })}
             {...props}
         >

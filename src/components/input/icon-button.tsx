@@ -28,15 +28,21 @@ export const IconButton: FC<IconButtonProps> = ({
     loading,
     disabled,
     size,
+    href,
+    as,
     ...props
 }) => {
+    const btnExclusiveProps: any = !href && !as ? { type: "button" } : {};
     return (
         <Button
+            {...btnExclusiveProps}
             color="neutral"
             variant="text"
             className={iconButton({ className, size })}
             disabled={loading || disabled}
             size={size}
+            href={href}
+            as={as}
             {...props}
             icon={undefined}
         >

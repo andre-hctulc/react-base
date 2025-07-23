@@ -1,14 +1,12 @@
 "use client";
 
-import { Dialog as BaseDialog, DialogPanel } from "@headlessui/react";
 import { tv, type VariantProps } from "tailwind-variants";
-import type { StyleProps } from "../../types/index.js";
-import clsx from "clsx";
-import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
-import { createPortal } from "react-dom";
+import type { PropsOf, StyleProps } from "../../types/index.js";
+import { Overlay } from "../layout/overlay.js";
+import { useEffect, useState, type FC } from "react";
 
 const dialog = tv({
-    base: "relative z-10 focus:outline-hidden",
+    base: "",
     variants: {},
     defaultVariants: {
         variant: "default",
@@ -17,8 +15,7 @@ const dialog = tv({
 
 const dialogPanel = tv({
     base: [
-        // use flex layout to fix overflow issues
-        "flex flex-col",
+        "flex flex-col transition-all",
         "max-w-full max-h-full bg-paper rounded-xl backdrop-blur-2xl m-4 box-border",
         "duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0",
     ],
@@ -64,60 +61,71 @@ export interface DialogProps
     onClose?: () => void;
     children?: React.ReactNode;
     loading?: boolean;
-    variant?: "transparent" | "default";
     /**
      * @default true
      */
     closable?: boolean;
+    /**
+     * Retain mounted during closed state.
+     */
+    retainMount?: boolean;
+    overlayProps?: PropsOf<typeof Overlay>;
+    panelProps?: PropsOf<"div">;
 }
 
 // TODO loading
-export const Dialog: React.FC<DialogProps> = ({
+export const Dialog: FC<DialogProps> = ({
     open,
     children,
     className,
-    loading,
-    variant,
-    closable,
+    closable = true,
     onClose,
     width,
     height,
     shadow,
     style,
+    overlayProps,
+    panelProps,
+    retainMount,
 }) => {
-    const mounted = useIsHydrated();
-    const cl = closable !== false;
+    const [render, setRender] = useState(open);
 
-    if (!mounted) return null;
+    useEffect(() => {
+        if (open) {
+            setRender(true);
+        } else {
+            const timer = setTimeout(() => setRender(false), 300); // Match the transition duration
+            return () => clearTimeout(timer);
+        }
+    }, [open]);
 
-    return createPortal(
-        <BaseDialog
-            open={open}
-            as="div"
-            className={dialog({ className })}
-            style={style}
-            onClose={() => {
-                if (cl && onClose) onClose();
+    return (
+        <Overlay
+            portal
+            centerContent
+            zIndex="50"
+            {...overlayProps}
+            variant="fixed"
+            className={dialog({ className: [className, overlayProps?.className] })}
+            style={{ ...style, ...overlayProps?.style }}
+            onClick={(e) => {
+                if (closable && onClose) onClose();
+                overlayProps?.onClick?.(e);
             }}
+            noInteraction={open ? (overlayProps?.noInteraction ?? false) : true}
+            bg={open ? (overlayProps?.bg ?? "transparent1") : "transparent"}
         >
             <div
-                data-open={open}
-                className={clsx(
-                    "fixed inset-0 z-40 w-screen overflow-y-auto transition-all duration-500 ease-out",
-                    variant == "transparent"
-                        ? ""
-                        : open
-                        ? "data-[open=true]:bg-black/10"
-                        : "data-[open=false]:bg-black/0"
-                )}
+                {...panelProps}
+                data-closed={open ? undefined : true}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    panelProps?.onClick?.(e);
+                }}
+                className={dialogPanel({ width, height, shadow, className: panelProps?.className })}
             >
-                <div className="flex h-screen items-center justify-center p-4 box-border">
-                    <DialogPanel transition className={dialogPanel({ width, height, shadow })}>
-                        {children}
-                    </DialogPanel>
-                </div>
+                {retainMount ? children : render ? children : null}
             </div>
-        </BaseDialog>,
-        document.body
+        </Overlay>
     );
 };

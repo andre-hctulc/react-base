@@ -1,13 +1,12 @@
 import { tv, type VariantProps } from "tailwind-variants";
-import type { LinkComponent, PropsOf } from "../../types/index.js";
+import type { LinkComponent, LinkProps, PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { type FC, type ReactNode, type Ref } from "react";
 import { Spinner } from "../data-display/spinner.js";
 import clsx from "clsx";
-import { themeColor } from "../../util/style.js";
 
 const listItem = tv({
-    base: "transition duration-75 min-w-0",
+    base: "transition duration-75 min-w-0 overflow-hidden flex items-center box-border",
     variants: {
         rounded: {
             sm: "rounded-sm",
@@ -19,63 +18,9 @@ const listItem = tv({
         clickable: {
             true: "cursor-pointer active:brightness-75",
         },
-        variant: {
-            danger: "text-error",
-            warning: "text-warning",
-            default: "",
-            secondary: "text-t2",
-        },
-        color: {
-            neutral: "",
-            black: "",
-            primary: "",
-            secondary: "",
-            error: "",
-            success: "",
-            warning: "",
-            info: "",
-            accent: "",
-        },
-        hoverEffect: {
-            true: "",
-            false: "",
-        },
         disabled: {
             true: "cursor-not-allowed opacity-50",
         },
-    },
-    compoundVariants: [
-        {
-            variant: "danger",
-            hoverEffect: true,
-            class: "hover:bg-error/5",
-        },
-        {
-            variant: "warning",
-            hoverEffect: true,
-            class: "hover:bg-warning/5",
-        },
-        {
-            variant: "default",
-            hoverEffect: true,
-            class: "hover:bg-transparent1",
-        },
-        {
-            variant: "secondary",
-            hoverEffect: true,
-            class: "hover:bg-neutral/5",
-        },
-    ],
-    defaultVariants: {
-        variant: "default",
-        rounded: "md",
-        color: "neutral",
-    },
-});
-
-const listItemInner = tv({
-    base: "w-full flex items-center box-border transition duration-100",
-    variants: {
         size: {
             xs: "text-xs px-2 gap-1.5 py-1",
             sm: "text-[14px] px-2 gap-2 py-1",
@@ -83,13 +28,56 @@ const listItemInner = tv({
             lg: "text-[15px] px-4 gap-4 py-2",
             xl: "text-[15px] px-5 gap-4 py-3",
         },
+        color: {
+            default: "",
+            neutral: "text-neutral",
+            black: "text-black",
+            primary: "text-primary",
+            secondary: "text-secondary",
+            error: "text-error",
+            success: "text-success",
+            warning: "text-warning",
+            info: "text-info",
+            accent: "text-accent",
+        },
+        hoverBg: {
+            none: "",
+            default: "hover:bg-transparent1",
+            neutral: "hover:bg-neutral/10",
+            black: "hover:bg-black/10",
+            primary: "hover:bg-primary/10",
+            secondary: "hover:bg-secondary/10",
+            error: "hover:bg-error/10",
+            success: "hover:bg-success/10",
+            warning: "hover:bg-warning/10",
+            info: "hover:bg-info/10",
+            accent: "hover:bg-accent/10",
+        },
+        bg: {
+            none: "",
+            default: "bg-transparent1",
+            neutral: "bg-neutral/10",
+            black: "bg-black/10",
+            primary: "bg-primary/10",
+            secondary: "bg-secondary/10",
+            error: "bg-error/10",
+            success: "bg-success/10",
+            warning: "bg-warning/10",
+            info: "bg-info/10",
+            accent: "bg-accent/10",
+        },
     },
     defaultVariants: {
         size: "md",
+        color: "default",
+        hoverBg: "default",
+        bg: "none",
+        variant: "default",
+        rounded: "md",
     },
 });
 
-interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<typeof listItemInner> {
+interface ListItemProps extends VariantProps<typeof listItem> {
     children?: React.ReactNode;
     onClick?: React.MouseEventHandler<HTMLLIElement>;
     className?: string;
@@ -99,7 +87,7 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
     key?: string;
     href?: string;
     LinkComponent?: LinkComponent;
-    innerProps?: any;
+    linkProps?: LinkProps;
     loading?: boolean;
     /**
      * @default "div"
@@ -120,6 +108,8 @@ interface ListItemProps extends VariantProps<typeof listItem>, VariantProps<type
      * @default true
      */
     activeBg?: boolean;
+    hoverEffect?: boolean;
+    innerProps?: PropsOf<"div">;
 }
 
 /**
@@ -141,9 +131,7 @@ export const ListItem: FC<ListItemProps> = ({
     href,
     LinkComponent,
     loading,
-    variant,
     size,
-    innerProps,
     disabled,
     iconProps,
     ref,
@@ -151,43 +139,56 @@ export const ListItem: FC<ListItemProps> = ({
     hoverEffect,
     end,
     wrapperProps,
-    color,
+    color = "default",
     activeBg = true,
+    linkProps,
+    bg,
+    as,
+    hoverBg,
+    innerProps,
+    icon,
+    clickable,
     ...props
 }) => {
-    const Link = LinkComponent || "a";
-    const icon = loading ? <Spinner color={variant === "danger" ? "error" : "neutral"} /> : props.icon;
-    const Comp: any = props.as || "li";
-    const Inner: any = href ? Link : "div";
-    const _innerProps = href ? { ...innerProps, href } : innerProps;
+    const ico = loading ? <Spinner color={color} /> : icon;
+    const InnerComp: any = href ? LinkComponent || "a" : "div";
+    const _linkProps = href ? { ...linkProps, href } : {};
     const _disabled = loading || disabled;
-    const interactive = _disabled ? false : props.clickable ?? (!!onClick || !!href);
+    const interactive = _disabled ? false : (clickable ?? (!!onClick || !!href));
     const iconSize = size === "xs" ? "sm" : size === "lg" || size === "xl" ? "xl" : "md";
-    const { bgA, text } = themeColor(
-        variant === "warning" ? "warning" : variant === "danger" ? "error" : color || "neutral"
-    );
-    const activeClasses = active && [activeBg && bgA(10), text];
+    const bgColor = bg || color;
+    const _hoverEffect = !active && (interactive || !!hoverEffect);
+    const Comp = as || "li";
 
     return (
-        <Comp
-            ref={ref}
-            data-active={active}
-            className={listItem({
-                hoverEffect: !active && (interactive || !!hoverEffect),
-                variant,
-                className: clsx(activeClasses, className),
-                clickable: interactive,
-                disabled: _disabled,
-            })}
-            data-reactive={true}
-            onClick={_disabled ? undefined : onClick}
-            style={style}
-        >
-            <Inner {..._innerProps} className={listItemInner({ size, className: innerProps?.className })}>
+        /* 
+        Wrapper component is required, so we can have a consistent root element (e.g. li),
+        even with href set.
+        */
+        <Comp className={className} style={style} ref={ref} {...props}>
+            <InnerComp
+                {...innerProps}
+                data-active={active || undefined}
+                className={listItem({
+                    size,
+                    className: innerProps?.className,
+                    hoverBg: _hoverEffect ? (hoverBg ?? bgColor) : "none",
+                    bg: bg ? bg : active ? bgColor : "none",
+                    color,
+                    clickable: interactive,
+                    disabled: _disabled,
+                })}
+                onClick={_disabled ? undefined : (e: any) => onClick?.(e)}
+                {..._linkProps}
+            >
                 {start}
-                {icon ? (
-                    <Icon className="self-center" size={iconSize}>
-                        {icon}
+                {ico ? (
+                    <Icon
+                        size={iconSize}
+                        {...iconProps}
+                        className={clsx("self-center", iconProps?.className)}
+                    >
+                        {ico}
                     </Icon>
                 ) : null}
                 {typeof children === "string" ? (
@@ -203,7 +204,7 @@ export const ListItem: FC<ListItemProps> = ({
                     </div>
                 )}
                 {end}
-            </Inner>
+            </InnerComp>
         </Comp>
     );
 };

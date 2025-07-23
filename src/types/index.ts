@@ -56,12 +56,14 @@ export interface RequiredChildrenProps {
  */
 export type TVCProps<
     T extends (...args: any) => any,
-    R extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> | never = never
+    R extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> | never = never,
 > = VariantProps<T> & Omit<ComponentProps<R>, "className"> & StyleProps;
 
 // #### Components ####
 
-export type LinkComponent = ComponentType<{ href: any; className?: string }>;
+export type LinkProps = PropsOf<"a">;
+
+export type LinkComponent = ComponentType<LinkProps & { href: string }>;
 
 // #### Helpers ####
 

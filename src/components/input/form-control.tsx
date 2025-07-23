@@ -1,3 +1,5 @@
+"use client";
+
 import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
 import { useJSForm } from "./js-form/js-form-context.js";
 import type { PartialPropsOf, TVCProps } from "../../types/index.js";
@@ -106,7 +108,7 @@ export const FormControl: FC<FormControlProps> = ({
     const _name = name !== undefined ? `${formCtx?.prefixNames ?? ""}${name}` : undefined;
     const hasName = _name !== undefined;
     const isErr = !noError && hasName && formCtx?.inputs[_name]?.ok === false;
-    const errText = isErr && formCtx.reporting ? errorText ?? (formCtx?.inputs[_name]?.error || "") : "";
+    const errText = isErr && formCtx.reporting ? (errorText ?? (formCtx?.inputs[_name]?.error || "")) : "";
     const _controlled = controlled ?? formCtx?.controlled;
     const id = useId();
     const childElement: ReactElement<any> | null = isValidElement(children) ? children : null;

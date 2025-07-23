@@ -4,7 +4,7 @@ export * from "./root.js";
 export * from "./header.js";
 export * from "./page-content.js";
 export * from "./overlay.js";
-export * from "./menu.js";
 export * from "./page-footer.js";
 export * from "./page-skeleton.js";
 export * from "./spinner-page.js";
+export * from "./drawer.js";

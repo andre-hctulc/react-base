@@ -9,18 +9,22 @@ const placeholder = tv({
     variants: {
         gap: {
             none: "",
+            xs: "gap-1",
             sm: "gap-2.5",
             md: "gap-4",
             lg: "gap-6",
         },
         padding: {
             none: "",
-            sm: "p-6",
+            "2xs": "p-1",
+            xs: "p-2",
+            sm: "p-5",
             md: "p-8",
             lg: "p-10",
         },
         grow: {
             true: "grow",
+            false: "",
         },
         fullHeight: {
             true: "h-full",
@@ -31,17 +35,14 @@ const placeholder = tv({
         my: {
             none: "",
             "2xs": "my-1",
-            xs: "my-2",
-            sm: "my-4",
-            md: "my-8",
-            lg: "my-12",
+            xs: "my-3",
+            sm: "my-6",
+            md: "my-10",
+            lg: "my-14",
             xl: "my-20",
         },
     },
-    defaultVariants: {
-        padding: "md",
-        gap: "md",
-    },
+    defaultVariants: {},
 });
 
 interface PlaceholderProps extends TVCProps<typeof placeholder, "div"> {
@@ -54,10 +55,6 @@ interface PlaceholderProps extends TVCProps<typeof placeholder, "div"> {
 }
 
 /**
- * A placeholder component that can be used to show a message or icon when there is no data.
- *
- * The component is a flex container that centers its children.
- *
  * ### Props
  * - `gap`
  * - `padding`

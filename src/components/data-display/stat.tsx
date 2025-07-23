@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { useMemo, type FC, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import { useRefOf } from "../../hooks/index.js";
-import type { TVCProps, PropsOf, LinkComponent } from "../../types/index.js";
+import type { TVCProps, PropsOf, LinkComponent, LinkProps } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { HelperText } from "../input/helper-text.js";
 import { Skeleton } from "./skeleton.js";
@@ -48,6 +48,7 @@ interface StatProps extends TVCProps<typeof stat, "div"> {
     icon?: ReactNode;
     loading?: boolean;
     LinkComponent?: LinkComponent;
+    linkProps?: LinkProps;
     href?: string;
 }
 
@@ -74,6 +75,7 @@ export const Stat: FC<StatProps> = ({
     textProps,
     icon,
     loading,
+    linkProps,
     children,
     href,
     LinkComponent,
@@ -98,6 +100,7 @@ export const Stat: FC<StatProps> = ({
     const mainProps: any = { ...textProps };
 
     if (href) {
+        Object.assign(mainProps, linkProps);
         mainProps.href = href;
     }
 

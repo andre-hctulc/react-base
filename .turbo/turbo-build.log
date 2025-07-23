@@ -1,0 +1,10 @@
+
+
+> @dre44/react-base@0.4.39 prebuild
+> rm -rf dist
+
+[1G[0K[1G[0K⠙[1G[0K
+> @dre44/react-base@0.4.39 build
+> tsc -p tsconfig.build.json && copyfiles -u 1 src/**/*.css dist/
+
+[1G[0K⠙[1G[0K[1G[0K⠙[1G[0K

@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import React, { type FC } from "react";
-import type { TVCProps, StyleProps } from "../../types/index.js";
+import { type FC, type ReactNode } from "react";
+import type { TVCProps, StyleProps, LinkProps } from "../../types/index.js";
 import { Spinner } from "../data-display/spinner.js";
 import { Icon } from "../icons/icon.js";
 import { themeColor } from "../../util/style.js";
@@ -70,8 +70,9 @@ const btn = tv({
 
 export interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">, StyleProps {
     iconPosition?: "left" | "right";
-    icon?: React.ReactNode;
-    children?: React.ReactNode;
+    icon?: ReactNode;
+    children?: ReactNode;
+    linkProps?: LinkProps;
     loading?: boolean;
     disabled?: boolean;
     as?: any;
@@ -94,6 +95,7 @@ export const Button: FC<ButtonProps> = ({
     as,
     href,
     ref,
+    linkProps,
     ...props
 }) => {
     const _variant = variant || "filled";
@@ -145,11 +147,12 @@ export const Button: FC<ButtonProps> = ({
         floating: activeBgA(75),
         mix: "active:bg-paper4",
     });
+    const btnExclusiveProps: any = !href && !as ? { disabled } : {};
 
     if (href) {
         p.href = href;
+        if (linkProps) Object.assign(p, linkProps);
     }
-
     return (
         <Comp
             ref={ref}
@@ -170,7 +173,7 @@ export const Button: FC<ButtonProps> = ({
                 mt,
                 disabled: _disabled,
             })}
-            disabled={_disabled}
+            {...btnExclusiveProps}
             {...p}
         >
             {ico && iconPosition === "left" && <Icon>{ico}</Icon>}

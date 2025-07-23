@@ -116,11 +116,12 @@ export function mergeProps<P extends object>(
                 mergedProps[key] = { ...mergedProps[key], ...propsItem[key] };
             } else if (mergeEvents !== false && /^on[A-Z]+.*$/.test(key)) {
                 const preHandler = mergedProps[key];
+                const currentHandler = (propsItem as any)[key];
 
                 mergedProps[key] = mergedProps[key]
                     ? (...args: any[]) => {
                           preHandler?.(...args);
-                          (propsItem as any)[key](...args);
+                          currentHandler?.(...args);
                       }
                     : propsItem[key];
             } else {

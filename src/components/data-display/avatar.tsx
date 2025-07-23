@@ -3,7 +3,7 @@ import type { TVCProps } from "../../types/index.js";
 import { type FC } from "react";
 
 const avatar = tv({
-    base: "flex items-center justify-center overflow-hidden shrink-0 aspect-square",
+    base: "flex items-center justify-center overflow-hidden shrink-0 aspect-square transition",
     variants: {
         shape: {
             circle: "rounded-full",
@@ -17,6 +17,7 @@ const avatar = tv({
             none: "",
         },
         size: {
+            xs: "size-6 text-base",
             sm: "size-8 text-lg",
             md: "size-10 text-xl",
             lg: "size-14 text-2xl",
@@ -34,6 +35,10 @@ const avatar = tv({
         },
         bold: {
             true: "font-medium",
+        },
+        clickable: {
+            true: "cursor-pointer hover:brightness-95 active:brightness-90",
+            false: "",
         },
         textColor: {
             "1": "text-t1",
@@ -66,12 +71,27 @@ export const Avatar: FC<AvatarProps> = ({
     bold,
     textColor,
     ref,
+    onClick,
+    clickable,
     ...props
 }) => {
     const Comp: any = as || "div";
 
     return (
-        <Comp ref={ref} className={avatar({ size, shape, padding, className, textColor, bold })} {...props}>
+        <Comp
+            ref={ref}
+            onClick={onClick}
+            className={avatar({
+                size,
+                shape,
+                padding,
+                className,
+                textColor,
+                bold,
+                clickable: clickable ?? !!onClick,
+            })}
+            {...props}
+        >
             {children}
         </Comp>
     );

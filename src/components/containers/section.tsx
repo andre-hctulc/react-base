@@ -33,7 +33,7 @@ const section = tv({
             md: "mb-8",
             lg: "mb-12",
         },
-        padding: {
+        size: {
             none: "",
             sm: "px-2.5 p-2",
             md: "px-5 p-4",
@@ -145,7 +145,7 @@ export const Section: FC<SectionProps> = ({
     openButtonProps,
     wrapperClassName,
     danger,
-    padding,
+    size,
     noBorder,
     ...props
 }) => {
@@ -179,6 +179,9 @@ export const Section: FC<SectionProps> = ({
         onOpenChange?.(!isOpen);
     }
 
+    const titl = title ?? sectionStartProps?.title;
+    const ico = icon ?? sectionStartProps?.icon;
+
     return (
         <Comp
             ref={ref}
@@ -192,59 +195,61 @@ export const Section: FC<SectionProps> = ({
                 bg,
                 flex,
                 danger,
-                padding: padding ?? (outlined ? "md" : "none"),
+                size: size ?? (outlined ? "md" : "none"),
             })}
             {...props}
         >
-            <SectionStart
-                variant={sectionStartVariant}
-                {...sectionStartProps}
-                onClick={(e) => {
-                    // default true
-                    if (_openOnStartClick) {
-                        handleOpenChange();
+            {!!(titl || ico || sectionStartProps?.end || closeable) && (
+                <SectionStart
+                    variant={sectionStartVariant}
+                    {...sectionStartProps}
+                    onClick={(e) => {
+                        // default true
+                        if (_openOnStartClick) {
+                            handleOpenChange();
+                        }
+                        sectionStartProps?.onClick?.(e);
+                    }}
+                    title={titl}
+                    icon={ico}
+                    className={clsx(
+                        sectionStartProps?.className,
+                        closeable && _openOnStartClick && "cursor-pointer"
+                    )}
+                    end={
+                        <Toolbar stopEventPropagation {...toolbarProps}>
+                            {sectionStartProps?.end}
+                            {closeable && (
+                                <IconButton
+                                    {...openButtonProps}
+                                    onClick={(e) => {
+                                        handleOpenChange();
+                                        openButtonProps?.onClick?.(e);
+                                    }}
+                                >
+                                    <ChevronRightIcon className={clsx("transition", isOpen && "rotate-90")} />
+                                </IconButton>
+                            )}
+                        </Toolbar>
                     }
-                    sectionStartProps?.onClick?.(e);
-                }}
-                title={title ?? sectionStartProps?.title}
-                icon={icon ?? sectionStartProps?.icon}
-                className={clsx(
-                    sectionStartProps?.className,
-                    closeable && _openOnStartClick && "cursor-pointer"
-                )}
-                end={
-                    <Toolbar stopEventPropagation {...toolbarProps}>
-                        {sectionStartProps?.end}
-                        {closeable && (
-                            <IconButton
-                                {...openButtonProps}
-                                onClick={(e) => {
-                                    handleOpenChange();
-                                    openButtonProps?.onClick?.(e);
-                                }}
-                            >
-                                <ChevronRightIcon className={clsx("transition", isOpen && "rotate-90")} />
-                            </IconButton>
-                        )}
-                    </Toolbar>
-                }
-                iconProps={{
-                    color: danger ? "error" : undefined,
-                    ...sectionStartProps?.iconProps,
-                }}
-                subtitleProps={{
-                    ...sectionStartProps?.subtitleProps,
-                    className: clsx(danger && "!text-error", sectionStartProps?.subtitleProps?.className),
-                }}
-            />
+                    iconProps={{
+                        color: danger ? "error" : undefined,
+                        ...sectionStartProps?.iconProps,
+                    }}
+                    subtitleProps={{
+                        ...sectionStartProps?.subtitleProps,
+                        className: clsx(danger && "!text-error", sectionStartProps?.subtitleProps?.className),
+                    }}
+                />
+            )}
             <CollapseVScreen show={isOpen}>
                 <div {...wrapperProps} className={clsx("pt-6", wrapperProps?.className, wrapperClassName)}>
                     {loading === true ? (
-                        <Placeholder my="lg">
+                        <Placeholder padding="sm" my="lg">
                             <Spinner size="2xl" />
                         </Placeholder>
                     ) : (
-                        loading ?? children
+                        (loading ?? children)
                     )}
                 </div>
             </CollapseVScreen>
