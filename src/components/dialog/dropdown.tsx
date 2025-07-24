@@ -106,6 +106,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
                     popoverProps?.onClose?.(e);
                     onClose?.();
                 }}
+                overlayProps={{ portal: false, ...popoverProps?.overlayProps }}
             >
                 <Card width="xs" variant="elevated_sm" {...cardProps}>
                     {content}
