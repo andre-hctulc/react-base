@@ -1,9 +1,0 @@
-
-
-> @dre44/react-base@0.4.39 prebuild /Users/andrethomas/Desktop/dev/projects/app0/packages/react-base
-> rm -rf dist
-
-
-> @dre44/react-base@0.4.39 build /Users/andrethomas/Desktop/dev/projects/app0/packages/react-base
-> tsc -p tsconfig.build.json && copyfiles -u 1 src/**/*.css dist/
-
