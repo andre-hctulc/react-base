@@ -96,7 +96,12 @@ export const Subtitle = <T extends ELEMENT = "h2">({
             {...props}
         >
             {icon && (
-                <Icon size="inherit" inline {...iconProps} className={clsx("mr-2", iconProps?.className)}>
+                <Icon
+                    size="inherit"
+                    inline
+                    {...(iconProps as any)}
+                    className={clsx("mr-2", iconProps?.className)}
+                >
                     {icon}
                 </Icon>
             )}

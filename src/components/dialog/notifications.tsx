@@ -211,7 +211,7 @@ const NotificationItem: FC<NotificationItemProps> = ({ className, notification }
                     icon={getIcon()}
                     type={notification.severity}
                     closable={notification.closable}
-                    title={notification.title}
+                    title={notification.title as any}
                     {...notification.alertProps}
                     className={clsx(notification.className, notification.alertProps?.className)}
                 >

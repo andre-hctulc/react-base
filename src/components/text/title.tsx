@@ -96,7 +96,7 @@ export const Title = <T extends ELEMENT = "h1">({
             {...props}
         >
             {icon && (
-                <Icon size="none" inline {...iconProps}>
+                <Icon size="none" inline {...iconProps as any}>
                     {icon}
                 </Icon>
             )}
