@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { PartialPropsOf, PropsOf, TVCProps } from "../../types/index.js";
+import type { PartialPropsOf, PropsOf, WithTVProps } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { Subtitle } from "../text/subtitle.js";
 
@@ -39,13 +39,17 @@ const sectionStart = tv({
     },
 });
 
-interface SectionStartProps extends TVCProps<typeof sectionStart, "div"> {
-    icon?: React.ReactNode;
-    iconProps?: PartialPropsOf<typeof Icon>;
-    subtitleProps?: PropsOf<typeof Subtitle>;
-    end?: ReactNode;
-    subtitleVariant?: PropsOf<typeof Subtitle>["variant"];
-}
+type SectionStartProps = WithTVProps<
+    PropsOf<"div"> & {
+        icon?: React.ReactNode;
+        iconProps?: PartialPropsOf<typeof Icon>;
+        subtitleProps?: PropsOf<typeof Subtitle>;
+        end?: ReactNode;
+        subtitleVariant?: PropsOf<typeof Subtitle>["variant"];
+        title?: string;
+    },
+    typeof sectionStart
+>;
 
 /**
  * ### Props
@@ -55,7 +59,7 @@ interface SectionStartProps extends TVCProps<typeof sectionStart, "div"> {
  * - `my` - Margin y
  * - `variant`
  */
-export const SectionStart: React.FC<SectionStartProps> = ({
+export const SectionStart: FC<SectionStartProps> = ({
     children,
     className,
     mt,

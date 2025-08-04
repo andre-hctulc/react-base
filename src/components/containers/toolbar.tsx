@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
 import { type FC } from "react";
+import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
 
 const toolbar = tv({
     base: "flex min-w-0",
@@ -62,11 +62,13 @@ const toolbar = tv({
     },
 });
 
-interface ToolbarProps extends TVCProps<typeof toolbar, "div"> {
-    children?: React.ReactNode;
-    stopEventPropagation?: boolean;
-    as?: any;
-}
+type ToolbarProps<T extends ELEMENT = "div"> = WithTVProps<
+    RichAsProps<T> & {
+        stopEventPropagation?: boolean;
+        as?: any;
+    },
+    typeof toolbar
+>;
 
 /**
  * ### Props

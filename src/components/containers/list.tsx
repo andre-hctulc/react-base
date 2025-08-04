@@ -2,7 +2,14 @@
 
 import { type MouseEvent, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { LinkComponent, PartialPropsOf, PropsOf, TVCProps } from "../../types/index.js";
+import type {
+    LinkComponent,
+    PartialPropsOf,
+    PropsOf,
+    RefProps,
+    StyleProps,
+    WithTVProps,
+} from "../../types/index.js";
 import clsx from "clsx";
 import { withPrefix } from "../../util/system.js";
 import { IconButton } from "../input/icon-button.js";
@@ -72,25 +79,30 @@ export type ListItemDef<D = any> = {
     listItemProps?: PartialPropsOf<typeof ListItem>;
 };
 
-export interface ListProps<D = any> extends TVCProps<typeof list, "ol" | "ul"> {
-    children?: ReactNode;
-    items?: ListItemDef<D>[];
-    onItemClick?: (item: ListItemDef<D>, e: MouseEvent) => void;
-    activeItems?: string | string[] | ((item: ListItemDef<D>) => boolean);
-    size?: "xs" | "sm" | "md" | "lg" | "xl";
-    LinkComponent?: LinkComponent;
-    loading?: boolean;
-    variant?: "icons" | "default";
-    iconButtonProps?: Partial<PropsOf<typeof IconButton>>;
-    listItemProps?: Partial<PropsOf<typeof ListItem>>;
-    activeListItemProps?: Partial<PropsOf<typeof ListItem>>;
-    activeIconButtonProps?: Partial<PropsOf<typeof IconButton>>;
-    /**
-     * @default "ul"
-     */
-    as?: "ol" | "ul";
-    color?: PropsOf<typeof ListItem>["color"];
-}
+export type ListProps<D = any> = WithTVProps<
+    StyleProps &
+        RefProps<HTMLOListElement | HTMLUListElement> & {
+            children?: ReactNode;
+            items?: ListItemDef<D>[];
+            onItemClick?: (item: ListItemDef<D>, e: MouseEvent) => void;
+            activeItems?: string | string[] | ((item: ListItemDef<D>) => boolean);
+            size?: "xs" | "sm" | "md" | "lg" | "xl";
+            LinkComponent?: LinkComponent;
+            loading?: boolean;
+            variant?: "icons" | "default";
+            iconButtonProps?: Partial<PropsOf<typeof IconButton>>;
+            listItemProps?: Partial<PropsOf<typeof ListItem>>;
+            activeListItemProps?: Partial<PropsOf<typeof ListItem>>;
+            activeIconButtonProps?: Partial<PropsOf<typeof IconButton>>;
+            /**
+             * Use "ol" instead of "ul" for ordered lists.
+             */
+            ordered?: boolean;
+            color?: PropsOf<typeof ListItem>["color"];
+        },
+    typeof list
+>;
+
 export const List = <D = any,>({
     className,
     items,
@@ -102,7 +114,7 @@ export const List = <D = any,>({
     LinkComponent,
     rounded,
     direction,
-    as,
+    ordered,
     iconButtonProps,
     listItemProps,
     elevate,
@@ -114,7 +126,7 @@ export const List = <D = any,>({
     activeListItemProps,
     ...props
 }: ListProps<D>) => {
-    const Comp: any = as || "ul";
+    const Comp: any = ordered ? "ol" : "ul";
     const globalItemProps = { LinkComponent, size, color, ...listItemProps };
 
     const isItemActive = (item: ListItemDef<D>) => {
@@ -123,8 +135,8 @@ export const List = <D = any,>({
             (typeof activeItems === "function"
                 ? activeItems(item)
                 : Array.isArray(activeItems)
-                  ? activeItems.includes(item.key)
-                  : item.key === activeItems)
+                ? activeItems.includes(item.key)
+                : item.key === activeItems)
         );
     };
 
@@ -146,7 +158,7 @@ export const List = <D = any,>({
                 const active = isItemActive(item);
 
                 if (variant === "icons") {
-                    const _buttonProps = mergeProps<PropsOf<typeof IconButton>>([
+                    const _buttonProps = mergeProps<PropsOf<typeof IconButton<"button">>>([
                         {
                             size: size === "xl" ? "lg" : size,
                             variant: "text",

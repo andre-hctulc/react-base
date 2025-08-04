@@ -1,7 +1,6 @@
 "use client";
 
-import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { PropsOf } from "../../types/index.js";
 import { Dialog } from "../dialog/dialog.js";
 import { CancelConfirm, type CancelButton, type ConfirmButton } from "./dialog-actions.js";
 import { useCallback, useRef, useState, type ReactNode } from "react";
@@ -75,9 +74,7 @@ export function useConfirmDialog(): Confirmation {
     return { dialog, confirm };
 }
 
-const confirmDialog = tv({});
-
-interface ConfirmDialogProps extends TVCProps<typeof confirmDialog, typeof Dialog> {
+interface ConfirmDialogProps extends PropsOf<typeof Dialog> {
     heading?: string;
     onConfirm?: () => void;
     onCancel?: () => void;
@@ -94,7 +91,6 @@ interface ConfirmDialogProps extends TVCProps<typeof confirmDialog, typeof Dialo
 
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     heading,
-    className,
     children,
     onCancel,
     onConfirm,
@@ -109,7 +105,6 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
 }) => {
     return (
         <Dialog
-            className={confirmDialog({ className })}
             onClose={() => {
                 onClose?.();
                 // Fire onCancel if the dialog is closed without a confirm or cancel action

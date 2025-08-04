@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 import type { Button } from "../input/button.js";
 import { IconButton } from "../input/icon-button.js";
 import { PencilIcon } from "../icons/pencil.js";
@@ -17,18 +17,21 @@ const sectionFooter = tv({
     defaultVariants: {},
 });
 
-interface SectionFooterProps extends TVCProps<typeof sectionFooter, "div"> {
-    actions?: React.ReactNode;
-    /**
-     * use this in combination with `variant: "actions"` to show an edit button
-     */
-    editable?: boolean;
-    editDisabled?: boolean;
-    onEditClick?: (e: React.MouseEvent) => void;
-    editIcon?: React.ReactNode;
-    editButtonProps?: PropsOf<typeof Button>;
-    editLoading?: boolean;
-}
+type SectionFooterProps = WithTVProps<
+    PropsOf<"div"> & {
+        actions?: React.ReactNode;
+        /**
+         * use this in combination with `variant: "actions"` to show an edit button
+         */
+        editable?: boolean;
+        editDisabled?: boolean;
+        onEditClick?: (e: React.MouseEvent) => void;
+        editIcon?: React.ReactNode;
+        editButtonProps?: PropsOf<typeof Button>;
+        editLoading?: boolean;
+    },
+    typeof sectionFooter
+>;
 
 export const SectionFooter: React.FC<SectionFooterProps> = ({
     children,

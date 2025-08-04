@@ -1,9 +1,9 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const accordion = tv({});
 
-interface AccordionProps extends TVCProps<typeof accordion, "div"> {}
+type AccordionProps = WithTVProps<PropsOf<"div">, typeof accordion>;
 
 export const Accordion: React.FC<AccordionProps> = ({ children, className, ...props }) => {
     return (

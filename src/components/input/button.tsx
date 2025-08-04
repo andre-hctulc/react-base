@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import { type FC, type ReactNode } from "react";
-import type { TVCProps, StyleProps, LinkProps } from "../../types/index.js";
+import { type ReactNode } from "react";
+import type { WithTVProps, ELEMENT, RichAsProps } from "../../types/index.js";
 import { Spinner } from "../data-display/spinner.js";
 import { Icon } from "../icons/icon.js";
 import { themeColor } from "../../util/style.js";
@@ -68,18 +68,18 @@ const btn = tv({
     },
 });
 
-export interface ButtonProps extends Omit<TVCProps<typeof btn, "button">, "className">, StyleProps {
-    iconPosition?: "left" | "right";
-    icon?: ReactNode;
-    children?: ReactNode;
-    linkProps?: LinkProps;
-    loading?: boolean;
-    disabled?: boolean;
-    as?: any;
-    href?: string;
-}
+type ButtonProps<T extends ELEMENT = "button"> = WithTVProps<
+    RichAsProps<T> & {
+        iconPosition?: "left" | "right";
+        icon?: ReactNode;
+        children?: ReactNode;
+        loading?: boolean;
+        disabled?: boolean;
+    },
+    typeof btn
+>;
 
-export const Button: FC<ButtonProps> = ({
+export const Button = <T extends ELEMENT = "button">({
     children,
     color,
     variant,
@@ -93,16 +93,14 @@ export const Button: FC<ButtonProps> = ({
     shadow,
     mt,
     as,
-    href,
     ref,
-    linkProps,
     ...props
-}) => {
+}: ButtonProps<T>) => {
     const _variant = variant || "filled";
     const _color = color || "primary";
     const ico = loading ? <Spinner color="inherit" size="sm" /> : icon;
     const _disabled = disabled || loading;
-    const Comp = as || (href ? "a" : "button");
+    const Comp: any = as || "button";
     const p: any = { ...props };
     const { bgA, bg, border, text, textC } = themeColor(_color);
     const { bg: hoverBg, bgA: hoverBgA } = themeColor(_color, "hover:");
@@ -147,12 +145,8 @@ export const Button: FC<ButtonProps> = ({
         floating: activeBgA(75),
         mix: "active:bg-paper4",
     });
-    const btnExclusiveProps: any = !href && !as ? { disabled } : {};
+    const btnExclusiveProps: any = !as || as === "button" ? { disabled } : {};
 
-    if (href) {
-        p.href = href;
-        if (linkProps) Object.assign(p, linkProps);
-    }
     return (
         <Comp
             ref={ref}

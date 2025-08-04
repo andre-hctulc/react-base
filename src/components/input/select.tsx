@@ -43,7 +43,7 @@ export interface RenderSelectedParams<V = string, D = any> {
 }
 
 export interface SelectProps<V = string, D = any>
-    extends InputLikeProps<V[], { options: SelectOption<V, D>[]; singleValue: V }>,
+    extends InputLikeProps<V[], { options: SelectOption<V, D>[]; singleValue: V | undefined }>,
         VariantProps<typeof select>,
         StyleProps {
     options: SelectOption<V, D>[];

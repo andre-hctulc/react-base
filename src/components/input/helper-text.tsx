@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import React, { type FC } from "react";
-import type { TVCProps, StyleProps } from "../../types/index.js";
+import React from "react";
+import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
 
 const helperText = tv({
     base: "",
@@ -18,12 +18,15 @@ const helperText = tv({
     },
 });
 
-interface HelperTextProps extends Omit<TVCProps<typeof helperText, "p">, "className">, StyleProps {
-    children?: React.ReactNode;
-    as?: any;
-}
+type HelperTextProps<T extends ELEMENT = "p"> = WithTVProps<
+    RichAsProps<T> & {
+        children?: React.ReactNode;
+        as?: any;
+    },
+    typeof helperText
+>;
 
-export const HelperText: FC<HelperTextProps> = ({
+export const HelperText = <T extends ELEMENT = "p">({
     children,
     className,
     italic,
@@ -31,8 +34,8 @@ export const HelperText: FC<HelperTextProps> = ({
     as,
     ref,
     ...props
-}) => {
-    const Comp = as || "p";
+}: HelperTextProps<T>) => {
+    const Comp: any = as || "p";
 
     return (
         <Comp ref={ref} className={helperText({ className, italic, variant })} {...props}>

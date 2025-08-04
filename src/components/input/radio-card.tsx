@@ -2,6 +2,7 @@ import { tv } from "tailwind-variants";
 import type { PropsOf } from "../../types/index.js";
 import { Card } from "../containers/card.js";
 import type { RadioRenderParams } from "./radio.js";
+import type { FC, ReactNode } from "react";
 
 const radioCard = tv({
     base: "transition border-[1.5px]",
@@ -35,14 +36,14 @@ const radioCard = tv({
 });
 
 interface RadioCardProps extends PropsOf<typeof Card> {
-    children?: React.ReactNode;
+    children?: ReactNode;
     params?: Partial<RadioRenderParams>;
 }
 
 /**
  * A helper component to render a card as a radio option
  */
-export const RadioCard: React.FC<RadioCardProps> = ({ params, className, children, ...props }) => {
+export const RadioCard: FC<RadioCardProps> = ({ params, className, children, ...props }) => {
     const p: RadioRenderParams = {
         option: { value: "", data: { label: "<option-not-defined>" } },
         active: false,

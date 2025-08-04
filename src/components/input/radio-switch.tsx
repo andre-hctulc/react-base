@@ -44,7 +44,7 @@ export type RadioSwitchOption<V = string, D = any> = LabeledChoice<V, D> & {
 };
 
 export interface RadioSwitchProps<V = string, D = any>
-    extends InputLikeProps<V[], { options: RadioSwitchOption<V, D>[]; singleValue: V }>,
+    extends InputLikeProps<V[], { options: RadioSwitchOption<V, D>[]; singleValue: V | undefined }>,
         VariantProps<typeof radioSwitch>,
         StyleProps {
     options: RadioSwitchOption<V, D>[];

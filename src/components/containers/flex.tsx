@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
 import { withPrefix } from "../../util/system.js";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const flex = tv({
     base: "flex",
@@ -44,7 +44,7 @@ const flex = tv({
     },
 });
 
-interface FlexProps extends TVCProps<typeof flex, "div"> {}
+type FlexProps = WithTVProps<PropsOf<"div">, typeof flex>;
 
 export const Flex: FC<FlexProps> = ({
     children,

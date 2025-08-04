@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 export const spinner = tv({
     base: "animate-spin origin-center",
@@ -50,7 +50,7 @@ export const spinner = tv({
     },
 });
 
-export interface SpinnerProps extends TVCProps<typeof spinner, "svg"> {}
+type SpinnerProps = WithTVProps<PropsOf<"svg">, typeof spinner>;
 
 export const Spinner: FC<SpinnerProps> = ({ className, size, color, ref, block, ...props }) => {
     return (

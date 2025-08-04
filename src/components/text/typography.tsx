@@ -1,7 +1,5 @@
-import type { TVCProps } from "../../types/index.js";
-import React, { type FC } from "react";
-import { withPrefix } from "../../util/system.js";
 import { tv } from "tailwind-variants";
+import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
 
 const typography = tv({
     base: "",
@@ -46,14 +44,12 @@ const typography = tv({
     defaultVariants: {},
 });
 
-export interface TypographyProps extends TVCProps<typeof typography, "span"> {
-    as?: any;
-}
+export type TypographyProps<T extends ELEMENT = "p"> = WithTVProps<RichAsProps<T>, typeof typography>;
 
 /**
  * Text. Used across components to consistently style text.
  */
-export const Typography: FC<TypographyProps> = ({
+export const Typography = <T extends ELEMENT = "p">({
     children,
     className,
     center,
@@ -65,8 +61,8 @@ export const Typography: FC<TypographyProps> = ({
     variant,
     ref,
     ...props
-}) => {
-    const Comp = as || "p";
+}: TypographyProps<T>) => {
+    const Comp = as;
 
     return (
         <Comp

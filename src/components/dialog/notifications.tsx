@@ -30,7 +30,7 @@ export interface Notification {
      * @default 5000
      */
     duration?: number;
-    icon?: React.ReactNode;
+    icon?: ReactNode;
     /**
      * Class name for the alert
      */
@@ -194,7 +194,7 @@ interface NotificationItemProps {
     className?: string;
 }
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ className, notification }) => {
+const NotificationItem: FC<NotificationItemProps> = ({ className, notification }) => {
     const getIcon = () => {
         if (notification.icon) return notification.icon;
         else if (!notification.severity || notification.severity === "info") return <InfoCircleIcon />;
@@ -209,9 +209,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ className, notifica
             <li className={clsx("bg-paper pointer-events-auto rounded-md", className)}>
                 <Alert
                     icon={getIcon()}
-                    title={notification.title}
                     type={notification.severity}
                     closable={notification.closable}
+                    title={notification.title}
                     {...notification.alertProps}
                     className={clsx(notification.className, notification.alertProps?.className)}
                 >

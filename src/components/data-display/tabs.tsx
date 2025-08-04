@@ -1,7 +1,7 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import type { Choice, PropsOf, TVCProps } from "../../types/index.js";
+import type { Choice, PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 import { Chip } from "./chip.js";
 import clsx from "clsx";
 import { RadioSwitch } from "../input/radio-switch.js";
@@ -39,23 +39,26 @@ export interface TabItem<V = string, D = any> extends Choice<V, D> {
     active?: boolean;
 }
 
-interface TabsProps<V = string, D = any> extends Omit<TVCProps<typeof tabs, "div">, "children"> {
-    /**
-     * Must be a string if used with variant "switch".
-     */
-    activeTabs?: string | string[] | ((tab: TabItem<V, D>) => boolean);
-    tabs: TabItem[];
-    chipProps?: Partial<PropsOf<typeof Chip>>;
-    tabProps?: Partial<PropsOf<typeof Tab>>;
-    LinkComponent?: any;
-    /**
-     * Only for `variant="default"`.
-     */
-    bg?: "1" | "2" | "3" | "4";
-    elevated?: boolean;
-    onTabClick?: (tab: TabItem<V, D>) => void;
-    disabled?: boolean;
-}
+type TabsProps<V = string, D = any> = WithTVProps<
+    StyleProps & {
+        /**
+         * Must be a string if used with variant "switch".
+         */
+        activeTabs?: string | string[] | ((tab: TabItem<V, D>) => boolean);
+        tabs: TabItem[];
+        chipProps?: Partial<PropsOf<typeof Chip>>;
+        tabProps?: Partial<PropsOf<typeof Tab>>;
+        LinkComponent?: any;
+        /**
+         * Only for `variant="default"`.
+         */
+        bg?: "1" | "2" | "3" | "4";
+        elevated?: boolean;
+        onTabClick?: (tab: TabItem<V, D>) => void;
+        disabled?: boolean;
+    },
+    typeof tabs
+>;
 
 export const Tabs: FC<TabsProps> = ({
     activeTabs,
@@ -167,7 +170,7 @@ export const Tabs: FC<TabsProps> = ({
                         LinkComponent={LinkComponent}
                         {...tabProps}
                         clickable={!!onTabClick || !!tabProps?.onClick || !!t.href}
-                        onClick={(e) => {
+                        onClick={(e: any) => {
                             onTabClick?.(t);
                             tabProps?.onClick?.(e);
                         }}

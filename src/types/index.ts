@@ -5,6 +5,7 @@ import type {
     ReactNode,
     ComponentType,
     JSX,
+    Ref,
 } from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { ListItem } from "../components/index.js";
@@ -34,30 +35,53 @@ export interface StyleProps {
     className?: string;
 }
 
-/**
- * Children props
- */
-export interface ChildrenProps {
+export type ChildrenProps<T = ReactNode> = {
     /**
      * Child elements
      */
-    children?: ReactNode;
-}
+    children?: T;
+};
+
+export type RefProps<T extends HTMLElement = HTMLElement> = {
+    /**
+     * Ref to the root element
+     */
+    ref?: Ref<T>;
+};
 
 export interface RequiredChildrenProps {
     children: ReactNode;
 }
 
-/**
- * A Helper type for a `tailwind-variants` component's props.
- * It bundles the variant props with the root element's props.
- * @template T tailwind-variant object
- * @template R Root element type
- */
-export type TVCProps<
-    T extends (...args: any) => any,
-    R extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> | never = never,
-> = VariantProps<T> & Omit<ComponentProps<R>, "className"> & StyleProps;
+// /**
+//  * A Helper type for a `tailwind-variants` component's props.
+//  * It bundles the variant props with the root element's props.
+//  * @template T tailwind-variant object
+//  * @template R Root element type
+//  */
+// export type TVCProps<
+//     T extends (...args: any) => any,
+//     R extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> | never = never
+// > = VariantProps<T> & Omit<ComponentProps<R>, "className"> & StyleProps;
+
+export type ELEMENT = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
+
+export interface ASProps<T extends ELEMENT> {
+    /**
+     * The element type to render as
+     */
+    as?: T;
+}
+
+export type RichAsProps<T extends ELEMENT> = ComponentProps<T> & {
+    /**
+     * The element type to render as
+     */
+    as?: T;
+};
+
+export type WithTVProps<T extends object, E extends (...args: any) => any> = VariantProps<E> &
+    Omit<T, keyof VariantProps<E>>;
 
 // #### Components ####
 
@@ -95,11 +119,11 @@ export interface LabeledChoice<V = string, D = any> extends Choice<V, D> {
     /**
      * The label to display
      */
-    label: React.ReactNode;
+    label: ReactNode;
     /**
      * Icon to display next to the label
      */
-    icon?: React.ReactNode;
+    icon?: ReactNode;
 }
 
 // #### Colors ####

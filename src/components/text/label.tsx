@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
 import { type FC } from "react";
+import type { ELEMENT, PropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
 
 const label = tv({
     base: "inline-block",
@@ -37,12 +37,14 @@ const label = tv({
     },
 });
 
-interface LabelProps extends TVCProps<typeof label, "label"> {
-    requiredHint?: boolean;
-    as?: any;
-}
+type LabelProps<T extends ELEMENT = "label"> = WithTVProps<
+    RichAsProps<T> & {
+        requiredHint?: boolean;
+    },
+    typeof label
+>;
 
-export const Label: FC<LabelProps> = ({
+export const Label = <T extends ELEMENT = "label">({
     children,
     className,
     requiredHint,
@@ -53,8 +55,8 @@ export const Label: FC<LabelProps> = ({
     variant,
     ref,
     ...props
-}) => {
-    const Comp = as || "label";
+}: LabelProps<T>) => {
+    const Comp: any = as || "label";
     const p = { ...props };
 
     if (as && as !== "label") {

@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { ChildrenProps, PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 import { Typography } from "../text/typography.js";
 import { Icon } from "../icons/icon.js";
 import React from "react";
@@ -45,14 +45,18 @@ const placeholder = tv({
     defaultVariants: {},
 });
 
-interface PlaceholderProps extends TVCProps<typeof placeholder, "div"> {
-    icon?: React.ReactNode;
-    iconProps?: Partial<PropsOf<typeof Icon>>;
-    helperText?: string;
-    helperTextProps?: PropsOf<typeof Typography>;
-    textProps?: PropsOf<typeof Typography>;
-    italic?: boolean;
-}
+type PlaceholderProps = WithTVProps<
+    StyleProps &
+        ChildrenProps & {
+            icon?: React.ReactNode;
+            iconProps?: Partial<PropsOf<typeof Icon>>;
+            helperText?: string;
+            helperTextProps?: PropsOf<typeof Typography>;
+            textProps?: PropsOf<typeof Typography>;
+            italic?: boolean;
+        },
+    typeof placeholder
+>;
 
 /**
  * ### Props

@@ -1,8 +1,7 @@
-import { type FC, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { ELEMENT, PartialPropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
-import clsx from "clsx";
 
 const title = tv({
     base: "",
@@ -52,18 +51,20 @@ const title = tv({
     },
 });
 
-export interface TitleProps extends TVCProps<typeof title, "h2"> {
-    as?: any;
-    icon?: ReactNode;
-    iconProps?: Partial<PropsOf<typeof Icon>>;
-}
+export type TitleProps<T extends ELEMENT = "h1"> = WithTVProps<
+    RichAsProps<T> & {
+        icon?: ReactNode;
+        iconProps?: PartialPropsOf<typeof Icon>;
+    },
+    typeof title
+>;
 
 /**
  * ### Props
  * - `variant`
  * - `underline`
  */
-export const Title: FC<TitleProps> = ({
+export const Title = <T extends ELEMENT = "h1">({
     children,
     className,
     as,
@@ -77,8 +78,8 @@ export const Title: FC<TitleProps> = ({
     iconProps,
     ref,
     ...props
-}) => {
-    const Comp = as || variant || "h1";
+}: TitleProps<T>) => {
+    const Comp: any = as || variant || "h1";
 
     return (
         <Comp

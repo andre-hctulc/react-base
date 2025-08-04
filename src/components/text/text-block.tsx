@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
 import type { FC } from "react";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const textBlockProps = tv({
     base: "",
@@ -59,7 +59,7 @@ const textBlockProps = tv({
     },
 });
 
-export interface TextBlockProps extends TVCProps<typeof textBlockProps, "p"> {}
+type TextBlockProps = WithTVProps<PropsOf<"p">, typeof textBlockProps>;
 
 /**
  * ### Props

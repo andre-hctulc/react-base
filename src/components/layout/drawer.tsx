@@ -4,7 +4,7 @@ import { collapse } from "@dre44/util";
 import clsx from "clsx";
 import { useEffect } from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 import { Overlay } from "./overlay.js";
 
 const drawer = tv({
@@ -76,21 +76,24 @@ const drawer = tv({
     },
 });
 
-export interface DrawerProps extends TVCProps<typeof drawer, "div"> {
-    open: boolean;
-    defaultOpen?: boolean;
-    onClose?: () => void;
-    children?: React.ReactNode;
-    overlayProps?: PropsOf<typeof Overlay>;
-    variant?: "overlay" | "embedded";
-    closeable?: boolean;
-    /**
-     * Can be used to define a custom class for the transition end state.
-     *
-     * Only applies if `variant` is set to "embedded".
-     */
-    transitionEndClassName?: string;
-}
+type DrawerProps = WithTVProps<
+    StyleProps & {
+        open: boolean;
+        defaultOpen?: boolean;
+        onClose?: () => void;
+        children?: React.ReactNode;
+        overlayProps?: PropsOf<typeof Overlay>;
+        variant?: "overlay" | "embedded";
+        closeable?: boolean;
+        /**
+         * Can be used to define a custom class for the transition end state.
+         *
+         * Only applies if `variant` is set to "embedded".
+         */
+        transitionEndClassName?: string;
+    },
+    typeof drawer
+>;
 
 export const Drawer: React.FC<DrawerProps> = ({
     open,
@@ -160,13 +163,13 @@ export const Drawer: React.FC<DrawerProps> = ({
                 drawer({
                     position,
                     size,
-                    shadow: isEmbedded ? shadow : (shadow ?? "lg"),
+                    shadow: isEmbedded ? shadow : shadow ?? "lg",
                     open,
                     bg,
                     padding,
                     variant,
                     className: [className, sizeClasses],
-                    border: isEmbedded ? (border ?? true) : border,
+                    border: isEmbedded ? border ?? true : border,
                 }),
                 open ? transformClasses.open : transformClasses.closed,
                 className

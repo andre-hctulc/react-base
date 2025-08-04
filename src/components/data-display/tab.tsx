@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
-import type { TVCProps } from "../../types/index.js";
 import { tv } from "tailwind-variants";
 import { Icon } from "../icons/icon.js";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const tab = tv({
     base: "transition flex items-center",
@@ -56,12 +56,15 @@ const tab = tv({
     },
 });
 
-interface TabProps extends TVCProps<typeof tab, "button"> {
-    LinkComponent?: any;
-    href?: string;
-    icon?: ReactNode;
-    clickable?: boolean;
-}
+type TabProps = WithTVProps<
+    (PropsOf<"a"> | PropsOf<"button">) & {
+        LinkComponent?: any;
+        href?: string;
+        icon?: ReactNode;
+        clickable?: boolean;
+    },
+    typeof tab
+>;
 
 export const Tab: FC<TabProps> = ({
     children,

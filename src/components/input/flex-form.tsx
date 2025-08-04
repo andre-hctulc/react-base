@@ -1,5 +1,5 @@
-import { tv, type ClassValue } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
+import { tv } from "tailwind-variants";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const flexForm = tv({
     base: "flex",
@@ -22,10 +22,7 @@ const flexForm = tv({
     },
 });
 
-interface FlexFormProps extends Omit<TVCProps<typeof flexForm, "form">, "className"> {
-    children?: React.ReactNode;
-    className?: ClassValue;
-}
+type FlexFormProps = WithTVProps<PropsOf<"form">, typeof flexForm>;
 
 /**
  * Use `formEventToFormData` or `formEventToValues` to convert form event to values.

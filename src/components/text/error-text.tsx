@@ -1,6 +1,5 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
-import { type FC } from "react";
+import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
 
 const errorText = tv({
     base: "text-error",
@@ -36,16 +35,13 @@ const errorText = tv({
     },
 });
 
-interface ErrorTextProps extends TVCProps<typeof errorText, "p"> {
-    name?: string;
-    as?: any;
-}
+type ErrorTextProps<T extends ELEMENT> = WithTVProps<RichAsProps<T> & { name?: string }, typeof errorText>;
 
 /**
  * ### Props
  * - `name` - The name of the input field this error is for. If provided the error will be displayed only if the input field is invalid.
  */
-export const ErrorText: FC<ErrorTextProps> = ({
+export const ErrorText = <T extends ELEMENT>({
     children,
     className,
     name,
@@ -56,8 +52,8 @@ export const ErrorText: FC<ErrorTextProps> = ({
     size,
     ref,
     ...props
-}) => {
-    const Comp = as || "p";
+}: ErrorTextProps<T>) => {
+    const Comp: any = as || "p";
 
     return (
         <Comp ref={ref} className={errorText({ className, my, mt, mb, size })} {...props}>

@@ -1,7 +1,7 @@
-import { cloneElement, isValidElement, type FC } from "react";
+import { cloneElement, isValidElement, type FC, type ReactElement, type ReactNode, type Ref } from "react";
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
 import clsx from "clsx";
+import type { StyleProps, WithTVProps } from "../../types/index.js";
 
 const icon = tv({
     base: "",
@@ -47,13 +47,17 @@ const icon = tv({
     },
 });
 
-interface IconProps extends TVCProps<typeof icon, "span"> {
-    children: React.ReactNode;
-    strokeWidth?: number | string;
-    height?: number | string;
-    width?: number | string;
-    fill?: string;
-}
+export type IconProps = WithTVProps<
+    StyleProps & {
+        children: ReactNode;
+        strokeWidth?: number | string;
+        height?: number | string;
+        width?: number | string;
+        fill?: string;
+        ref?: Ref<any>;
+    },
+    typeof icon
+>;
 
 export const Icon: FC<IconProps> = ({
     className,

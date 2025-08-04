@@ -2,10 +2,17 @@
 
 import { collapse } from "@dre44/util";
 import clsx from "clsx";
-import { useMemo, type FC, type ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import { useRefOf } from "../../hooks/index.js";
-import type { TVCProps, PropsOf, LinkComponent, LinkProps } from "../../types/index.js";
+import type {
+    PropsOf,
+    LinkComponent,
+    LinkProps,
+    WithTVProps,
+    ELEMENT,
+    RichAsProps,
+} from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { HelperText } from "../input/helper-text.js";
 import { Skeleton } from "./skeleton.js";
@@ -38,19 +45,21 @@ const stat = tv({
     },
 });
 
-interface StatProps extends TVCProps<typeof stat, "div"> {
-    as?: any;
-    valueParser?: (value: any) => string;
-    value: any;
-    description?: string;
-    descriptionProps?: PropsOf<typeof HelperText>;
-    textProps?: PropsOf<"p">;
-    icon?: ReactNode;
-    loading?: boolean;
-    LinkComponent?: LinkComponent;
-    linkProps?: LinkProps;
-    href?: string;
-}
+type StatProps<T extends ELEMENT = "div"> = WithTVProps<
+    RichAsProps<T> & {
+        valueParser?: (value: any) => string;
+        value: any;
+        description?: string;
+        descriptionProps?: PropsOf<typeof HelperText>;
+        textProps?: PropsOf<"p">;
+        icon?: ReactNode;
+        loading?: boolean;
+        LinkComponent?: LinkComponent;
+        linkProps?: LinkProps;
+        href?: string;
+    },
+    typeof stat
+>;
 
 /**
  * ### Props
@@ -62,7 +71,7 @@ interface StatProps extends TVCProps<typeof stat, "div"> {
  * - `href`
  * - `LinkComponent`
  */
-export const Stat: FC<StatProps> = ({
+export const Stat = <T extends ELEMENT = "div">({
     valueParser,
     value,
     as,
@@ -80,9 +89,9 @@ export const Stat: FC<StatProps> = ({
     href,
     LinkComponent,
     ...props
-}) => {
+}: StatProps<T>) => {
     const MainComp: any = href ? LinkComponent || "a" : "div";
-    const Comp = as || "div";
+    const Comp: any = as || "div";
     const valueParserRef = useRefOf(valueParser);
     const val = useMemo(() => {
         return valueParserRef.current ? valueParserRef.current(value) : String(value);

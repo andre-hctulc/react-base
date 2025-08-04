@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
 import { type FC } from "react";
 import { createPortal } from "react-dom";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const overlay = tv({
     base: "w-full h-full transition-all transition-100",
@@ -44,14 +44,16 @@ const overlay = tv({
     },
 });
 
-interface OverlayProps extends TVCProps<typeof overlay, "div"> {
-    children?: React.ReactNode;
-    noInteraction?: boolean;
-    /**
-     * Portal the popover to the body
-     */
-    portal?: boolean;
-}
+type OverlayProps = WithTVProps<
+    PropsOf<"div"> & {
+        noInteraction?: boolean;
+        /**
+         * Portal the popover to the body
+         */
+        portal?: boolean;
+    },
+    typeof overlay
+>;
 
 /**
  * ### Props

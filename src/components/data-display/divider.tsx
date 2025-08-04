@@ -1,6 +1,5 @@
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
-import { type FC } from "react";
+import type { ELEMENT, PropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
 import clsx from "clsx";
 
 const divider = tv({
@@ -19,12 +18,21 @@ const divider = tv({
     defaultVariants: {},
 });
 
-export interface DividerProps extends TVCProps<typeof divider, "div"> {
-    as?: any;
-    mainProps?: PropsOf<"div">;
-}
+type DividerProps<T extends ELEMENT> = WithTVProps<
+    RichAsProps<T> & {
+        mainProps?: PropsOf<"div">;
+    },
+    typeof divider
+>;
 
-export const Divider: FC<DividerProps> = ({ children, className, as, mainProps, my, ...props }) => {
+export const Divider = <T extends ELEMENT>({
+    children,
+    className,
+    as,
+    mainProps,
+    my,
+    ...props
+}: DividerProps<T>) => {
     const Comp: any = as || "div";
 
     return (

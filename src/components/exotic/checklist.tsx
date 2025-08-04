@@ -2,7 +2,7 @@ import { collapse } from "@dre44/util";
 import clsx from "clsx";
 import type { FC, ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { LinkComponent, LinkProps, PropsOf, TVCProps } from "../../types/index.js";
+import type { LinkComponent, LinkProps, PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 import { Subtitle } from "../text/subtitle.js";
 import { Icon } from "../icons/icon.js";
 import { CheckCircleIcon } from "../icons/check-circle.js";
@@ -41,12 +41,16 @@ export interface ChecklistItem extends ComponentProps {
     href?: string;
 }
 
-interface ChecklistProps extends TVCProps<typeof checklist, "ol">, ComponentProps {
-    items: ChecklistItem[];
-    checkedIcon?: ReactNode;
-    uncheckedIcon?: ReactNode;
-    checked?: string | string[] | ((item: ChecklistItem) => boolean);
-}
+type ChecklistProps = WithTVProps<
+    StyleProps &
+        ComponentProps & {
+            items: ChecklistItem[];
+            checkedIcon?: ReactNode;
+            uncheckedIcon?: ReactNode;
+            checked?: string | string[] | ((item: ChecklistItem) => boolean);
+        },
+    typeof checklist
+>;
 
 export const Checklist: FC<ChecklistProps> = ({
     className,

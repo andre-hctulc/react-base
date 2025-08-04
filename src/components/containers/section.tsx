@@ -2,7 +2,7 @@
 
 import { tv } from "tailwind-variants";
 import { type FC, type ReactNode, useEffect, useState } from "react";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { ELEMENT, PropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
 import { SectionStart } from "./section-start.js";
 import { Toolbar } from "./toolbar.js";
 import { IconButton } from "../input/icon-button.js";
@@ -74,38 +74,40 @@ const section = tv({
     },
 });
 
-interface SectionProps extends TVCProps<typeof section, "section"> {
-    title?: string;
-    icon?: ReactNode;
-    sectionStartProps?: PropsOf<typeof SectionStart>;
-    as?: any;
-    /**
-     * Actions are wrapped in a {@link Toolbar}. These are passed to the toolbar.
-     */
-    toolbarProps?: PropsOf<typeof Toolbar>;
-    /**
-     * @default true
-     */
-    openOnStartClick?: boolean;
-    open?: boolean;
-    /**
-     * @default true
-     */
-    defaultOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-    /**
-     * Props of children wrapper
-     */
-    wrapperProps?: PropsOf<"div">;
-    wrapperClassName?: string;
-    loading?: ReactNode;
-    /**
-     * @default true
-     */
-    closeable?: boolean;
-    openButtonProps?: PropsOf<typeof IconButton>;
-    noBorder?: boolean;
-}
+type SectionProps<T extends ELEMENT = "section"> = WithTVProps<
+    RichAsProps<T> & {
+        title?: string;
+        icon?: ReactNode;
+        sectionStartProps?: PropsOf<typeof SectionStart>;
+        /**
+         * Actions are wrapped in a {@link Toolbar}. These are passed to the toolbar.
+         */
+        toolbarProps?: PropsOf<typeof Toolbar>;
+        /**
+         * @default true
+         */
+        openOnStartClick?: boolean;
+        open?: boolean;
+        /**
+         * @default true
+         */
+        defaultOpen?: boolean;
+        onOpenChange?: (open: boolean) => void;
+        /**
+         * Props of children wrapper
+         */
+        wrapperProps?: PropsOf<"div">;
+        wrapperClassName?: string;
+        loading?: ReactNode;
+        /**
+         * @default true
+         */
+        closeable?: boolean;
+        openButtonProps?: PropsOf<typeof IconButton>;
+        noBorder?: boolean;
+    },
+    typeof section
+>;
 
 /**
  * ### Props
@@ -249,7 +251,7 @@ export const Section: FC<SectionProps> = ({
                             <Spinner size="2xl" />
                         </Placeholder>
                     ) : (
-                        (loading ?? children)
+                        loading ?? children
                     )}
                 </div>
             </CollapseVScreen>

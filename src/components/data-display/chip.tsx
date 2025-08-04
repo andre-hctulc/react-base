@@ -1,11 +1,8 @@
 import { tv } from "tailwind-variants";
-import React, { type FC } from "react";
-import type { TVCProps } from "../../types/index.js";
 import { collapse } from "@dre44/util";
 import { themeColor } from "../../util/style.js";
 import { Icon } from "../icons/icon.js";
-
-// removed: align-middle
+import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
 
 const chip = tv({
     base: "inline-flex text-center shrink-0 items-center data-[clickable=true]:cursor-pointer transition",
@@ -57,19 +54,22 @@ const chip = tv({
     },
 });
 
-export interface ChipProps extends TVCProps<typeof chip, "span"> {
-    hoverEffect?: boolean;
-    clickable?: boolean;
-    /**
-     * Equal to `hoverEffect: true` and `clickable: true`.
-     */
-    interactive?: boolean;
-    icon?: React.ReactNode;
-    iconPosition?: "left" | "right";
-    as?: any;
-}
+type ChipProps<T extends ELEMENT = "span"> = WithTVProps<
+    RichAsProps<T> & {
+        hoverEffect?: boolean;
+        clickable?: boolean;
+        /**
+         * Equal to `hoverEffect: true` and `clickable: true`.
+         */
+        interactive?: boolean;
+        icon?: React.ReactNode;
+        iconPosition?: "left" | "right";
+        as?: any;
+    },
+    typeof chip
+>;
 
-export const Chip: FC<ChipProps> = ({
+export const Chip = <T extends ELEMENT = "span">({
     children,
     color,
     variant,
@@ -86,7 +86,7 @@ export const Chip: FC<ChipProps> = ({
     thinText,
     ref,
     ...props
-}) => {
+}: ChipProps<T>) => {
     const Comp: any = as || "span";
     const _color = color || "neutral";
     const _variant = variant || "outlined";

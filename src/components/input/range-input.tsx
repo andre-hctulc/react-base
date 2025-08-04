@@ -1,8 +1,8 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import React, { useId, useMemo, useState, type FC } from "react";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import React, { useId, useMemo, useState, type ChangeEvent, type FC } from "react";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 import type { InputLikeProps } from "./types.js";
 import clsx from "clsx";
 
@@ -12,24 +12,26 @@ const rangeInput = tv({
     defaultVariants: {},
 });
 
-interface RangeInputProps
-    extends Omit<TVCProps<typeof rangeInput, "div">, "defaultValue" | "value" | "type" | "onChange">,
-        InputLikeProps<number, React.ChangeEvent<HTMLDivElement>> {
-    inputProps?: PropsOf<"input">;
-    /**
-     * List of marker positions or amount of partitions
-     */
-    markers?: number[] | number;
-    min?: number;
-    max?: number;
-    step?: string | number;
-    id?: string;
-    /**
-     * Show min/max and current value
-     * @default true
-     */
-    labeled?: boolean;
-}
+type RangeInputProps = WithTVProps<
+    PropsOf<"div"> &
+        InputLikeProps<number, ChangeEvent<HTMLDivElement>> & {
+            inputProps?: PropsOf<"input">;
+            /**
+             * List of marker positions or amount of partitions
+             */
+            markers?: number[] | number;
+            min?: number;
+            max?: number;
+            step?: string | number;
+            id?: string;
+            /**
+             * Show min/max and current value
+             * @default true
+             */
+            labeled?: boolean;
+        },
+    typeof rangeInput
+>;
 
 /**
  * ### Props

@@ -1,6 +1,6 @@
-import { type FC, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { ELEMENT, PropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
 import { IconButton } from "../input/icon-button.js";
 import { XIcon } from "../icons/x.js";
 import { Title } from "../text/title.js";
@@ -36,18 +36,20 @@ const alert = tv({
     },
 });
 
-export interface AlertProps extends Omit<TVCProps<typeof alert, "div">, "title"> {
-    as?: any;
-    closable?: boolean;
-    onClose?: () => void;
-    closeButtonProps?: PropsOf<typeof IconButton>;
-    title?: ReactNode;
-    titleProps?: PropsOf<typeof Title>;
-    loading?: boolean;
-    actions?: ReactNode;
-    toolBarProps?: PropsOf<typeof Toolbar>;
-    icon?: ReactNode;
-}
+type AlertProps<T extends ELEMENT = "div"> = WithTVProps<
+    RichAsProps<T> & {
+        closable?: boolean;
+        onClose?: () => void;
+        closeButtonProps?: PropsOf<typeof IconButton>;
+        title?: ReactNode;
+        titleProps?: PropsOf<typeof Title>;
+        loading?: boolean;
+        actions?: ReactNode;
+        toolBarProps?: PropsOf<typeof Toolbar>;
+        icon?: ReactNode;
+    },
+    typeof alert
+>;
 
 /**
  * ### Props
@@ -58,7 +60,7 @@ export interface AlertProps extends Omit<TVCProps<typeof alert, "div">, "title">
  * - `title` - The title of the alert
  * - `loading` - Controls the loading state of the close button
  */
-export const Alert: FC<AlertProps> = ({
+export const Alert = <T extends ELEMENT = "div">({
     children,
     type,
     className,
@@ -76,8 +78,8 @@ export const Alert: FC<AlertProps> = ({
     toolBarProps,
     icon,
     ...props
-}) => {
-    const Comp = as || "div";
+}: AlertProps<T>) => {
+    const Comp: any = as || "div";
     const { bgA, border, textC } = themeColor(type || "info");
 
     return (

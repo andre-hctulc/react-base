@@ -1,10 +1,10 @@
 "use client";
 
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
 import { type ChangeEvent } from "react";
 import type { InputLikeProps } from "./types.js";
 import { inputEventToValue } from "../../util/react.js";
+import type { PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 
 const input = tv({
     base: [
@@ -23,12 +23,11 @@ const input = tv({
     },
 });
 
-export interface InputProps<T = string>
-    extends Omit<
-            TVCProps<typeof input, "input">,
-            "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"
-        >,
-        InputLikeProps<T, ChangeEvent<HTMLInputElement>> {}
+export type InputProps<T = string> = WithTVProps<
+    Omit<PropsOf<"input">, "defaultValue" | "value" | "onChange" | "checked" | "defaultChecked"> &
+        InputLikeProps<T, ChangeEvent<HTMLInputElement>>,
+    typeof input
+>;
 
 export const Input = <T = string,>({
     size,

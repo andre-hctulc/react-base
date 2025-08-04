@@ -1,6 +1,6 @@
-import { type FC, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { ELEMENT, PropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import clsx from "clsx";
 
@@ -51,18 +51,20 @@ const subtitle = tv({
     },
 });
 
-export interface SubtitleProps extends TVCProps<typeof subtitle, "h2"> {
-    as?: any;
-    icon?: ReactNode;
-    iconProps?: Partial<PropsOf<typeof Icon>>;
-}
+type SubtitleProps<T extends ELEMENT = "h2"> = WithTVProps<
+    RichAsProps<T> & {
+        icon?: ReactNode;
+        iconProps?: Partial<PropsOf<typeof Icon>>;
+    },
+    typeof subtitle
+>;
 
 /**
  * ### Props
  * - `variant`
  * - `underline`
  */
-export const Subtitle: FC<SubtitleProps> = ({
+export const Subtitle = <T extends ELEMENT = "h2">({
     children,
     className,
     as,
@@ -76,8 +78,8 @@ export const Subtitle: FC<SubtitleProps> = ({
     ref,
     bold,
     ...props
-}) => {
-    const Comp = as || variant || "h2";
+}: SubtitleProps<T>) => {
+    const Comp: any = as || variant || "h2";
 
     return (
         <Comp

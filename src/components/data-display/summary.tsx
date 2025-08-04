@@ -4,7 +4,7 @@ import { isPlainObject } from "@dre44/util";
 import clsx from "clsx";
 import type { FC, ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import type { PropsOf, TVCProps } from "../../types/index.js";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { useAsSet } from "../../hooks/index.js";
 import { CopyIconButton } from "../exotic/copy-icon-button.js";
@@ -23,31 +23,34 @@ export interface FieldModel {
 
 export type SummaryModel<T extends object = any> = Partial<Record<string & keyof T, FieldModel>>;
 
-export interface SummaryProps extends TVCProps<typeof summary, "table"> {
-    values: object;
-    model?: SummaryModel;
-    /**
-     * @default "w-40"
-     */
-    labelWidth?: number | "auto";
-    prefix?: string;
-    nestedMargin?: number;
-    fieldModels?: (key: string, value: string, path: string) => FieldModel;
-    /**
-     * Array of field paths to exclude from the summary.
-     */
-    excludeFields?: string[];
-    /**
-     * Array of field paths to include in the summary.
-     * If provided, only these fields will be displayed, ignoring `excludeFields`.
-     */
-    includeFields?: string[];
-    /**
-     * Only include fields that are present in the model.
-     */
-    strictModel?: boolean;
-    emptyPlaceholder?: string;
-}
+type SummaryProps = WithTVProps<
+    PropsOf<"table"> & {
+        values: object;
+        model?: SummaryModel;
+        /**
+         * @default "w-40"
+         */
+        labelWidth?: number | "auto";
+        prefix?: string;
+        nestedMargin?: number;
+        fieldModels?: (key: string, value: string, path: string) => FieldModel;
+        /**
+         * Array of field paths to exclude from the summary.
+         */
+        excludeFields?: string[];
+        /**
+         * Array of field paths to include in the summary.
+         * If provided, only these fields will be displayed, ignoring `excludeFields`.
+         */
+        includeFields?: string[];
+        /**
+         * Only include fields that are present in the model.
+         */
+        strictModel?: boolean;
+        emptyPlaceholder?: string;
+    },
+    typeof summary
+>;
 
 export const Summary: FC<SummaryProps> = ({
     values,
@@ -95,8 +98,8 @@ export const Summary: FC<SummaryProps> = ({
                         typeof renderedValue === "string"
                             ? renderedValue
                             : !renderedValue
-                              ? String(value)
-                              : undefined;
+                            ? String(value)
+                            : undefined;
 
                     return (
                         <tr key={key} className="">

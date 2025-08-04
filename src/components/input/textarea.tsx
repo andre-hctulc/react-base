@@ -2,8 +2,8 @@
 
 import { tv } from "tailwind-variants";
 import React, { type FC } from "react";
-import type { TVCProps } from "../../types/index.js";
 import type { InputLikeProps } from "./types.js";
+import type {  PropsOf, WithTVProps } from "../../types/index.js";
 
 const textarea = tv({
     base: [
@@ -24,9 +24,10 @@ const textarea = tv({
     },
 });
 
-interface TextareaProps
-    extends Omit<TVCProps<typeof textarea, "textarea">, "defaultValue" | "value" | "onChange">,
-        InputLikeProps<string, React.ChangeEvent<HTMLTextAreaElement>> {}
+type TextareaProps = WithTVProps<
+    PropsOf<"textarea"> & InputLikeProps<string, React.ChangeEvent<HTMLTextAreaElement>>,
+    typeof textarea
+>;
 
 export const Textarea: FC<TextareaProps> = ({
     size,

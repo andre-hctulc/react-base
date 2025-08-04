@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Toolbar } from "../containers/toolbar.js";
 import { Button } from "../input/button.js";
@@ -87,12 +88,12 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
     );
 };
 
-interface CancelButtonProps extends PropsOf<typeof Button> {}
+interface CancelButtonProps extends PropsOf<typeof Button<"button">> {}
 
 /**
  * A cancel button for dialogs.
  */
-export const CancelButton: React.FC<CancelButtonProps> = (props) => {
+export const CancelButton: FC<CancelButtonProps> = (props) => {
     return (
         <Button variant="text" color="neutral" {...props}>
             {props.children || "Cancel"}
@@ -100,7 +101,7 @@ export const CancelButton: React.FC<CancelButtonProps> = (props) => {
     );
 };
 
-interface ConfirmButtonProps extends PropsOf<typeof Button> {
+interface ConfirmButtonProps extends PropsOf<typeof Button<"button">> {
     danger?: boolean;
 }
 

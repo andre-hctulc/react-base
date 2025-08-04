@@ -1,6 +1,5 @@
 import { tv } from "tailwind-variants";
-import type { TVCProps } from "../../types/index.js";
-import { type FC } from "react";
+import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
 
 const card = tv({
     base: "overflow-hidden flex flex-col",
@@ -72,12 +71,15 @@ const card = tv({
     },
 });
 
-interface CardProps extends TVCProps<typeof card, "div"> {
-    size?: "xs" | "sm" | "md" | "lg" | "xl" | "fit" | "none" | "2xl" | "auto";
-    as?: any;
-}
+type CardProps<T extends ELEMENT = "div"> = WithTVProps<
+    RichAsProps<T> & {
+        size?: "xs" | "sm" | "md" | "lg" | "xl" | "fit" | "none" | "2xl" | "auto";
+        as?: any;
+    },
+    typeof card
+>;
 
-export const Card: FC<CardProps> = ({
+export const Card = <T extends ELEMENT = "div">({
     children,
     shadow,
     className,
@@ -90,8 +92,8 @@ export const Card: FC<CardProps> = ({
     rounded,
     ref,
     ...props
-}) => {
-    const Comp = props.as || "div";
+}: CardProps<T>) => {
+    const Comp: any = props.as || "div";
 
     return (
         <Comp

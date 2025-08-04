@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import type { PropsOf } from "../../types/index.js";
+import type { ELEMENT, PropsOf } from "../../types/index.js";
 import { Button } from "./button.js";
 import { tv } from "tailwind-variants";
 import { Spinner } from "../data-display/spinner.js";
@@ -20,9 +20,9 @@ const iconButton = tv({
     },
 });
 
-export interface IconButtonProps extends Omit<PropsOf<typeof Button>, "icon" | "iconPosition"> {}
+type IconButtonProps<T extends ELEMENT = "button"> = Omit<PropsOf<typeof Button<T>>, "icon" | "iconPosition">;
 
-export const IconButton: FC<IconButtonProps> = ({
+export const IconButton = <T extends ELEMENT = "button">({
     children,
     className,
     loading,
@@ -31,7 +31,7 @@ export const IconButton: FC<IconButtonProps> = ({
     href,
     as,
     ...props
-}) => {
+}: IconButtonProps<T>) => {
     const btnExclusiveProps: any = !href && !as ? { type: "button" } : {};
     return (
         <Button
