@@ -56,6 +56,7 @@ interface RootProps extends VariantProps<typeof root> {
     children?: ReactNode;
     style?: CSSProperties;
     className?: string;
+    id?: string;
 }
 
 /**
@@ -75,9 +76,11 @@ export const Root: FC<RootProps> = ({
     relative,
     style,
     bg,
+    id,
 }) => {
     return (
         <div
+            id={id}
             className={root({
                 className,
                 variant,

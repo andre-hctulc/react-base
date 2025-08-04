@@ -63,6 +63,7 @@ const page = tv({
 interface PageProps extends VariantProps<typeof page>, StyleProps {
     children?: React.ReactNode;
     ref?: Ref<HTMLDivElement>;
+    id?: string;
 }
 
 /**
@@ -83,6 +84,7 @@ export const Page: FC<PageProps> = ({
     ref,
     sticky,
     bg,
+    id,
 }) => {
     return (
         <div
@@ -101,6 +103,7 @@ export const Page: FC<PageProps> = ({
             })}
             ref={ref}
             style={style}
+            id={id}
         >
             {children}
         </div>
