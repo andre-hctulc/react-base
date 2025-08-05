@@ -62,7 +62,7 @@ export const Typography = <T extends ELEMENT = "p">({
     ref,
     ...props
 }: TypographyProps<T>) => {
-    const Comp = as;
+    const Comp: any = as || "p";
 
     return (
         <Comp

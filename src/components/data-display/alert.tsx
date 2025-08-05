@@ -37,7 +37,7 @@ const alert = tv({
 });
 
 type AlertProps<T extends ELEMENT = "div"> = WithTVProps<
-    RichAsProps<T> & {
+    Omit<RichAsProps<T>, "title"> & {
         closable?: boolean;
         onClose?: () => void;
         closeButtonProps?: PropsOf<typeof IconButton>;
