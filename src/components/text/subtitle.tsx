@@ -23,6 +23,8 @@ const subtitle = tv({
             md: "my-4",
             lg: "my-7",
             xl: "my-12",
+            "2xl": "my-16",
+            "3xl": "my-22",
         },
         mt: {
             none: "",
@@ -31,6 +33,8 @@ const subtitle = tv({
             md: "mt-4",
             lg: "mt-7",
             xl: "mt-12",
+            "2xl": "mt-16",
+            "3xl": "mt-22",
         },
         mb: {
             none: "",
@@ -39,6 +43,8 @@ const subtitle = tv({
             md: "mb-4",
             lg: "mb-7",
             xl: "mb-12",
+            "2xl": "mb-16",
+            "3xl": "mb-22",
         },
         bold: {
             true: "font-semibold",
