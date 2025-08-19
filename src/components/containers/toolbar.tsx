@@ -27,6 +27,8 @@ const toolbar = tv({
             lg: "p-4",
         },
         justify: {
+            none: "",
+            normal: "",
             start: "justify-start",
             end: "justify-end",
             center: "justify-center",
@@ -35,6 +37,8 @@ const toolbar = tv({
             evenly: "justify-evenly",
         },
         align: {
+            none: "",
+            normal: "",
             start: "items-start",
             end: "items-end",
             center: "items-center",

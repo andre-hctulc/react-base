@@ -96,7 +96,7 @@ type DrawerProps = WithTVProps<
 >;
 
 export const Drawer: React.FC<DrawerProps> = ({
-    open,
+    open = true,
     onClose,
     position = "left",
     size = "md",

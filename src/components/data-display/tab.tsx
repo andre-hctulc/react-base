@@ -4,7 +4,7 @@ import { Icon } from "../icons/icon.js";
 import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const tab = tv({
-    base: "transition flex items-center",
+    base: "transition flex items-center shrink-0",
     variants: {
         variant: {
             elevated: "rounded-sm bg-paper2 h-min data-[disabled=false]:hover:text-primary/80",
@@ -103,7 +103,7 @@ export const Tab: FC<TabProps> = ({
             })}
         >
             {icon && <Icon>{icon}</Icon>}
-            {children}
+            <span className="truncate">{children}</span>
         </Comp>
     );
 };

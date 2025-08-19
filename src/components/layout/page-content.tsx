@@ -15,8 +15,9 @@ const pageContent = tv({
         padding: {
             none: "",
             sm: "p-2 md:p-4",
-            md: "p-3.5 md:p-7",
-            lg: "p-5 md:p-9",
+            md: "p-4 md:p-7",
+            lg: "p-7 md:p-11",
+            xl: "p-10 md:p-15",
         },
         justifyContent: {
             center: "justify-center",

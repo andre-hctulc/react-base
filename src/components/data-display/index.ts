@@ -2,6 +2,7 @@ export * from "./alert.js";
 export * from "./chip.js";
 export * from "./stat.js";
 export * from "./avatar.js";
+export * from "./avatar-group.js";
 export * from "./placeholder.js";
 export * from "./skeleton.js";
 export * from "./tabs.js";

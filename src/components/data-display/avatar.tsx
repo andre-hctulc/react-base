@@ -17,13 +17,17 @@ const avatar = tv({
             none: "",
         },
         size: {
-            xs: "size-6 text-base",
-            sm: "size-8 text-lg",
-            md: "size-10 text-xl",
-            lg: "size-14 text-2xl",
-            xl: "size-16 text-3xl",
+            xs: "size-6 text-sm",
+            sm: "size-8 text-base",
+            md: "size-10 text-lg",
+            lg: "size-14 text-xl",
+            xl: "size-16 text-2xl",
             auto: "",
             none: "",
+        },
+        border: {
+            true: "border-[1.5px]",
+            false: "",
         },
         padding: {
             sm: "p-1",
@@ -45,6 +49,13 @@ const avatar = tv({
             "2": "text-t2",
             "3": "text-t3",
             "4": "text-t4",
+        },
+        shadow: {
+            xs: "shadow-xs",
+            sm: "shadow-sm",
+            md: "shadow-md",
+            lg: "shadow-lg",
+            xl: "shadow-xl",
         },
     },
     defaultVariants: {
@@ -74,7 +85,9 @@ export const Avatar: FC<AvatarProps> = ({
     textColor,
     ref,
     onClick,
+    border,
     clickable,
+    shadow,
     ...props
 }) => {
     const Comp: any = as || "div";
@@ -90,6 +103,8 @@ export const Avatar: FC<AvatarProps> = ({
                 className,
                 textColor,
                 bold,
+                border,
+                shadow,
                 clickable: clickable ?? !!onClick,
             })}
             {...props}

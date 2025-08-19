@@ -90,7 +90,7 @@ export const Tooltip: FC<TooltipProps> = ({
                         () => {
                             setOpen(true);
                         },
-                        hasEntered ? (reEnterDelay ?? enterDelay ?? 200) : (enterDelay ?? 200)
+                        hasEntered ? reEnterDelay ?? enterDelay ?? 200 : enterDelay ?? 200
                     );
                     entered.current = true;
                 },
@@ -107,7 +107,7 @@ export const Tooltip: FC<TooltipProps> = ({
                 anchor={anchor.current}
                 portal={portal ?? false}
                 zIndex={zIndex}
-                gap={gap}
+                gap={gap ?? 4}
             >
                 <div
                     {...containerProps}

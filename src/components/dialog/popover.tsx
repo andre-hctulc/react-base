@@ -107,7 +107,7 @@ export const Popover: React.FC<PopoverProps> = (props) => {
             {
                 name: "offset",
                 options: {
-                    offset: [0, props.gap], // Adjust the offset of the popover
+                    offset: [0, props.gap ?? 4], // Adjust the offset of the popover
                 },
             },
             {

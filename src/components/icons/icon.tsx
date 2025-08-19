@@ -40,6 +40,10 @@ const icon = tv({
         inline: {
             true: "inline",
         },
+        noShrink: {
+            true: "shrink-0",
+            false: "",
+        },
     },
     defaultVariants: {
         size: "md",
@@ -70,9 +74,10 @@ export const Icon: FC<IconProps> = ({
     width,
     fill,
     ref,
+    noShrink,
     ...props
 }) => {
-    const classes = icon({ className, size, color, inline });
+    const classes = icon({ className, size, color, inline, noShrink });
     let additionalProps: any = {};
 
     if (!isValidElement(children))

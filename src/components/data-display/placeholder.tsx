@@ -13,6 +13,7 @@ const placeholder = tv({
             sm: "gap-2.5",
             md: "gap-4",
             lg: "gap-6",
+            xl: "gap-8",
         },
         padding: {
             none: "",
@@ -42,7 +43,9 @@ const placeholder = tv({
             xl: "my-20",
         },
     },
-    defaultVariants: {},
+    defaultVariants: {
+        gap: "sm",
+    },
 });
 
 type PlaceholderProps = WithTVProps<
@@ -54,6 +57,7 @@ type PlaceholderProps = WithTVProps<
             helperTextProps?: PropsOf<typeof Typography>;
             textProps?: PropsOf<typeof Typography>;
             italic?: boolean;
+            light?: boolean;
         },
     typeof placeholder
 >;
@@ -84,19 +88,20 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
     fullWidth,
     italic,
     my,
+    light,
     ...props
 }) => {
     return (
         <div className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth, my })} {...props}>
             {icon && (
-                <span className="text-t2">
+                <span className={light ? "text-t3" : "text-t2"}>
                     <Icon size="4xl" {...iconProps}>
                         {icon}
                     </Icon>
                 </span>
             )}
             {typeof children === "string" ? (
-                <Typography italic={italic} variant="secondary" {...textProps}>
+                <Typography italic={italic} variant={light ? "tertiary" : "secondary"} {...textProps}>
                     {children}
                 </Typography>
             ) : (
