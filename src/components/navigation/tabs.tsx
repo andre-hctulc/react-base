@@ -2,12 +2,12 @@
 
 import { tv } from "tailwind-variants";
 import type { Choice, PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
-import { Chip } from "./chip.js";
 import clsx from "clsx";
 import { RadioSwitch } from "../input/radio-switch.js";
 import { useMemo, type FC, type ReactNode } from "react";
 import { Tab } from "./tab.js";
-import { collapse } from "@dre44/util";
+import { collapse } from "@dre44/util/objects";
+import { Chip } from "../data-display/chip.js";
 
 export const tabs = tv({
     base: "",
@@ -45,7 +45,7 @@ type TabsProps<V = string, D = any> = WithTVProps<
          * Must be a string if used with variant "switch".
          */
         activeTabs?: string | string[] | ((tab: TabItem<V, D>) => boolean);
-        tabs: TabItem[];
+        tabs?: TabItem[];
         chipProps?: Partial<PropsOf<typeof Chip>>;
         tabProps?: Partial<PropsOf<typeof Tab>>;
         LinkComponent?: any;
@@ -56,6 +56,7 @@ type TabsProps<V = string, D = any> = WithTVProps<
         elevated?: boolean;
         onTabClick?: (tab: TabItem<V, D>) => void;
         disabled?: boolean;
+        children?: ReactNode;
     },
     typeof tabs
 >;
@@ -73,10 +74,12 @@ export const Tabs: FC<TabsProps> = ({
     bg,
     elevated,
     disabled,
+    children,
     ...props
 }) => {
     const switchValue = useMemo(() => {
         if (typeof activeTabs === "string") return [activeTabs];
+        else if (Array.isArray(activeTabs)) return activeTabs;
         return [];
     }, [activeTabs, tabItems]);
     const isTabActive = (item: TabItem) => {
@@ -107,7 +110,7 @@ export const Tabs: FC<TabsProps> = ({
                 LinkComponent={LinkComponent}
                 readOnly={disabled}
                 onChange={({ options: [option] }) => onTabClick?.(option)}
-                options={tabItems}
+                options={tabItems || []}
                 value={switchValue}
             />
         );
@@ -115,7 +118,7 @@ export const Tabs: FC<TabsProps> = ({
 
     return (
         <div {...props} className={tabs({ variant, size, className: [className, gap] })}>
-            {tabItems.map((t) => {
+            {tabItems?.map((t) => {
                 if (t.visible === false) return null;
 
                 const isActive = isTabActive(t);
@@ -123,7 +126,7 @@ export const Tabs: FC<TabsProps> = ({
 
                 if (variant === "chips") {
                     const chip = (
-                        <Chip
+                        <Chip<"button">
                             icon={t.icon}
                             as="button"
                             key={t.value}
@@ -174,11 +177,13 @@ export const Tabs: FC<TabsProps> = ({
                             onTabClick?.(t);
                             tabProps?.onClick?.(e);
                         }}
+                        className={clsx("!h-full", tabProps?.className)}
                     >
                         {t.label}
                     </Tab>
                 );
             })}
+            {children}
         </div>
     );
 };

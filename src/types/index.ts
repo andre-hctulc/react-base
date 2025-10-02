@@ -3,9 +3,9 @@ import type {
     ComponentProps,
     CSSProperties,
     ReactNode,
-    ComponentType,
     JSX,
     Ref,
+    ElementType,
 } from "react";
 import type { VariantProps } from "tailwind-variants";
 import type { ListItem } from "../components/index.js";
@@ -35,9 +35,9 @@ export interface StyleProps {
     className?: string;
 }
 
-export type ChildrenProps<T = ReactNode> = {
+export type ChildrenProps<T extends ReactNode = ReactNode> = {
     /**
-     * Child elements
+     * Child nodes
      */
     children?: T;
 };
@@ -87,7 +87,7 @@ export type WithTVProps<T extends object, E extends (...args: any) => any> = Var
 
 export type LinkProps = PropsOf<"a">;
 
-export type LinkComponent = ComponentType<LinkProps & { href: string }>;
+export type LinkComponent = ElementType<LinkProps & { href: string }>;
 
 // #### Helpers ####
 

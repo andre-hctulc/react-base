@@ -7,6 +7,10 @@ import { useJSForm } from "./js-form/js-form-context.js";
 
 interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "value"> {
     value: T;
+    /**
+     * Disable JSON stringification/parsing for non primitives.
+     */
+    noJson?: boolean;
 }
 
 /**
@@ -16,16 +20,17 @@ interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "val
  * **Remember:** Hidden inputs do not trigger any change events natively
  *
  * ### In {@link JSForm}s
- * 
+ *
  * some behavior is added to hidden inputs:
- * 
+ *
  * - Hidden inputs will trigger change events when their value changes.
  *   This way we can use {@link useJSForm} to observe live state of hidden inputs.
  * - Validation props (e.g. *required*, *pattern*) will be used to validate the hidden input.
  *
  */
-export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => {
+export const HiddenInput: React.FC<HiddenInputProps> = ({ value, name, noJson, ...props }) => {
     const formCtx = useJSForm();
+    const hasName = name !== undefined;
     const inited = useRef(false);
     const [val, isJson] = useMemo<[string | number | string[], boolean]>(() => {
         if (value === undefined) {
@@ -33,7 +38,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => 
         }
 
         // Not in a JSForm context: Parse to inp value
-        if (!formCtx) {
+        if (!formCtx || !hasName) {
             if (Array.isArray(value)) {
                 return [value.map((v) => String(v)), true];
             } else if (typeof value === "string" || typeof value === "number") {
@@ -43,7 +48,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => 
             }
         }
 
-        const isJson = typeof value !== "string" && typeof value !== "number";
+        const isJson = !noJson && typeof value !== "string" && typeof value !== "number";
 
         // If in a JSForm context and json data: Use json stringification (rbjsoninp)
         if (isJson) {
@@ -60,9 +65,13 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => 
 
     // Trigger JSForm change event on value change
     useEffect(() => {
+        if (!hasName) {
+            return;
+        }
+
         // Only trigger change event if the value was already initialized
         if (inited.current && preValue.current !== val) {
-            formCtx?.triggerChange({ name: props.name, value: val });
+            formCtx?.triggerChange({ name, value: val });
         } else {
             inited.current = true;
         }
@@ -72,5 +81,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, ...props }) => 
 
     // IMP mark as json input with data attribute. Ths is handled accordingly in js forms
     // SEE inputEventToValue
-    return <input data-rbjsoninp={isJson ? true : undefined} value={val} {...props} type="hidden" />;
+    return (
+        <input data-rbjsoninp={isJson ? true : undefined} name={name} value={val} {...props} type="hidden" />
+    );
 };

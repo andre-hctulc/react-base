@@ -2,7 +2,7 @@ import { tv } from "tailwind-variants";
 import type { PropsOf, WithTVProps } from "../../types/index.js";
 import type { Button } from "../input/button.js";
 import { IconButton } from "../input/icon-button.js";
-import { PencilIcon } from "../icons/pencil.js";
+import { PencilIcon } from "../icons/phosphor/pencil.js";
 import clsx from "clsx";
 
 const sectionFooter = tv({

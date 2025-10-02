@@ -12,6 +12,9 @@ const helperText = tv({
             default: "text-sm text-t2 leading-4",
             secondary: "text-xs text-t2 leading-4",
         },
+        disabled: {
+            true: "text-t3",
+        },
     },
     defaultVariants: {
         variant: "default",
@@ -33,12 +36,13 @@ export const HelperText = <T extends ELEMENT = "p">({
     variant,
     as,
     ref,
+    disabled,
     ...props
 }: HelperTextProps<T>) => {
     const Comp: any = as || "p";
 
     return (
-        <Comp ref={ref} className={helperText({ className, italic, variant })} {...props}>
+        <Comp ref={ref} className={helperText({ className, italic, variant, disabled })} {...props}>
             {children}
         </Comp>
     );

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Card, CardBody, CardFooter, CardHeader } from "../../../components/containers/card.js";
 import { IconButton } from "../../../components/index.js";
-import { InfoCircleIcon } from "../../../components/icons/info-circle.js";
+import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 
 // #### META ####
 const meta = {

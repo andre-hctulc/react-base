@@ -32,8 +32,14 @@ function checkValidity(el: HTMLInputElement | HTMLTextAreaElement | HTMLSelectEl
         return true;
     }
 
-    // For other input types, we can use the built-in checkValidity()
-    return el.checkValidity();
+    try {
+        // For other input types, we can use the built-in checkValidity()
+        return el.checkValidity();
+    } catch (err) {
+        // Errors may occur for:
+        // - invalid regexp in pattern attribute
+        return false;
+    }
 }
 
 /**

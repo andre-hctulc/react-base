@@ -1,6 +1,6 @@
 "use client";
 
-import { collapse } from "@dre44/util";
+import { collapse } from "@dre44/util/objects";
 import clsx from "clsx";
 import { useEffect } from "react";
 import { tv } from "tailwind-variants";

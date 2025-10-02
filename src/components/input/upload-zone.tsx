@@ -6,7 +6,7 @@ import { List, type ListItemDef } from "../containers/list.js";
 import clsx from "clsx";
 import type { InputLikeProps } from "./types.js";
 import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
-import { XIcon } from "../icons/x.js";
+import { XIcon } from "../icons/phosphor/x.js";
 import { Toolbar } from "../containers/toolbar.js";
 import { IconButton } from "./icon-button.js";
 import { Icon } from "../icons/icon.js";

@@ -1,6 +1,6 @@
 import { type FC } from "react";
-import type { PropsOf } from "../../types/index.js";
-import { Icon } from "./icon.js";
+import type { PropsOf } from "../../../types/index.js";
+import { Icon } from "../icon.js";
 
 interface QuestionCircleIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 

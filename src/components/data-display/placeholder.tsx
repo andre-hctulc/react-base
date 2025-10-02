@@ -2,7 +2,7 @@ import { tv } from "tailwind-variants";
 import type { ChildrenProps, PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 import { Typography } from "../text/typography.js";
 import { Icon } from "../icons/icon.js";
-import React from "react";
+import { type FC, type ReactNode } from "react";
 
 const placeholder = tv({
     base: "flex flex-col items-center justify-center",
@@ -42,6 +42,15 @@ const placeholder = tv({
             lg: "my-14",
             xl: "my-20",
         },
+        py: {
+            none: "",
+            "2xs": "py-1",
+            xs: "py-3",
+            sm: "py-6",
+            md: "py-10",
+            lg: "py-14",
+            xl: "py-20",
+        },
     },
     defaultVariants: {
         gap: "sm",
@@ -51,13 +60,13 @@ const placeholder = tv({
 type PlaceholderProps = WithTVProps<
     StyleProps &
         ChildrenProps & {
-            icon?: React.ReactNode;
+            icon?: ReactNode;
             iconProps?: Partial<PropsOf<typeof Icon>>;
             helperText?: string;
             helperTextProps?: PropsOf<typeof Typography>;
             textProps?: PropsOf<typeof Typography>;
             italic?: boolean;
-            light?: boolean;
+            disabled?: boolean;
         },
     typeof placeholder
 >;
@@ -71,9 +80,10 @@ type PlaceholderProps = WithTVProps<
  * - `grow`
  * - `fullHeight`
  * - `fullWidth`
+ * - `py`
  * - `my`
  */
-export const Placeholder: React.FC<PlaceholderProps> = ({
+export const Placeholder: FC<PlaceholderProps> = ({
     children,
     className,
     icon,
@@ -88,20 +98,24 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
     fullWidth,
     italic,
     my,
-    light,
+    disabled,
+    py,
     ...props
 }) => {
     return (
-        <div className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth, my })} {...props}>
+        <div
+            className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth, my, py })}
+            {...props}
+        >
             {icon && (
-                <span className={light ? "text-t3" : "text-t2"}>
+                <span className={disabled ? "text-t3" : "text-t2"}>
                     <Icon size="4xl" {...iconProps}>
                         {icon}
                     </Icon>
                 </span>
             )}
             {typeof children === "string" ? (
-                <Typography italic={italic} variant={light ? "tertiary" : "secondary"} {...textProps}>
+                <Typography italic={italic} variant={disabled ? "tertiary" : "secondary"} {...textProps}>
                     {children}
                 </Typography>
             ) : (

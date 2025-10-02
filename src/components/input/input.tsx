@@ -7,19 +7,21 @@ import { inputEventToValue } from "../../util/react.js";
 import type { PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 
 const input = tv({
-    base: [
-        "block w-full rounded-lg border-none bg-paper3 py-1.5 px-3",
-        "transition outline-0 focus:outline-2 focus:outline-divider",
-    ],
+    base: ["block w-full rounded-lg bg-paper3 py-1.5 px-3 transition outline-0"],
     variants: {
         size: {
             sm: "h-7 text-sm",
             md: "h-9 text-sm",
             lg: "h-11 text-base",
         },
+        variant: {
+            outlined: "border border-divider bg-paper focus:outline-2 focus:outline-divider",
+            filled: "bg-paper2 border-none focus:outline-2 focus:outline-divider",
+        },
     },
     defaultVariants: {
         size: "md",
+        variant: "filled",
     },
 });
 
@@ -40,6 +42,7 @@ export const Input = <T = string,>({
     value,
     onChange,
     ref,
+    variant,
     ...props
 }: InputProps<T>) => {
     return (
@@ -48,7 +51,7 @@ export const Input = <T = string,>({
             ref={ref}
             value={value as any}
             defaultValue={defaultValue as any}
-            className={input({ size, className })}
+            className={input({ size, className, variant })}
             name={name}
             type={type}
             onChange={(e) => {

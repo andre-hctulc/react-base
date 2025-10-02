@@ -4,7 +4,7 @@ import { useState, type ReactNode } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./types.js";
 import type { LabeledChoice, PartialPropsOf, StyleProps } from "../../types/index.js";
-import { ChevronDownIcon } from "../icons/chevron-down.js";
+import { ChevronDownIcon } from "../icons/phosphor/chevron-down.js";
 import { Chip } from "../data-display/chip.js";
 import { XScroll } from "../shadow/x-scroll.js";
 import { Icon } from "../icons/icon.js";
@@ -17,7 +17,7 @@ import { Placeholder } from "../data-display/placeholder.js";
 
 const select = tv({
     base: [
-        "w-full rounded-lg bg-paper3 text-left text-sm cursor-pointer",
+        "w-full rounded-lg bg-paper2 text-left text-sm cursor-pointer",
         "flex relative",
         "h-full w-full",
         "py-1.5 pr-9 pl-3 gap-3",
@@ -38,19 +38,19 @@ const select = tv({
     },
 });
 
-export interface RenderSelectedParams<V = string, D = any> {
-    selected: SelectOption<V, D>[];
+export interface RenderSelectedParams<D = any> {
+    selected: SelectOption<D>[];
 }
 
-export interface SelectProps<V = string, D = any>
-    extends InputLikeProps<V[], { options: SelectOption<V, D>[]; singleValue: V | undefined }>,
+export interface SelectProps<D = any>
+    extends InputLikeProps<string[], { options: SelectOption<D>[]; singleValue: string | undefined }>,
         VariantProps<typeof select>,
         StyleProps {
-    options: SelectOption<V, D>[];
+    options: SelectOption<D>[];
     icon?: React.ReactNode;
     placeholder?: React.ReactNode;
     multiple?: boolean;
-    renderSelected?: (params: RenderSelectedParams<V, D>) => React.ReactNode;
+    renderSelected?: (params: RenderSelectedParams<D>) => React.ReactNode;
     loading?: boolean;
     /**
      * @default "Loading..."
@@ -62,7 +62,7 @@ export interface SelectProps<V = string, D = any>
     placeholderProps?: PartialPropsOf<typeof Placeholder>;
 }
 
-export interface SelectOption<V = string, D = any> extends LabeledChoice<V, D> {
+export interface SelectOption<D = any> extends LabeledChoice<string, D> {
     defaultChecked?: boolean;
 }
 
@@ -101,7 +101,7 @@ export const Select = <V = string, D = any>({
     empty,
     popoverProps,
     placeholderProps,
-}: SelectProps<V, D>) => {
+}: SelectProps<D>) => {
     const [root, setRoot] = useState<HTMLDivElement | null>(null);
     const [open, setOpen] = useState(false);
     const { isActiveChoice, toggleChoice, choices, activeChoices, rawValues, activateChoice } = useChoices(
@@ -115,7 +115,7 @@ export const Select = <V = string, D = any>({
             defaultValue,
         }
     );
-    const firstSelected: SelectOption<V, D> | undefined = activeChoices[0];
+    const firstSelected: SelectOption<D> | undefined = activeChoices[0];
     const selectedEl = renderSelected ? (
         renderSelected({ selected: activeChoices })
     ) : multiple ? (
@@ -145,8 +145,8 @@ export const Select = <V = string, D = any>({
         typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
     const _disabled = loading || readOnly || !!disabled;
 
-    const getListItems = (options: SelectOption<V, D>[]) => {
-        return choices.map<ListItemDef<SelectOption<V, D>>>((option) => {
+    const getListItems = (options: SelectOption<D>[]) => {
+        return choices.map<ListItemDef<SelectOption<D>>>((option) => {
             return {
                 label: option.label,
                 listItemProps: {
@@ -164,7 +164,7 @@ export const Select = <V = string, D = any>({
 
     return (
         <div className={className} style={style} ref={setRoot}>
-            <HiddenInput id={id} name={name} value={rawValues} required={required} />
+            <HiddenInput noJson id={id} name={name} value={rawValues} required={required} />
             <button
                 type="button"
                 disabled={_disabled}
@@ -193,7 +193,7 @@ export const Select = <V = string, D = any>({
                 <Card variant="custom" bg="1" shadow="sm">
                     {!options.length &&
                         (empty ?? (
-                            <Placeholder my="2xs" {...placeholderProps}>
+                            <Placeholder disabled italic py="xs" {...placeholderProps}>
                                 {emptyText ?? "No options available"}
                             </Placeholder>
                         ))}
@@ -202,7 +202,7 @@ export const Select = <V = string, D = any>({
                             padding="sm"
                             items={getListItems(options)}
                             onItemClick={(listItem) => {
-                                const option: SelectOption<V, D> | undefined = listItem.data;
+                                const option: SelectOption<D> | undefined = listItem.data;
                                 if (!option || option.disabled) return;
 
                                 if (multiple) {

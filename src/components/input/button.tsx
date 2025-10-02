@@ -4,7 +4,7 @@ import type { WithTVProps, ELEMENT, RichAsProps } from "../../types/index.js";
 import { Spinner } from "../data-display/spinner.js";
 import { Icon } from "../icons/icon.js";
 import { themeColor } from "../../util/style.js";
-import { collapse } from "@dre44/util";
+import { collapse } from "@dre44/util/objects";
 
 const btn = tv({
     base: "flex items-center justify-center transition duration-100 shrink-0 truncate cursor-pointer",
@@ -34,6 +34,7 @@ const btn = tv({
             text: "",
             floating: "shadow-md",
             mix: "border",
+            highlight: "border",
         },
         size: {
             xs: "h-5 text-xs px-2 gap-1.5",
@@ -112,6 +113,7 @@ export const Button = <T extends ELEMENT = "button">({
         text: "",
         floating: bg,
         mix: "bg-paper2",
+        highlight: bgA(15),
     });
     const borderColor = collapse(_variant, {
         filled: "",
@@ -120,6 +122,7 @@ export const Button = <T extends ELEMENT = "button">({
         text: "",
         floating: bg,
         mix: "border-[1.5px]",
+        highlight: border,
     });
     const textColor = collapse(_variant, {
         filled: textC,
@@ -128,6 +131,7 @@ export const Button = <T extends ELEMENT = "button">({
         text: text,
         floating: textC,
         mix: text,
+        highlight: text,
     });
     const hoverBgColor = collapse(_variant, {
         filled: hoverBgA(90),
@@ -136,6 +140,7 @@ export const Button = <T extends ELEMENT = "button">({
         text: hoverBgA(10),
         floating: hoverBg,
         mix: "hover:bg-paper3",
+        highlight: hoverBgA(10),
     });
     const activeBgColor = collapse(_variant, {
         filled: activeBgA(75),
@@ -144,6 +149,7 @@ export const Button = <T extends ELEMENT = "button">({
         text: activeBgA(20),
         floating: activeBgA(75),
         mix: "active:bg-paper4",
+        highlight: activeBgA(30),
     });
     const btnExclusiveProps: any = !as || as === "button" ? { disabled } : {};
 

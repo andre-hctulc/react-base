@@ -1,9 +1,20 @@
+"use client";
+
 import { tv, type VariantProps } from "tailwind-variants";
-import type { LinkComponent, LinkProps, PropsOf } from "../../types/index.js";
+import type { LinkComponent, LinkProps, PartialPropsOf, PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
-import { type FC, type ReactNode, type Ref } from "react";
+import {
+    useEffect,
+    useState,
+    type CSSProperties,
+    type FC,
+    type MouseEventHandler,
+    type ReactNode,
+    type Ref,
+} from "react";
 import { Spinner } from "../data-display/spinner.js";
 import clsx from "clsx";
+import { Checkbox } from "../input/checkbox.js";
 
 const listItem = tv({
     base: "transition duration-75 min-w-0 overflow-hidden flex items-center box-border",
@@ -78,12 +89,12 @@ const listItem = tv({
 });
 
 interface ListItemProps extends VariantProps<typeof listItem> {
-    children?: React.ReactNode;
-    onClick?: React.MouseEventHandler<HTMLLIElement>;
+    children?: ReactNode;
+    onClick?: MouseEventHandler<HTMLLIElement>;
     className?: string;
-    style?: React.CSSProperties;
+    style?: CSSProperties;
     active?: boolean;
-    icon?: React.ReactNode;
+    icon?: ReactNode;
     key?: string;
     href?: string;
     LinkComponent?: LinkComponent;
@@ -98,7 +109,7 @@ interface ListItemProps extends VariantProps<typeof listItem> {
      * Apply clickable styles? Defaults to true when {@link onClick} or {@link href} is provided.
      */
     clickable?: boolean;
-    iconProps?: PropsOf<typeof Icon>;
+    iconProps?: PartialPropsOf<typeof Icon>;
     ref?: Ref<HTMLElement>;
     start?: ReactNode;
     end?: ReactNode;
@@ -110,6 +121,11 @@ interface ListItemProps extends VariantProps<typeof listItem> {
     activeBg?: boolean;
     hoverEffect?: boolean;
     innerProps?: PropsOf<"div">;
+    selectable?: boolean;
+    onSelectionChange?: (selected: boolean, value: string | undefined) => void;
+    selected?: boolean | string[];
+    value?: string;
+    checkboxProps?: PartialPropsOf<typeof Checkbox>;
 }
 
 /**
@@ -148,17 +164,36 @@ export const ListItem: FC<ListItemProps> = ({
     innerProps,
     icon,
     clickable,
+    selectable,
+    selected,
+    onSelectionChange,
+    value,
+    checkboxProps,
     ...props
 }) => {
     const ico = loading ? <Spinner color={color} /> : icon;
     const InnerComp: any = href ? LinkComponent || "a" : "div";
     const _linkProps = href ? { ...linkProps, href } : {};
     const _disabled = loading || disabled;
-    const interactive = _disabled ? false : (clickable ?? (!!onClick || !!href));
+    const interactive = _disabled ? false : clickable ?? (!!onClick || !!href);
     const iconSize = size === "xs" ? "sm" : size === "lg" || size === "xl" ? "xl" : "md";
     const bgColor = bg || color;
     const _hoverEffect = !active && (interactive || !!hoverEffect);
     const Comp = as || "li";
+    const [isSelected, setIsSelected] = useState(() => {
+        if (typeof selected === "boolean") return selected;
+        if (Array.isArray(selected) && value !== undefined) return selected.includes(value);
+        return false;
+    });
+    const selectedControlled = selected !== undefined;
+
+    useEffect(() => {
+        if (typeof selected === "boolean") {
+            setIsSelected(selected);
+        } else if (Array.isArray(selected) && value !== undefined) {
+            setIsSelected(selected.includes(value));
+        }
+    }, [selected]);
 
     return (
         /* 
@@ -172,7 +207,7 @@ export const ListItem: FC<ListItemProps> = ({
                 className={listItem({
                     size,
                     className: innerProps?.className,
-                    hoverBg: _hoverEffect ? (hoverBg ?? bgColor) : "none",
+                    hoverBg: _hoverEffect ? hoverBg ?? bgColor : "none",
                     bg: bg ? bg : active ? bgColor : "none",
                     color,
                     clickable: interactive,
@@ -181,6 +216,21 @@ export const ListItem: FC<ListItemProps> = ({
                 onClick={_disabled ? undefined : (e: any) => onClick?.(e)}
                 {..._linkProps}
             >
+                {selectable && (
+                    <Checkbox
+                        size="sm"
+                        {...checkboxProps}
+                        value={isSelected}
+                        onChange={(e) => {
+                            const selected = e.value;
+                            if (!selectedControlled) {
+                                setIsSelected(selected);
+                            }
+                            onSelectionChange?.(selected, value);
+                            checkboxProps?.onChange?.(e);
+                        }}
+                    />
+                )}
                 {start}
                 {ico ? (
                     <Icon

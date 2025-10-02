@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Select, type SelectOption } from "../../../components/input/select.js";
-import { InfoCircleIcon } from "../../../components/icons/info-circle.js";
+import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 
 // #### META ####
 const meta = {
@@ -46,17 +46,19 @@ const options: SelectOption<string>[] = [
 ];
 
 export const Default: Story = {
-    render: args => <Select options={args.options} defaultValue={args.defaultValue} />,
+    render: (args) => <Select options={args.options} defaultValue={args.defaultValue} />,
     args: { options, defaultValue: [""] },
 };
 
 export const MultipleOptions: Story = {
-    render: args => <Select options={args.options} defaultValue={args.defaultValue} multiple />,
+    render: (args) => <Select options={args.options} defaultValue={args.defaultValue} multiple />,
     args: { options, defaultValue: ["opt1"] },
 };
 
 export const CustomIcon: Story = {
-    render: args => <Select options={args.options} defaultValue={args.defaultValue} icon={<InfoCircleIcon />} />,
+    render: (args) => (
+        <Select options={args.options} defaultValue={args.defaultValue} icon={<InfoCircleIcon />} />
+    ),
     args: { options, defaultValue: ["opt1"] },
 };
 // ---- STORIES ----

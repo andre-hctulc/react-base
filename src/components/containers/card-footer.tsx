@@ -16,12 +16,13 @@ const cardFooter = tv({
         },
         size: {
             none: "",
-            xs: "p-1.5",
-            sm: "p-2 ",
-            md: "p-3",
-            lg: "p-5",
-            xl: "p-7",
+            xs: "p-2",
+            sm: "p-3 ",
+            md: "p-4",
+            lg: "p-6",
+            xl: "p-8",
             "2xl": "p-10",
+            "3xl": "p-14",
         },
     },
     defaultVariants: {

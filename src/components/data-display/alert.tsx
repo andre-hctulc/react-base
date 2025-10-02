@@ -2,16 +2,21 @@ import { type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import type { ELEMENT, PropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
 import { IconButton } from "../input/icon-button.js";
-import { XIcon } from "../icons/x.js";
+import { XIcon } from "../icons/phosphor/x.js";
 import { Title } from "../text/title.js";
 import clsx from "clsx";
 import { themeColor } from "../../util/style.js";
 import { Toolbar } from "../containers/toolbar.js";
+import { Icon } from "../icons/icon.js";
+import { InfoCircleIcon } from "../icons/phosphor/info-circle.js";
+import { CheckCircleIcon } from "../icons/phosphor/check-circle.js";
+import { WarningOctagonIcon } from "../icons/phosphor/warning-octagon.js";
+import { QuestionCircleIcon } from "../icons/phosphor/question-circle.js";
 
 const alert = tv({
     base: "px-3 py-2",
     variants: {
-        type: {
+        severity: {
             error: "",
             success: "",
             warning: "",
@@ -28,11 +33,26 @@ const alert = tv({
             xl: "rounded-xl",
             none: "",
         },
+        shadow: {
+            sm: "shadow-sm",
+            md: "shadow-md",
+            true: "shadow",
+            lg: "shadow-lg",
+            xl: "shadow-xl",
+            none: "",
+        },
+        textColor: {
+            none: "",
+            contrast: "",
+            t2: "text-t2",
+            t3: "text-t3",
+        },
     },
     defaultVariants: {
-        type: "info",
+        severity: "info",
         outlined: true,
         rounded: "md",
+        textColor: "contrast",
     },
 });
 
@@ -47,9 +67,18 @@ type AlertProps<T extends ELEMENT = "div"> = WithTVProps<
         actions?: ReactNode;
         toolBarProps?: PropsOf<typeof Toolbar>;
         icon?: ReactNode;
+        defaultIcon?: boolean;
     },
     typeof alert
 >;
+
+export const getDefaultAlertIcon = (severity: AlertProps["severity"]) => {
+    if (severity === "info") return <InfoCircleIcon />;
+    else if (severity === "success") return <CheckCircleIcon />;
+    else if (severity === "error") return <WarningOctagonIcon />;
+    else if (severity === "warning") return <QuestionCircleIcon />;
+    return <QuestionCircleIcon />;
+};
 
 /**
  * ### Props
@@ -62,7 +91,7 @@ type AlertProps<T extends ELEMENT = "div"> = WithTVProps<
  */
 export const Alert = <T extends ELEMENT = "div">({
     children,
-    type,
+    severity = "info",
     className,
     as,
     outlined,
@@ -77,22 +106,35 @@ export const Alert = <T extends ELEMENT = "div">({
     actions,
     toolBarProps,
     icon,
+    defaultIcon,
+    textColor,
+    shadow,
     ...props
 }: AlertProps<T>) => {
     const Comp: any = as || "div";
-    const { bgA, border, textC } = themeColor(type || "info");
+    const { bgA, border, textC } = themeColor(severity);
+    const hasToolbar = !!actions || !!closable;
+    const ic = icon || (defaultIcon ? getDefaultAlertIcon(severity) : null);
 
     return (
         <Comp
             ref={ref}
-            className={alert({ type, className: [bgA(30), border, textC, className], outlined, rounded })}
+            className={alert({
+                severity,
+                className: [bgA(30), border, !textColor && textC, className],
+                textColor,
+                outlined,
+                rounded,
+                shadow,
+            })}
             {...props}
         >
-            {(actions || closable) && (
+            {hasToolbar && (
                 <Toolbar gap="xs" {...toolBarProps} className={clsx("float-right", toolBarProps?.className)}>
+                    {ic && <Icon size="md">{ic}</Icon>}
                     {actions}
                     <IconButton
-                        color={type || "info"}
+                        color={severity}
                         loading={loading}
                         {...closeButtonProps}
                         onClick={(e) => {
@@ -105,8 +147,14 @@ export const Alert = <T extends ELEMENT = "div">({
                     </IconButton>
                 </Toolbar>
             )}
-            {(title || icon) && (
-                <Title icon={icon} variant="h4" {...titleProps}>
+            {(title || ic) && (
+                <Title
+                    iconProps={{ color: severity, size: "md" }}
+                    icon={!hasToolbar && ic}
+                    variant="h4"
+                    mb="xs"
+                    {...titleProps}
+                >
                     {title}
                 </Title>
             )}

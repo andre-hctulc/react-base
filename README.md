@@ -32,3 +32,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ className }) => {
 ## Compatibility
 
 `react@18` `react-dom@18` `@types/react@18` `@types/react-dom@18`
+
+## Icons
+
+We use [Phosphor Icons](https://phosphoricons.com) as system icons

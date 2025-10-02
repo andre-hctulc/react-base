@@ -2,22 +2,17 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { type FC, type ReactNode } from "react";
 
 const cardBody = tv({
-    base: "grow max-h-full min-h-0 overflow-auto",
+    base: "grow max-h-full min-h-0 overflow-auto not-first:pt-0 not-last:pb-0",
     variants: {
         size: {
             none: "",
-            xs: "p-1.5",
-            sm: "py-2 px-2.5",
-            md: "py-3 px-3.5",
-            lg: "py-5 px-6",
-            xl: "py-7 px-8",
-            "2xl": "p-12",
-        },
-        embedded: {
-            true: "!py-0",
-            footer: "!pb-0",
-            header: "!pt-0",
-            false: "",
+            xs: "p-2",
+            sm: "p-3 ",
+            md: "p-4",
+            lg: "p-6",
+            xl: "p-8",
+            "2xl": "p-10",
+            "3xl": "p-14",
         },
         flex: {
             col: "flex flex-col",
@@ -64,11 +59,10 @@ export const CardBody: FC<CardBodyProps> = ({
     fullHeight,
     alignItems,
     scroll,
-    embedded,
 }) => {
     const Comp = as || "div";
     return (
-        <Comp className={cardBody({ className, size, flex, grow, fullHeight, alignItems, scroll, embedded })}>
+        <Comp className={cardBody({ className, size, flex, grow, fullHeight, alignItems, scroll })}>
             {children}
         </Comp>
     );

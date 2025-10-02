@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import { collapse } from "@dre44/util";
+import { collapse } from "@dre44/util/objects";
 import { themeColor } from "../../util/style.js";
 import { Icon } from "../icons/icon.js";
 import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
@@ -28,6 +28,7 @@ const chip = tv({
             outlined: "border",
             pale: "",
             text: "",
+            highlight: "border",
         },
         size: {
             sm: "h-5 text-xs px-1.5 gap-1",
@@ -64,7 +65,6 @@ type ChipProps<T extends ELEMENT = "span"> = WithTVProps<
         interactive?: boolean;
         icon?: React.ReactNode;
         iconPosition?: "left" | "right";
-        as?: any;
     },
     typeof chip
 >;
@@ -98,30 +98,35 @@ export const Chip = <T extends ELEMENT = "span">({
         outlined: "",
         pale: bgA(20),
         text: "",
+        highlight: bgA(15),
     });
     const borderColor = collapse(_variant, {
         filled: "",
         outlined: border,
         pale: bgA(20),
         text: "",
+        highlight: border,
     });
     const textColor = collapse(_variant, {
         filled: textC,
         outlined: text,
         pale: text,
         text: text,
+        highlight: text,
     });
     const hoverBgColor = collapse(_variant, {
         filled: hoverBgA(90),
         outlined: hoverBgA(10),
         pale: hoverBgA(30),
         text: hoverBgA(10),
+        highlight: hoverBgA(20),
     });
     const activeBgColor = collapse(_variant, {
         filled: activeBgA(75),
         outlined: activeBgA(20),
         pale: activeBgA(20),
         text: activeBgA(20),
+        highlight: activeBgA(30),
     });
     const _clickable = clickable ?? interactive ?? !!props.onClick;
     const _hoverEffect = hoverEffect ?? interactive ?? !!props.onClick;

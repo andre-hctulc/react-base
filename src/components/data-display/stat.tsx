@@ -1,6 +1,6 @@
 "use client";
 
-import { collapse } from "@dre44/util";
+import { collapse } from "@dre44/util/objects";
 import clsx from "clsx";
 import { useMemo, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
@@ -14,7 +14,7 @@ import type {
     RichAsProps,
 } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
-import { HelperText } from "../input/helper-text.js";
+import { HelperText } from "../text/helper-text.js";
 import { Skeleton } from "./skeleton.js";
 
 const stat = tv({

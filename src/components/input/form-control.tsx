@@ -3,7 +3,7 @@
 import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
 import { useJSForm } from "./js-form/js-form-context.js";
 import type { PartialPropsOf, RefProps, RichAsProps, StyleProps, WithTVProps } from "../../types/index.js";
-import { HelperText } from "./helper-text.js";
+import { HelperText } from "../text/helper-text.js";
 import { tv } from "tailwind-variants";
 import { Label } from "../text/label.js";
 import { ErrorText } from "../text/error-text.js";
@@ -110,7 +110,7 @@ export const FormControl: FC<FormControlProps> = ({
     requiredHint,
 }) => {
     const formCtx = useJSForm();
-    const _name = name !== undefined ? `${formCtx?.prefixNames ?? ""}${name}` : undefined;
+    const _name = name !== undefined ? `${formCtx?.namesPrefix ?? ""}${name}` : undefined;
     const hasName = _name !== undefined;
     const isErr = !noError && hasName && formCtx?.inputs[_name]?.ok === false;
     const errText = isErr && formCtx.reporting ? errorText ?? (formCtx?.inputs[_name]?.error || "") : "";

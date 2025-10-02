@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "../../../components/data-display/index.js";
-import { QuestionCircleIcon } from "../../../components/icons/question-circle.js";
+import { QuestionCircleIcon } from "../../../components/icons/phosphor/question-circle.js";
 
 // #### META ####
 const meta = {
@@ -27,9 +27,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    render: args => (
+    render: (args) => (
         <Avatar>
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ maxWidth: "20px" }}>
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ maxWidth: "20px" }}
+            >
                 <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                 <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">

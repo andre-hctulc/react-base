@@ -1,5 +1,6 @@
 import { type FC, type Ref } from "react";
 import { type ClassValue, tv, type VariantProps } from "tailwind-variants";
+import type { StyleProps } from "../../types/index.js";
 
 const pageFooter = tv({
     base: "max-w-full box-border",
@@ -61,9 +62,11 @@ const pageFooterInner = tv({
     },
 });
 
-interface PageFooterProps extends VariantProps<typeof pageFooter>, VariantProps<typeof pageFooterInner> {
+interface PageFooterProps
+    extends VariantProps<typeof pageFooter>,
+        StyleProps,
+        VariantProps<typeof pageFooterInner> {
     children?: React.ReactNode;
-    className?: ClassValue;
     as?: any;
     ref?: Ref<HTMLElement>;
 }
@@ -76,6 +79,7 @@ interface PageFooterProps extends VariantProps<typeof pageFooter>, VariantProps<
 export const PageFooter: FC<PageFooterProps> = ({
     children,
     className,
+    style,
     as,
     position,
     innerSize,
@@ -89,6 +93,7 @@ export const PageFooter: FC<PageFooterProps> = ({
 
     return (
         <Comp
+            style={style}
             className={pageFooter({
                 className,
                 position,

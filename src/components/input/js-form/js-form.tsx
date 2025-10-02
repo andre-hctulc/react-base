@@ -68,7 +68,7 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
     /**
      * Consumed by {@link FormControl}s
      */
-    prefixNames?: string;
+    namesPrefix?: string;
     onContextChange?: (ctx: JSFormContext<T>) => void;
     ref?: Ref<HTMLFormElement>;
 }
@@ -78,7 +78,7 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
  *
  * ### Props
  * - `nested`
- * - `prefixNames`
+ * - `namesPrefix`
  */
 export const JSForm = <T extends object = any>({
     children,
@@ -96,7 +96,7 @@ export const JSForm = <T extends object = any>({
     reportStrategy,
     onInit,
     nested,
-    prefixNames,
+    namesPrefix,
     ref,
     onContextChange,
 }: JSFormProps<T>) => {
@@ -208,7 +208,7 @@ export const JSForm = <T extends object = any>({
     }, []);
 
     const triggerChange = useCallback(
-        (target?: { name: string | undefined; value: any }) => {
+        (target?: { name: string; value: any }) => {
             // For nested forms the form ref is not present!
             // We bubble the change event to the parent form
             if (nested) {
@@ -231,10 +231,10 @@ export const JSForm = <T extends object = any>({
             default: def,
             value: val,
             controlled: values !== undefined,
-            prefixNames,
+            namesPrefix,
             resetSignal,
         }),
-        [snapshot, triggerChange, reset, def, val, values, prefixNames, resetSignal]
+        [snapshot, triggerChange, reset, def, val, values, namesPrefix, resetSignal]
     );
     const onContextChangeRef = useRefOf(onContextChange);
 

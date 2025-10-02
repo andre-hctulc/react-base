@@ -11,7 +11,7 @@ export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T>
      *
      * Also used by {@link HiddenInput}s to trigger change events.
      */
-    triggerChange: (target?: { name: string | undefined; value: any }) => void;
+    triggerChange: (target?: { name: string; value: any }) => void;
     /**
      * Form default value.
      */
@@ -28,7 +28,7 @@ export interface JSFormContext<T extends object = any> extends JSFormSnapshot<T>
      * Sets the default controlled state for form controls
      */
     controlled: boolean;
-    prefixNames: string | undefined;
+    namesPrefix: string | undefined;
     resetSignal: number;
 }
 

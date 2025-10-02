@@ -1,6 +1,6 @@
 "use client";
 
-import { type ComponentType } from "react";
+import { type ElementType } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 import type { InputLikeProps } from "./types.js";
 import type { LabeledChoice, StyleProps } from "../../types/index.js";
@@ -31,6 +31,10 @@ const radioSwitch = tv({
             neutral: "text-neutral",
             accent: "text-accent",
         },
+        disabled: {
+            true: "!cursor-not-allowed",
+            false: "",
+        },
     },
     defaultVariants: {
         color: "primary",
@@ -48,7 +52,7 @@ export interface RadioSwitchProps<V = string, D = any>
         VariantProps<typeof radioSwitch>,
         StyleProps {
     options: RadioSwitchOption<V, D>[];
-    LinkComponent?: ComponentType<{ href?: string }>;
+    LinkComponent?: ElementType<{ href?: string }>;
     dense?: boolean;
     toggleMode?: boolean;
     multiple?: boolean;
@@ -84,18 +88,20 @@ export const RadioSwitch = <V = string, D = any>({
     const { bgA } = themeColor(color || "primary");
 
     return (
-        <div className={radioSwitch({ className, size, color, bg })} style={style}>
+        <div className={radioSwitch({ className, size, color, bg, disabled })} style={style}>
             {/* form compatibility */}
             {name && <HiddenInput required={required} name={name} value={rawValues} />}
             {choices.map((option, i) => {
+                const optionDisabled = !!option.disabled;
                 const canActivate = !disabled && !readOnly && !option.disabled;
                 const active = isActiveChoice(option.value);
                 const last = i === options.length - 1;
                 const classes = clsx(
-                    "text-center flex items-center gap-2 transition cursor-pointer",
+                    "text-center flex items-center gap-2 transition",
                     dense ? "px-2" : "px-4",
                     !last && "border-r border-divider/40",
-                    active ? ["", bgA(5)] : "text-t2",
+                    optionDisabled ? "cursor-not-allowed" : "cursor-pointer",
+                    active ? ["", bgA(5)] : canActivate ? "text-t2" : "text-t3",
                     canActivate && !active && "hover:bg-transparent1 active:bg-transparent2"
                 );
 

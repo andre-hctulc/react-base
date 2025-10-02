@@ -4,6 +4,8 @@ import clsx from "clsx";
 import { Icon } from "../icons/icon.js";
 import { Title } from "../text/title.js";
 import type { CSSProperties, FC, ReactNode } from "react";
+import { Subtitle } from "../text/subtitle.js";
+import { collapse } from "@dre44/util/objects";
 
 const cardHeader = tv({
     variants: {
@@ -13,12 +15,13 @@ const cardHeader = tv({
         },
         size: {
             none: "",
-            xs: "p-1.5",
-            sm: "p-2 ",
-            md: "p-3",
-            lg: "p-5",
-            xl: "p-7",
+            xs: "p-2",
+            sm: "p-3 ",
+            md: "p-4",
+            lg: "p-6",
+            xl: "p-8",
             "2xl": "p-10",
+            "3xl": "p-14",
         },
     },
     defaultVariants: {
@@ -32,10 +35,12 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
     className?: string;
     title?: ReactNode;
     titleProps?: PartialPropsOf<typeof Title>;
+    subtitle?: ReactNode;
+    subtitleProps?: PartialPropsOf<typeof Subtitle>;
     /**
-     * Rendered before the title and after the icon
+     * Rendered after the title
      */
-    badges?: ReactNode;
+    after?: ReactNode;
     /**
      * Rendered before the title
      */
@@ -60,7 +65,7 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
  * - `title`: Title of the card
  * - `size`: Padding size
  * - `border`: Whether to show a border
- * - `badges`: Content rendered before the title and after the icon
+ * - `after`: Content rendered after the title
  * - `start`: Rendered before the title
  * - `end`: Rendered after the title
  * - `pre`: Rendered at the top of the card header
@@ -69,9 +74,9 @@ export const CardHeader: FC<CardHeaderProps> = ({
     children,
     className,
     title,
-    size,
+    size = "md",
     border,
-    badges,
+    after,
     end,
     innerProps,
     iconProps,
@@ -80,24 +85,71 @@ export const CardHeader: FC<CardHeaderProps> = ({
     titleProps,
     as,
     pre,
+    subtitle,
+    subtitleProps,
     ...props
 }) => {
-    const renderInner = !!title || !!end || !!badges || !!icon;
+    const renderMain = !!title || !!end || !!after || !!icon || !!start;
     const Comp = as || "div";
 
     return (
         <Comp className={cardHeader({ className, size, border })} style={props.style}>
             {pre}
-            {renderInner && (
+            {renderMain && (
                 <div {...innerProps} className={clsx("flex items-center gap-3", innerProps?.className)}>
                     {start}
-                    {icon && <Icon {...iconProps}>{icon}</Icon>}
-                    {badges}
-                    <Title variant="h4" {...titleProps}>
-                        {title}
-                    </Title>
+                    {!!(title || icon) && (
+                        <Title
+                            icon={icon}
+                            variant={collapse(size, {
+                                xs: "h5",
+                                sm: "h5",
+                                md: "h4",
+                                lg: "h3",
+                                xl: "h2",
+                                "2xl": "h1",
+                                "3xl": "h1",
+                                none: "h4",
+                            } as const)}
+                            {...titleProps}
+                        >
+                            {title}
+                        </Title>
+                    )}
+                    {after}
                     {end && <div className="ml-auto min-w-0">{end}</div>}
                 </div>
+            )}
+            {subtitle && (
+                <Subtitle
+                    variant={collapse(size, {
+                        xs: "h5",
+                        sm: "h5",
+                        md: "h4",
+                        lg: "h4",
+                        xl: "h3",
+                        "2xl": "h2",
+                        "3xl": "h2",
+                        none: "h5",
+                    } as const)}
+                    {...subtitleProps}
+                    className={clsx(
+                        renderMain &&
+                            collapse(size, {
+                                xs: ["mt-1"],
+                                sm: ["mt-1"],
+                                md: ["mt-2"],
+                                lg: ["mt-2.5"],
+                                xl: ["mt-3"],
+                                "2xl": ["mt-4"],
+                                "3xl": ["mt-5"],
+                                none: ["mt-2"],
+                            } as const),
+                        subtitleProps?.className
+                    )}
+                >
+                    {subtitle}
+                </Subtitle>
             )}
             {children}
         </Comp>

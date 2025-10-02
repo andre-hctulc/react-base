@@ -1,6 +1,6 @@
 "use client";
 
-import { isPlainObject } from "@dre44/util";
+import { isPlainObject } from "@dre44/util/objects";
 import clsx from "clsx";
 import type { FC, ReactNode } from "react";
 import { tv } from "tailwind-variants";

@@ -3,13 +3,10 @@
 import { tv } from "tailwind-variants";
 import React, { type FC } from "react";
 import type { InputLikeProps } from "./types.js";
-import type {  PropsOf, WithTVProps } from "../../types/index.js";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const textarea = tv({
-    base: [
-        "transition block w-full rounded-lg border-none bg-paper3 py-1.5 px-3",
-        "focus:outline-hidden focus:outline-2 focus:-outline-offset-2 focus:outline-divider",
-    ],
+    base: ["transition block w-full rounded-lg py-1.5 px-3"],
     variants: {
         size: {
             sm: "h-7 text-sm",
@@ -18,9 +15,14 @@ const textarea = tv({
             xl: "h-32 text-sm",
             "2xl": "h-44 text-sm",
         },
+        variant: {
+            outlined: "border border-divider bg-paper focus:outline-2 focus:outline-divider",
+            filled: "bg-paper2 border-none focus:outline-2 focus:outline-divider",
+        },
     },
     defaultVariants: {
         size: "lg",
+        variant: "filled",
     },
 });
 
@@ -39,6 +41,7 @@ export const Textarea: FC<TextareaProps> = ({
     value,
     onChange,
     ref,
+    variant,
     ...props
 }) => {
     return (
@@ -47,7 +50,7 @@ export const Textarea: FC<TextareaProps> = ({
             ref={ref}
             value={value}
             defaultValue={defaultValue}
-            className={textarea({ size, className })}
+            className={textarea({ size, className, variant })}
             name={name}
             onChange={(e) => {
                 onChange?.({ value: e.target.value, ...e });

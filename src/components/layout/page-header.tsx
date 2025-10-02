@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { Title } from "../text/title.js";
-import type { PropsOf } from "../../types/index.js";
+import type { PropsOf, StyleProps } from "../../types/index.js";
 import type { Page } from "./page.js";
 
 const pageHeader = tv({
@@ -39,14 +39,13 @@ const pageHeader = tv({
     },
 });
 
-interface PageHeaderProps extends VariantProps<typeof pageHeader> {
+interface PageHeaderProps extends StyleProps, VariantProps<typeof pageHeader> {
     title?: React.ReactNode;
     titleProps?: PropsOf<typeof Title>;
     badges?: React.ReactNode;
     actions?: React.ReactNode;
     children?: React.ReactNode;
     pre?: React.ReactNode;
-    className?: ClassValue;
     center?: boolean;
     padding?: "none" | "sm" | "md" | "lg";
 }
@@ -68,9 +67,10 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     sticky,
     relative,
     mt,
+    style,
 }) => {
     return (
-        <div className={pageHeader({ className, mb, mt, padding, sticky, relative })}>
+        <div style={style} className={pageHeader({ className, mb, mt, padding, sticky, relative })}>
             {pre}
             {(badges || actions || title) && (
                 <div className={clsx("flex gap-3 py-2", center && "justify-center")}>

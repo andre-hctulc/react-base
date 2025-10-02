@@ -10,7 +10,7 @@ import { Placeholder } from "../data-display/placeholder.js";
 import { Spinner } from "../data-display/spinner.js";
 import { CollapseVScreen } from "../transitions/collapse.js";
 import clsx from "clsx";
-import { ChevronRightIcon } from "../icons/chevron-right.js";
+import { ChevronRightIcon } from "../icons/phosphor/chevron-right.js";
 
 const section = tv({
     base: "",
@@ -96,8 +96,8 @@ type SectionProps<T extends ELEMENT = "section"> = WithTVProps<
         /**
          * Props of children wrapper
          */
-        wrapperProps?: PropsOf<"div">;
-        wrapperClassName?: string;
+        bodyProps?: PropsOf<"div">;
+        bodyClassName?: string;
         loading?: ReactNode;
         /**
          * @default true
@@ -142,10 +142,10 @@ export const Section: FC<SectionProps> = ({
     defaultOpen,
     open,
     onOpenChange,
-    wrapperProps,
     closeable,
     openButtonProps,
-    wrapperClassName,
+    bodyProps,
+    bodyClassName,
     danger,
     size,
     noBorder,
@@ -244,10 +244,10 @@ export const Section: FC<SectionProps> = ({
                     }}
                 />
             )}
-            <CollapseVScreen show={isOpen}>
-                <div {...wrapperProps} className={clsx("pt-6", wrapperProps?.className, wrapperClassName)}>
+            <CollapseVScreen show={isOpen} unmount={false}>
+                <div {...bodyProps} className={clsx("pt-6", bodyProps?.className, bodyClassName)}>
                     {loading === true ? (
-                        <Placeholder padding="sm" my="lg">
+                        <Placeholder padding="sm" py="lg">
                             <Spinner size="2xl" />
                         </Placeholder>
                     ) : (

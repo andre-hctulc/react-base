@@ -1,3 +1,5 @@
+"use client";
+
 import type { FC, ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import { Icon } from "../icons/icon.js";

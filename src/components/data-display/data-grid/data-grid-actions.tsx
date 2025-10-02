@@ -3,7 +3,7 @@
 import React from "react";
 import { Popover } from "../../dialog/popover.js";
 import { IconButton } from "../../input/icon-button.js";
-import { MoreVertIcon } from "../../icons/more-vert.js";
+import { MoreVertIcon } from "../../icons/phosphor/more-vert.js";
 
 interface DataGridActions {
     moreIcon?: React.ReactNode;

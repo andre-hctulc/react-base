@@ -24,21 +24,23 @@ const icon = tv({
             inherit: "",
         },
         color: {
+            none: "",
             primary: "text-primary",
             secondary: "text-secondary",
+            accent: "text-accent",
             success: "text-success",
             error: "text-error",
             warning: "text-warning",
             info: "text-info",
             inherit: "text-inherit",
             neutral: "text-neutral",
-            text: "text",
-            text2: "text-t2",
-            text3: "text-t3",
-            text4: "text-t4",
+            t2: "text-t2",
+            t3: "text-t3",
+            t4: "text-t4",
         },
         inline: {
             true: "inline",
+            flex: "inline-flex",
         },
         noShrink: {
             true: "shrink-0",
@@ -46,7 +48,7 @@ const icon = tv({
         },
     },
     defaultVariants: {
-        size: "md",
+        size: "inherit",
         color: "inherit",
     },
 });
@@ -92,9 +94,9 @@ export const Icon: FC<IconProps> = ({
     if (width !== undefined) additionalProps.width = width;
     if (fill !== undefined) additionalProps.fill = fill;
 
-    return cloneElement(children as React.ReactElement, {
+    return cloneElement(children as ReactElement, {
         ref,
-        className: clsx(classes, ((children as React.ReactElement).props as any)?.className),
+        className: clsx(classes, ((children as ReactElement).props as any)?.className),
         ...additionalProps,
         ...props,
     });

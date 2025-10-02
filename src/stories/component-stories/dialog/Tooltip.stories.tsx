@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Tooltip } from "../../../components/dialog/index.js";
 import { IconButton } from "../../../components/index.js";
-import { InfoCircleIcon } from "../../../components/icons/info-circle.js";
+import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 
 // #### META ####
 const meta = {
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 // TODO stories from tooltip left, top, right and bottom
 export const Default: Story = {
-    render: args => (
+    render: (args) => (
         <>
             <Tooltip content={args.content}>
                 <IconButton>

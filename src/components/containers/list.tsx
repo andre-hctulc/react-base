@@ -1,6 +1,6 @@
 "use client";
 
-import { type MouseEvent, type ReactNode } from "react";
+import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import type {
     LinkComponent,
@@ -11,10 +11,11 @@ import type {
     WithTVProps,
 } from "../../types/index.js";
 import clsx from "clsx";
-import { withPrefix } from "../../util/system.js";
 import { IconButton } from "../input/icon-button.js";
 import { ListItem } from "./list-item.js";
 import { mergeProps, populateProps } from "../../util/react.js";
+import type { InputLikeProps } from "../input/types.js";
+import { HiddenInput } from "../input/hidden-input.js";
 
 const list = tv({
     base: "rounded-sm flex",
@@ -80,7 +81,8 @@ export type ListItemDef<D = any> = {
 };
 
 export type ListProps<D = any> = WithTVProps<
-    StyleProps &
+    InputLikeProps<string[], { singleValue: string | undefined }> &
+        StyleProps &
         RefProps<HTMLOListElement | HTMLUListElement> & {
             children?: ReactNode;
             items?: ListItemDef<D>[];
@@ -99,10 +101,15 @@ export type ListProps<D = any> = WithTVProps<
              */
             ordered?: boolean;
             color?: PropsOf<typeof ListItem>["color"];
+            multiple?: boolean;
+            selectable?: boolean;
         },
     typeof list
 >;
 
+/**
+ * Can be used as an input element!
+ */
 export const List = <D = any,>({
     className,
     items,
@@ -124,11 +131,51 @@ export const List = <D = any,>({
     color,
     activeIconButtonProps,
     activeListItemProps,
+    value,
+    defaultValue,
+    onChange,
+    multiple,
+    name,
+    selectable,
     ...props
 }: ListProps<D>) => {
+    const selectedControlled = !!value;
+    const [selectedItems, setSelectedItems] = useState<string[]>(value || []);
     const Comp: any = ordered ? "ol" : "ul";
-    const globalItemProps = { LinkComponent, size, color, ...listItemProps };
+    const _selectable = !!selectable || !!name || !!multiple || !!value || !!defaultValue;
+    const globalItemProps: PartialPropsOf<typeof ListItem> = {
+        LinkComponent,
+        size,
+        color,
+        selectable: _selectable,
+        ...listItemProps,
+        selected: selectedItems,
+        onSelectionChange: (selected, value) => {
+            listItemProps?.onSelectionChange?.(selected, value);
 
+            if (value !== undefined && _selectable) {
+                let newSelection: string[];
+
+                if (multiple) {
+                    if (selected) {
+                        newSelection = selectedItems.includes(value)
+                            ? [...selectedItems.filter((n) => n !== value), value]
+                            : [...selectedItems, value];
+                    } else {
+                        newSelection = selectedItems.filter((v) => v !== value);
+                    }
+                } else {
+                    newSelection = selectedItems.includes(value) ? [] : [value];
+                }
+
+                if (!selectedControlled) {
+                    setSelectedItems(newSelection);
+                }
+
+                onChange?.({ value: newSelection, singleValue: newSelection[0] });
+            }
+        },
+    };
     const isItemActive = (item: ListItemDef<D>) => {
         return (
             item.props?.active ??
@@ -140,72 +187,84 @@ export const List = <D = any,>({
         );
     };
 
-    return (
-        <Comp
-            ref={ref}
-            className={list({
-                className,
-                direction,
-                padding: padding ?? (size || "md"),
-                elevate,
-                rounded,
-                gap,
-            })}
-            {...props}
-        >
-            {populateProps(children, globalItemProps, "left", (el) => el.type === ListItem)}
-            {items?.map((item) => {
-                const active = isItemActive(item);
+    useEffect(() => {
+        if (value) {
+            setSelectedItems(value);
+        }
+    }, [value]);
 
-                if (variant === "icons") {
-                    const _buttonProps = mergeProps<PropsOf<typeof IconButton<"button">>>([
-                        {
-                            size: size === "xl" ? "lg" : size,
-                            variant: "text",
-                            color: active ? "black" : "neutral",
-                        },
-                        iconButtonProps,
-                        item.props,
-                        item.buttonProps,
-                        {
-                            className: clsx(active && "bg-transparent2"),
-                            onClick: (e) => {
-                                onItemClick?.(item, e);
+    return (
+        <>
+            {name && (
+                <>
+                    {JSON.stringify(selectedItems)}
+                    <HiddenInput name={name} value={selectedItems} />
+                </>
+            )}
+            <Comp
+                ref={ref}
+                className={list({
+                    className,
+                    direction,
+                    padding: padding ?? (size || "md"),
+                    elevate,
+                    rounded,
+                    gap,
+                })}
+                {...props}
+            >
+                {populateProps(children, globalItemProps, "left", (el) => el.type === ListItem)}
+                {items?.map((item) => {
+                    const active = isItemActive(item);
+
+                    if (variant === "icons") {
+                        const _buttonProps = mergeProps<PropsOf<typeof IconButton<"button">>>([
+                            {
+                                size: size === "xl" ? "lg" : size,
+                                variant: "text",
+                                color: active ? "black" : "neutral",
                             },
+                            iconButtonProps,
+                            item.props,
+                            item.buttonProps,
+                            {
+                                className: clsx(active && "bg-transparent2"),
+                                onClick: (e) => {
+                                    onItemClick?.(item, e);
+                                },
+                            },
+                            active && activeIconButtonProps,
+                        ]);
+
+                        return (
+                            <IconButton {..._buttonProps} key={item.key}>
+                                {item.props?.icon}
+                            </IconButton>
+                        );
+                    }
+
+                    const _itemProps = mergeProps<PropsOf<typeof ListItem>>([
+                        { size: "md", active },
+                        globalItemProps,
+                        item.props,
+                        item.listItemProps,
+                        {
+                            onClick: onItemClick
+                                ? (e) => {
+                                      onItemClick?.(item, e);
+                                  }
+                                : undefined,
                         },
-                        active && activeIconButtonProps,
+                        active && activeListItemProps,
                     ]);
 
                     return (
-                        <IconButton {..._buttonProps} key={item.key}>
-                            {item.props?.icon}
-                        </IconButton>
+                        <ListItem {..._itemProps} key={item.key}>
+                            {item.label}
+                        </ListItem>
                     );
-                }
-
-                const _itemProps = mergeProps<PropsOf<typeof ListItem>>([
-                    { size: "md", active },
-                    globalItemProps,
-                    item.listItemProps,
-                    item.props,
-                    {
-                        onClick: onItemClick
-                            ? (e) => {
-                                  onItemClick?.(item, e);
-                              }
-                            : undefined,
-                    },
-                    active && activeListItemProps,
-                ]);
-
-                return (
-                    <ListItem {..._itemProps} key={item.key}>
-                        {item.label}
-                    </ListItem>
-                );
-            })}
-        </Comp>
+                })}
+            </Comp>
+        </>
     );
 };
-
-List.displayName = withPrefix("List");

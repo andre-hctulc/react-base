@@ -1,9 +1,9 @@
 "use client";
 
 import clsx from "clsx";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, type Ref } from "react";
 import type { InputLikeProps } from "./types.js";
-import type { StyleProps } from "../../types/index.js";
+import type { ASProps, ELEMENT, StyleProps } from "../../types/index.js";
 import { useRefOf } from "../../hooks/index.js";
 
 type InputListInputProps<V = string> = Pick<
@@ -11,7 +11,11 @@ type InputListInputProps<V = string> = Pick<
     "readOnly" | "disabled" | "name" | "defaultValue"
 >;
 
-export interface InputListProps<T = string> extends InputLikeProps<T[]>, StyleProps {
+export interface InputListProps<T = string, A extends ELEMENT = "div">
+    extends InputLikeProps<T[]>,
+        StyleProps,
+        ASProps<A> {
+    ref?: Ref<any>;
     /**
      * Passed to {@link renderInput} as default value for the input
      */
@@ -30,7 +34,7 @@ export interface InputListProps<T = string> extends InputLikeProps<T[]>, StylePr
     }) => React.ReactNode;
     renderValues: (params: {
         values: T[];
-        change: (mutator: (items: T[]) => T[]) => void;
+        change: (newItems: ((items: T[]) => T[]) | T[]) => void;
         remove: (item: T) => void;
         inputProps: InputListInputProps<T>;
     }) => React.ReactNode;
@@ -51,7 +55,7 @@ const compare = (a: any, b: any) => a === b;
  * - `unique` - Only allow unique values
  * - `sort` - Sort function for the values
  */
-export const InputList = <T = string,>({
+export const InputList = <T = string, A extends ELEMENT = "div">({
     className,
     renderInput,
     renderValues,
@@ -68,15 +72,15 @@ export const InputList = <T = string,>({
     defaultInputValue,
     compareValues,
     ...inputProps
-}: InputListProps<T>) => {
+}: InputListProps<T, A>) => {
     const sortRef = useRefOf(sort);
     const compareRef = useRefOf(compareValues || compare);
     const onChangeRef = useRefOf(onChange);
     const [values, setValues] = useState<T[]>(value || defaultValue || []);
     const Comp = as || "div";
     const [candidate, setCandidate] = useState<T>();
-    const change = (mutator: (currentValues: T[]) => T[]) => {
-        setValues(mutator as any);
+    const change = (mutator: ((currentValues: T[]) => T[]) | T[]) => {
+        setValues(mutator);
     };
 
     const add = useCallback(
@@ -138,8 +142,8 @@ export const InputList = <T = string,>({
 
     return (
         <Comp className={clsx("", className)} style={style}>
-            {reverse ? inpEl : valuesEl}
             {reverse ? valuesEl : inpEl}
+            {reverse ? inpEl : valuesEl}
         </Comp>
     );
 };

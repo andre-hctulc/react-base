@@ -1,7 +1,7 @@
 "use client";
 
 import type { PropsOf } from "../../types/index.js";
-import { CopyIcon } from "../icons/copy.js";
+import { CopyIcon } from "../icons/phosphor/copy.js";
 import { IconButton } from "../input/icon-button.js";
 import { useNotifications } from "../dialog/notifications.js";
 

@@ -1,8 +1,10 @@
 import { tv } from "tailwind-variants";
 import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
 
+// TODO use rem
+
 const card = tv({
-    base: "overflow-hidden flex flex-col",
+    base: "transition overflow-hidden flex flex-col",
     variants: {
         variant: {
             custom: "",
@@ -14,6 +16,7 @@ const card = tv({
         shadow: {
             none: "",
             sm: "shadow-sm",
+            true: "shadow",
             md: "shadow-md",
             lg: "shadow-lg",
             xl: "shadow-xl",
@@ -51,6 +54,14 @@ const card = tv({
             "2xl": "w-[750px]",
             fit: "w-fit",
         },
+        maxWidth: {
+            xs: "max-w-[150px]",
+            sm: "max-w-[250px]",
+            md: "max-w-[350px]",
+            lg: "max-w-[450px]",
+            xl: "max-w-[550px]",
+            "2xl": "max-w-[750px]",
+        },
         height: {
             none: "",
             auto: "h-auto",
@@ -61,6 +72,14 @@ const card = tv({
             xl: "h-[400px]",
             "2xl": "h-[500px]",
             fit: "h-fit",
+        },
+        active: {
+            true: "border border-primary ring-2 ring-offset-3 ring-primary",
+            false: "",
+        },
+        hoverEffect: {
+            true: "hover:border-primary cursor-pointer",
+            false: "",
         },
     },
     defaultVariants: {
@@ -90,7 +109,10 @@ export const Card = <T extends ELEMENT = "div">({
     size,
     variant,
     rounded,
+    active,
     ref,
+    hoverEffect,
+    maxWidth,
     ...props
 }: CardProps<T>) => {
     const Comp: any = props.as || "div";
@@ -107,6 +129,9 @@ export const Card = <T extends ELEMENT = "div">({
                 width: width ?? size,
                 height: height ?? size,
                 variant,
+                active,
+                hoverEffect,
+                maxWidth,
             })}
             {...props}
         >

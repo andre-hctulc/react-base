@@ -13,12 +13,13 @@ interface UseChoicesResult<C extends Choice> {
     activateChoice: (values: ChoiceValue<C>) => void;
     toggleChoice: (value: ChoiceValue<C>) => void;
     activateChoices: (values: ChoiceValue<C>[]) => void;
+    setActiveChoices: (values: ChoiceValue<C>[]) => void;
     deactivateChoice: (value: ChoiceValue<C>) => void;
     deactivateChoices: (value: ChoiceValue<C>[]) => void;
     isActiveChoice: (value: ChoiceValue<C>) => boolean;
     areActiveChoices: (value: ChoiceValue<C>[]) => boolean;
     controlled: boolean;
-    rawValues: string | string[];
+    rawValues: string[];
     activeValues: ChoiceValue<C>[];
 }
 
@@ -68,17 +69,28 @@ export function useChoices<C extends Choice<any, any>>(
 
             if (multiple) {
                 const valuesSet = new Set(values);
-                newValues = [...Array.from(valuesSet), ...value.filter((o) => !valuesSet.has(o))];
-            }
-            if (values.length) {
+                newValues = [...value.filter((o) => !valuesSet.has(o)), ...Array.from(valuesSet)];
+            } else if (values.length) {
                 newValues = [values[0]];
             } else {
                 newValues = [];
             }
 
-            setValue(newValues);
+            if (!controlled) {
+                setValue(newValues);
+            }
 
             onChangeRef.current?.(newValues, findChoices(newValues));
+        },
+        [value, multiple, controlled]
+    );
+    const setActiveChoices = useCallback(
+        (values: ChoiceValue<C>[]) => {
+            if (!controlled) {
+                setValue(values);
+            }
+
+            onChangeRef.current?.(values, findChoices(values));
         },
         [value, multiple, controlled]
     );
@@ -92,7 +104,9 @@ export function useChoices<C extends Choice<any, any>>(
         (values: ChoiceValue<C>[]) => {
             const valuesSet = new Set(values);
             const newValue = value.filter((o) => !valuesSet.has(o));
-            setValue(newValue);
+            if (!controlled) {
+                setValue(newValue);
+            }
             onChangeRef.current?.(newValue, findChoices(newValue));
         },
         [value, controlled]
@@ -126,14 +140,18 @@ export function useChoices<C extends Choice<any, any>>(
             if (!multiple) {
                 newValue = newValue.slice(0, 1);
             }
-            setValue(newValue);
+
+            if (!controlled) {
+                setValue(newValue);
+            }
+
             onChangeRef.current?.(newValue, findChoices(newValue));
         },
         [value, controlled, multiple]
     );
     const rawValues = useMemo(() => {
-        return multiple ? value.map((v) => String(v)) : value.length ? String(value[0]) : "";
-    }, [value, controlled]);
+        return value.map((v) => String(v));
+    }, [value]);
     // Use "hash" of value as controlled value trigger, so one can provide values without memoizing them
     const controlledTrigger = useMemo(() => JSON.stringify(controlledValue), [controlledValue]);
 
@@ -162,5 +180,6 @@ export function useChoices<C extends Choice<any, any>>(
         controlled,
         rawValues,
         activeValues: value,
+        setActiveChoices,
     };
 }

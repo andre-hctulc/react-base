@@ -6,8 +6,8 @@ import { usePopper, type Modifier } from "react-popper";
 import type { Placement } from "@popperjs/core";
 import { Transition } from "@headlessui/react";
 import { Overlay } from "../layout/overlay.js";
-import type { Falsy } from "@dre44/util";
-import { Fragment, useCallback, useMemo, useState, type MouseEvent } from "react";
+import type { Falsy } from "@dre44/util/types";
+import { Fragment, useCallback, useMemo, useState, type FC, type MouseEvent, type ReactNode } from "react";
 
 const popover = tv({
     base: "absolute",
@@ -61,7 +61,7 @@ const popover = tv({
 
 export interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
     anchor: HTMLElement | null | undefined;
-    children?: React.ReactNode;
+    children?: ReactNode;
     open: boolean;
     position?: Placement;
     /**
@@ -87,9 +87,12 @@ export interface PopoverProps extends VariantProps<typeof popover>, StyleProps {
 }
 
 /**
- * The popover is portaled to the body
+ * ### Props
+ * - `portal` - Defaults to true. Whether to portal the popover to the body.
+ * - `zIndex`
+ * - `position`
  */
-export const Popover: React.FC<PopoverProps> = (props) => {
+export const Popover: FC<PopoverProps> = (props) => {
     const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
     const pos = props.position ?? "bottom";
     const [isPositioned, setIsPositioned] = useState(false); // Track whether the popover is positioned
@@ -164,10 +167,10 @@ export const Popover: React.FC<PopoverProps> = (props) => {
                 <div
                     ref={setPopperElement}
                     style={{ ...styles.popper, ...props.style }}
+                    {...attributes.popper}
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
-                    {...attributes.popper}
                     className={popover({
                         minWidth: props.minWidth,
                         width: props.width,

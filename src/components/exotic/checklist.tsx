@@ -1,12 +1,12 @@
-import { collapse } from "@dre44/util";
+import { collapse } from "@dre44/util/objects";
 import clsx from "clsx";
 import type { FC, ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import type { LinkComponent, LinkProps, PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 import { Subtitle } from "../text/subtitle.js";
 import { Icon } from "../icons/icon.js";
-import { CheckCircleIcon } from "../icons/check-circle.js";
-import { XCircleIcon } from "../icons/x-circle.js";
+import { CheckCircleIcon } from "../icons/phosphor/check-circle.js";
+import { XCircleIcon } from "../icons/phosphor/x-circle.js";
 
 const checklist = tv({
     base: "",

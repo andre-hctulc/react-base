@@ -81,6 +81,15 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
     }, [cols, col]);
     const sticky = col.stickyLeft || col.stickyRight;
     const isFlexCell = col.alignCenter || col.justifyCenter || col.center;
+    const isEmpty = value == null || value === "";
+
+    const text = () => {
+        if (col.stringify) {
+            return col.stringify(value, row, col);
+        }
+        return isEmpty && col.emptyText ? col.emptyText : String(value);
+    };
+
     /* 
     NOTE **sticky**
     Sticky will only grasp when the element hits the edge on mount.
@@ -98,7 +107,7 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
                 col.stickyRight && "sticky right-0 order-1",
                 firstStickyRight && "ml-auto",
                 lastStickyLeft && !leftEnd && "shadow-sm",
-                firstStickyRight && !rightEnd && "shadow-sm",
+                firstStickyRight && !rightEnd && "shadow-sm"
             )}
             style={{ minWidth: width, maxWidth: width, left: stickyLeft, right: stickyRight }}
             onClick={(e) => onClick?.(value, row, col, e)}
@@ -117,8 +126,11 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
                 {col.render ? (
                     col.render(value, row, col)
                 ) : (
-                    <DataGridCellText>
-                        {col.stringify ? col.stringify(value, row, col) : value}
+                    <DataGridCellText
+                        italic={isEmpty && !!col.emptyText}
+                        secondary={isEmpty && !!col.emptyText}
+                    >
+                        {text()}
                     </DataGridCellText>
                 )}
             </div>

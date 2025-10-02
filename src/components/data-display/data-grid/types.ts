@@ -71,4 +71,5 @@ export interface DataGridColDef<T extends object = any> {
     stickyLeft?: boolean;
     stickyRight?: boolean;
     headerCellClassName?: string;
+    emptyText?: string;
 }

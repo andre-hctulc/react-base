@@ -9,3 +9,4 @@ export * from "./text/index.js";
 export * from "./transitions/index.js";
 export * from "./icons/index.js";
 export * from "./exotic/index.js";
+export * from "./navigation/index.js";

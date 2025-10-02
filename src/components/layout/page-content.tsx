@@ -1,5 +1,6 @@
 import { type FC, type Ref } from "react";
 import { type ClassValue, tv, type VariantProps } from "tailwind-variants";
+import type { StyleProps } from "../../types/index.js";
 
 const pageContent = tv({
     base: "max-w-full box-border",
@@ -49,9 +50,8 @@ const pageContent = tv({
     },
 });
 
-interface PageContentProps extends VariantProps<typeof pageContent> {
+interface PageContentProps extends StyleProps, VariantProps<typeof pageContent> {
     children?: React.ReactNode;
-    className?: ClassValue;
     ref?: Ref<HTMLElement>;
 }
 
@@ -71,9 +71,11 @@ export const PageContent: FC<PageContentProps> = ({
     alignItems,
     justifyContent,
     ref,
+    style,
 }) => {
     return (
         <main
+            style={style}
             className={pageContent({
                 className,
                 alignItems,

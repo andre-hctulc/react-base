@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Chip } from "../../../components/data-display/index.js";
-import { InfoCircleIcon } from "../../../components/icons/info-circle.js";
+import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 
 // #### META ####
 const meta = {
@@ -10,7 +10,20 @@ const meta = {
         layout: "centered",
     },
     argTypes: {
-        color: { control: "radio", options: ["neutral", "black", "primary", "secondary", "error", "success", "warning", "info", "accent"] },
+        color: {
+            control: "radio",
+            options: [
+                "neutral",
+                "black",
+                "primary",
+                "secondary",
+                "error",
+                "success",
+                "warning",
+                "info",
+                "accent",
+            ],
+        },
         // remove from ui
         style: { table: { disable: true } },
         className: { table: { disable: true } },
@@ -29,7 +42,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    render: args => (
+    render: (args) => (
         <Chip {...args}>
             <span>some content</span>
         </Chip>
@@ -38,7 +51,7 @@ export const Default: Story = {
 };
 
 export const ChipWithIcon: Story = {
-    render: args => (
+    render: (args) => (
         <Chip {...args}>
             <span>some content</span>
         </Chip>

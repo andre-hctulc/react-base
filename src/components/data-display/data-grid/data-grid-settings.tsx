@@ -3,7 +3,7 @@
 import React, { useMemo } from "react";
 import { Card } from "../../containers/card.js";
 import { Popover } from "../../dialog/popover.js";
-import { GearIcon } from "../../icons/gear.js";
+import { GearIcon } from "../../icons/phosphor/gear.js";
 import { Subtitle } from "../../text/subtitle.js";
 import type { DataGridColDef } from "./types.js";
 import { Select, type SelectOption } from "../../input/select.js";
@@ -53,12 +53,7 @@ export const DataGridSettings: React.FC<DataGridSettingsProps> = ({ icon, cols, 
                 zIndex="20"
                 position="left-start"
             >
-                <Card
-                    width="sm"
-                    onClick={(e) => {
-                        console.log("test");
-                    }}
-                >
+                <Card width="sm">
                     <CardBody>
                         <Subtitle mb="sm" variant="h3">
                             Columns

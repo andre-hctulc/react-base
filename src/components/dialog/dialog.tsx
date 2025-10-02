@@ -15,7 +15,7 @@ const dialog = tv({
 
 const dialogPanel = tv({
     base: [
-        "flex flex-col transition-all",
+        "flex flex-col transition-all overflow-hidden",
         "max-w-full max-h-full bg-paper rounded-xl backdrop-blur-2xl m-4 box-border",
         "duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0",
     ],
@@ -24,6 +24,7 @@ const dialogPanel = tv({
             sm: "w-[400px]",
             md: "w-[500px]",
             lg: "w-[700px]",
+            xl: "w-[900px]",
             none: "",
         },
         height: {
@@ -32,6 +33,13 @@ const dialogPanel = tv({
             md: "h-[400px]",
             lg: "h-[550px]",
             xl: "h-[800px]",
+        },
+        minHeight: {
+            none: "",
+            sm: "min-h-[250px]",
+            md: "min-h-[400px]",
+            lg: "min-h-[550px]",
+            xl: "min-h-[800px]",
         },
         maxHeight: {
             none: "",
@@ -87,6 +95,8 @@ export const Dialog: FC<DialogProps> = ({
     overlayProps,
     panelProps,
     retainMount,
+    minHeight,
+    maxHeight,
 }) => {
     const [render, setRender] = useState(open);
 
@@ -112,8 +122,8 @@ export const Dialog: FC<DialogProps> = ({
                 if (closable && onClose) onClose();
                 overlayProps?.onClick?.(e);
             }}
-            noInteraction={open ? (overlayProps?.noInteraction ?? false) : true}
-            bg={open ? (overlayProps?.bg ?? "transparent1") : "transparent"}
+            noInteraction={open ? overlayProps?.noInteraction ?? false : true}
+            bg={open ? overlayProps?.bg ?? "transparent1" : "transparent"}
         >
             <div
                 {...panelProps}
@@ -122,7 +132,14 @@ export const Dialog: FC<DialogProps> = ({
                     e.stopPropagation();
                     panelProps?.onClick?.(e);
                 }}
-                className={dialogPanel({ width, height, shadow, className: panelProps?.className })}
+                className={dialogPanel({
+                    width,
+                    height,
+                    minHeight,
+                    maxHeight,
+                    shadow,
+                    className: panelProps?.className,
+                })}
             >
                 {retainMount ? children : render ? children : null}
             </div>

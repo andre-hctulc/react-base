@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { IconButton } from "../../../components/input/icon-button.js";
-import { InfoCircleIcon } from "../../../components/icons/info-circle.js";
+import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 
 // #### META ####
 const meta = {
@@ -11,7 +11,10 @@ const meta = {
     },
     argTypes: {
         variant: { control: "select", options: ["filled", "floating", "outlined", "text", "pale"] },
-        color: { control: "select", options: ["error", "accent", "black", "info", "pale", "neutral", "secondary", "primary"] },
+        color: {
+            control: "select",
+            options: ["error", "accent", "black", "info", "pale", "neutral", "secondary", "primary"],
+        },
         loading: { control: { type: "boolean" } },
         disabled: { control: "boolean" },
         shape: { control: "select", options: ["pill", "rounded_lg", "rounded_md", "rounded_sm", "square"] },

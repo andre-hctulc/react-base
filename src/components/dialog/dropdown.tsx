@@ -2,6 +2,7 @@
 
 import {
     cloneElement,
+    type FC,
     type ReactElement,
     type ReactNode,
     type Ref,
@@ -13,6 +14,7 @@ import type { PartialPropsOf, PropsOf } from "../../types/index.js";
 import { Card } from "../containers/card.js";
 import { Popover } from "./popover.js";
 import { List, type ListItemDef } from "../containers/list.js";
+import { collapse } from "@dre44/util/objects";
 
 export interface DropdownAnchorProps {
     disabled?: boolean;
@@ -48,9 +50,13 @@ interface DropdownProps {
     open?: boolean;
     onClose?: () => void;
     onOpen?: () => void;
+    /**
+     * Use {@link cardProps}, {@link listProps} and {@link popoverProps} for fine grained control over width.
+     */
+    width?: "auto" | "xs" | "anchor";
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({
+export const Dropdown: FC<DropdownProps> = ({
     children,
     disabled,
     content,
@@ -63,6 +69,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
     open,
     onClose,
     onOpen,
+    width,
 }) => {
     const controlled = open !== undefined;
     const [isOpen, setOpen] = useState(open ?? defaultOpen ?? false);
@@ -78,6 +85,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
         ref: anchor,
         disabled: disabled || children.props.disabled,
     };
+    const [cardWidth, popoverWidth] = collapse(width || "auto", {
+        auto: [menuItems && !width ? "xs" : undefined, undefined],
+        xs: ["xs", undefined],
+        anchor: [undefined, "anchor"],
+    } as const);
 
     useEffect(() => {
         if (open !== undefined) {
@@ -96,6 +108,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
             {cloneElement(children, anchorProps)}
             <Popover
                 position="bottom-end"
+                width={popoverWidth}
+                portal={false}
                 {...popoverProps}
                 anchor={anchor.current}
                 open={isOpen}
@@ -107,7 +121,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
                     onClose?.();
                 }}
             >
-                <Card width="xs" variant="elevated_sm" {...cardProps}>
+                <Card width={cardWidth} variant="elevated_sm" {...cardProps}>
                     {content}
                     {!!menuItems?.length && <List padding="sm" items={menuItems} {...listProps} />}
                     {endContent}

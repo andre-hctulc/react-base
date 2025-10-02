@@ -25,7 +25,7 @@ export interface DataGridProps<T extends object> {
     rowId: (row: T) => string;
     onRowClick?: OnRowClick<T>;
     onCellClick?: OnCellClick<T>;
-    onSelectionChange?: (rows: T[]) => void;
+    onSelectionChange?: (rows: T[], allSelected: boolean) => void;
     /**
      * @default 40
      */
@@ -146,7 +146,10 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                             onChange={({ value }) => {
                                 const newSelection = value ? props.rows : [];
                                 setSelection(newSelection);
-                                props.onSelectionChange?.(newSelection);
+                                props.onSelectionChange?.(
+                                    newSelection,
+                                    newSelection.length === props.rows.length
+                                );
                             }}
                             onClick={(e) => e.stopPropagation()}
                         />
@@ -166,7 +169,10 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
                                 ? [...selection, row]
                                 : selection.filter((r) => getRowId.current(r) !== rowId);
                             setSelection(newSelection);
-                            props.onSelectionChange?.(newSelection);
+                            props.onSelectionChange?.(
+                                newSelection,
+                                newSelection.length === props.rows.length
+                            );
                         }}
                         onClick={(e) => e.stopPropagation()}
                     />
@@ -234,7 +240,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
         // If selection changed (rows removed from selection), update
         if (newSelection.length !== selection.length) {
             setSelection(newSelection);
-            props.onSelectionChange?.(newSelection);
+            props.onSelectionChange?.(newSelection, newSelection.length === props.rows.length);
         }
     }, [props.rows]);
 

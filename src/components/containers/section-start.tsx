@@ -47,6 +47,7 @@ type SectionStartProps = WithTVProps<
         end?: ReactNode;
         subtitleVariant?: PropsOf<typeof Subtitle>["variant"];
         title?: string;
+        after?: ReactNode;
     },
     typeof sectionStart
 >;
@@ -72,6 +73,7 @@ export const SectionStart: FC<SectionStartProps> = ({
     variant,
     end,
     subtitleVariant,
+    after,
     ...props
 }) => {
     const defaultVariant = variant === "default" || !variant;
@@ -87,6 +89,7 @@ export const SectionStart: FC<SectionStartProps> = ({
                     >
                         {title}
                     </Subtitle>
+                    {after}
                     {end && <div className="min-w-0 ml-auto">{end}</div>}
                 </div>
             )}

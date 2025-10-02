@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Popover } from "../../../components/dialog/index.js";
 import { IconButton } from "../../../components/index.js";
-import { InfoCircleIcon } from "../../../components/icons/info-circle.js";
+import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 
 // #### META ####
 const meta = {
@@ -33,7 +33,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    render: args => (
+    render: (args) => (
         <>
             {/* // ? TODO how to set an anchor */}
             <IconButton variant="filled">

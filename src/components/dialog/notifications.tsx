@@ -4,13 +4,10 @@ import type { PropsOf } from "../../types/index.js";
 import { createPortal } from "react-dom";
 import clsx from "clsx";
 import { Fade } from "../transitions/fade.js";
-import { InfoCircleIcon } from "../icons/info-circle.js";
-import { CheckCircleIcon } from "../icons/check-circle.js";
-import { ExclamationMarkIcon } from "../icons/exclamation-mark.js";
-import { QuestionCircleIcon } from "../icons/question-circle.js";
 import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
 import { createContext, useCallback, useContext, useMemo, useState, type FC, type ReactNode } from "react";
 import { Alert } from "../data-display/alert.js";
+import { createId } from "../../util/system.js";
 
 const DEFAULT_DURATION: number = 3500;
 
@@ -99,7 +96,10 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
 
     const notify = useCallback((notification: NotificationInput) => {
         // insert id if not provided
-        if (notification.id === undefined) notification.id = Date.now() + "";
+        if (notification.id === undefined) {
+            notification.id = createId(10);
+        }
+
         const notificationWithId: Notification = notification as Notification;
 
         setNotifications((prev) => [
@@ -124,50 +124,55 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
     return (
         <NotificationsContext.Provider value={{ notify, close }}>
             {/* top_left */}
-            {createPortal(
-                <NotificationsBox className={"fixed top-0 left-0"}>
-                    {top_left.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} />
-                    ))}
-                </NotificationsBox>,
-                document.body
-            )}
+            {!!top_left.length &&
+                createPortal(
+                    <NotificationsBox className={"fixed top-0 left-0"}>
+                        {top_left.map((notification) => (
+                            <NotificationItem key={notification.id} notification={notification} />
+                        ))}
+                    </NotificationsBox>,
+                    document.body
+                )}
             {/* top_center */}
-            {createPortal(
-                <NotificationsBox className={"top-0 left-[50%] translate-x-[-50%]"}>
-                    {top_center.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} />
-                    ))}
-                </NotificationsBox>,
-                document.body
-            )}
+            {!!top_center.length &&
+                createPortal(
+                    <NotificationsBox className={"top-0 left-[50%] translate-x-[-50%]"}>
+                        {top_center.map((notification) => (
+                            <NotificationItem key={notification.id} notification={notification} />
+                        ))}
+                    </NotificationsBox>,
+                    document.body
+                )}
             {/* top_right */}
-            {createPortal(
-                <NotificationsBox className={"fixed top-0 right-0"}>
-                    {top_right.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} />
-                    ))}
-                </NotificationsBox>,
-                document.body
-            )}
+            {!!top_right.length &&
+                createPortal(
+                    <NotificationsBox className={"fixed top-0 right-0"}>
+                        {top_right.map((notification) => (
+                            <NotificationItem key={notification.id} notification={notification} />
+                        ))}
+                    </NotificationsBox>,
+                    document.body
+                )}
             {/* bottom_right */}
-            {createPortal(
-                <NotificationsBox className={"fixed bottom-0 right-0"}>
-                    {bottom_right.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} />
-                    ))}
-                </NotificationsBox>,
-                document.body
-            )}
+            {!!bottom_right.length &&
+                createPortal(
+                    <NotificationsBox className={"fixed bottom-0 right-0"}>
+                        {bottom_right.map((notification) => (
+                            <NotificationItem key={notification.id} notification={notification} />
+                        ))}
+                    </NotificationsBox>,
+                    document.body
+                )}
             {/* bottom_left */}
-            {createPortal(
-                <NotificationsBox className={"fixed bottom-0 left-0"}>
-                    {bottom_left.map((notification) => (
-                        <NotificationItem key={notification.id} notification={notification} />
-                    ))}
-                </NotificationsBox>,
-                document.body
-            )}
+            {!!bottom_left.length &&
+                createPortal(
+                    <NotificationsBox className={"fixed bottom-0 left-0"}>
+                        {bottom_left.map((notification) => (
+                            <NotificationItem key={notification.id} notification={notification} />
+                        ))}
+                    </NotificationsBox>,
+                    document.body
+                )}
             {children}
         </NotificationsContext.Provider>
     );
@@ -195,23 +200,17 @@ interface NotificationItemProps {
 }
 
 const NotificationItem: FC<NotificationItemProps> = ({ className, notification }) => {
-    const getIcon = () => {
-        if (notification.icon) return notification.icon;
-        else if (!notification.severity || notification.severity === "info") return <InfoCircleIcon />;
-        else if (notification.severity === "success") return <CheckCircleIcon />;
-        else if (notification.severity === "error") return <ExclamationMarkIcon />;
-        else if (notification.severity === "warning") return <QuestionCircleIcon />;
-        return <QuestionCircleIcon />;
-    };
-
     return (
         <Fade show unmount>
             <li className={clsx("bg-paper pointer-events-auto rounded-md", className)}>
                 <Alert
-                    icon={getIcon()}
-                    type={notification.severity}
+                    defaultIcon
+                    severity={notification.severity}
                     closable={notification.closable}
                     title={notification.title as any}
+                    titleProps={{ size: "md" }}
+                    shadow="md"
+                    outlined={false}
                     {...notification.alertProps}
                     className={clsx(notification.className, notification.alertProps?.className)}
                 >

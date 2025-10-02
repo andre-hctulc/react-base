@@ -1,7 +1,7 @@
 import React, { type FC } from "react";
-import type { PropsOf } from "../../types/index.js";
-import { Icon } from "./icon.js";
-import { withPrefix } from "../../util/system.js";
+import type { PropsOf } from "../../../types/index.js";
+import { Icon } from "../icon.js";
+import { withPrefix } from "../../../util/system.js";
 
 interface CheckIconProps extends Omit<PropsOf<typeof Icon>, "children"> {}
 

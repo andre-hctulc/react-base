@@ -7,11 +7,11 @@ const title = tv({
     base: "",
     variants: {
         variant: {
-            h1: "text-2xl",
-            h2: "text-xl",
-            h3: "text-lg",
-            h4: "text-base",
-            h5: "text-sm",
+            h1: "text-2xl gap-4.5",
+            h2: "text-xl gap-4",
+            h3: "text-lg gap-3.5",
+            h4: "text-base gap-3",
+            h5: "text-sm gap-2.5",
         },
         underline: {
             true: "underline",
@@ -43,6 +43,9 @@ const title = tv({
             md: "mb-4",
             lg: "mb-7",
             xl: "mb-12",
+        },
+        flex: {
+            true: "flex items-center",
         },
     },
     defaultVariants: {
@@ -84,19 +87,20 @@ export const Title = <T extends ELEMENT = "h1">({
     return (
         <Comp
             className={title({
-                className: [icon && "flex items-center gap-2", className],
+                className,
                 variant,
                 underline,
                 my,
                 mb,
                 mt,
                 bold,
+                flex: !!icon,
             })}
             ref={ref as any}
             {...props}
         >
             {icon && (
-                <Icon size="none" inline {...iconProps as any}>
+                <Icon inline {...(iconProps as any)}>
                     {icon}
                 </Icon>
             )}
