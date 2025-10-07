@@ -17,6 +17,10 @@ interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "val
  * Hidden input (`type="hidden"`).
  * Uses JSON stringification to store objects in the value. Strings or numbers are stored as is.
  *
+ * If `noJson` is set:
+ * - For string arrays, multiple hidden inputs will be rendered with the same name
+ * - otherwise the value will be used as is
+ *
  * **Remember:** Hidden inputs do not trigger any change events natively
  *
  * ### In {@link JSForm}s
@@ -38,7 +42,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, name, noJson, .
         }
 
         // Not in a JSForm context: Parse to inp value
-        if (!formCtx || !hasName) {
+        if (noJson || !formCtx || !hasName) {
             if (Array.isArray(value)) {
                 return [value.map((v) => String(v)), true];
             } else if (typeof value === "string" || typeof value === "number") {
@@ -48,7 +52,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, name, noJson, .
             }
         }
 
-        const isJson = !noJson && typeof value !== "string" && typeof value !== "number";
+        const isJson = typeof value !== "string" && typeof value !== "number";
 
         // If in a JSForm context and json data: Use json stringification (rbjsoninp)
         if (isJson) {
@@ -78,6 +82,10 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, name, noJson, .
 
         preValue.current = val;
     }, [val]);
+
+    if (hasName && noJson && Array.isArray(val)) {
+        return val.map((v) => <input hidden key={v} name={name} value={v} {...props} />);
+    }
 
     // IMP mark as json input with data attribute. Ths is handled accordingly in js forms
     // SEE inputEventToValue

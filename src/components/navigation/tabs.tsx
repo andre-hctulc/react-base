@@ -30,7 +30,7 @@ export const tabs = tv({
     },
 });
 
-export interface TabItem<V = string, D = any> extends Choice<V, D> {
+export interface TabItem< D = any> extends Choice<D> {
     label: ReactNode;
     icon?: ReactNode;
     href?: string;
@@ -39,12 +39,12 @@ export interface TabItem<V = string, D = any> extends Choice<V, D> {
     active?: boolean;
 }
 
-type TabsProps<V = string, D = any> = WithTVProps<
+type TabsProps<D = any> = WithTVProps<
     StyleProps & {
         /**
          * Must be a string if used with variant "switch".
          */
-        activeTabs?: string | string[] | ((tab: TabItem<V, D>) => boolean);
+        activeTabs?: string | string[] | ((tab: TabItem<D>) => boolean);
         tabs?: TabItem[];
         chipProps?: Partial<PropsOf<typeof Chip>>;
         tabProps?: Partial<PropsOf<typeof Tab>>;
@@ -54,7 +54,7 @@ type TabsProps<V = string, D = any> = WithTVProps<
          */
         bg?: "1" | "2" | "3" | "4";
         elevated?: boolean;
-        onTabClick?: (tab: TabItem<V, D>) => void;
+        onTabClick?: (tab: TabItem<D>) => void;
         disabled?: boolean;
         children?: ReactNode;
     },

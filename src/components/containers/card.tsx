@@ -39,9 +39,14 @@ const card = tv({
         },
         border: {
             none: "",
+            true: "border",
             default: "border",
             thin: "border-[0.5px]",
             thicker: "border-[1.5px]",
+        },
+        borderColor: {
+            default: "border-divider",
+            light: "border-divider-light",
         },
         width: {
             none: "",
@@ -113,6 +118,7 @@ export const Card = <T extends ELEMENT = "div">({
     ref,
     hoverEffect,
     maxWidth,
+    borderColor,
     ...props
 }: CardProps<T>) => {
     const Comp: any = props.as || "div";
@@ -132,6 +138,7 @@ export const Card = <T extends ELEMENT = "div">({
                 active,
                 hoverEffect,
                 maxWidth,
+                borderColor,
             })}
             {...props}
         >

@@ -77,6 +77,8 @@ export interface SelectOption<D = any> extends LabeledChoice<string, D> {
  * - `loadingText` - The text to display when loading
  * - `empty`
  * - `emptyText`
+ * 
+ * @deprecated Use `Combobox` instead
  */
 export const Select = <V = string, D = any>({
     options,
@@ -182,7 +184,6 @@ export const Select = <V = string, D = any>({
             </button>
             <Popover
                 width="anchor"
-                portal={false}
                 anchor={root}
                 open={open}
                 onClose={() => setOpen(false)}

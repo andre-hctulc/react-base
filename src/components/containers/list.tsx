@@ -140,9 +140,9 @@ export const List = <D = any,>({
     ...props
 }: ListProps<D>) => {
     const selectedControlled = !!value;
-    const [selectedItems, setSelectedItems] = useState<string[]>(value || []);
+    const [selectedItems, setSelectedItems] = useState<string[]>(value || defaultValue || []);
     const Comp: any = ordered ? "ol" : "ul";
-    const _selectable = !!selectable || !!name || !!multiple || !!value || !!defaultValue;
+    const _selectable = !!selectable || !!name || !!value || !!defaultValue;
     const globalItemProps: PartialPropsOf<typeof ListItem> = {
         LinkComponent,
         size,
@@ -153,7 +153,7 @@ export const List = <D = any,>({
         onSelectionChange: (selected, value) => {
             listItemProps?.onSelectionChange?.(selected, value);
 
-            if (value !== undefined && _selectable) {
+            if (_selectable) {
                 let newSelection: string[];
 
                 if (multiple) {

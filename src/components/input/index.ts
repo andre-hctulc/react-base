@@ -23,3 +23,4 @@ export * from "./icon-button.js";
 export * from "./range-input.js";
 export * from "./hidden-input.js";
 export * from "./text-input-list.js";
+export * from "./combobox.js";

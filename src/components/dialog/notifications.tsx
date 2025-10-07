@@ -204,7 +204,6 @@ const NotificationItem: FC<NotificationItemProps> = ({ className, notification }
         <Fade show unmount>
             <li className={clsx("bg-paper pointer-events-auto rounded-md", className)}>
                 <Alert
-                    defaultIcon
                     severity={notification.severity}
                     closable={notification.closable}
                     title={notification.title as any}

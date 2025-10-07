@@ -18,8 +18,8 @@ const tab = tv({
         },
         size: {
             xs: "h-5 text-xs px-2 gap-1.5",
-            sm: "h-7 text-sm px-3 gap-2",
-            md: "h-9 text-base px-3.5 gap-2.5",
+            sm: "h-8 text-sm px-3 gap-2",
+            md: "h-10 text-base px-3.5 gap-2.5",
             lg: "h-[42px] text-lg px-3 gap-3",
             xl: "h-12 text-xl px-4 gap-3",
         },

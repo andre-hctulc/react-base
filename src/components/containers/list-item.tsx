@@ -5,6 +5,7 @@ import type { LinkComponent, LinkProps, PartialPropsOf, PropsOf } from "../../ty
 import { Icon } from "../icons/icon.js";
 import {
     useEffect,
+    useId,
     useState,
     type CSSProperties,
     type FC,
@@ -122,7 +123,7 @@ interface ListItemProps extends VariantProps<typeof listItem> {
     hoverEffect?: boolean;
     innerProps?: PropsOf<"div">;
     selectable?: boolean;
-    onSelectionChange?: (selected: boolean, value: string | undefined) => void;
+    onSelectionChange?: (selected: boolean, value: string) => void;
     selected?: boolean | string[];
     value?: string;
     checkboxProps?: PartialPropsOf<typeof Checkbox>;
@@ -180,9 +181,11 @@ export const ListItem: FC<ListItemProps> = ({
     const bgColor = bg || color;
     const _hoverEffect = !active && (interactive || !!hoverEffect);
     const Comp = as || "li";
+    const fallbackValue = useId();
+    const _value = value ?? fallbackValue;
     const [isSelected, setIsSelected] = useState(() => {
         if (typeof selected === "boolean") return selected;
-        if (Array.isArray(selected) && value !== undefined) return selected.includes(value);
+        if (Array.isArray(selected)) return selected.includes(_value);
         return false;
     });
     const selectedControlled = selected !== undefined;
@@ -190,8 +193,8 @@ export const ListItem: FC<ListItemProps> = ({
     useEffect(() => {
         if (typeof selected === "boolean") {
             setIsSelected(selected);
-        } else if (Array.isArray(selected) && value !== undefined) {
-            setIsSelected(selected.includes(value));
+        } else if (Array.isArray(selected) && _value !== undefined) {
+            setIsSelected(selected.includes(_value));
         }
     }, [selected]);
 
@@ -226,7 +229,7 @@ export const ListItem: FC<ListItemProps> = ({
                             if (!selectedControlled) {
                                 setIsSelected(selected);
                             }
-                            onSelectionChange?.(selected, value);
+                            onSelectionChange?.(selected, _value);
                             checkboxProps?.onChange?.(e);
                         }}
                     />

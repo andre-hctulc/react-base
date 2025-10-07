@@ -14,7 +14,7 @@ import { WarningOctagonIcon } from "../icons/phosphor/warning-octagon.js";
 import { QuestionCircleIcon } from "../icons/phosphor/question-circle.js";
 
 const alert = tv({
-    base: "px-3 py-2",
+    base: "flex px-3 py-2",
     variants: {
         severity: {
             error: "",
@@ -66,8 +66,10 @@ type AlertProps<T extends ELEMENT = "div"> = WithTVProps<
         loading?: boolean;
         actions?: ReactNode;
         toolBarProps?: PropsOf<typeof Toolbar>;
+        /**
+         * Use _null_ to disable the icon
+         */
         icon?: ReactNode;
-        defaultIcon?: boolean;
     },
     typeof alert
 >;
@@ -106,7 +108,6 @@ export const Alert = <T extends ELEMENT = "div">({
     actions,
     toolBarProps,
     icon,
-    defaultIcon,
     textColor,
     shadow,
     ...props
@@ -114,7 +115,8 @@ export const Alert = <T extends ELEMENT = "div">({
     const Comp: any = as || "div";
     const { bgA, border, textC } = themeColor(severity);
     const hasToolbar = !!actions || !!closable;
-    const ic = icon || (defaultIcon ? getDefaultAlertIcon(severity) : null);
+    const hasHeader = hasToolbar || !!title;
+    const ic = icon === null ? undefined : icon || getDefaultAlertIcon(severity);
 
     return (
         <Comp
@@ -129,40 +131,47 @@ export const Alert = <T extends ELEMENT = "div">({
             })}
             {...props}
         >
-            {hasToolbar && (
-                <Toolbar gap="xs" {...toolBarProps} className={clsx("float-right", toolBarProps?.className)}>
-                    {ic && <Icon size="md">{ic}</Icon>}
-                    {actions}
-                    <IconButton
-                        color={severity}
-                        loading={loading}
-                        {...closeButtonProps}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            closeButtonProps?.onClick?.(e);
-                            onClose?.();
-                        }}
-                    >
-                        <XIcon />
-                    </IconButton>
-                </Toolbar>
+            {ic && (
+                <div className={clsx("pr-2.5 pt-0.5", hasHeader ? "pt-1" : "pt-0.5")}>
+                    <Icon color={severity}>{ic}</Icon>
+                </div>
             )}
-            {(title || ic) && (
-                <Title
-                    iconProps={{ color: severity, size: "md" }}
-                    icon={!hasToolbar && ic}
-                    variant="h4"
-                    mb="xs"
-                    {...titleProps}
-                >
-                    {title}
-                </Title>
-            )}
-            {typeof children === "string" ? (
-                <p className={clsx("text-sm", closable && !title && "pt-2")}>{children}</p>
-            ) : (
-                children
-            )}
+            <div>
+                {hasHeader && (
+                    <div className="flex gap-3 mb-1">
+                        {!!title && (
+                            <Title variant="h4" {...titleProps}>
+                                {title}
+                            </Title>
+                        )}
+                        {hasToolbar && (
+                            <Toolbar
+                                wrap
+                                grow
+                                gap="xs"
+                                {...toolBarProps}
+                                className={clsx("float-right", toolBarProps?.className)}
+                            >
+                                {ic && <Icon size="md">{ic}</Icon>}
+                                {actions}
+                                <IconButton
+                                    color={severity}
+                                    loading={loading}
+                                    {...closeButtonProps}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        closeButtonProps?.onClick?.(e);
+                                        onClose?.();
+                                    }}
+                                >
+                                    <XIcon />
+                                </IconButton>
+                            </Toolbar>
+                        )}
+                    </div>
+                )}
+                {typeof children === "string" ? <p className={clsx("text-sm")}>{children}</p> : children}
+            </div>
         </Comp>
     );
 };

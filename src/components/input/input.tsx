@@ -4,10 +4,10 @@ import { tv } from "tailwind-variants";
 import { type ChangeEvent } from "react";
 import type { InputLikeProps } from "./types.js";
 import { inputEventToValue } from "../../util/react.js";
-import type { PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
+import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const input = tv({
-    base: ["block w-full rounded-lg bg-paper3 py-1.5 px-3 transition outline-0"],
+    base: ["block w-full rounded-lg py-1.5 px-3 transition outline-0"],
     variants: {
         size: {
             sm: "h-7 text-sm",
@@ -17,6 +17,7 @@ const input = tv({
         variant: {
             outlined: "border border-divider bg-paper focus:outline-2 focus:outline-divider",
             filled: "bg-paper2 border-none focus:outline-2 focus:outline-divider",
+            ghost: "border-none focus:outline-0",
         },
     },
     defaultVariants: {
