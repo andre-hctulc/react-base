@@ -8,3 +8,4 @@ export * from "./page-footer.js";
 export * from "./page-skeleton.js";
 export * from "./spinner-page.js";
 export * from "./drawer.js";
+export * from "./drawer-card-variants.js";

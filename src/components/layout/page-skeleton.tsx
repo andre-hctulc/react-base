@@ -10,7 +10,7 @@ interface PageSkeletonProps extends Omit<PropsOf<typeof Page>, "children"> {
 export const PageSkeleton: React.FC<PageSkeletonProps> = ({ className, body, ...props }) => {
     return (
         <Page {...props}>
-            <PageContent fullHeight>
+            <PageContent height="full">
                 <div className="flex gap-3">
                     <Skeleton className="w-1/2 max-w-[300px]" shape="rounded_xl" height={43}></Skeleton>
                     <Skeleton className="ml-auto" size={43} shape="circle" />

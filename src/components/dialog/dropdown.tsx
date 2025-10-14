@@ -54,6 +54,10 @@ interface DropdownProps {
      * Use {@link cardProps}, {@link listProps} and {@link popoverProps} for fine grained control over width.
      */
     width?: "auto" | "xs" | "anchor";
+    /**
+     * Popover `portal` prop.
+     */
+    portal?: boolean;
 }
 
 export const Dropdown: FC<DropdownProps> = ({
@@ -70,6 +74,7 @@ export const Dropdown: FC<DropdownProps> = ({
     onClose,
     onOpen,
     width,
+    portal,
 }) => {
     const controlled = open !== undefined;
     const [isOpen, setOpen] = useState(open ?? defaultOpen ?? false);
@@ -109,7 +114,7 @@ export const Dropdown: FC<DropdownProps> = ({
             <Popover
                 position="bottom-end"
                 width={popoverWidth}
-                portal={false}
+                portal={portal}
                 {...popoverProps}
                 anchor={anchor.current}
                 open={isOpen}

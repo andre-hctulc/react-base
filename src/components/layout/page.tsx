@@ -8,7 +8,7 @@ const page = tv({
         sticky: {
             true: "sticky top-0 z-10",
         },
-        size: {
+        width: {
             "4xs": "max-w-xl mx-auto",
             "3xs": "max-w-2xl mx-auto",
             "2xs": "max-w-3xl mx-auto",
@@ -17,13 +17,12 @@ const page = tv({
             md: "max-w-6xl mx-auto",
             lg: "max-w-7xl mx-auto",
             xl: "max-w-8xl mx-auto",
-            full_width: "w-full",
+            full: "w-full",
         },
-        variant: {
-            default: "",
-            flex_row: "flex",
-            flex_col: "flex flex-col",
-            center: "flex items-center justify-center",
+        height: {
+            full: "h-full",
+            screen: "h-screen",
+            auto: "",
         },
         shrink: {
             true: "shrink-1",
@@ -32,14 +31,13 @@ const page = tv({
         grow: {
             true: "grow",
         },
-        maxHeightFull: {
-            true: "max-h-full",
+        maxHeight: {
+            full: "max-h-full",
+            auto: "",
         },
-        minHeight0: {
-            true: "min-h-0",
-        },
-        fullHeight: {
-            true: "h-full",
+        minHeight: {
+            "0": "min-h-0",
+            auto: "",
         },
         flex: {
             row: "flex",
@@ -54,7 +52,7 @@ const page = tv({
         },
     },
     defaultVariants: {
-        size: "lg",
+        width: "lg",
         variant: "default",
         shrink: false,
     },
@@ -71,14 +69,13 @@ interface PageProps extends VariantProps<typeof page>, StyleProps {
  */
 export const Page: FC<PageProps> = ({
     children,
-    variant,
     className,
     style,
     grow,
-    size,
-    maxHeightFull,
-    minHeight0,
-    fullHeight,
+    width,
+    height,
+    minHeight,
+    maxHeight,
     flex,
     shrink,
     ref,
@@ -89,15 +86,14 @@ export const Page: FC<PageProps> = ({
     return (
         <div
             className={page({
-                size,
+                width,
                 flex,
                 shrink,
                 className,
                 grow,
-                maxHeightFull,
-                minHeight0,
-                fullHeight,
-                variant,
+                height,
+                minHeight,
+                maxHeight,
                 sticky,
                 bg,
             })}

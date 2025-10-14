@@ -10,7 +10,7 @@ export interface SpinnerPageProps extends Omit<PropsOf<typeof Page>, "children">
 export const SpinnerPage: React.FC<SpinnerPageProps> = ({ className, spinnerSize, ...props }) => {
     return (
         <Page {...props}>
-            <PageContent fullHeight flex="col" className="items-center justify-center">
+            <PageContent height="full" flex="col" className="items-center justify-center">
                 <Spinner size={spinnerSize || "2xl"} />
             </PageContent>
         </Page>

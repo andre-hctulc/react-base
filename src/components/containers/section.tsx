@@ -105,6 +105,7 @@ type SectionProps<T extends ELEMENT = "section"> = WithTVProps<
         closeable?: boolean;
         openButtonProps?: PropsOf<typeof IconButton>;
         noBorder?: boolean;
+        unmount?: boolean;
     },
     typeof section
 >;
@@ -149,6 +150,7 @@ export const Section: FC<SectionProps> = ({
     danger,
     size,
     noBorder,
+    unmount,
     ...props
 }) => {
     const [isOpen, setOpen] = useState(defaultOpen ?? true);
@@ -244,7 +246,7 @@ export const Section: FC<SectionProps> = ({
                     }}
                 />
             )}
-            <CollapseVScreen show={isOpen} unmount={false}>
+            <CollapseVScreen show={isOpen} unmount={unmount ?? false}>
                 <div {...bodyProps} className={clsx("pt-6", bodyProps?.className, bodyClassName)}>
                     {loading === true ? (
                         <Placeholder padding="sm" py="lg">

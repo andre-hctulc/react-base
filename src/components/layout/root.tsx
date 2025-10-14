@@ -4,18 +4,15 @@ import { tv, type VariantProps } from "tailwind-variants";
 const root = tv({
     base: "max-w-full box-border flex",
     variants: {
-        variant: {
-            grow: "grow",
-            full_width: "w-full",
-        },
         direction: {
             row: "flex-row",
             col: "flex-col",
             mix: "flex-col lg:flex-row",
             mix_inverse: "flex-col lg:flex-row-reverse",
         },
-        minHeight0: {
-            true: "min-h-0",
+        minHeight: {
+            "0": "min-h-0",
+            auto: "",
         },
         grow: {
             true: "grow",
@@ -24,14 +21,14 @@ const root = tv({
             true: "overflow-y-auto",
             false: "",
         },
-        heightScreen: {
-            true: "h-screen",
+        height: {
+            screen: "h-screen",
+            full: "h-full",
+            auto: "",
         },
-        fullHeight: {
-            true: "h-full",
-        },
-        maxHeightFull: {
-            true: "max-h-full",
+        maxHeight: {
+            full: "max-h-full",
+            auto: "",
         },
         relative: {
             true: "relative",
@@ -48,7 +45,6 @@ const root = tv({
         direction: "col",
         grow: true,
         scroll: false,
-        variant: "full_width",
     },
 });
 
@@ -67,12 +63,10 @@ export const Root: FC<RootProps> = ({
     className,
     direction,
     scroll,
-    fullHeight,
-    heightScreen,
-    maxHeightFull,
-    variant,
+    height,
     grow,
-    minHeight0,
+    minHeight,
+    maxHeight,
     relative,
     style,
     bg,
@@ -83,14 +77,12 @@ export const Root: FC<RootProps> = ({
             id={id}
             className={root({
                 className,
-                variant,
                 scroll,
-                heightScreen,
-                fullHeight,
+                height,
+                minHeight,
+                maxHeight,
                 grow,
                 direction,
-                maxHeightFull,
-                minHeight0,
                 relative,
                 bg,
             })}

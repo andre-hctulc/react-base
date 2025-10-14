@@ -1,12 +1,13 @@
 import { type FC, type Ref } from "react";
-import { type ClassValue, tv, type VariantProps } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 import type { StyleProps } from "../../types/index.js";
 
 const pageContent = tv({
     base: "max-w-full box-border",
     variants: {
-        minHeight0: {
-            true: "min-h-0",
+        minHeight: {
+            "0": "min-h-0",
+            auto: "",
         },
         width: {
             full: "w-full",
@@ -37,11 +38,14 @@ const pageContent = tv({
         grow: {
             true: "grow",
         },
-        fullHeight: {
-            true: "h-full",
+        height: {
+            full: "h-full",
+            screen: "h-screen",
+            auto: "",
         },
-        maxHeightFull: {
-            true: "max-h-full",
+        maxHeight: {
+            full: "max-h-full",
+            auto: "",
         },
     },
     defaultVariants: {
@@ -62,12 +66,12 @@ export const PageContent: FC<PageContentProps> = ({
     children,
     className,
     padding,
-    fullHeight,
-    maxHeightFull,
+    minHeight,
+    maxHeight,
+    height,
     flex,
     width,
     grow,
-    minHeight0,
     alignItems,
     justifyContent,
     ref,
@@ -83,10 +87,10 @@ export const PageContent: FC<PageContentProps> = ({
                 width,
                 padding,
                 flex,
-                maxHeightFull,
-                fullHeight,
+                minHeight,
+                maxHeight,
+                height,
                 grow,
-                minHeight0,
             })}
             ref={ref}
         >

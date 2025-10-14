@@ -34,7 +34,7 @@ const pageFooter = tv({
 const pageFooterInner = tv({
     base: "mx-auto h-full",
     variants: {
-        innerSize: {
+        innerWidth: {
             "4xs": "max-w-xl mx-auto",
             "3xs": "max-w-2xl mx-auto",
             "2xs": "max-w-3xl mx-auto",
@@ -43,7 +43,7 @@ const pageFooterInner = tv({
             md: "max-w-6xl mx-auto",
             lg: "max-w-7xl mx-auto",
             xl: "max-w-8xl mx-auto",
-            full_width: "w-full",
+            full: "w-full",
         },
         padding: {
             none: "",
@@ -57,7 +57,7 @@ const pageFooterInner = tv({
         },
     },
     defaultVariants: {
-        innerSize: "full_width",
+        innerWidth: "full",
         padding: "md",
     },
 });
@@ -82,7 +82,7 @@ export const PageFooter: FC<PageFooterProps> = ({
     style,
     as,
     position,
-    innerSize,
+    innerWidth,
     padding,
     variant,
     shadow,
@@ -102,7 +102,7 @@ export const PageFooter: FC<PageFooterProps> = ({
             })}
             ref={ref}
         >
-            <div className={pageFooterInner({ innerSize, padding, flex })}>{children}</div>
+            <div className={pageFooterInner({ innerWidth, padding, flex })}>{children}</div>
         </Comp>
     );
 };

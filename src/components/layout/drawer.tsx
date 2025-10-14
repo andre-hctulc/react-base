@@ -8,7 +8,7 @@ import type { PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
 import { Overlay } from "./overlay.js";
 
 const drawer = tv({
-    base: "bg-white shrink-0 border-transparent transition-all duration-300 ease-in-out",
+    base: "bg-white shrink-0 border-transparent transition-all duration-300 ease-in-out min-h-0",
     variants: {
         variant: {
             overlay: "fixed z-30",
@@ -68,6 +68,11 @@ const drawer = tv({
             false: "",
             thin: "border-[0.5px]",
         },
+        flex: {
+            col: "flex flex-col",
+            row: "flex flex-row",
+            none: "",
+        },
     },
     defaultVariants: {
         position: "left",
@@ -91,6 +96,7 @@ type DrawerProps = WithTVProps<
          * Only applies if `variant` is set to "embedded".
          */
         transitionEndClassName?: string;
+        unmount?: boolean;
     },
     typeof drawer
 >;
@@ -110,9 +116,12 @@ export const Drawer: React.FC<DrawerProps> = ({
     variant,
     border,
     transitionEndClassName,
+    flex,
+    unmount,
     ...props
 }) => {
     const isEmbedded = variant === "embedded";
+    const isAbsolute = variant === "absolute";
     const isVert = position === "top" || position === "bottom";
     const sizeClasses = isVert
         ? collapse(size, {
@@ -161,6 +170,7 @@ export const Drawer: React.FC<DrawerProps> = ({
             onClick={(e) => e.stopPropagation()}
             className={clsx(
                 drawer({
+                    flex,
                     position,
                     size,
                     shadow: isEmbedded ? shadow : shadow ?? "lg",
@@ -175,7 +185,7 @@ export const Drawer: React.FC<DrawerProps> = ({
                 className
             )}
         >
-            {children}
+            {unmount && !open ? undefined : children}
         </div>
     );
 
@@ -188,8 +198,8 @@ export const Drawer: React.FC<DrawerProps> = ({
             <Overlay
                 noInteraction={!open}
                 zIndex="40"
-                bg={open ? "blur_xs" : "transparent"}
-                variant="fixed"
+                bg={open && !isAbsolute ? "blur_xs" : "transparent"}
+                variant={isAbsolute ? "absolute" : "fixed"}
                 onClick={() => onClose?.()}
                 {...overlayProps}
             >

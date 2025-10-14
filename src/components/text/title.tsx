@@ -16,6 +16,10 @@ const title = tv({
         underline: {
             true: "underline",
         },
+        truncate: {
+            true: "truncate",
+            false: "",
+        },
         bold: {
             true: "font-semibold",
             false: "font-medium",
@@ -80,6 +84,7 @@ export const Title = <T extends ELEMENT = "h1">({
     icon,
     iconProps,
     ref,
+    truncate,
     ...props
 }: TitleProps<T>) => {
     const Comp: any = as || variant || "h1";
@@ -95,6 +100,7 @@ export const Title = <T extends ELEMENT = "h1">({
                 mt,
                 bold,
                 flex: !!icon,
+                truncate,
             })}
             ref={ref as any}
             {...props}

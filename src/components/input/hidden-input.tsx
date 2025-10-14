@@ -34,6 +34,7 @@ interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "val
  */
 export const HiddenInput: React.FC<HiddenInputProps> = ({ value, name, noJson, ...props }) => {
     const formCtx = useJSForm();
+    const hasCtx = !!formCtx;
     const hasName = name !== undefined;
     const inited = useRef(false);
     const [val, isJson] = useMemo<[string | number | string[], boolean]>(() => {
@@ -42,7 +43,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, name, noJson, .
         }
 
         // Not in a JSForm context: Parse to inp value
-        if (noJson || !formCtx || !hasName) {
+        if (noJson || !hasCtx || !hasName) {
             if (Array.isArray(value)) {
                 return [value.map((v) => String(v)), true];
             } else if (typeof value === "string" || typeof value === "number") {
@@ -60,7 +61,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, name, noJson, .
         }
 
         return [value, false];
-    }, [value, formCtx]);
+    }, [value, hasCtx]);
     /**
      * Previous value.
      * Used to check if the value has changed and if we should trigger a change event
@@ -84,7 +85,7 @@ export const HiddenInput: React.FC<HiddenInputProps> = ({ value, name, noJson, .
     }, [val]);
 
     if (hasName && noJson && Array.isArray(val)) {
-        return val.map((v) => <input hidden key={v} name={name} value={v} {...props} />);
+        return val.map((v) => <input key={v} name={name} value={v} {...props} type="hidden" />);
     }
 
     // IMP mark as json input with data attribute. Ths is handled accordingly in js forms

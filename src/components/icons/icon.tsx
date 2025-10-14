@@ -37,6 +37,8 @@ const icon = tv({
             t2: "text-t2",
             t3: "text-t3",
             t4: "text-t4",
+            black: "text-black",
+            white: "text-white",
         },
         inline: {
             true: "inline",

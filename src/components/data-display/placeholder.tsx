@@ -27,11 +27,13 @@ const placeholder = tv({
             true: "grow",
             false: "",
         },
-        fullHeight: {
-            true: "h-full",
+        height: {
+            full: "h-full",
+            auto: "",
         },
-        fullWidth: {
-            true: "w-full",
+        width: {
+            full: "w-full",
+            auto: "",
         },
         my: {
             none: "",
@@ -94,8 +96,8 @@ export const Placeholder: FC<PlaceholderProps> = ({
     helperTextProps,
     grow,
     textProps,
-    fullHeight,
-    fullWidth,
+    height,
+    width,
     italic,
     my,
     disabled,
@@ -103,10 +105,7 @@ export const Placeholder: FC<PlaceholderProps> = ({
     ...props
 }) => {
     return (
-        <div
-            className={placeholder({ className, gap, padding, grow, fullHeight, fullWidth, my, py })}
-            {...props}
-        >
+        <div className={placeholder({ className, gap, padding, grow, height, width, my, py })} {...props}>
             {icon && (
                 <span className={disabled ? "text-t3" : "text-t2"}>
                     <Icon size="4xl" {...iconProps}>
