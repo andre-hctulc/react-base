@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import type { PropsOf, WithTVProps } from "../../types/index.js";
 
 const overlay = tv({
-    base: "w-full h-full transition-all transition-100",
+    base: "w-full h-full transition-all transition-100 overflow-hidden",
     variants: {
         variant: {
             fixed: "fixed inset-0",

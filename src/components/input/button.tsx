@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 import { type ReactNode } from "react";
-import type { WithTVProps, ELEMENT, RichAsProps } from "../../types/index.js";
+import type { WithTVProps, ELEMENT, RichAsProps, PartialPropsOf } from "../../types/index.js";
 import { Spinner } from "../data-display/spinner.js";
 import { Icon } from "../icons/icon.js";
 import { themeColor } from "../../util/style.js";
@@ -76,6 +76,7 @@ type ButtonProps<T extends ELEMENT = "button"> = WithTVProps<
         children?: ReactNode;
         loading?: boolean;
         disabled?: boolean;
+        iconProps?: PartialPropsOf<typeof Icon>;
     },
     typeof btn
 >;
@@ -95,6 +96,7 @@ export const Button = <T extends ELEMENT = "button">({
     mt,
     as,
     ref,
+    iconProps,
     ...props
 }: ButtonProps<T>) => {
     const _variant = variant || "filled";
@@ -176,9 +178,9 @@ export const Button = <T extends ELEMENT = "button">({
             {...btnExclusiveProps}
             {...p}
         >
-            {ico && iconPosition === "left" && <Icon>{ico}</Icon>}
+            {ico && iconPosition === "left" && <Icon {...(iconProps as any)}>{ico}</Icon>}
             {children}
-            {ico && iconPosition !== "left" && <Icon>{ico}</Icon>}
+            {ico && iconPosition !== "left" && <Icon {...(iconProps as any)}>{ico}</Icon>}
         </Comp>
     );
 };
