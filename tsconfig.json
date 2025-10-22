@@ -12,7 +12,7 @@
         "jsx": "react-jsx",
         "verbatimModuleSyntax": true,
         "outDir": "dist",
-        "declaration": true
+        "declaration": true,
     },
     "include": ["src/**/*"]
 }
