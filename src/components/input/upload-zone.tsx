@@ -2,14 +2,10 @@
 
 import type { PartialPropsOf, PropsOf, StyleProps } from "../../types/index.js";
 import { Droppable } from "./droppable.js";
-import { List, type ListItemDef } from "../containers/list.js";
-import clsx from "clsx";
 import type { InputLikeProps } from "./types.js";
 import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
-import { XIcon } from "../icons/phosphor/x.js";
-import { Toolbar } from "../containers/toolbar.js";
-import { IconButton } from "./icon-button.js";
 import { Icon } from "../icons/icon.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
 interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     children?: ReactNode;
@@ -87,7 +83,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
     };
 
     return (
-        <div className={clsx("flex flex-col", className)} style={style}>
+        <div className={twMerge("flex flex-col", className)} style={style}>
             <input
                 ref={input}
                 accept={props.accept}
@@ -109,7 +105,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
                     setFiles(Array.from(e.dataTransfer.files));
                     mainProps?.onDrop?.(e);
                 }}
-                className={clsx(
+                className={twMerge(
                     "grow min-h-0 overflow-y-auto flex flex-col items-center justify-center gap-3 p-5",
                     !props.disabled && "cursor-pointer",
                     "border-[1.5px] rounded-lg border-dashed transition hover:bg-primary/5 hover:border-info",
@@ -125,7 +121,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
                         size="4xl"
                         color="neutral"
                         {...iconProps}
-                        className={clsx("mb-2", iconProps?.className)}
+                        className={twMerge("mb-2", iconProps?.className)}
                     >
                         {icon}
                     </Icon>
@@ -135,8 +131,9 @@ export const UploadZone: FC<UploadZoneProps> = ({
                     <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
                 )}
             </Droppable>
-            {props.renderFiles === "menu" && (
-                <List
+            {props.renderFiles === "menu" &&
+                null
+                /* <List
                     rounded="sm"
                     className="mt-2"
                     items={files.map<ListItemDef>((file) => ({
@@ -145,15 +142,15 @@ export const UploadZone: FC<UploadZoneProps> = ({
                         listItemProps: {
                             end: (
                                 <Toolbar>
-                                    <IconButton color="error" onClick={() => removeFile(file)}>
+                                    <Button color="error" onClick={() => removeFile(file)}>
                                         <XIcon />
-                                    </IconButton>
+                                    </Button>
                                 </Toolbar>
                             ),
                         },
                     }))}
-                />
-            )}
+                /> */
+            }
             {typeof props.renderFiles === "function" && props.renderFiles(files)}
             {children}
         </div>

@@ -26,14 +26,10 @@
     },
     "dependencies": {
         "@dre44/util": "^0.7.3",
-        "@headlessui/react": "^2.2.0",
-        "@popperjs/core": "^2.11.8",
-        "clsx": "^2.1.0",
         "dot-prop": "^9.0.0",
+        "flowbite-react": "^0.12.10",
         "react": "^19.2.0",
-        "react-dom": "^19.1.0",
-        "react-popper": "^2.3.0",
-        "tailwind-variants": "^0.2.1"
+        "react-dom": "^19.1.0"
     },
     "devDependencies": {
         "@chromatic-com/storybook": "^3.2.6",

@@ -1,40 +1,12 @@
-@source "safelist.txt";
 /* Reference compiled source! */
 @source "dist";
+
+/* Add safelist for dynamic classes */
+@import "safelist.css";
 
 /* #### Theme #### */
 
 @theme {
-    /* Colors */
-
-    --color-primary: rgb(73, 135, 243);
-    --color-primary-contrast: rgb(255, 255, 255);
-    --color-secondary: rgb(243, 73, 135);
-    --color-secondary-contrast: rgb(255, 255, 255);
-    --color-accent: rgb(184, 181, 177);
-    --color-accent-contrast: rgb(255, 255, 255);
-    --color-error: rgb(232, 59, 63);
-    --color-error-contrast: rgb(255, 255, 255);
-    --color-success: rgb(64, 163, 63);
-    --color-success-contrast: rgb(255, 255, 255);
-    --color-warning: rgb(255, 202, 40);
-    --color-warning-contrast: rgb(255, 255, 255);
-    --color-info: rgb(15, 115, 198);
-    --color-info-contrast: rgb(255, 255, 255);
-    --color-neutral: rgb(94, 94, 94);
-    --color-neutral-contrast: rgb(255, 255, 255);
-    --color-black: rgb(0, 0, 0);
-    --color-white: rgb(255, 255, 255);
-    --color-transparent: transparent;
-    --color-green: rgb(0, 255, 0);
-    --color-red: rgb(255, 0, 0);
-    --color-blue: rgb(0, 0, 255);
-    --color-yellow: rgb(255, 255, 0);
-    --color-pink: rgb(255, 0, 255);
-    --color-cyan: rgb(0, 255, 255);
-    --color-gray: rgb(94, 94, 94);
-    --color-blueish-gray: rgb(107, 114, 128);
-
     /* Background Colors */
 
     --color-paper1: rgb(255, 255, 255);

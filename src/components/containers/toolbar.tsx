@@ -1,128 +1,99 @@
-import { tv } from "tailwind-variants";
-import { type FC } from "react";
-import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
+"use client";
 
-const toolbar = tv({
+import { createTheme } from "flowbite-react/helpers/create-theme";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import {
+    alignItems,
+    flexDirection,
+    flexGrow,
+    flexWrap,
+    justifyContent,
+    noShrink,
+    withGap,
+    withPadding,
+    withScroll,
+    type BaseTheme,
+    type TProps,
+    type WithAlignItems,
+    type WithFlexDirection,
+    type WithFlexWrap,
+    type WithGap,
+    type WithGrow,
+    type WithJustifyContent,
+    type WithNoShrink,
+    type WithPadding,
+    type WithScroll,
+} from "../../util/style.js";
+import type { FlowbiteBoolean } from "flowbite-react/types";
+import type { RichAsProps } from "../../types/index.js";
+import { useResolveT } from "../../hooks/index.js";
+import { type FC, type ElementType } from "react";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        toolbar: ToolbarTheme;
+    }
+
+    interface FlowbiteProps {
+        toolbar: Partial<WithoutThemingProps<ToolbarProps>>;
+    }
+}
+
+export interface ToolbarTheme
+    extends BaseTheme,
+        WithFlexDirection,
+        WithGap,
+        WithPadding,
+        WithAlignItems,
+        WithJustifyContent,
+        WithGrow,
+        WithNoShrink,
+        WithFlexWrap,
+        WithScroll {
+    mlAuto: FlowbiteBoolean;
+}
+
+const toolbar = createTheme<ToolbarTheme>({
     base: "flex min-w-0",
-    variants: {
-        direction: {
-            row: "flex-row",
-            col: "flex-col",
-        },
-        scroll: {
-            true: "",
-        },
-        gap: {
-            xs: "gap-1",
-            sm: "gap-2",
-            md: "gap-3",
-            lg: "gap-5",
-            xl: "gap-6",
-            "2xl": "gap-8",
-        },
-        padding: {
-            none: "p-0",
-            sm: "p-2",
-            md: "p-3",
-            lg: "p-4",
-        },
-        justify: {
-            none: "",
-            normal: "",
-            start: "justify-start",
-            end: "justify-end",
-            center: "justify-center",
-            between: "justify-between",
-            around: "justify-around",
-            evenly: "justify-evenly",
-        },
-        align: {
-            none: "",
-            normal: "",
-            start: "items-start",
-            end: "items-end",
-            center: "items-center",
-            baseline: "items-baseline",
-            stretch: "items-stretch",
-        },
-        grow: {
-            true: "grow",
-        },
-        wrap: {
-            true: "flex-wrap",
-        },
-        noShrink: {
-            true: "shrink-0",
-        },
-        mlAuto: {
-            true: "ml-auto",
-        },
-    },
-    compoundVariants: [
-        { direction: "col", scroll: true, className: "overflow-y-auto" },
-        { direction: "row", scroll: true, className: "overflow-x-auto" },
-    ],
-    defaultVariants: {
-        gap: "md",
-        align: "center",
-        direction: "row",
+    direction: flexDirection,
+    ...withScroll,
+    ...withGap,
+    ...withPadding,
+    justifyContent: justifyContent,
+    alignItems: alignItems,
+    grow: flexGrow,
+    wrap: flexWrap,
+    noShrink,
+    mlAuto: {
+        on: "ml-auto",
+        off: "",
     },
 });
 
-type ToolbarProps<T extends ELEMENT = "div"> = WithTVProps<
-    RichAsProps<T> & {
+type ToolbarProps<T extends ElementType = "div"> = RichAsProps<T> &
+    TProps<ToolbarTheme> & {
         stopEventPropagation?: boolean;
-        as?: any;
-    },
-    typeof toolbar
->;
+    };
 
 /**
  * ### Props
  * - `stopEventPropagation`
  */
-export const Toolbar: FC<ToolbarProps> = ({
-    children,
-    direction,
-    gap,
-    padding,
-    className,
-    justify,
-    align,
-    grow,
-    wrap,
-    stopEventPropagation,
-    scroll,
-    ref,
-    noShrink,
-    mlAuto,
-    ...props
-}) => {
+export const Toolbar: FC<ToolbarProps> = (props) => {
+    const { className, children } = useResolveT("toolbar", toolbar, props);
     const Comp: any = props.as || "div";
 
     return (
         <Comp
-            className={toolbar({
-                className,
-                direction,
-                padding,
-                grow,
-                gap,
-                align,
-                justify,
-                wrap,
-                scroll,
-                noShrink,
-                mlAuto,
-            })}
-            ref={ref as any}
+            className={twMerge(className)}
+            ref={props.ref as any}
             onClick={
-                stopEventPropagation
+                props.stopEventPropagation
                     ? (e: React.MouseEvent<any>) => {
                           e.stopPropagation();
                           props.onClick?.(e);
                       }
-                    : undefined
+                    : props.onClick
             }
             {...props}
         >

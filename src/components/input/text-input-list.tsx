@@ -1,20 +1,23 @@
 "use client";
 
-import { useRef, useState, type FC, type Ref } from "react";
+import {
+    useRef,
+    useState,
+    type FC,
+    type Ref,
+    type RefObject,
+} from "react";
 import { InputList } from "./input-list.js";
-import { Input } from "./input.js";
-import type { PropsOf } from "../../types/index.js";
-import { Textarea } from "./textarea.js";
-import { IconButton } from "./icon-button.js";
 import { PlusIcon } from "../icons/phosphor/plus.js";
-import clsx from "clsx";
 import { XIcon } from "../icons/phosphor/x.js";
 import type { InputLikeProps } from "./types.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { Button, TextInput, type TextInputProps, Textarea, type TextareaProps } from "flowbite-react";
 
 interface TextInputListProps extends InputLikeProps<string[]> {
     textarea?: boolean;
-    listInputProps?: PropsOf<typeof Input | typeof Textarea>;
-    inputProps?: PropsOf<typeof Input | typeof Textarea>;
+    listInputProps?: Partial<TextInputProps | TextareaProps>;
+    inputProps?: Partial<TextInputProps | TextareaProps>;
     placeholder?: string;
     className?: string;
     ref?: Ref<any>;
@@ -36,14 +39,14 @@ export const TextInputList: FC<TextInputListProps> = ({
     ref,
     unique,
 }) => {
-    const Inp = textarea ? Textarea : Input;
+    const Inp = textarea ? Textarea : TextInput;
     const [newValue, setNewValue] = useState("");
     const inpRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
     return (
         <InputList<string>
             unique={unique}
-            className={clsx("space-y-4", className)}
+            className={twMerge("space-y-4", className)}
             ref={ref}
             value={value}
             defaultValue={defaultValue}
@@ -64,7 +67,7 @@ export const TextInputList: FC<TextInputListProps> = ({
                             disabled={disabled}
                             placeholder={placeholder}
                             {...(inputProps as any)}
-                            ref={inpRef}
+                            ref={inpRef as RefObject<any>}
                             value={newValue}
                             onChange={(e) => setNewValue(e.target.value)}
                             onKeyDown={(e) => {
@@ -74,15 +77,15 @@ export const TextInputList: FC<TextInputListProps> = ({
                                 }
                             }}
                         />
-                        <IconButton
+                        <Button
                             disabled={disabled || readOnly || !newValue}
                             onClick={() => {
                                 addValue(newValue);
                             }}
-                            color="neutral"
+                            color="gray"
                         >
                             <PlusIcon />
-                        </IconButton>
+                        </Button>
                     </div>
                 );
             }}
@@ -91,10 +94,9 @@ export const TextInputList: FC<TextInputListProps> = ({
                     {values.map((value, i) => (
                         <li className="flex gap-2" key={i}>
                             <Inp
-                                variant="outlined"
                                 {...(inputProps as any)}
                                 {...(listInputProps as any)}
-                                className={clsx("grow", listInputProps?.className)}
+                                className={twMerge("grow", listInputProps?.className)}
                                 name={name}
                                 value={value}
                                 onChange={(e) => {
@@ -107,9 +109,9 @@ export const TextInputList: FC<TextInputListProps> = ({
                                 }}
                             />
                             {!inputProps.readOnly && (
-                                <IconButton disabled={inputProps.disabled} onClick={() => remove(value)}>
+                                <Button disabled={inputProps.disabled} onClick={() => remove(value)}>
                                     <XIcon />
-                                </IconButton>
+                                </Button>
                             )}
                         </li>
                     ))}

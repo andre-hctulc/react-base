@@ -1,38 +1,47 @@
 "use client";
 
-import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
 import { useCallback, useEffect, useMemo, useRef, useState, type Ref } from "react";
 import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types.js";
 import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
 import { createSnapshot } from "./helpers.js";
 import { getProperty } from "dot-prop";
-import { useRefOf } from "../../../hooks/index.js";
-import type { PropsOf } from "../../../types/index.js";
+import { useRefOf, useResolveT } from "../../../hooks/index.js";
+import type { PropsOf, StyleProps } from "../../../types/index.js";
+import {
+    flexDirection,
+    withGap,
+    type BaseTheme,
+    type TProps,
+    type WithFlex,
+    type WithGap,
+} from "../../../util/style.js";
+import { createTheme } from "flowbite-react";
 
-const jsForm = tv({
-    variants: {
-        flex: {
-            row: "flex flex-row",
-            col: "flex flex-col",
-            wrap: "flex flex-wrap",
-        },
-        gap: {
-            sm: "gap-2",
-            md: "gap-3.5",
-            lg: "gap-6",
-            none: "",
-        },
-    },
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        jsForm: JSFormTheme;
+    }
+
+    interface FlowbiteProps {
+        jsForm: Partial<WithoutThemingProps<JSFormProps>>;
+    }
+}
+
+interface JSFormTheme extends BaseTheme, WithFlex, WithGap {}
+
+const jsForm = createTheme<JSFormTheme>({
+    base: "",
+    flex: flexDirection,
+    ...withGap,
 });
 
-export interface JSFormProps<T extends object = any> extends VariantProps<typeof jsForm> {
+export interface JSFormProps<T extends object = any> extends StyleProps, TProps<JSFormTheme> {
     id?: string;
     children?: React.ReactNode;
     onSubmit?: (snapshot: JSFormSnapshot<T>) => void;
     onChange?: (snapshot: JSFormChange<T> & { changedField: { name: string; newValue: any } }) => void;
     onInvalid?: (snapshot: JSFormSnapshot<T>) => void;
     validate?: (data: JSFormValidateData<T>) => JSFormValidation<T> | boolean | undefined | void;
-    className?: ClassValue;
     /**
      * Form target attribute
      */
@@ -80,26 +89,25 @@ export interface JSFormProps<T extends object = any> extends VariantProps<typeof
  * - `nested`
  * - `namesPrefix`
  */
-export const JSForm = <T extends object = any>({
-    children,
-    onSubmit,
-    className,
-    onInvalid,
-    target,
-    validate,
-    id,
-    defaultValues,
-    values,
-    onChange,
-    flex,
-    gap,
-    reportStrategy,
-    onInit,
-    nested,
-    namesPrefix,
-    ref,
-    onContextChange,
-}: JSFormProps<T>) => {
+export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
+    const { children, className, restProps } = useResolveT("jsForm", jsForm, props);
+    const {
+        defaultValues,
+        nested,
+        values,
+        validate,
+        reportStrategy,
+        onInvalid,
+        onChange,
+        onSubmit,
+        namesPrefix,
+        onContextChange,
+        onInit,
+        ref,
+        target,
+        id,
+        ...rootProps
+    } = restProps;
     const form = useRef<HTMLFormElement>(null);
     const parentFormCtx = useJSForm();
     const def = useCallback(
@@ -271,8 +279,8 @@ export const JSForm = <T extends object = any>({
                     ref.current = f;
                 }
             }}
-            className={jsForm({ flex, gap, className })}
-            {...formProps}
+            className={className}
+            {...rootProps}
         >
             <JSFormCtx.Provider value={ctx}>{children}</JSFormCtx.Provider>
         </Comp>

@@ -1,38 +1,45 @@
-import { tv, type VariantProps } from "tailwind-variants";
-import type { PartialPropsOf, PropsOf } from "../../types/index.js";
-import clsx from "clsx";
-import { Icon } from "../icons/icon.js";
-import { Title } from "../text/title.js";
-import type { CSSProperties, FC, ReactNode } from "react";
-import { Subtitle } from "../text/subtitle.js";
-import { collapse } from "@dre44/util/objects";
+"use client";
 
-const cardHeader = tv({
-    variants: {
-        border: {
-            true: "border-b",
-            false: "",
-        },
-        size: {
-            none: "",
-            xs: "p-2",
-            sm: "p-3 ",
-            md: "p-4",
-            lg: "p-6",
-            xl: "p-8",
-            "2xl": "p-10",
-            "3xl": "p-14",
-        },
-    },
+import { createTheme } from "flowbite-react";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import {
+    withBorder,
+    withPadding,
+    type BaseTheme,
+    type TProps,
+    type WithBorder,
+    type WithPadding,
+} from "../../util/style.js";
+import type { PartialPropsOf, PropsOf } from "../../types/index.js";
+import { type IconLike, type IconProps } from "../icons/icon.js";
+import { Title } from "../text/title.js";
+import type { ComponentProps, FC, ReactNode } from "react";
+import { Subtitle } from "../text/subtitle.js";
+import { useResolveT } from "../../hooks/index.js";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        cardHeader: CardHeaderTheme;
+    }
+
+    interface FlowbiteProps {
+        cardHeader: Partial<WithoutThemingProps<CardHeaderProps>>;
+    }
+}
+
+export interface CardHeaderTheme extends BaseTheme, WithPadding, WithBorder {}
+
+const cardHeader = createTheme<CardHeaderTheme>({
+    base: "",
+    ...withBorder,
+    ...withPadding,
     defaultVariants: {
-        size: "md",
+        p: "md",
         border: false,
     },
 });
 
-interface CardHeaderProps extends VariantProps<typeof cardHeader> {
-    children?: ReactNode;
-    className?: string;
+interface CardHeaderProps extends TProps<CardHeaderTheme>, Omit<ComponentProps<"div">, "title"> {
     title?: ReactNode;
     titleProps?: PartialPropsOf<typeof Title>;
     subtitle?: ReactNode;
@@ -53,10 +60,9 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
      * Rendered at the top of the card header
      */
     pre?: ReactNode;
-    style?: CSSProperties;
     innerProps?: PropsOf<"div">;
-    icon?: ReactNode;
-    iconProps?: PartialPropsOf<typeof Icon>;
+    icon?: IconLike;
+    iconProps?: IconProps;
     as?: any;
 }
 
@@ -70,49 +76,33 @@ interface CardHeaderProps extends VariantProps<typeof cardHeader> {
  * - `end`: Rendered after the title
  * - `pre`: Rendered at the top of the card header
  */
-export const CardHeader: FC<CardHeaderProps> = ({
-    children,
-    className,
-    title,
-    size = "md",
-    border,
-    after,
-    end,
-    innerProps,
-    iconProps,
-    icon,
-    start,
-    titleProps,
-    as,
-    pre,
-    subtitle,
-    subtitleProps,
-    ...props
-}) => {
+export const CardHeader: FC<CardHeaderProps> = (props) => {
+    const { className, restProps, children } = useResolveT("cardHeader", cardHeader, props);
+    const {
+        title,
+        after,
+        end,
+        innerProps,
+        icon,
+        start,
+        titleProps,
+        as,
+        pre,
+        subtitle,
+        subtitleProps,
+        iconProps,
+        ...rootProps
+    } = restProps;
     const renderMain = !!title || !!end || !!after || !!icon || !!start;
-    const Comp = as || "div";
 
     return (
-        <Comp className={cardHeader({ className, size, border })} style={props.style}>
+        <div className={className} {...rootProps}>
             {pre}
             {renderMain && (
-                <div {...innerProps} className={clsx("flex items-center gap-3", innerProps?.className)}>
+                <div {...innerProps} className={twMerge("flex items-center gap-3", innerProps?.className)}>
                     {start}
                     {!!(title || icon) && (
-                        <Title
-                            icon={icon}
-                            variant={collapse(size, {
-                                xs: "h5",
-                                sm: "h5",
-                                md: "h4",
-                                lg: "h3",
-                                xl: "h2",
-                                "2xl": "h1",
-                                "3xl": "h1",
-                                none: "h4",
-                            } as const)}
-                            {...titleProps}
-                        >
+                        <Title icon={icon} iconProps={iconProps} variant="h4" {...titleProps}>
                             {title}
                         </Title>
                     )}
@@ -121,37 +111,11 @@ export const CardHeader: FC<CardHeaderProps> = ({
                 </div>
             )}
             {subtitle && (
-                <Subtitle
-                    variant={collapse(size, {
-                        xs: "h5",
-                        sm: "h5",
-                        md: "h4",
-                        lg: "h4",
-                        xl: "h3",
-                        "2xl": "h2",
-                        "3xl": "h2",
-                        none: "h5",
-                    } as const)}
-                    {...subtitleProps}
-                    className={clsx(
-                        renderMain &&
-                            collapse(size, {
-                                xs: ["mt-1"],
-                                sm: ["mt-1"],
-                                md: ["mt-2"],
-                                lg: ["mt-2.5"],
-                                xl: ["mt-3"],
-                                "2xl": ["mt-4"],
-                                "3xl": ["mt-5"],
-                                none: ["mt-2"],
-                            } as const),
-                        subtitleProps?.className
-                    )}
-                >
+                <Subtitle variant="h4" {...subtitleProps} className={twMerge(subtitleProps?.className)}>
                     {subtitle}
                 </Subtitle>
             )}
             {children}
-        </Comp>
+        </div>
     );
 };

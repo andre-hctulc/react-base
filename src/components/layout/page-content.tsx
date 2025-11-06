@@ -1,99 +1,70 @@
-import { type FC, type Ref } from "react";
-import { tv, type VariantProps } from "tailwind-variants";
-import type { StyleProps } from "../../types/index.js";
+"use client";
 
-const pageContent = tv({
+import { type FC, type ComponentProps } from "react";
+import { createTheme } from "flowbite-react/helpers/create-theme";
+import type {
+    BaseTheme,
+    TProps,
+    WithAlignItems,
+    WithFlex,
+    WithGrow,
+    WithHeight,
+    WithJustifyContent,
+    WithPadding,
+    WithWidth,
+} from "../../util/style.js";
+import {
+    alignItems,
+    flexDirection,
+    flexGrow,
+    justifyContent,
+    withHeight,
+    withPadding,
+    withWidth,
+} from "../../util/style.js";
+import { useResolveT } from "../../hooks/index.js";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        pageContent: PageContentTheme;
+    }
+}
+
+export interface PageContentTheme
+    extends BaseTheme,
+        WithPadding,
+        WithHeight,
+        WithWidth,
+        WithJustifyContent,
+        WithAlignItems,
+        WithFlex,
+        WithGrow {}
+
+const pageContent = createTheme<PageContentTheme>({
     base: "max-w-full box-border",
-    variants: {
-        minHeight: {
-            "0": "min-h-0",
-            auto: "",
-        },
-        width: {
-            full: "w-full",
-            none: "",
-            auto: "w-auto",
-        },
-        padding: {
-            none: "",
-            sm: "p-2 md:p-4",
-            md: "p-4 md:p-7",
-            lg: "p-7 md:p-11",
-            xl: "p-10 md:p-15",
-        },
-        justifyContent: {
-            center: "justify-center",
-            start: "justify-start",
-            end: "justify-end",
-        },
-        alignItems: {
-            center: "items-center",
-            start: "items-start",
-            end: "items-end",
-        },
-        flex: {
-            row: "flex",
-            col: "flex flex-col",
-        },
-        grow: {
-            true: "grow",
-        },
-        height: {
-            full: "h-full",
-            screen: "h-screen",
-            auto: "",
-        },
-        maxHeight: {
-            full: "max-h-full",
-            auto: "",
-        },
-    },
+    ...withHeight,
+    ...withWidth,
+    justifyContent,
+    alignItems,
+    flex: flexDirection,
+    grow: flexGrow,
+    ...withPadding,
     defaultVariants: {
-        padding: "md",
+        p: "md",
         width: "full",
     },
 });
 
-interface PageContentProps extends StyleProps, VariantProps<typeof pageContent> {
-    children?: React.ReactNode;
-    ref?: Ref<HTMLElement>;
-}
+export interface PageContentProps extends ComponentProps<"main">, TProps<PageContentTheme> {}
 
 /**
  * Use this inside a `Page` component to display page content.
  */
-export const PageContent: FC<PageContentProps> = ({
-    children,
-    className,
-    padding,
-    minHeight,
-    maxHeight,
-    height,
-    flex,
-    width,
-    grow,
-    alignItems,
-    justifyContent,
-    ref,
-    style,
-}) => {
+export const PageContent: FC<PageContentProps> = (props) => {
+    const { className, restProps, children } = useResolveT("pageContent", pageContent, props);
+
     return (
-        <main
-            style={style}
-            className={pageContent({
-                className,
-                alignItems,
-                justifyContent,
-                width,
-                padding,
-                flex,
-                minHeight,
-                maxHeight,
-                height,
-                grow,
-            })}
-            ref={ref}
-        >
+        <main className={className} {...restProps}>
             {children}
         </main>
     );

@@ -1,17 +1,20 @@
+"use client";
+
 import type { FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Toolbar } from "../containers/toolbar.js";
-import { Button } from "../input/button.js";
+import { Button, Spinner } from "flowbite-react";
+import { ButtonIcon } from "../data-display/button-icon.js";
 
 interface CancelConfirmProps {
     className?: string;
     gap?: PropsOf<typeof Toolbar>["gap"];
-    padding?: PropsOf<typeof Toolbar>["padding"];
+    padding?: PropsOf<typeof Toolbar>["p"];
     onCancel?: () => void;
     onConfirm?: () => void;
     confirmText?: string;
     cancelText?: string;
-    buttonProps?: PropsOf<typeof Button>;
+    buttonProps?: PropsOf<typeof Button<"button">>;
     form?: string;
     confirmButtonProps?: PropsOf<typeof ConfirmButton>;
     cancelButtonProps?: PropsOf<typeof CancelButton>;
@@ -51,7 +54,7 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
     padding,
 }) => {
     return (
-        <Toolbar className={className} gap={gap} padding={padding}>
+        <Toolbar className={className} gap={gap} p={padding}>
             {showCancel !== false && (
                 <CancelButton
                     size={size}
@@ -69,7 +72,6 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
             )}
             <ConfirmButton
                 size={size}
-                loading={loading}
                 disabled={disabled}
                 danger={danger}
                 form={form}
@@ -82,6 +84,11 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
                     confirmButtonProps?.onClick?.(e);
                 }}
             >
+                {loading && (
+                    <ButtonIcon>
+                        <Spinner size="sm" light />
+                    </ButtonIcon>
+                )}
                 {confirmText || "Confirm"}
             </ConfirmButton>
         </Toolbar>
@@ -95,7 +102,7 @@ interface CancelButtonProps extends PropsOf<typeof Button<"button">> {}
  */
 export const CancelButton: FC<CancelButtonProps> = (props) => {
     return (
-        <Button variant="text" color="neutral" {...props}>
+        <Button color="light" {...props}>
             {props.children || "Cancel"}
         </Button>
     );

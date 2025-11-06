@@ -2,12 +2,13 @@
 
 import type { PropsOf } from "../../types/index.js";
 import { createPortal } from "react-dom";
-import clsx from "clsx";
 import { Fade } from "../transitions/fade.js";
 import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
 import { createContext, useCallback, useContext, useMemo, useState, type FC, type ReactNode } from "react";
-import { Alert } from "../data-display/alert.js";
 import { createId } from "../../util/system.js";
+import { Alert } from "flowbite-react";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import type { IconFC } from "../icons/icon.js";
 
 const DEFAULT_DURATION: number = 3500;
 
@@ -16,7 +17,7 @@ export type NotificationPosition = "top_left" | "top_center" | "top_right" | "bo
 export interface Notification {
     message: ReactNode;
     title?: ReactNode;
-    severity?: "info" | "success" | "warning" | "error";
+    color?: PropsOf<typeof Alert>["color"];
     id: string;
     /**
      * @default "top_center"
@@ -27,13 +28,12 @@ export interface Notification {
      * @default 5000
      */
     duration?: number;
-    icon?: ReactNode;
+    icon?: IconFC;
     /**
      * Class name for the alert
      */
     className?: string;
-    closable?: boolean;
-    onClose?: (notificationId: string) => void;
+    onClose?: (notification: Notification) => void;
     alertProps?: PropsOf<typeof Alert>;
 }
 
@@ -88,7 +88,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
             if (index === -1) return prev;
 
             const notification = prev[index];
-            notification.onClose?.(notificationId);
+            notification.onClose?.(notification);
 
             return [...prev.slice(0, index), ...prev.slice(index + 1)];
         });
@@ -112,7 +112,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
         if (duration > 0 && duration !== Infinity) {
             setTimeout(() => {
                 close(notificationWithId.id);
-                notification.onClose?.(notificationWithId.id);
+                notification.onClose?.(notificationWithId);
             }, duration);
         }
 
@@ -182,7 +182,7 @@ const NotificationsBox: React.FC<PropsOf<"ol">> = ({ className, ...props }) => {
     return (
         <ol
             {...props}
-            className={clsx(
+            className={twMerge(
                 "fixed max-w-full w-[350px] max-h-[600px] overflow-auto pointer-events-none z-50",
                 "p-4 box-border",
                 "flex flex-col gap-3",
@@ -202,17 +202,19 @@ interface NotificationItemProps {
 const NotificationItem: FC<NotificationItemProps> = ({ className, notification }) => {
     return (
         <Fade show unmount>
-            <li className={clsx("bg-paper pointer-events-auto rounded-md", className)}>
+            <li className={twMerge("bg-paper pointer-events-auto rounded-md", className)}>
                 <Alert
-                    severity={notification.severity}
-                    closable={notification.closable}
-                    title={notification.title as any}
-                    titleProps={{ size: "md" }}
-                    shadow="md"
-                    outlined={false}
+                    color={notification.color || "info"}
+                    icon={notification.icon}
                     {...notification.alertProps}
-                    className={clsx(notification.className, notification.alertProps?.className)}
+                    onDismiss={(e) => {
+                        notification.onClose?.(notification);
+                        notification.alertProps?.onDismiss?.(e);
+                    }}
+                    className={twMerge(notification.className, notification.alertProps?.className)}
                 >
+                    {notification.title && <span className="font-medium">{notification.title}</span>}
+                    {notification.title && notification.message && <br />}
                     {notification.message}
                 </Alert>
             </li>

@@ -1,72 +1,70 @@
-import type { FC } from "react";
-import { tv } from "tailwind-variants";
-import { withPrefix } from "../../util/system.js";
-import type { PropsOf, WithTVProps } from "../../types/index.js";
+"use client";
 
-const flex = tv({
+import type { ElementType } from "react";
+import { createTheme } from "flowbite-react";
+import {
+    alignItems,
+    flexDirection,
+    flexWrap,
+    flexGrow,
+    justifyContent,
+    noShrink,
+    withWidthAndHeight,
+    type BaseTheme,
+    type TProps,
+    type WithAlignItems,
+    type WithFlexDirection,
+    type WithFlexWrap,
+    type WithGrow,
+    type WithJustifyContent,
+    type WithNoShrink,
+    type WithWidthAndHeight,
+} from "../../util/style.js";
+import { withPrefix } from "../../util/system.js";
+import type { PropsOf, RichAsProps } from "../../types/index.js";
+import { useResolveT } from "../../hooks/index.js";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        flex: FlexTheme;
+    }
+
+    interface FlowbiteProps {
+        flex: Partial<WithoutThemingProps<FlexProps>>;
+    }
+}
+
+export interface FlexTheme
+    extends BaseTheme,
+        WithAlignItems,
+        WithFlexDirection,
+        WithJustifyContent,
+        WithWidthAndHeight,
+        WithFlexWrap,
+        WithGrow,
+        WithNoShrink {}
+
+const flex = createTheme<FlexTheme>({
     base: "flex",
-    variants: {
-        direction: {
-            row: "flex-row",
-            col: "flex-col",
-            row_reverse: "flex-row-reverse",
-            col_reverse: "flex-col-reverse",
-        },
-        align: {
-            start: "items-start",
-            center: "items-center",
-            end: "items-end",
-            baseline: "items-baseline",
-            stretch: "items-stretch",
-        },
-        justify: {
-            start: "justify-start",
-            center: "justify-center",
-            end: "justify-end",
-            between: "justify-between",
-            around: "justify-around",
-        },
-        wrap: {
-            none: "flex-no-wrap",
-            normal: "flex-wrap",
-            reverse: "flex-wrap-reverse",
-        },
-        grow: {
-            true: "grow",
-        },
-        noShrink: {
-            true: "shrink-0",
-        },
-        minH0: { true: "min-h-0" },
-    },
-    defaultVariants: {
-        direction: "row",
-    },
+    direction: flexDirection,
+    alignItems,
+    justifyContent,
+    wrap: flexWrap,
+    grow: flexGrow,
+    noShrink: noShrink,
+    ...withWidthAndHeight,
 });
 
-type FlexProps = WithTVProps<PropsOf<"div">, typeof flex>;
+type FlexProps<T extends ElementType = "div"> = PropsOf<"div"> & TProps<FlexTheme> & RichAsProps<T>;
 
-export const Flex: FC<FlexProps> = ({
-    children,
-    className,
-    direction,
-    align,
-    justify,
-    wrap,
-    grow,
-    noShrink,
-    minH0,
-    ref,
-    ...props
-}) => {
+export const Flex = <T extends ElementType = "div">(props: FlexProps<T>) => {
+    const { className, children, restProps } = useResolveT("flex", flex, props);
+    const Comp: any = props.as || "div";
+
     return (
-        <div
-            ref={ref}
-            className={flex({ className, direction, align, noShrink, justify, wrap, grow, minH0 })}
-            {...props}
-        >
+        <Comp ref={props.ref} className={className} {...restProps}>
             {children}
-        </div>
+        </Comp>
     );
 };
 

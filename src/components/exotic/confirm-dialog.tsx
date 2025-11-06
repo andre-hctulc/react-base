@@ -1,13 +1,10 @@
 "use client";
 
 import type { PropsOf } from "../../types/index.js";
-import { Dialog } from "../dialog/dialog.js";
 import { CancelConfirm, type CancelButton, type ConfirmButton } from "./dialog-actions.js";
 import { useCallback, useRef, useState, type ReactNode } from "react";
-import { CardHeader } from "../containers/card-header.js";
-import { CardBody } from "../containers/card-body.js";
-import { CardFooter } from "../containers/card-footer.js";
 import { Toolbar } from "../containers/toolbar.js";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
 
 interface ConfirmOptions {
     /**
@@ -37,7 +34,7 @@ export function useConfirmDialog(): Confirmation {
         <ConfirmDialog
             danger={params?.options.danger}
             {...params?.options.dialogProps}
-            open={open}
+            show={open}
             onConfirm={() => {
                 closeListener.current?.(true);
                 params?.options.dialogProps?.onConfirm?.();
@@ -74,7 +71,7 @@ export function useConfirmDialog(): Confirmation {
     return { dialog, confirm };
 }
 
-interface ConfirmDialogProps extends PropsOf<typeof Dialog> {
+interface ConfirmDialogProps extends PropsOf<typeof Modal> {
     heading?: string;
     onConfirm?: () => void;
     onCancel?: () => void;
@@ -104,7 +101,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     ...props
 }) => {
     return (
-        <Dialog
+        <Modal
             onClose={() => {
                 onClose?.();
                 // Fire onCancel if the dialog is closed without a confirm or cancel action
@@ -112,10 +109,10 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             }}
             {...props}
         >
-            {heading && <CardHeader title={heading} />}
-            <CardBody>{children}</CardBody>
-            <CardFooter variant="actions">
-                <Toolbar>
+            {heading && <ModalHeader>{heading}</ModalHeader>}
+            <ModalBody>{children}</ModalBody>
+            <ModalFooter>
+                <Toolbar justifyContent="end">
                     <CancelConfirm
                         showCancel={showCancel}
                         cancelText={cancelButtonText}
@@ -127,7 +124,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
                         confirmButtonProps={confirmButtonProps}
                     />
                 </Toolbar>
-            </CardFooter>
-        </Dialog>
+            </ModalFooter>
+        </Modal>
     );
 };

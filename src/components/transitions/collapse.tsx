@@ -1,5 +1,5 @@
-import { Transition } from "@headlessui/react";
 import type { PropsOf } from "../../types/index.js";
+import Transition from "./transition.js";
 
 // ###### CollapseV ######
 

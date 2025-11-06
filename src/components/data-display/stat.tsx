@@ -1,65 +1,60 @@
 "use client";
 
 import { collapse } from "@dre44/util/objects";
-import clsx from "clsx";
-import { useMemo, type ReactNode } from "react";
-import { tv } from "tailwind-variants";
-import { useRefOf } from "../../hooks/index.js";
-import type {
-    PropsOf,
-    LinkComponent,
-    LinkProps,
-    WithTVProps,
-    ELEMENT,
-    RichAsProps,
-} from "../../types/index.js";
-import { Icon } from "../icons/icon.js";
-import { HelperText } from "../text/helper-text.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { useMemo, type ReactNode, type ElementType } from "react";
+import { createTheme, HelperText } from "flowbite-react";
+import {
+    shadow,
+    shape,
+    type BaseTheme,
+    type TProps,
+    type WithShadow,
+    type WithShape,
+} from "../../util/style.js";
+import { useRefOf, useResolveT } from "../../hooks/index.js";
+import type { PropsOf, LinkComponent, LinkProps, RichAsProps } from "../../types/index.js";
+import { Icon, type IconLike } from "../icons/icon.js";
 import { Skeleton } from "./skeleton.js";
 
-const stat = tv({
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        stat: StatTheme;
+    }
+
+    interface FlowbiteProps {
+        stat: Partial<WithoutThemingProps<StatProps>>;
+    }
+}
+
+export interface StatTheme extends BaseTheme, WithShape, WithShadow {
+    variant: Record<"outlined" | "elevated" | "contrast", string>;
+}
+
+const stat = createTheme<StatTheme>({
     base: "",
-    variants: {
-        size: {
-            "2xs": "rounded p-3 text-xl",
-            xs: "rounded p-4 text-3xl",
-            sm: "rounded p-5 text-4xl",
-            md: "rounded-lg p-6 text-5xl",
-            lg: "rounded-xl p-8 text-6xl",
-            xl: "rounded-2xl p-12 text-7xl",
-        },
-        variant: {
-            outlined: "border",
-            elevated: "shadow",
-            contrast: "bg-paper",
-        },
-        shadow: {
-            sm: "shadow-sm",
-            md: "shadow-md",
-            lg: "shadow-lg",
-        },
+    variant: {
+        outlined: "border",
+        elevated: "shadow",
+        contrast: "bg-paper",
     },
-    defaultVariants: {
-        size: "md",
-        variant: "outlined",
-    },
+    shadow,
+    shape,
 });
 
-type StatProps<T extends ELEMENT = "div"> = WithTVProps<
-    RichAsProps<T> & {
+type StatProps<T extends ElementType = "div"> = RichAsProps<T> &
+    TProps<StatTheme> & {
         valueParser?: (value: any) => string;
         value: any;
         description?: string;
         descriptionProps?: PropsOf<typeof HelperText>;
         textProps?: PropsOf<"p">;
-        icon?: ReactNode;
+        icon?: IconLike;
         loading?: boolean;
         LinkComponent?: LinkComponent;
         linkProps?: LinkProps;
         href?: string;
-    },
-    typeof stat
->;
+    };
 
 /**
  * ### Props
@@ -71,33 +66,32 @@ type StatProps<T extends ELEMENT = "div"> = WithTVProps<
  * - `href`
  * - `LinkComponent`
  */
-export const Stat = <T extends ELEMENT = "div">({
-    valueParser,
-    value,
-    as,
-    className,
-    size,
-    variant,
-    shadow,
-    description,
-    descriptionProps,
-    textProps,
-    icon,
-    loading,
-    linkProps,
-    children,
-    href,
-    LinkComponent,
-    ...props
-}: StatProps<T>) => {
-    const MainComp: any = href ? LinkComponent || "a" : "div";
-    const Comp: any = as || "div";
+export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
+    const { className, restProps } = useResolveT("stat", stat, props);
+    const {
+        valueParser,
+        value,
+        description,
+        descriptionProps,
+        textProps,
+        icon,
+        loading,
+        linkProps,
+        children,
+        href,
+        LinkComponent,
+        as,
+        ...rootProps
+    } = restProps;
+
+    const MainComp: any = as || (href ? LinkComponent || "a" : "div");
+    const Comp: any = restProps.as || "div";
     const valueParserRef = useRefOf(valueParser);
     const val = useMemo(() => {
         return valueParserRef.current ? valueParserRef.current(value) : String(value);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
-    const [gap, iconGap, iconSize, helperTextSize] = collapse(size || "md", {
+    const [gap, iconGap, iconSize, helperTextSize] = collapse(props.size || "md", {
         "2xs": ["mt-1", "mr-1", "text-lg", "text-sm"],
         xs: ["mt-2", "mr-1.5", "text-xl", "text-base"],
         sm: ["mt-4", "mr-2", "text-2xl", "text-base"],
@@ -114,10 +108,10 @@ export const Stat = <T extends ELEMENT = "div">({
     }
 
     return (
-        <Comp className={stat({ className, size, variant, shadow })} {...props}>
-            <MainComp {...mainProps} className={clsx("font-medium", textProps?.className)}>
+        <Comp className={className} {...rootProps}>
+            <MainComp {...mainProps} className={twMerge("font-medium", textProps?.className)}>
                 {icon && (
-                    <Icon inline className={clsx(iconGap, iconSize)}>
+                    <Icon inline className={twMerge(iconGap, iconSize)}>
                         {icon}
                     </Icon>
                 )}
@@ -126,7 +120,7 @@ export const Stat = <T extends ELEMENT = "div">({
             {description && (
                 <HelperText
                     {...descriptionProps}
-                    className={clsx("font-normal", gap, helperTextSize, descriptionProps?.className)}
+                    className={twMerge("font-normal", gap, helperTextSize, descriptionProps?.className)}
                 >
                     {description}
                 </HelperText>

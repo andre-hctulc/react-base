@@ -1,53 +1,90 @@
-import { cloneElement, isValidElement, type FC, type ReactElement, type ReactNode, type Ref } from "react";
-import { tv } from "tailwind-variants";
-import clsx from "clsx";
-import type { StyleProps, WithTVProps } from "../../types/index.js";
+"use client";
 
-const icon = tv({
+import { cloneElement, isValidElement, type FC, type ReactNode } from "react";
+import { createTheme } from "flowbite-react/helpers/create-theme";
+import type { BaseTheme, TProps, WithNoShrink } from "../../util/style.js";
+import type { FlowbiteBoolean, FlowbiteColors, FlowbiteSizes } from "flowbite-react/types";
+import { useResolveT } from "../../hooks/index.js";
+import type { ComponentProps } from "react";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        icon: IconTheme;
+    }
+}
+
+export interface IconTheme extends BaseTheme, WithNoShrink {
+    size: FlowbiteSizes & Record<"none" | "inherit", string>;
+    color: FlowbiteColors & {
+        none: string;
+        inherit: string;
+        neutral: string;
+        t2: string;
+        t3: string;
+        t4: string;
+        black: string;
+        white: string;
+    };
+    inline: FlowbiteBoolean & { "inline-flex": string };
+}
+
+const icon = createTheme<IconTheme>({
     base: "",
-    variants: {
-        size: {
-            xs: "text-xs",
-            sm: "text-sm",
-            md: "text-base",
-            lg: "text-lg",
-            xl: "text-xl",
-            "2xl": "text-2xl",
-            "3xl": "text-3xl",
-            "4xl": "text-4xl",
-            "5xl": "text-5xl",
-            "6xl": "text-6xl",
-            "7xl": "text-7xl",
-            "8xl": "text-8xl",
-            "9xl": "text-9xl",
-            none: "",
-            inherit: "",
-        },
-        color: {
-            none: "",
-            primary: "text-primary",
-            secondary: "text-secondary",
-            accent: "text-accent",
-            success: "text-success",
-            error: "text-error",
-            warning: "text-warning",
-            info: "text-info",
-            inherit: "text-inherit",
-            neutral: "text-neutral",
-            t2: "text-t2",
-            t3: "text-t3",
-            t4: "text-t4",
-            black: "text-black",
-            white: "text-white",
-        },
-        inline: {
-            true: "inline",
-            flex: "inline-flex",
-        },
-        noShrink: {
-            true: "shrink-0",
-            false: "",
-        },
+    size: {
+        xs: "text-xs",
+        sm: "text-sm",
+        md: "text-base",
+        lg: "text-lg",
+        xl: "text-xl",
+        "2xl": "text-2xl",
+        "3xl": "text-3xl",
+        "4xl": "text-4xl",
+        "5xl": "text-5xl",
+        "6xl": "text-6xl",
+        "7xl": "text-7xl",
+        none: "",
+        inherit: "",
+    },
+    color: {
+        // Standard Flowbite colors
+        blue: "text-blue-600",
+        cyan: "text-cyan-600",
+        dark: "text-gray-800",
+        failure: "text-red-600",
+        success: "text-success",
+        warning: "text-warning",
+        gray: "text-gray-600",
+        green: "text-green-600",
+        indigo: "text-indigo-600",
+        light: "text-gray-300",
+        lime: "text-lime-600",
+        pink: "text-pink-600",
+        purple: "text-purple-600",
+        red: "text-red-600",
+        teal: "text-teal-600",
+        yellow: "text-yellow-600",
+        primary: "text-primary",
+        secondary: "text-secondary",
+        // Custom colors
+        none: "",
+        inherit: "text-inherit",
+        neutral: "text-neutral",
+        t2: "text-t2",
+        t3: "text-t3",
+        t4: "text-t4",
+        black: "text-black",
+        white: "text-white",
+        accent: "text-accent",
+        info: "text-info",
+    },
+    inline: {
+        on: "inline",
+        off: "",
+        "inline-flex": "inline-flex",
+    },
+    noShrink: {
+        on: "shrink-0",
+        off: "",
     },
     defaultVariants: {
         size: "inherit",
@@ -55,51 +92,36 @@ const icon = tv({
     },
 });
 
-export type IconProps = WithTVProps<
-    StyleProps & {
-        children: ReactNode;
-        strokeWidth?: number | string;
-        height?: number | string;
-        width?: number | string;
-        fill?: string;
-        ref?: Ref<any>;
-    },
-    typeof icon
->;
+export type IconFC = FC<ComponentProps<"svg">>;
+export type IconFCProps = ComponentProps<"svg">;
 
-export const Icon: FC<IconProps> = ({
-    className,
-    children,
-    size,
-    color,
-    inline,
-    strokeWidth,
-    height,
-    width,
-    fill,
-    ref,
-    noShrink,
-    ...props
-}) => {
-    const classes = icon({ className, size, color, inline, noShrink });
-    let additionalProps: any = {};
+export type IconLike = IconFC | ReactNode;
 
-    if (!isValidElement(children))
+export interface IconProps extends Omit<IconFCProps, "color" | "children">, TProps<IconTheme> {
+    children?: IconLike;
+}
+
+export const Icon: FC<IconProps> = (props) => {
+    const { className, children, restProps } = useResolveT("icon", icon, props);
+
+    // IconFC
+    if (typeof children === "function") {
+        const IconComp: IconFC = children;
+        return <IconComp className={className} {...(restProps as IconFCProps)} />;
+    }
+    // svg
+    else if (isValidElement(children)) {
+        return cloneElement(children, {
+            className,
+            ...restProps,
+        });
+    }
+    // fallback
+    else {
         return (
-            <span ref={ref} className={classes}>
+            <span className={className} {...(restProps as ComponentProps<"span">)}>
                 {children}
             </span>
         );
-
-    if (strokeWidth !== undefined) additionalProps.strokeWidth = strokeWidth;
-    if (height !== undefined) additionalProps.height = height;
-    if (width !== undefined) additionalProps.width = width;
-    if (fill !== undefined) additionalProps.fill = fill;
-
-    return cloneElement(children as ReactElement, {
-        ref,
-        className: clsx(classes, ((children as ReactElement).props as any)?.className),
-        ...additionalProps,
-        ...props,
-    });
+    }
 };

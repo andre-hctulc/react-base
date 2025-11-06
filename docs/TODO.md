@@ -1,5 +1,2 @@
 -   px -> rm
--   implment card body embedded prop with tailwind or pure css
--   color util for variants
-    -   Include `custom: ""` color variant
--   Use more css instead of tailwind-variants to reduce html output
+-   use compound styling for some complex components

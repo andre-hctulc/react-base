@@ -1,15 +1,28 @@
 "use client";
 
 import { isPlainObject } from "@dre44/util/objects";
-import clsx from "clsx";
-import type { FC, ReactNode } from "react";
-import { tv } from "tailwind-variants";
-import type { PropsOf, WithTVProps } from "../../types/index.js";
+import type { FC, ReactNode, ComponentProps } from "react";
+import { Clipboard, createTheme } from "flowbite-react";
+import type { BaseTheme, TProps } from "../../util/style.js";
+import type { PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
-import { useAsSet } from "../../hooks/index.js";
-import { CopyIconButton } from "../exotic/copy-icon-button.js";
+import { useAsSet, useResolveT } from "../../hooks/index.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { CopyIcon } from "../icons/phosphor/copy.js";
 
-const summary = tv({
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        summary: SummaryTheme;
+    }
+
+    interface FlowbiteProps {
+        summary: Partial<WithoutThemingProps<SummaryProps>>;
+    }
+}
+
+export interface SummaryTheme extends BaseTheme {}
+
+const summary = createTheme<SummaryTheme>({
     base: "w-full border-separate border-spacing-y-2",
 });
 
@@ -23,57 +36,56 @@ export interface FieldModel {
 
 export type SummaryModel<T extends object = any> = Partial<Record<string & keyof T, FieldModel>>;
 
-type SummaryProps = WithTVProps<
-    PropsOf<"table"> & {
-        values: object;
-        model?: SummaryModel;
-        /**
-         * @default "w-40"
-         */
-        labelWidth?: number | "auto";
-        prefix?: string;
-        nestedMargin?: number;
-        fieldModels?: (key: string, value: string, path: string) => FieldModel;
-        /**
-         * Array of field paths to exclude from the summary.
-         */
-        excludeFields?: string[];
-        /**
-         * Array of field paths to include in the summary.
-         * If provided, only these fields will be displayed, ignoring `excludeFields`.
-         */
-        includeFields?: string[];
-        /**
-         * Only include fields that are present in the model.
-         */
-        strictModel?: boolean;
-        emptyPlaceholder?: string;
-    },
-    typeof summary
->;
+interface SummaryProps extends ComponentProps<"table">, TProps<SummaryTheme> {
+    values: object;
+    model?: SummaryModel;
+    /**
+     * @default "w-40"
+     */
+    labelWidth?: number | "auto";
+    prefix?: string;
+    nestedMargin?: number;
+    fieldModels?: (key: string, value: string, path: string) => FieldModel;
+    /**
+     * Array of field paths to exclude from the summary.
+     */
+    excludeFields?: string[];
+    /**
+     * Array of field paths to include in the summary.
+     * If provided, only these fields will be displayed, ignoring `excludeFields`.
+     */
+    includeFields?: string[];
+    /**
+     * Only include fields that are present in the model.
+     */
+    strictModel?: boolean;
+    emptyPlaceholder?: string;
+}
 
-export const Summary: FC<SummaryProps> = ({
-    values,
-    prefix,
-    model,
-    fieldModels,
-    nestedMargin,
-    labelWidth,
-    excludeFields,
-    emptyPlaceholder,
-    className,
-    strictModel,
-    ...props
-}) => {
+export const Summary: FC<SummaryProps> = (props) => {
+    const { className, restProps } = useResolveT("summary", summary, props);
+    const {
+        values,
+        prefix,
+        model,
+        fieldModels,
+        nestedMargin,
+        labelWidth,
+        excludeFields,
+        emptyPlaceholder,
+        strictModel,
+        includeFields,
+        ...rootProps
+    } = restProps;
     const entries = Object.entries(values);
     const excludeFieldsSet = useAsSet(excludeFields || []);
-    const includeFieldsSet = useAsSet(props.includeFields || []);
+    const includeFieldsSet = useAsSet(includeFields || []);
 
     return (
         <table
-            className={summary({ className })}
+            className={className}
             style={nestedMargin !== undefined ? { marginLeft: nestedMargin } : undefined}
-            {...props}
+            {...rootProps}
         >
             <tbody>
                 {entries.map(([key, value]) => {
@@ -105,7 +117,7 @@ export const Summary: FC<SummaryProps> = ({
                         <tr key={key} className="">
                             <td
                                 style={{ width: labelWidth }}
-                                className={clsx("pr-4 py-1 whitespace-nowrap", !labelWidth && "w-40")}
+                                className={twMerge("pr-4 py-1 whitespace-nowrap", !labelWidth && "w-40")}
                             >
                                 <div className="flex items-center">
                                     {fieldModel?.icon && (
@@ -113,7 +125,7 @@ export const Summary: FC<SummaryProps> = ({
                                             size="sm"
                                             color="neutral"
                                             {...fieldModel.iconProps}
-                                            className={clsx("mr-2", fieldModel.iconProps?.className)}
+                                            className={twMerge("mr-2", fieldModel.iconProps?.className)}
                                         >
                                             {fieldModel.icon}
                                         </Icon>
@@ -131,7 +143,7 @@ export const Summary: FC<SummaryProps> = ({
                                         prefix={`${prefix || ""}${key}.`}
                                         values={value}
                                         style={{ marginLeft: 16 }}
-                                        className={clsx(nestedMargin === undefined && "ml-4")}
+                                        className={twMerge(nestedMargin === undefined && "ml-4")}
                                     />
                                 ) : (
                                     <div className="flex">
@@ -149,11 +161,7 @@ export const Summary: FC<SummaryProps> = ({
                                             )}
                                         </div>
                                         {fieldModel?.canCopy && (
-                                            <CopyIconButton
-                                                size="sm"
-                                                className="ml-2"
-                                                textToCopy={String(value)}
-                                            />
+                                            <Clipboard valueToCopy={value} label={<CopyIcon />} />
                                         )}
                                     </div>
                                 )}

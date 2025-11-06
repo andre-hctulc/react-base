@@ -1,20 +1,33 @@
 "use client";
 
-import React from "react";
-import { tv, type VariantProps } from "tailwind-variants";
-import type { InputLikeProps } from "./types.js";
-import type { Choice, StyleProps } from "../../types/index.js";
+import React, { type ComponentProps } from "react";
+import type { Choice } from "../../types/index.js";
 import { HiddenInput } from "./hidden-input.js";
+import { createTheme } from "flowbite-react";
+import type { BaseTheme, TProps } from "../../util/style.js";
+import type { IconLike } from "../icons/icon.js";
+import type { InputLikeProps } from "./types.js";
+import { useResolveT } from "../../hooks/index.js";
 
-const radio = tv({
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        radioLike: RadioLikeTheme;
+    }
+}
+
+export interface RadioLikeTheme extends BaseTheme {
+    orientation: {
+        vertical: string;
+        horizontal: string;
+    };
+}
+
+const radioLike = createTheme<RadioLikeTheme>({
     base: "",
-    variants: {
-        orientation: {
-            vertical: "",
-            horizontal: "flex gap-3",
-        },
+    orientation: {
+        vertical: "",
+        horizontal: "flex gap-3",
     },
-    defaultVariants: {},
 });
 
 export interface RadioRenderParams<V = string, D = any> {
@@ -25,12 +38,12 @@ export interface RadioRenderParams<V = string, D = any> {
     activate: () => void;
 }
 
-export interface RadioProps<V = string, D = any>
-    extends InputLikeProps<V, { option: Choice<V, D> }>,
-        VariantProps<typeof radio>,
-        StyleProps {
+export interface RadioLikeProps<V = string, D = any>
+    extends TProps<RadioLikeTheme>,
+        Omit<ComponentProps<"div">, keyof InputLikeProps>,
+        InputLikeProps<V> {
     options: Choice<V, D>[];
-    icon?: React.ReactNode;
+    icon: IconLike;
     renderOption: (option: RadioRenderParams<V, D>) => React.ReactNode;
 }
 
@@ -39,19 +52,20 @@ export interface RadioProps<V = string, D = any>
  * - `options` - The options to display in the dropdown
  * - `renderOption` - Renders the options
  */
-export const Radio = <V = string, D = any>({
-    options,
-    className,
-    style,
-    disabled,
-    readOnly,
-    value,
-    defaultValue,
-    onChange,
-    required,
-    name,
-    renderOption,
-}: RadioProps<V, D>) => {
+export const RadioLike = <V = string, D = any>(props: RadioLikeProps<V, D>) => {
+    const { className, children, restProps } = useResolveT("radioLike", radioLike, props);
+    const {
+        value,
+        defaultValue,
+        onChange,
+        options,
+        name,
+        disabled,
+        readOnly,
+        renderOption,
+        required,
+        ...rootProps
+    } = restProps;
     const controlled = value !== undefined;
     // capture selected state to display in the button
     const [selected, setSelected] = React.useState<Choice<V, D> | null>(() => {
@@ -78,7 +92,7 @@ export const Radio = <V = string, D = any>({
     }, [value, options]);
 
     return (
-        <div className={radio({ className })} style={style}>
+        <div className={className} {...rootProps}>
             {/* form compatibility */}
             {name && <HiddenInput name={name} value={String(selected?.value || "")} required={required} />}
             {options.map((option) => {

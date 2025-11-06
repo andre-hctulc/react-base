@@ -1,93 +1,64 @@
-import type { CSSProperties, FC, ReactNode } from "react";
-import { tv, type VariantProps } from "tailwind-variants";
+"use client";
 
-const root = tv({
+import type { FC, ComponentProps } from "react";
+import { createTheme } from "flowbite-react/helpers/create-theme";
+import {
+    flexDirection,
+    flexGrow,
+    withHeight,
+    withScroll,
+    type BaseTheme,
+    type TProps,
+    type WithFlexDirection,
+    type WithGrow,
+    type WithHeight,
+    type WithScroll,
+} from "../../util/style.js";
+import { useResolveT } from "../../hooks/index.js";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        root: RootTheme;
+    }
+}
+
+export interface RootTheme extends BaseTheme, WithFlexDirection, WithHeight, WithGrow, WithScroll {
+    relative: Record<"true", string>;
+    bg: Record<"none" | "1" | "2" | "3" | "4", string>;
+}
+
+const root = createTheme<RootTheme>({
     base: "max-w-full box-border flex",
-    variants: {
-        direction: {
-            row: "flex-row",
-            col: "flex-col",
-            mix: "flex-col lg:flex-row",
-            mix_inverse: "flex-col lg:flex-row-reverse",
-        },
-        minHeight: {
-            "0": "min-h-0",
-            auto: "",
-        },
-        grow: {
-            true: "grow",
-        },
-        scroll: {
-            true: "overflow-y-auto",
-            false: "",
-        },
-        height: {
-            screen: "h-screen",
-            full: "h-full",
-            auto: "",
-        },
-        maxHeight: {
-            full: "max-h-full",
-            auto: "",
-        },
-        relative: {
-            true: "relative",
-        },
-        bg: {
-            none: "",
-            "1": "bg-paper",
-            "2": "bg-paper2",
-            "3": "bg-paper3",
-            "4": "bg-paper4",
-        },
+    direction: flexDirection,
+    ...withHeight,
+    grow: flexGrow,
+    ...withScroll,
+    relative: {
+        true: "relative",
+    },
+    bg: {
+        none: "",
+        "1": "bg-paper",
+        "2": "bg-paper2",
+        "3": "bg-paper3",
+        "4": "bg-paper4",
     },
     defaultVariants: {
         direction: "col",
         grow: true,
-        scroll: false,
     },
 });
 
-interface RootProps extends VariantProps<typeof root> {
-    children?: ReactNode;
-    style?: CSSProperties;
-    className?: string;
-    id?: string;
-}
+export interface RootProps extends TProps<RootTheme>, ComponentProps<"div"> {}
 
 /**
  * A flex container. Use it as contextual root container for your layout.
  */
-export const Root: FC<RootProps> = ({
-    children,
-    className,
-    direction,
-    scroll,
-    height,
-    grow,
-    minHeight,
-    maxHeight,
-    relative,
-    style,
-    bg,
-    id,
-}) => {
+export const Root: FC<RootProps> = (props) => {
+    const { className, restProps, children } = useResolveT("root", root, props);
+
     return (
-        <div
-            id={id}
-            className={root({
-                className,
-                scroll,
-                height,
-                minHeight,
-                maxHeight,
-                grow,
-                direction,
-                relative,
-                bg,
-            })}
-            style={style}
-        >
+        <div className={className} {...restProps}>
             {children}
         </div>
     );

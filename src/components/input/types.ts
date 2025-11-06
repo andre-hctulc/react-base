@@ -1,22 +1,7 @@
-// /**
-//  * Single input value
-//  */
-// export type SingleInputValue = string | number | boolean | File;
-
-// /**
-//  * Array of valid input value types
-//  */
-// export type InputValueArray = string[] | number[] | boolean[] | File[];
-
-// /**
-//  * Valid input value types
-//  */
-// export type InputValue = SingleInputValue | InputValueArray;
-
 /**
  * Input base properties. Each input component's props should conform this interface.
  */
-export interface InputLikeProps<T = any, E extends object = {}> {
+export interface InputLikeProps<T = any, E = any> {
     /**
      * Default value of the input
      */
@@ -28,7 +13,7 @@ export interface InputLikeProps<T = any, E extends object = {}> {
     /**
      * Callback when the value of the input changes
      */
-    onChange?: (value: { value: T } & E) => void;
+    onChange?: (e: E) => void;
     /**
      * Name of the input element
      */

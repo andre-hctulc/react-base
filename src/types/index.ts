@@ -7,13 +7,11 @@ import type {
     Ref,
     ElementType,
 } from "react";
-import type { VariantProps } from "tailwind-variants";
-import type { ListItem } from "../components/index.js";
 
 // #### Props ####
 
 /**
- * Alias for {@link ComponentProps}
+ * Alias for react's {@link ComponentProps}
  */
 export type PropsOf<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> = ComponentProps<T>;
 
@@ -53,36 +51,19 @@ export interface RequiredChildrenProps {
     children: ReactNode;
 }
 
-// /**
-//  * A Helper type for a `tailwind-variants` component's props.
-//  * It bundles the variant props with the root element's props.
-//  * @template T tailwind-variant object
-//  * @template R Root element type
-//  */
-// export type TVCProps<
-//     T extends (...args: any) => any,
-//     R extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> | never = never
-// > = VariantProps<T> & Omit<ComponentProps<R>, "className"> & StyleProps;
-
-export type ELEMENT = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
-
-export interface ASProps<T extends ELEMENT> {
+export interface ASProps<T extends ElementType> {
     /**
      * The element type to render as
      */
     as?: T;
 }
 
-export type RichAsProps<T extends ELEMENT> = ComponentProps<T> & {
+export type RichAsProps<T extends ElementType> = ComponentProps<T> & {
     /**
      * The element type to render as
      */
     as?: T;
 };
-
-export type WithTVProps<T extends object, E extends (...args: any) => any> = VariantProps<E> &
-    Omit<T, keyof VariantProps<E>>;
-
 // #### Components ####
 
 export type LinkProps = PropsOf<"a">;
@@ -109,7 +90,6 @@ export interface Choice<V = string, D = any> {
      * Choice disabled?
      */
     disabled?: boolean;
-    listItemProps?: PartialPropsOf<typeof ListItem>;
 }
 
 /**

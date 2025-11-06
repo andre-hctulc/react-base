@@ -1,79 +1,63 @@
-import clsx from "clsx";
-import { tv, type ClassValue, type VariantProps } from "tailwind-variants";
-import { Title } from "../text/title.js";
-import type { PropsOf, StyleProps } from "../../types/index.js";
-import type { Page } from "./page.js";
+"use client";
 
-const pageHeader = tv({
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { createTheme } from "flowbite-react/helpers/create-theme";
+import { Title } from "../text/title.js";
+import type { PropsOf } from "../../types/index.js";
+import type { Page } from "./page.js";
+import type { BaseTheme, WithPadding, WithMargin } from "../../util/style.js";
+import { withPadding, withMargin } from "../../util/style.js";
+import { useResolveT } from "../../hooks/index.js";
+import type { ComponentProps, ReactNode } from "react";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        pageHeader: PageHeaderTheme;
+    }
+}
+
+export interface PageHeaderTheme extends BaseTheme, WithPadding, WithMargin {
+    sticky: Record<"true", string>;
+    relative: Record<"true", string>;
+}
+
+const pageHeader = createTheme<PageHeaderTheme>({
     base: "w-full",
-    variants: {
-        padding: {
-            none: "",
-            sm: "p-2 md:p-4 pb-0 md:pb-0",
-            md: "p-3.5 md:p-7 pb-0 md:pb-0",
-            lg: "p-5 md:p-9 pb-0 md:pb-0",
-        },
-        mb: {
-            none: "",
-            xs: "mb-4",
-            sm: "mb-8",
-            md: "mb-12",
-            lg: "mb-16",
-            xl: "mb-20",
-        },
-        mt: {
-            none: "",
-            xs: "mt-4",
-            sm: "mt-8",
-            md: "mt-12",
-            lg: "mt-16",
-            xl: "mt-20",
-        },
-        sticky: { true: "sticky top-0 z-10" },
-        relative: {
-            true: "relative",
-        },
+    sticky: {
+        true: "sticky top-0 z-10",
     },
+    relative: {
+        true: "relative",
+    },
+    ...withPadding,
+    ...withMargin,
     defaultVariants: {
-        padding: "md",
+        p: "md",
     },
 });
 
-interface PageHeaderProps extends StyleProps, VariantProps<typeof pageHeader> {
-    title?: React.ReactNode;
+export interface PageHeaderProps extends Omit<ComponentProps<"div">, "title"> {
+    title?: ReactNode;
     titleProps?: PropsOf<typeof Title>;
-    badges?: React.ReactNode;
-    actions?: React.ReactNode;
-    children?: React.ReactNode;
-    pre?: React.ReactNode;
+    badges?: ReactNode;
+    actions?: ReactNode;
+    children?: ReactNode;
+    pre?: ReactNode;
     center?: boolean;
-    padding?: "none" | "sm" | "md" | "lg";
 }
 
 /**
  * Use this inside a {@link Page} component to display a header with title, badges and actions.
  */
-export const PageHeader: React.FC<PageHeaderProps> = ({
-    title,
-    titleProps,
-    actions,
-    badges,
-    pre,
-    children,
-    className,
-    center,
-    mb,
-    padding,
-    sticky,
-    relative,
-    mt,
-    style,
-}) => {
+export const PageHeader: React.FC<PageHeaderProps> = (props) => {
+    const { className, restProps, children } = useResolveT("pageHeader", pageHeader, props);
+    const { pre, badges, actions, title, titleProps, center, ...rootProps } = restProps;
+
     return (
-        <div style={style} className={pageHeader({ className, mb, mt, padding, sticky, relative })}>
+        <div className={className} {...rootProps}>
             {pre}
             {(badges || actions || title) && (
-                <div className={clsx("flex gap-3 py-2", center && "justify-center")}>
+                <div className={twMerge("flex gap-3 py-2", center && "justify-center")}>
                     {title && <Title {...titleProps}>{title}</Title>}
                     {badges && <div className="flex gap-3">{badges}</div>}
                     {actions && <div className="flex flex-wrap grow items-center justify-end">{actions}</div>}

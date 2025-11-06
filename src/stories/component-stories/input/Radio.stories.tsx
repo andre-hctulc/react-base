@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Radio } from "../../../components/input/radio.js";
+import { RadioLike } from "../../../components/input/radio-like.js";
 import type { Choice } from "../../../types/index.js";
 
 // #### META ####
 const meta = {
     title: "input/radio",
-    component: Radio,
+    component: RadioLike,
     parameters: {
         layout: "centered",
     },
@@ -25,7 +25,7 @@ const meta = {
         icon: { table: { disable: true } },
     },
     args: {},
-} satisfies Meta<typeof Radio>;
+} satisfies Meta<typeof RadioLike>;
 
 export default meta;
 // #### META ####
@@ -39,7 +39,7 @@ export const Default: Story = {
     render: (args) => (
         <>
             <span className="text-red">TODO</span>
-            <Radio options={options} renderOption={(opt) => <span>{opt.option.value}</span>} />
+            <RadioLike options={options} renderOption={(opt) => <span>{opt.option.value}</span>} />
         </>
     ),
     args: { options, renderOption: () => <></> },

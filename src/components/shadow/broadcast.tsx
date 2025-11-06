@@ -1,18 +1,19 @@
 "use client";
 
-import React from "react";
+import { Children, cloneElement, isValidElement, type JSXElementConstructor, type ReactElement, type ReactNode, type ReactPortal } from "react";
+
 
 type BroadcastProps<P = any> = {
     props:
         | Partial<P>
         | ((
               child:
-                  | React.ReactPortal
-                  | React.ReactElement<unknown, string | React.JSXElementConstructor<any>>
+                  | ReactPortal
+                  | ReactElement<unknown, string | JSXElementConstructor<any>>
           ) => P | null);
-    children?: React.ReactNode;
+    children?: ReactNode;
     filter?: (
-        child: React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>>
+        child: ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>>
     ) => boolean;
 };
 
@@ -25,8 +26,8 @@ type BroadcastProps<P = any> = {
  * - `filter` - A filter function to filter children
  */
 export const Broadcast = <P = any,>(props: BroadcastProps<P>) => {
-    return React.Children.map(props.children, (child) => {
-        if (React.isValidElement(child)) {
+    return Children.map(props.children, (child) => {
+        if (isValidElement(child)) {
             if (props.filter && !props.filter(child)) return child;
 
             let p: any;
@@ -41,7 +42,7 @@ export const Broadcast = <P = any,>(props: BroadcastProps<P>) => {
                 return child;
             }
 
-            return React.cloneElement(child, p);
+            return cloneElement(child, p);
         } else {
             return child;
         }

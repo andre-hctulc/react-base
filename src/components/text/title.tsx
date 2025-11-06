@@ -1,115 +1,83 @@
-import { type ReactNode } from "react";
-import { tv } from "tailwind-variants";
-import type { ELEMENT, PartialPropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
-import { Icon } from "../icons/icon.js";
+"use client";
 
-const title = tv({
+import { type ElementType } from "react";
+import { createTheme } from "flowbite-react/helpers/create-theme";
+import type { BaseTheme, TProps, WithMargin } from "../../util/style.js";
+import { withMargin } from "../../util/style.js";
+import type { FlowbiteBoolean } from "flowbite-react/types";
+import type { RichAsProps } from "../../types/index.js";
+import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
+import { useResolveT } from "../../hooks/index.js";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        title: TitleTheme;
+    }
+}
+
+export interface TitleTheme extends BaseTheme, WithMargin {
+    variant: Record<"h1" | "h2" | "h3" | "h4" | "h5", string>;
+    underline: FlowbiteBoolean;
+    truncate: FlowbiteBoolean;
+    bold: FlowbiteBoolean;
+    flex: FlowbiteBoolean;
+}
+
+const title = createTheme<TitleTheme>({
     base: "",
-    variants: {
-        variant: {
-            h1: "text-2xl gap-4.5",
-            h2: "text-xl gap-4",
-            h3: "text-lg gap-3.5",
-            h4: "text-base gap-3",
-            h5: "text-sm gap-2.5",
-        },
-        underline: {
-            true: "underline",
-        },
-        truncate: {
-            true: "truncate",
-            false: "",
-        },
-        bold: {
-            true: "font-semibold",
-            false: "font-medium",
-        },
-        my: {
-            none: "",
-            xs: "my-1",
-            sm: "my-2",
-            md: "my-4",
-            lg: "my-7",
-            xl: "my-12",
-        },
-        mt: {
-            none: "",
-            xs: "mt-1",
-            sm: "mt-2",
-            md: "mt-4",
-            lg: "mt-7",
-            xl: "mt-12",
-        },
-        mb: {
-            none: "",
-            xs: "mb-1",
-            sm: "mb-2",
-            md: "mb-4",
-            lg: "mb-7",
-            xl: "mb-12",
-        },
-        flex: {
-            true: "flex items-center",
-        },
+    variant: {
+        h1: "text-2xl gap-4.5",
+        h2: "text-xl gap-4",
+        h3: "text-lg gap-3.5",
+        h4: "text-base gap-3",
+        h5: "text-sm gap-2.5",
     },
+    underline: {
+        on: "underline",
+        off: "",
+    },
+    truncate: {
+        on: "truncate",
+        off: "",
+    },
+    bold: {
+        on: "font-semibold",
+        off: "font-medium",
+    },
+    flex: {
+        on: "flex items-center",
+        off: "",
+    },
+    ...withMargin,
     defaultVariants: {
         variant: "h1",
         bold: false,
     },
 });
 
-export type TitleProps<T extends ELEMENT = "h1"> = WithTVProps<
-    RichAsProps<T> & {
-        icon?: ReactNode;
-        iconProps?: PartialPropsOf<typeof Icon>;
-    },
-    typeof title
->;
+export type TitleProps<T extends ElementType = "h1"> = RichAsProps<T> &
+    TProps<TitleTheme> & {
+        icon?: IconLike;
+        iconProps?: IconProps;
+        variant?: "h1" | "h2" | "h3" | "h4" | "h5";
+    };
 
 /**
  * ### Props
  * - `variant`
  * - `underline`
  */
-export const Title = <T extends ELEMENT = "h1">({
-    children,
-    className,
-    as,
-    variant,
-    underline,
-    my,
-    mb,
-    mt,
-    bold,
-    icon,
-    iconProps,
-    ref,
-    truncate,
-    ...props
-}: TitleProps<T>) => {
+export const Title = <T extends ElementType = "h1">(props: TitleProps<T>) => {
+    const { className, restProps } = useResolveT("title", title, {
+        ...props,
+        flex: !!props.icon,
+    });
+    const { children, as, variant, icon, iconProps, ...rootProps } = restProps;
     const Comp: any = as || variant || "h1";
 
     return (
-        <Comp
-            className={title({
-                className,
-                variant,
-                underline,
-                my,
-                mb,
-                mt,
-                bold,
-                flex: !!icon,
-                truncate,
-            })}
-            ref={ref as any}
-            {...props}
-        >
-            {icon && (
-                <Icon inline {...(iconProps as any)}>
-                    {icon}
-                </Icon>
-            )}
+        <Comp className={className} {...rootProps}>
+            {icon && <Icon {...iconProps}>{icon}</Icon>}
             {children}
         </Comp>
     );

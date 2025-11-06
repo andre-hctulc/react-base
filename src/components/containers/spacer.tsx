@@ -1,44 +1,48 @@
-import { tv, type VariantProps } from "tailwind-variants";
-import type { ELEMENT, RichAsProps, WithTVProps } from "../../types/index.js";
+"use client";
 
-const spacer = tv({
+import { createTheme } from "flowbite-react";
+import {
+    flexWrap,
+    withGap,
+    type BaseTheme,
+    type TProps,
+    type WithFlexWrap,
+    type WithGap,
+} from "../../util/style.js";
+import { useResolveT } from "../../hooks/index.js";
+import type { ElementType } from "react";
+import type { RichAsProps } from "../../types/index.js";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        spacer: SpacerTheme;
+    }
+
+    interface FlowbiteProps {
+        spacer: Partial<WithoutThemingProps<SpacerProps>>;
+    }
+}
+
+export interface SpacerTheme extends BaseTheme, WithGap, WithFlexWrap {
+    variant: Record<"row" | "col", string>;
+}
+
+const spacer = createTheme<SpacerTheme>({
     base: "flex",
-    variants: {
-        variant: {
-            row: "",
-            col: "flex-col",
-        },
-        wrap: {
-            true: "flex-wrap",
-        },
-        spacing: {
-            "2xs": "gap-0.5",
-            xs: "gap-1",
-            sm: "gap-2",
-            md: "gap-4",
-            lg: "gap-6",
-            xl: "gap-8",
-            "2xl": "gap-10",
-            "3xl": "gap-12",
-            "4xl": "gap-16",
-            "5xl": "gap-20",
-        },
+    variant: {
+        row: "",
+        col: "flex-col",
     },
+    wrap: flexWrap,
+    ...withGap,
     defaultVariants: {
-        spacing: "md",
-        variant: "col",
+        gap: "md",
+        align: "center",
+        direction: "row",
     },
 });
 
-type SpacerProps<T extends ELEMENT = "div"> = WithTVProps<
-    RichAsProps<T> & {
-        /**
-         * NOT IMPLEMENTED
-         */
-        dynSpacing?: () => VariantProps<typeof spacer>["spacing"];
-    },
-    typeof spacer
->;
+type SpacerProps<T extends ElementType = "div"> = RichAsProps<T> & TProps<SpacerTheme> & {};
 
 /**
  * Flex container. Creates gap between elements.
@@ -50,15 +54,8 @@ type SpacerProps<T extends ELEMENT = "div"> = WithTVProps<
  * - `as`
  * - `dynSpacing`
  */
-export const Spacer = <T extends ELEMENT>({
-    className,
-    spacing,
-    variant,
-    wrap,
-    as,
-    dynSpacing,
-    ...props
-}: SpacerProps<T>) => {
-    const Comp: any = as || "div";
-    return <Comp className={spacer({ className, spacing, variant, wrap })} {...props} />;
+export const Spacer = <T extends ElementType>(props: SpacerProps<T>) => {
+    const { className, restProps } = useResolveT("spacer", spacer, props);
+    const Comp = restProps.as || "div";
+    return <Comp className={className} {...props} />;
 };

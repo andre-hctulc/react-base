@@ -1,22 +1,43 @@
+"use client";
+
 import { collapse } from "@dre44/util/objects";
-import clsx from "clsx";
 import type { FC, ReactNode } from "react";
-import { tv } from "tailwind-variants";
-import type { LinkComponent, LinkProps, PropsOf, StyleProps, WithTVProps } from "../../types/index.js";
+import type { LinkComponent, LinkProps, PropsOf, StyleProps } from "../../types/index.js";
 import { Subtitle } from "../text/subtitle.js";
 import { Icon } from "../icons/icon.js";
 import { CheckCircleIcon } from "../icons/phosphor/check-circle.js";
 import { XCircleIcon } from "../icons/phosphor/x-circle.js";
+import type { BaseTheme, TProps } from "../../util/style.js";
+import { createTheme } from "flowbite-react";
+import { useResolveT } from "../../hooks/index.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
-const checklist = tv({
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        checklist: ChecklistTheme;
+    }
+
+    interface FlowbiteProps {
+        checklist: Partial<WithoutThemingProps<ChecklistProps>>;
+    }
+}
+
+export interface ChecklistTheme extends BaseTheme {
+    size: {
+        sm: string;
+        md: string;
+        lg: string;
+        xl: string;
+    };
+}
+
+const checklist = createTheme<ChecklistTheme>({
     base: "",
-    variants: {
-        size: {
-            sm: "space-y-1",
-            md: "space-y-1.5",
-            lg: "space-y-2",
-            xl: "space-y-3",
-        },
+    size: {
+        sm: "space-y-1",
+        md: "space-y-1.5",
+        lg: "space-y-2",
+        xl: "space-y-3",
     },
     defaultVariants: {
         size: "md",
@@ -41,32 +62,31 @@ export interface ChecklistItem extends ComponentProps {
     href?: string;
 }
 
-type ChecklistProps = WithTVProps<
+type ChecklistProps = TProps<ChecklistTheme> &
     StyleProps &
-        ComponentProps & {
-            items: ChecklistItem[];
-            checkedIcon?: ReactNode;
-            uncheckedIcon?: ReactNode;
-            checked?: string | string[] | ((item: ChecklistItem) => boolean);
-        },
-    typeof checklist
->;
+    ComponentProps & {
+        items: ChecklistItem[];
+        checkedIcon?: ReactNode;
+        uncheckedIcon?: ReactNode;
+        checked?: string | string[] | ((item: ChecklistItem) => boolean);
+    };
 
-export const Checklist: FC<ChecklistProps> = ({
-    className,
-    items,
-    checkedIcon,
-    uncheckedIcon,
-    checked,
-    titleProps,
-    textProps,
-    secondaryTextProps,
-    iconProps,
-    size = "md",
-    LinkComponent,
-    linkProps,
-    ...props
-}) => {
+export const Checklist: FC<ChecklistProps> = (props) => {
+    const { restProps, children, className } = useResolveT("checklist", checklist, props);
+    const {
+        items,
+        checkedIcon,
+        uncheckedIcon,
+        checked,
+        titleProps,
+        textProps,
+        secondaryTextProps,
+        iconProps,
+        size = "md",
+        LinkComponent,
+        linkProps,
+        ...rootProps
+    } = restProps;
     const cIcon = checkedIcon || <CheckCircleIcon />;
     const uncIcon = uncheckedIcon || <XCircleIcon />;
     const iconSize = collapse(size, {
@@ -123,7 +143,7 @@ export const Checklist: FC<ChecklistProps> = ({
     };
 
     return (
-        <ol {...props} className={checklist({ className, size })}>
+        <ol className={className} {...rootProps}>
             {items.map((item) => {
                 const checked = isChecked(item);
                 const Comp: any = item.href ? item.LinkComponent || LinkComponent || "a" : "div";
@@ -138,7 +158,7 @@ export const Checklist: FC<ChecklistProps> = ({
                                     size={iconSize}
                                     {...iconProps}
                                     {...item.iconProps}
-                                    className={clsx(
+                                    className={twMerge(
                                         iconClasses,
                                         iconProps?.className,
                                         item.iconProps?.className
@@ -157,7 +177,7 @@ export const Checklist: FC<ChecklistProps> = ({
                                     <p
                                         {...textProps}
                                         {...item.textProps}
-                                        className={clsx(
+                                        className={twMerge(
                                             textClasses,
                                             item.textProps?.className,
                                             textProps?.className
@@ -170,7 +190,7 @@ export const Checklist: FC<ChecklistProps> = ({
                                     <p
                                         {...secondaryTextProps}
                                         {...item.secondaryTextProps}
-                                        className={clsx(
+                                        className={twMerge(
                                             "text-sm ",
                                             secTextClasses,
                                             secondaryTextProps?.className,

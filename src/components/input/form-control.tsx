@@ -2,113 +2,110 @@
 
 import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
 import { useJSForm } from "./js-form/js-form-context.js";
-import type { PartialPropsOf, RefProps, RichAsProps, StyleProps, WithTVProps } from "../../types/index.js";
-import { HelperText } from "../text/helper-text.js";
-import { tv } from "tailwind-variants";
-import { Label } from "../text/label.js";
+import type { PartialPropsOf, RefProps, StyleProps } from "../../types/index.js";
 import { ErrorText } from "../text/error-text.js";
+import { createTheme, HelperText, Label } from "flowbite-react";
+import { withGap, type BaseTheme, type TProps, type WithGap } from "../../util/style.js";
+import { useResolveT } from "../../hooks/index.js";
+import type { FlowbiteBoolean } from "flowbite-react/types";
 
-const formControl = tv({
-    base: "flex",
-    variants: {
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        formControl: FormControlTheme;
+    }
+
+    interface FlowbiteProps {
+        formControl: Partial<WithoutThemingProps<FormControlProps>>;
+    }
+}
+
+export interface FormControlTheme {
+    root: BaseTheme &
+        WithGap & {
+            horizontal: FlowbiteBoolean;
+        };
+    body: BaseTheme & WithGap & {};
+}
+
+const formControl = createTheme<FormControlTheme>({
+    root: {
+        base: "flex",
         horizontal: {
-            true: "",
-            false: "flex-col",
+            on: "",
+            off: "flex-col",
         },
-        gap: {
-            none: "none",
-            sm: "gap-1",
-            md: "gap-2",
-            lg: "gap-3",
-            xl: "gap-4.5",
+        ...withGap,
+        defaultVariants: {
+            gap: "sm",
         },
     },
-    defaultVariants: {
-        gap: "md",
-        horizontal: false,
+    body: {
+        base: "flex flex-col",
+        ...withGap,
+        defaultVariants: {
+            gap: "sm",
+        },
     },
 });
 
-const formControlBody = tv({
-    base: "flex flex-col",
-    variants: {
-        gap: {
-            none: "none",
-            xs: "gap-0.5",
-            sm: "gap-1",
-            md: "gap-2",
-            lg: "gap-3",
-            xl: "gap-4.5",
-        },
-    },
-    defaultVariants: {
-        gap: "sm",
-    },
-});
-
-type FormControlProps = WithTVProps<
+type FormControlProps = TProps<FormControlTheme> &
     StyleProps &
-        RefProps<HTMLDivElement> & {
-            /**
-             * Default value of the input
-             */
-            name?: string;
-            children: ReactNode;
-            /**
-             * Whether the input is controlled or not.
-             * By default, this is derived from the {@link JSFormContext}.
-             */
-            controlled?: boolean;
-            label?: string;
-            labelProps?: PartialPropsOf<typeof Label>;
-            errorText?: string;
-            helperText?: string;
-            helperTextProps?: PartialPropsOf<typeof HelperText>;
-            errorTextProps?: PartialPropsOf<typeof ErrorText>;
-            horizontal?: boolean;
-            labelWidth?: string | number;
-            /**
-             * Set to true, to prevent any error message from showing
-             */
-            noError?: boolean;
-            helperTextTop?: boolean;
-            /**
-             * Indicates that the label is not labeling a valid input element (e.g. in combination with hidden inputs).
-             *
-             * In this case a span is used instead of a label element.
-             */
-            mimic?: boolean;
-            requiredHint?: boolean;
-        },
-    typeof formControl
->;
+    RefProps<HTMLDivElement> & {
+        /**
+         * Default value of the input
+         */
+        name?: string;
+        children: ReactNode;
+        /**
+         * Whether the input is controlled or not.
+         * By default, this is derived from the {@link JSFormContext}.
+         */
+        controlled?: boolean;
+        label?: string;
+        labelProps?: PartialPropsOf<typeof Label>;
+        errorText?: string;
+        helperText?: string;
+        helperTextProps?: PartialPropsOf<typeof HelperText>;
+        errorTextProps?: PartialPropsOf<typeof ErrorText>;
+        horizontal?: boolean;
+        labelWidth?: string | number;
+        /**
+         * Set to true, to prevent any error message from showing
+         */
+        noError?: boolean;
+        helperTextTop?: boolean;
+        /**
+         * Indicates that the label is not labeling a valid input element (e.g. in combination with hidden inputs).
+         *
+         * In this case a span is used instead of a label element.
+         */
+        mimic?: boolean;
+        requiredHint?: boolean;
+    };
 
 /**
  * Wraps an input element with a label, error message and helper text.
  *
  * Consumes {@link JSFormContext}, to handle {@link JSForm} default value state.
  */
-export const FormControl: FC<FormControlProps> = ({
-    children,
-    label,
-    name,
-    controlled,
-    className,
-    style,
-    errorText,
-    errorTextProps,
-    helperText,
-    helperTextProps,
-    labelProps,
-    horizontal,
-    gap,
-    labelWidth,
-    noError,
-    helperTextTop,
-    mimic,
-    ref,
-    requiredHint,
-}) => {
+export const FormControl: FC<FormControlProps> = (props) => {
+    const { classNames, restProps, children } = useResolveT("formControl", formControl, props);
+    const {
+        noError,
+        errorText,
+        controlled,
+        mimic,
+        ref,
+        name,
+        label,
+        helperText,
+        helperTextProps,
+        helperTextTop,
+        errorTextProps,
+        requiredHint,
+        labelProps,
+        ...rootProps
+    } = restProps;
     const formCtx = useJSForm();
     const _name = name !== undefined ? `${formCtx?.namesPrefix ?? ""}${name}` : undefined;
     const hasName = _name !== undefined;
@@ -151,39 +148,31 @@ export const FormControl: FC<FormControlProps> = ({
     }
 
     const body = (
-        <>
+        <div className={classNames.body}>
             {helperText && helperTextTop && <HelperText {...helperTextProps}>{helperText}</HelperText>}
             {childElement ? cloneElement(childElement, inpProps) : children}
             {helperText && !helperTextTop && <HelperText {...helperTextProps}>{helperText}</HelperText>}
             {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
-        </>
+        </div>
     );
-    const lbl = label && (
-        <Label
-            requiredHint={requiredHint}
-            htmlFor={id}
-            {...labelProps}
-            /* default to span if hidden */
-            as={labelProps?.as ?? (mimic ? "span" : undefined)}
-            style={{ width: labelWidth, ...labelProps?.style }}
-        >
-            {label}
-        </Label>
-    );
+    const lbl =
+        label &&
+        (mimic ? (
+            <span>
+                {label}
+                {requiredHint && ` *`}
+            </span>
+        ) : (
+            <Label htmlFor={id} {...labelProps}>
+                {label}
+                {requiredHint && ` *`}
+            </Label>
+        ));
 
     return (
-        <div ref={ref} className={formControl({ horizontal, gap, className })} style={style}>
-            {horizontal ? (
-                <>
-                    {lbl}
-                    <div className={formControlBody({ gap })}>{body}</div>
-                </>
-            ) : (
-                <>
-                    {lbl}
-                    {body}
-                </>
-            )}
+        <div ref={ref} className={classNames.root} {...rootProps}>
+            {lbl}
+            {body}
         </div>
     );
 };
