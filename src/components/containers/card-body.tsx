@@ -48,7 +48,6 @@ const cardBody = createTheme<CardBodyTheme>({
     alignItems: alignItems,
     ...withPadding,
     defaultVariants: {
-        p: "md",
     },
 });
 

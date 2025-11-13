@@ -6,6 +6,7 @@ import type { BaseTheme, TProps, WithNoShrink } from "../../util/style.js";
 import type { FlowbiteBoolean, FlowbiteColors, FlowbiteSizes } from "flowbite-react/types";
 import { useResolveT } from "../../hooks/index.js";
 import type { ComponentProps } from "react";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {
@@ -111,8 +112,8 @@ export const Icon: FC<IconProps> = (props) => {
     }
     // svg
     else if (isValidElement(children)) {
-        return cloneElement(children, {
-            className,
+        return cloneElement<any>(children, {
+            className: twMerge((children.props as any)?.className, className),
             ...restProps,
         });
     }

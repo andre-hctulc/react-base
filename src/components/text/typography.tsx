@@ -11,6 +11,10 @@ declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         typography: TypographyTheme;
     }
+
+    interface FlowbiteProps {
+        typography: Partial<WithoutThemingProps<TypographyProps>>;
+    }
 }
 
 export interface TypographyTheme extends BaseTheme {
@@ -72,8 +76,8 @@ export type TypographyProps<T extends ElementType = "p"> = RichAsProps<T> & TPro
  * Text. Used across components to consistently style text.
  */
 export const Typography = <T extends ElementType = "p">(props: TypographyProps<T>) => {
-    const { className, restProps } = useResolveT("typography", typography, props);
-    const { children, as, ...rootProps } = restProps;
+    const { className, children, restProps } = useResolveT("typography", typography, props);
+    const { as, ...rootProps } = restProps;
     const Comp: any = as || "p";
 
     return (

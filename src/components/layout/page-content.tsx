@@ -28,6 +28,10 @@ declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         pageContent: PageContentTheme;
     }
+
+    interface FlowbiteProps {
+        pageContent: Partial<WithoutThemingProps<PageContentProps>>;
+    }
 }
 
 export interface PageContentTheme
@@ -50,7 +54,7 @@ const pageContent = createTheme<PageContentTheme>({
     grow: flexGrow,
     ...withPadding,
     defaultVariants: {
-        p: "md",
+        p: "lg",
         width: "full",
     },
 });

@@ -21,6 +21,10 @@ declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         page: PageTheme;
     }
+
+    interface FlowbiteProps {
+        page: Partial<WithoutThemingProps<PageProps>>;
+    }
 }
 
 export interface PageTheme extends BaseTheme, WithHeight, WithGrow, WithNoShrink, WithFlex {
@@ -60,7 +64,7 @@ const page = createTheme<PageTheme>({
         "4": "bg-paper4",
     },
     defaultVariants: {
-        width: "lg",
+        width: "md",
         variant: "default",
         noShrink: true,
     },

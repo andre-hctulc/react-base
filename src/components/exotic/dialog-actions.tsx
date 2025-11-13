@@ -4,12 +4,14 @@ import type { FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Toolbar } from "../containers/toolbar.js";
 import { Button, Spinner } from "flowbite-react";
-import { ButtonIcon } from "../data-display/button-icon.js";
+import { ButtonSpinner } from "../data-display/button-spinner.js";
 
 interface CancelConfirmProps {
     className?: string;
     gap?: PropsOf<typeof Toolbar>["gap"];
-    padding?: PropsOf<typeof Toolbar>["p"];
+    p?: PropsOf<typeof Toolbar>["p"];
+    grow?: PropsOf<typeof Toolbar>["grow"];
+    justifyContent?: PropsOf<typeof Toolbar>["justifyContent"];
     onCancel?: () => void;
     onConfirm?: () => void;
     confirmText?: string;
@@ -51,10 +53,12 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
     disabled,
     className,
     gap,
-    padding,
+    p,
+    justifyContent,
+    grow,
 }) => {
     return (
-        <Toolbar className={className} gap={gap} p={padding}>
+        <Toolbar className={className} gap={gap} p={p} justifyContent={justifyContent} grow={grow}>
             {showCancel !== false && (
                 <CancelButton
                     size={size}
@@ -84,11 +88,7 @@ export const CancelConfirm: React.FC<CancelConfirmProps> = ({
                     confirmButtonProps?.onClick?.(e);
                 }}
             >
-                {loading && (
-                    <ButtonIcon>
-                        <Spinner size="sm" light />
-                    </ButtonIcon>
-                )}
+                {loading && <ButtonSpinner />}
                 {confirmText || "Confirm"}
             </ConfirmButton>
         </Toolbar>
@@ -117,7 +117,7 @@ interface ConfirmButtonProps extends PropsOf<typeof Button<"button">> {
  */
 export const ConfirmButton: React.FC<ConfirmButtonProps> = ({ danger, ...props }) => {
     return (
-        <Button color={danger ? "error" : "primary"} {...props}>
+        <Button color={danger ? "failure" : "default"} {...props}>
             {props.children || "Confirm"}
         </Button>
     );

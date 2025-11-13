@@ -75,18 +75,9 @@ interface PlaceholderProps extends ComponentProps<"div">, TProps<PlaceholderThem
  * - `my`
  */
 export const Placeholder: FC<PlaceholderProps> = (props) => {
-    const { className, restProps } = useResolveT("placeholder", placeholder, props);
-    const {
-        children,
-        icon,
-        iconProps,
-        helperText,
-        helperTextProps,
-        textProps,
-        italic,
-        disabled,
-        ...rootProps
-    } = restProps;
+    const { className, children, restProps } = useResolveT("placeholder", placeholder, props);
+    const { icon, iconProps, helperText, helperTextProps, textProps, italic, disabled, ...rootProps } =
+        restProps;
 
     return (
         <div className={className} {...rootProps}>

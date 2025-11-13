@@ -14,6 +14,10 @@ declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         pageHeader: PageHeaderTheme;
     }
+
+    interface FlowbiteProps {
+        pageHeader: Partial<WithoutThemingProps<PageHeaderProps>>;
+    }
 }
 
 export interface PageHeaderTheme extends BaseTheme, WithPadding, WithMargin {
@@ -32,7 +36,7 @@ const pageHeader = createTheme<PageHeaderTheme>({
     ...withPadding,
     ...withMargin,
     defaultVariants: {
-        p: "md",
+        p: "lg",
     },
 });
 

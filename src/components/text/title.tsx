@@ -13,6 +13,10 @@ declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         title: TitleTheme;
     }
+
+    interface FlowbiteProps {
+        title: Partial<WithoutThemingProps<TitleProps>>;
+    }
 }
 
 export interface TitleTheme extends BaseTheme, WithMargin {
@@ -68,11 +72,11 @@ export type TitleProps<T extends ElementType = "h1"> = RichAsProps<T> &
  * - `underline`
  */
 export const Title = <T extends ElementType = "h1">(props: TitleProps<T>) => {
-    const { className, restProps } = useResolveT("title", title, {
+    const { className, restProps, children } = useResolveT("title", title, {
         ...props,
         flex: !!props.icon,
     });
-    const { children, as, variant, icon, iconProps, ...rootProps } = restProps;
+    const { as, variant, icon, iconProps, ...rootProps } = restProps;
     const Comp: any = as || variant || "h1";
 
     return (

@@ -3,7 +3,7 @@
 import React, { type FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 
-interface DroppableProps extends PropsOf<"div"> {
+export interface DroppableProps extends PropsOf<"div"> {
     disabled?: boolean;
 }
 

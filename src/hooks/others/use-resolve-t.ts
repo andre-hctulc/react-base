@@ -5,13 +5,15 @@ import { resolveProps } from "flowbite-react/helpers/resolve-props";
 import { useResolveTheme } from "flowbite-react/helpers/resolve-theme";
 import { useThemeProvider, type ThemeProviderValue } from "flowbite-react/theme/provider";
 import type { ReactNode } from "react";
-import { collectClasses } from "../../util/style.js";
+import { collectClasses, type TProps } from "../../util/style.js";
+
+export type RestProps<P, T> = Omit<P, keyof TProps<T> | "className" | "children">;
 
 interface UseTBaseResult<T = any, P = any> {
     /**
      * Does **not** include *children* or *className* or any *theme prop*!
      */
-    restProps: P;
+    restProps: RestProps<P, T>;
     /**
      * Children prop
      */

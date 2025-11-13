@@ -3,10 +3,14 @@ import { cloneElement, type FC, type ReactElement } from "react";
 
 interface ButtonIconProps {
     children: ReactElement<{ className?: string }>;
+    right?: boolean;
 }
 
-export const ButtonIcon: FC<ButtonIconProps> = ({ children }) => {
+export const ButtonIcon: FC<ButtonIconProps> = ({ children, right }) => {
     return cloneElement(children, {
-        className: twMerge(children.props.className, "first:mr-3 last:ml-3"),
+        // TODO
+        // do this with css. 
+        // PROBLEM: last, first selectors do not work with the button text.
+        className: twMerge(children.props.className, "", right ? "ml-3" : "mr-3"),
     });
 };

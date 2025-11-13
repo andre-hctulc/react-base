@@ -4,7 +4,7 @@ import { Fragment } from "react/jsx-runtime";
 import type { TransitionClasses, TransitionEvents } from "./transition.js";
 import { cloneElement, useContext } from "react";
 import { TransitionContext } from "./transition-context.js";
-import { useCSSTransition } from "../../hooks/index.js";
+import { useCssTransition } from "../../hooks/index.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
 interface TransitionChildProps extends TransitionClasses, TransitionEvents {
@@ -31,7 +31,7 @@ export function TransitionChild({
     const context = useContext(TransitionContext);
     const classes = { enter, enterFrom, enterTo, leave, leaveFrom, leaveTo };
     const events = { onBeforeEnter, onAfterEnter, onBeforeLeave, onAfterLeave };
-    const { ref, mounted } = useCSSTransition(!!context?.show, classes, events);
+    const { ref, mounted } = useCssTransition(!!context?.show, classes, events);
 
     if (!mounted) return null;
 

@@ -10,6 +10,10 @@ declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         textBlock: TextBlockTheme;
     }
+
+    interface FlowbiteProps {
+        textBlock: Partial<WithoutThemingProps<TextBlockProps>>;
+    }
 }
 
 export interface TextBlockTheme extends BaseTheme {

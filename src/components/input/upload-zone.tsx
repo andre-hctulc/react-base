@@ -7,7 +7,7 @@ import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
 import { Icon } from "../icons/icon.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
-interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
+export interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     children?: ReactNode;
     secondaryText?: string;
     text?: string;

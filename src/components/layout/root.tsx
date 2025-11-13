@@ -15,15 +15,20 @@ import {
     type WithScroll,
 } from "../../util/style.js";
 import { useResolveT } from "../../hooks/index.js";
+import type { FlowbiteBoolean } from "flowbite-react/types";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         root: RootTheme;
     }
+
+    interface FlowbiteProps {
+        root: Partial<WithoutThemingProps<RootProps>>;
+    }
 }
 
 export interface RootTheme extends BaseTheme, WithFlexDirection, WithHeight, WithGrow, WithScroll {
-    relative: Record<"true", string>;
+    relative: FlowbiteBoolean;
     bg: Record<"none" | "1" | "2" | "3" | "4", string>;
 }
 
@@ -34,7 +39,8 @@ const root = createTheme<RootTheme>({
     grow: flexGrow,
     ...withScroll,
     relative: {
-        true: "relative",
+        on: "relative",
+        off: "",
     },
     bg: {
         none: "",

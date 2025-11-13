@@ -7,6 +7,7 @@ import type {
     Ref,
     ElementType,
 } from "react";
+import type { IconFC } from "../components";
 
 // #### Props ####
 
@@ -103,7 +104,7 @@ export interface LabeledChoice<V = string, D = any> extends Choice<V, D> {
     /**
      * Icon to display next to the label
      */
-    icon?: ReactNode;
+    icon?: IconFC;
 }
 
 // #### Colors ####

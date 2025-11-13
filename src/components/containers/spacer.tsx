@@ -56,6 +56,6 @@ type SpacerProps<T extends ElementType = "div"> = RichAsProps<T> & TProps<Spacer
  */
 export const Spacer = <T extends ElementType>(props: SpacerProps<T>) => {
     const { className, restProps } = useResolveT("spacer", spacer, props);
-    const Comp = restProps.as || "div";
-    return <Comp className={className} {...props} />;
+    const Comp: any = restProps.as || "div";
+    return <Comp className={className} {...restProps} />;
 };

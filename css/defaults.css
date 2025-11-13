@@ -1,0 +1,25 @@
+/* 
+
+defaults.css
+
+Define default styles for some components.
+
+*/
+
+@layer base {
+    /* Default Border Color */
+    *,
+    hr {
+        border-color: var(--color-divider);
+    }
+
+    body {
+        background-color: var(--color-paper);
+        color: var(--color-t1);
+    }
+
+    [role="button"],
+    button {
+        cursor: pointer;
+    }
+}

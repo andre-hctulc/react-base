@@ -11,15 +11,33 @@ import {
 } from "react";
 import { TransitionChild } from "./transition-child.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import { useCSSTransition } from "../../hooks/index.js";
+import { useCssTransition } from "../../hooks/index.js";
 import { TransitionContext } from "./transition-context.js";
 
 export interface TransitionClasses {
+    /**
+     * Classes applied during entire enter transition. Kept after transition completes.
+     */
     enter?: string;
+    /**
+     * Classes applied at the start of enter transition (initial state).
+     */
     enterFrom?: string;
+    /**
+     * Classes applied during enter transition animation (target state).
+     */
     enterTo?: string;
+    /**
+     * Classes applied during entire leave transition. Removed after transition completes.
+     */
     leave?: string;
+    /**
+     * Classes applied at the start of leave transition (initial state).
+     */
     leaveFrom?: string;
+    /**
+     * Classes applied during leave transition animation (target state).
+     */
     leaveTo?: string;
 }
 
@@ -66,7 +84,7 @@ export function Transition({
     const classes = { enter, enterFrom, enterTo, leave, leaveFrom, leaveTo };
     const events: TransitionEvents = { onBeforeEnter, onAfterEnter, onBeforeLeave, onAfterLeave };
 
-    const { ref, mounted } = useCSSTransition(show, classes, events, appear);
+    const { ref, mounted } = useCssTransition(show, classes, events, appear);
 
     const contextValue = {
         show,

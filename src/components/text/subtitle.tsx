@@ -5,7 +5,7 @@ import { createTheme } from "flowbite-react/helpers/create-theme";
 import type { PropsOf, RichAsProps } from "../../types/index.js";
 import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import { type BaseTheme, type TProps } from "../../util/style.js";
+import { withMargin, type BaseTheme, type TProps, type WithMargin } from "../../util/style.js";
 import type { FlowbiteBoolean } from "flowbite-react/types";
 import { useResolveT } from "../../hooks/index.js";
 
@@ -13,14 +13,15 @@ declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         subtitle: SubtitleTheme;
     }
+
+    interface FlowbiteProps {
+        subtitle: Partial<WithoutThemingProps<SubtitleProps>>;
+    }
 }
 
-export interface SubtitleTheme extends BaseTheme {
+export interface SubtitleTheme extends BaseTheme, WithMargin {
     variant: Record<"h2" | "h3" | "h4" | "h5", string>;
     underline: FlowbiteBoolean;
-    my: Record<"none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl", string>;
-    mt: Record<"none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl", string>;
-    mb: Record<"none" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl", string>;
     bold: FlowbiteBoolean;
 }
 
@@ -36,36 +37,7 @@ const subtitle = createTheme<SubtitleTheme>({
         on: "underline",
         off: "",
     },
-    my: {
-        none: "",
-        xs: "my-1",
-        sm: "my-2",
-        md: "my-4",
-        lg: "my-7",
-        xl: "my-12",
-        "2xl": "my-16",
-        "3xl": "my-22",
-    },
-    mt: {
-        none: "",
-        xs: "mt-1",
-        sm: "mt-2",
-        md: "mt-4",
-        lg: "mt-7",
-        xl: "mt-12",
-        "2xl": "mt-16",
-        "3xl": "mt-22",
-    },
-    mb: {
-        none: "",
-        xs: "mb-1",
-        sm: "mb-2",
-        md: "mb-4",
-        lg: "mb-7",
-        xl: "mb-12",
-        "2xl": "mb-16",
-        "3xl": "mb-22",
-    },
+    ...withMargin,
     bold: {
         on: "font-semibold",
         off: "font-medium",

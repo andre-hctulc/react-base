@@ -1,20 +1,21 @@
 "use client";
 
-import {
-    useRef,
-    useState,
-    type FC,
-    type Ref,
-    type RefObject,
-} from "react";
+import { useRef, useState, type FC, type Ref, type RefObject } from "react";
 import { InputList } from "./input-list.js";
-import { PlusIcon } from "../icons/phosphor/plus.js";
-import { XIcon } from "../icons/phosphor/x.js";
 import type { InputLikeProps } from "./types.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import { Button, TextInput, type TextInputProps, Textarea, type TextareaProps } from "flowbite-react";
+import {
+    Button,
+    CloseIcon,
+    TextInput,
+    type TextInputProps,
+    Textarea,
+    type TextareaProps,
+} from "flowbite-react";
+import { IconButton } from "./icon-button.js";
+import { PlusIcon } from "../icons/phosphor/plus.js";
 
-interface TextInputListProps extends InputLikeProps<string[]> {
+export interface TextInputListProps extends InputLikeProps<string[]> {
     textarea?: boolean;
     listInputProps?: Partial<TextInputProps | TextareaProps>;
     inputProps?: Partial<TextInputProps | TextareaProps>;
@@ -76,8 +77,9 @@ export const TextInputList: FC<TextInputListProps> = ({
                                     addValue(newValue);
                                 }
                             }}
+                            className={twMerge("grow", inputProps?.className)}
                         />
-                        <Button
+                        <IconButton
                             disabled={disabled || readOnly || !newValue}
                             onClick={() => {
                                 addValue(newValue);
@@ -85,7 +87,7 @@ export const TextInputList: FC<TextInputListProps> = ({
                             color="gray"
                         >
                             <PlusIcon />
-                        </Button>
+                        </IconButton>
                     </div>
                 );
             }}
@@ -109,9 +111,9 @@ export const TextInputList: FC<TextInputListProps> = ({
                                 }}
                             />
                             {!inputProps.readOnly && (
-                                <Button disabled={inputProps.disabled} onClick={() => remove(value)}>
-                                    <XIcon />
-                                </Button>
+                                <IconButton disabled={inputProps.disabled} onClick={() => remove(value)}>
+                                    <CloseIcon />
+                                </IconButton>
                             )}
                         </li>
                     ))}

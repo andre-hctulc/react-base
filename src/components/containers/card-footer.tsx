@@ -36,7 +36,6 @@ const cardFooter = createTheme<CardFooterTheme>({
     ...withBorder,
     ...withPadding,
     defaultVariants: {
-        p: "md",
         variant: "default",
         border: false,
     },

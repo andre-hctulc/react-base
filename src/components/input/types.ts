@@ -13,7 +13,7 @@ export interface InputLikeProps<T = any, E = any> {
     /**
      * Callback when the value of the input changes
      */
-    onChange?: (e: E) => void;
+    onChange?: (e: E & { value: T }) => void;
     /**
      * Name of the input element
      */

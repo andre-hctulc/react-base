@@ -40,6 +40,7 @@ const skeleton = createTheme<SkeletonTheme>({
     ...withWidthAndHeight,
     defaultVariants: {
         p: "md",
+        shape: "rounded-md"
     },
 });
 

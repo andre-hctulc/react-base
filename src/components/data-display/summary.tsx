@@ -2,13 +2,13 @@
 
 import { isPlainObject } from "@dre44/util/objects";
 import type { FC, ReactNode, ComponentProps } from "react";
-import { Clipboard, createTheme } from "flowbite-react";
+import { createTheme } from "flowbite-react";
 import type { BaseTheme, TProps } from "../../util/style.js";
 import type { PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
 import { useAsSet, useResolveT } from "../../hooks/index.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import { CopyIcon } from "../icons/phosphor/copy.js";
+import { ClipboardIconButton } from "../input/clipboard-icon-button.js";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {
@@ -146,7 +146,7 @@ export const Summary: FC<SummaryProps> = (props) => {
                                         className={twMerge(nestedMargin === undefined && "ml-4")}
                                     />
                                 ) : (
-                                    <div className="flex">
+                                    <div className="flex gap-2">
                                         <div className="grow min-w-0">
                                             {strValue !== undefined ? (
                                                 <span className="text-sm">
@@ -161,7 +161,7 @@ export const Summary: FC<SummaryProps> = (props) => {
                                             )}
                                         </div>
                                         {fieldModel?.canCopy && (
-                                            <Clipboard valueToCopy={value} label={<CopyIcon />} />
+                                            <ClipboardIconButton size="sm" valueToCopy={value} />
                                         )}
                                     </div>
                                 )}

@@ -128,7 +128,11 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                 createPortal(
                     <NotificationsBox className={"fixed top-0 left-0"}>
                         {top_left.map((notification) => (
-                            <NotificationItem key={notification.id} notification={notification} />
+                            <NotificationItem
+                                key={notification.id}
+                                notification={notification}
+                                onClose={() => close(notification.id)}
+                            />
                         ))}
                     </NotificationsBox>,
                     document.body
@@ -138,7 +142,11 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                 createPortal(
                     <NotificationsBox className={"top-0 left-[50%] translate-x-[-50%]"}>
                         {top_center.map((notification) => (
-                            <NotificationItem key={notification.id} notification={notification} />
+                            <NotificationItem
+                                key={notification.id}
+                                notification={notification}
+                                onClose={() => close(notification.id)}
+                            />
                         ))}
                     </NotificationsBox>,
                     document.body
@@ -148,7 +156,11 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                 createPortal(
                     <NotificationsBox className={"fixed top-0 right-0"}>
                         {top_right.map((notification) => (
-                            <NotificationItem key={notification.id} notification={notification} />
+                            <NotificationItem
+                                key={notification.id}
+                                notification={notification}
+                                onClose={() => close(notification.id)}
+                            />
                         ))}
                     </NotificationsBox>,
                     document.body
@@ -158,7 +170,11 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                 createPortal(
                     <NotificationsBox className={"fixed bottom-0 right-0"}>
                         {bottom_right.map((notification) => (
-                            <NotificationItem key={notification.id} notification={notification} />
+                            <NotificationItem
+                                key={notification.id}
+                                notification={notification}
+                                onClose={() => close(notification.id)}
+                            />
                         ))}
                     </NotificationsBox>,
                     document.body
@@ -168,7 +184,11 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                 createPortal(
                     <NotificationsBox className={"fixed bottom-0 left-0"}>
                         {bottom_left.map((notification) => (
-                            <NotificationItem key={notification.id} notification={notification} />
+                            <NotificationItem
+                                key={notification.id}
+                                notification={notification}
+                                onClose={() => close(notification.id)}
+                            />
                         ))}
                     </NotificationsBox>,
                     document.body
@@ -197,17 +217,19 @@ const NotificationsBox: React.FC<PropsOf<"ol">> = ({ className, ...props }) => {
 interface NotificationItemProps {
     notification: Notification;
     className?: string;
+    onClose?: (notification: Notification) => void;
 }
 
-const NotificationItem: FC<NotificationItemProps> = ({ className, notification }) => {
+const NotificationItem: FC<NotificationItemProps> = ({ className, notification, onClose }) => {
     return (
         <Fade show unmount>
             <li className={twMerge("bg-paper pointer-events-auto rounded-md", className)}>
                 <Alert
-                    color={notification.color || "info"}
                     icon={notification.icon}
                     {...notification.alertProps}
+                    color={notification.color || notification.alertProps?.color || "info"}
                     onDismiss={(e) => {
+                        onClose?.(notification);
                         notification.onClose?.(notification);
                         notification.alertProps?.onDismiss?.(e);
                     }}

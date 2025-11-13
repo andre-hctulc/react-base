@@ -34,7 +34,6 @@ const cardHeader = createTheme<CardHeaderTheme>({
     ...withBorder,
     ...withPadding,
     defaultVariants: {
-        p: "md",
         border: false,
     },
 });
@@ -99,7 +98,7 @@ export const CardHeader: FC<CardHeaderProps> = (props) => {
         <div className={className} {...rootProps}>
             {pre}
             {renderMain && (
-                <div {...innerProps} className={twMerge("flex items-center gap-3", innerProps?.className)}>
+                <div {...innerProps} className={twMerge("flex items-center gap-3 min-w-0", innerProps?.className)}>
                     {start}
                     {!!(title || icon) && (
                         <Title icon={icon} iconProps={iconProps} variant="h4" {...titleProps}>

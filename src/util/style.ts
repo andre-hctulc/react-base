@@ -3,6 +3,34 @@ import type { FlowbiteBoolean, FlowbiteSizes, ThemingProps } from "flowbite-reac
 
 // #### Base ####
 
+export const addCssClasses = (element: Element, classes: string) => {
+    if (!element || !classes || typeof classes !== "string") return;
+
+    // Split by spaces and filter out empty strings
+    const classArray = classes.split(/\s+/).filter((cls) => cls.trim().length > 0);
+
+    classArray.forEach((cls) => {
+        const trimmed = cls.trim();
+        if (trimmed && !element.classList.contains(trimmed)) {
+            element.classList.add(trimmed);
+        }
+    });
+};
+
+export const removeCssClasses = (element: Element, classes: string) => {
+    if (!element || !classes || typeof classes !== "string") return;
+
+    // Split by spaces and filter out empty strings
+    const classArray = classes.split(/\s+/).filter((cls) => cls.trim().length > 0);
+
+    classArray.forEach((cls) => {
+        const trimmed = cls.trim();
+        if (trimmed && element.classList.contains(trimmed)) {
+            element.classList.remove(trimmed);
+        }
+    });
+};
+
 export interface WithDefaultVariants {
     /**
      * Provide default values for theme props.
@@ -16,7 +44,7 @@ export interface BaseTheme extends WithDefaultVariants {
     base: string;
 }
 
-export type FlatThemingProps<T> = Omit<
+export type ThemeProps<T> = Omit<
     {
         [K in keyof T]?: T[K] extends object
             ? T[K] extends FlowbiteBoolean
@@ -24,26 +52,35 @@ export type FlatThemingProps<T> = Omit<
                 : keyof T[K]
             : never;
     },
-    keyof WithDefaultVariants
+    keyof BaseTheme
 >;
 
-export type FlatCompoundThemingProps<T> = {
-    [K in keyof T]?: FlatThemingProps<T[K]>;
+export type FlattenOneLevel<T> = {
+    [K in keyof T as T[K] extends object ? keyof T[K] : K]: T[K] extends object ? T[K][keyof T[K]] : T[K];
 };
 
 /**
- * If the *root* key is present, the theme is interpreted as a compound theme.
- * *defaultValues* can be used to assign default values for theme props, but are omitted from theming props.
+ * Flattens compound theming props.
+ * Meaning that all sub themes share the same value space.
  */
-export type TProps<T> = ThemingProps<T> &
-    ("root" extends keyof T ? FlatCompoundThemingProps<T> : FlatThemingProps<T>);
+export type CompoundThemingProps<T> = Partial<
+    FlattenOneLevel<{
+        [K in keyof T]: ThemeProps<T[K]>;
+    }>
+>;
+
+/**
+ * If the *root* key is present, the theme is interpreted as a compound theme.
+ * *defaultVariants* can be used to assign default values for theme props, but are omitted from theming props.
+ */
+export type TProps<T> = ThemingProps<T> & ("root" extends keyof T ? CompoundThemingProps<T> : ThemeProps<T>);
 
 /**
  * Collects css classes from a theme object based on the provided props.
  */
 export function collectClasses(theme: object, props: any, collectClassNameFromProps: boolean): string {
     const rootClasses: string[] = [];
-    const defaultValues = (theme as any).defaultValues as Record<string, any> | undefined;
+    const defaultVariants = (theme as any).defaultVariants as Record<string, any> | undefined;
 
     if (collectClassNameFromProps && typeof props.className === "string") {
         rootClasses.push(props.className);
@@ -51,9 +88,9 @@ export function collectClasses(theme: object, props: any, collectClassNameFromPr
 
     for (const [key, themeValue] of Object.entries(theme)) {
         // skip default values definition
-        if (key === "defaultValues") continue;
+        if (key === "defaultVariants") continue;
 
-        const defaultValue = defaultValues ? defaultValues[key] : undefined;
+        const defaultValue = defaultVariants ? defaultVariants[key] : undefined;
 
         if (typeof themeValue === "string") {
             rootClasses.push(themeValue);
@@ -84,6 +121,17 @@ export function collectClasses(theme: object, props: any, collectClassNameFromPr
     }
 
     return twMerge(rootClasses);
+}
+
+export type NoneOption = {
+    none: string;
+};
+
+function withNone<T>(obj: T, noneValue = ""): T & NoneOption {
+    return {
+        ...obj,
+        none: noneValue,
+    };
 }
 
 // #### Flex ####
@@ -272,80 +320,101 @@ export function createDefaultSizeTheme<T>(prefix: string): Record<keyof Flowbite
     };
 }
 
+export function upSize(size: keyof FlowbiteSizes): keyof FlowbiteSizes {
+    const order: (keyof FlowbiteSizes)[] = [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "4xl",
+        "5xl",
+        "6xl",
+        "7xl",
+    ];
+    const index = order.indexOf(size);
+    if (index === -1 || index === order.length - 1) {
+        return size;
+    }
+    return order[index + 1];
+}
+
 // #### Padding ####
 
 export interface WithPadding {
-    p: FlowbiteSizes;
-    px: FlowbiteSizes;
-    py: FlowbiteSizes;
-    pt: FlowbiteSizes;
-    pr: FlowbiteSizes;
-    pb: FlowbiteSizes;
-    pl: FlowbiteSizes;
-    pe: FlowbiteSizes;
-    ps: FlowbiteSizes;
+    p: FlowbiteSizes & NoneOption;
+    px: FlowbiteSizes & NoneOption;
+    py: FlowbiteSizes & NoneOption;
+    pt: FlowbiteSizes & NoneOption;
+    pr: FlowbiteSizes & NoneOption;
+    pb: FlowbiteSizes & NoneOption;
+    pl: FlowbiteSizes & NoneOption;
+    pe: FlowbiteSizes & NoneOption;
+    ps: FlowbiteSizes & NoneOption;
 }
 
 export const withPadding: WithPadding = {
-    p: createDefaultSizeTheme("p"),
-    px: createDefaultSizeTheme("px"),
-    py: createDefaultSizeTheme("py"),
-    pt: createDefaultSizeTheme("pt"),
-    pr: createDefaultSizeTheme("pr"),
-    pb: createDefaultSizeTheme("pb"),
-    pl: createDefaultSizeTheme("pl"),
-    pe: createDefaultSizeTheme("pe"),
-    ps: createDefaultSizeTheme("ps"),
+    p: withNone(createDefaultSizeTheme("p")),
+    px: withNone(createDefaultSizeTheme("px")),
+    py: withNone(createDefaultSizeTheme("py")),
+    pt: withNone(createDefaultSizeTheme("pt")),
+    pr: withNone(createDefaultSizeTheme("pr")),
+    pb: withNone(createDefaultSizeTheme("pb")),
+    pl: withNone(createDefaultSizeTheme("pl")),
+    pe: withNone(createDefaultSizeTheme("pe")),
+    ps: withNone(createDefaultSizeTheme("ps")),
 };
 
 // #### Margin ####
 
 export interface WithMargin {
-    m: FlowbiteSizes;
-    mx: FlowbiteSizes;
-    my: FlowbiteSizes;
-    mt: FlowbiteSizes;
-    mr: FlowbiteSizes;
-    mb: FlowbiteSizes;
-    ml: FlowbiteSizes;
-    me: FlowbiteSizes;
-    ms: FlowbiteSizes;
+    m: FlowbiteSizes & NoneOption;
+    mx: FlowbiteSizes & NoneOption;
+    my: FlowbiteSizes & NoneOption;
+    mt: FlowbiteSizes & NoneOption;
+    mr: FlowbiteSizes & NoneOption;
+    mb: FlowbiteSizes & NoneOption;
+    ml: FlowbiteSizes & NoneOption;
+    me: FlowbiteSizes & NoneOption;
+    ms: FlowbiteSizes & NoneOption;
 }
 
 export const withMargin: WithMargin = {
-    m: createDefaultSizeTheme("m"),
-    mx: createDefaultSizeTheme("mx"),
-    my: createDefaultSizeTheme("my"),
-    mt: createDefaultSizeTheme("mt"),
-    mr: createDefaultSizeTheme("mr"),
-    mb: createDefaultSizeTheme("mb"),
-    ml: createDefaultSizeTheme("ml"),
-    me: createDefaultSizeTheme("me"),
-    ms: createDefaultSizeTheme("ms"),
+    m: withNone(createDefaultSizeTheme("m")),
+    mx: withNone(createDefaultSizeTheme("mx")),
+    my: withNone(createDefaultSizeTheme("my")),
+    mt: withNone(createDefaultSizeTheme("mt")),
+    mr: withNone(createDefaultSizeTheme("mr")),
+    mb: withNone(createDefaultSizeTheme("mb")),
+    ml: withNone(createDefaultSizeTheme("ml")),
+    me: withNone(createDefaultSizeTheme("me")),
+    ms: withNone(createDefaultSizeTheme("ms")),
 };
 
 // #### Gap/Spacing ####
 
 export interface WithGap {
-    gap: FlowbiteSizes;
-    rowGap: FlowbiteSizes;
-    colGap: FlowbiteSizes;
+    gap: FlowbiteSizes & NoneOption;
+    rowGap: FlowbiteSizes & NoneOption;
+    colGap: FlowbiteSizes & NoneOption;
 }
 
 export const withGap: WithGap = {
-    gap: createDefaultSizeTheme("gap"),
-    rowGap: createDefaultSizeTheme("row-gap"),
-    colGap: createDefaultSizeTheme("column-gap"),
+    gap: withNone(createDefaultSizeTheme("gap")),
+    rowGap: withNone(createDefaultSizeTheme("row-gap")),
+    colGap: withNone(createDefaultSizeTheme("column-gap")),
 };
 
 export interface WithSpacing {
-    spaceX: FlowbiteSizes;
-    spaceY: FlowbiteSizes;
+    spaceX: FlowbiteSizes & NoneOption;
+    spaceY: FlowbiteSizes & NoneOption;
 }
 
 export const withSpacing: WithSpacing = {
-    spaceX: createDefaultSizeTheme("space-x"),
-    spaceY: createDefaultSizeTheme("space-y"),
+    spaceX: withNone(createDefaultSizeTheme("space-x")),
+    spaceY: withNone(createDefaultSizeTheme("space-y")),
 };
 
 // #### Border ####
@@ -405,13 +474,13 @@ export const withScroll: WithScroll = {
 // #### Shape ####
 
 export type Shape =
-    | "rounded_xs"
-    | "rounded_sm"
-    | "rounded_md"
-    | "rounded_lg"
-    | "rounded_xl"
-    | "rounded_2xl"
-    | "rounded_3xl"
+    | "rounded-xs"
+    | "rounded-sm"
+    | "rounded-md"
+    | "rounded-lg"
+    | "rounded-xl"
+    | "rounded-2xl"
+    | "rounded-3xl"
     | "circle"
     | "square";
 
@@ -420,13 +489,13 @@ export interface WithShape {
 }
 
 export const shape: Record<Shape, string> = {
-    rounded_xs: "rounded-xs",
-    rounded_sm: "rounded-sm",
-    rounded_md: "rounded-md",
-    rounded_lg: "rounded-lg",
-    rounded_xl: "rounded-xl",
-    rounded_2xl: "rounded-2xl",
-    rounded_3xl: "rounded-3xl",
+    "rounded-xs": "rounded-xs",
+    "rounded-sm": "rounded-sm",
+    "rounded-md": "rounded",
+    "rounded-lg": "rounded-lg",
+    "rounded-xl": "rounded-xl",
+    "rounded-2xl": "rounded-2xl",
+    "rounded-3xl": "rounded-3xl",
     circle: "rounded-full",
     square: "rounded-[1px]",
 };

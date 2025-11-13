@@ -37,18 +37,20 @@ const formControl = createTheme<FormControlTheme>({
         ...withGap,
         defaultVariants: {
             gap: "sm",
+            horizontal: "off",
         },
     },
     body: {
         base: "flex flex-col",
         ...withGap,
         defaultVariants: {
-            gap: "sm",
+            gap: "md",
+            horizontal: "off",
         },
     },
 });
 
-type FormControlProps = TProps<FormControlTheme> &
+export type FormControlProps = TProps<FormControlTheme> &
     StyleProps &
     RefProps<HTMLDivElement> & {
         /**

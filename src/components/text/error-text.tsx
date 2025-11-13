@@ -11,6 +11,10 @@ declare module "flowbite-react/types" {
     interface FlowbiteTheme {
         errorText: ErrorTextTheme;
     }
+
+    interface FlowbiteProps {
+        errorText: Partial<WithoutThemingProps<ErrorTextProps>>;
+    }
 }
 
 export interface ErrorTextTheme extends BaseTheme, WithMargin {

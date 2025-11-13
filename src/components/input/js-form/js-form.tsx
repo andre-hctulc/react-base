@@ -9,10 +9,12 @@ import { useRefOf, useResolveT } from "../../../hooks/index.js";
 import type { PropsOf, StyleProps } from "../../../types/index.js";
 import {
     flexDirection,
+    flexWrap,
     withGap,
     type BaseTheme,
     type TProps,
     type WithFlex,
+    type WithFlexWrap,
     type WithGap,
 } from "../../../util/style.js";
 import { createTheme } from "flowbite-react";
@@ -27,10 +29,11 @@ declare module "flowbite-react/types" {
     }
 }
 
-interface JSFormTheme extends BaseTheme, WithFlex, WithGap {}
+interface JSFormTheme extends BaseTheme, WithFlex, WithGap, WithFlexWrap {}
 
 const jsForm = createTheme<JSFormTheme>({
     base: "",
+    wrap: flexWrap,
     flex: flexDirection,
     ...withGap,
 });
@@ -263,7 +266,6 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
         formProps.onSubmit = handleSubmit;
         formProps.target = target;
         formProps.onChange = handleChange;
-        formProps.ref = form;
     }
 
     return (
@@ -281,6 +283,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
             }}
             className={className}
             {...rootProps}
+            {...formProps}
         >
             <JSFormCtx.Provider value={ctx}>{children}</JSFormCtx.Provider>
         </Comp>

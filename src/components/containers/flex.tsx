@@ -62,7 +62,7 @@ export const Flex = <T extends ElementType = "div">(props: FlexProps<T>) => {
     const Comp: any = props.as || "div";
 
     return (
-        <Comp ref={props.ref} className={className} {...restProps}>
+        <Comp className={className} {...restProps}>
             {children}
         </Comp>
     );

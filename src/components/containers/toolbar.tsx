@@ -1,7 +1,6 @@
 "use client";
 
 import { createTheme } from "flowbite-react/helpers/create-theme";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 import {
     alignItems,
     flexDirection,
@@ -10,6 +9,7 @@ import {
     justifyContent,
     noShrink,
     withGap,
+    withMargin,
     withPadding,
     withScroll,
     type BaseTheme,
@@ -20,6 +20,7 @@ import {
     type WithGap,
     type WithGrow,
     type WithJustifyContent,
+    type WithMargin,
     type WithNoShrink,
     type WithPadding,
     type WithScroll,
@@ -49,7 +50,8 @@ export interface ToolbarTheme
         WithGrow,
         WithNoShrink,
         WithFlexWrap,
-        WithScroll {
+        WithScroll,
+        WithMargin {
     mlAuto: FlowbiteBoolean;
 }
 
@@ -68,6 +70,11 @@ const toolbar = createTheme<ToolbarTheme>({
         on: "ml-auto",
         off: "",
     },
+    defaultVariants: {
+        gap: "md",
+        alignItems: "center",
+    },
+    ...withMargin,
 });
 
 type ToolbarProps<T extends ElementType = "div"> = RichAsProps<T> &
@@ -80,22 +87,23 @@ type ToolbarProps<T extends ElementType = "div"> = RichAsProps<T> &
  * - `stopEventPropagation`
  */
 export const Toolbar: FC<ToolbarProps> = (props) => {
-    const { className, children } = useResolveT("toolbar", toolbar, props);
+    const { className, children, restProps } = useResolveT("toolbar", toolbar, props);
     const Comp: any = props.as || "div";
+    const { stopEventPropagation, onClick, ...rootProps } = restProps;
 
     return (
         <Comp
-            className={twMerge(className)}
+            className={className}
             ref={props.ref as any}
             onClick={
-                props.stopEventPropagation
+                stopEventPropagation
                     ? (e: React.MouseEvent<any>) => {
                           e.stopPropagation();
-                          props.onClick?.(e);
+                          onClick?.(e);
                       }
-                    : props.onClick
+                    : onClick
             }
-            {...props}
+            {...rootProps}
         >
             {children}
         </Comp>

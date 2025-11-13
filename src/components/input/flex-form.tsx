@@ -32,11 +32,12 @@ const flexForm = createTheme<FlexFormTheme>({
     wrap: flexWrap,
     ...withGap,
     defaultVariants: {
-        gap: "col",
+        gap: "md",
+        direction: "col",
     },
 });
 
-type FlexFormProps = TProps<FlexFormTheme> & PropsOf<"form">;
+export type FlexFormProps = TProps<FlexFormTheme> & PropsOf<"form">;
 
 /**
  * Use `formEventToFormData` or `formEventToValues` to convert form event to values.

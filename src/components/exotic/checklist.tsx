@@ -82,13 +82,13 @@ export const Checklist: FC<ChecklistProps> = (props) => {
         textProps,
         secondaryTextProps,
         iconProps,
-        size = "md",
         LinkComponent,
         linkProps,
         ...rootProps
     } = restProps;
     const cIcon = checkedIcon || <CheckCircleIcon />;
     const uncIcon = uncheckedIcon || <XCircleIcon />;
+    const size = props.size ?? "md";
     const iconSize = collapse(size, {
         sm: "md",
         md: "lg",
