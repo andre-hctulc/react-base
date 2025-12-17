@@ -1,4 +1,4 @@
-import type { IconFC } from "../icon";
+import type { IconFC } from "../icon.js";
 
 export const GearIcon: IconFC = (props) => {
     return (

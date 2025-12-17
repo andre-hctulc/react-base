@@ -2,7 +2,7 @@
 
 import { CheckIcon, type ButtonProps, ClipboardListIcon } from "flowbite-react";
 import { useRef, useState, type ElementType } from "react";
-import { IconButton } from "./icon-button";
+import { IconButton } from "../button/icon-button";
 import type { PropsOf } from "../../types";
 
 type ClipboardIconButtonProps<T extends ElementType = "button"> = PropsOf<typeof IconButton<T>> & {

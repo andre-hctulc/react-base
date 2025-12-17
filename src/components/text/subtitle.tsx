@@ -5,7 +5,14 @@ import { createTheme } from "flowbite-react/helpers/create-theme";
 import type { PropsOf, RichAsProps } from "../../types/index.js";
 import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import { withMargin, type BaseTheme, type TProps, type WithMargin } from "../../util/style.js";
+import {
+    withLineClamp,
+    withMargin,
+    type BaseTheme,
+    type TProps,
+    type WithLineClamp,
+    type WithMargin,
+} from "../../util/style.js";
 import type { FlowbiteBoolean } from "flowbite-react/types";
 import { useResolveT } from "../../hooks/index.js";
 
@@ -19,7 +26,7 @@ declare module "flowbite-react/types" {
     }
 }
 
-export interface SubtitleTheme extends BaseTheme, WithMargin {
+export interface SubtitleTheme extends BaseTheme, WithMargin, WithLineClamp {
     variant: Record<"h2" | "h3" | "h4" | "h5", string>;
     underline: FlowbiteBoolean;
     bold: FlowbiteBoolean;
@@ -46,6 +53,7 @@ const subtitle = createTheme<SubtitleTheme>({
         variant: "h2",
         bold: false,
     },
+    ...withLineClamp,
 });
 
 type SubtitleProps<T extends ElementType = "h2"> = TProps<SubtitleTheme> &
@@ -69,7 +77,7 @@ export const Subtitle = <T extends ElementType = "h2">(props: SubtitleProps<T>) 
     return (
         <Comp className={twMerge(className, icon && "flex items-center")} {...rootProps}>
             {icon && (
-                <Icon size="inherit" inline {...iconProps} className={twMerge("mr-2", iconProps?.className)}>
+                <Icon noShrink inline {...iconProps} className={twMerge("mr-2", iconProps?.className)}>
                     {icon}
                 </Icon>
             )}

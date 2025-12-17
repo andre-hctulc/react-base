@@ -106,7 +106,7 @@ export const CardHeader: FC<CardHeaderProps> = (props) => {
                         </Title>
                     )}
                     {after}
-                    {end && <div className="ml-auto min-w-0">{end}</div>}
+                    {end && <div className="ml-auto min-w-0 shrink-0">{end}</div>}
                 </div>
             )}
             {subtitle && (

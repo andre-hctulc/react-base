@@ -40,7 +40,7 @@ const skeleton = createTheme<SkeletonTheme>({
     ...withWidthAndHeight,
     defaultVariants: {
         p: "md",
-        shape: "rounded-md"
+        shape: "rounded-md",
     },
 });
 
@@ -79,7 +79,7 @@ export const Skeleton = <T extends ElementType = "div">(props: SkeletonProps<T>)
     }
 
     return (
-        <Comp data-children-occupy-space={occupy} className={className} {...rootProps}>
+        <Comp data-children-occupy-space={occupy ?? true} className={className} {...rootProps}>
             {occupy !== false && children}
         </Comp>
     );

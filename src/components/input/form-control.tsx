@@ -1,13 +1,13 @@
 "use client";
 
 import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
-import { useJSForm } from "./js-form/js-form-context.js";
 import type { PartialPropsOf, RefProps, StyleProps } from "../../types/index.js";
 import { ErrorText } from "../text/error-text.js";
 import { createTheme, HelperText, Label } from "flowbite-react";
 import { withGap, type BaseTheme, type TProps, type WithGap } from "../../util/style.js";
 import { useResolveT } from "../../hooks/index.js";
 import type { FlowbiteBoolean } from "flowbite-react/types";
+import { useJSForm } from "./js-form-context.js";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {

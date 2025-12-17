@@ -8,7 +8,7 @@ interface ButtonSpinnerProps extends PropsOf<typeof Spinner> {}
 export const ButtonSpinner: FC<ButtonSpinnerProps> = (props) => {
     return (
         <ButtonIcon>
-            <Spinner light size="sm" {...props} />
+            <Spinner color="gray" light size="sm" {...props} />
         </ButtonIcon>
     );
 };

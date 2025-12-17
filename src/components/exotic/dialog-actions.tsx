@@ -3,8 +3,8 @@
 import type { FC } from "react";
 import type { PropsOf } from "../../types/index.js";
 import { Toolbar } from "../containers/toolbar.js";
-import { Button, Spinner } from "flowbite-react";
-import { ButtonSpinner } from "../data-display/button-spinner.js";
+import { Button } from "flowbite-react";
+import { ButtonSpinner } from "../button/button-spinner.js";
 
 interface CancelConfirmProps {
     className?: string;

@@ -1,5 +1,8 @@
 export * from "./types.js";
-export * from "./js-form/index.js";
+export * from "./js-form.js";
+export { zodValidate } from "./js-form-helpers.js";
+export { useJSForm } from "./js-form-context.js";
+export * from "./js-form-types.js";
 export * from "./form-control.js";
 export * from "./flex-form.js";
 export * from "./input-list.js";
@@ -12,5 +15,4 @@ export * from "./radio-like.js";
 export * from "./hidden-input.js";
 export * from "./text-input-list.js";
 export * from "./clipboard-icon-button.js";
-export * from "./icon-button.js";
 export * from "./combobox.js";

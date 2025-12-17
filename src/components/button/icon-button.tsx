@@ -26,7 +26,7 @@ export const IconButton = <T extends ElementType = "button">({
             )}
             {...props}
         >
-            <Icon size="none" className="text-[1.25em]" color={ghost ? color : undefined}>
+            <Icon size="none" className="text-[1.25em]" color={ghost ? color ?? "neutral" : undefined}>
                 {children}
             </Icon>
         </Button>

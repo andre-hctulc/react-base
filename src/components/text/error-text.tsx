@@ -1,8 +1,8 @@
 "use client";
 
 import { createTheme } from "flowbite-react/helpers/create-theme";
-import type { BaseTheme, TProps, WithMargin } from "../../util/style.js";
-import { withMargin } from "../../util/style.js";
+import type { BaseTheme, TProps, WithLineClamp, WithMargin } from "../../util/style.js";
+import { withLineClamp, withMargin } from "../../util/style.js";
 import type { RichAsProps } from "../../types/index.js";
 import { useResolveT } from "../../hooks/index.js";
 import type { ElementType } from "react";
@@ -17,7 +17,7 @@ declare module "flowbite-react/types" {
     }
 }
 
-export interface ErrorTextTheme extends BaseTheme, WithMargin {
+export interface ErrorTextTheme extends BaseTheme, WithMargin, WithLineClamp {
     size: Record<"sm" | "base", string>;
 }
 
@@ -31,6 +31,7 @@ const errorText = createTheme<ErrorTextTheme>({
     defaultVariants: {
         size: "sm",
     },
+    ...withLineClamp,
 });
 
 type ErrorTextProps<T extends ElementType = "p"> = RichAsProps<T> & TProps<ErrorTextTheme> & {};

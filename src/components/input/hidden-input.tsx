@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import type { PropsOf } from "../../types/index.js";
-import type { JSForm } from "./js-form/js-form.js";
-import { useJSForm } from "./js-form/js-form-context.js";
+import type { JSForm } from "./js-form.js";
+import { useJSForm } from "./js-form-context.js";
 
 export interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "value"> {
     value: T;

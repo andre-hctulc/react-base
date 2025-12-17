@@ -12,7 +12,7 @@ import {
     Textarea,
     type TextareaProps,
 } from "flowbite-react";
-import { IconButton } from "./icon-button.js";
+import { IconButton } from "../button/icon-button.js";
 import { PlusIcon } from "../icons/phosphor/plus.js";
 
 export interface TextInputListProps extends InputLikeProps<string[]> {
@@ -91,34 +91,40 @@ export const TextInputList: FC<TextInputListProps> = ({
                     </div>
                 );
             }}
-            renderValues={({ values, change, inputProps, remove }) => (
-                <ul className="space-y-2">
-                    {values.map((value, i) => (
-                        <li className="flex gap-2" key={i}>
-                            <Inp
-                                {...(inputProps as any)}
-                                {...(listInputProps as any)}
-                                className={twMerge("grow", listInputProps?.className)}
-                                name={name}
-                                value={value}
-                                onChange={(e) => {
-                                    listInputProps?.onChange?.(e as any);
-                                    change((items) => {
-                                        const newItems = [...items];
-                                        newItems.splice(i, 1, e.target.value);
-                                        return newItems;
-                                    });
-                                }}
-                            />
-                            {!inputProps.readOnly && (
-                                <IconButton disabled={inputProps.disabled} onClick={() => remove(value)}>
-                                    <CloseIcon />
-                                </IconButton>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            )}
+            renderValues={({ values, change, inputProps, remove }) => {
+                if (!values.length) {
+                    return null;
+                }
+
+                return (
+                    <ul className="space-y-2">
+                        {values.map((value, i) => (
+                            <li className="flex gap-2" key={i}>
+                                <Inp
+                                    {...(inputProps as any)}
+                                    {...(listInputProps as any)}
+                                    className={twMerge("grow", listInputProps?.className)}
+                                    name={name}
+                                    value={value}
+                                    onChange={(e) => {
+                                        listInputProps?.onChange?.(e as any);
+                                        change((items) => {
+                                            const newItems = [...items];
+                                            newItems.splice(i, 1, e.target.value);
+                                            return newItems;
+                                        });
+                                    }}
+                                />
+                                {!inputProps.readOnly && (
+                                    <IconButton disabled={inputProps.disabled} onClick={() => remove(value)}>
+                                        <CloseIcon />
+                                    </IconButton>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                );
+            }}
         />
     );
 };

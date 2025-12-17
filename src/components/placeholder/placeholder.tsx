@@ -15,10 +15,10 @@ import {
     type WithPadding,
     type WithWidthAndHeight,
 } from "../../util/style.js";
-import type { PropsOf } from "../../types/index.js";
+import type { PropsOf, RichAsProps } from "../../types/index.js";
 import { Typography } from "../text/typography.js";
-import { Icon, type IconFC, type IconLike, type IconProps } from "../icons/icon.js";
-import { type FC, type ReactNode, type ComponentProps } from "react";
+import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
+import { type ReactNode, type ElementType } from "react";
 import { useResolveT } from "../../hooks/index.js";
 
 declare module "flowbite-react/types" {
@@ -47,20 +47,21 @@ const placeholder = createTheme<PlaceholderTheme>({
     ...withWidthAndHeight,
     ...withMargin,
     defaultVariants: {
-        gap: "sm",
+        gap: "md",
     },
 });
 
-interface PlaceholderProps extends ComponentProps<"div">, TProps<PlaceholderTheme> {
-    children?: ReactNode;
-    icon?: IconLike;
-    iconProps?: IconProps;
-    helperText?: string;
-    helperTextProps?: PropsOf<typeof Typography>;
-    textProps?: PropsOf<typeof Typography>;
-    italic?: boolean;
-    disabled?: boolean;
-}
+export type PlaceholderProps<A extends ElementType = "div"> = RichAsProps<A> &
+    TProps<PlaceholderTheme> & {
+        children?: ReactNode;
+        icon?: IconLike;
+        iconProps?: IconProps;
+        helperText?: string;
+        helperTextProps?: PropsOf<typeof Typography>;
+        textProps?: PropsOf<typeof Typography>;
+        italic?: boolean;
+        disabled?: boolean;
+    };
 
 /**
  * ### Props
@@ -74,13 +75,14 @@ interface PlaceholderProps extends ComponentProps<"div">, TProps<PlaceholderThem
  * - `py`
  * - `my`
  */
-export const Placeholder: FC<PlaceholderProps> = (props) => {
+export const Placeholder = <A extends ElementType = "div">(props: PlaceholderProps<A>) => {
     const { className, children, restProps } = useResolveT("placeholder", placeholder, props);
-    const { icon, iconProps, helperText, helperTextProps, textProps, italic, disabled, ...rootProps } =
+    const { icon, iconProps, helperText, helperTextProps, textProps, italic, disabled, as, ...rootProps } =
         restProps;
+    const Comp: any = as || "div";
 
     return (
-        <div className={className} {...rootProps}>
+        <Comp className={className} {...rootProps}>
             {icon && (
                 <span className={disabled ? "text-t3" : "text-t2"}>
                     <Icon size="4xl" {...iconProps}>
@@ -100,6 +102,6 @@ export const Placeholder: FC<PlaceholderProps> = (props) => {
                     {helperText}
                 </Typography>
             )}
-        </div>
+        </Comp>
     );
 };

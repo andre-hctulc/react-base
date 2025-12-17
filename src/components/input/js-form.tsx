@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, type Ref } from "react";
-import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./types.js";
+import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./js-form-types.js";
 import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
-import { createSnapshot } from "./helpers.js";
+import { createSnapshot } from "./js-form-helpers.js";
 import { getProperty } from "dot-prop";
-import { useRefOf, useResolveT } from "../../../hooks/index.js";
-import type { PropsOf, StyleProps } from "../../../types/index.js";
+import { useRefOf, useResolveT } from "../../hooks/index.js";
+import type { PropsOf, StyleProps } from "../../types/index.js";
 import {
     flexDirection,
     flexWrap,
@@ -16,7 +16,7 @@ import {
     type WithFlex,
     type WithFlexWrap,
     type WithGap,
-} from "../../../util/style.js";
+} from "../../util/style.js";
 import { createTheme } from "flowbite-react";
 
 declare module "flowbite-react/types" {

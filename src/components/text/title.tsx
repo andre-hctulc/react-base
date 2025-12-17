@@ -2,12 +2,13 @@
 
 import { type ElementType } from "react";
 import { createTheme } from "flowbite-react/helpers/create-theme";
-import type { BaseTheme, TProps, WithMargin } from "../../util/style.js";
-import { withMargin } from "../../util/style.js";
+import type { BaseTheme, TProps, WithLineClamp, WithMargin } from "../../util/style.js";
+import { withLineClamp, withMargin } from "../../util/style.js";
 import type { FlowbiteBoolean } from "flowbite-react/types";
 import type { RichAsProps } from "../../types/index.js";
 import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
 import { useResolveT } from "../../hooks/index.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {
@@ -19,7 +20,7 @@ declare module "flowbite-react/types" {
     }
 }
 
-export interface TitleTheme extends BaseTheme, WithMargin {
+export interface TitleTheme extends BaseTheme, WithMargin, WithLineClamp {
     variant: Record<"h1" | "h2" | "h3" | "h4" | "h5", string>;
     underline: FlowbiteBoolean;
     truncate: FlowbiteBoolean;
@@ -30,11 +31,11 @@ export interface TitleTheme extends BaseTheme, WithMargin {
 const title = createTheme<TitleTheme>({
     base: "",
     variant: {
-        h1: "text-2xl gap-4.5",
-        h2: "text-xl gap-4",
-        h3: "text-lg gap-3.5",
-        h4: "text-base gap-3",
-        h5: "text-sm gap-2.5",
+        h1: "text-2xl",
+        h2: "text-xl",
+        h3: "text-lg",
+        h4: "text-base",
+        h5: "text-sm",
     },
     underline: {
         on: "underline",
@@ -57,6 +58,7 @@ const title = createTheme<TitleTheme>({
         variant: "h1",
         bold: false,
     },
+    ...withLineClamp,
 });
 
 export type TitleProps<T extends ElementType = "h1"> = RichAsProps<T> &
@@ -81,7 +83,11 @@ export const Title = <T extends ElementType = "h1">(props: TitleProps<T>) => {
 
     return (
         <Comp className={className} {...rootProps}>
-            {icon && <Icon {...iconProps}>{icon}</Icon>}
+            {icon && (
+                <Icon noShrink inline {...iconProps} className={twMerge("mr-2.5", iconProps?.className)}>
+                    {icon}
+                </Icon>
+            )}
             {children}
         </Comp>
     );

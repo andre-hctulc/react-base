@@ -64,12 +64,12 @@ interface TransitionProps extends TransitionClasses, TransitionEvents {
 }
 
 export function Transition({
-    show = false,
-    appear = false,
-    unmount = true,
+    show,
+    appear,
+    unmount,
     children,
-    as: Component = Fragment,
-    className = "",
+    as,
+    className,
     enter,
     enterFrom,
     enterTo,
@@ -81,16 +81,20 @@ export function Transition({
     onBeforeLeave,
     onAfterLeave,
 }: TransitionProps) {
+    const Component = as || Fragment;
     const classes = { enter, enterFrom, enterTo, leave, leaveFrom, leaveTo };
     const events: TransitionEvents = { onBeforeEnter, onAfterEnter, onBeforeLeave, onAfterLeave };
+    const _show = show ?? false;
+    const _unmount = unmount ?? false;
+    const _appear = appear ?? false;
 
-    const { ref, mounted } = useCssTransition(show, classes, events, appear);
+    const { ref, mounted } = useCssTransition(_show, classes, events, _appear);
 
     const contextValue = {
-        show,
+        show: _show,
     };
 
-    if (unmount && !mounted) return null;
+    if (_unmount && !mounted) return null;
 
     const content = (
         <TransitionContext.Provider value={contextValue}>
@@ -120,10 +124,10 @@ export function Transition({
                 {cloneElement<any>(children, {
                     ref,
                     className: twMerge(childProps.className, className),
-                    style: {
-                        ...childProps.style,
-                        display: mounted ? undefined : "none",
-                    },
+                    // style: {
+                    //     ...childProps.style,
+                    //     display: mounted ? undefined : "none",
+                    // },
                 })}
             </TransitionContext.Provider>
         );
@@ -131,7 +135,10 @@ export function Transition({
 
     return (
         <TransitionContext.Provider value={contextValue}>
-            <Component ref={ref} className={className} style={{ display: mounted ? undefined : "none" }}>
+            <Component
+                ref={ref}
+                className={className} /* style={{ display: mounted ? undefined : "none" }} */
+            >
                 {children}
             </Component>
         </TransitionContext.Provider>

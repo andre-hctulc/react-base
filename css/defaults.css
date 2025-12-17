@@ -22,4 +22,9 @@ Define default styles for some components.
     button {
         cursor: pointer;
     }
+
+    [role="button"][disabled],
+    button[disabled] {
+        cursor: not-allowed !important;
+    }
 }

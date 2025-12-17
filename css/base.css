@@ -11,6 +11,7 @@ Usage:
 
 /* Reference compiled source! */
 @source "../dist";
+@source "./defaults.css";
 
 /* Import all css assets here */
 @import "./theme.css";

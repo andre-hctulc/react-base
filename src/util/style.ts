@@ -1,13 +1,27 @@
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import type { FlowbiteBoolean, FlowbiteSizes, ThemingProps } from "flowbite-react/types";
+import type { FlowbiteBoolean, FlowbiteColors, FlowbiteSizes, ThemingProps } from "flowbite-react/types";
+
+/* 
+
+# Conventions
+
+- `With*` interface that represent a theme fragment.
+- `with*` functions that provide default theme fragments.
+- `add*` functions that augment theme variants with extra options like `auto` or `none`.
+
+*/
 
 // #### Base ####
 
-export const addCssClasses = (element: Element, classes: string) => {
-    if (!element || !classes || typeof classes !== "string") return;
+export const addCssClasses = (element: Element, ...classes: (string | undefined)[]) => {
+    if (!element || !classes) return;
 
     // Split by spaces and filter out empty strings
-    const classArray = classes.split(/\s+/).filter((cls) => cls.trim().length > 0);
+    const classArray = classes
+        .filter(Boolean)
+        .join(" ")
+        .split(/\s+/)
+        .filter((cls) => cls.trim().length > 0);
 
     classArray.forEach((cls) => {
         const trimmed = cls.trim();
@@ -17,11 +31,15 @@ export const addCssClasses = (element: Element, classes: string) => {
     });
 };
 
-export const removeCssClasses = (element: Element, classes: string) => {
-    if (!element || !classes || typeof classes !== "string") return;
+export const removeCssClasses = (element: Element, ...classes: (string | undefined)[]) => {
+    if (!element || !classes) return;
 
     // Split by spaces and filter out empty strings
-    const classArray = classes.split(/\s+/).filter((cls) => cls.trim().length > 0);
+    const classArray = classes
+        .filter(Boolean)
+        .join(" ")
+        .split(/\s+/)
+        .filter((cls) => cls.trim().length > 0);
 
     classArray.forEach((cls) => {
         const trimmed = cls.trim();
@@ -123,11 +141,22 @@ export function collectClasses(theme: object, props: any, collectClassNameFromPr
     return twMerge(rootClasses);
 }
 
+export type AutoOption = {
+    auto: string;
+};
+
+function addAuto<T>(obj: T, autoValue = ""): T & AutoOption {
+    return {
+        ...obj,
+        auto: autoValue,
+    };
+}
+
 export type NoneOption = {
     none: string;
 };
 
-function withNone<T>(obj: T, noneValue = ""): T & NoneOption {
+function addNone<T>(obj: T, noneValue = ""): T & NoneOption {
     return {
         ...obj,
         none: noneValue,
@@ -215,6 +244,11 @@ export const justifyContent: Record<JustifyContent, string> = {
 
 export interface WithSize {
     size: FlowbiteSizes;
+}
+// #### Color ####
+
+export interface WithColor {
+    color: FlowbiteColors;
 }
 
 // #### Width/Height ####
@@ -356,41 +390,41 @@ export interface WithPadding {
 }
 
 export const withPadding: WithPadding = {
-    p: withNone(createDefaultSizeTheme("p")),
-    px: withNone(createDefaultSizeTheme("px")),
-    py: withNone(createDefaultSizeTheme("py")),
-    pt: withNone(createDefaultSizeTheme("pt")),
-    pr: withNone(createDefaultSizeTheme("pr")),
-    pb: withNone(createDefaultSizeTheme("pb")),
-    pl: withNone(createDefaultSizeTheme("pl")),
-    pe: withNone(createDefaultSizeTheme("pe")),
-    ps: withNone(createDefaultSizeTheme("ps")),
+    p: addNone(createDefaultSizeTheme("p")),
+    px: addNone(createDefaultSizeTheme("px")),
+    py: addNone(createDefaultSizeTheme("py")),
+    pt: addNone(createDefaultSizeTheme("pt")),
+    pr: addNone(createDefaultSizeTheme("pr")),
+    pb: addNone(createDefaultSizeTheme("pb")),
+    pl: addNone(createDefaultSizeTheme("pl")),
+    pe: addNone(createDefaultSizeTheme("pe")),
+    ps: addNone(createDefaultSizeTheme("ps")),
 };
 
 // #### Margin ####
 
 export interface WithMargin {
-    m: FlowbiteSizes & NoneOption;
-    mx: FlowbiteSizes & NoneOption;
-    my: FlowbiteSizes & NoneOption;
-    mt: FlowbiteSizes & NoneOption;
-    mr: FlowbiteSizes & NoneOption;
-    mb: FlowbiteSizes & NoneOption;
-    ml: FlowbiteSizes & NoneOption;
-    me: FlowbiteSizes & NoneOption;
-    ms: FlowbiteSizes & NoneOption;
+    m: FlowbiteSizes & NoneOption & AutoOption;
+    mx: FlowbiteSizes & NoneOption & AutoOption;
+    my: FlowbiteSizes & NoneOption & AutoOption;
+    mt: FlowbiteSizes & NoneOption & AutoOption;
+    mr: FlowbiteSizes & NoneOption & AutoOption;
+    mb: FlowbiteSizes & NoneOption & AutoOption;
+    ml: FlowbiteSizes & NoneOption & AutoOption;
+    me: FlowbiteSizes & NoneOption & AutoOption;
+    ms: FlowbiteSizes & NoneOption & AutoOption;
 }
 
 export const withMargin: WithMargin = {
-    m: withNone(createDefaultSizeTheme("m")),
-    mx: withNone(createDefaultSizeTheme("mx")),
-    my: withNone(createDefaultSizeTheme("my")),
-    mt: withNone(createDefaultSizeTheme("mt")),
-    mr: withNone(createDefaultSizeTheme("mr")),
-    mb: withNone(createDefaultSizeTheme("mb")),
-    ml: withNone(createDefaultSizeTheme("ml")),
-    me: withNone(createDefaultSizeTheme("me")),
-    ms: withNone(createDefaultSizeTheme("ms")),
+    m: addAuto(addNone(createDefaultSizeTheme("m")), "m-auto"),
+    mx: addAuto(addNone(createDefaultSizeTheme("mx")), "mx-auto"),
+    my: addAuto(addNone(createDefaultSizeTheme("my")), "my-auto"),
+    mt: addAuto(addNone(createDefaultSizeTheme("mt")), "mt-auto"),
+    mr: addAuto(addNone(createDefaultSizeTheme("mr")), "mr-auto"),
+    mb: addAuto(addNone(createDefaultSizeTheme("mb")), "mb-auto"),
+    ml: addAuto(addNone(createDefaultSizeTheme("ml")), "ml-auto"),
+    me: addAuto(addNone(createDefaultSizeTheme("me")), "me-auto"),
+    ms: addAuto(addNone(createDefaultSizeTheme("ms")), "ms-auto"),
 };
 
 // #### Gap/Spacing ####
@@ -402,9 +436,9 @@ export interface WithGap {
 }
 
 export const withGap: WithGap = {
-    gap: withNone(createDefaultSizeTheme("gap")),
-    rowGap: withNone(createDefaultSizeTheme("row-gap")),
-    colGap: withNone(createDefaultSizeTheme("column-gap")),
+    gap: addNone(createDefaultSizeTheme("gap")),
+    rowGap: addNone(createDefaultSizeTheme("row-gap")),
+    colGap: addNone(createDefaultSizeTheme("column-gap")),
 };
 
 export interface WithSpacing {
@@ -413,8 +447,8 @@ export interface WithSpacing {
 }
 
 export const withSpacing: WithSpacing = {
-    spaceX: withNone(createDefaultSizeTheme("space-x")),
-    spaceY: withNone(createDefaultSizeTheme("space-y")),
+    spaceX: addNone(createDefaultSizeTheme("space-x")),
+    spaceY: addNone(createDefaultSizeTheme("space-y")),
 };
 
 // #### Border ####
@@ -425,6 +459,7 @@ export interface BorderOptions {
     thin: string;
     thicker: string;
     thick: string;
+    thinnest: string;
 }
 
 export type BorderColor = "divider" | "divider-dark";
@@ -438,6 +473,7 @@ export const withBorder: WithBorder = {
     border: {
         on: "border",
         off: "border-0",
+        thinnest: "border-[0.5px]",
         thin: "border-[0.5px]",
         thicker: "border-[1.5px]",
         thick: "border-2",
@@ -516,4 +552,51 @@ export const shadow: Record<ShadowSize, string> = {
     "2xl": "shadow-2xl",
     inner: "shadow-inner",
     none: "shadow-none",
+};
+
+// #### Fit ####
+
+export interface WithFit {
+    fitHeight: FlowbiteBoolean;
+    fitWidth: FlowbiteBoolean;
+    fit: FlowbiteBoolean;
+}
+
+export const withFit: WithFit = {
+    fitHeight: {
+        on: "h-fit",
+        off: "",
+    },
+    fitWidth: {
+        on: "w-fit",
+        off: "",
+    },
+    fit: {
+        on: "w-fit h-fit",
+        off: "",
+    },
+};
+
+// #### Line Clamp ####
+
+export interface WithLineClamp {
+    lineClamp: Record<"none" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10", string>;
+}
+
+export const lineClamp = {
+    none: "",
+    "1": "line-clamp-1",
+    "2": "line-clamp-2",
+    "3": "line-clamp-3",
+    "4": "line-clamp-4",
+    "5": "line-clamp-5",
+    "6": "line-clamp-6",
+    "7": "line-clamp-7",
+    "8": "line-clamp-8",
+    "9": "line-clamp-9",
+    "10": "line-clamp-10",
+};
+
+export const withLineClamp: WithLineClamp = {
+    lineClamp,
 };

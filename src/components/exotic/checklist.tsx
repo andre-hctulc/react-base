@@ -5,10 +5,8 @@ import type { FC, ReactNode } from "react";
 import type { LinkComponent, LinkProps, PropsOf, StyleProps } from "../../types/index.js";
 import { Subtitle } from "../text/subtitle.js";
 import { Icon } from "../icons/icon.js";
-import { CheckCircleIcon } from "../icons/phosphor/check-circle.js";
-import { XCircleIcon } from "../icons/phosphor/x-circle.js";
 import type { BaseTheme, TProps } from "../../util/style.js";
-import { createTheme } from "flowbite-react";
+import { CheckIcon, createTheme, XIcon } from "flowbite-react";
 import { useResolveT } from "../../hooks/index.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
@@ -34,10 +32,10 @@ export interface ChecklistTheme extends BaseTheme {
 const checklist = createTheme<ChecklistTheme>({
     base: "",
     size: {
-        sm: "space-y-1",
-        md: "space-y-1.5",
-        lg: "space-y-2",
-        xl: "space-y-3",
+        sm: "space-y-1.5",
+        md: "space-y-3",
+        lg: "space-y-4.5",
+        xl: "space-y-7",
     },
     defaultVariants: {
         size: "md",
@@ -60,6 +58,8 @@ export interface ChecklistItem extends ComponentProps {
     secondaryText?: string;
     checked?: boolean;
     href?: string;
+    disabled?: boolean;
+    secondary?: boolean;
 }
 
 type ChecklistProps = TProps<ChecklistTheme> &
@@ -86,8 +86,8 @@ export const Checklist: FC<ChecklistProps> = (props) => {
         linkProps,
         ...rootProps
     } = restProps;
-    const cIcon = checkedIcon || <CheckCircleIcon />;
-    const uncIcon = uncheckedIcon || <XCircleIcon />;
+    const cIcon = checkedIcon || <CheckIcon />;
+    const uncIcon = uncheckedIcon || <XIcon />;
     const size = props.size ?? "md";
     const iconSize = collapse(size, {
         sm: "md",
@@ -97,16 +97,17 @@ export const Checklist: FC<ChecklistProps> = (props) => {
     } as const);
     const iconClasses = collapse(size, {
         sm: "mt-0.5 mr-2",
-        md: "mt-0.5 mr-2.5",
-        lg: "mt-0.5 mr-3",
+        md: "mt-0.5 mr-3",
+        lg: "mt-0.5 mr-3.5",
         xl: "mr-4",
     } as const);
     const textClasses = collapse(size, {
-        sm: "text-sm",
-        md: "text-base",
-        lg: "text-lg",
-        xl: "text-xl",
+        sm: "text-xs",
+        md: "text-sm",
+        lg: "text-base",
+        xl: "text-lg",
     } as const);
+
     const secTextClasses = collapse(size, {
         sm: "text-xs",
         md: "text-sm",
@@ -141,6 +142,32 @@ export const Checklist: FC<ChecklistProps> = (props) => {
         }
         return false;
     };
+
+    /* 
+    
+    <div className="space-y-3 mb-8 grow">
+                    {features.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-3" title={feature.description}>
+                            <div className="shrink-0 mt-0.5">
+                                {feature.included ? (
+                                    <PiCheck className="w-5 h-5 text-green-500" />
+                                ) : (
+                                    <PiX className="w-5 h-5 text-red-400" />
+                                )}
+                            </div>
+                            <span
+                                className={`text-sm ${
+                                    feature.included
+                                        ? "text-gray-900 dark:text-white"
+                                        : "text-gray-400 dark:text-gray-500 line-through"
+                                }`}
+                            >
+                                {feature.name}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+    */
 
     return (
         <ol className={className} {...rootProps}>
@@ -179,6 +206,8 @@ export const Checklist: FC<ChecklistProps> = (props) => {
                                         {...item.textProps}
                                         className={twMerge(
                                             textClasses,
+                                            item.disabled && "text-t4 line-through",
+                                            item.secondary && "text-t3",
                                             item.textProps?.className,
                                             textProps?.className
                                         )}
@@ -191,7 +220,7 @@ export const Checklist: FC<ChecklistProps> = (props) => {
                                         {...secondaryTextProps}
                                         {...item.secondaryTextProps}
                                         className={twMerge(
-                                            "text-sm ",
+                                            " text-t2",
                                             secTextClasses,
                                             secondaryTextProps?.className,
                                             item.secondaryTextProps?.className

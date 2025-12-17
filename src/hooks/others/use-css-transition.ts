@@ -22,7 +22,7 @@ export function useCssTransition(
 ): UseCssTransitionResult {
     // Initialize state - always start hidden when show=true to trigger transitions
     const [state, setState] = useState<TransitionState>(() => {
-        return show ? TransitionState.Hidden : TransitionState.Hidden;
+        return appear ? TransitionState.Entering : show ? TransitionState.Entered : TransitionState.Hidden;
     });
 
     const [mounted, setMounted] = useState(show);
@@ -74,12 +74,9 @@ export function useCssTransition(
         events.onBeforeEnter?.();
         setState(TransitionState.Entering);
 
-        // Clean up any existing classes
+        // Create initial enter style
         cleanupClasses(element);
-
-        // Apply enter and enterFrom classes immediately
-        if (classes.enter) addCssClasses(element, classes.enter);
-        if (classes.enterFrom) addCssClasses(element, classes.enterFrom);
+        addCssClasses(element, classes.enter, classes.enterFrom);
 
         // Force reflow
         element.offsetHeight;
@@ -111,10 +108,6 @@ export function useCssTransition(
             });
         });
 
-        // Clean up transition-specific classes but keep persistent enter classes
-        if (classes.enterTo) removeCssClasses(element, classes.enterTo);
-        // Keep classes.enter as it contains persistent styles like overflow-hidden and transition properties
-
         setState(TransitionState.Entered);
         events.onAfterEnter?.();
     };
@@ -127,13 +120,9 @@ export function useCssTransition(
         events.onBeforeLeave?.();
         setState(TransitionState.Leaving);
 
-        // Clean up enter classes and apply leave classes
-        if (classes.enter) removeCssClasses(element, classes.enter);
-        if (classes.enterFrom) removeCssClasses(element, classes.enterFrom);
-        if (classes.enterTo) removeCssClasses(element, classes.enterTo);
-
-        if (classes.leave) addCssClasses(element, classes.leave);
-        if (classes.leaveFrom) addCssClasses(element, classes.leaveFrom);
+        // Create initial leave style
+        cleanupClasses(element);
+        addCssClasses(element, classes.leave, classes.leaveFrom);
 
         // Force reflow
         element.offsetHeight;
@@ -142,8 +131,8 @@ export function useCssTransition(
         await new Promise<void>((resolve) => {
             requestAnimationFrame(() => {
                 // Remove leaveFrom and add leaveTo
-                if (classes.leaveFrom) removeCssClasses(element, classes.leaveFrom);
-                if (classes.leaveTo) addCssClasses(element, classes.leaveTo);
+                removeCssClasses(element, classes.leaveFrom);
+                addCssClasses(element, classes.leaveTo);
 
                 // Set up transition completion detection
                 const handleTransitionEnd = (event: TransitionEvent) => {
@@ -165,8 +154,6 @@ export function useCssTransition(
             });
         });
 
-        // Clean up all leave classes
-        cleanupClasses(element);
         setState(TransitionState.Hidden);
         setMounted(false);
         events.onAfterLeave?.();
@@ -186,12 +173,13 @@ export function useCssTransition(
                 // With appear=true, start transition immediately
                 executeEnter(element);
             } else {
-                // With appear=false, skip to entered state but apply persistent enter classes
-                setState(TransitionState.Entered);
-                if (classes.enter) {
-                    addCssClasses(element, classes.enter);
-                }
-                events.onAfterEnter?.();
+                addCssClasses(element, classes.enterTo, classes.enter);
+            }
+        } else {
+            if (appear) {
+                executeLeave(element);
+            } else {
+                addCssClasses(element, classes.leaveTo, classes.leave);
             }
         }
     }, [show, appear]);

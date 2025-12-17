@@ -15,10 +15,10 @@ Extend the base theme
     --color-paper3: var(--color-gray-100);
     --color-paper4: var(--color-gray-200);
     --color-paper5: var(--color-gray-300);
-    --color-transparent1: rgba(128, 128, 128, 0.1);
-    --color-transparent2: rgba(128, 128, 128, 0.2);
-    --color-transparent2: rgba(128, 128, 128, 0.3);
-    --color-transparent4: rgba(128, 128, 128, 0.4);
+    --color-transparent1: rgba(128, 128, 128, 0.05);
+    --color-transparent2: rgba(128, 128, 128, 0.1);
+    --color-transparent3: rgba(128, 128, 128, 0.2);
+    --color-transparent4: rgba(128, 128, 128, 0.3);
 
     /* Text  Colors */
 

@@ -77,6 +77,7 @@ const icon = createTheme<IconTheme>({
         white: "text-white",
         accent: "text-accent",
         info: "text-info",
+        error: "text-error",
     },
     inline: {
         on: "inline",

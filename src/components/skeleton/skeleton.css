@@ -1,0 +1,33 @@
+.RB_Skeleton[data-children-occupy-space] {
+    color: transparent !important;
+}
+
+.RB_Skeleton[data-children-occupy-space] *,
+.RB_Skeleton[data-children-occupy-space]::before,
+.RB_Skeleton[data-children-occupy-space]::after {
+    visibility: hidden !important;
+    color: transparent !important;
+}
+
+.RB_Skeleton:not([data-children-occupy-space]) {
+    font-size: 0 !important;
+    line-height: 0 !important;
+}
+
+.RB_Skeleton:not([data-children-occupy-space]) *,
+.RB_Skeleton:not([data-children-occupy-space])::before,
+.RB_Skeleton:not([data-children-occupy-space])::after {
+    display: none !important;
+}
+
+/* Hide background images and content */
+.RB_Skeleton * {
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+/* Ensure no content escapes via positioning */
+.RB_Skeleton {
+    overflow: hidden;
+}
