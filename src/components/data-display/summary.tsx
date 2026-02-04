@@ -1,6 +1,5 @@
 "use client";
 
-import { isPlainObject } from "@dre44/util/objects";
 import type { FC, ReactNode, ComponentProps } from "react";
 import { createTheme } from "flowbite-react";
 import type { BaseTheme, TProps } from "../../util/style.js";
@@ -9,6 +8,7 @@ import { Icon } from "../icons/icon.js";
 import { useAsSet, useResolveT } from "../../hooks/index.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 import { ClipboardIconButton } from "../input/clipboard-icon-button.js";
+import { isPlainObject } from "@dre44/util/objects";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {

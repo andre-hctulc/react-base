@@ -41,7 +41,7 @@ const cardFooter = createTheme<CardFooterTheme>({
     },
 });
 
-interface CardFooterProps extends TProps<CardFooterTheme>, ComponentProps<"div"> {}
+export interface CardFooterProps extends TProps<CardFooterTheme>, ComponentProps<"div"> {}
 
 export const CardFooter: FC<CardFooterProps> = (props) => {
     const { className, children, restProps } = useResolveT("cardFooter", cardFooter, props);

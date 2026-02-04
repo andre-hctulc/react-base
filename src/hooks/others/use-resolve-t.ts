@@ -6,6 +6,8 @@ import { useResolveTheme } from "flowbite-react/helpers/resolve-theme";
 import { useThemeProvider, type ThemeProviderValue } from "flowbite-react/theme/provider";
 import type { ReactNode } from "react";
 import { collectClasses, type TProps } from "../../util/style.js";
+import type { DeepPartial } from "flowbite-react/types";
+import { deepMerge } from "@dre44/util/objects";
 
 export type RestProps<P, T> = Omit<P, keyof TProps<T> | "className" | "children">;
 
@@ -43,12 +45,12 @@ interface UseTCompoundResult<T = any, P = any> extends UseTBaseResult<T, P> {
 }
 
 /**
- * Hook to resolve theming props and classes for a `Flowbite React` component.
+ * Hook to extract a component theme and resolve props for a component.
  */
 export function useResolveT<T = any, P = any>(
     componentName: string,
     componentTheme: T,
-    props: P
+    props: P,
 ): "root" extends keyof T ? UseTCompoundResult<T, P> : UseTResult<T, P> {
     const provider: any = useThemeProvider();
 
@@ -56,7 +58,7 @@ export function useResolveT<T = any, P = any>(
     const theme = useResolveTheme<any>(
         [componentTheme, provider.theme?.[componentName], (props as any).theme],
         [get(provider.clearTheme, componentName), (props as any).clearTheme],
-        [get(provider.applyTheme, componentName), (props as any).applyTheme]
+        [get(provider.applyTheme, componentName), (props as any).applyTheme],
     );
     const compound = "root" in theme;
 
@@ -84,12 +86,15 @@ export function useResolveT<T = any, P = any>(
 
     // compound
     if (compound) {
-        baseResult.classNames = Object.keys(theme as object).reduce((acc, partName) => {
-            const subTheme = theme[partName];
-            acc[partName] = collectClasses(subTheme, props, partName === "root");
-            delThemeProps(subTheme);
-            return acc;
-        }, {} as Record<string, string>);
+        baseResult.classNames = Object.keys(theme as object).reduce(
+            (acc, partName) => {
+                const subTheme = theme[partName];
+                acc[partName] = collectClasses(subTheme, props, partName === "root");
+                delThemeProps(subTheme);
+                return acc;
+            },
+            {} as Record<string, string>,
+        );
     }
     // simple
     else {
@@ -98,4 +103,18 @@ export function useResolveT<T = any, P = any>(
     }
 
     return baseResult;
+}
+
+/**
+ * Hook to extend an existing component theme and resolve props for a component.
+ * Class merging may be done in the base component, so you may want to propagate the original className instead of the resolved one returned here.
+ */
+export function useResolveExtendT<T extends object = any, P = any>(
+    componentName: string,
+    baseTheme: T,
+    componentTheme: DeepPartial<T>,
+    props: P,
+): "root" extends keyof T ? UseTCompoundResult<T, P> : UseTResult<T, P> {
+    const result = useResolveT<T, P>(componentName, deepMerge<any>(baseTheme, componentTheme), props);
+    return result;
 }

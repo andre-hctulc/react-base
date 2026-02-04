@@ -37,10 +37,6 @@ const contrastCard = createTheme<ContrastCardTheme>({
 
 export type ContrastCardProps = CardProps & TProps<ContrastCardTheme> & {};
 
-/**
- * ### Props
- * - `embedded` - Controls vertical padding. Use it in combination with card header and footer
- */
 export const ContrastCard: FC<ContrastCardProps> = (props) => {
     const { className, restProps, children } = useResolveT("cardBody", contrastCard, props);
 

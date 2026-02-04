@@ -11,9 +11,9 @@ interface PromiseListeners<T = any, E = unknown> {
 export interface UsePromiseResult<T = any, E = unknown> {
     data: T | undefined;
     isPending: boolean;
-    isResolved: boolean;
-    isError: boolean;
-    error: E | null;
+    isSuccess: boolean;
+    isFinished: boolean;
+    error: E | undefined;
     promise: (promise: Promise<T>) => void;
 }
 
@@ -23,8 +23,8 @@ export interface UsePromiseResult<T = any, E = unknown> {
 export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T, E>): UsePromiseResult<T, E> {
     const [data, setData] = useState<T>();
     const [isPending, setIsPending] = useState(false);
-    const [resolved, setResolved] = useState(false);
-    const [error, setError] = useState<E | null>(null);
+    const [isFinished, setIsFinished] = useState(false);
+    const [error, setError] = useState<E | undefined>(undefined);
     const currentPromise = useRef<Promise<T> | null>(null);
     const errorListener = useRefOf(listeners?.onError);
     const successListener = useRefOf(listeners?.onSuccess);
@@ -35,14 +35,14 @@ export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T,
         if (!currentPromise) {
             setData(undefined);
             setIsPending(false);
-            setResolved(false);
-            setError(null);
+            setIsFinished(false);
+            setError(undefined);
             return;
         }
 
         setIsPending(true);
-        setResolved(false);
-        setError(null);
+        setIsFinished(false);
+        setError(undefined);
         setData(undefined);
 
         newPromise
@@ -51,15 +51,15 @@ export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T,
                 if (currentPromise.current !== newPromise) return;
                 setIsPending(false);
                 setData(data);
-                setResolved(true);
-                setError(null);
+                setIsFinished(true);
+                setError(undefined);
             })
             .catch((err) => {
                 errorListener.current?.(err);
                 if (currentPromise.current !== newPromise) return;
                 setIsPending(false);
                 setData(undefined);
-                setResolved(true);
+                setIsFinished(true);
                 setError(err);
             });
     }, []);
@@ -67,9 +67,9 @@ export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T,
     return {
         data,
         isPending,
-        isResolved: resolved,
+        isFinished,
         error,
-        promise: promise,
-        isError: error !== null,
+        promise,
+        isSuccess: error !== undefined,
     };
 }

@@ -24,10 +24,6 @@ const cardOutline = createTheme<CardOutlineTheme>({
 
 export type CardOutlineProps = CardProps & TProps<CardOutlineTheme> & {};
 
-/**
- * ### Props
- * - `embedded` - Controls vertical padding. Use it in combination with card header and footer
- */
 export const CardOutline: FC<CardOutlineProps> = (props) => {
     const { className, restProps, children } = useResolveT("cardBody", cardOutline, props);
 

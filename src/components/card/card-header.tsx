@@ -38,7 +38,7 @@ const cardHeader = createTheme<CardHeaderTheme>({
     },
 });
 
-interface CardHeaderProps extends TProps<CardHeaderTheme>, Omit<ComponentProps<"div">, "title"> {
+export interface CardHeaderProps extends TProps<CardHeaderTheme>, Omit<ComponentProps<"div">, "title"> {
     title?: ReactNode;
     titleProps?: PartialPropsOf<typeof Title>;
     subtitle?: ReactNode;

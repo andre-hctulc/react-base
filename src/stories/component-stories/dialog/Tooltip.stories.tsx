@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Tooltip } from "../../../components/dialog/index.js";
+import { Tooltip } from "../../../components/alert/index.js";
 import { IconButton } from "../../../components/index.js";
 import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 

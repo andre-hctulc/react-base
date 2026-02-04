@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Dialog, DialogBody, DialogFooter, DialogHeader } from "../../../components/dialog/index.js";
+import { Dialog, DialogBody, DialogFooter, DialogHeader } from "../../../components/alert/index.js";
 
 // #### META ####
 const meta = {

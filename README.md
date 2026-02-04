@@ -1,3 +1,9 @@
 # react-base
 
-[Flowbite React](https://flowbite-react.com) components + **React hooks**.
+## Components
+
+Custom [Flowbite React](https://flowbite-react.com) components.
+
+## Hooks
+
+React hooks.

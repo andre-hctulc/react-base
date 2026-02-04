@@ -124,10 +124,6 @@ export function Transition({
                 {cloneElement<any>(children, {
                     ref,
                     className: twMerge(childProps.className, className),
-                    // style: {
-                    //     ...childProps.style,
-                    //     display: mounted ? undefined : "none",
-                    // },
                 })}
             </TransitionContext.Provider>
         );
@@ -135,10 +131,7 @@ export function Transition({
 
     return (
         <TransitionContext.Provider value={contextValue}>
-            <Component
-                ref={ref}
-                className={className} /* style={{ display: mounted ? undefined : "none" }} */
-            >
+            <Component ref={ref} className={className}>
                 {children}
             </Component>
         </TransitionContext.Provider>

@@ -47,11 +47,10 @@ const cardBody = createTheme<CardBodyTheme>({
     ...withHeight,
     alignItems: alignItems,
     ...withPadding,
-    defaultVariants: {
-    },
+    defaultVariants: {},
 });
 
-interface CardBodyProps extends ComponentProps<"div">, TProps<CardBodyTheme> {}
+export interface CardBodyProps extends ComponentProps<"div">, TProps<CardBodyTheme> {}
 
 /**
  * ### Props
