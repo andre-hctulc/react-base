@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type Ref } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type Ref, type SubmitEvent } from "react";
 import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./js-form-types.js";
 import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
 import { createSnapshot } from "./js-form-helpers.js";
@@ -122,7 +122,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
             }
             return undefined;
         },
-        [defaultValues, parentFormCtx, nested]
+        [defaultValues, parentFormCtx, nested],
     );
     const val = useCallback(
         (name: string) => {
@@ -133,7 +133,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
             }
             return undefined;
         },
-        [values, parentFormCtx, nested]
+        [values, parentFormCtx, nested],
     );
     const [snapshot, setSnapshot] = useState<JSFormSnapshot<T>>(() => {
         return {
@@ -153,7 +153,11 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
     const inited = useRef(false);
     const Comp: any = nested ? "div" : "form";
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+        if (e.target !== e.currentTarget) {
+            return;
+        }
+
         // Prevents form routing and posting
         e.preventDefault();
 
@@ -195,7 +199,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
                 showErrors: reportStrategy === "on_change" || reporting.current,
                 validate: (...args) => validateRef.current?.(...args),
                 onInvalid: (...args) => onInvalidRef.current?.(...args),
-            }
+            },
         );
         setSnapshot(snapshot);
 
@@ -231,7 +235,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
             if (!_form) return;
             handleChange({ currentTarget: _form, target });
         },
-        [handleChange, nested, parentFormCtx]
+        [handleChange, nested, parentFormCtx],
     );
     const ctx = useMemo<JSFormContext>(
         () => ({
@@ -245,7 +249,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
             namesPrefix,
             resetSignal,
         }),
-        [snapshot, triggerChange, reset, def, val, values, namesPrefix, resetSignal]
+        [snapshot, triggerChange, reset, def, val, values, namesPrefix, resetSignal],
     );
     const onContextChangeRef = useRefOf(onContextChange);
 

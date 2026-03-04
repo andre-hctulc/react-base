@@ -1,8 +1,8 @@
 "use client";
 
 import { createTheme } from "flowbite-react/helpers/create-theme";
-import type { BaseTheme, TProps, WithLineClamp, WithMargin } from "../../util/style.js";
-import { withLineClamp, withMargin } from "../../util/style.js";
+import type { BaseTheme, TProps, WithLineClamp, WithMargin, WithTextSize } from "../../util/style.js";
+import { withLineClamp, withMargin, withTextSize } from "../../util/style.js";
 import type { RichAsProps } from "../../types/index.js";
 import { useResolveT } from "../../hooks/index.js";
 import type { ElementType } from "react";
@@ -17,23 +17,20 @@ declare module "flowbite-react/types" {
     }
 }
 
-export interface ColorTextTheme extends BaseTheme, WithMargin, WithLineClamp {
-    size: Record<"sm" | "base", string>;
+export interface ColorTextTheme extends BaseTheme, WithMargin, WithLineClamp, WithTextSize {
     color: Record<"error" | "success" | "warning" | "info", string>;
 }
 
 const colorText = createTheme<ColorTextTheme>({
     base: "",
-    size: {
-        sm: "text-sm",
-        base: "text-base",
-    },
+
     color: {
         error: "text-error",
         success: "text-success",
         warning: "text-warning",
         info: "text-info",
     },
+    ...withTextSize,
     ...withMargin,
     ...withLineClamp,
     defaultVariants: {

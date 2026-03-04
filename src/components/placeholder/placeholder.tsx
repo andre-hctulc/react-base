@@ -16,10 +16,10 @@ import {
     type WithWidthAndHeight,
 } from "../../util/style.js";
 import type { PropsOf, RichAsProps } from "../../types/index.js";
-import { Typography } from "../text/typography.js";
 import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
 import { type ReactNode, type ElementType } from "react";
 import { useResolveT } from "../../hooks/index.js";
+import { PlaceholderText } from "../text/placeholder-text.js";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {
@@ -57,8 +57,8 @@ export type PlaceholderProps<A extends ElementType = "div"> = RichAsProps<A> &
         icon?: IconLike;
         iconProps?: IconProps;
         helperText?: string;
-        helperTextProps?: PropsOf<typeof Typography>;
-        textProps?: PropsOf<typeof Typography>;
+        helperTextProps?: PropsOf<typeof PlaceholderText>;
+        textProps?: PropsOf<typeof PlaceholderText>;
         italic?: boolean;
         disabled?: boolean;
     };
@@ -91,16 +91,16 @@ export const Placeholder = <A extends ElementType = "div">(props: PlaceholderPro
                 </span>
             )}
             {typeof children === "string" ? (
-                <Typography italic={italic} variant={disabled ? "tertiary" : "secondary"} {...textProps}>
+                <PlaceholderText italic={italic} variant={disabled ? "tertiary" : "secondary"} {...textProps}>
                     {children}
-                </Typography>
+                </PlaceholderText>
             ) : (
                 children
             )}
             {helperText && (
-                <Typography variant="tertiary" {...helperTextProps}>
+                <PlaceholderText variant="tertiary" {...helperTextProps}>
                     {helperText}
-                </Typography>
+                </PlaceholderText>
             )}
         </Comp>
     );
