@@ -31,13 +31,7 @@ declare module "flowbite-react/types" {
 }
 
 export interface CardBodyTheme
-    extends BaseTheme,
-        WithFlex,
-        WithPadding,
-        WithAlignItems,
-        WithHeight,
-        WithGrow,
-        WithScroll {}
+    extends BaseTheme, WithFlex, WithPadding, WithAlignItems, WithHeight, WithGrow, WithScroll {}
 
 const cardBody = createTheme<CardBodyTheme>({
     base: "grow max-h-full min-h-0 overflow-auto not-first:pt-0 not-last:pb-0",

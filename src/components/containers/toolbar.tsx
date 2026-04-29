@@ -41,7 +41,8 @@ declare module "flowbite-react/types" {
 }
 
 export interface ToolbarTheme
-    extends BaseTheme,
+    extends
+        BaseTheme,
         WithFlexDirection,
         WithGap,
         WithPadding,

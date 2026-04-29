@@ -507,6 +507,20 @@ export const withScroll: WithScroll = {
     },
 };
 
+export interface Overflow {
+    hidden: string;
+    auto: string;
+    visible: string;
+    scroll: string;
+}
+
+export const overflow: Overflow = {
+    hidden: "overflow-hidden",
+    auto: "overflow-auto",
+    visible: "overflow-visible",
+    scroll: "overflow-scroll",
+};
+
 // #### Shape ####
 
 export type Shape =

@@ -3,6 +3,9 @@
     "version": "0.5.0",
     "main": "dist/index.js",
     "type": "module",
+    "publishConfig": {
+        "access": "restricted"
+    },
     "exports": {
         ".": {
             "style": "./css/base.css",
@@ -25,9 +28,9 @@
         "storybook:tc": "tsc --noEmit"
     },
     "dependencies": {
-        "@dre44/util": "^0.12.0",
+        "@dre44/util": "^0.12.1",
         "dot-prop": "^9.0.0",
-        "flowbite-react": "^0.12.16",
+        "flowbite-react": "^0.12.17",
         "react": "^19.2.0",
         "react-dom": "^19.1.0"
     },

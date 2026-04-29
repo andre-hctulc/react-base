@@ -8,6 +8,7 @@ import { withGap, type BaseTheme, type TProps, type WithGap } from "../../util/s
 import { useResolveT } from "../../hooks/index.js";
 import type { FlowbiteBoolean } from "flowbite-react/types";
 import { useJSForm } from "./js-form-context.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {
@@ -112,7 +113,7 @@ export const FormControl: FC<FormControlProps> = (props) => {
     const _name = name !== undefined ? `${formCtx?.namesPrefix ?? ""}${name}` : undefined;
     const hasName = _name !== undefined;
     const isErr = !noError && hasName && formCtx?.inputs[_name]?.ok === false;
-    const errText = isErr && formCtx.reporting ? errorText ?? (formCtx?.inputs[_name]?.error || "") : "";
+    const errText = isErr && formCtx.reporting ? (errorText ?? (formCtx?.inputs[_name]?.error || "")) : "";
     const _controlled = controlled ?? formCtx?.controlled;
     const id = useId();
     const childElement: ReactElement<any> | null = isValidElement(children) ? children : null;
@@ -151,9 +152,17 @@ export const FormControl: FC<FormControlProps> = (props) => {
 
     const body = (
         <div className={classNames.body}>
-            {helperText && helperTextTop && <HelperText {...helperTextProps}>{helperText}</HelperText>}
+            {helperText && helperTextTop && (
+                <HelperText {...helperTextProps} className={twMerge("m-0", helperTextProps?.className)}>
+                    {helperText}
+                </HelperText>
+            )}
             {childElement ? cloneElement(childElement, inpProps) : children}
-            {helperText && !helperTextTop && <HelperText {...helperTextProps}>{helperText}</HelperText>}
+            {helperText && !helperTextTop && (
+                <HelperText {...helperTextProps} className={twMerge("m-0", helperTextProps?.className)}>
+                    {helperText}
+                </HelperText>
+            )}
             {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
         </div>
     );

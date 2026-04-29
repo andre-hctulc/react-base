@@ -17,7 +17,7 @@ declare module "flowbite-react/types" {
 /**
  * Tabs without content container.
  */
-export const TabsList: FC<TabsProps> = ({ children, className, ...props }) => {
+export const TabList: FC<TabsProps> = ({ children, className, ...props }) => {
     const { theme, restProps } = useResolveExtendT<TabsTheme>(
         "tabsList",
         tabsTheme,
