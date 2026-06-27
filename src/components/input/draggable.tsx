@@ -1,8 +1,10 @@
+"use client";
+
 import React, { type FC, type Ref } from "react";
 import type { StyleProps } from "../../types/index.js";
-import clsx from "clsx";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
-interface DraggableProps extends StyleProps {
+export interface DraggableProps extends StyleProps {
     children?: React.ReactNode;
     disabled?: boolean;
     onDragStart?: React.DragEventHandler<HTMLDivElement>;
@@ -33,7 +35,7 @@ export const Draggable: FC<DraggableProps> = ({
             draggable={!disabled}
             onDragEnd={handleDragEnd}
             onDragStart={handleDragStart}
-            className={clsx("inline-block", className)}
+            className={twMerge("inline-block", className)}
             style={style}
         >
             {children}

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ListItem } from "../../../components/containers/list-item.js";
+import { CommonListItem } from "../../../components/list/common-list-item.js";
 import { List } from "../../../components/containers/list.js";
 
 // #### META ####

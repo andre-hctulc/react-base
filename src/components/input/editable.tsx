@@ -16,7 +16,7 @@ export function useEditMode(): boolean {
     return editMode;
 }
 
-interface EditableProps {
+export interface EditableProps {
     children?: React.ReactNode;
     editMode: boolean;
 }

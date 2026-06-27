@@ -1,18 +1,18 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { ChildrenProps } from "../../types/index.js";
 
 interface DelayedProps extends ChildrenProps {
     delay: number;
     in?: boolean;
-    renderDelay?: React.ReactNode;
+    renderDelay?: ReactNode;
 }
 
 export function Delayed(props: DelayedProps) {
-    const [delayed, setDelayed] = React.useState(!!props.delay);
+    const [delayed, setDelayed] = useState(!!props.delay);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!props.delay || props.in === false) return setDelayed(false);
 
         let interrupted = false;

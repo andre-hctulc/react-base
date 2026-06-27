@@ -1,11 +1,35 @@
 "use client";
 
-import React from "react";
+import { useCallback, useEffect, useState } from "react";
+import { triggerDownload } from "@dre44/util/window";
 
-export function useBlobUrl(file: Blob | null | undefined) {
-    const [blobUrl, setBlobUrl] = React.useState<string | undefined>();
+interface UseBlobUrlResult {
+    url: string | undefined;
+    /**
+     * @returns Url given and download started?
+     */
+    download: (fileName?: string) => boolean;
+    /**
+     * Original blob file. Only provided if `rememberOriginal` is set to true.
+     */
+    blob: Blob | undefined;
+}
 
-    React.useEffect(() => {
+/**
+ * @param rememberOriginal Whether to keep a reference to the original blob file.
+ */
+export function useBlobUrl(file: Blob | null | undefined, rememberOriginal = false): UseBlobUrlResult {
+    const [blobUrl, setBlobUrl] = useState<string | undefined>();
+    const download = useCallback(
+        (fileName?: string) => {
+            if (!blobUrl) return false;
+            triggerDownload(blobUrl, fileName);
+            return true;
+        },
+        [blobUrl]
+    );
+
+    useEffect(() => {
         if (!file) return setBlobUrl(undefined);
 
         const url = URL.createObjectURL(file);
@@ -16,22 +40,5 @@ export function useBlobUrl(file: Blob | null | undefined) {
         };
     }, [file]);
 
-    /**
-     * Starts a  download
-     * @param fileName
-     */
-    function download(fileName?: string) {
-        if (!blobUrl) return;
-
-        const a = document.createElement("a");
-
-        a.href = blobUrl;
-        a.download = typeof fileName === "string" ? fileName : "unnamed";
-
-        a.click();
-        // Clean up: remove the anchor
-        document.body.removeChild(a);
-    }
-
-    return { url: blobUrl, download, blob: file || undefined };
+    return { url: blobUrl, download, blob: rememberOriginal ? file || undefined : undefined };
 }

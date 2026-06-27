@@ -1,0 +1,295 @@
+"use client";
+
+import { useCallback, useEffect, useMemo, useRef, useState, type Ref, type SubmitEvent } from "react";
+import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./js-form-types.js";
+import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
+import { createSnapshot } from "./js-form-helpers.js";
+import { getProperty } from "dot-prop";
+import { useRefOf, useResolveT } from "../../hooks/index.js";
+import type { PropsOf, StyleProps } from "../../types/index.js";
+import {
+    flexDirection,
+    flexWrap,
+    withGap,
+    type BaseTheme,
+    type TProps,
+    type WithFlex,
+    type WithFlexWrap,
+    type WithGap,
+} from "../../util/style.js";
+import { createTheme } from "flowbite-react";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        jsForm: JSFormTheme;
+    }
+
+    interface FlowbiteProps {
+        jsForm: Partial<WithoutThemingProps<JSFormProps>>;
+    }
+}
+
+interface JSFormTheme extends BaseTheme, WithFlex, WithGap, WithFlexWrap {}
+
+const jsForm = createTheme<JSFormTheme>({
+    base: "",
+    wrap: flexWrap,
+    flex: flexDirection,
+    ...withGap,
+});
+
+export interface JSFormProps<T extends object = any> extends StyleProps, TProps<JSFormTheme> {
+    id?: string;
+    children?: React.ReactNode;
+    onSubmit?: (snapshot: JSFormSnapshot<T>) => void;
+    onChange?: (snapshot: JSFormChange<T> & { changedField: { name: string; newValue: any } }) => void;
+    onInvalid?: (snapshot: JSFormSnapshot<T>) => void;
+    validate?: (data: JSFormValidateData<T>) => JSFormValidation<T> | boolean | undefined | void;
+    /**
+     * Form target attribute
+     */
+    target?: string;
+    /**
+     * Whether to show validation errors on change
+     * @default "on_submit"
+     */
+    reportStrategy?: "on_submit" | "on_change";
+    /**
+     * Default value of the form.
+     *
+     * Consumed by {@link FormControl}s.
+     */
+    defaultValues?: Partial<T>;
+    /**
+     * Value of the form.
+     *
+     * Consumed by {@link FormControl}s.
+     */
+    values?: Partial<T>;
+    /**
+     * Callback when the form is initialized
+     */
+    onInit?: (snapshot: JSFormSnapshot<T>) => void;
+    /**
+     * ### nested: true
+     * - Renders div instead of form
+     * - bubbles up manually triggered change events
+     * - Uses default values from parent form if not provided in this form
+     */
+    nested?: boolean;
+    /**
+     * Consumed by {@link FormControl}s
+     */
+    namesPrefix?: string;
+    onContextChange?: (ctx: JSFormContext<T>) => void;
+    ref?: Ref<HTMLFormElement>;
+}
+
+/**
+ * Input names are interpreted as dot prop paths
+ *
+ * ### Props
+ * - `nested`
+ * - `namesPrefix`
+ */
+export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
+    const { children, className, restProps } = useResolveT("jsForm", jsForm, props);
+    const {
+        defaultValues,
+        nested,
+        values,
+        validate,
+        reportStrategy,
+        onInvalid,
+        onChange,
+        onSubmit,
+        namesPrefix,
+        onContextChange,
+        onInit,
+        ref,
+        target,
+        id,
+        ...rootProps
+    } = restProps;
+    const form = useRef<HTMLFormElement>(null);
+    const parentFormCtx = useJSForm();
+    const def = useCallback(
+        (name: string) => {
+            if (defaultValues) {
+                return getProperty(defaultValues, name);
+            } else if (nested && parentFormCtx) {
+                return parentFormCtx.default(name);
+            }
+            return undefined;
+        },
+        [defaultValues, parentFormCtx, nested],
+    );
+    const val = useCallback(
+        (name: string) => {
+            if (values) {
+                return getProperty(values, name);
+            } else if (nested && parentFormCtx) {
+                return parentFormCtx.value(name);
+            }
+            return undefined;
+        },
+        [values, parentFormCtx, nested],
+    );
+    const [snapshot, setSnapshot] = useState<JSFormSnapshot<T>>(() => {
+        return {
+            ok: true,
+            form: null,
+            formData: new FormData(),
+            values: {} as T,
+            inputs: {},
+            invalidReason: null,
+            reporting: false,
+        };
+    });
+    /**
+     * Keep track of whether the form is reporting errors for the _on\_submit_ strategy
+     */
+    const reporting = useRef(false);
+    const inited = useRef(false);
+    const Comp: any = nested ? "div" : "form";
+
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+        if (e.target !== e.currentTarget) {
+            return;
+        }
+
+        // Prevents form routing and posting
+        e.preventDefault();
+
+        const snapshot = createSnapshot(e.currentTarget, {
+            reportFormErrors: true,
+            showErrors: !reportStrategy || reportStrategy === "on_submit",
+            validate,
+            onInvalid,
+        });
+
+        setSnapshot(snapshot);
+
+        if (snapshot.ok) {
+            onSubmit?.(snapshot);
+            reporting.current = false;
+        } else {
+            reporting.current = true;
+        }
+    };
+    const validateRef = useRefOf(validate);
+    const onInvalidRef = useRefOf(onInvalid);
+    const onChangeRef = useRefOf(onChange);
+
+    /**
+     * Manually trigger change event
+     * Used by hidden inputs
+     */
+    const handleChange = useCallback((e: { currentTarget: HTMLFormElement; target: any }) => {
+        const form = e.currentTarget;
+
+        const { name, value } = e.target || ({} as any);
+
+        const snapshot = createSnapshot(
+            form,
+            // Set reportFormErrors to false,
+            // because the first invalid input gets focused on Form.reportValidity()
+            {
+                reportFormErrors: false,
+                showErrors: reportStrategy === "on_change" || reporting.current,
+                validate: (...args) => validateRef.current?.(...args),
+                onInvalid: (...args) => onInvalidRef.current?.(...args),
+            },
+        );
+        setSnapshot(snapshot);
+
+        onChangeRef.current?.({
+            ...snapshot,
+            changedField:
+                typeof name === "string" ? { name, newValue: value } : { name: "", newValue: undefined },
+        });
+    }, []);
+
+    const [resetSignal, setResetSignal] = useState(0);
+    const reset = useCallback(() => {
+        if (form.current) form.current.reset();
+        reporting.current = false;
+        setResetSignal((s) => {
+            if (s > 1000) {
+                return 1;
+            }
+            return s + 1;
+        });
+    }, []);
+
+    const triggerChange = useCallback(
+        (target?: { name: string; value: any }) => {
+            // For nested forms the form ref is not present!
+            // We bubble the change event to the parent form
+            if (nested) {
+                parentFormCtx?.triggerChange(target);
+                return;
+            }
+
+            const _form = form.current;
+            if (!_form) return;
+            handleChange({ currentTarget: _form, target });
+        },
+        [handleChange, nested, parentFormCtx],
+    );
+    const ctx = useMemo<JSFormContext>(
+        () => ({
+            ...snapshot,
+            reset,
+            triggerChange,
+            defaultValues: defaultValues,
+            default: def,
+            value: val,
+            controlled: values !== undefined,
+            namesPrefix,
+            resetSignal,
+        }),
+        [snapshot, triggerChange, reset, def, val, values, namesPrefix, resetSignal],
+    );
+    const onContextChangeRef = useRefOf(onContextChange);
+
+    useEffect(() => {
+        if (!inited.current && snapshot.form) {
+            inited.current = true;
+            onInit?.(snapshot);
+        }
+    }, [snapshot]);
+
+    useEffect(() => {
+        onContextChangeRef.current?.(ctx);
+    }, [ctx]);
+
+    let formProps: PropsOf<"form"> = {};
+
+    if (!nested) {
+        formProps.onSubmit = handleSubmit;
+        formProps.target = target;
+        formProps.onChange = handleChange;
+    }
+
+    return (
+        <Comp
+            id={id}
+            key={resetSignal}
+            ref={(f: any) => {
+                form.current = f;
+
+                if (typeof ref === "function") {
+                    ref(f);
+                } else if (ref) {
+                    ref.current = f;
+                }
+            }}
+            className={className}
+            {...rootProps}
+            {...formProps}
+        >
+            <JSFormCtx.Provider value={ctx}>{children}</JSFormCtx.Provider>
+        </Comp>
+    );
+};

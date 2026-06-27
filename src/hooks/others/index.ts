@@ -8,3 +8,5 @@ export * from "./use-ref-of.js";
 export * from "./use-delayed-value.js";
 export * from "./use-context-x.js";
 export * from "./use-choices.js";
+export * from "./use-css-transition.js";
+export * from "./use-resolve-t.js";

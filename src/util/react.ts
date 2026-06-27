@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 import {
     Children,
     cloneElement,
@@ -110,7 +110,7 @@ export function mergeProps<P extends object>(
         for (const key in propsItem) {
             if (mergeClasses !== false && key === "className") {
                 mergedProps[key] = mergedProps[key]
-                    ? clsx(mergedProps[key], (propsItem as any)[key])
+                    ? twMerge(mergedProps[key], (propsItem as any)[key])
                     : propsItem[key];
             } else if (mergeStyles !== false && key === "style") {
                 mergedProps[key] = { ...mergedProps[key], ...propsItem[key] };

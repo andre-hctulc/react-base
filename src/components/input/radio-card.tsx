@@ -1,33 +1,44 @@
-import { tv } from "tailwind-variants";
-import type { PropsOf } from "../../types/index.js";
-import { Card } from "../containers/card.js";
-import type { RadioRenderParams } from "./radio.js";
-import type { FC, ReactNode } from "react";
+"use client";
 
-const radioCard = tv({
+import { createTheme } from "flowbite-react/helpers/create-theme";
+import type { PropsOf } from "../../types/index.js";
+// import type { RadioRenderParams } from "./radio.js";
+import type { FC, ReactNode } from "react";
+import { Card, type CardProps } from "flowbite-react";
+import { type BaseTheme, type TProps } from "../../util/style.js";
+import type { FlowbiteBoolean } from "flowbite-react/types";
+import { useResolveT } from "../../hooks/index.js";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        radioCard: RadioCardTheme;
+    }
+
+    interface FlowbiteProps {
+        radioCard: Partial<WithoutThemingProps<RadioCardProps>>;
+    }
+}
+
+export interface RadioCardTheme extends BaseTheme {
+    active: FlowbiteBoolean;
+    disabled: FlowbiteBoolean;
+    readOnly: FlowbiteBoolean;
+}
+
+const radioCard = createTheme<RadioCardTheme>({
     base: "transition border-[1.5px]",
-    variants: {
-        active: {
-            true: "border-primary outline-0",
-            false: "outline-primary",
-        },
-        disabled: {
-            true: "opacity-50",
-            false: "",
-        },
-        readOnly: {
-            true: "",
-        },
+    active: {
+        on: "border-primary outline-0",
+        off: "outline-primary",
     },
-    compoundVariants: [
-        {
-            disabled: false,
-            readOnly: false,
-            active: false,
-            className: "hover:outline-offset-2 hover:outline cursor-pointer",
-        },
-        { disabled: false, readOnly: false, className: "hover:bg-neutral/5" },
-    ],
+    disabled: {
+        on: "opacity-50",
+        off: "",
+    },
+    readOnly: {
+        on: "",
+        off: "",
+    },
     defaultVariants: {
         active: false,
         disabled: false,
@@ -35,33 +46,26 @@ const radioCard = tv({
     },
 });
 
-interface RadioCardProps extends PropsOf<typeof Card> {
-    children?: ReactNode;
-    params?: Partial<RadioRenderParams>;
-}
+export type RadioCardProps = CardProps &
+    TProps<RadioCardTheme> & {
+        params?: Partial<any /* RadioRenderParams */>;
+    };
 
 /**
  * A helper component to render a card as a radio option
  */
-export const RadioCard: FC<RadioCardProps> = ({ params, className, children, ...props }) => {
-    const p: RadioRenderParams = {
-        option: { value: "", data: { label: "<option-not-defined>" } },
-        active: false,
-        activate: () => {},
-        disabled: false,
-        readOnly: false,
-        ...params,
-    };
+export const RadioCard: FC<RadioCardProps> = (props) => {
+    const { className, restProps, children } = useResolveT("radioCard", radioCard, props);
+    const { params, onClick, ...rootProps } = restProps;
 
     return (
         <Card
-            {...props}
-            key={p.option.value}
-            className={radioCard({ className, active: p.active, disabled: p.disabled, readOnly: p.readOnly })}
+            className={className}
             onClick={(e) => {
-                p.activate();
-                props.onClick?.(e);
+                params?.activate();
+                onClick?.(e);
             }}
+            {...(rootProps as any)}
         >
             {children}
         </Card>

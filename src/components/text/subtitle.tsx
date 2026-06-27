@@ -1,113 +1,83 @@
-import { type ReactNode } from "react";
-import { tv } from "tailwind-variants";
-import type { ELEMENT, PropsOf, RichAsProps, WithTVProps } from "../../types/index.js";
-import { Icon } from "../icons/icon.js";
-import clsx from "clsx";
+"use client";
 
-const subtitle = tv({
+import { type ElementType, type ReactNode } from "react";
+import { createTheme } from "flowbite-react/helpers/create-theme";
+import type { PropsOf, RichAsProps } from "../../types/index.js";
+import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import {
+    withLineClamp,
+    withMargin,
+    type BaseTheme,
+    type TProps,
+    type WithLineClamp,
+    type WithMargin,
+} from "../../util/style.js";
+import type { FlowbiteBoolean } from "flowbite-react/types";
+import { useResolveT } from "../../hooks/index.js";
+
+declare module "flowbite-react/types" {
+    interface FlowbiteTheme {
+        subtitle: SubtitleTheme;
+    }
+
+    interface FlowbiteProps {
+        subtitle: Partial<WithoutThemingProps<SubtitleProps>>;
+    }
+}
+
+export interface SubtitleTheme extends BaseTheme, WithMargin, WithLineClamp {
+    variant: Record<"h2" | "h3" | "h4" | "h5", string>;
+    underline: FlowbiteBoolean;
+    bold: FlowbiteBoolean;
+}
+
+const subtitle = createTheme<SubtitleTheme>({
     base: "text-t2",
-    variants: {
-        variant: {
-            h2: "text-xl",
-            h3: "text-lg",
-            h4: "text-base",
-            h5: "text-sm",
-        },
-        underline: {
-            true: "underline",
-        },
-        my: {
-            none: "",
-            xs: "my-1",
-            sm: "my-2",
-            md: "my-4",
-            lg: "my-7",
-            xl: "my-12",
-            "2xl": "my-16",
-            "3xl": "my-22",
-        },
-        mt: {
-            none: "",
-            xs: "mt-1",
-            sm: "mt-2",
-            md: "mt-4",
-            lg: "mt-7",
-            xl: "mt-12",
-            "2xl": "mt-16",
-            "3xl": "mt-22",
-        },
-        mb: {
-            none: "",
-            xs: "mb-1",
-            sm: "mb-2",
-            md: "mb-4",
-            lg: "mb-7",
-            xl: "mb-12",
-            "2xl": "mb-16",
-            "3xl": "mb-22",
-        },
-        bold: {
-            true: "font-semibold",
-            false: "font-medium",
-        },
+    variant: {
+        h2: "text-xl",
+        h3: "text-lg",
+        h4: "text-base",
+        h5: "text-sm",
+    },
+    underline: {
+        on: "underline",
+        off: "",
+    },
+    ...withMargin,
+    bold: {
+        on: "font-semibold",
+        off: "font-medium",
     },
     defaultVariants: {
         variant: "h2",
         bold: false,
     },
+    ...withLineClamp,
 });
 
-type SubtitleProps<T extends ELEMENT = "h2"> = WithTVProps<
+type SubtitleProps<T extends ElementType = "h2"> = TProps<SubtitleTheme> &
     RichAsProps<T> & {
-        icon?: ReactNode;
-        iconProps?: Partial<PropsOf<typeof Icon>>;
-    },
-    typeof subtitle
->;
+        icon?: IconLike;
+        iconProps?: IconProps;
+    };
 
 /**
  * ### Props
- * - `variant`
- * - `underline`
+ * - `variant` - Heading variant (h2, h3, h4, h5)
+ * - `underline` - Add underline decoration
+ * - `my`, `mt`, `mb` - Margin utilities
+ * - `bold` - Font weight control
  */
-export const Subtitle = <T extends ELEMENT = "h2">({
-    children,
-    className,
-    as,
-    variant,
-    underline,
-    my,
-    mt,
-    mb,
-    icon,
-    iconProps,
-    ref,
-    bold,
-    ...props
-}: SubtitleProps<T>) => {
-    const Comp: any = as || variant || "h2";
+export const Subtitle = <T extends ElementType = "h2">(props: SubtitleProps<T>) => {
+    const { className, children, restProps } = useResolveT("subtitle", subtitle, props);
+    const { as, icon, iconProps, ...rootProps } = restProps;
+    const Comp: any = as || props.variant || "h2";
 
     return (
-        <Comp
-            className={subtitle({
-                className: [icon && "flex items-center", className],
-                underline,
-                variant,
-                my,
-                mb,
-                mt,
-                bold,
-            })}
-            ref={ref as any}
-            {...props}
-        >
+        <Comp className={twMerge(className, icon && "flex items-center")} {...rootProps}>
             {icon && (
-                <Icon
-                    size="inherit"
-                    inline
-                    {...(iconProps as any)}
-                    className={clsx("mr-2", iconProps?.className)}
-                >
+                <Icon noShrink inline {...iconProps} className={twMerge("mr-2", iconProps?.className)}>
                     {icon}
                 </Icon>
             )}

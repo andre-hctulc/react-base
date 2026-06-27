@@ -5,7 +5,7 @@
     "type": "module",
     "exports": {
         ".": {
-            "style": "./base.css",
+            "style": "./css/base.css",
             "import": "./dist/index.js",
             "types": "./dist/index.d.ts"
         }
@@ -25,15 +25,11 @@
         "storybook:tc": "tsc --noEmit"
     },
     "dependencies": {
-        "@dre44/util": "^0.7.3",
-        "@headlessui/react": "^2.2.0",
-        "@popperjs/core": "^2.11.8",
-        "clsx": "^2.1.0",
+        "@dre44/util": "^0.12.0",
         "dot-prop": "^9.0.0",
+        "flowbite-react": "^0.12.16",
         "react": "^19",
-        "react-dom": "^19",
-        "react-popper": "^2.3.0",
-        "tailwind-variants": "^0.2.1"
+        "react-dom": "^19"
     },
     "devDependencies": {
         "@chromatic-com/storybook": "^3.2.6",

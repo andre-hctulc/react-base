@@ -1,17 +1,17 @@
 "use client";
 
-import clsx from "clsx";
-import { useCallback, useMemo, useState, type Ref } from "react";
+import { useCallback, useMemo, useState, type ElementType, type Ref } from "react";
 import type { InputLikeProps } from "./types.js";
-import type { ASProps, ELEMENT, StyleProps } from "../../types/index.js";
+import type { ASProps, StyleProps } from "../../types/index.js";
 import { useRefOf } from "../../hooks/index.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
 type InputListInputProps<V = string> = Pick<
     InputLikeProps<V>,
     "readOnly" | "disabled" | "name" | "defaultValue"
 >;
 
-export interface InputListProps<T = string, A extends ELEMENT = "div">
+export interface InputListProps<T = string, A extends ElementType = "div">
     extends InputLikeProps<T[]>,
         StyleProps,
         ASProps<A> {
@@ -55,7 +55,7 @@ const compare = (a: any, b: any) => a === b;
  * - `unique` - Only allow unique values
  * - `sort` - Sort function for the values
  */
-export const InputList = <T = string, A extends ELEMENT = "div">({
+export const InputList = <T = string, A extends ElementType = "div">({
     className,
     renderInput,
     renderValues,
@@ -141,7 +141,7 @@ export const InputList = <T = string, A extends ELEMENT = "div">({
         });
 
     return (
-        <Comp className={clsx("", className)} style={style}>
+        <Comp className={twMerge("", className)} style={style}>
             {reverse ? valuesEl : inpEl}
             {reverse ? inpEl : valuesEl}
         </Comp>

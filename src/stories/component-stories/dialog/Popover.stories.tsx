@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Popover } from "../../../components/dialog/index.js";
+import { Popover } from "../../../components/alert/index.js";
 import { IconButton } from "../../../components/index.js";
 import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 

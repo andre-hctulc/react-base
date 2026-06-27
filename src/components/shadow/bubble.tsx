@@ -1,4 +1,4 @@
-import React from "react";
+import { cloneElement, type FC, type ReactElement } from "react";
 
 interface BubbleProps {
     eventProp: string;
@@ -8,7 +8,7 @@ interface BubbleProps {
      * if no valid event is provided, `eventProp` is used as the event type.
      */
     eventType?: string;
-    children: React.ReactElement<any>;
+    children: ReactElement<any>;
     /** `EventInit.cancelable` */
     cancelable?: boolean;
     /** `EventInit.composed` */
@@ -34,7 +34,7 @@ const bubbleMarker = Symbol.for("rb_bubble_marker");
  *
  * The custom events detail is an array of the original event arguments.
  *  */
-export const Bubble: React.FC<BubbleProps> = ({
+export const Bubble: FC<BubbleProps> = ({
     eventProp,
     children,
     cancelable,
@@ -72,5 +72,5 @@ export const Bubble: React.FC<BubbleProps> = ({
         onBubble?.(customEvent);
     };
 
-    return React.cloneElement(children, { [eventProp]: bubble });
+    return cloneElement(children, { [eventProp]: bubble });
 };

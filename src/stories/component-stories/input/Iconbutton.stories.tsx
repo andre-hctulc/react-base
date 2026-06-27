@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { IconButton } from "../../../components/input/icon-button.js";
+import { IconButton } from "../../../components/button/icon-button.js";
 import { InfoCircleIcon } from "../../../components/icons/phosphor/info-circle.js";
 
 // #### META ####

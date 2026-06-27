@@ -1,14 +1,14 @@
 "use client";
 
-import { cloneElement, useEffect, useState } from "react";
-import { hideScrollbar as hide } from "../../util/style.js";
+import { cloneElement, useEffect, useState, type FC, type ReactElement } from "react";
+import { hideScrollbar } from "../../util/system.js";
 
 interface XScrollProps {
     /**
      * The container element that will be scrolled horizontally.
      * Must forward the ref.
      */
-    children: React.ReactElement<any>;
+    children: ReactElement<any>;
     /**
      * Hide the scrollbar of the container?
      */
@@ -18,7 +18,7 @@ interface XScrollProps {
 /**
  * A component that allows horizontal scrolling with the mouse wheel.
  */
-export const XScroll: React.FC<XScrollProps> = ({ children, hideScrollbar }) => {
+export const XScroll: FC<XScrollProps> = ({ children, hideScrollbar: hide }) => {
     const [container, setContainer] = useState<HTMLElement | null>(null);
 
     // Use native event listeners. This does not work with React's synthetic events.
@@ -27,8 +27,8 @@ export const XScroll: React.FC<XScrollProps> = ({ children, hideScrollbar }) => 
 
         const aborterController = new AbortController();
 
-        if (hideScrollbar) {
-            hide(container);
+        if (hide) {
+            hideScrollbar(container);
         }
 
         container.addEventListener(
