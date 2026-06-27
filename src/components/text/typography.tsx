@@ -2,7 +2,7 @@
 
 import { createTheme } from "flowbite-react/helpers/create-theme";
 import { withTextSize, type BaseTheme, type TProps, type WithTextSize } from "../../util/style.js";
-import type { FlowbiteBoolean, FlowbiteSizes } from "flowbite-react/types";
+import type { FlowbiteBoolean } from "flowbite-react/types";
 import type { RichAsProps } from "../../types/index.js";
 import { useResolveT } from "../../hooks/index.js";
 import type { ElementType } from "react";
