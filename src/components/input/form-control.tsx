@@ -24,7 +24,10 @@ export interface FormControlTheme {
         WithGap & {
             horizontal: FlowbiteBoolean;
         };
-    body: BaseTheme & WithGap & {};
+    body: BaseTheme &
+        WithGap & {
+            horizontal: FlowbiteBoolean;
+        };
 }
 
 const formControl = createTheme<FormControlTheme>({
@@ -43,6 +46,10 @@ const formControl = createTheme<FormControlTheme>({
     body: {
         base: "flex flex-col",
         ...withGap,
+        horizontal: {
+            on: "flex-row items-center",
+            off: "flex-col",
+        },
         defaultVariants: {
             gap: "md",
             horizontal: "off",
@@ -69,7 +76,6 @@ export type FormControlProps = TProps<FormControlTheme> &
         helperText?: string;
         helperTextProps?: PartialPropsOf<typeof HelperText>;
         errorTextProps?: PartialPropsOf<typeof ErrorText>;
-        horizontal?: boolean;
         labelWidth?: string | number;
         /**
          * Set to true, to prevent any error message from showing
@@ -82,6 +88,7 @@ export type FormControlProps = TProps<FormControlTheme> &
          * In this case a span is used instead of a label element.
          */
         mimic?: boolean;
+        horizontal?: boolean;
         requiredHint?: boolean;
     };
 
@@ -91,7 +98,7 @@ export type FormControlProps = TProps<FormControlTheme> &
  * Consumes {@link JSFormContext}, to handle {@link JSForm} default value state.
  */
 export const FormControl: FC<FormControlProps> = (props) => {
-    const { classNames, restProps, children } = useResolveT("formControl", formControl, props);
+    const { classNames, restProps, children, theme } = useResolveT("formControl", formControl, props);
     const {
         noError,
         errorText,
@@ -106,13 +113,14 @@ export const FormControl: FC<FormControlProps> = (props) => {
         errorTextProps,
         requiredHint,
         labelProps,
+        labelWidth,
         ...rootProps
     } = restProps;
     const formCtx = useJSForm();
     const _name = name !== undefined ? `${formCtx?.namesPrefix ?? ""}${name}` : undefined;
     const hasName = _name !== undefined;
     const isErr = !noError && hasName && formCtx?.inputs[_name]?.ok === false;
-    const errText = isErr && formCtx.reporting ? errorText ?? (formCtx?.inputs[_name]?.error || "") : "";
+    const errText = isErr && formCtx.reporting ? (errorText ?? (formCtx?.inputs[_name]?.error || "")) : "";
     const _controlled = controlled ?? formCtx?.controlled;
     const id = useId();
     const childElement: ReactElement<any> | null = isValidElement(children) ? children : null;
