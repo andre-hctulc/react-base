@@ -6,7 +6,6 @@ import { ErrorText } from "../text/error-text.js";
 import { createTheme, HelperText, Label } from "flowbite-react";
 import { withGap, type BaseTheme, type TProps, type WithGap } from "../../util/style.js";
 import { useResolveT } from "../../hooks/index.js";
-import type { FlowbiteBoolean } from "flowbite-react/types";
 import { useJSForm } from "./js-form-context.js";
 
 declare module "flowbite-react/types" {
@@ -20,39 +19,23 @@ declare module "flowbite-react/types" {
 }
 
 export interface FormControlTheme {
-    root: BaseTheme &
-        WithGap & {
-            horizontal: FlowbiteBoolean;
-        };
-    body: BaseTheme &
-        WithGap & {
-            horizontal: FlowbiteBoolean;
-        };
+    root: BaseTheme & WithGap;
+    horizontalWrapper: BaseTheme & WithGap;
 }
 
 const formControl = createTheme<FormControlTheme>({
     root: {
-        base: "flex",
-        horizontal: {
-            on: "",
-            off: "flex-col",
-        },
+        base: "flex flex-col",
         ...withGap,
         defaultVariants: {
             gap: "sm",
-            horizontal: "off",
         },
     },
-    body: {
-        base: "flex flex-col",
+    horizontalWrapper: {
+        base: "flex",
         ...withGap,
-        horizontal: {
-            on: "flex-row items-center",
-            off: "flex-col",
-        },
         defaultVariants: {
             gap: "md",
-            horizontal: "off",
         },
     },
 });
@@ -81,7 +64,6 @@ export type FormControlProps = TProps<FormControlTheme> &
          * Set to true, to prevent any error message from showing
          */
         noError?: boolean;
-        helperTextTop?: boolean;
         /**
          * Indicates that the label is not labeling a valid input element (e.g. in combination with hidden inputs).
          *
@@ -109,11 +91,11 @@ export const FormControl: FC<FormControlProps> = (props) => {
         label,
         helperText,
         helperTextProps,
-        helperTextTop,
         errorTextProps,
         requiredHint,
         labelProps,
         labelWidth,
+        horizontal,
         ...rootProps
     } = restProps;
     const formCtx = useJSForm();
@@ -157,32 +139,47 @@ export const FormControl: FC<FormControlProps> = (props) => {
         }
     }
 
-    const body = (
-        <div className={classNames.body}>
-            {helperText && helperTextTop && <HelperText {...helperTextProps}>{helperText}</HelperText>}
-            {childElement ? cloneElement(childElement, inpProps) : children}
-            {helperText && !helperTextTop && <HelperText {...helperTextProps}>{helperText}</HelperText>}
-            {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
-        </div>
-    );
-    const lbl =
-        label &&
-        (mimic ? (
+    const inp = childElement ? cloneElement(childElement, inpProps) : children;
+
+    const helperTexts =
+        !!helperText || !!errText ? (
+            <div>
+                {helperText && <HelperText {...helperTextProps}>{helperText}</HelperText>}
+                {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
+            </div>
+        ) : null;
+
+    const lbl = label ? (
+        mimic ? (
             <span>
                 {label}
-                {requiredHint && ` *`}
+                {requiredHint && " *"}
             </span>
         ) : (
             <Label htmlFor={id} {...labelProps}>
                 {label}
-                {requiredHint && ` *`}
+                {requiredHint && " *"}
             </Label>
-        ));
+        )
+    ) : null;
 
-    return (
-        <div ref={ref} className={classNames.root} {...rootProps}>
-            {lbl}
-            {body}
-        </div>
-    );
+    if (horizontal) {
+        return (
+            <div ref={ref} className={classNames.root} {...rootProps}>
+                <div className={classNames.horizontalWrapper}>
+                    {lbl}
+                    {inp}
+                </div>
+                {helperTexts}
+            </div>
+        );
+    } else {
+        return (
+            <div ref={ref} className={classNames.root} {...rootProps}>
+                {lbl}
+                {inp}
+                {helperTexts}
+            </div>
+        );
+    }
 };
