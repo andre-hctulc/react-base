@@ -32,7 +32,7 @@ const formControl = createTheme<FormControlTheme>({
         },
     },
     horizontalWrapper: {
-        base: "flex",
+        base: "flex items-center",
         ...withGap,
         defaultVariants: {
             gap: "md",
