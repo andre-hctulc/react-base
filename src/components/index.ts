@@ -23,3 +23,5 @@ export * from "./label/index.js";
 export * from "./spinner/index.js";
 export * from "./modal/index.js";
 export * from "./tabs/index.js";
+export * from "./simple-card/index.js";
+export * from "./chip/index.js";

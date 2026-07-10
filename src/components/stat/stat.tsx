@@ -5,7 +5,7 @@ import { useMemo, type ElementType } from "react";
 import { createTheme } from "flowbite-react";
 import {
     shadow,
-    shape,
+    shapes,
     withBorder,
     withFit,
     type BaseTheme,
@@ -14,7 +14,6 @@ import {
     type WithColor,
     type WithFit,
     type WithShadow,
-    type WithShape,
     type WithSize,
 } from "../../util/style.js";
 import { useRefOf, useResolveT } from "../../hooks/index.js";
@@ -33,18 +32,11 @@ declare module "flowbite-react/types" {
 }
 
 export interface StatTheme
-    extends BaseTheme,
-        WithShape,
-        WithShadow,
-        WithBorder,
-        WithFit,
-        WithSize,
-        WithColor {}
+    extends BaseTheme, WithShadow, WithBorder, WithFit, WithSize, WithColor {}
 
 const stat = createTheme<StatTheme>({
     base: "bg-paper2 rounded-lg",
     shadow,
-    shape,
     ...withBorder,
     ...withFit,
     size: {
@@ -188,7 +180,7 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
                     className={twMerge(
                         "text-[0.9em]",
                         isDefaultColor && "text-t2",
-                        descriptionProps?.className
+                        descriptionProps?.className,
                     )}
                 >
                     {description}
