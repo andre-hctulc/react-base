@@ -14,7 +14,6 @@ Usage:
 @import "./safelist.css";
 @import "./defaults.css";
 
-
 /* Reference compiled source! */
 @source "../dist";
-@source "./defaults.css";
+@source "../.flowbite-react/class-list.json";

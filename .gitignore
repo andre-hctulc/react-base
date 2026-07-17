@@ -23,3 +23,6 @@ storybook-static
 
 #### turbo ####
 .turbo
+
+#### Flowbite React ####
+.flowbite-react/class-list.json
