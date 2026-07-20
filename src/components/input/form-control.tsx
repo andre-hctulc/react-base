@@ -7,6 +7,7 @@ import { createTheme, HelperText, Label } from "flowbite-react";
 import { withGap, type BaseTheme, type TProps, type WithGap } from "../../util/style.js";
 import { useResolveT } from "../../hooks/index.js";
 import { useJSForm } from "./js-form-context.js";
+import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
 declare module "flowbite-react/types" {
     interface FlowbiteTheme {
@@ -143,8 +144,12 @@ export const FormControl: FC<FormControlProps> = (props) => {
 
     const helperTexts =
         !!helperText || !!errText ? (
-            <div>
-                {helperText && <HelperText {...helperTextProps}>{helperText}</HelperText>}
+            <div className="space-y-2">
+                {helperText && (
+                    <HelperText {...helperTextProps} className={twMerge("mt-0", helperTextProps?.className)}>
+                        {helperText}
+                    </HelperText>
+                )}
                 {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
             </div>
         ) : null;

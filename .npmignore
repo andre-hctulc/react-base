@@ -1,28 +1,21 @@
 #### VS Code ####
-
 .vscode
 *.code-workspace
 
-#### Code/Configs ####
-
-test
+#### TS ####
 scripts
 src
 tsconfig.json
 tsconfig.build.json
 .eslintrc.json
 
-#### Docs ####
-
+#### docs ####
 docs
 
-#### Disk ####
-
+#### os ####
 .DS_Store
 
 #### Storybook ####
-
-vitest.*
 .storybook
 storybook-static
 *storybook.log
@@ -31,3 +24,10 @@ postcss.config.js
 #### Flowbite React ####
 .flowbite-react/config.json
 .flowbite-react/init.tsx
+
+#### Turborepo ####
+.turbo
+
+#### Test ####
+test
+vitest.*

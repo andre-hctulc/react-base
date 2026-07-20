@@ -16,4 +16,6 @@ Usage:
 
 /* Reference compiled source! */
 @source "../dist";
+
+/* Reference flowbite component classes */
 @source "../.flowbite-react/class-list.json";
