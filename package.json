@@ -28,9 +28,9 @@
         "storybook:tc": "tsc --noEmit"
     },
     "dependencies": {
-        "@dre44/util": "^0.25.0",
+        "@dre44/util": "^0.26.0",
         "dot-prop": "^9.0.0",
-        "flowbite-react": "^0.12.16",
+        "flowbite-react": "^0",
         "react": "^19",
         "react-dom": "^19"
     },

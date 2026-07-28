@@ -7,6 +7,8 @@ Extend the base theme
 */
 
 @theme {
+    --react-base-theme-mounted: "true";
+
     /* Background Colors */
 
     --color-paper1: var(--color-white);
@@ -245,12 +247,13 @@ Extend the base theme
     --shadow-even-sm: 0px 2px 8px 0px rgba(99, 99, 99, 0.2);
     --shadow-even: 0px 4px 12px rgba(0, 0, 0, 0.1);
     --shadow-even-md: 0px 5px 15px rgba(0, 0, 0, 0.35);
-    --shadow-even-lg: 0px 54px 55px rgba(0, 0, 0, 0.25), 0px -12px 30px rgba(0, 0, 0, 0.12),
+    --shadow-even-lg:
+        0px 54px 55px rgba(0, 0, 0, 0.25), 0px -12px 30px rgba(0, 0, 0, 0.12),
         0px 4px 6px rgba(0, 0, 0, 0.12), 0px 12px 13px rgba(0, 0, 0, 0.17), 0px -3px 5px rgba(0, 0, 0, 0.09);
     --shadow-border: 0px 1px 3px 0px rgba(0, 0, 0, 0.02), 0px 0px 0px 1px rgba(27, 31, 35, 0.15);
     --shadow-inset-xs: 0px 2px 4px 0px rgba(0, 0, 0, 0.06) inset;
-    --shadow-inset-sm: 0px 30px 60px -12px rgba(50, 50, 93, 0.25) inset,
-        0px 18px 36px -18px rgba(0, 0, 0, 0.3) inset;
+    --shadow-inset-sm:
+        0px 30px 60px -12px rgba(50, 50, 93, 0.25) inset, 0px 18px 36px -18px rgba(0, 0, 0, 0.3) inset;
 
     /* Animations */
 
