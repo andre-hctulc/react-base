@@ -110,8 +110,8 @@ export const Summary: FC<SummaryProps> = (props) => {
                         typeof renderedValue === "string"
                             ? renderedValue
                             : !renderedValue
-                            ? String(value)
-                            : undefined;
+                              ? String(value)
+                              : undefined;
 
                     return (
                         <tr key={key} className="">
@@ -131,7 +131,7 @@ export const Summary: FC<SummaryProps> = (props) => {
                                         </Icon>
                                     )}
                                     {!fieldModel?.label || typeof fieldModel.label === "string" ? (
-                                        <span className="text-t2 text-sm">{fieldModel?.label ?? key}</span>
+                                        <span className="text-t-2 text-sm">{fieldModel?.label ?? key}</span>
                                     ) : (
                                         fieldModel?.label
                                     )}
@@ -151,7 +151,7 @@ export const Summary: FC<SummaryProps> = (props) => {
                                             {strValue !== undefined ? (
                                                 <span className="text-sm">
                                                     {value == null ? (
-                                                        <i className="text-t3">{emptyPlaceholder}</i>
+                                                        <i className="text-t-3">{emptyPlaceholder}</i>
                                                     ) : (
                                                         strValue
                                                     )}

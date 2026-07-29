@@ -36,8 +36,8 @@ export interface AvatarLikeTheme extends BaseTheme, WithBorder, WithPadding, Wit
 const avatarLike = createTheme<AvatarLikeTheme>({
     base: "flex items-center justify-center overflow-hidden shrink-0 aspect-square transition",
     color: {
-        default: "bg-paper-2 text-t2",
-        dark: "bg-paper-3 text-t3",
+        default: "bg-paper-2 text-t-2",
+        dark: "bg-paper-3 text-t-3",
         primary: "bg-primary text-primary-contrast",
         secondary: "bg-secondary text-secondary-contrast",
         success: "bg-success text-success-contrast",

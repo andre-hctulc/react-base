@@ -34,17 +34,18 @@ Extend the base theme
 
     /* === Text Colors === */
 
-    --color-t1: rgb(0, 0, 0);
-    --color-t2: var(--color-gray-700);
-    --color-t3: var(--color-gray-500);
-    --color-t4: var(--color-gray-400);
-    --color-t5: var(--color-gray-300);
+    --color-t: var(--color-t-1);
+    --color-t-1: rgb(0, 0, 0);
+    --color-t-2: var(--color-gray-700);
+    --color-t-3: var(--color-gray-500);
+    --color-t-4: var(--color-gray-400);
+    --color-t-5: var(--color-gray-300);
 
     /* text contrast */
-    --color-tc1: rgb(255, 255, 255);
     --color-tc: var(--color-tc1);
-    --color-tc2: var(--color-gray-300);
-    --color-tc3: var(--color-gray-400);
+    --color-tc-1: rgb(255, 255, 255);
+    --color-tc-2: var(--color-gray-300);
+    --color-tc-3: var(--color-gray-400);
 
     /* === Border Colors === */
 

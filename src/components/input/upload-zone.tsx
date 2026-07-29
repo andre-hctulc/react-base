@@ -78,7 +78,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
         updateFiles(
             files.filter((file) => fileId(file) !== findId),
             false,
-            true
+            true,
         );
     };
 
@@ -109,7 +109,7 @@ export const UploadZone: FC<UploadZoneProps> = ({
                     "grow min-h-0 overflow-y-auto flex flex-col items-center justify-center gap-3 p-5",
                     !props.disabled && "cursor-pointer",
                     "border-[1.5px] rounded-lg border-dashed transition hover:bg-primary/5 hover:border-info",
-                    mainProps?.className
+                    mainProps?.className,
                 )}
                 onClick={(e) => {
                     input.current?.click();
@@ -128,11 +128,11 @@ export const UploadZone: FC<UploadZoneProps> = ({
                 )}
                 <p {...textProps}>{text || "Upload"}</p>
                 {secondaryText !== "" && (
-                    <p className="text-sm text-t2">{secondaryText || "Select or drop a File"}</p>
+                    <p className="text-sm text-t-2">{secondaryText || "Select or drop a File"}</p>
                 )}
             </Droppable>
-            {props.renderFiles === "menu" &&
-                null
+            {
+                props.renderFiles === "menu" && null
                 /* <List
                     rounded="sm"
                     className="mt-2"

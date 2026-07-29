@@ -31,8 +31,7 @@ declare module "flowbite-react/types" {
     }
 }
 
-export interface StatTheme
-    extends BaseTheme, WithShadow, WithBorder, WithFit, WithSize, WithColor {}
+export interface StatTheme extends BaseTheme, WithShadow, WithBorder, WithFit, WithSize, WithColor {}
 
 const stat = createTheme<StatTheme>({
     base: "bg-paper-2 rounded-lg",
@@ -179,7 +178,7 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
                     {...descriptionProps}
                     className={twMerge(
                         "text-[0.9em]",
-                        isDefaultColor && "text-t2",
+                        isDefaultColor && "text-t-2",
                         descriptionProps?.className,
                     )}
                 >

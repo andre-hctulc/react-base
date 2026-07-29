@@ -78,7 +78,7 @@ const simpleCard = createTheme<SimpleCardTheme>({
         ...withPadding,
     },
     paragraph: {
-        base: "text-t3 mt-1",
+        base: "text-t-3 mt-1",
         size: {
             xs: "text-xs",
             sm: "text-xs",
@@ -94,7 +94,7 @@ const simpleCard = createTheme<SimpleCardTheme>({
         },
     },
     title: {
-        base: "text-t2 font-medium",
+        base: "text-t-2 font-medium",
         size: {
             xs: "text-xs",
             sm: "text-sm",

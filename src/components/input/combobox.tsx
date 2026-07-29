@@ -62,7 +62,7 @@ const combobox = createTheme<ComboboxTheme>({
             lg: "h-11text-base",
         },
         disabled: {
-            on: "cursor-not-allowed text-t3",
+            on: "cursor-not-allowed text-t-3",
             off: "",
         },
         defaultVariants: {
@@ -211,10 +211,10 @@ export const Combobox = <V = string, D = any>(props: ComboboxProps<D>) => {
     );
     const hasOptions = activeOptions.length > 0;
 
-    const loadingEl = <span className="text-t3 truncate">{loadingText ?? "Loading..."}</span>;
+    const loadingEl = <span className="text-t-3 truncate">{loadingText ?? "Loading..."}</span>;
 
     const placeholderEl =
-        typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
+        typeof placeholder === "string" ? <span className="text-t-3">{placeholder}</span> : placeholder;
     const _disabled = loading || readOnly || !!props.disabled;
 
     const optionsRef = useRefOf(options);
@@ -335,7 +335,7 @@ export const Combobox = <V = string, D = any>(props: ComboboxProps<D>) => {
                             {loading ? loadingEl : activeChoices.length ? selectedEl : placeholderEl}
                         </div>
                     </XScroll>
-                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t2 text-base">
+                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t-2 text-base">
                         {icon || <ChevronDownIcon />}
                     </span>
                 </button>
