@@ -1,6 +1,6 @@
 {
     "name": "@dre44/react-base",
-    "version": "0.5.0",
+    "version": "0.12.0",
     "main": "dist/index.js",
     "type": "module",
     "publishConfig": {
@@ -18,7 +18,10 @@
         "tc": "tsc --noEmit -p tsconfig.build.json",
         "tc:watch": "tsc --watch --noEmit -p tsconfig.build.json",
         "prebuild": "rm -rf dist",
-        "build": "tsc -p tsconfig.build.json && copyfiles -u 1 src/**/*.css dist/",
+        "build": "npm run build:ts && npm run build:css && npm run build:flowbite",
+        "build:ts": "tsc -p tsconfig.build.json",
+        "build:css": "copyfiles -u 1 src/**/*.css dist/",
+        "build:flowbite": "flowbite-react build",
         "lint": "npx eslint src",
         "demo": "npx serve -s ./demo-build -p 3065",
         "demo:prepare": "node --loader ts-node/esm scripts/build-comp-demos.ts",
@@ -29,10 +32,12 @@
     },
     "dependencies": {
         "@dre44/util": "^0.26.0",
-        "dot-prop": "^9.0.0",
-        "flowbite-react": "^0.12.17",
-        "react": "^19.2.0",
-        "react-dom": "^19.1.0"
+        "dot-prop": "^9.0.0"
+    },
+    "peerDependencies": {
+        "flowbite-react": "^0",
+        "react": "^19",
+        "react-dom": "^19"
     },
     "devDependencies": {
         "@chromatic-com/storybook": "^3.2.6",
@@ -46,9 +51,9 @@
         "@storybook/test": "^8.6.7",
         "@tailwindcss/postcss": "^4",
         "@tailwindcss/vite": "^4.0.14",
-        "@types/node": "^20",
-        "@types/react": "^19.2.2",
-        "@types/react-dom": "^19.1.6",
+        "@types/node": "^20.19.43",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
         "@vitest/browser": "^3.0.9",
         "@vitest/coverage-v8": "^3.0.9",
         "copyfiles": "^2.4.1",

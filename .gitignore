@@ -1,25 +1,23 @@
 #### Code ####
-
 node_modules
 dist
 
 #### Docs ####
-
 docs/hidden.md
 
 #### VS Code ####
-
 .vscode
 *.code-workspace
 
 #### Disk ####
-
 .DS_Store
 
 #### Storybook ####
-
 storybook-static
 *storybook.log
 
 #### turbo ####
 .turbo
+
+#### Flowbite React ####
+.flowbite-react/class-list.json

@@ -33,7 +33,7 @@ export interface SubtitleTheme extends BaseTheme, WithMargin, WithLineClamp {
 }
 
 const subtitle = createTheme<SubtitleTheme>({
-    base: "text-t2",
+    base: "text-t-2",
     variant: {
         h2: "text-xl",
         h3: "text-lg",

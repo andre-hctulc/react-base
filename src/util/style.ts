@@ -73,19 +73,25 @@ export type ThemeProps<T> = Omit<
     keyof BaseTheme
 >;
 
-export type FlattenOneLevel<T> = {
-    [K in keyof T as T[K] extends object ? keyof T[K] : K]: T[K] extends object ? T[K][keyof T[K]] : T[K];
-};
-
 /**
  * Flattens compound theming props.
  * Meaning that all sub themes share the same value space.
  */
-export type CompoundThemingProps<T> = Partial<
-    FlattenOneLevel<{
-        [K in keyof T]: ThemeProps<T[K]>;
-    }>
->;
+type UnionKeys<T> = T extends unknown ? keyof T : never;
+type UnionValue<T, K extends PropertyKey> = T extends unknown ? (K extends keyof T ? T[K] : never) : never;
+
+export type CompoundThemingProps<T> = Partial<{
+    [K in UnionKeys<
+        {
+            [P in keyof T]: ThemeProps<T[P]>;
+        }[keyof T]
+    >]: UnionValue<
+        {
+            [P in keyof T]: ThemeProps<T[P]>;
+        }[keyof T],
+        K
+    >;
+}>;
 
 /**
  * If the *root* key is present, the theme is interpreted as a compound theme.
@@ -96,9 +102,14 @@ export type TProps<T> = ThemingProps<T> & ("root" extends keyof T ? CompoundThem
 /**
  * Collects css classes from a theme object based on the provided props.
  */
-export function collectClasses(theme: object, props: any, collectClassNameFromProps: boolean): string {
+export function collectClasses(
+    theme: object,
+    props: any,
+    collectClassNameFromProps: boolean,
+    defaultVariants?: Record<string, any>,
+): string {
     const rootClasses: string[] = [];
-    const defaultVariants = (theme as any).defaultVariants as Record<string, any> | undefined;
+    const defaults = defaultVariants || (theme as any).defaultVariants || {};
 
     if (collectClassNameFromProps && typeof props.className === "string") {
         rootClasses.push(props.className);
@@ -108,7 +119,7 @@ export function collectClasses(theme: object, props: any, collectClassNameFromPr
         // skip default values definition
         if (key === "defaultVariants") continue;
 
-        const defaultValue = defaultVariants ? defaultVariants[key] : undefined;
+        const defaultValue = defaults ? defaults[key] : undefined;
 
         if (typeof themeValue === "string") {
             rootClasses.push(themeValue);
@@ -243,12 +254,12 @@ export const justifyContent: Record<JustifyContent, string> = {
 // #### Size ####
 
 export interface WithSize {
-    size: FlowbiteSizes;
+    size: Partial<FlowbiteSizes>;
 }
 // #### Color ####
 
 export interface WithColor {
-    color: FlowbiteColors;
+    color: Partial<FlowbiteColors>;
 }
 
 // #### Width/Height ####
@@ -451,39 +462,6 @@ export const withSpacing: WithSpacing = {
     spaceY: addNone(createDefaultSizeTheme("space-y")),
 };
 
-// #### Border ####
-
-export interface BorderOptions {
-    on: string;
-    off: string;
-    thin: string;
-    thicker: string;
-    thick: string;
-    thinnest: string;
-}
-
-export type BorderColor = "divider" | "divider-dark";
-
-export interface WithBorder {
-    border: BorderOptions;
-    borderColor: Record<BorderColor, string>;
-}
-
-export const withBorder: WithBorder = {
-    border: {
-        on: "border",
-        off: "border-0",
-        thinnest: "border-[0.5px]",
-        thin: "border-[0.5px]",
-        thicker: "border-[1.5px]",
-        thick: "border-2",
-    },
-    borderColor: {
-        divider: "border-divider",
-        "divider-dark": "border-divider-dark",
-    },
-};
-
 // #### Scroll ####
 
 export interface WithScroll {
@@ -538,7 +516,7 @@ export interface WithShape {
     shape: Record<Shape, string>;
 }
 
-export const shape: Record<Shape, string> = {
+export const shapes: Record<Shape, string> = {
     "rounded-xs": "rounded-xs",
     "rounded-sm": "rounded-sm",
     "rounded-md": "rounded",
@@ -638,4 +616,39 @@ export const textSize: Record<keyof FlowbiteSizes | "base", string> = {
 
 export const withTextSize: WithTextSize = {
     textSize,
+};
+
+// #### Border ####
+
+export interface BorderOptions {
+    on: string;
+    off: string;
+    thin: string;
+    thicker: string;
+    thick: string;
+    thinnest: string;
+}
+
+export type BorderColor = "divider" | "divider-dark";
+
+export interface WithBorder {
+    border: BorderOptions;
+    borderColor: Record<BorderColor, string>;
+    shape: Record<Shape, string>;
+}
+
+export const withBorder: WithBorder = {
+    border: {
+        on: "border",
+        off: "border-0",
+        thinnest: "border-[0.5px]",
+        thin: "border-[0.5px]",
+        thicker: "border-[1.5px]",
+        thick: "border-2",
+    },
+    borderColor: {
+        divider: "border-divider",
+        "divider-dark": "border-divider-dark",
+    },
+    shape: shapes,
 };

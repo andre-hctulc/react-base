@@ -49,7 +49,7 @@ const combobox = createTheme<ComboboxTheme>({
     root: { base: "" },
     button: {
         base: twMerge([
-            "w-full rounded-lg bg-paper2 text-left text-sm cursor-pointer",
+            "w-full rounded-lg bg-paper-2 text-left text-sm cursor-pointer",
             "flex relative",
             "h-full w-full",
             "py-1.5 pr-9 pl-3 gap-3",
@@ -61,7 +61,7 @@ const combobox = createTheme<ComboboxTheme>({
             lg: "h-11text-base",
         },
         disabled: {
-            on: "cursor-not-allowed text-t3",
+            on: "cursor-not-allowed text-t-3",
             off: "",
         },
         defaultVariants: {
@@ -234,10 +234,10 @@ export const Combobox = <V extends any = string, D = any>(props: ComboboxProps<D
         </span>
     );
 
-    const loadingEl = <span className="text-t3 truncate">{loadingText ?? "Loading..."}</span>;
+    const loadingEl = <span className="text-t-3 truncate">{loadingText ?? "Loading..."}</span>;
 
     const placeholderEl =
-        typeof placeholder === "string" ? <span className="text-t3">{placeholder}</span> : placeholder;
+        typeof placeholder === "string" ? <span className="text-t-3">{placeholder}</span> : placeholder;
     const _disabled = loading || readOnly || !!props.disabled;
 
     const optionsRef = useRefOf(options);
@@ -388,7 +388,7 @@ export const Combobox = <V extends any = string, D = any>(props: ComboboxProps<D
                             {loading ? loadingEl : activeChoices.length ? selectedEl : placeholderEl}
                         </div>
                     </XScroll>
-                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t2 text-base">
+                    <span className="absolute translate-y-[-50%] top-[50%] right-3 text-t-2 text-base">
                         {icon || <ChevronDownIcon />}
                     </span>
                 </button>

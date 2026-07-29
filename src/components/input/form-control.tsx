@@ -6,7 +6,6 @@ import { ErrorText } from "../text/error-text.js";
 import { createTheme, HelperText, Label } from "flowbite-react";
 import { withGap, type BaseTheme, type TProps, type WithGap } from "../../util/style.js";
 import { useResolveT } from "../../hooks/index.js";
-import type { FlowbiteBoolean } from "flowbite-react/types";
 import { useJSForm } from "./js-form-context.js";
 import { twMerge } from "flowbite-react/helpers/tailwind-merge";
 
@@ -21,32 +20,23 @@ declare module "flowbite-react/types" {
 }
 
 export interface FormControlTheme {
-    root: BaseTheme &
-        WithGap & {
-            horizontal: FlowbiteBoolean;
-        };
-    body: BaseTheme & WithGap & {};
+    root: BaseTheme & WithGap;
+    horizontalWrapper: BaseTheme & WithGap;
 }
 
 const formControl = createTheme<FormControlTheme>({
     root: {
-        base: "flex",
-        horizontal: {
-            on: "",
-            off: "flex-col",
-        },
-        ...withGap,
-        defaultVariants: {
-            gap: "sm",
-            horizontal: "off",
-        },
-    },
-    body: {
         base: "flex flex-col",
         ...withGap,
         defaultVariants: {
+            gap: "sm",
+        },
+    },
+    horizontalWrapper: {
+        base: "flex items-center",
+        ...withGap,
+        defaultVariants: {
             gap: "md",
-            horizontal: "off",
         },
     },
 });
@@ -70,19 +60,18 @@ export type FormControlProps = TProps<FormControlTheme> &
         helperText?: string;
         helperTextProps?: PartialPropsOf<typeof HelperText>;
         errorTextProps?: PartialPropsOf<typeof ErrorText>;
-        horizontal?: boolean;
         labelWidth?: string | number;
         /**
          * Set to true, to prevent any error message from showing
          */
         noError?: boolean;
-        helperTextTop?: boolean;
         /**
          * Indicates that the label is not labeling a valid input element (e.g. in combination with hidden inputs).
          *
          * In this case a span is used instead of a label element.
          */
         mimic?: boolean;
+        horizontal?: boolean;
         requiredHint?: boolean;
     };
 
@@ -92,7 +81,7 @@ export type FormControlProps = TProps<FormControlTheme> &
  * Consumes {@link JSFormContext}, to handle {@link JSForm} default value state.
  */
 export const FormControl: FC<FormControlProps> = (props) => {
-    const { classNames, restProps, children } = useResolveT("formControl", formControl, props);
+    const { classNames, restProps, children, theme } = useResolveT("formControl", formControl, props);
     const {
         noError,
         errorText,
@@ -103,10 +92,11 @@ export const FormControl: FC<FormControlProps> = (props) => {
         label,
         helperText,
         helperTextProps,
-        helperTextTop,
         errorTextProps,
         requiredHint,
         labelProps,
+        labelWidth,
+        horizontal,
         ...rootProps
     } = restProps;
     const formCtx = useJSForm();
@@ -150,40 +140,51 @@ export const FormControl: FC<FormControlProps> = (props) => {
         }
     }
 
-    const body = (
-        <div className={classNames.body}>
-            {helperText && helperTextTop && (
-                <HelperText {...helperTextProps} className={twMerge("m-0", helperTextProps?.className)}>
-                    {helperText}
-                </HelperText>
-            )}
-            {childElement ? cloneElement(childElement, inpProps) : children}
-            {helperText && !helperTextTop && (
-                <HelperText {...helperTextProps} className={twMerge("m-0", helperTextProps?.className)}>
-                    {helperText}
-                </HelperText>
-            )}
-            {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
-        </div>
-    );
-    const lbl =
-        label &&
-        (mimic ? (
+    const inp = childElement ? cloneElement(childElement, inpProps) : children;
+
+    const helperTexts =
+        !!helperText || !!errText ? (
+            <div className="space-y-2">
+                {helperText && (
+                    <HelperText {...helperTextProps} className={twMerge("mt-0", helperTextProps?.className)}>
+                        {helperText}
+                    </HelperText>
+                )}
+                {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
+            </div>
+        ) : null;
+
+    const lbl = label ? (
+        mimic ? (
             <span>
                 {label}
-                {requiredHint && ` *`}
+                {requiredHint && " *"}
             </span>
         ) : (
             <Label htmlFor={id} {...labelProps}>
                 {label}
-                {requiredHint && ` *`}
+                {requiredHint && " *"}
             </Label>
-        ));
+        )
+    ) : null;
 
-    return (
-        <div ref={ref} className={classNames.root} {...rootProps}>
-            {lbl}
-            {body}
-        </div>
-    );
+    if (horizontal) {
+        return (
+            <div ref={ref} className={classNames.root} {...rootProps}>
+                <div className={classNames.horizontalWrapper}>
+                    {lbl}
+                    {inp}
+                </div>
+                {helperTexts}
+            </div>
+        );
+    } else {
+        return (
+            <div ref={ref} className={classNames.root} {...rootProps}>
+                {lbl}
+                {inp}
+                {helperTexts}
+            </div>
+        );
+    }
 };

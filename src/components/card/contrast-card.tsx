@@ -26,9 +26,9 @@ export interface ContrastCardTheme extends BaseTheme {
 const contrastCard = createTheme<ContrastCardTheme>({
     base: "shadow-none border-none",
     contrast: {
-        light: "bg-paper2",
-        dark: "bg-paper3",
-        darkest: "bg-paper4",
+        light: "bg-paper-2",
+        dark: "bg-paper-3",
+        darkest: "bg-paper-4",
     },
     defaultVariants: {
         contrast: "light",

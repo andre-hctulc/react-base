@@ -6,7 +6,7 @@ import "./skeleton.css";
 import { withPrefix } from "../../util/system.js";
 import type { ElementType } from "react";
 import {
-    shape,
+    shapes,
     withMargin,
     withPadding,
     withWidthAndHeight,
@@ -34,7 +34,7 @@ export interface SkeletonTheme extends BaseTheme, WithShape, WithPadding, WithMa
 
 const skeleton = createTheme<SkeletonTheme>({
     base: [withPrefix("Skeleton"), "animate-skeleton"].join(" "),
-    shape,
+    shape: shapes,
     ...withPadding,
     ...withMargin,
     ...withWidthAndHeight,

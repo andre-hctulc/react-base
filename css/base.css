@@ -9,11 +9,13 @@ Usage:
 
 */
 
-/* Reference compiled source! */
-@source "../dist";
-@source "./defaults.css";
-
 /* Import all css assets here */
 @import "./theme.css";
 @import "./safelist.css";
 @import "./defaults.css";
+
+/* Reference compiled source! */
+@source "../dist";
+
+/* Reference flowbite component classes */
+@source "../.flowbite-react/class-list.json";

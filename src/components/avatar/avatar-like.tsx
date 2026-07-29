@@ -4,7 +4,6 @@ import { type ElementType, type FC } from "react";
 import type { RichAsProps } from "../../types/index.js";
 import {
     shadow,
-    shape,
     withBorder,
     withPadding,
     type BaseTheme,
@@ -28,7 +27,7 @@ declare module "flowbite-react/types" {
     }
 }
 
-export interface AvatarLikeTheme extends BaseTheme, WithShape, WithBorder, WithPadding, WithShadow {
+export interface AvatarLikeTheme extends BaseTheme, WithBorder, WithPadding, WithShadow {
     bold: FlowbiteBoolean;
     color: FlowbiteColors;
     size: FlowbiteSizes & NoneOption;
@@ -36,10 +35,9 @@ export interface AvatarLikeTheme extends BaseTheme, WithShape, WithBorder, WithP
 
 const avatarLike = createTheme<AvatarLikeTheme>({
     base: "flex items-center justify-center overflow-hidden shrink-0 aspect-square transition",
-    shape,
     color: {
-        default: "bg-paper2 text-t2",
-        dark: "bg-paper3 text-t3",
+        default: "bg-paper-2 text-t-2",
+        dark: "bg-paper-3 text-t-3",
         primary: "bg-primary text-primary-contrast",
         secondary: "bg-secondary text-secondary-contrast",
         success: "bg-success text-success-contrast",
