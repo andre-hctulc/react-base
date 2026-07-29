@@ -35,7 +35,7 @@ export interface StatTheme
     extends BaseTheme, WithShadow, WithBorder, WithFit, WithSize, WithColor {}
 
 const stat = createTheme<StatTheme>({
-    base: "bg-paper2 rounded-lg",
+    base: "bg-paper-2 rounded-lg",
     shadow,
     ...withBorder,
     ...withFit,

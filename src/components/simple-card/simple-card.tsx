@@ -54,7 +54,7 @@ export interface SimpleCardTheme extends WithDefaultVariants {
 
 const simpleCard = createTheme<SimpleCardTheme>({
     root: {
-        base: "border border-divider bg-paper3",
+        base: "border border-divider bg-paper-3",
         size: {
             xs: "px-2 py-1 gap-0.5",
             sm: "px-3 py-2 gap-0.5",

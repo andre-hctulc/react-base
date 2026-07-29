@@ -22,7 +22,7 @@ export const ClipboardIconButton = <T extends ElementType = "button">({
     ...props
 }: ClipboardIconButtonProps<T>) => {
     const [copied, setCopied] = useState(false);
-    const currentTimeout = useRef<NodeJS.Timeout | null>(null);
+    const currentTimeout = useRef<any>(null);
 
     return (
         <IconButton<"button">

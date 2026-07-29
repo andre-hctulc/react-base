@@ -50,7 +50,7 @@ const combobox = createTheme<ComboboxTheme>({
     root: { base: "" },
     button: {
         base: twMerge([
-            "w-full rounded-lg bg-paper2 text-left text-sm cursor-pointer",
+            "w-full rounded-lg bg-paper-2 text-left text-sm cursor-pointer",
             "flex relative",
             "h-full w-full",
             "py-1.5 pr-9 pl-3 gap-3",

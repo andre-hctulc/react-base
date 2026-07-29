@@ -27,7 +27,7 @@ export function useCssTransition(
 
     const [mounted, setMounted] = useState(show);
     const elementRef = useRef<HTMLElement>(null);
-    const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
+    const timeoutRef = useRef<any>(undefined);
     const transitionEndListenerRef = useRef<((event: TransitionEvent) => void) | null>(null);
     const hasInitialized = useRef(false);
 
