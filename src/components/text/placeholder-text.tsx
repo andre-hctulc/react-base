@@ -29,9 +29,9 @@ const placeholderText = createTheme<PlaceholderTextTheme>({
     ...withMargin,
     ...withLineClamp,
     variant: {
-        primary: "text-t2",
-        secondary: "text-t3 text-sm",
-        tertiary: "text-t4 text-xs",
+        primary: "text-t-2",
+        secondary: "text-t-3 text-sm",
+        tertiary: "text-t-4 text-xs",
     },
     italic: {
         on: "italic",

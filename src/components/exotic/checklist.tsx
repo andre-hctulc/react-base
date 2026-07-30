@@ -188,7 +188,7 @@ export const Checklist: FC<ChecklistProps> = (props) => {
                                     className={twMerge(
                                         iconClasses,
                                         iconProps?.className,
-                                        item.iconProps?.className
+                                        item.iconProps?.className,
                                     )}
                                 >
                                     {checked ? cIcon : uncIcon}
@@ -206,10 +206,10 @@ export const Checklist: FC<ChecklistProps> = (props) => {
                                         {...item.textProps}
                                         className={twMerge(
                                             textClasses,
-                                            item.disabled && "text-t4 line-through",
-                                            item.secondary && "text-t3",
+                                            item.disabled && "text-t-4 line-through",
+                                            item.secondary && "text-t-3",
                                             item.textProps?.className,
-                                            textProps?.className
+                                            textProps?.className,
                                         )}
                                     >
                                         {item.text}
@@ -220,10 +220,10 @@ export const Checklist: FC<ChecklistProps> = (props) => {
                                         {...secondaryTextProps}
                                         {...item.secondaryTextProps}
                                         className={twMerge(
-                                            " text-t2",
+                                            " text-t-2",
                                             secTextClasses,
                                             secondaryTextProps?.className,
-                                            item.secondaryTextProps?.className
+                                            item.secondaryTextProps?.className,
                                         )}
                                     >
                                         {item.secondaryText}

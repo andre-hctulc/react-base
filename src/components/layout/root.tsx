@@ -5,9 +5,11 @@ import { createTheme } from "flowbite-react/helpers/create-theme";
 import {
     flexDirection,
     flexGrow,
+    overflow,
     withHeight,
     withScroll,
     type BaseTheme,
+    type Overflow,
     type TProps,
     type WithFlexDirection,
     type WithGrow,
@@ -29,6 +31,7 @@ declare module "flowbite-react/types" {
 
 export interface RootTheme extends BaseTheme, WithFlexDirection, WithHeight, WithGrow, WithScroll {
     relative: FlowbiteBoolean;
+    overflow: Overflow;
     bg: Record<"none" | "1" | "2" | "3" | "4", string>;
 }
 
@@ -37,6 +40,7 @@ const root = createTheme<RootTheme>({
     direction: flexDirection,
     ...withHeight,
     grow: flexGrow,
+    overflow,
     ...withScroll,
     relative: {
         on: "relative",
@@ -45,9 +49,9 @@ const root = createTheme<RootTheme>({
     bg: {
         none: "",
         "1": "bg-paper",
-        "2": "bg-paper2",
-        "3": "bg-paper3",
-        "4": "bg-paper4",
+        "2": "bg-paper-2",
+        "3": "bg-paper-3",
+        "4": "bg-paper-4",
     },
     defaultVariants: {
         direction: "col",

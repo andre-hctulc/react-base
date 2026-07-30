@@ -41,7 +41,7 @@ interface UseTCompoundResult<T = any, P = any> extends UseTBaseResult<T, P> {
     /**
      * The computed className for the component
      */
-    classNames: Record<keyof T, string>;
+    classNames: Record<Exclude<keyof T, "defaultVariants">, string>;
 }
 
 /**
@@ -89,7 +89,7 @@ export function useResolveT<T = any, P = any>(
         baseResult.classNames = Object.keys(theme as object).reduce(
             (acc, partName) => {
                 const subTheme = theme[partName];
-                acc[partName] = collectClasses(subTheme, props, partName === "root");
+                acc[partName] = collectClasses(subTheme, props, partName === "root", theme.defaultVariants);
                 delThemeProps(subTheme);
                 return acc;
             },

@@ -1,10 +1,5 @@
 import { getProperty, setProperty } from "dot-prop";
-<<<<<<< HEAD:src/components/input/js-form/helpers.ts
-import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./types.js";
-import type { ZodType } from "zod";
-=======
 import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./js-form-types.js";
->>>>>>> 716e27b234c7b97964efa8cb8907f8b51207fb84:src/components/input/js-form-helpers.ts
 
 type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 

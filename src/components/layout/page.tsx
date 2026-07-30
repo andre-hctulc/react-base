@@ -59,9 +59,9 @@ const page = createTheme<PageTheme>({
     bg: {
         none: "",
         "1": "bg-paper",
-        "2": "bg-paper2",
-        "3": "bg-paper3",
-        "4": "bg-paper4",
+        "2": "bg-paper-2",
+        "3": "bg-paper-3",
+        "4": "bg-paper-4",
     },
     defaultVariants: {
         width: "md",

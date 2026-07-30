@@ -7,50 +7,60 @@ Extend the base theme
 */
 
 @theme {
-    /* Background Colors */
+    --react-base-theme-mounted: "true";
 
-    --color-paper1: var(--color-white);
-    --color-paper: var(--color-paper1);
-    --color-paper2: var(--color-gray-50);
-    --color-paper3: var(--color-gray-100);
-    --color-paper4: var(--color-gray-200);
-    --color-paper5: var(--color-gray-300);
+    /* === Flowbite-aligned semantic aliases === */
+
+    --color-background: var(--color-paper);
+    --color-foreground: var(--color-t1);
+    --color-muted-foreground: var(--color-t3);
+    --color-surface: #ffffff;
+    --color-surface-alt: var(--color-gray-50);
+    --color-border: var(--color-divider-light);
+
+    /* === Background Colors === */
+
+    --color-paper: var(--color-paper-1);
+    --color-paper-1: var(--color-white);
+    --color-paper-2: var(--color-gray-50);
+    --color-paper-3: var(--color-gray-100);
+    --color-paper-4: var(--color-gray-200);
+    --color-paper-5: var(--color-gray-300);
+    --color-transparent: transparent;
     --color-transparent1: rgba(128, 128, 128, 0.05);
     --color-transparent2: rgba(128, 128, 128, 0.1);
     --color-transparent3: rgba(128, 128, 128, 0.2);
     --color-transparent4: rgba(128, 128, 128, 0.3);
 
-    /* Text  Colors */
+    /* === Text Colors === */
 
-    --color-t1: rgb(0, 0, 0);
-    --color-t2: rgb(94, 94, 94);
-    --color-t3: rgb(151, 151, 151);
-    --color-t4: rgb(178, 178, 178);
-    --color-t5: rgb(204, 204, 204);
+    --color-t: var(--color-t-1);
+    --color-t-1: rgb(0, 0, 0);
+    --color-t-2: var(--color-gray-700);
+    --color-t-3: var(--color-gray-500);
+    --color-t-4: var(--color-gray-400);
+    --color-t-5: var(--color-gray-300);
 
-    /* tc=text-contrast */
-    --color-tc1: rgb(255, 255, 255);
+    /* text contrast */
     --color-tc: var(--color-tc1);
-    --color-tc2: rgb(204, 204, 204);
-    --color-tc3: rgb(153, 153, 153);
+    --color-tc-1: rgb(255, 255, 255);
+    --color-tc-2: var(--color-gray-300);
+    --color-tc-3: var(--color-gray-400);
 
-    /* Border Colors */
+    /* === Border Colors === */
 
-    --color-divider: rgb(204, 204, 204);
-    --color-divider-light: rgb(224, 224, 224);
-    --color-divider-dark: rgb(102, 102, 102);
+    --color-divider: var(--color-gray-300);
+    --color-divider-light: var(--color-gray-200);
+    --color-divider-dark: var(--color-gray-400);
     --border-current: var(--color-divider);
 
-    /* 
-    Base Color Palettes
-
-    For base colors no css vars exist by default, so we need to define them here, 
-    so wen can reference them later as css vars. E.g. in semantic color palettes.
-    */
+    /* === Base Color Palettes === */
 
     --color-white: #ffffff;
+    --color-black: #000000;
 
     /* Red */
+    --color-red: var(--color-red-500);
     --color-red-50: #fef2f2;
     --color-red-100: #fee2e2;
     --color-red-200: #fecaca;
@@ -63,7 +73,7 @@ Extend the base theme
     --color-red-900: #7f1d1d;
 
     /* Gray */
-
+    --color-gray: var(--color-gray-500);
     --color-gray-50: #f9fafb;
     --color-gray-100: #f3f4f6;
     --color-gray-200: #e5e7eb;
@@ -76,6 +86,7 @@ Extend the base theme
     --color-gray-900: #111827;
 
     /* Yellow */
+    --color-yellow: var(--color-yellow-500);
     --color-yellow-50: #fefce8;
     --color-yellow-100: #fef9c3;
     --color-yellow-200: #fef08a;
@@ -88,6 +99,7 @@ Extend the base theme
     --color-yellow-900: #713f12;
 
     /* Green */
+    --color-green: var(--color-green-500);
     --color-green-50: #f0fdf4;
     --color-green-100: #dcfce7;
     --color-green-200: #bbf7d0;
@@ -100,6 +112,7 @@ Extend the base theme
     --color-green-900: #14532d;
 
     /* Blue */
+    --color-blue: var(--color-blue-500);
     --color-blue-50: #eff6ff;
     --color-blue-100: #dbeafe;
     --color-blue-200: #bfdbfe;
@@ -112,6 +125,7 @@ Extend the base theme
     --color-blue-900: #1e3a8a;
 
     /* Purple */
+    --color-purple: var(--color-purple-500);
     --color-purple-50: #faf5ff;
     --color-purple-100: #f3e8ff;
     --color-purple-200: #e9d5ff;
@@ -123,11 +137,7 @@ Extend the base theme
     --color-purple-800: #6b21a8;
     --color-purple-900: #581c87;
 
-    /* 
-    Semantic Color Palettes 
-    
-    We add semantic colors as aliases to the existing color palette.
-    */
+    /* === Semantic Color Palettes === */
 
     /* Primary Colors - Blue */
     --color-primary: var(--color-primary-500);
@@ -240,19 +250,20 @@ Extend the base theme
     --color-secondary-800: var(--color-purple-800);
     --color-secondary-900: var(--color-purple-900);
 
-    /* Shadows */
+    /* === Shadows === */
 
     --shadow-even-sm: 0px 2px 8px 0px rgba(99, 99, 99, 0.2);
     --shadow-even: 0px 4px 12px rgba(0, 0, 0, 0.1);
     --shadow-even-md: 0px 5px 15px rgba(0, 0, 0, 0.35);
-    --shadow-even-lg: 0px 54px 55px rgba(0, 0, 0, 0.25), 0px -12px 30px rgba(0, 0, 0, 0.12),
+    --shadow-even-lg:
+        0px 54px 55px rgba(0, 0, 0, 0.25), 0px -12px 30px rgba(0, 0, 0, 0.12),
         0px 4px 6px rgba(0, 0, 0, 0.12), 0px 12px 13px rgba(0, 0, 0, 0.17), 0px -3px 5px rgba(0, 0, 0, 0.09);
     --shadow-border: 0px 1px 3px 0px rgba(0, 0, 0, 0.02), 0px 0px 0px 1px rgba(27, 31, 35, 0.15);
     --shadow-inset-xs: 0px 2px 4px 0px rgba(0, 0, 0, 0.06) inset;
-    --shadow-inset-sm: 0px 30px 60px -12px rgba(50, 50, 93, 0.25) inset,
-        0px 18px 36px -18px rgba(0, 0, 0, 0.3) inset;
+    --shadow-inset-sm:
+        0px 30px 60px -12px rgba(50, 50, 93, 0.25) inset, 0px 18px 36px -18px rgba(0, 0, 0, 0.3) inset;
 
-    /* Animations */
+    /* === Animations === */
 
     --animate-skeleton: skeleton 1.5s ease-in-out infinite;
 

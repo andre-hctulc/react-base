@@ -32,12 +32,7 @@ declare module "flowbite-react/types" {
 }
 
 export interface PlaceholderTheme
-    extends BaseTheme,
-        WithGap,
-        WithPadding,
-        WithGrow,
-        WithWidthAndHeight,
-        WithMargin {}
+    extends BaseTheme, WithGap, WithPadding, WithGrow, WithWidthAndHeight, WithMargin {}
 
 const placeholder = createTheme<PlaceholderTheme>({
     base: "flex flex-col items-center justify-center",
@@ -84,7 +79,7 @@ export const Placeholder = <A extends ElementType = "div">(props: PlaceholderPro
     return (
         <Comp className={className} {...rootProps}>
             {icon && (
-                <span className={disabled ? "text-t3" : "text-t2"}>
+                <span className={disabled ? "text-t-3" : "text-t-2"}>
                     <Icon size="4xl" {...iconProps}>
                         {icon}
                     </Icon>
