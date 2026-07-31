@@ -1,20 +1,20 @@
 "use client";
 
 import { useCallback, useMemo, useRef, useState, type ReactNode } from "react";
-import { ConfirmModal, type ConfirmModalProps } from "./confirm-modal";
+import { ConfirmDialog, type ConfirmDialogProps } from "./confirm-dialog";
 import { hexId } from "@dre44/util/random";
 
-interface UseConfirmModalOptions {
-    baseModalProps?: Partial<ConfirmModalProps>;
+interface UseConfirmDialogOptions {
+    baseDialogOptions?: Partial<ConfirmDialogProps>;
 }
 
 interface ConfirmOptions {}
 
-interface UseConfirmModalResult {
+interface UseConfirmDialogResult {
     /**
      * @returns A promise that resolves to true if confirmed, false otherwise.
      */
-    confirm: (modalProps: Partial<ConfirmModalProps>, options?: ConfirmOptions) => Promise<boolean>;
+    confirm: (modalProps: Partial<ConfirmDialogProps>, options?: ConfirmOptions) => Promise<boolean>;
     /**
      * Indicates if any confirm modal is currently active.
      */
@@ -25,15 +25,15 @@ interface UseConfirmModalResult {
     confirmModals: ReactNode;
 }
 
-export function useConfirmModal({ baseModalProps }: UseConfirmModalOptions = {}): UseConfirmModalResult {
-    const modals = useRef<Record<string, ConfirmModalProps>>({});
+export function useConfirmDialog({ baseDialogOptions: baseModalProps }: UseConfirmDialogOptions = {}): UseConfirmDialogResult {
+    const modals = useRef<Record<string, ConfirmDialogProps>>({});
     const [modalsOpen, setModalsOpen] = useState<Record<string, boolean>>({});
     const isActive = useMemo(() => {
         return Object.values(modalsOpen).some((open) => open);
     }, [modalsOpen]);
 
     const confirm = useCallback(
-        (modalProps: Partial<ConfirmModalProps>, options: ConfirmOptions = {}) => {
+        (modalProps: Partial<ConfirmDialogProps>, options?: ConfirmOptions) => {
             const confirmationId = hexId(4);
 
             const promise = new Promise<boolean>((resolve) => {
@@ -67,7 +67,7 @@ export function useConfirmModal({ baseModalProps }: UseConfirmModalOptions = {})
                     resolve(false);
                 };
 
-                const mergedModalProps: ConfirmModalProps = {
+                const mergedModalProps: ConfirmDialogProps = {
                     message: "Are you sure?",
                     show: true,
                     ...baseModalProps,
@@ -89,7 +89,7 @@ export function useConfirmModal({ baseModalProps }: UseConfirmModalOptions = {})
         <>
             {Object.entries(modals.current).map(([confirmationId, modalProps]) => {
                 const show = modalsOpen[confirmationId] ?? false;
-                return <ConfirmModal key={confirmationId} {...modalProps} show={show} />;
+                return <ConfirmDialog key={confirmationId} {...modalProps} show={show} />;
             })}
         </>
     );

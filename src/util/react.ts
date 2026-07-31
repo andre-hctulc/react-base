@@ -1,4 +1,4 @@
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { cn as twMerge } from "@/util/cn.js";
 import {
     Children,
     cloneElement,
@@ -42,7 +42,7 @@ export function populateProps<P extends object>(
     children: ReactNode,
     props: P | ((element: ReactElement, index: number, arr: any[]) => P),
     mergeStrategy: "left" | "right" = "right",
-    populateIf?: (element: ReactElement) => boolean
+    populateIf?: (element: ReactElement) => boolean,
 ): ReactNode[] {
     const arr = Children.toArray(children);
     return arr.map((child, index, arr) => {
@@ -54,7 +54,7 @@ export function populateProps<P extends object>(
                 mergeStrategy === "left"
                     ? { ...addProps, ...(child.props as any) }
                     : // default
-                      addProps
+                      addProps,
             );
         }
         return child;
@@ -101,7 +101,7 @@ export function mergeProps<P extends object>(
         mergeClasses,
         mergeStyles,
         mergeEvents,
-    }: { mergeEvents?: boolean; mergeStyles?: boolean; mergeClasses?: boolean } = {}
+    }: { mergeEvents?: boolean; mergeStyles?: boolean; mergeClasses?: boolean } = {},
 ): P {
     const mergedProps: any = {};
     for (const propsItem of props) {

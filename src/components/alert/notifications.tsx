@@ -7,8 +7,8 @@ import { useIsHydrated } from "../../hooks/others/use-is-hydrated.js";
 import { createContext, useCallback, useContext, useMemo, useState, type FC, type ReactNode } from "react";
 import { createId } from "../../util/system.js";
 import { Alert } from "flowbite-react";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import type { IconFC } from "../icons/icon.js";
+import { cn as twMerge } from "@/util/cn.js";
+import type { LucideIcon } from "lucide-react";
 
 const DEFAULT_DURATION: number = 3500;
 
@@ -28,7 +28,7 @@ export interface Notification {
      * @default 5000
      */
     duration?: number;
-    icon?: IconFC;
+    icon?: LucideIcon;
     /**
      * Class name for the alert
      */
@@ -135,7 +135,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                             />
                         ))}
                     </NotificationsBox>,
-                    document.body
+                    document.body,
                 )}
             {/* top_center */}
             {!!top_center.length &&
@@ -149,7 +149,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                             />
                         ))}
                     </NotificationsBox>,
-                    document.body
+                    document.body,
                 )}
             {/* top_right */}
             {!!top_right.length &&
@@ -163,7 +163,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                             />
                         ))}
                     </NotificationsBox>,
-                    document.body
+                    document.body,
                 )}
             {/* bottom_right */}
             {!!bottom_right.length &&
@@ -177,7 +177,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                             />
                         ))}
                     </NotificationsBox>,
-                    document.body
+                    document.body,
                 )}
             {/* bottom_left */}
             {!!bottom_left.length &&
@@ -191,7 +191,7 @@ export const NotificationsProvider: FC<NotificationsProviderProps> = ({ children
                             />
                         ))}
                     </NotificationsBox>,
-                    document.body
+                    document.body,
                 )}
             {children}
         </NotificationsContext.Provider>
@@ -206,7 +206,7 @@ const NotificationsBox: React.FC<PropsOf<"ol">> = ({ className, ...props }) => {
                 "fixed max-w-full w-[350px] max-h-[600px] overflow-auto pointer-events-none z-50",
                 "p-4 box-border",
                 "flex flex-col gap-3",
-                className
+                className,
             )}
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             {...props}

@@ -1,44 +1,27 @@
-"use client";
+import { type FC, type ComponentProps } from "react";
+import { cn } from "@/util/cn.js";
 
-import { type FC } from "react";
-import { Label, labelTheme, type LabelProps, type LabelTheme } from "flowbite-react";
-import { useResolveT } from "../../hooks/index.js";
-
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        labelMimic: LabelMimicTheme;
-    }
-
-    interface FlowbiteProps {
-        labelMimic: Partial<WithoutThemingProps<LabelMimicProps>>;
-    }
+export interface LabelMimicProps extends Omit<ComponentProps<"span">, "color"> {
+    disabled?: boolean;
+    color?: "success" | "failure" | "warning" | "info" | "default";
 }
 
-const labelMimicTheme = {
-    // Make labelTheme compatible with useResolveT. See https://flowbite-react.com/docs/components/forms for original label theme
-    ...labelTheme.root,
-    disabled: {
-        on: "opacity-50",
-        off: "",
-    },
-
-    defaultVariants: {},
-};
-
-export interface LabelMimicTheme extends LabelTheme {}
-
-export interface LabelMimicProps extends LabelProps {}
-
 /**
- *
- * A {@link Label} as *span*.
+ * A label-styled `<span>` element.
  */
-export const LabelMimic: FC<LabelMimicProps> = (props) => {
-    const { className, restProps, children } = useResolveT("label", labelMimicTheme, props);
-
-    return (
-        <span className={className} {...restProps}>
-            {children}
-        </span>
-    );
-};
+export const LabelMimic: FC<LabelMimicProps> = ({ disabled, color, className, children, ...props }) => (
+    <span
+        className={cn(
+            "text-sm font-medium",
+            disabled && "opacity-50",
+            color === "success" && "text-success",
+            color === "failure" && "text-failure",
+            color === "warning" && "text-warning",
+            color === "info" && "text-info",
+            className,
+        )}
+        {...props}
+    >
+        {children}
+    </span>
+);

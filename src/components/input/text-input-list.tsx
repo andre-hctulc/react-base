@@ -1,24 +1,20 @@
 "use client";
 
-import { useRef, useState, type FC, type Ref, type RefObject } from "react";
+import { useRef, useState, type ComponentProps, type FC, type Ref, type RefObject } from "react";
 import { InputList } from "./input-list.js";
 import type { InputLikeProps } from "./types.js";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import {
-    Button,
-    CloseIcon,
-    TextInput,
-    type TextInputProps,
-    Textarea,
-    type TextareaProps,
-} from "flowbite-react";
+import { cn } from "@/util/cn.js";
 import { IconButton } from "../button/icon-button.js";
 import { PlusIcon } from "../icons/phosphor/plus.js";
+import { X } from "lucide-react";
+
+const inputBaseClass =
+    "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary focus:border-primary dark:border-gray-600 dark:bg-gray-700 dark:text-white";
 
 export interface TextInputListProps extends InputLikeProps<string[]> {
     textarea?: boolean;
-    listInputProps?: Partial<TextInputProps | TextareaProps>;
-    inputProps?: Partial<TextInputProps | TextareaProps>;
+    listInputProps?: Partial<ComponentProps<"input"> | ComponentProps<"textarea">>;
+    inputProps?: Partial<ComponentProps<"input"> | ComponentProps<"textarea">>;
     placeholder?: string;
     className?: string;
     ref?: Ref<any>;
@@ -40,14 +36,14 @@ export const TextInputList: FC<TextInputListProps> = ({
     ref,
     unique,
 }) => {
-    const Inp = textarea ? Textarea : TextInput;
+    const Inp: any = textarea ? "textarea" : "input";
     const [newValue, setNewValue] = useState("");
     const inpRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
     return (
         <InputList<string>
             unique={unique}
-            className={twMerge("space-y-4", className)}
+            className={cn("space-y-4", className)}
             ref={ref}
             value={value}
             defaultValue={defaultValue}
@@ -63,6 +59,7 @@ export const TextInputList: FC<TextInputListProps> = ({
                 return (
                     <div className="flex gap-2">
                         <Inp
+                            type={textarea ? undefined : "text"}
                             readOnly={readOnly}
                             required={required}
                             disabled={disabled}
@@ -70,14 +67,14 @@ export const TextInputList: FC<TextInputListProps> = ({
                             {...(inputProps as any)}
                             ref={inpRef as RefObject<any>}
                             value={newValue}
-                            onChange={(e) => setNewValue(e.target.value)}
-                            onKeyDown={(e) => {
+                            onChange={(e: any) => setNewValue(e.target.value)}
+                            onKeyDown={(e: any) => {
                                 if (e.key === "Enter" && newValue) {
                                     e.preventDefault();
                                     addValue(newValue);
                                 }
                             }}
-                            className={twMerge("grow", inputProps?.className)}
+                            className={cn(inputBaseClass, "grow", inputProps?.className)}
                         />
                         <IconButton
                             disabled={disabled || readOnly || !newValue}
@@ -101,13 +98,18 @@ export const TextInputList: FC<TextInputListProps> = ({
                         {values.map((value, i) => (
                             <li className="flex gap-2" key={i}>
                                 <Inp
+                                    type={textarea ? undefined : "text"}
                                     {...(inputProps as any)}
                                     {...(listInputProps as any)}
-                                    className={twMerge("grow", listInputProps?.className)}
+                                    className={cn(
+                                        inputBaseClass,
+                                        "grow",
+                                        (listInputProps as any)?.className,
+                                    )}
                                     name={name}
                                     value={value}
-                                    onChange={(e) => {
-                                        listInputProps?.onChange?.(e as any);
+                                    onChange={(e: any) => {
+                                        (listInputProps as any)?.onChange?.(e);
                                         change((items) => {
                                             const newItems = [...items];
                                             newItems.splice(i, 1, e.target.value);
@@ -115,9 +117,12 @@ export const TextInputList: FC<TextInputListProps> = ({
                                         });
                                     }}
                                 />
-                                {!inputProps.readOnly && (
-                                    <IconButton disabled={inputProps.disabled} onClick={() => remove(value)}>
-                                        <CloseIcon />
+                                {!(inputProps as any)?.readOnly && (
+                                    <IconButton
+                                        disabled={(inputProps as any)?.disabled}
+                                        onClick={() => remove(value)}
+                                    >
+                                        <X />
                                     </IconButton>
                                 )}
                             </li>

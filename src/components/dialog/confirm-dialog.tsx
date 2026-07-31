@@ -12,7 +12,7 @@ import {
 import type { FC, ReactNode } from "react";
 import { Toolbar } from "../containers";
 
-export interface ConfirmModalProps extends ModalProps {
+export interface ConfirmDialogProps extends ModalProps {
     confirmBtnText?: string;
     cancelBtnText?: string;
     title?: string;
@@ -23,7 +23,7 @@ export interface ConfirmModalProps extends ModalProps {
     cancelBtnProps?: ButtonProps;
 }
 
-export const ConfirmModal: FC<ConfirmModalProps> = ({
+export const ConfirmDialog: FC<ConfirmDialogProps> = ({
     confirmBtnText,
     cancelBtnText,
     title,

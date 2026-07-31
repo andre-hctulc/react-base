@@ -1,11 +1,10 @@
 "use client";
 
-import { CheckIcon, type ButtonProps, ClipboardListIcon } from "flowbite-react";
-import { useRef, useState, type ElementType } from "react";
-import { IconButton } from "../button/icon-button";
-import type { PropsOf } from "../../types";
+import { useRef, useState, type ComponentProps } from "react";
+import { Check, ClipboardList } from "lucide-react";
+import { Button } from "../cn/button.js";
 
-type ClipboardIconButtonProps<T extends ElementType = "button"> = PropsOf<typeof IconButton<T>> & {
+export type ClipboardIconButtonProps = ComponentProps<"button"> & {
     onCopySuccess?: () => void;
     valueToCopy: string;
     /**
@@ -14,22 +13,21 @@ type ClipboardIconButtonProps<T extends ElementType = "button"> = PropsOf<typeof
     timeout?: number;
 };
 
-export const ClipboardIconButton = <T extends ElementType = "button">({
+export const ClipboardIconButton = ({
     valueToCopy,
     onCopySuccess,
     onClick,
     timeout,
     ...props
-}: ClipboardIconButtonProps<T>) => {
+}: ClipboardIconButtonProps) => {
     const [copied, setCopied] = useState(false);
-    const currentTimeout = useRef<any>(null);
+    const currentTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     return (
-        <IconButton<"button">
+        <Button
+            type="button"
             onClick={(e) => {
-                if (currentTimeout.current) {
-                    clearTimeout(currentTimeout.current);
-                }
+                if (currentTimeout.current) clearTimeout(currentTimeout.current);
                 navigator.clipboard.writeText(valueToCopy).then(() => {
                     setCopied(true);
                     onCopySuccess?.();
@@ -39,7 +37,7 @@ export const ClipboardIconButton = <T extends ElementType = "button">({
             }}
             {...props}
         >
-            {copied ? <CheckIcon /> : <ClipboardListIcon />}
-        </IconButton>
+            {copied ? <Check /> : <ClipboardList />}
+        </Button>
     );
 };

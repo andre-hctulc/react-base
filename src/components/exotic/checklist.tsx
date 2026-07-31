@@ -1,46 +1,19 @@
-"use client";
-
 import { collapse } from "@dre44/util/objects";
 import type { FC, ReactNode } from "react";
 import type { LinkComponent, LinkProps, PropsOf, StyleProps } from "../../types/index.js";
 import { Subtitle } from "../text/subtitle.js";
 import { Icon } from "../icons/icon.js";
-import type { BaseTheme, TProps } from "../../util/style.js";
-import { CheckIcon, createTheme, XIcon } from "flowbite-react";
-import { useResolveT } from "../../hooks/index.js";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { cn } from "@/util/cn.js";
+import { Check, X } from "lucide-react";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        checklist: ChecklistTheme;
-    }
+const sizeMap = {
+    sm: "space-y-1.5",
+    md: "space-y-3",
+    lg: "space-y-4.5",
+    xl: "space-y-7",
+} as const;
 
-    interface FlowbiteProps {
-        checklist: Partial<WithoutThemingProps<ChecklistProps>>;
-    }
-}
-
-export interface ChecklistTheme extends BaseTheme {
-    size: {
-        sm: string;
-        md: string;
-        lg: string;
-        xl: string;
-    };
-}
-
-const checklist = createTheme<ChecklistTheme>({
-    base: "",
-    size: {
-        sm: "space-y-1.5",
-        md: "space-y-3",
-        lg: "space-y-4.5",
-        xl: "space-y-7",
-    },
-    defaultVariants: {
-        size: "md",
-    },
-});
+type ChecklistSize = keyof typeof sizeMap;
 
 interface ComponentProps {
     titleProps?: PropsOf<typeof Subtitle>;
@@ -62,70 +35,87 @@ export interface ChecklistItem extends ComponentProps {
     secondary?: boolean;
 }
 
-type ChecklistProps = TProps<ChecklistTheme> &
-    StyleProps &
+export type ChecklistProps = StyleProps &
     ComponentProps & {
+        size?: ChecklistSize;
         items: ChecklistItem[];
         checkedIcon?: ReactNode;
         uncheckedIcon?: ReactNode;
         checked?: string | string[] | ((item: ChecklistItem) => boolean);
     };
 
-export const Checklist: FC<ChecklistProps> = (props) => {
-    const { restProps, children, className } = useResolveT("checklist", checklist, props);
-    const {
-        items,
-        checkedIcon,
-        uncheckedIcon,
-        checked,
-        titleProps,
-        textProps,
-        secondaryTextProps,
-        iconProps,
-        LinkComponent,
-        linkProps,
-        ...rootProps
-    } = restProps;
-    const cIcon = checkedIcon || <CheckIcon />;
-    const uncIcon = uncheckedIcon || <XIcon />;
-    const size = props.size ?? "md";
-    const iconSize = collapse(size, {
-        sm: "md",
-        md: "lg",
-        lg: "2xl",
-        xl: "4xl",
-    } as const);
-    const iconClasses = collapse(size, {
-        sm: "mt-0.5 mr-2",
-        md: "mt-0.5 mr-3",
-        lg: "mt-0.5 mr-3.5",
-        xl: "mr-4",
-    } as const);
-    const textClasses = collapse(size, {
-        sm: "text-xs",
-        md: "text-sm",
-        lg: "text-base",
-        xl: "text-lg",
-    } as const);
+export const Checklist: FC<ChecklistProps> = ({
+    size = "md",
+    items,
+    checkedIcon,
+    uncheckedIcon,
+    checked,
+    titleProps,
+    textProps,
+    secondaryTextProps,
+    iconProps,
+    LinkComponent,
+    linkProps,
+    className,
+    style,
+}) => {
+    const cIcon = checkedIcon || <Check />;
+    const uncIcon = uncheckedIcon || <X />;
+    const iconSize = collapse(
+        {
+            sm: "md",
+            md: "lg",
+            lg: "2xl",
+            xl: "4xl",
+        } as const,
+        size,
+    );
+    const iconClasses = collapse(
+        {
+            sm: "mt-0.5 mr-2",
+            md: "mt-0.5 mr-3",
+            lg: "mt-0.5 mr-3.5",
+            xl: "mr-4",
+        } as const,
+        size,
+    );
+    const textClasses = collapse(
+        {
+            sm: "text-xs",
+            md: "text-sm",
+            lg: "text-base",
+            xl: "text-lg",
+        } as const,
+        size,
+    );
 
-    const secTextClasses = collapse(size, {
-        sm: "text-xs",
-        md: "text-sm",
-        lg: "text-base",
-        xl: "text-lg",
-    } as const);
-    const subtitleVariant = collapse(size, {
-        sm: "h5",
-        md: "h4",
-        lg: "h3",
-        xl: "h2",
-    } as const);
-    const mainClasses = collapse(size, {
-        sm: "",
-        md: "",
-        lg: "",
-        xl: "pt-1",
-    } as const);
+    const secTextClasses = collapse(
+        {
+            sm: "text-xs",
+            md: "text-sm",
+            lg: "text-base",
+            xl: "text-lg",
+        } as const,
+        size,
+    );
+    const subtitleVariant = collapse(
+        {
+            sm: "h5",
+            md: "h4",
+            lg: "h3",
+            xl: "h2",
+        } as const,
+        size,
+    );
+    const mainClasses = collapse(
+        {
+            sm: "",
+            md: "",
+            lg: "",
+            xl: "pt-1",
+        } as const,
+        size,
+    );
 
     const isChecked = (item: ChecklistItem): boolean => {
         if (item.checked) {
@@ -143,34 +133,8 @@ export const Checklist: FC<ChecklistProps> = (props) => {
         return false;
     };
 
-    /* 
-    
-    <div className="space-y-3 mb-8 grow">
-                    {features.map((feature, index) => (
-                        <div key={index} className="flex items-start gap-3" title={feature.description}>
-                            <div className="shrink-0 mt-0.5">
-                                {feature.included ? (
-                                    <PiCheck className="w-5 h-5 text-green-500" />
-                                ) : (
-                                    <PiX className="w-5 h-5 text-red-400" />
-                                )}
-                            </div>
-                            <span
-                                className={`text-sm ${
-                                    feature.included
-                                        ? "text-gray-900 dark:text-white"
-                                        : "text-gray-400 dark:text-gray-500 line-through"
-                                }`}
-                            >
-                                {feature.name}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-    */
-
     return (
-        <ol className={className} {...rootProps}>
+        <ol className={cn(collapse(sizeMap, size), className)} style={style}>
             {items.map((item) => {
                 const checked = isChecked(item);
                 const Comp: any = item.href ? item.LinkComponent || LinkComponent || "a" : "div";
@@ -185,7 +149,7 @@ export const Checklist: FC<ChecklistProps> = (props) => {
                                     size={iconSize}
                                     {...iconProps}
                                     {...item.iconProps}
-                                    className={twMerge(
+                                    className={cn(
                                         iconClasses,
                                         iconProps?.className,
                                         item.iconProps?.className,
@@ -204,7 +168,7 @@ export const Checklist: FC<ChecklistProps> = (props) => {
                                     <p
                                         {...textProps}
                                         {...item.textProps}
-                                        className={twMerge(
+                                        className={cn(
                                             textClasses,
                                             item.disabled && "text-t-4 line-through",
                                             item.secondary && "text-t-3",
@@ -219,7 +183,7 @@ export const Checklist: FC<ChecklistProps> = (props) => {
                                     <p
                                         {...secondaryTextProps}
                                         {...item.secondaryTextProps}
-                                        className={twMerge(
+                                        className={cn(
                                             " text-t-2",
                                             secTextClasses,
                                             secondaryTextProps?.className,

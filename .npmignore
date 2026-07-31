@@ -5,8 +5,7 @@
 #### TS ####
 scripts
 src
-tsconfig.json
-tsconfig.build.json
+tsconfig.*
 .eslintrc.json
 
 #### docs ####
@@ -21,13 +20,14 @@ storybook-static
 *storybook.log
 postcss.config.js
 
-#### Flowbite React ####
-.flowbite-react/config.json
-.flowbite-react/init.tsx
-
 #### Turborepo ####
 .turbo
 
 #### Test ####
 test
 vitest.*
+
+#### shadcn ####
+
+components.json
+postcss.config.js

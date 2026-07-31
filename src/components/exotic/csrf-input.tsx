@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { type FC } from "react";
 import { HiddenInput } from "../input/hidden-input.js";
 
-interface CSRFInputProps {
+interface CsrfInputProps {
     /**
      * Defaults to the value of the "XSRF-TOKEN" cookie.
      */
@@ -15,7 +15,7 @@ interface CSRFInputProps {
     required?: boolean;
 }
 
-export const CSRFInput: React.FC<CSRFInputProps> = ({ token, name, active, debug, required }) => {
+export const CsrfInput: FC<CsrfInputProps> = ({ token, name, active, debug, required }) => {
     const [value, setValue] = React.useState(token || "");
 
     React.useLayoutEffect(() => {

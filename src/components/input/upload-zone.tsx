@@ -5,7 +5,7 @@ import { Droppable } from "./droppable.js";
 import type { InputLikeProps } from "./types.js";
 import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
 import { Icon } from "../icons/icon.js";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { cn as twMerge } from "@/util/cn.js";
 
 export interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     children?: ReactNode;

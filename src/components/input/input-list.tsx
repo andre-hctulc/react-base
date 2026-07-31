@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState, type ElementType, type Ref } from "reac
 import type { InputLikeProps } from "./types.js";
 import type { ASProps, StyleProps } from "../../types/index.js";
 import { useRefOf } from "../../hooks/index.js";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { cn as twMerge } from "@/util/cn.js";
 
 type InputListInputProps<V = string> = Pick<
     InputLikeProps<V>,

@@ -1,21 +1,8 @@
-/* 
-
-base.css
-
-CSS entry for this package.
-
-Usage:
-@import "react-base";
-
-*/
-
-/* Import all css assets here */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @import "./theme.css";
-@import "./safelist.css";
 @import "./defaults.css";
+@import "./safelist.css";
 
-/* Reference compiled source! */
-@source "../dist";
-
-/* Reference flowbite component classes */
-@source "../.flowbite-react/class-list.json";
+@custom-variant dark (&: is(.dark *));

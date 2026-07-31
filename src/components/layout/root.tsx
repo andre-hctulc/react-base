@@ -1,74 +1,79 @@
-"use client";
-
 import type { FC, ComponentProps } from "react";
-import { createTheme } from "flowbite-react/helpers/create-theme";
+import { cn } from "@/util/cn.js";
+import { collapse } from "@dre44/util/objects";
 import {
     flexDirection,
-    flexGrow,
+    height,
+    maxHeight,
+    minHeight,
     overflow,
-    withHeight,
     withScroll,
-    type BaseTheme,
+    type FlexDirection,
     type Overflow,
-    type TProps,
-    type WithFlexDirection,
-    type WithGrow,
-    type WithHeight,
-    type WithScroll,
 } from "../../util/style.js";
-import { useResolveT } from "../../hooks/index.js";
-import type { FlowbiteBoolean } from "flowbite-react/types";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        root: RootTheme;
-    }
+type SizeLike = keyof typeof height;
 
-    interface FlowbiteProps {
-        root: Partial<WithoutThemingProps<RootProps>>;
-    }
+const bgMap = {
+    none: "",
+    "1": "bg-paper",
+    "2": "bg-paper-2",
+    "3": "bg-paper-3",
+    "4": "bg-paper-4",
+} as const;
+
+export interface RootProps extends ComponentProps<"div"> {
+    direction?: FlexDirection;
+    height?: SizeLike;
+    maxHeight?: SizeLike;
+    minHeight?: SizeLike;
+    grow?: boolean;
+    relative?: boolean;
+    overflow?: keyof Overflow;
+    scroll?: boolean;
+    scrollY?: boolean;
+    scrollX?: boolean;
+    bg?: keyof typeof bgMap;
 }
 
-export interface RootTheme extends BaseTheme, WithFlexDirection, WithHeight, WithGrow, WithScroll {
-    relative: FlowbiteBoolean;
-    overflow: Overflow;
-    bg: Record<"none" | "1" | "2" | "3" | "4", string>;
-}
-
-const root = createTheme<RootTheme>({
-    base: "max-w-full box-border flex",
-    direction: flexDirection,
-    ...withHeight,
-    grow: flexGrow,
-    overflow,
-    ...withScroll,
-    relative: {
-        on: "relative",
-        off: "",
-    },
-    bg: {
-        none: "",
-        "1": "bg-paper",
-        "2": "bg-paper-2",
-        "3": "bg-paper-3",
-        "4": "bg-paper-4",
-    },
-    defaultVariants: {
-        direction: "col",
-        grow: true,
-    },
-});
-
-export interface RootProps extends TProps<RootTheme>, ComponentProps<"div"> {}
-
-/**
- * A flex container. Use it as contextual root container for your layout.
- */
+/** Flex container. Use as the contextual root container for your layout. */
 export const Root: FC<RootProps> = (props) => {
-    const { className, restProps, children } = useResolveT("root", root, props);
+    const {
+        direction = "col",
+        grow = true,
+        relative,
+        height: h,
+        maxHeight: mxh,
+        minHeight: mnh,
+        overflow: ov,
+        scroll,
+        scrollY,
+        scrollX,
+        bg,
+        className,
+        children,
+        ...restProps
+    } = props;
 
     return (
-        <div className={className} {...restProps}>
+        <div
+            className={cn(
+                "max-w-full box-border flex",
+                collapse(flexDirection, direction),
+                grow && "grow",
+                relative && "relative",
+                h && collapse(height, h!),
+                mxh && collapse(maxHeight, mxh!),
+                mnh && collapse(minHeight, mnh!),
+                ov && collapse(overflow, ov!),
+                scroll && withScroll.scroll.on,
+                scrollY && withScroll.scrollY.on,
+                scrollX && withScroll.scrollX.on,
+                bg && collapse(bgMap, bg!),
+                className,
+            )}
+            {...restProps}
+        >
             {children}
         </div>
     );

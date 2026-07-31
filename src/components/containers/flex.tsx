@@ -1,68 +1,83 @@
-"use client";
-
 import type { ElementType } from "react";
-import { createTheme } from "flowbite-react";
+import { cn } from "@/util/cn.js";
+import { collapse } from "@dre44/util/objects";
 import {
     alignItems,
     flexDirection,
     flexWrap,
-    flexGrow,
+    height,
     justifyContent,
-    noShrink,
-    withWidthAndHeight,
-    type BaseTheme,
-    type TProps,
-    type WithAlignItems,
-    type WithFlexDirection,
-    type WithFlexWrap,
-    type WithGrow,
-    type WithJustifyContent,
-    type WithNoShrink,
-    type WithWidthAndHeight,
+    maxHeight,
+    maxWidth,
+    minHeight,
+    minWidth,
+    width,
+    type AlignItems,
+    type FlexDirection,
+    type FlexWrap,
+    type JustifyContent,
 } from "../../util/style.js";
 import { withPrefix } from "../../util/system.js";
-import type { PropsOf, RichAsProps } from "../../types/index.js";
-import { useResolveT } from "../../hooks/index.js";
+import type { RichAsProps } from "../../types/index.js";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        flex: FlexTheme;
-    }
+type SizeLike = keyof typeof height;
 
-    interface FlowbiteProps {
-        flex: Partial<WithoutThemingProps<FlexProps>>;
-    }
-}
-
-export interface FlexTheme
-    extends BaseTheme,
-        WithAlignItems,
-        WithFlexDirection,
-        WithJustifyContent,
-        WithWidthAndHeight,
-        WithFlexWrap,
-        WithGrow,
-        WithNoShrink {}
-
-const flex = createTheme<FlexTheme>({
-    base: "flex",
-    direction: flexDirection,
-    alignItems,
-    justifyContent,
-    wrap: flexWrap,
-    grow: flexGrow,
-    noShrink: noShrink,
-    ...withWidthAndHeight,
-});
-
-type FlexProps<T extends ElementType = "div"> = PropsOf<"div"> & TProps<FlexTheme> & RichAsProps<T>;
+export type FlexProps<T extends ElementType = "div"> = RichAsProps<T> & {
+    direction?: FlexDirection;
+    alignItems?: AlignItems;
+    justifyContent?: JustifyContent;
+    wrap?: FlexWrap;
+    grow?: boolean;
+    noShrink?: boolean;
+    height?: SizeLike;
+    maxHeight?: SizeLike;
+    minHeight?: SizeLike;
+    width?: SizeLike;
+    maxWidth?: SizeLike;
+    minWidth?: SizeLike;
+};
 
 export const Flex = <T extends ElementType = "div">(props: FlexProps<T>) => {
-    const { className, children, restProps } = useResolveT("flex", flex, props);
-    const Comp: any = props.as || "div";
+    const {
+        direction,
+        alignItems: ai,
+        justifyContent: jc,
+        wrap,
+        grow,
+        noShrink,
+        height: h,
+        maxHeight: mxh,
+        minHeight: mnh,
+        width: w,
+        maxWidth: mxw,
+        minWidth: mnw,
+        className,
+        children,
+        as,
+        ...restProps
+    } = props;
+    const Comp: any = as || "div";
 
     return (
-        <Comp className={className} {...restProps}>
+        <Comp
+            className={cn(
+                "flex",
+                direction && collapse(flexDirection, direction!),
+                ai && collapse(alignItems, ai!),
+                jc && collapse(justifyContent, jc!),
+                wrap && collapse(flexWrap, wrap!),
+                grow && "grow",
+                noShrink && "shrink-0",
+                h && collapse(height, h!),
+                mxh && collapse(maxHeight, mxh!),
+                mnh && collapse(minHeight, mnh!),
+                w && collapse(width, w!),
+                mxw && collapse(maxWidth, mxw!),
+                mnw && collapse(minWidth, mnw!),
+                className,
+            )}
+            {...restProps}
+        >
             {children}
         </Comp>
     );

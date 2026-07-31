@@ -10,7 +10,7 @@ import {
     Children,
 } from "react";
 import { TransitionChild } from "./transition-child.js";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { cn as twMerge } from "@/util/cn.js";
 import { useCssTransition } from "../../hooks/index.js";
 import { TransitionContext } from "./transition-context.js";
 

@@ -1,66 +1,48 @@
-"use client";
-
-import { createTheme } from "flowbite-react/helpers/create-theme";
-import { withTextSize, type BaseTheme, type TProps, type WithTextSize } from "../../util/style.js";
-import type { FlowbiteBoolean } from "flowbite-react/types";
+import { type ElementType } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/util/cn.js";
 import type { RichAsProps } from "../../types/index.js";
-import { useResolveT } from "../../hooks/index.js";
-import type { ElementType } from "react";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        typography: TypographyTheme;
-    }
-
-    interface FlowbiteProps {
-        typography: Partial<WithoutThemingProps<TypographyProps>>;
-    }
-}
-
-export interface TypographyTheme extends BaseTheme, WithTextSize {
-    center: FlowbiteBoolean;
-    underline: FlowbiteBoolean;
-    italic: FlowbiteBoolean;
-    lineHeight: Record<"none" | "tight" | "snug" | "normal" | "relaxed" | "loose", string>;
-}
-
-const typography = createTheme<TypographyTheme>({
-    base: "",
-    ...withTextSize,
-    center: {
-        on: "text-center",
-        off: "",
-    },
-    underline: {
-        on: "underline",
-        off: "",
-    },
-    italic: {
-        on: "italic",
-        off: "",
-    },
-    lineHeight: {
-        none: "",
-        tight: "leading-tight",
-        snug: "leading-snug",
-        normal: "leading-normal",
-        relaxed: "leading-relaxed",
-        loose: "leading-loose",
+const typographyVariants = cva("", {
+    variants: {
+        textSize: {
+            xs: "text-xs",
+            sm: "text-sm",
+            base: "text-base",
+            md: "text-md",
+            lg: "text-lg",
+            xl: "text-xl",
+            "2xl": "text-2xl",
+            "3xl": "text-3xl",
+        },
+        center: { true: "text-center" },
+        underline: { true: "underline" },
+        italic: { true: "italic" },
+        lineHeight: {
+            tight: "leading-tight",
+            snug: "leading-snug",
+            normal: "leading-normal",
+            relaxed: "leading-relaxed",
+            loose: "leading-loose",
+        },
     },
 });
 
-export type TypographyProps<T extends ElementType = "p"> = RichAsProps<T> & TProps<TypographyTheme> & {};
+export type TypographyProps<T extends ElementType = "p"> = RichAsProps<T> &
+    VariantProps<typeof typographyVariants>;
 
-/**
- * Text. Used across components to consistently style text.
- */
+export { typographyVariants };
+
+/** Text component for consistent typography styling. */
 export const Typography = <T extends ElementType = "p">(props: TypographyProps<T>) => {
-    const { className, children, restProps } = useResolveT("typography", typography, props);
-    const { as, ...rootProps } = restProps;
+    const { textSize, center, underline, italic, lineHeight, className, children, as, ...restProps } =
+        props as any;
     const Comp: any = as || "p";
-
     return (
-        <Comp className={className} {...rootProps}>
+        <Comp
+            className={cn(typographyVariants({ textSize, center, underline, italic, lineHeight }), className)}
+            {...restProps}
+        >
             {children}
         </Comp>
     );

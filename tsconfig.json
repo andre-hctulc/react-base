@@ -14,8 +14,11 @@
         "verbatimModuleSyntax": true,
         "outDir": "dist",
         "declaration": true,
-        "rootDir": "./src",
-        "types": ["node"]
+        "rootDir": ".",
+        "types": ["node"],
+        "paths": {
+            "@/*": ["./src/*"]
+        }
     },
     "include": ["src/**/*"]
 }

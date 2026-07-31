@@ -1,44 +1,22 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type Ref, type SubmitEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type Ref } from "react";
 import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./js-form-types.js";
 import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
 import { createSnapshot } from "./js-form-helpers.js";
 import { getProperty } from "dot-prop";
-import { useRefOf, useResolveT } from "../../hooks/index.js";
+import { useRefOf } from "../../hooks/index.js";
 import type { PropsOf, StyleProps } from "../../types/index.js";
-import {
-    flexDirection,
-    flexWrap,
-    withGap,
-    type BaseTheme,
-    type TProps,
-    type WithFlex,
-    type WithFlexWrap,
-    type WithGap,
-} from "../../util/style.js";
-import { createTheme } from "flowbite-react";
+import { cn } from "@/util/cn.js";
+import { collapse } from "@dre44/util/objects";
+import { flexDirection, flexWrap, withGap, type FlexDirection, type FlexWrap } from "../../util/style.js";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        jsForm: JSFormTheme;
-    }
+type GapSize = keyof typeof withGap.gap;
 
-    interface FlowbiteProps {
-        jsForm: Partial<WithoutThemingProps<JSFormProps>>;
-    }
-}
-
-interface JSFormTheme extends BaseTheme, WithFlex, WithGap, WithFlexWrap {}
-
-const jsForm = createTheme<JSFormTheme>({
-    base: "",
-    wrap: flexWrap,
-    flex: flexDirection,
-    ...withGap,
-});
-
-export interface JSFormProps<T extends object = any> extends StyleProps, TProps<JSFormTheme> {
+export interface JSFormProps<T extends object = any> extends StyleProps {
+    flex?: FlexDirection;
+    wrap?: FlexWrap;
+    gap?: GapSize;
     id?: string;
     children?: React.ReactNode;
     onSubmit?: (snapshot: JSFormSnapshot<T>) => void;
@@ -93,8 +71,13 @@ export interface JSFormProps<T extends object = any> extends StyleProps, TProps<
  * - `namesPrefix`
  */
 export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
-    const { children, className, restProps } = useResolveT("jsForm", jsForm, props);
     const {
+        flex,
+        wrap,
+        gap,
+        children,
+        className,
+        style,
         defaultValues,
         nested,
         values,
@@ -110,7 +93,13 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
         target,
         id,
         ...rootProps
-    } = restProps;
+    } = props as any;
+    const computedClassName = cn(
+        flex && collapse(flexDirection, flex!),
+        wrap && collapse(flexWrap, wrap!),
+        gap && collapse(withGap.gap, gap),
+        className,
+    );
     const form = useRef<HTMLFormElement>(null);
     const parentFormCtx = useJSForm();
     const def = useCallback(
@@ -153,7 +142,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
     const inited = useRef(false);
     const Comp: any = nested ? "div" : "form";
 
-    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         if (e.target !== e.currentTarget) {
             return;
         }
@@ -285,7 +274,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
                     ref.current = f;
                 }
             }}
-            className={className}
+            className={computedClassName}
             {...rootProps}
             {...formProps}
         >

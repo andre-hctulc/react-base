@@ -1,30 +1,12 @@
 "use client";
 
 import type { FC, ReactNode, ComponentProps } from "react";
-import { createTheme } from "flowbite-react";
-import type { BaseTheme, TProps } from "../../util/style.js";
+import { cn } from "@/util/cn.js";
 import type { PropsOf } from "../../types/index.js";
 import { Icon } from "../icons/icon.js";
-import { useAsSet, useResolveT } from "../../hooks/index.js";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { useAsSet } from "../../hooks/index.js";
 import { ClipboardIconButton } from "../input/clipboard-icon-button.js";
 import { isPlainObject } from "@dre44/util/objects";
-
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        summary: SummaryTheme;
-    }
-
-    interface FlowbiteProps {
-        summary: Partial<WithoutThemingProps<SummaryProps>>;
-    }
-}
-
-export interface SummaryTheme extends BaseTheme {}
-
-const summary = createTheme<SummaryTheme>({
-    base: "w-full border-separate border-spacing-y-2",
-});
 
 export interface FieldModel {
     label?: ReactNode;
@@ -36,54 +18,47 @@ export interface FieldModel {
 
 export type SummaryModel<T extends object = any> = Partial<Record<string & keyof T, FieldModel>>;
 
-interface SummaryProps extends ComponentProps<"table">, TProps<SummaryTheme> {
+export interface SummaryProps extends ComponentProps<"table"> {
     values: object;
     model?: SummaryModel;
-    /**
-     * @default "w-40"
-     */
+    /** @default "w-40" */
     labelWidth?: number | "auto";
     prefix?: string;
     nestedMargin?: number;
     fieldModels?: (key: string, value: string, path: string) => FieldModel;
-    /**
-     * Array of field paths to exclude from the summary.
-     */
+    /** Array of field paths to exclude from the summary. */
     excludeFields?: string[];
     /**
      * Array of field paths to include in the summary.
      * If provided, only these fields will be displayed, ignoring `excludeFields`.
      */
     includeFields?: string[];
-    /**
-     * Only include fields that are present in the model.
-     */
+    /** Only include fields that are present in the model. */
     strictModel?: boolean;
     emptyPlaceholder?: string;
 }
 
-export const Summary: FC<SummaryProps> = (props) => {
-    const { className, restProps } = useResolveT("summary", summary, props);
-    const {
-        values,
-        prefix,
-        model,
-        fieldModels,
-        nestedMargin,
-        labelWidth,
-        excludeFields,
-        emptyPlaceholder,
-        strictModel,
-        includeFields,
-        ...rootProps
-    } = restProps;
+export const Summary: FC<SummaryProps> = ({
+    className,
+    values,
+    prefix,
+    model,
+    fieldModels,
+    nestedMargin,
+    labelWidth,
+    excludeFields,
+    emptyPlaceholder,
+    strictModel,
+    includeFields,
+    ...rootProps
+}) => {
     const entries = Object.entries(values);
     const excludeFieldsSet = useAsSet(excludeFields || []);
     const includeFieldsSet = useAsSet(includeFields || []);
 
     return (
         <table
-            className={className}
+            className={cn("w-full border-separate border-spacing-y-2", className)}
             style={nestedMargin !== undefined ? { marginLeft: nestedMargin } : undefined}
             {...rootProps}
         >
@@ -95,10 +70,9 @@ export const Summary: FC<SummaryProps> = (props) => {
                     const fieldModel =
                         staticModel || dynamicModel ? { ...staticModel, ...dynamicModel } : undefined;
 
-                    // Excluded?
                     if (
                         excludeFieldsSet.has(path) ||
-                        (props.includeFields && !includeFieldsSet.has(path)) ||
+                        (includeFields && !includeFieldsSet.has(path)) ||
                         (strictModel && !fieldModel)
                     ) {
                         return null;
@@ -114,10 +88,10 @@ export const Summary: FC<SummaryProps> = (props) => {
                               : undefined;
 
                     return (
-                        <tr key={key} className="">
+                        <tr key={key}>
                             <td
                                 style={{ width: labelWidth }}
-                                className={twMerge("pr-4 py-1 whitespace-nowrap", !labelWidth && "w-40")}
+                                className={cn("pr-4 py-1 whitespace-nowrap", !labelWidth && "w-40")}
                             >
                                 <div className="flex items-center">
                                     {fieldModel?.icon && (
@@ -125,7 +99,7 @@ export const Summary: FC<SummaryProps> = (props) => {
                                             size="sm"
                                             color="neutral"
                                             {...fieldModel.iconProps}
-                                            className={twMerge("mr-2", fieldModel.iconProps?.className)}
+                                            className={cn("mr-2", fieldModel.iconProps?.className)}
                                         >
                                             {fieldModel.icon}
                                         </Icon>
@@ -143,7 +117,7 @@ export const Summary: FC<SummaryProps> = (props) => {
                                         prefix={`${prefix || ""}${key}.`}
                                         values={value}
                                         style={{ marginLeft: 16 }}
-                                        className={twMerge(nestedMargin === undefined && "ml-4")}
+                                        className={cn(nestedMargin === undefined && "ml-4")}
                                     />
                                 ) : (
                                     <div className="flex gap-2">
@@ -161,7 +135,10 @@ export const Summary: FC<SummaryProps> = (props) => {
                                             )}
                                         </div>
                                         {fieldModel?.canCopy && (
-                                            <ClipboardIconButton size="sm" valueToCopy={value} />
+                                            <ClipboardIconButton
+                                                valueToCopy={value}
+                                                className="h-7 w-7 p-0"
+                                            />
                                         )}
                                     </div>
                                 )}

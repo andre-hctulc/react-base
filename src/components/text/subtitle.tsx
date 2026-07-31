@@ -1,83 +1,91 @@
-"use client";
-
-import { type ElementType, type ReactNode } from "react";
-import { createTheme } from "flowbite-react/helpers/create-theme";
-import type { PropsOf, RichAsProps } from "../../types/index.js";
+import { type ElementType } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/util/cn.js";
+import { collapse } from "@dre44/util/objects";
+import { lineClamp, withMargin } from "../../util/style.js";
+import type { RichAsProps } from "../../types/index.js";
 import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import {
-    withLineClamp,
-    withMargin,
-    type BaseTheme,
-    type TProps,
-    type WithLineClamp,
-    type WithMargin,
-} from "../../util/style.js";
-import type { FlowbiteBoolean } from "flowbite-react/types";
-import { useResolveT } from "../../hooks/index.js";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        subtitle: SubtitleTheme;
-    }
-
-    interface FlowbiteProps {
-        subtitle: Partial<WithoutThemingProps<SubtitleProps>>;
-    }
-}
-
-export interface SubtitleTheme extends BaseTheme, WithMargin, WithLineClamp {
-    variant: Record<"h2" | "h3" | "h4" | "h5", string>;
-    underline: FlowbiteBoolean;
-    bold: FlowbiteBoolean;
-}
-
-const subtitle = createTheme<SubtitleTheme>({
-    base: "text-t-2",
-    variant: {
-        h2: "text-xl",
-        h3: "text-lg",
-        h4: "text-base",
-        h5: "text-sm",
+const subtitleVariants = cva("text-t-2", {
+    variants: {
+        variant: {
+            h2: "text-xl",
+            h3: "text-lg",
+            h4: "text-base",
+            h5: "text-sm",
+        },
+        bold: { true: "font-semibold", false: "font-medium" },
+        underline: { true: "underline" },
     },
-    underline: {
-        on: "underline",
-        off: "",
-    },
-    ...withMargin,
-    bold: {
-        on: "font-semibold",
-        off: "font-medium",
-    },
-    defaultVariants: {
-        variant: "h2",
-        bold: false,
-    },
-    ...withLineClamp,
+    defaultVariants: { variant: "h2", bold: false },
 });
 
-type SubtitleProps<T extends ElementType = "h2"> = TProps<SubtitleTheme> &
-    RichAsProps<T> & {
+type MarginSize = keyof typeof withMargin.mt;
+type LineClampKey = keyof typeof lineClamp;
+
+export type SubtitleProps<T extends ElementType = "h2"> = RichAsProps<T> &
+    VariantProps<typeof subtitleVariants> & {
         icon?: IconLike;
         iconProps?: IconProps;
+        lineClamp?: LineClampKey;
+        m?: MarginSize;
+        mx?: MarginSize;
+        my?: MarginSize;
+        mt?: MarginSize;
+        mr?: MarginSize;
+        mb?: MarginSize;
+        ml?: MarginSize;
+        me?: MarginSize;
+        ms?: MarginSize;
     };
 
-/**
- * ### Props
- * - `variant` - Heading variant (h2, h3, h4, h5)
- * - `underline` - Add underline decoration
- * - `my`, `mt`, `mb` - Margin utilities
- * - `bold` - Font weight control
- */
+export { subtitleVariants };
+
 export const Subtitle = <T extends ElementType = "h2">(props: SubtitleProps<T>) => {
-    const { className, children, restProps } = useResolveT("subtitle", subtitle, props);
-    const { as, icon, iconProps, ...rootProps } = restProps;
-    const Comp: any = as || props.variant || "h2";
+    const {
+        variant = "h2",
+        bold = false,
+        underline,
+        icon,
+        iconProps,
+        lineClamp: lc,
+        m,
+        mx,
+        my,
+        mt,
+        mr,
+        mb,
+        ml,
+        me,
+        ms,
+        className,
+        children,
+        as,
+        ...restProps
+    } = props as any;
+    const Comp: any = as || variant;
 
     return (
-        <Comp className={twMerge(className, icon && "flex items-center")} {...rootProps}>
+        <Comp
+            className={cn(
+                subtitleVariants({ variant, bold, underline }),
+                icon && "flex items-center",
+                lc && collapse(lineClamp, lc!),
+                m && collapse(withMargin.m, m),
+                mx && collapse(withMargin.mx, mx),
+                my && collapse(withMargin.my, my),
+                mt && collapse(withMargin.mt, mt),
+                mr && collapse(withMargin.mr, mr),
+                mb && collapse(withMargin.mb, mb),
+                ml && collapse(withMargin.ml, ml),
+                me && collapse(withMargin.me, me),
+                ms && collapse(withMargin.ms, ms),
+                className,
+            )}
+            {...restProps}
+        >
             {icon && (
-                <Icon noShrink inline {...iconProps} className={twMerge("mr-2", iconProps?.className)}>
+                <Icon noShrink inline {...iconProps} className={cn("mr-2", iconProps?.className)}>
                     {icon}
                 </Icon>
             )}

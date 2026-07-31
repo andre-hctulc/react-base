@@ -1,52 +1,43 @@
 "use client";
 
-import { useResolveT } from "../../hooks/index.js";
+import { cn } from "@/util/cn.js";
+import { collapse } from "@dre44/util/objects";
 import type { PropsOf } from "../../types/index.js";
-import {
-    flexDirection,
-    flexWrap,
-    withGap,
-    type BaseTheme,
-    type TProps,
-    type WithFlexDirection,
-    type WithFlexWrap,
-    type WithGap,
-} from "../../util/style.js";
-import { createTheme } from "flowbite-react";
+import { flexDirection, flexWrap, withGap, type FlexDirection, type FlexWrap } from "../../util/style.js";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        flexForm: FlexFormTheme;
-    }
+type GapSize = keyof typeof withGap.gap;
 
-    interface FlowbiteProps {
-        flexForm: Partial<WithoutThemingProps<FlexFormProps>>;
-    }
-}
-
-interface FlexFormTheme extends BaseTheme, WithFlexDirection, WithFlexWrap, WithGap {}
-
-const flexForm = createTheme<FlexFormTheme>({
-    base: "flex",
-    direction: flexDirection,
-    wrap: flexWrap,
-    ...withGap,
-    defaultVariants: {
-        gap: "md",
-        direction: "col",
-    },
-});
-
-export type FlexFormProps = TProps<FlexFormTheme> & PropsOf<"form">;
-
-/**
- * Use `formEventToFormData` or `formEventToValues` to convert form event to values.
- */
-export const FlexForm: React.FC<FlexFormProps> = (props) => {
-    const { children, className, restProps } = useResolveT("flexForm", flexForm, props);
-    return (
-        <form className={className} {...restProps}>
-            {children}
-        </form>
-    );
+export type FlexFormProps = PropsOf<"form"> & {
+    direction?: FlexDirection;
+    wrap?: FlexWrap;
+    gap?: GapSize;
+    rowGap?: GapSize;
+    colGap?: GapSize;
 };
+
+/** Use `formEventToFormData` or `formEventToValues` to convert form event to values. */
+export const FlexForm: React.FC<FlexFormProps> = ({
+    direction = "col",
+    wrap,
+    gap = "md",
+    rowGap,
+    colGap,
+    className,
+    children,
+    ...restProps
+}) => (
+    <form
+        className={cn(
+            "flex",
+            collapse(flexDirection, direction),
+            wrap && collapse(flexWrap, wrap!),
+            collapse(withGap.gap, gap),
+            rowGap && collapse(withGap.rowGap, rowGap),
+            colGap && collapse(withGap.colGap, colGap),
+            className,
+        )}
+        {...restProps}
+    >
+        {children}
+    </form>
+);

@@ -1,5 +1,13 @@
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import type { FlowbiteBoolean, FlowbiteColors, FlowbiteSizes, ThemingProps } from "flowbite-react/types";
+import { cn as twMerge } from "@/util/cn.js";
+
+// Local type equivalents (previously from flowbite-react/types)
+export type FlowbiteBoolean = { on: string; off: string };
+export type FlowbiteColors = Record<string, string>;
+export type FlowbiteSizes = Record<
+    "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl",
+    string
+>;
+type ThemingProps<T> = { theme?: Partial<T>; clearTheme?: boolean; applyTheme?: boolean };
 
 /* 
 

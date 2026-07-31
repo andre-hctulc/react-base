@@ -1,104 +1,64 @@
 "use client";
 
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { cn } from "@/util/cn.js";
+import { collapse } from "@dre44/util/objects";
 import { useMemo, type ElementType } from "react";
-import { createTheme } from "flowbite-react";
-import {
-    shadow,
-    shapes,
-    withBorder,
-    withFit,
-    type BaseTheme,
-    type TProps,
-    type WithBorder,
-    type WithColor,
-    type WithFit,
-    type WithShadow,
-    type WithSize,
-} from "../../util/style.js";
-import { useRefOf, useResolveT } from "../../hooks/index.js";
+import { shadow, withBorder } from "../../util/style.js";
+import { useRefOf } from "../../hooks/index.js";
 import type { PropsOf, LinkComponent, LinkProps, RichAsProps } from "../../types/index.js";
 import { Icon, type IconLike } from "../icons/icon.js";
 import { Skeleton } from "../skeleton/skeleton.js";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        stat: StatTheme;
-    }
+const sizeMap = {
+    xs: "text-xs p-1",
+    sm: "text-sm p-2",
+    md: "text-base p-2.5",
+    lg: "text-lg p-3",
+    xl: "text-xl p-4",
+    "2xl": "text-2xl p-5",
+} as const;
 
-    interface FlowbiteProps {
-        stat: Partial<WithoutThemingProps<StatProps>>;
-    }
-}
+/** Simplified semantic color map */
+const colorMap = {
+    default: "",
+    primary: "bg-primary-50 text-primary-700",
+    secondary: "bg-secondary-50 text-secondary-700",
+    success: "bg-success-50 text-success-700",
+    error: "bg-error-50 text-error-700",
+    danger: "bg-danger-50 text-danger-700",
+    warning: "bg-warning-50 text-warning-700",
+    info: "bg-info-50 text-info-700",
+    blue: "bg-blue-50 text-blue-700",
+    green: "bg-green-50 text-green-700",
+    red: "bg-red-50 text-red-700",
+    gray: "bg-gray-50 text-gray-700",
+} as const;
 
-export interface StatTheme extends BaseTheme, WithShadow, WithBorder, WithFit, WithSize, WithColor {}
+export type StatColor = keyof typeof colorMap;
+export type StatSize = keyof typeof sizeMap;
 
-const stat = createTheme<StatTheme>({
-    base: "bg-paper-2 rounded-lg",
-    shadow,
-    ...withBorder,
-    ...withFit,
-    size: {
-        xs: "text-xs p-1",
-        sm: "text-sm p-2",
-        md: "text-base p-2.5",
-        lg: "text-lg p-3",
-        xl: "text-xl p-4",
-        "2xl": "text-2xl p-5",
-        "3xl": "text-3xl p-6",
-        "4xl": "text-4xl p-7",
-        "5xl": "text-5xl p-8",
-        "6xl": "text-6xl p-9",
-        "7xl": "text-7xl p-20",
-    },
-    color: {
-        default: "",
-        blue: "bg-blue-50 text-blue-700",
-        red: "bg-red-50 text-red-700",
-        green: "bg-green-50 text-green-700",
-        yellow: "bg-yellow-50 text-yellow-700",
-        purple: "bg-purple-50 text-purple-700",
-        pink: "bg-pink-50 text-pink-700",
-        gray: "bg-gray-50 text-gray-700",
-        primary: "bg-primary-50 text-primary-700",
-        secondary: "bg-secondary-50 text-secondary-700",
-        success: "bg-success-50 text-success-700",
-        danger: "bg-danger-50 text-danger-700",
-        error: "bg-error-50 text-error-700",
-        warning: "bg-warning-50 text-warning-700",
-        info: "bg-info-50 text-info-700",
-        light: "bg-light-50 text-light-700",
-        dark: "bg-dark-50 text-dark-700",
-        cyan: "bg-cyan-50 text-cyan-700",
-        teal: "bg-teal-50 text-teal-700",
-        indigo: "bg-indigo-50 text-indigo-700",
-        failure: "bg-failure-50 text-failure-700",
-        lime: "bg-lime-50 text-lime-700",
-    },
-    defaultVariants: {
-        fitWidth: true,
-        border: true,
-        size: "md",
-    },
-});
-
-type StatProps<T extends ElementType = "div"> = RichAsProps<T> &
-    TProps<StatTheme> & {
-        valueParser?: (value: any) => string;
-        value: any;
-        description?: string;
-        descriptionProps?: PropsOf<"p">;
-        textProps?: PropsOf<"p">;
-        icon?: IconLike;
-        loading?: boolean;
-        LinkComponent?: LinkComponent;
-        linkProps?: LinkProps;
-        href?: string;
-        skeletonProps?: PropsOf<typeof Skeleton>;
-        unit?: string;
-        iconProps?: PropsOf<typeof Icon>;
-        unitProps?: PropsOf<"span">;
-    };
+type StatProps<T extends ElementType = "div"> = RichAsProps<T> & {
+    size?: StatSize;
+    color?: StatColor;
+    shadow?: keyof typeof shadow;
+    border?: boolean | keyof typeof withBorder.border;
+    fitWidth?: boolean;
+    fitHeight?: boolean;
+    valueParser?: (value: any) => string;
+    value: any;
+    description?: string;
+    descriptionProps?: PropsOf<"p">;
+    textProps?: PropsOf<"p">;
+    icon?: IconLike;
+    loading?: boolean;
+    LinkComponent?: LinkComponent;
+    linkProps?: LinkProps;
+    href?: string;
+    skeletonProps?: PropsOf<typeof Skeleton>;
+    unit?: string;
+    iconProps?: PropsOf<typeof Icon>;
+    unitProps?: PropsOf<"span">;
+};
 
 /**
  * ### Props
@@ -111,8 +71,13 @@ type StatProps<T extends ElementType = "div"> = RichAsProps<T> &
  * - `LinkComponent`
  */
 export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
-    const { className, restProps } = useResolveT("stat", stat, props);
     const {
+        size = "md",
+        color,
+        shadow: sh,
+        border = true,
+        fitWidth = true,
+        fitHeight,
         valueParser,
         value,
         description,
@@ -129,17 +94,18 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
         unit,
         unitProps,
         iconProps,
+        className,
         ...rootProps
-    } = restProps;
+    } = props as any;
 
+    const Comp: any = as || "div";
     const MainComp: any = as || (href ? LinkComponent || "a" : "div");
-    const Comp: any = restProps.as || "div";
     const valueParserRef = useRefOf(valueParser);
     const val = useMemo(() => {
         return valueParserRef.current ? valueParserRef.current(value) : String(value);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
-    const isDefaultColor = !props.color || props.color === "default";
+    const isDefaultColor = !color || color === "default";
     const mainProps: any = { ...textProps };
 
     if (href) {
@@ -148,27 +114,43 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
     }
 
     return (
-        <Comp className={className} {...rootProps}>
-            <MainComp {...mainProps} className={twMerge("font-medium text-[1em]", textProps?.className)}>
+        <Comp
+            className={cn(
+                "bg-paper-2 rounded-lg",
+                collapse(sizeMap, size),
+                color && collapse(colorMap, color!),
+                sh && collapse(shadow, sh!),
+                border === true
+                    ? withBorder.border.on
+                    : border && typeof border === "string"
+                      ? (withBorder.border as any)[border]
+                      : undefined,
+                fitWidth && "w-fit",
+                fitHeight && "h-fit",
+                className,
+            )}
+            {...rootProps}
+        >
+            <MainComp {...mainProps} className={cn("font-medium text-[1em]", textProps?.className)}>
                 {icon && (
                     <Icon
                         color={isDefaultColor ? "neutral" : "inherit"}
                         inline
                         {...iconProps}
-                        className={twMerge("mr-2", iconProps?.className)}
+                        className={cn("mr-2", iconProps?.className)}
                     >
                         {icon}
                     </Icon>
                 )}
                 {loading ? (
                     <Skeleton as="span" {...skeletonProps}>
-                        {<span className="text-[1.8em]">...</span>}
+                        <span className="text-[1.8em]">...</span>
                     </Skeleton>
                 ) : (
                     <span className="text-[1.8em]">{val}</span>
                 )}
                 {unit && (
-                    <span {...unitProps} className={twMerge("ml-1 text-[1.2em]", unitProps?.className)}>
+                    <span {...unitProps} className={cn("ml-1 text-[1.2em]", unitProps?.className)}>
                         {unit}
                     </span>
                 )}
@@ -176,7 +158,7 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
             {description && (
                 <p
                     {...descriptionProps}
-                    className={twMerge(
+                    className={cn(
                         "text-[0.9em]",
                         isDefaultColor && "text-t-2",
                         descriptionProps?.className,

@@ -1,64 +1,31 @@
 "use client";
 
 import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
+import { cn } from "@/util/cn.js";
+import { collapse } from "@dre44/util/objects";
 import type { PartialPropsOf, RefProps, StyleProps } from "../../types/index.js";
 import { ErrorText } from "../text/error-text.js";
-import { createTheme, HelperText, Label } from "flowbite-react";
-import { withGap, type BaseTheme, type TProps, type WithGap } from "../../util/style.js";
-import { useResolveT } from "../../hooks/index.js";
+import { withGap } from "../../util/style.js";
 import { useJSForm } from "./js-form-context.js";
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
+import { Label } from "@/components/cn/label.js";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        formControl: FormControlTheme;
-    }
+type GapSize = keyof typeof withGap.gap;
 
-    interface FlowbiteProps {
-        formControl: Partial<WithoutThemingProps<FormControlProps>>;
-    }
-}
-
-export interface FormControlTheme {
-    root: BaseTheme & WithGap;
-    horizontalWrapper: BaseTheme & WithGap;
-}
-
-const formControl = createTheme<FormControlTheme>({
-    root: {
-        base: "flex flex-col",
-        ...withGap,
-        defaultVariants: {
-            gap: "sm",
-        },
-    },
-    horizontalWrapper: {
-        base: "flex items-center",
-        ...withGap,
-        defaultVariants: {
-            gap: "md",
-        },
-    },
-});
-
-export type FormControlProps = TProps<FormControlTheme> &
-    StyleProps &
+export type FormControlProps = StyleProps &
     RefProps<HTMLDivElement> & {
+        gap?: GapSize;
+        horizontalGap?: GapSize;
         /**
          * Default value of the input
          */
         name?: string;
         children: ReactNode;
-        /**
-         * Whether the input is controlled or not.
-         * By default, this is derived from the {@link JSFormContext}.
-         */
         controlled?: boolean;
         label?: string;
         labelProps?: PartialPropsOf<typeof Label>;
         errorText?: string;
         helperText?: string;
-        helperTextProps?: PartialPropsOf<typeof HelperText>;
+        helperTextProps?: PartialPropsOf<"p">;
         errorTextProps?: PartialPropsOf<typeof ErrorText>;
         labelWidth?: string | number;
         /**
@@ -81,9 +48,11 @@ export type FormControlProps = TProps<FormControlTheme> &
  * Consumes {@link JSFormContext}, to handle {@link JSForm} default value state.
  */
 export const FormControl: FC<FormControlProps> = (props) => {
-    const { classNames, restProps, children, theme } = useResolveT("formControl", formControl, props);
     const {
+        gap = "sm",
+        horizontalGap = "md",
         noError,
+        children,
         errorText,
         controlled,
         mimic,
@@ -98,7 +67,7 @@ export const FormControl: FC<FormControlProps> = (props) => {
         labelWidth,
         horizontal,
         ...rootProps
-    } = restProps;
+    } = props as any;
     const formCtx = useJSForm();
     const _name = name !== undefined ? `${formCtx?.namesPrefix ?? ""}${name}` : undefined;
     const hasName = _name !== undefined;
@@ -142,13 +111,19 @@ export const FormControl: FC<FormControlProps> = (props) => {
 
     const inp = childElement ? cloneElement(childElement, inpProps) : children;
 
+    const rootClass = cn("flex flex-col", collapse(withGap.gap, gap), rootProps.className);
+    const wrapperClass = cn("flex items-center", collapse(withGap.gap, horizontalGap));
+
     const helperTexts =
         !!helperText || !!errText ? (
             <div className="space-y-2">
                 {helperText && (
-                    <HelperText {...helperTextProps} className={twMerge("mt-0", helperTextProps?.className)}>
+                    <p
+                        {...helperTextProps}
+                        className={cn("text-sm text-t-3 mt-0", helperTextProps?.className)}
+                    >
                         {helperText}
-                    </HelperText>
+                    </p>
                 )}
                 {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
             </div>
@@ -161,17 +136,24 @@ export const FormControl: FC<FormControlProps> = (props) => {
                 {requiredHint && " *"}
             </span>
         ) : (
-            <Label htmlFor={id} {...labelProps}>
+            <Label
+                htmlFor={id}
+                {...labelProps}
+                className={cn(labelWidth !== undefined ? "" : undefined, labelProps?.className)}
+                style={labelWidth !== undefined ? { width: labelWidth } : undefined}
+            >
                 {label}
                 {requiredHint && " *"}
             </Label>
         )
     ) : null;
 
+    const { className: _cls, ...divProps } = rootProps;
+
     if (horizontal) {
         return (
-            <div ref={ref} className={classNames.root} {...rootProps}>
-                <div className={classNames.horizontalWrapper}>
+            <div ref={ref} className={rootClass} {...divProps}>
+                <div className={wrapperClass}>
                     {lbl}
                     {inp}
                 </div>
@@ -180,7 +162,7 @@ export const FormControl: FC<FormControlProps> = (props) => {
         );
     } else {
         return (
-            <div ref={ref} className={classNames.root} {...rootProps}>
+            <div ref={ref} className={rootClass} {...divProps}>
                 {lbl}
                 {inp}
                 {helperTexts}

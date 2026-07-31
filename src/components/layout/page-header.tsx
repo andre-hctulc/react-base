@@ -1,44 +1,12 @@
-"use client";
-
-import { twMerge } from "flowbite-react/helpers/tailwind-merge";
-import { createTheme } from "flowbite-react/helpers/create-theme";
+import { cn } from "@/util/cn.js";
+import { collapse } from "@dre44/util/objects";
 import { Title } from "../text/title.js";
 import type { PropsOf } from "../../types/index.js";
-import type { Page } from "./page.js";
-import type { BaseTheme, WithPadding, WithMargin } from "../../util/style.js";
 import { withPadding, withMargin } from "../../util/style.js";
-import { useResolveT } from "../../hooks/index.js";
 import type { ComponentProps, ReactNode } from "react";
 
-declare module "flowbite-react/types" {
-    interface FlowbiteTheme {
-        pageHeader: PageHeaderTheme;
-    }
-
-    interface FlowbiteProps {
-        pageHeader: Partial<WithoutThemingProps<PageHeaderProps>>;
-    }
-}
-
-export interface PageHeaderTheme extends BaseTheme, WithPadding, WithMargin {
-    sticky: Record<"true", string>;
-    relative: Record<"true", string>;
-}
-
-const pageHeader = createTheme<PageHeaderTheme>({
-    base: "w-full",
-    sticky: {
-        true: "sticky top-0 z-10",
-    },
-    relative: {
-        true: "relative",
-    },
-    ...withPadding,
-    ...withMargin,
-    defaultVariants: {
-        p: "lg",
-    },
-});
+type PadSize = keyof typeof withPadding.p;
+type MarginSize = keyof typeof withMargin.mt;
 
 export interface PageHeaderProps extends Omit<ComponentProps<"div">, "title"> {
     title?: ReactNode;
@@ -48,20 +16,81 @@ export interface PageHeaderProps extends Omit<ComponentProps<"div">, "title"> {
     children?: ReactNode;
     pre?: ReactNode;
     center?: boolean;
+    sticky?: boolean;
+    relative?: boolean;
+    p?: PadSize;
+    px?: PadSize;
+    py?: PadSize;
+    pt?: PadSize;
+    pr?: PadSize;
+    pb?: PadSize;
+    pl?: PadSize;
+    m?: MarginSize;
+    mx?: MarginSize;
+    my?: MarginSize;
+    mt?: MarginSize;
+    mr?: MarginSize;
+    mb?: MarginSize;
+    ml?: MarginSize;
 }
 
-/**
- * Use this inside a {@link Page} component to display a header with title, badges and actions.
- */
+/** Use inside a `Page` component to display a header with title, badges and actions. */
 export const PageHeader: React.FC<PageHeaderProps> = (props) => {
-    const { className, restProps, children } = useResolveT("pageHeader", pageHeader, props);
-    const { pre, badges, actions, title, titleProps, center, ...rootProps } = restProps;
+    const {
+        p = "lg",
+        px,
+        py,
+        pt,
+        pr,
+        pb,
+        pl,
+        m,
+        mx,
+        my,
+        mt,
+        mr,
+        mb,
+        ml,
+        sticky,
+        relative,
+        pre,
+        badges,
+        actions,
+        title,
+        titleProps,
+        center,
+        className,
+        children,
+        ...rootProps
+    } = props;
 
     return (
-        <div className={className} {...rootProps}>
+        <div
+            className={cn(
+                "w-full",
+                sticky && "sticky top-0 z-10",
+                relative && "relative",
+                collapse(withPadding.p, p),
+                px && collapse(withPadding.px, px),
+                py && collapse(withPadding.py, py),
+                pt && collapse(withPadding.pt, pt),
+                pr && collapse(withPadding.pr, pr),
+                pb && collapse(withPadding.pb, pb),
+                pl && collapse(withPadding.pl, pl),
+                m && collapse(withMargin.m, m),
+                mx && collapse(withMargin.mx, mx),
+                my && collapse(withMargin.my, my),
+                mt && collapse(withMargin.mt, mt),
+                mr && collapse(withMargin.mr, mr),
+                mb && collapse(withMargin.mb, mb),
+                ml && collapse(withMargin.ml, ml),
+                className,
+            )}
+            {...rootProps}
+        >
             {pre}
             {(badges || actions || title) && (
-                <div className={twMerge("flex gap-3 py-2", center && "justify-center")}>
+                <div className={cn("flex gap-3 py-2", center && "justify-center")}>
                     {title && <Title {...titleProps}>{title}</Title>}
                     {badges && <div className="flex gap-3">{badges}</div>}
                     {actions && <div className="flex flex-wrap grow items-center justify-end">{actions}</div>}
