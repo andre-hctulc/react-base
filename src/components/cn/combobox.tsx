@@ -2,7 +2,7 @@ import * as React from "react";
 import { Combobox as ComboboxPrimitive } from "@base-ui/react";
 import { CheckIcon, ChevronDownIcon, XIcon } from "lucide-react";
 
-import { cn } from "@/util/cn/cn.util";
+import { cn } from "@/util/cn";
 import { Button } from "@/components/cn/button";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/cn/input-group";
 

@@ -5,7 +5,7 @@
   "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
   "registryDependencies": [
     "field",
-    "use-js-form"
+    "andre-hctulc/react-base/use-js-form"
   ],
   "files": [
     {

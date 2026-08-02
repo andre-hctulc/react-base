@@ -7,7 +7,7 @@ import { createSnapshot } from "./js-form-helpers.js";
 import { getProperty } from "dot-prop";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
 import type { PropsOf, StyleProps } from "@/types/index.js";
-import { cn } from "@/util/cn/cn.util.js";
+import { cn } from "@/util/cn.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz } from "@/util/react/variants.util.js";
 

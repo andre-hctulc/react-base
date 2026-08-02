@@ -541,7 +541,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "title"
+        "andre-hctulc/react-base/title"
       ],
       "files": [
         {
@@ -556,8 +556,8 @@
       "title": "SpinnerPage",
       "description": "Full-page spinner using Page and PageContent.",
       "registryDependencies": [
-        "page",
-        "page-content"
+        "andre-hctulc/react-base/page",
+        "andre-hctulc/react-base/page-content"
       ],
       "files": [
         {
@@ -587,7 +587,7 @@
       "title": "ErrorText",
       "description": "Error-colored text using ColorText.",
       "registryDependencies": [
-        "color-text"
+        "andre-hctulc/react-base/color-text"
       ],
       "files": [
         {
@@ -602,7 +602,7 @@
       "title": "SuccessText",
       "description": "Success-colored text using ColorText.",
       "registryDependencies": [
-        "color-text"
+        "andre-hctulc/react-base/color-text"
       ],
       "files": [
         {
@@ -620,7 +620,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "icon"
+        "andre-hctulc/react-base/icon"
       ],
       "files": [
         {
@@ -671,7 +671,7 @@
       "title": "Transition",
       "description": "Headless CSS class-based enter/leave transition primitive.",
       "registryDependencies": [
-        "use-css-transition"
+        "andre-hctulc/react-base/use-css-transition"
       ],
       "files": [
         {
@@ -694,7 +694,7 @@
       "title": "Fade",
       "description": "CSS opacity fade enter/leave transition.",
       "registryDependencies": [
-        "transition"
+        "andre-hctulc/react-base/transition"
       ],
       "files": [
         {
@@ -709,7 +709,7 @@
       "title": "CollapseTransition",
       "description": "CSS height collapse enter/leave transition.",
       "registryDependencies": [
-        "transition"
+        "andre-hctulc/react-base/transition"
       ],
       "files": [
         {
@@ -736,8 +736,8 @@
       "title": "Summary",
       "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
       "registryDependencies": [
-        "icon",
-        "clipboard-icon-button"
+        "andre-hctulc/react-base/icon",
+        "andre-hctulc/react-base/clipboard-icon-button"
       ],
       "files": [
         {
@@ -769,6 +769,9 @@
       "name": "use-js-form",
       "title": "useJsForm",
       "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
+      "dependencies": [
+        "dot-prop"
+      ],
       "files": [
         {
           "path": "src/components/input/js-form-types.ts",
@@ -791,7 +794,7 @@
       "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
       "registryDependencies": [
         "field",
-        "use-js-form"
+        "andre-hctulc/react-base/use-js-form"
       ],
       "files": [
         {
@@ -806,8 +809,8 @@
       "title": "JSForm",
       "description": "Form component powered by useJsForm — handles default values, validation and submission.",
       "registryDependencies": [
-        "use-js-form",
-        "form-control"
+        "andre-hctulc/react-base/use-js-form",
+        "andre-hctulc/react-base/form-control"
       ],
       "files": [
         {

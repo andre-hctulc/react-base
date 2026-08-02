@@ -6,7 +6,7 @@
             "type": "registry:ui",
             "title": "Transition",
             "description": "Headless CSS class-based enter/leave transition primitive.",
-            "registryDependencies": ["use-css-transition"],
+            "registryDependencies": ["andre-hctulc/react-base/use-css-transition"],
             "files": [
                 { "path": "transition.tsx", "type": "registry:ui" },
                 { "path": "transition-context.ts", "type": "registry:lib" },
@@ -18,7 +18,7 @@
             "type": "registry:ui",
             "title": "Fade",
             "description": "CSS opacity fade enter/leave transition.",
-            "registryDependencies": ["transition"],
+            "registryDependencies": ["andre-hctulc/react-base/transition"],
             "files": [{ "path": "fade.tsx", "type": "registry:ui" }]
         },
         {
@@ -26,7 +26,7 @@
             "type": "registry:ui",
             "title": "CollapseTransition",
             "description": "CSS height collapse enter/leave transition.",
-            "registryDependencies": ["transition"],
+            "registryDependencies": ["andre-hctulc/react-base/transition"],
             "files": [{ "path": "collapse.tsx", "type": "registry:ui" }]
         }
     ]

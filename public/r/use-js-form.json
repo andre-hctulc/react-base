@@ -3,6 +3,9 @@
   "name": "use-js-form",
   "title": "useJsForm",
   "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
+  "dependencies": [
+    "dot-prop"
+  ],
   "files": [
     {
       "path": "src/components/input/js-form-types.ts",

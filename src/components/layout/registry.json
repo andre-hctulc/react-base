@@ -39,7 +39,7 @@
             "title": "PageHeader",
             "description": "Page header with title, badges, actions slots, padding and margin variants.",
             "dependencies": ["class-variance-authority"],
-            "registryDependencies": ["title"],
+            "registryDependencies": ["andre-hctulc/react-base/title"],
             "files": [{ "path": "page-header.tsx", "type": "registry:ui" }]
         },
         {
@@ -47,7 +47,7 @@
             "type": "registry:ui",
             "title": "SpinnerPage",
             "description": "Full-page spinner using Page and PageContent.",
-            "registryDependencies": ["page", "page-content"],
+            "registryDependencies": ["andre-hctulc/react-base/page", "andre-hctulc/react-base/page-content"],
             "files": [{ "path": "spinner-page.tsx", "type": "registry:ui" }]
         }
     ]

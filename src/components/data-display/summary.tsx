@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC, ReactNode, ComponentProps } from "react";
-import { cn } from "@/util/cn/cn.util.js";
+import { cn } from "@/util/cn.js";
 import type { PropsOf } from "@/types/index.js";
 import { Icon } from "@/components/icons/icon.js";
 import { useAsSet } from "@/hooks/iterables/use-as-set.js";

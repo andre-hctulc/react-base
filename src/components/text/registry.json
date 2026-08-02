@@ -14,7 +14,7 @@
             "type": "registry:ui",
             "title": "ErrorText",
             "description": "Error-colored text using ColorText.",
-            "registryDependencies": ["color-text"],
+            "registryDependencies": ["andre-hctulc/react-base/color-text"],
             "files": [{ "path": "error-text.tsx", "type": "registry:ui" }]
         },
         {
@@ -22,7 +22,7 @@
             "type": "registry:ui",
             "title": "SuccessText",
             "description": "Success-colored text using ColorText.",
-            "registryDependencies": ["color-text"],
+            "registryDependencies": ["andre-hctulc/react-base/color-text"],
             "files": [{ "path": "success-text.tsx", "type": "registry:ui" }]
         },
         {
@@ -31,7 +31,7 @@
             "title": "Title",
             "description": "Polymorphic heading with variant, bold, truncate and icon slot.",
             "dependencies": ["class-variance-authority"],
-            "registryDependencies": ["icon"],
+            "registryDependencies": ["andre-hctulc/react-base/icon"],
             "files": [{ "path": "title.tsx", "type": "registry:ui" }]
         },
         {

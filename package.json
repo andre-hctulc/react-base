@@ -27,12 +27,10 @@
         "./components": "./dist/components/index.js"
     },
     "dependencies": {
-        "@dre44/util": "^0.27.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "dot-prop": "^9.0.0",
-        "lucide-react": "^1.28.0",
-        "tailwind-merge": "^3.6.0"
+        "lucide-react": "^1.28.0"
     },
     "peerDependencies": {
         "react": "^19",

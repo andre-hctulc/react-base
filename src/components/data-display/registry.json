@@ -13,7 +13,7 @@
             "type": "registry:ui",
             "title": "Summary",
             "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
-            "registryDependencies": ["icon", "clipboard-icon-button"],
+            "registryDependencies": ["andre-hctulc/react-base/icon", "andre-hctulc/react-base/clipboard-icon-button"],
             "files": [{ "path": "summary.tsx", "type": "registry:ui" }]
         }
     ]

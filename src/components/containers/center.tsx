@@ -1,4 +1,4 @@
-import { cn } from "@/util/cn/cn.util.js";
+import { cn } from "@/util/cn.js";
 import { type ComponentProps, type FC } from "react";
 
 export interface CenterProps extends ComponentProps<"div"> {}

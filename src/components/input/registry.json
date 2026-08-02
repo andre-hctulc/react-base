@@ -15,6 +15,7 @@
             "type": "registry:hook",
             "title": "useJsForm",
             "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
+            "dependencies": ["dot-prop"],
             "files": [
                 { "path": "js-form-types.ts", "type": "registry:lib" },
                 { "path": "js-form-helpers.ts", "type": "registry:lib" },
@@ -26,7 +27,7 @@
             "type": "registry:ui",
             "title": "FormControl",
             "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
-            "registryDependencies": ["field", "use-js-form"],
+            "registryDependencies": ["field", "andre-hctulc/react-base/use-js-form"],
             "files": [{ "path": "form-control.tsx", "type": "registry:ui" }]
         },
         {
@@ -34,7 +35,7 @@
             "type": "registry:ui",
             "title": "JSForm",
             "description": "Form component powered by useJsForm — handles default values, validation and submission.",
-            "registryDependencies": ["use-js-form", "form-control"],
+            "registryDependencies": ["andre-hctulc/react-base/use-js-form", "andre-hctulc/react-base/form-control"],
             "files": [
                 { "path": "js-form.tsx", "type": "registry:ui" },
                 { "path": "flex-form.tsx", "type": "registry:ui" }

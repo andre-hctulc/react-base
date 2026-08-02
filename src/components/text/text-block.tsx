@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/util/cn/cn.util.js";
+import { cn } from "@/util/cn.js";
 import type { PropsOf } from "@/types/index.js";
 
 const textBlockVariants = cva("", {

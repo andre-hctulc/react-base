@@ -1,4 +1,4 @@
-import { cn as twMerge } from "@/util/cn/cn.util.js";
+import { cn as twMerge } from "@/util/cn.js";
 import {
     Children,
     cloneElement,

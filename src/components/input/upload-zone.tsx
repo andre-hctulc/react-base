@@ -5,7 +5,7 @@ import { Droppable } from "./droppable.js";
 import type { InputLikeProps } from "./types.js";
 import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
 import { Icon } from "@/components/icons/icon.js";
-import { cn as twMerge } from "@/util/cn/cn.util.js";
+import { cn as twMerge } from "@/util/cn.js";
 
 export interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     children?: ReactNode;

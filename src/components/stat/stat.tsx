@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/util/cn/cn.util.js";
+import { cn } from "@/util/cn.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { useMemo, type ElementType } from "react";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";

@@ -4,7 +4,7 @@
   "title": "CollapseTransition",
   "description": "CSS height collapse enter/leave transition.",
   "registryDependencies": [
-    "transition"
+    "andre-hctulc/react-base/transition"
   ],
   "files": [
     {

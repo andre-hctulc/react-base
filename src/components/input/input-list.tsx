@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState, type ElementType, type Ref } from "reac
 import type { InputLikeProps } from "./types.js";
 import type { ASProps, StyleProps } from "@/types/index.js";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
-import { cn as twMerge } from "@/util/cn/cn.util.js";
+import { cn as twMerge } from "@/util/cn.js";
 
 type InputListInputProps<V = string> = Pick<
     InputLikeProps<V>,
