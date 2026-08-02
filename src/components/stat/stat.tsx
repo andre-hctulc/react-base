@@ -1,64 +1,79 @@
 "use client";
 
-import { cn } from "@/util/cn.js";
-import { collapse } from "@dre44/util/objects";
+import { cn } from "@/util/cn/cn.util.js";
+import { cva, type VariantProps } from "class-variance-authority";
 import { useMemo, type ElementType } from "react";
-import { shadow, withBorder } from "../../util/style.js";
-import { useRefOf } from "../../hooks/index.js";
-import type { PropsOf, LinkComponent, LinkProps, RichAsProps } from "../../types/index.js";
-import { Icon, type IconLike } from "../icons/icon.js";
-import { Skeleton } from "../skeleton/skeleton.js";
+import { useRefOf } from "@/hooks/others/use-ref-of.js";
+import type { PropsOf, LinkComponent, LinkProps, RichAsProps } from "@/types/index.js";
+import { Icon, type IconLike } from "@/components/icons/icon.js";
+import { Skeleton } from "@/components/cn/skeleton.js";
 
-const sizeMap = {
-    xs: "text-xs p-1",
-    sm: "text-sm p-2",
-    md: "text-base p-2.5",
-    lg: "text-lg p-3",
-    xl: "text-xl p-4",
-    "2xl": "text-2xl p-5",
-} as const;
+const statVariants = cva("bg-paper-2 rounded-lg", {
+    variants: {
+        size: {
+            xs: "text-xs p-1",
+            sm: "text-sm p-2",
+            md: "text-base p-2.5",
+            lg: "text-lg p-3",
+            xl: "text-xl p-4",
+            "2xl": "text-2xl p-5",
+        },
+        color: {
+            default: "",
+            primary: "bg-primary-50 text-primary-700",
+            secondary: "bg-secondary-50 text-secondary-700",
+            success: "bg-success-50 text-success-700",
+            error: "bg-error-50 text-error-700",
+            danger: "bg-danger-50 text-danger-700",
+            warning: "bg-warning-50 text-warning-700",
+            info: "bg-info-50 text-info-700",
+            blue: "bg-blue-50 text-blue-700",
+            green: "bg-green-50 text-green-700",
+            red: "bg-red-50 text-red-700",
+            gray: "bg-gray-50 text-gray-700",
+        },
+        shadow: {
+            none: "shadow-none",
+            sm: "shadow-sm",
+            md: "shadow-md",
+            lg: "shadow-lg",
+            xl: "shadow-xl",
+            "2xl": "shadow-2xl",
+            inner: "shadow-inner",
+        },
+        border: {
+            true: "border",
+            false: "border-0",
+            thin: "border-[0.5px]",
+            thinnest: "border-[0.5px]",
+            thicker: "border-[1.5px]",
+            thick: "border-2",
+        },
+        fitWidth: { true: "w-fit", false: "" },
+        fitHeight: { true: "h-fit", false: "" },
+    },
+    defaultVariants: { size: "md", border: true, fitWidth: true },
+});
 
-/** Simplified semantic color map */
-const colorMap = {
-    default: "",
-    primary: "bg-primary-50 text-primary-700",
-    secondary: "bg-secondary-50 text-secondary-700",
-    success: "bg-success-50 text-success-700",
-    error: "bg-error-50 text-error-700",
-    danger: "bg-danger-50 text-danger-700",
-    warning: "bg-warning-50 text-warning-700",
-    info: "bg-info-50 text-info-700",
-    blue: "bg-blue-50 text-blue-700",
-    green: "bg-green-50 text-green-700",
-    red: "bg-red-50 text-red-700",
-    gray: "bg-gray-50 text-gray-700",
-} as const;
+export type StatColor = NonNullable<VariantProps<typeof statVariants>["color"]>;
+export type StatSize = NonNullable<VariantProps<typeof statVariants>["size"]>;
 
-export type StatColor = keyof typeof colorMap;
-export type StatSize = keyof typeof sizeMap;
-
-type StatProps<T extends ElementType = "div"> = RichAsProps<T> & {
-    size?: StatSize;
-    color?: StatColor;
-    shadow?: keyof typeof shadow;
-    border?: boolean | keyof typeof withBorder.border;
-    fitWidth?: boolean;
-    fitHeight?: boolean;
-    valueParser?: (value: any) => string;
-    value: any;
-    description?: string;
-    descriptionProps?: PropsOf<"p">;
-    textProps?: PropsOf<"p">;
-    icon?: IconLike;
-    loading?: boolean;
-    LinkComponent?: LinkComponent;
-    linkProps?: LinkProps;
-    href?: string;
-    skeletonProps?: PropsOf<typeof Skeleton>;
-    unit?: string;
-    iconProps?: PropsOf<typeof Icon>;
-    unitProps?: PropsOf<"span">;
-};
+type StatProps<T extends ElementType = "div"> = RichAsProps<T> &
+    VariantProps<typeof statVariants> & {
+        valueParser?: (value: any) => string;
+        value: any;
+        description?: string;
+        descriptionProps?: PropsOf<"p">;
+        textProps?: PropsOf<"p">;
+        icon?: IconLike;
+        LinkComponent?: LinkComponent;
+        linkProps?: LinkProps;
+        href?: string;
+        skeletonProps?: PropsOf<typeof Skeleton>;
+        unit?: string;
+        iconProps?: PropsOf<typeof Icon>;
+        unitProps?: PropsOf<"span">;
+    };
 
 /**
  * ### Props
@@ -72,11 +87,11 @@ type StatProps<T extends ElementType = "div"> = RichAsProps<T> & {
  */
 export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
     const {
-        size = "md",
+        size,
         color,
-        shadow: sh,
-        border = true,
-        fitWidth = true,
+        shadow,
+        border,
+        fitWidth,
         fitHeight,
         valueParser,
         value,
@@ -84,7 +99,6 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
         descriptionProps,
         textProps,
         icon,
-        loading,
         linkProps,
         children,
         href,
@@ -96,7 +110,7 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
         iconProps,
         className,
         ...rootProps
-    } = props as any;
+    } = props;
 
     const Comp: any = as || "div";
     const MainComp: any = as || (href ? LinkComponent || "a" : "div");
@@ -115,20 +129,7 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
 
     return (
         <Comp
-            className={cn(
-                "bg-paper-2 rounded-lg",
-                collapse(sizeMap, size),
-                color && collapse(colorMap, color!),
-                sh && collapse(shadow, sh!),
-                border === true
-                    ? withBorder.border.on
-                    : border && typeof border === "string"
-                      ? (withBorder.border as any)[border]
-                      : undefined,
-                fitWidth && "w-fit",
-                fitHeight && "h-fit",
-                className,
-            )}
+            className={cn(statVariants({ size, color, shadow, border, fitWidth, fitHeight }), className)}
             {...rootProps}
         >
             <MainComp {...mainProps} className={cn("font-medium text-[1em]", textProps?.className)}>
@@ -142,13 +143,6 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
                         {icon}
                     </Icon>
                 )}
-                {loading ? (
-                    <Skeleton as="span" {...skeletonProps}>
-                        <span className="text-[1.8em]">...</span>
-                    </Skeleton>
-                ) : (
-                    <span className="text-[1.8em]">{val}</span>
-                )}
                 {unit && (
                     <span {...unitProps} className={cn("ml-1 text-[1.2em]", unitProps?.className)}>
                         {unit}
@@ -158,11 +152,7 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
             {description && (
                 <p
                     {...descriptionProps}
-                    className={cn(
-                        "text-[0.9em]",
-                        isDefaultColor && "text-t-2",
-                        descriptionProps?.className,
-                    )}
+                    className={cn("text-[0.9em]", isDefaultColor && "text-t-2", descriptionProps?.className)}
                 >
                     {description}
                 </p>

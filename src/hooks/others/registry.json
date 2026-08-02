@@ -1,0 +1,82 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "use-breakpoints",
+            "type": "registry:hook",
+            "title": "useBreakpoints",
+            "description": "Returns the active Tailwind-style breakpoint.",
+            "files": [{ "path": "use-breakpoints.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-choices",
+            "type": "registry:hook",
+            "title": "useChoices",
+            "description": "Multi-select state management.",
+            "files": [{ "path": "use-choices.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-context-x",
+            "type": "registry:hook",
+            "title": "useContextX",
+            "description": "Typed context consumer that throws when used outside its provider.",
+            "files": [{ "path": "use-context-x.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-css-transition",
+            "type": "registry:hook",
+            "title": "useCssTransition",
+            "description": "Drives CSS class-based enter/leave transitions.",
+            "files": [{ "path": "use-css-transition.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-delayed-value",
+            "type": "registry:hook",
+            "title": "useDelayedValue",
+            "description": "Returns a value that updates after a delay.",
+            "files": [{ "path": "use-delayed-value.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-interval",
+            "type": "registry:hook",
+            "title": "useInterval",
+            "description": "Declarative setInterval with automatic cleanup.",
+            "files": [{ "path": "use-interval.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-is-hydrated",
+            "type": "registry:hook",
+            "title": "useIsHydrated",
+            "description": "Returns true after the component has mounted (SSR-safe).",
+            "files": [{ "path": "use-is-hydrated.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-persistent-state",
+            "type": "registry:hook",
+            "title": "usePersistentState",
+            "description": "useState that syncs to localStorage.",
+            "files": [{ "path": "use-persistent-state.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-promise",
+            "type": "registry:hook",
+            "title": "usePromise",
+            "description": "Tracks loading/error/data state of a promise.",
+            "files": [{ "path": "use-promise.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-ref-of",
+            "type": "registry:hook",
+            "title": "useRefOf",
+            "description": "Keeps a ref in sync with the latest value of a variable.",
+            "files": [{ "path": "use-ref-of.ts", "type": "registry:hook" }]
+        },
+        {
+            "name": "use-timeout",
+            "type": "registry:hook",
+            "title": "useTimeout",
+            "description": "Declarative setTimeout with automatic cleanup.",
+            "files": [{ "path": "use-timeout.ts", "type": "registry:hook" }]
+        }
+    ]
+}

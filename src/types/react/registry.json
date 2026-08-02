@@ -1,0 +1,15 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "react-types",
+            "type": "registry:lib",
+            "title": "React types",
+            "description": "Common React type utilities: PropsOf, PartialPropsOf, StyleProps, RefProps, RichAsProps.",
+            "files": [
+                { "path": "react.types.ts", "type": "registry:lib" },
+                { "path": "index.ts", "type": "registry:lib" }
+            ]
+        }
+    ]
+}

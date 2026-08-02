@@ -1,0 +1,12 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "stat",
+            "type": "registry:ui",
+            "title": "Stat",
+            "description": "Stat card with label, value and trend display.",
+            "files": [{ "path": "stat.tsx", "type": "registry:ui" }]
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "variants-util",
+            "type": "registry:lib",
+            "title": "Variants utility",
+            "description": "CVA size variant helpers: sz() and msz().",
+            "files": [{ "path": "variants.util.ts", "type": "registry:lib" }]
+        },
+        {
+            "name": "react-util",
+            "type": "registry:lib",
+            "title": "React utilities",
+            "description": "React utility helpers.",
+            "files": [{ "path": "react.util.ts", "type": "registry:lib" }]
+        }
+    ]
+}

@@ -1,17 +1,18 @@
 "use client";
 
-import { useRef, useState, type ComponentProps } from "react";
+import { useRef, useState } from "react";
 import { Check, ClipboardList } from "lucide-react";
-import { Button } from "../cn/button.js";
+import { Button, } from "@/components/cn/button.js";
+import type { PropsOf } from "@/types/index.js";
 
-export type ClipboardIconButtonProps = ComponentProps<"button"> & {
+export interface ClipboardIconButtonProps extends PropsOf<typeof Button> {
     onCopySuccess?: () => void;
     valueToCopy: string;
     /**
      * @default 2000
      */
     timeout?: number;
-};
+}
 
 export const ClipboardIconButton = ({
     valueToCopy,

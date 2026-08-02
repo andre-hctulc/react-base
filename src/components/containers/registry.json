@@ -1,0 +1,35 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "flex",
+            "type": "registry:ui",
+            "title": "Flex",
+            "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
+            "dependencies": ["class-variance-authority"],
+            "files": [{ "path": "flex.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "toolbar",
+            "type": "registry:ui",
+            "title": "Toolbar",
+            "description": "Flex toolbar with spacing, padding, margin, scroll and alignment variants.",
+            "dependencies": ["class-variance-authority"],
+            "files": [{ "path": "toolbar.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "center",
+            "type": "registry:ui",
+            "title": "Center",
+            "description": "Center, CenterH and CenterV flex utilities.",
+            "files": [{ "path": "center.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "spacer",
+            "type": "registry:ui",
+            "title": "Spacer",
+            "description": "Polymorphic flex gap container.",
+            "files": [{ "path": "spacer.tsx", "type": "registry:ui" }]
+        }
+    ]
+}

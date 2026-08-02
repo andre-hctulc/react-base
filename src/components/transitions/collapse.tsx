@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { PropsOf } from "../../types/index.js";
+import type { PropsOf } from "@/types/index.js";
 import Transition from "./transition.js";
 
 // ###### CollapseV ######

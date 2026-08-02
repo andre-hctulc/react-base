@@ -10,9 +10,9 @@ import {
     Children,
 } from "react";
 import { TransitionChild } from "./transition-child.js";
-import { cn as twMerge } from "@/util/cn.js";
-import { useCssTransition } from "../../hooks/index.js";
+import { cn as twMerge } from "@/util/cn/cn.util.js";
 import { TransitionContext } from "./transition-context.js";
+import { useCssTransition } from "@/hooks/others/use-css-transition.js";
 
 export interface TransitionClasses {
     /**
@@ -108,7 +108,7 @@ export function Transition({
 
     // Check if children contains TransitionChild components
     const hasTransitionChildren = Children.toArray(children).some(
-        (child) => isValidElement(child) && child.type === TransitionChild
+        (child) => isValidElement(child) && child.type === TransitionChild,
     );
 
     if (hasTransitionChildren) {

@@ -1,7 +1,7 @@
 import { type ElementType } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/util/cn.js";
-import type { RichAsProps } from "../../types/index.js";
+import { cn } from "@/util/cn/cn.util.js";
+import type { RichAsProps } from "@/types/index.js";
 
 const typographyVariants = cva("", {
     variants: {

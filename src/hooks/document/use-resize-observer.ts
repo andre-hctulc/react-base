@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, type RefObject } from "react";
-import { useRefOf } from "../others";
+import { useRefOf } from "@/hooks/others/index.js";
 
 export function useResizeObserver(
     ref: RefObject<Element | null> | Element,

@@ -1,0 +1,15 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "include": [
+        "icons/registry.json",
+        "containers/registry.json",
+        "layout/registry.json",
+        "text/registry.json",
+        "transitions/registry.json",
+        "data-display/registry.json",
+        "input/registry.json",
+        "dialog/registry.json",
+        "stat/registry.json",
+        "label/registry.json"
+    ]
+}

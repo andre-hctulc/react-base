@@ -1,56 +1,117 @@
 import type { ElementType } from "react";
-import { cn } from "@/util/cn.js";
-import { collapse } from "@dre44/util/objects";
-import {
-    alignItems,
-    flexDirection,
-    flexWrap,
-    height,
-    justifyContent,
-    maxHeight,
-    maxWidth,
-    minHeight,
-    minWidth,
-    width,
-    type AlignItems,
-    type FlexDirection,
-    type FlexWrap,
-    type JustifyContent,
-} from "../../util/style.js";
-import { withPrefix } from "../../util/system.js";
-import type { RichAsProps } from "../../types/index.js";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/util/cn/cn.util.js";
+import type { RichAsProps } from "@/types/index.js";
 
-type SizeLike = keyof typeof height;
+const flexVariants = cva("flex", {
+    variants: {
+        direction: {
+            row: "flex-row",
+            row_reverse: "flex-row-reverse",
+            col: "flex-col",
+            col_reverse: "flex-col-reverse",
+        },
+        alignItems: {
+            auto: "",
+            start: "items-start",
+            center: "items-center",
+            end: "items-end",
+            stretch: "items-stretch",
+            baseline: "items-baseline",
+        },
+        justifyContent: {
+            start: "justify-start",
+            center: "justify-center",
+            end: "justify-end",
+            between: "justify-between",
+            around: "justify-around",
+        },
+        wrap: {
+            none: "flex-nowrap",
+            normal: "flex-wrap",
+            reverse: "flex-wrap-reverse",
+        },
+        grow: {
+            true: "grow",
+            false: "",
+        },
+        noShrink: {
+            true: "shrink-0",
+            false: "",
+        },
+        height: {
+            full: "h-full",
+            screen: "h-screen",
+            auto: "h-auto",
+            min: "h-min",
+            max: "h-max",
+            fit: "h-fit",
+            "0": "h-0",
+        },
+        maxHeight: {
+            full: "max-h-full",
+            screen: "max-h-screen",
+            auto: "max-h-auto",
+            min: "max-h-min",
+            max: "max-h-max",
+            fit: "max-h-fit",
+            "0": "max-h-0",
+        },
+        minHeight: {
+            full: "min-h-full",
+            screen: "min-h-screen",
+            auto: "min-h-auto",
+            min: "min-h-min",
+            max: "min-h-max",
+            fit: "min-h-fit",
+            "0": "min-h-0",
+        },
+        width: {
+            full: "w-full",
+            screen: "w-screen",
+            auto: "w-auto",
+            min: "min-w-full",
+            max: "max-w-full",
+            fit: "w-fit",
+            "0": "w-0",
+        },
+        maxWidth: {
+            full: "max-w-full",
+            screen: "max-w-screen",
+            auto: "max-w-auto",
+            min: "max-w-min",
+            max: "max-w-max",
+            fit: "max-w-fit",
+            "0": "max-w-0",
+        },
+        minWidth: {
+            full: "min-w-full",
+            screen: "min-w-screen",
+            auto: "min-w-auto",
+            min: "min-w-min",
+            max: "min-w-max",
+            fit: "min-w-fit",
+            "0": "min-w-0",
+        },
+    },
+});
 
-export type FlexProps<T extends ElementType = "div"> = RichAsProps<T> & {
-    direction?: FlexDirection;
-    alignItems?: AlignItems;
-    justifyContent?: JustifyContent;
-    wrap?: FlexWrap;
-    grow?: boolean;
-    noShrink?: boolean;
-    height?: SizeLike;
-    maxHeight?: SizeLike;
-    minHeight?: SizeLike;
-    width?: SizeLike;
-    maxWidth?: SizeLike;
-    minWidth?: SizeLike;
-};
+export type FlexProps<T extends ElementType = "div"> = RichAsProps<T> & VariantProps<typeof flexVariants>;
 
 export const Flex = <T extends ElementType = "div">(props: FlexProps<T>) => {
     const {
         direction,
-        alignItems: ai,
-        justifyContent: jc,
+        alignItems,
+        justifyContent,
         wrap,
         grow,
         noShrink,
-        height: h,
-        maxHeight: mxh,
-        minHeight: mnh,
-        width: w,
-        maxWidth: mxw,
-        minWidth: mnw,
+        height,
+        maxHeight,
+        minHeight,
+        width,
+        maxWidth,
+        minWidth,
         className,
         children,
         as,
@@ -61,19 +122,20 @@ export const Flex = <T extends ElementType = "div">(props: FlexProps<T>) => {
     return (
         <Comp
             className={cn(
-                "flex",
-                direction && collapse(flexDirection, direction!),
-                ai && collapse(alignItems, ai!),
-                jc && collapse(justifyContent, jc!),
-                wrap && collapse(flexWrap, wrap!),
-                grow && "grow",
-                noShrink && "shrink-0",
-                h && collapse(height, h!),
-                mxh && collapse(maxHeight, mxh!),
-                mnh && collapse(minHeight, mnh!),
-                w && collapse(width, w!),
-                mxw && collapse(maxWidth, mxw!),
-                mnw && collapse(minWidth, mnw!),
+                flexVariants({
+                    direction,
+                    alignItems,
+                    justifyContent,
+                    wrap,
+                    grow,
+                    noShrink,
+                    height,
+                    maxHeight,
+                    minHeight,
+                    width,
+                    maxWidth,
+                    minWidth,
+                }),
                 className,
             )}
             {...restProps}
@@ -83,4 +145,4 @@ export const Flex = <T extends ElementType = "div">(props: FlexProps<T>) => {
     );
 };
 
-Flex.displayName = withPrefix("Flex");
+Flex.displayName = "Flex";

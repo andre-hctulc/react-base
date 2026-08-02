@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography",
+  "title": "Typography",
+  "description": "Styled typography components (h1-h6, p, ul, etc.).",
+  "files": [
+    {
+      "path": "src/components/text/typography.tsx",
+      "content": "import { type ElementType } from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/util/cn/cn.util.js\";\nimport type { RichAsProps } from \"@/types/index.js\";\n\nconst typographyVariants = cva(\"\", {\n    variants: {\n        textSize: {\n            xs: \"text-xs\",\n            sm: \"text-sm\",\n            base: \"text-base\",\n            md: \"text-md\",\n            lg: \"text-lg\",\n            xl: \"text-xl\",\n            \"2xl\": \"text-2xl\",\n            \"3xl\": \"text-3xl\",\n        },\n        center: { true: \"text-center\" },\n        underline: { true: \"underline\" },\n        italic: { true: \"italic\" },\n        lineHeight: {\n            tight: \"leading-tight\",\n            snug: \"leading-snug\",\n            normal: \"leading-normal\",\n            relaxed: \"leading-relaxed\",\n            loose: \"leading-loose\",\n        },\n    },\n});\n\nexport type TypographyProps<T extends ElementType = \"p\"> = RichAsProps<T> &\n    VariantProps<typeof typographyVariants>;\n\nexport { typographyVariants };\n\n/** Text component for consistent typography styling. */\nexport const Typography = <T extends ElementType = \"p\">(props: TypographyProps<T>) => {\n    const { textSize, center, underline, italic, lineHeight, className, children, as, ...restProps } =\n        props as any;\n    const Comp: any = as || \"p\";\n    return (\n        <Comp\n            className={cn(typographyVariants({ textSize, center, underline, italic, lineHeight }), className)}\n            {...restProps}\n        >\n            {children}\n        </Comp>\n    );\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

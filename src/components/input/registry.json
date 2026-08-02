@@ -1,0 +1,51 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "clipboard-icon-button",
+            "type": "registry:ui",
+            "title": "ClipboardIconButton",
+            "description": "Icon button that copies a value to the clipboard.",
+            "dependencies": ["lucide-react"],
+            "registryDependencies": ["button"],
+            "files": [{ "path": "clipboard-icon-button.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "use-js-form",
+            "type": "registry:hook",
+            "title": "useJsForm",
+            "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
+            "files": [
+                { "path": "js-form-types.ts", "type": "registry:lib" },
+                { "path": "js-form-helpers.ts", "type": "registry:lib" },
+                { "path": "js-form-context.ts", "type": "registry:lib" }
+            ]
+        },
+        {
+            "name": "form-control",
+            "type": "registry:ui",
+            "title": "FormControl",
+            "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
+            "registryDependencies": ["field", "use-js-form"],
+            "files": [{ "path": "form-control.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "js-form",
+            "type": "registry:ui",
+            "title": "JSForm",
+            "description": "Form component powered by useJsForm — handles default values, validation and submission.",
+            "registryDependencies": ["use-js-form", "form-control"],
+            "files": [
+                { "path": "js-form.tsx", "type": "registry:ui" },
+                { "path": "flex-form.tsx", "type": "registry:ui" }
+            ]
+        },
+        {
+            "name": "editable",
+            "type": "registry:ui",
+            "title": "Editable",
+            "description": "Inline editable field that switches between view and edit mode.",
+            "files": [{ "path": "editable.tsx", "type": "registry:ui" }]
+        }
+    ]
+}

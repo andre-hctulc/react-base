@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "fade",
+  "title": "Fade",
+  "description": "CSS opacity fade enter/leave transition.",
+  "registryDependencies": [
+    "transition"
+  ],
+  "files": [
+    {
+      "path": "src/components/transitions/fade.tsx",
+      "content": "import type { PropsOf } from \"@/types/index.js\";\nimport Transition from \"./transition.js\";\n\ninterface FadeProps extends PropsOf<typeof Transition> {}\n\nexport const Fade: React.FC<FadeProps> = (props) => {\n    return (\n        <Transition\n            enter=\"transition-opacity duration-300 ease-out\"\n            enterFrom=\"opacity-0\"\n            enterTo=\"opacity-100\"\n            leave=\"transition-opacity duration-300 ease-in\"\n            leaveFrom=\"opacity-100\"\n            leaveTo=\"opacity-0\"\n            {...props}\n        >\n            {props.children}\n        </Transition>\n    );\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

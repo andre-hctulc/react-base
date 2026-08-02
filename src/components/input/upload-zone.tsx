@@ -1,11 +1,11 @@
 "use client";
 
-import type { PartialPropsOf, PropsOf, StyleProps } from "../../types/index.js";
+import type { PartialPropsOf, PropsOf, StyleProps } from "@/types/index.js";
 import { Droppable } from "./droppable.js";
 import type { InputLikeProps } from "./types.js";
 import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
-import { Icon } from "../icons/icon.js";
-import { cn as twMerge } from "@/util/cn.js";
+import { Icon } from "@/components/icons/icon.js";
+import { cn as twMerge } from "@/util/cn/cn.util.js";
 
 export interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
     children?: ReactNode;

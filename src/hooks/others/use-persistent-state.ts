@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
-import { withPrefix } from "../../util/system.js";
 
 /*
 
@@ -16,12 +15,12 @@ type LocalStorageChangeEvent = {
     newValue: any;
 };
 
-const CUSTOM_EVENT_NAME = withPrefix("storage_change");
+const CUSTOM_EVENT_NAME = "use-persistent-state-storage-change";
 
 export function usePersistentState<T>(
     key: string,
     defaultValue: T,
-    storage: Storage = localStorage
+    storage: Storage = localStorage,
 ): [T, Dispatch<SetStateAction<T>>] {
     const [state, setState] = useState<T>(() => {
         const storedValue = storage.getItem(key);

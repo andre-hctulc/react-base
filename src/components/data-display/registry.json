@@ -1,0 +1,20 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "dot",
+            "type": "registry:ui",
+            "title": "Dot",
+            "description": "Small colored status dot.",
+            "files": [{ "path": "dot.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "summary",
+            "type": "registry:ui",
+            "title": "Summary",
+            "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
+            "registryDependencies": ["icon", "clipboard-icon-button"],
+            "files": [{ "path": "summary.tsx", "type": "registry:ui" }]
+        }
+    ]
+}

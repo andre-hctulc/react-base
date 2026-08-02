@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { capitalizeFirstLetter } from "../../util/system.js";
 
 type Breakpoints = Record<string, string>;
 
@@ -29,6 +28,10 @@ const defaultBreakpoints: Breakpoints = {
     "2xl": "(min-width: 1536px)",
 };
 
+function capitalizeFirstLetter(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function useBreakpoints(customBreakpoints?: Breakpoints): BreakpointsSnapshot {
     const breakpoints = useRef(customBreakpoints || defaultBreakpoints);
     const [state, setState] = useState<BreakpointsSnapshot>({ breakpoint: "" } as any);
@@ -52,7 +55,7 @@ export function useBreakpoints(customBreakpoints?: Breakpoints): BreakpointsSnap
                     [key]: mediaQuery.matches,
                     [`min${capitalizeFirstLetter(key)}`]: mediaQuery.matches,
                 }),
-                {}
+                {},
             );
 
             // for (const defaultSize of ["sm", "md", "lg", "xl", "2xl"]) {

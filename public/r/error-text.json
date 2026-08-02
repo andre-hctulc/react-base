@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-text",
+  "title": "ErrorText",
+  "description": "Error-colored text using ColorText.",
+  "registryDependencies": [
+    "color-text"
+  ],
+  "files": [
+    {
+      "path": "src/components/text/error-text.tsx",
+      "content": "import type { ElementType } from \"react\";\nimport { ColorText, type ColorTextProps } from \"./color-text\";\n\nexport const ErrorText = <T extends ElementType = \"p\">(props: ColorTextProps<T>) => {\n    return <ColorText<T> color=\"error\" {...props} />;\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

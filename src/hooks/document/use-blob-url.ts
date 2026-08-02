@@ -1,7 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { triggerDownload } from "@dre44/util/window";
+
+function triggerDownload(url: string, fileName?: string): void {
+    const a = document.createElement("a");
+    a.href = url;
+    if (fileName) a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
 
 interface UseBlobUrlResult {
     url: string | undefined;

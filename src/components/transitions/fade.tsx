@@ -1,4 +1,4 @@
-import type { PropsOf } from "../../types/index.js";
+import type { PropsOf } from "@/types/index.js";
 import Transition from "./transition.js";
 
 interface FadeProps extends PropsOf<typeof Transition> {}

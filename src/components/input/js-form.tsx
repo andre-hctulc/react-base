@@ -5,18 +5,30 @@ import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData
 import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
 import { createSnapshot } from "./js-form-helpers.js";
 import { getProperty } from "dot-prop";
-import { useRefOf } from "../../hooks/index.js";
-import type { PropsOf, StyleProps } from "../../types/index.js";
-import { cn } from "@/util/cn.js";
-import { collapse } from "@dre44/util/objects";
-import { flexDirection, flexWrap, withGap, type FlexDirection, type FlexWrap } from "../../util/style.js";
+import { useRefOf } from "@/hooks/others/use-ref-of.js";
+import type { PropsOf, StyleProps } from "@/types/index.js";
+import { cn } from "@/util/cn/cn.util.js";
+import { cva, type VariantProps } from "class-variance-authority";
+import { sz } from "@/util/react/variants.util.js";
 
-type GapSize = keyof typeof withGap.gap;
+const jsFormVariants = cva("", {
+    variants: {
+        flex: {
+            row: "flex flex-row",
+            row_reverse: "flex flex-row-reverse",
+            col: "flex flex-col",
+            col_reverse: "flex flex-col-reverse",
+        },
+        wrap: {
+            none: "flex-nowrap",
+            normal: "flex-wrap",
+            reverse: "flex-wrap-reverse",
+        },
+        gap: sz("gap"),
+    },
+});
 
-export interface JSFormProps<T extends object = any> extends StyleProps {
-    flex?: FlexDirection;
-    wrap?: FlexWrap;
-    gap?: GapSize;
+export interface JSFormProps<T extends object = any> extends StyleProps, VariantProps<typeof jsFormVariants> {
     id?: string;
     children?: React.ReactNode;
     onSubmit?: (snapshot: JSFormSnapshot<T>) => void;
@@ -93,13 +105,8 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
         target,
         id,
         ...rootProps
-    } = props as any;
-    const computedClassName = cn(
-        flex && collapse(flexDirection, flex!),
-        wrap && collapse(flexWrap, wrap!),
-        gap && collapse(withGap.gap, gap),
-        className,
-    );
+    } = props;
+    const computedClassName = cn(jsFormVariants({ flex, wrap, gap }), className);
     const form = useRef<HTMLFormElement>(null);
     const parentFormCtx = useJSForm();
     const def = useCallback(

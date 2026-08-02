@@ -5,8 +5,19 @@ import {
     TransitionState,
     type TransitionClasses,
     type TransitionEvents,
-} from "../../components/transitions/transition.js";
-import { addCssClasses, removeCssClasses } from "../../util/style.js";
+} from "@/components/transitions/transition.js";
+
+function addCssClasses(element: HTMLElement, ...classes: (string | undefined)[]) {
+    classes.forEach((cls) => {
+        if (cls) element.classList.add(...cls.split(" "));
+    });
+}
+
+function removeCssClasses(element: HTMLElement, ...classes: (string | undefined)[]) {
+    classes.forEach((cls) => {
+        if (cls) element.classList.remove(...cls.split(" "));
+    });
+}
 
 interface UseCssTransitionResult {
     ref: React.RefObject<HTMLElement | null>;
@@ -18,7 +29,7 @@ export function useCssTransition(
     show: boolean,
     classes: TransitionClasses,
     events: TransitionEvents,
-    appear: boolean = false
+    appear: boolean = false,
 ): UseCssTransitionResult {
     // Initialize state - always start hidden when show=true to trigger transitions
     const [state, setState] = useState<TransitionState>(() => {

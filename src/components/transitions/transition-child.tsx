@@ -4,8 +4,8 @@ import { Fragment } from "react/jsx-runtime";
 import type { TransitionClasses, TransitionEvents } from "./transition.js";
 import { cloneElement, useContext } from "react";
 import { TransitionContext } from "./transition-context.js";
-import { useCssTransition } from "../../hooks/index.js";
-import { cn as twMerge } from "@/util/cn.js";
+import { useCssTransition } from "@/hooks/others/use-css-transition.js";
+import { cn as twMerge } from "@/util/cn/cn.util.js";
 
 interface TransitionChildProps extends TransitionClasses, TransitionEvents {
     children: React.ReactElement | ((ref: React.RefObject<HTMLElement | null>) => React.ReactElement);

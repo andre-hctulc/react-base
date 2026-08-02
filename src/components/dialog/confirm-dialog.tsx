@@ -1,26 +1,19 @@
 "use client";
 
-import {
-    Button,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
-    type ButtonProps,
-    type ModalProps,
-} from "flowbite-react";
-import type { FC, ReactNode } from "react";
-import { Toolbar } from "../containers";
+import type { ComponentPropsWithoutRef, FC, ReactNode } from "react";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/cn/dialog.js";
+import { Button, } from "@/components/cn/button.js";
+import type { PropsOf } from "@/types/index.js";
 
-export interface ConfirmDialogProps extends ModalProps {
+export interface ConfirmDialogProps extends ComponentPropsWithoutRef<typeof Dialog> {
     confirmBtnText?: string;
     cancelBtnText?: string;
     title?: string;
     message: ReactNode;
     onConfirm?: () => void;
     onCancel?: () => void;
-    confirmBtnProps?: ButtonProps;
-    cancelBtnProps?: ButtonProps;
+    confirmBtnProps?: PropsOf<typeof Button>;
+    cancelBtnProps?: PropsOf<typeof Button>;
 }
 
 export const ConfirmDialog: FC<ConfirmDialogProps> = ({
@@ -32,51 +25,49 @@ export const ConfirmDialog: FC<ConfirmDialogProps> = ({
     onCancel,
     confirmBtnProps,
     cancelBtnProps,
-    onClose,
-    ...modalProps
+    onOpenChange,
+    ...dialogProps
 }) => {
     return (
-        <Modal
-            size="md"
-            onClose={() => {
-                onClose?.();
-                onCancel?.();
+        <Dialog
+            onOpenChange={(open) => {
+                onOpenChange?.(open);
+                if (!open) onCancel?.();
             }}
-            {...modalProps}
+            {...dialogProps}
         >
-            {title && <ModalHeader>{title}</ModalHeader>}
-            <ModalBody>{message}</ModalBody>
-            <ModalFooter>
-                <Toolbar grow justifyContent="end">
+            <DialogContent className="sm:max-w-md">
+                {title && (
+                    <DialogHeader>
+                        <DialogTitle>{title}</DialogTitle>
+                    </DialogHeader>
+                )}
+                <div className="py-2">{message}</div>
+                <DialogFooter>
                     {cancelBtnText !== "" && (
                         <Button
-                            color="gray"
-                            outline
+                            variant="outline"
                             {...cancelBtnProps}
                             onClick={(e) => {
                                 cancelBtnProps?.onClick?.(e);
-                                if (!e.defaultPrevented) {
-                                    onCancel?.();
-                                }
+                                if (!e.defaultPrevented) onCancel?.();
                             }}
                         >
                             {cancelBtnText ?? "Cancel"}
                         </Button>
                     )}
                     <Button
-                        color="red"
+                        variant="destructive"
                         {...confirmBtnProps}
                         onClick={(e) => {
                             confirmBtnProps?.onClick?.(e);
-                            if (!e.defaultPrevented) {
-                                onConfirm?.();
-                            }
+                            if (!e.defaultPrevented) onConfirm?.();
                         }}
                     >
                         {confirmBtnText ?? "Ok"}
                     </Button>
-                </Toolbar>
-            </ModalFooter>
-        </Modal>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     );
 };

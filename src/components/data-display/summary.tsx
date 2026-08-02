@@ -1,12 +1,17 @@
 "use client";
 
 import type { FC, ReactNode, ComponentProps } from "react";
-import { cn } from "@/util/cn.js";
-import type { PropsOf } from "../../types/index.js";
-import { Icon } from "../icons/icon.js";
-import { useAsSet } from "../../hooks/index.js";
-import { ClipboardIconButton } from "../input/clipboard-icon-button.js";
-import { isPlainObject } from "@dre44/util/objects";
+import { cn } from "@/util/cn/cn.util.js";
+import type { PropsOf } from "@/types/index.js";
+import { Icon } from "@/components/icons/icon.js";
+import { useAsSet } from "@/hooks/iterables/use-as-set.js";
+import { ClipboardIconButton } from "@/components/input/clipboard-icon-button.js";
+
+const isPlainObject = (val: unknown): val is Record<string, unknown> =>
+    !!val &&
+    typeof val === "object" &&
+    !Array.isArray(val) &&
+    Object.getPrototypeOf(val) === Object.prototype;
 
 export interface FieldModel {
     label?: ReactNode;
@@ -104,10 +109,10 @@ export const Summary: FC<SummaryProps> = ({
                                             {fieldModel.icon}
                                         </Icon>
                                     )}
-                                    {!fieldModel?.label || typeof fieldModel.label === "string" ? (
-                                        <span className="text-t-2 text-sm">{fieldModel?.label ?? key}</span>
+                                    {fieldModel?.label && typeof fieldModel.label !== "string" ? (
+                                        fieldModel.label
                                     ) : (
-                                        fieldModel?.label
+                                        <span className="text-t-2 text-sm">{fieldModel?.label ?? key}</span>
                                     )}
                                 </div>
                             </td>
@@ -116,6 +121,13 @@ export const Summary: FC<SummaryProps> = ({
                                     <Summary
                                         prefix={`${prefix || ""}${key}.`}
                                         values={value}
+                                        model={model}
+                                        fieldModels={fieldModels}
+                                        excludeFields={excludeFields}
+                                        includeFields={includeFields}
+                                        strictModel={strictModel}
+                                        emptyPlaceholder={emptyPlaceholder}
+                                        labelWidth={labelWidth}
                                         style={{ marginLeft: 16 }}
                                         className={cn(nestedMargin === undefined && "ml-4")}
                                     />

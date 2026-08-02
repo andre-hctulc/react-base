@@ -3,10 +3,9 @@
 import { useRef, useState, type ComponentProps, type FC, type Ref, type RefObject } from "react";
 import { InputList } from "./input-list.js";
 import type { InputLikeProps } from "./types.js";
-import { cn } from "@/util/cn.js";
-import { IconButton } from "../button/icon-button.js";
-import { PlusIcon } from "../icons/phosphor/plus.js";
-import { X } from "lucide-react";
+import { cn } from "@/util/cn/cn.util.js";
+import { LucidePlus, LucideX } from "lucide-react";
+import { Button } from "@/components/cn/button.js";
 
 const inputBaseClass =
     "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary focus:border-primary dark:border-gray-600 dark:bg-gray-700 dark:text-white";
@@ -76,15 +75,15 @@ export const TextInputList: FC<TextInputListProps> = ({
                             }}
                             className={cn(inputBaseClass, "grow", inputProps?.className)}
                         />
-                        <IconButton
+                        <Button
                             disabled={disabled || readOnly || !newValue}
                             onClick={() => {
                                 addValue(newValue);
                             }}
                             color="gray"
                         >
-                            <PlusIcon />
-                        </IconButton>
+                            <LucidePlus />
+                        </Button>
                     </div>
                 );
             }}
@@ -101,11 +100,7 @@ export const TextInputList: FC<TextInputListProps> = ({
                                     type={textarea ? undefined : "text"}
                                     {...(inputProps as any)}
                                     {...(listInputProps as any)}
-                                    className={cn(
-                                        inputBaseClass,
-                                        "grow",
-                                        (listInputProps as any)?.className,
-                                    )}
+                                    className={cn(inputBaseClass, "grow", (listInputProps as any)?.className)}
                                     name={name}
                                     value={value}
                                     onChange={(e: any) => {
@@ -118,12 +113,12 @@ export const TextInputList: FC<TextInputListProps> = ({
                                     }}
                                 />
                                 {!(inputProps as any)?.readOnly && (
-                                    <IconButton
+                                    <Button
                                         disabled={(inputProps as any)?.disabled}
                                         onClick={() => remove(value)}
                                     >
-                                        <X />
-                                    </IconButton>
+                                        <LucideX />
+                                    </Button>
                                 )}
                             </li>
                         ))}

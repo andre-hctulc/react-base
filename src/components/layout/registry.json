@@ -1,0 +1,54 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "root",
+            "type": "registry:ui",
+            "title": "Root",
+            "description": "Flex root layout container with direction, overflow and background variants.",
+            "dependencies": ["class-variance-authority"],
+            "files": [{ "path": "root.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "overlay",
+            "type": "registry:ui",
+            "title": "Overlay",
+            "description": "Fixed or absolute overlay with blur/opacity background variants and optional portal.",
+            "dependencies": ["class-variance-authority"],
+            "files": [{ "path": "overlay.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "page",
+            "type": "registry:ui",
+            "title": "Page",
+            "description": "Page container with constrained width, flex and background variants.",
+            "dependencies": ["class-variance-authority"],
+            "files": [{ "path": "page.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "page-content",
+            "type": "registry:ui",
+            "title": "PageContent",
+            "description": "Main content area with padding, size and flex variants.",
+            "dependencies": ["class-variance-authority"],
+            "files": [{ "path": "page-content.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "page-header",
+            "type": "registry:ui",
+            "title": "PageHeader",
+            "description": "Page header with title, badges, actions slots, padding and margin variants.",
+            "dependencies": ["class-variance-authority"],
+            "registryDependencies": ["title"],
+            "files": [{ "path": "page-header.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "spinner-page",
+            "type": "registry:ui",
+            "title": "SpinnerPage",
+            "description": "Full-page spinner using Page and PageContent.",
+            "registryDependencies": ["page", "page-content"],
+            "files": [{ "path": "spinner-page.tsx", "type": "registry:ui" }]
+        }
+    ]
+}

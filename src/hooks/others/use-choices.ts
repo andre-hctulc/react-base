@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { Choice } from "../../types/index.js";
+import type { Choice } from "@/types/index.js";
 import { useRefOf } from "./use-ref-of.js";
 
 type ChoiceValue<C extends Choice> = C extends Choice<infer V, any> ? V : never;

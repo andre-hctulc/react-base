@@ -1,7 +1,16 @@
 "use client";
 
 import { cloneElement, useEffect, useState, type FC, type ReactElement } from "react";
-import { hideScrollbar } from "../../util/system.js";
+
+export function hideScrollbar(element: HTMLElement) {
+    element.style.overflow = "scroll"; // Ensure it's scrollable
+    // @ts-ignore
+    element.style.scrollbarWidth = "none"; // For Firefox
+
+    // Hide the scrollbar for Webkit-based browsers
+    element.style.setProperty("webkitOverflowScrolling", "touch");
+    element.style.setProperty("::-webkit-scrollbar", "display: none");
+}
 
 interface XScrollProps {
     /**
@@ -38,7 +47,7 @@ export const XScroll: FC<XScrollProps> = ({ children, hideScrollbar: hide }) => 
                 e.stopPropagation();
                 container.scrollLeft += e.deltaY;
             },
-            { signal: aborterController.signal }
+            { signal: aborterController.signal },
         );
 
         return () => {

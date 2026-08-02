@@ -2,9 +2,9 @@
 
 import { useCallback, useMemo, useState, type ElementType, type Ref } from "react";
 import type { InputLikeProps } from "./types.js";
-import type { ASProps, StyleProps } from "../../types/index.js";
-import { useRefOf } from "../../hooks/index.js";
-import { cn as twMerge } from "@/util/cn.js";
+import type { ASProps, StyleProps } from "@/types/index.js";
+import { useRefOf } from "@/hooks/others/use-ref-of.js";
+import { cn as twMerge } from "@/util/cn/cn.util.js";
 
 type InputListInputProps<V = string> = Pick<
     InputLikeProps<V>,
@@ -12,9 +12,7 @@ type InputListInputProps<V = string> = Pick<
 >;
 
 export interface InputListProps<T = string, A extends ElementType = "div">
-    extends InputLikeProps<T[]>,
-        StyleProps,
-        ASProps<A> {
+    extends InputLikeProps<T[]>, StyleProps, ASProps<A> {
     ref?: Ref<any>;
     /**
      * Passed to {@link renderInput} as default value for the input
@@ -22,7 +20,7 @@ export interface InputListProps<T = string, A extends ElementType = "div">
     defaultInputValue?: any;
     renderInput: (params: {
         /**
-         * @param newItem - The value of the new item. Id not provided the current candidate is used
+         * @param newItem - The value of the new item. If not provided the current candidate is used
          */
         add: (newItem?: T) => void;
         /**
@@ -100,18 +98,18 @@ export const InputList = <T = string, A extends ElementType = "div">({
             onChangeRef.current?.({ value: newItems });
             setCandidate(undefined);
         },
-        [values, unique, candidate]
+        [values, unique, candidate],
     );
 
     const remove = useCallback(
         (item: T, index?: number) => {
             const newItems = values.filter(
-                (it, i) => !compareRef.current(it, item) && (index === undefined || index === i)
+                (it, i) => !compareRef.current(it, item) && (index === undefined || index === i),
             );
             if (value === undefined) setValues(newItems);
             onChangeRef.current?.({ value: newItems });
         },
-        [value, values]
+        [value, values],
     );
 
     const changeCandidate = useCallback((neItem: T) => {

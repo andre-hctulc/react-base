@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "title",
+  "title": "Title",
+  "description": "Polymorphic heading with variant, bold, truncate and icon slot.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "icon"
+  ],
+  "files": [
+    {
+      "path": "src/components/text/title.tsx",
+      "content": "import { type ElementType } from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/util/cn/cn.util.js\";\nimport { msz } from \"@/util/react/variants.util.js\";\nimport type { RichAsProps } from \"@/types/index.js\";\nimport { Icon, type IconLike, type IconProps } from \"@/components/icons/icon.js\";\n\nconst titleVariants = cva(\"\", {\n    variants: {\n        variant: {\n            h1: \"text-2xl\",\n            h2: \"text-xl\",\n            h3: \"text-lg\",\n            h4: \"text-base\",\n            h5: \"text-sm\",\n        },\n        bold: { true: \"font-semibold\", false: \"font-medium\" },\n        underline: { true: \"underline\" },\n        truncate: { true: \"truncate\" },\n        lineClamp: {\n            none: \"\",\n            \"1\": \"line-clamp-1\",\n            \"2\": \"line-clamp-2\",\n            \"3\": \"line-clamp-3\",\n            \"4\": \"line-clamp-4\",\n            \"5\": \"line-clamp-5\",\n            \"6\": \"line-clamp-6\",\n            \"7\": \"line-clamp-7\",\n            \"8\": \"line-clamp-8\",\n            \"9\": \"line-clamp-9\",\n            \"10\": \"line-clamp-10\",\n        },\n        m: msz(\"m\"),\n        mx: msz(\"mx\"),\n        my: msz(\"my\"),\n        mt: msz(\"mt\"),\n        mr: msz(\"mr\"),\n        mb: msz(\"mb\"),\n        ml: msz(\"ml\"),\n        me: msz(\"me\"),\n        ms: msz(\"ms\"),\n    },\n    defaultVariants: { variant: \"h1\", bold: false },\n});\n\nexport type TitleProps<T extends ElementType = \"h1\"> = RichAsProps<T> &\n    VariantProps<typeof titleVariants> & {\n        icon?: IconLike;\n        iconProps?: IconProps;\n    };\n\nexport { titleVariants };\n\nexport const Title = <T extends ElementType = \"h1\">(props: TitleProps<T>) => {\n    const {\n        variant,\n        bold,\n        underline,\n        truncate,\n        icon,\n        iconProps,\n        lineClamp,\n        m,\n        mx,\n        my,\n        mt,\n        mr,\n        mb,\n        ml,\n        me,\n        ms,\n        className,\n        children,\n        as,\n        ...restProps\n    } = props as any;\n    const Comp: any = as || variant;\n\n    return (\n        <Comp\n            className={cn(\n                titleVariants({\n                    variant,\n                    bold,\n                    underline,\n                    truncate,\n                    lineClamp,\n                    m,\n                    mx,\n                    my,\n                    mt,\n                    mr,\n                    mb,\n                    ml,\n                    me,\n                    ms,\n                }),\n                icon && \"flex items-center\",\n                className,\n            )}\n            {...restProps}\n        >\n            {icon && (\n                <Icon noShrink inline {...iconProps} className={cn(\"mr-2.5\", iconProps?.className)}>\n                    {icon}\n                </Icon>\n            )}\n            {children}\n        </Comp>\n    );\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,10 +1,9 @@
 import { type ElementType } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/util/cn.js";
-import { collapse } from "@dre44/util/objects";
-import { lineClamp, withMargin } from "../../util/style.js";
-import type { RichAsProps } from "../../types/index.js";
-import { Icon, type IconLike, type IconProps } from "../icons/icon.js";
+import { cn } from "@/util/cn/cn.util.js";
+import { msz } from "@/util/react/variants.util.js";
+import type { RichAsProps } from "@/types/index.js";
+import { Icon, type IconLike, type IconProps } from "@/components/icons/icon.js";
 
 const subtitleVariants = cva("text-t-2", {
     variants: {
@@ -16,39 +15,48 @@ const subtitleVariants = cva("text-t-2", {
         },
         bold: { true: "font-semibold", false: "font-medium" },
         underline: { true: "underline" },
+        lineClamp: {
+            none: "",
+            "1": "line-clamp-1",
+            "2": "line-clamp-2",
+            "3": "line-clamp-3",
+            "4": "line-clamp-4",
+            "5": "line-clamp-5",
+            "6": "line-clamp-6",
+            "7": "line-clamp-7",
+            "8": "line-clamp-8",
+            "9": "line-clamp-9",
+            "10": "line-clamp-10",
+        },
+        m: msz("m"),
+        mx: msz("mx"),
+        my: msz("my"),
+        mt: msz("mt"),
+        mr: msz("mr"),
+        mb: msz("mb"),
+        ml: msz("ml"),
+        me: msz("me"),
+        ms: msz("ms"),
     },
     defaultVariants: { variant: "h2", bold: false },
 });
-
-type MarginSize = keyof typeof withMargin.mt;
-type LineClampKey = keyof typeof lineClamp;
 
 export type SubtitleProps<T extends ElementType = "h2"> = RichAsProps<T> &
     VariantProps<typeof subtitleVariants> & {
         icon?: IconLike;
         iconProps?: IconProps;
-        lineClamp?: LineClampKey;
-        m?: MarginSize;
-        mx?: MarginSize;
-        my?: MarginSize;
-        mt?: MarginSize;
-        mr?: MarginSize;
-        mb?: MarginSize;
-        ml?: MarginSize;
-        me?: MarginSize;
-        ms?: MarginSize;
     };
 
 export { subtitleVariants };
 
 export const Subtitle = <T extends ElementType = "h2">(props: SubtitleProps<T>) => {
     const {
-        variant = "h2",
-        bold = false,
+        variant,
+        bold,
         underline,
         icon,
         iconProps,
-        lineClamp: lc,
+        lineClamp,
         m,
         mx,
         my,
@@ -68,18 +76,8 @@ export const Subtitle = <T extends ElementType = "h2">(props: SubtitleProps<T>) 
     return (
         <Comp
             className={cn(
-                subtitleVariants({ variant, bold, underline }),
+                subtitleVariants({ variant, bold, underline, lineClamp, m, mx, my, mt, mr, mb, ml, me, ms }),
                 icon && "flex items-center",
-                lc && collapse(lineClamp, lc!),
-                m && collapse(withMargin.m, m),
-                mx && collapse(withMargin.mx, mx),
-                my && collapse(withMargin.my, my),
-                mt && collapse(withMargin.mt, mt),
-                mr && collapse(withMargin.mr, mr),
-                mb && collapse(withMargin.mb, mb),
-                ml && collapse(withMargin.ml, ml),
-                me && collapse(withMargin.me, me),
-                ms && collapse(withMargin.ms, ms),
                 className,
             )}
             {...restProps}

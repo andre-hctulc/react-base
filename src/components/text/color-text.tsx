@@ -1,9 +1,8 @@
 import { type ElementType } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/util/cn.js";
-import { collapse } from "@dre44/util/objects";
-import { lineClamp, textSize, withMargin } from "../../util/style.js";
-import type { RichAsProps } from "../../types/index.js";
+import { cn } from "@/util/cn/cn.util.js";
+import { msz } from "@/util/react/variants.util.js";
+import type { RichAsProps } from "@/types/index.js";
 
 const colorTextVariants = cva("", {
     variants: {
@@ -13,35 +12,56 @@ const colorTextVariants = cva("", {
             warning: "text-warning",
             info: "text-info",
         },
+        textSize: {
+            xs: "text-xs",
+            sm: "text-sm",
+            base: "text-base",
+            md: "text-md",
+            lg: "text-lg",
+            xl: "text-xl",
+            "2xl": "text-2xl",
+            "3xl": "text-3xl",
+            "4xl": "text-4xl",
+            "5xl": "text-5xl",
+            "6xl": "text-6xl",
+            "7xl": "text-7xl",
+        },
+        lineClamp: {
+            none: "",
+            "1": "line-clamp-1",
+            "2": "line-clamp-2",
+            "3": "line-clamp-3",
+            "4": "line-clamp-4",
+            "5": "line-clamp-5",
+            "6": "line-clamp-6",
+            "7": "line-clamp-7",
+            "8": "line-clamp-8",
+            "9": "line-clamp-9",
+            "10": "line-clamp-10",
+        },
+        m: msz("m"),
+        mx: msz("mx"),
+        my: msz("my"),
+        mt: msz("mt"),
+        mr: msz("mr"),
+        mb: msz("mb"),
+        ml: msz("ml"),
+        me: msz("me"),
+        ms: msz("ms"),
     },
     defaultVariants: { color: "info" },
 });
 
-type MarginSize = keyof typeof withMargin.mt;
-type LineClampKey = keyof typeof lineClamp;
-
 export type ColorTextProps<T extends ElementType = "p"> = RichAsProps<T> &
-    VariantProps<typeof colorTextVariants> & {
-        textSize?: keyof typeof textSize;
-        lineClamp?: LineClampKey;
-        m?: MarginSize;
-        mx?: MarginSize;
-        my?: MarginSize;
-        mt?: MarginSize;
-        mr?: MarginSize;
-        mb?: MarginSize;
-        ml?: MarginSize;
-        me?: MarginSize;
-        ms?: MarginSize;
-    };
+    VariantProps<typeof colorTextVariants>;
 
 export { colorTextVariants };
 
 export const ColorText = <T extends ElementType = "p">(props: ColorTextProps<T>) => {
     const {
-        color = "info",
-        textSize: ts,
-        lineClamp: lc,
+        color,
+        textSize,
+        lineClamp,
         m,
         mx,
         my,
@@ -55,23 +75,12 @@ export const ColorText = <T extends ElementType = "p">(props: ColorTextProps<T>)
         children,
         as,
         ...restProps
-    } = props as any;
+    } = props;
     const Comp: any = as || "p";
     return (
         <Comp
             className={cn(
-                colorTextVariants({ color }),
-                ts && collapse(textSize, ts!),
-                lc && collapse(lineClamp, lc!),
-                m && collapse(withMargin.m, m),
-                mx && collapse(withMargin.mx, mx),
-                my && collapse(withMargin.my, my),
-                mt && collapse(withMargin.mt, mt),
-                mr && collapse(withMargin.mr, mr),
-                mb && collapse(withMargin.mb, mb),
-                ml && collapse(withMargin.ml, ml),
-                me && collapse(withMargin.me, me),
-                ms && collapse(withMargin.ms, ms),
+                colorTextVariants({ color, textSize, lineClamp, m, mx, my, mt, mr, mb, ml, me, ms }),
                 className,
             )}
             {...restProps}

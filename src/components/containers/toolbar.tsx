@@ -1,59 +1,71 @@
-"use client";
-
-import { cn } from "@/util/cn.js";
-import { collapse } from "@dre44/util/objects";
-import {
-    alignItems,
-    flexDirection,
-    flexGrow,
-    flexWrap,
-    justifyContent,
-    withGap,
-    withMargin,
-    withPadding,
-    withScroll,
-    type AlignItems,
-    type FlexDirection,
-    type FlexWrap,
-    type JustifyContent,
-} from "../../util/style.js";
-import type { RichAsProps } from "../../types/index.js";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/util/cn/cn.util.js";
+import type { RichAsProps } from "@/types/index.js";
 import { type FC, type ElementType } from "react";
+import { msz, sz } from "@/util/react/variants.util.js";
 
-type GapSize = keyof typeof withGap.gap;
-type PadSize = keyof typeof withPadding.p;
-type MarginSize = keyof typeof withMargin.m;
+const toolbarVariants = cva("flex min-w-0", {
+    variants: {
+        direction: {
+            row: "flex-row",
+            row_reverse: "flex-row-reverse",
+            col: "flex-col",
+            col_reverse: "flex-col-reverse",
+        },
+        gap: sz("gap"),
+        rowGap: sz("row-gap"),
+        colGap: sz("column-gap"),
+        p: sz("p"),
+        px: sz("px"),
+        py: sz("py"),
+        pt: sz("pt"),
+        pr: sz("pr"),
+        pb: sz("pb"),
+        pl: sz("pl"),
+        alignItems: {
+            auto: "",
+            start: "items-start",
+            center: "items-center",
+            end: "items-end",
+            stretch: "items-stretch",
+            baseline: "items-baseline",
+        },
+        justifyContent: {
+            start: "justify-start",
+            center: "justify-center",
+            end: "justify-end",
+            between: "justify-between",
+            around: "justify-around",
+        },
+        grow: { true: "grow", false: "" },
+        noShrink: { true: "shrink-0", false: "" },
+        wrap: {
+            none: "flex-nowrap",
+            normal: "flex-wrap",
+            reverse: "flex-wrap-reverse",
+        },
+        scroll: { true: "overflow-auto", false: "" },
+        scrollY: { true: "overflow-y-auto", false: "" },
+        scrollX: { true: "overflow-x-auto", false: "" },
+        m: msz("m"),
+        mx: msz("mx"),
+        my: msz("my"),
+        mt: msz("mt"),
+        mr: msz("mr"),
+        mb: msz("mb"),
+        ml: msz("ml"),
+        mlAuto: { true: "ml-auto", false: "" },
+    },
+    defaultVariants: {
+        gap: "md",
+        alignItems: "center",
+    },
+});
 
-export type ToolbarProps<T extends ElementType = "div"> = RichAsProps<T> & {
-    direction?: FlexDirection;
-    gap?: GapSize;
-    rowGap?: GapSize;
-    colGap?: GapSize;
-    p?: PadSize;
-    px?: PadSize;
-    py?: PadSize;
-    pt?: PadSize;
-    pr?: PadSize;
-    pb?: PadSize;
-    pl?: PadSize;
-    alignItems?: AlignItems;
-    justifyContent?: JustifyContent;
-    grow?: boolean;
-    noShrink?: boolean;
-    wrap?: FlexWrap;
-    scroll?: boolean;
-    scrollY?: boolean;
-    scrollX?: boolean;
-    m?: MarginSize;
-    mx?: MarginSize;
-    my?: MarginSize;
-    mt?: MarginSize;
-    mr?: MarginSize;
-    mb?: MarginSize;
-    ml?: MarginSize;
-    mlAuto?: boolean;
-    stopEventPropagation?: boolean;
-};
+export type ToolbarProps<T extends ElementType = "div"> = RichAsProps<T> &
+    VariantProps<typeof toolbarVariants> & {
+        stopEventPropagation?: boolean;
+    };
 
 /**
  * ### Props
@@ -62,7 +74,7 @@ export type ToolbarProps<T extends ElementType = "div"> = RichAsProps<T> & {
 export const Toolbar: FC<ToolbarProps> = (props) => {
     const {
         direction,
-        gap = "md",
+        gap,
         rowGap,
         colGap,
         p,
@@ -72,8 +84,8 @@ export const Toolbar: FC<ToolbarProps> = (props) => {
         pr,
         pb,
         pl,
-        alignItems: ai = "center",
-        justifyContent: jc,
+        alignItems,
+        justifyContent,
         grow,
         noShrink,
         wrap,
@@ -95,40 +107,41 @@ export const Toolbar: FC<ToolbarProps> = (props) => {
         as,
         ref,
         ...restProps
-    } = props as any;
+    } = props;
     const Comp: any = as || "div";
 
     return (
         <Comp
             className={cn(
-                "flex min-w-0",
-                direction && collapse(flexDirection, direction!),
-                collapse(withGap.gap, gap),
-                rowGap && collapse(withGap.rowGap, rowGap),
-                colGap && collapse(withGap.colGap, colGap),
-                p && collapse(withPadding.p, p),
-                px && collapse(withPadding.px, px),
-                py && collapse(withPadding.py, py),
-                pt && collapse(withPadding.pt, pt),
-                pr && collapse(withPadding.pr, pr),
-                pb && collapse(withPadding.pb, pb),
-                pl && collapse(withPadding.pl, pl),
-                ai && collapse(alignItems, ai!),
-                jc && collapse(justifyContent, jc!),
-                grow && "grow",
-                noShrink && "shrink-0",
-                wrap && collapse(flexWrap, wrap!),
-                scroll && "overflow-auto",
-                scrollY && "overflow-y-auto",
-                scrollX && "overflow-x-auto",
-                m && collapse(withMargin.m, m),
-                mx && collapse(withMargin.mx, mx),
-                my && collapse(withMargin.my, my),
-                mt && collapse(withMargin.mt, mt),
-                mr && collapse(withMargin.mr, mr),
-                mb && collapse(withMargin.mb, mb),
-                ml && collapse(withMargin.ml, ml),
-                mlAuto && "ml-auto",
+                toolbarVariants({
+                    direction,
+                    gap,
+                    rowGap,
+                    colGap,
+                    p,
+                    px,
+                    py,
+                    pt,
+                    pr,
+                    pb,
+                    pl,
+                    alignItems,
+                    justifyContent,
+                    grow,
+                    noShrink,
+                    wrap,
+                    scroll,
+                    scrollY,
+                    scrollX,
+                    m,
+                    mx,
+                    my,
+                    mt,
+                    mr,
+                    mb,
+                    ml,
+                    mlAuto,
+                }),
                 className,
             )}
             ref={ref}

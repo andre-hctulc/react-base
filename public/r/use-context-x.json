@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-context-x",
+  "title": "useContextX",
+  "description": "Typed context consumer that throws when used outside its provider.",
+  "files": [
+    {
+      "path": "src/hooks/others/use-context-x.ts",
+      "content": "\"use client\";\n\nimport { useContext, type Context } from \"react\";\n\n/**\n * Requires the context by default.\n * @param optional If true, returns _undefined_ if the context is not found.\n */\nexport function useContextX<C, O extends boolean = false>(\n    context: Context<C>,\n    optional?: O\n): O extends true ? C | undefined : C {\n    const ctx = useContext(context);\n    if (!ctx) {\n        if (optional) {\n            return undefined as any;\n        }\n        throw new Error(`Provider for context '${context.displayName || context.name}' not found`);\n    }\n    return ctx;\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { type FC, type Ref } from "react";
-import type { StyleProps } from "../../types/index.js";
-import { cn as twMerge } from "@/util/cn.js";
+import type { StyleProps } from "@/types/index.js";
+import { cn as twMerge } from "@/util/cn/cn.util.js";
 
 export interface DraggableProps extends StyleProps {
     children?: React.ReactNode;

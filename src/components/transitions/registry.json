@@ -1,0 +1,33 @@
+{
+    "$schema": "https://ui.shadcn.com/schema/registry.json",
+    "items": [
+        {
+            "name": "transition",
+            "type": "registry:ui",
+            "title": "Transition",
+            "description": "Headless CSS class-based enter/leave transition primitive.",
+            "registryDependencies": ["use-css-transition"],
+            "files": [
+                { "path": "transition.tsx", "type": "registry:ui" },
+                { "path": "transition-context.ts", "type": "registry:lib" },
+                { "path": "transition-child.tsx", "type": "registry:ui" }
+            ]
+        },
+        {
+            "name": "fade",
+            "type": "registry:ui",
+            "title": "Fade",
+            "description": "CSS opacity fade enter/leave transition.",
+            "registryDependencies": ["transition"],
+            "files": [{ "path": "fade.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "collapse-transition",
+            "type": "registry:ui",
+            "title": "CollapseTransition",
+            "description": "CSS height collapse enter/leave transition.",
+            "registryDependencies": ["transition"],
+            "files": [{ "path": "collapse.tsx", "type": "registry:ui" }]
+        }
+    ]
+}

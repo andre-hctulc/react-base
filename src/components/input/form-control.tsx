@@ -1,20 +1,12 @@
 "use client";
 
 import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
-import { cn } from "@/util/cn.js";
-import { collapse } from "@dre44/util/objects";
-import type { PartialPropsOf, RefProps, StyleProps } from "../../types/index.js";
-import { ErrorText } from "../text/error-text.js";
-import { withGap } from "../../util/style.js";
+import type { PartialPropsOf, RefProps, StyleProps } from "@/types/index.js";
 import { useJSForm } from "./js-form-context.js";
-import { Label } from "@/components/cn/label.js";
-
-type GapSize = keyof typeof withGap.gap;
+import { Field, FieldDescription, FieldError, FieldLabel, FieldTitle } from "@/components/cn/field.js";
 
 export type FormControlProps = StyleProps &
     RefProps<HTMLDivElement> & {
-        gap?: GapSize;
-        horizontalGap?: GapSize;
         /**
          * Default value of the input
          */
@@ -22,11 +14,11 @@ export type FormControlProps = StyleProps &
         children: ReactNode;
         controlled?: boolean;
         label?: string;
-        labelProps?: PartialPropsOf<typeof Label>;
+        labelProps?: PartialPropsOf<typeof FieldLabel>;
         errorText?: string;
         helperText?: string;
-        helperTextProps?: PartialPropsOf<"p">;
-        errorTextProps?: PartialPropsOf<typeof ErrorText>;
+        helperTextProps?: PartialPropsOf<typeof FieldDescription>;
+        errorTextProps?: PartialPropsOf<typeof FieldError>;
         labelWidth?: string | number;
         /**
          * Set to true, to prevent any error message from showing
@@ -40,6 +32,7 @@ export type FormControlProps = StyleProps &
         mimic?: boolean;
         horizontal?: boolean;
         requiredHint?: boolean;
+        title?: string;
     };
 
 /**
@@ -49,8 +42,6 @@ export type FormControlProps = StyleProps &
  */
 export const FormControl: FC<FormControlProps> = (props) => {
     const {
-        gap = "sm",
-        horizontalGap = "md",
         noError,
         children,
         errorText,
@@ -66,8 +57,10 @@ export const FormControl: FC<FormControlProps> = (props) => {
         labelProps,
         labelWidth,
         horizontal,
+        title,
         ...rootProps
-    } = props as any;
+    } = props;
+
     const formCtx = useJSForm();
     const _name = name !== undefined ? `${formCtx?.namesPrefix ?? ""}${name}` : undefined;
     const hasName = _name !== undefined;
@@ -77,31 +70,20 @@ export const FormControl: FC<FormControlProps> = (props) => {
     const id = useId();
     const childElement: ReactElement<any> | null = isValidElement(children) ? children : null;
 
-    // input props
     const inpProps: any = {};
 
-    // If the child is an input element (optimistic), we pass some props to it
     if (childElement) {
-        if (!mimic) {
-            inpProps.id = id;
-        }
+        if (!mimic) inpProps.id = id;
+        if (hasName) inpProps.name = _name;
 
-        if (hasName) {
-            inpProps.name = _name;
-        }
-
-        // ## Handle JSForm support here
         if (formCtx && _name) {
             if (_controlled) {
                 const controlledValue = formCtx.value(_name);
-
                 if (controlledValue !== undefined && childElement?.props.value === undefined) {
                     inpProps.value = controlledValue;
                 }
             } else {
                 const defaultValue = formCtx.default(_name);
-
-                // handle js form default value
                 if (defaultValue !== undefined && childElement?.props.defaultValue === undefined) {
                     inpProps.defaultValue = defaultValue;
                 }
@@ -110,63 +92,35 @@ export const FormControl: FC<FormControlProps> = (props) => {
     }
 
     const inp = childElement ? cloneElement(childElement, inpProps) : children;
+    const labelStyle = labelWidth !== undefined ? { width: labelWidth } : undefined;
+    const labelContent = (
+        <>
+            {label}
+            {requiredHint && " *"}
+        </>
+    );
 
-    const rootClass = cn("flex flex-col", collapse(withGap.gap, gap), rootProps.className);
-    const wrapperClass = cn("flex items-center", collapse(withGap.gap, horizontalGap));
-
-    const helperTexts =
-        !!helperText || !!errText ? (
-            <div className="space-y-2">
-                {helperText && (
-                    <p
-                        {...helperTextProps}
-                        className={cn("text-sm text-t-3 mt-0", helperTextProps?.className)}
-                    >
-                        {helperText}
-                    </p>
-                )}
-                {errText && <ErrorText {...errorTextProps}>{errText}</ErrorText>}
-            </div>
-        ) : null;
-
-    const lbl = label ? (
-        mimic ? (
-            <span>
-                {label}
-                {requiredHint && " *"}
-            </span>
-        ) : (
-            <Label
-                htmlFor={id}
-                {...labelProps}
-                className={cn(labelWidth !== undefined ? "" : undefined, labelProps?.className)}
-                style={labelWidth !== undefined ? { width: labelWidth } : undefined}
-            >
-                {label}
-                {requiredHint && " *"}
-            </Label>
-        )
-    ) : null;
-
-    const { className: _cls, ...divProps } = rootProps;
-
-    if (horizontal) {
-        return (
-            <div ref={ref} className={rootClass} {...divProps}>
-                <div className={wrapperClass}>
-                    {lbl}
-                    {inp}
-                </div>
-                {helperTexts}
-            </div>
-        );
-    } else {
-        return (
-            <div ref={ref} className={rootClass} {...divProps}>
-                {lbl}
-                {inp}
-                {helperTexts}
-            </div>
-        );
-    }
+    return (
+        <Field
+            ref={ref}
+            orientation={horizontal ? "horizontal" : "vertical"}
+            data-invalid={isErr || undefined}
+            {...rootProps}
+        >
+            {title && <FieldTitle>{title}</FieldTitle>}
+            {label &&
+                (mimic ? (
+                    <FieldLabel asChild {...labelProps} style={labelStyle}>
+                        <span>{labelContent}</span>
+                    </FieldLabel>
+                ) : (
+                    <FieldLabel htmlFor={id} {...labelProps} style={labelStyle}>
+                        {labelContent}
+                    </FieldLabel>
+                ))}
+            {inp}
+            {helperText && <FieldDescription {...helperTextProps}>{helperText}</FieldDescription>}
+            {errText && <FieldError {...errorTextProps}>{errText}</FieldError>}
+        </Field>
+    );
 };

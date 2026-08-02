@@ -1,9 +1,9 @@
 import { collapse } from "@dre44/util/objects";
 import type { FC, ReactNode } from "react";
-import type { LinkComponent, LinkProps, PropsOf, StyleProps } from "../../types/index.js";
-import { Subtitle } from "../text/subtitle.js";
-import { Icon } from "../icons/icon.js";
-import { cn } from "@/util/cn.js";
+import type { LinkComponent, LinkProps, PropsOf, StyleProps } from "@/types/index.js";
+import { Subtitle } from "@/components/text/subtitle.js";
+import { Icon } from "@/components/icons/icon.js";
+import { cn } from "@/util/cn/cn.util.js";
 import { Check, X } from "lucide-react";
 
 const sizeMap = {

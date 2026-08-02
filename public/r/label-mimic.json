@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label-mimic",
+  "title": "LabelMimic",
+  "description": "Span styled to look like a label — for non-input labeling contexts.",
+  "files": [
+    {
+      "path": "src/components/label/label-mimic.tsx",
+      "content": "import { type FC, type ComponentProps } from \"react\";\nimport { cn } from \"@/util/cn/cn.util.js\";\n\nexport interface LabelMimicProps extends Omit<ComponentProps<\"span\">, \"color\"> {\n    disabled?: boolean;\n    color?: \"success\" | \"failure\" | \"warning\" | \"info\" | \"default\";\n}\n\n/**\n * A label-styled `<span>` element.\n */\nexport const LabelMimic: FC<LabelMimicProps> = ({ disabled, color, className, children, ...props }) => (\n    <span\n        className={cn(\n            \"text-sm font-medium\",\n            disabled && \"opacity-50\",\n            color === \"success\" && \"text-success\",\n            color === \"failure\" && \"text-failure\",\n            color === \"warning\" && \"text-warning\",\n            color === \"info\" && \"text-info\",\n            className,\n        )}\n        {...props}\n    >\n        {children}\n    </span>\n);\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

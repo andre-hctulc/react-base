@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "system-util",
+  "title": "System utilities",
+  "description": "createId, withPrefix and other system utilities.",
+  "files": [
+    {
+      "path": "src/util/system/system.ts",
+      "content": "export const PRE = \"RB_\";\n\nexport function withPrefix(suffix: string) {\n    return PRE + suffix;\n}\n\nexport function capitalizeFirstLetter(str: string): string {\n    return str.charAt(0).toUpperCase() + str.slice(1);\n}\n\nexport function createId(len: number) {\n    return Math.random()\n        .toString(36)\n        .substring(2, 2 + len);\n}\n\n\nexport function hideScrollbar(element: HTMLElement) {\n    element.style.overflow = \"scroll\"; // Ensure it's scrollable\n    // @ts-ignore\n    element.style.scrollbarWidth = \"none\"; // For Firefox\n\n    // Hide the scrollbar for Webkit-based browsers\n    element.style.setProperty(\"webkitOverflowScrolling\", \"touch\");\n    element.style.setProperty(\"::-webkit-scrollbar\", \"display: none\");\n}",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

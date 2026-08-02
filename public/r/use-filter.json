@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-filter",
+  "title": "useFilter",
+  "description": "Memoised array filter.",
+  "files": [
+    {
+      "path": "src/hooks/iterables/use-filter.ts",
+      "content": "\"use client\";\n\nimport React from \"react\";\n\n/**\n * Filter an array based on a filter function.\n * @param arr The array to filter\n * @param filter The filter function\n * @param deps Additional dependencies\n * @param reactiveFilter Whether to recompute the filter when the filter changes.\n */\nexport function useFilter<T = any>(arr: T[], filter: (item: T) => any): T[] {\n    const filtered = React.useMemo(() => {\n        if (!arr) return [];\n        return arr.filter(filter);\n    }, [arr]);\n\n    return filtered;\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

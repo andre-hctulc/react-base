@@ -1,7 +1,6 @@
-import { cn } from "@/util/cn.js";
-import { collapse } from "@dre44/util/objects";
 import { PageContent } from "./page-content.js";
 import { Page, type PageProps } from "./page.js";
+import { Spinner } from "@/components/cn/spinner.js";
 
 const spinnerSizeMap = {
     xs: "size-3",
@@ -17,15 +16,6 @@ const spinnerSizeMap = {
 
 type SpinnerSize = keyof typeof spinnerSizeMap;
 
-const Spinner = ({ size = "2xl" }: { size?: SpinnerSize }) => (
-    <div
-        className={cn(
-            "animate-spin rounded-full border-4 border-gray-200 border-t-current",
-            collapse(spinnerSizeMap, size),
-        )}
-    />
-);
-
 export interface SpinnerPageProps extends Omit<PageProps, "children"> {
     spinnerSize?: SpinnerSize;
 }
@@ -33,7 +23,7 @@ export interface SpinnerPageProps extends Omit<PageProps, "children"> {
 export const SpinnerPage: React.FC<SpinnerPageProps> = ({ spinnerSize, ...props }) => (
     <Page {...props}>
         <PageContent height="full" flex="col" className="items-center justify-center">
-            <Spinner size={spinnerSize || "2xl"} />
+            <Spinner className={spinnerSizeMap[spinnerSize || "2xl"]} />
         </PageContent>
     </Page>
 );
