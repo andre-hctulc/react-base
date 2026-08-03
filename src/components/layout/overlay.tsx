@@ -2,7 +2,7 @@
 
 import { type FC, type ComponentProps } from "react";
 import { createPortal } from "react-dom";
-import { cn } from "@/lib/cn.util.js";
+import { cn } from "@/util/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const overlayVariants = cva("w-full h-full transition-all transition-100 overflow-hidden", {

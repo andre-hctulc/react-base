@@ -12,7 +12,7 @@ import {
     type ReactNode,
 } from "react";
 import { Icon } from "@/components/icons/icon.js";
-import { cn as twMerge } from "@/lib/cn.util.js";
+import { cn as twMerge } from "@/util/cn.util.js";
 
 export interface UploadZoneProps extends InputLikeProps<File[]> {
     children?: ReactNode;

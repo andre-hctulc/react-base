@@ -1,6 +1,6 @@
 import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/cn.util.js";
+import { cn } from "@/util/cn.util.js";
 import { Slot } from "radix-ui";
 
 const typographyVariants = cva("", {
@@ -31,7 +31,6 @@ const typographyVariants = cva("", {
 export interface TypographyProps extends ComponentProps<"p">, VariantProps<typeof typographyVariants> {
     asChild?: boolean;
 }
-
 
 /** Text component for consistent typography styling. */
 export const Typography: FC<TypographyProps> = (props) => {

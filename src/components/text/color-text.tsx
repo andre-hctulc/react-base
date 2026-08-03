@@ -1,6 +1,6 @@
 import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/cn.util.js";
+import { cn } from "@/util/cn.util.js";
 import { msz } from "@/util/react/variants.util.js";
 import { Slot } from "radix-ui";
 

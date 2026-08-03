@@ -1,5 +1,5 @@
 import type { FC, ComponentProps } from "react";
-import { cn } from "@/lib/cn.util.js";
+import { cn } from "@/util/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const rootVariants = cva("max-w-full box-border flex", {

@@ -1,7 +1,7 @@
 import type { ComponentProps, ComponentType, CSSProperties, FC, ReactNode } from "react";
 import { Subtitle } from "@/components/text/subtitle.js";
 import { Icon } from "@/components/icons/icon.js";
-import { cn } from "@/lib/cn.util.js";
+import { cn } from "@/util/cn.util.js";
 import { Check, X } from "lucide-react";
 
 function collapse<T extends Record<string, any>, K extends keyof T>(obj: T, key: K): T[K] {

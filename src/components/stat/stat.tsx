@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/cn.util.js";
+import { cn } from "@/util/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { useMemo, type FC, type ComponentProps, type ComponentType } from "react";
 import { Slot } from "radix-ui";
