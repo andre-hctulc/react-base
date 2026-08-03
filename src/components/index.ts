@@ -1,13 +1,1 @@
-export * from "./data-display/index.js";
-export * from "./dev/index.js";
-export * from "./layout/index.js";
-export * from "./shadow/index.js";
-export * from "./input/index.js";
-export * from "./containers/index.js";
-export * from "./text/index.js";
-export * from "./transitions/index.js";
-export * from "./icons/index.js";
-export * from "./exotic/index.js";
-export * from "./navigation/index.js";
-export * from "./stat/index.js";
-export * from "./label/index.js";
+export {};

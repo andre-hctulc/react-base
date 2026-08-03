@@ -35,9 +35,8 @@
       "description": "Creates an object URL from a Blob and revokes it on cleanup.",
       "files": [
         {
-          "path": "src/hooks/document/use-blob-url.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/document/use-blob-url.ts"
+          "path": "src/hooks/use-blob-url.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -48,9 +47,8 @@
       "description": "Reactively resolves a DOM element by id.",
       "files": [
         {
-          "path": "src/hooks/document/use-element-by-id.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/document/use-element-by-id.ts"
+          "path": "src/hooks/use-element-by-id.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -61,9 +59,8 @@
       "description": "Observes keydown events on document or a target element.",
       "files": [
         {
-          "path": "src/hooks/document/use-key-down-observer.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/document/use-key-down-observer.ts"
+          "path": "src/hooks/use-key-down-observer.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -74,9 +71,8 @@
       "description": "Observes element resize events via ResizeObserver.",
       "files": [
         {
-          "path": "src/hooks/document/use-resize-observer.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/document/use-resize-observer.ts"
+          "path": "src/hooks/use-resize-observer.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -87,9 +83,8 @@
       "description": "Returns the current window screen dimensions.",
       "files": [
         {
-          "path": "src/hooks/document/use-screen-size.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/document/use-screen-size.ts"
+          "path": "src/hooks/use-screen-size.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -100,9 +95,8 @@
       "description": "Creates an object URL from an SVG string.",
       "files": [
         {
-          "path": "src/hooks/document/use-svg-url.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/document/use-svg-url.ts"
+          "path": "src/hooks/use-svg-url.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -113,9 +107,8 @@
       "description": "Attaches and cleans up a window event listener.",
       "files": [
         {
-          "path": "src/hooks/document/use-window-event.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/document/use-window-event.ts"
+          "path": "src/hooks/use-window-event.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -126,9 +119,8 @@
       "description": "Stateful array with push, pop, remove and other helpers.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-array.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-array.ts"
+          "path": "src/hooks/use-array.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -139,9 +131,8 @@
       "description": "Memoises a value as a stable array reference.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-as-array.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-as-array.ts"
+          "path": "src/hooks/use-as-array.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -152,9 +143,8 @@
       "description": "Memoises an array as a stable Map reference.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-as-map.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-as-map.ts"
+          "path": "src/hooks/use-as-map.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -165,9 +155,8 @@
       "description": "Memoises an array as a stable Set reference.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-as-set.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-as-set.ts"
+          "path": "src/hooks/use-as-set.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -178,9 +167,8 @@
       "description": "Memoised array filter.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-filter.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-filter.ts"
+          "path": "src/hooks/use-filter.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -191,9 +179,8 @@
       "description": "Memoised array map.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-map-array.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-map-array.ts"
+          "path": "src/hooks/use-map-array.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -204,9 +191,8 @@
       "description": "Stateful Map with set, delete and clear helpers.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-map.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-map.ts"
+          "path": "src/hooks/use-map.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -217,9 +203,8 @@
       "description": "Returns a memoised numeric range array.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-range.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-range.ts"
+          "path": "src/hooks/use-range.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -230,9 +215,8 @@
       "description": "Stateful Set with add, delete and clear helpers.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-set.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/iterables/use-set.ts"
+          "path": "src/hooks/use-set.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -243,9 +227,8 @@
       "description": "Returns the maximum value from an array.",
       "files": [
         {
-          "path": "src/hooks/math/use-max.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/math/use-max.ts"
+          "path": "src/hooks/use-max.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -256,9 +239,8 @@
       "description": "Returns the minimum value from an array.",
       "files": [
         {
-          "path": "src/hooks/math/use-min.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/math/use-min.ts"
+          "path": "src/hooks/use-min.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -269,9 +251,8 @@
       "description": "Reads and writes the URL hash.",
       "files": [
         {
-          "path": "src/hooks/navigation/use-hash.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/navigation/use-hash.ts"
+          "path": "src/hooks/use-hash.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -282,9 +263,8 @@
       "description": "Returns the active Tailwind-style breakpoint.",
       "files": [
         {
-          "path": "src/hooks/others/use-breakpoints.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-breakpoints.ts"
+          "path": "src/hooks/use-breakpoints.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -295,9 +275,8 @@
       "description": "Typed context consumer that throws when used outside its provider.",
       "files": [
         {
-          "path": "src/hooks/others/use-context-x.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-context-x.ts"
+          "path": "src/hooks/use-context-x.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -308,9 +287,8 @@
       "description": "Drives CSS class-based enter/leave transitions.",
       "files": [
         {
-          "path": "src/hooks/others/use-css-transition.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-css-transition.ts"
+          "path": "src/hooks/use-css-transition.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -321,9 +299,8 @@
       "description": "Returns a value that updates after a delay.",
       "files": [
         {
-          "path": "src/hooks/others/use-delayed-value.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-delayed-value.ts"
+          "path": "src/hooks/use-delayed-value.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -334,9 +311,8 @@
       "description": "Declarative setInterval with automatic cleanup.",
       "files": [
         {
-          "path": "src/hooks/others/use-interval.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-interval.ts"
+          "path": "src/hooks/use-interval.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -347,9 +323,8 @@
       "description": "Returns true after the component has mounted (SSR-safe).",
       "files": [
         {
-          "path": "src/hooks/others/use-is-hydrated.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-is-hydrated.ts"
+          "path": "src/hooks/use-is-hydrated.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -360,9 +335,8 @@
       "description": "useState that syncs to localStorage.",
       "files": [
         {
-          "path": "src/hooks/others/use-persistent-state.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-persistent-state.ts"
+          "path": "src/hooks/use-persistent-state.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -373,9 +347,8 @@
       "description": "Tracks loading/error/data state of a promise.",
       "files": [
         {
-          "path": "src/hooks/others/use-promise.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-promise.ts"
+          "path": "src/hooks/use-promise.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -386,9 +359,8 @@
       "description": "Keeps a ref in sync with the latest value of a variable.",
       "files": [
         {
-          "path": "src/hooks/others/use-ref-of.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-ref-of.ts"
+          "path": "src/hooks/use-ref-of.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
@@ -399,29 +371,11 @@
       "description": "Declarative setTimeout with automatic cleanup.",
       "files": [
         {
-          "path": "src/hooks/others/use-timeout.ts",
-          "type": "registry:hook",
-          "target": "@hooks/rb/others/use-timeout.ts"
+          "path": "src/hooks/use-timeout.ts",
+          "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
-    },
-    {
-      "name": "icon",
-      "title": "Icon",
-      "description": "Polymorphic icon wrapper with size, color, inline and noShrink variants. Accepts LucideIcon FC, SVG element, or ReactNode.",
-      "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
-      ],
-      "files": [
-        {
-          "path": "src/components/icons/icon.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/icons/icon.tsx"
-        }
-      ],
-      "type": "registry:ui"
     },
     {
       "name": "flex",
@@ -432,9 +386,8 @@
       ],
       "files": [
         {
-          "path": "src/components/containers/flex.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/containers/flex.tsx"
+          "path": "src/components/flex.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -452,9 +405,8 @@
       ],
       "files": [
         {
-          "path": "src/components/containers/toolbar.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/containers/toolbar.tsx"
+          "path": "src/components/toolbar.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -465,9 +417,8 @@
       "description": "Center, CenterH and CenterV flex utilities.",
       "files": [
         {
-          "path": "src/components/containers/center.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/containers/center.tsx"
+          "path": "src/components/center.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -481,9 +432,154 @@
       ],
       "files": [
         {
-          "path": "src/components/containers/spacer.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/containers/spacer.tsx"
+          "path": "src/components/spacer.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "dot",
+      "title": "Dot",
+      "description": "Small colored status dot.",
+      "files": [
+        {
+          "path": "src/components/dot.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "summary",
+      "title": "Summary",
+      "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/icon",
+        "andre-hctulc/react-base/clipboard-icon-button",
+        "andre-hctulc/react-base/use-as-set"
+      ],
+      "files": [
+        {
+          "path": "src/components/summary.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "icon",
+      "title": "Icon",
+      "description": "Polymorphic icon wrapper with size, color, inline and noShrink variants. Accepts LucideIcon FC, SVG element, or ReactNode.",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/icon.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "clipboard-icon-button",
+      "title": "ClipboardIconButton",
+      "description": "Icon button that copies a value to the clipboard.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "src/components/clipboard-icon-button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "use-js-form",
+      "title": "useJsForm",
+      "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
+      "dependencies": [
+        "dot-prop"
+      ],
+      "files": [
+        {
+          "path": "src/components/js-form-types.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/components/js-form-helpers.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/components/js-form-context.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "type": "registry:hook"
+    },
+    {
+      "name": "form-control",
+      "title": "FormControl",
+      "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
+      "registryDependencies": [
+        "field",
+        "andre-hctulc/react-base/use-js-form"
+      ],
+      "files": [
+        {
+          "path": "src/components/form-control.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "js-form",
+      "title": "JSForm",
+      "description": "Form component powered by useJsForm — handles default values, validation and submission.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/use-js-form",
+        "andre-hctulc/react-base/form-control"
+      ],
+      "files": [
+        {
+          "path": "src/components/js-form.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/components/flex-form.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "editable",
+      "title": "Editable",
+      "description": "Inline editable field that switches between view and edit mode.",
+      "files": [
+        {
+          "path": "src/components/editable.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "label-mimic",
+      "title": "LabelMimic",
+      "description": "Span styled to look like a label — for non-input labeling contexts.",
+      "files": [
+        {
+          "path": "src/components/label-mimic.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -497,9 +593,8 @@
       ],
       "files": [
         {
-          "path": "src/components/layout/root.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/layout/root.tsx"
+          "path": "src/components/root.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -513,9 +608,8 @@
       ],
       "files": [
         {
-          "path": "src/components/layout/overlay.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/layout/overlay.tsx"
+          "path": "src/components/overlay.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -529,9 +623,8 @@
       ],
       "files": [
         {
-          "path": "src/components/layout/page.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/layout/page.tsx"
+          "path": "src/components/page.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -548,9 +641,8 @@
       ],
       "files": [
         {
-          "path": "src/components/layout/page-content.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/layout/page-content.tsx"
+          "path": "src/components/page-content.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -568,9 +660,8 @@
       ],
       "files": [
         {
-          "path": "src/components/layout/page-header.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/layout/page-header.tsx"
+          "path": "src/components/page-header.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -586,9 +677,25 @@
       ],
       "files": [
         {
-          "path": "src/components/layout/spinner-page.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/layout/spinner-page.tsx"
+          "path": "src/components/spinner-page.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "stat",
+      "title": "Stat",
+      "description": "Stat card with label, value and trend display.",
+      "registryDependencies": [
+        "skeleton",
+        "andre-hctulc/react-base/icon",
+        "andre-hctulc/react-base/use-ref-of"
+      ],
+      "files": [
+        {
+          "path": "src/components/stat.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -605,9 +712,8 @@
       ],
       "files": [
         {
-          "path": "src/components/text/color-text.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/text/color-text.tsx"
+          "path": "src/components/color-text.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -625,9 +731,8 @@
       ],
       "files": [
         {
-          "path": "src/components/text/title.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/text/title.tsx"
+          "path": "src/components/title.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -642,9 +747,8 @@
       ],
       "files": [
         {
-          "path": "src/components/text/subtitle.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/text/subtitle.tsx"
+          "path": "src/components/subtitle.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -655,9 +759,8 @@
       "description": "Prose text block.",
       "files": [
         {
-          "path": "src/components/text/text-block.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/text/text-block.tsx"
+          "path": "src/components/text-block.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -668,9 +771,8 @@
       "description": "Styled typography components (h1-h6, p, ul, etc.).",
       "files": [
         {
-          "path": "src/components/text/typography.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/text/typography.tsx"
+          "path": "src/components/typography.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -684,19 +786,16 @@
       ],
       "files": [
         {
-          "path": "src/components/transitions/transition.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/transitions/transition.tsx"
+          "path": "src/components/transition.tsx",
+          "type": "registry:ui"
         },
         {
-          "path": "src/components/transitions/transition-context.ts",
-          "type": "registry:lib",
-          "target": "@components/rb/transitions/transition-context.ts"
+          "path": "src/components/transition-context.ts",
+          "type": "registry:lib"
         },
         {
-          "path": "src/components/transitions/transition-child.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/transitions/transition-child.tsx"
+          "path": "src/components/transition-child.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -710,9 +809,8 @@
       ],
       "files": [
         {
-          "path": "src/components/transitions/fade.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/transitions/fade.tsx"
+          "path": "src/components/fade.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"
@@ -726,168 +824,8 @@
       ],
       "files": [
         {
-          "path": "src/components/transitions/collapse.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/transitions/collapse.tsx"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "dot",
-      "title": "Dot",
-      "description": "Small colored status dot.",
-      "files": [
-        {
-          "path": "src/components/data-display/dot.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/data-display/dot.tsx"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "summary",
-      "title": "Summary",
-      "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/icon",
-        "andre-hctulc/react-base/clipboard-icon-button",
-        "andre-hctulc/react-base/use-as-set"
-      ],
-      "files": [
-        {
-          "path": "src/components/data-display/summary.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/data-display/summary.tsx"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "clipboard-icon-button",
-      "title": "ClipboardIconButton",
-      "description": "Icon button that copies a value to the clipboard.",
-      "dependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "button"
-      ],
-      "files": [
-        {
-          "path": "src/components/input/clipboard-icon-button.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/input/clipboard-icon-button.tsx"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "use-js-form",
-      "title": "useJsForm",
-      "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
-      "dependencies": [
-        "dot-prop"
-      ],
-      "files": [
-        {
-          "path": "src/components/input/js-form-types.ts",
-          "type": "registry:lib",
-          "target": "@components/rb/input/js-form-types.ts"
-        },
-        {
-          "path": "src/components/input/js-form-helpers.ts",
-          "type": "registry:lib",
-          "target": "@components/rb/input/js-form-helpers.ts"
-        },
-        {
-          "path": "src/components/input/js-form-context.ts",
-          "type": "registry:lib",
-          "target": "@components/rb/input/js-form-context.ts"
-        }
-      ],
-      "type": "registry:hook"
-    },
-    {
-      "name": "form-control",
-      "title": "FormControl",
-      "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
-      "registryDependencies": [
-        "field",
-        "andre-hctulc/react-base/use-js-form"
-      ],
-      "files": [
-        {
-          "path": "src/components/input/form-control.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/input/form-control.tsx"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "js-form",
-      "title": "JSForm",
-      "description": "Form component powered by useJsForm — handles default values, validation and submission.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/use-js-form",
-        "andre-hctulc/react-base/form-control"
-      ],
-      "files": [
-        {
-          "path": "src/components/input/js-form.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/input/js-form.tsx"
-        },
-        {
-          "path": "src/components/input/flex-form.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/input/flex-form.tsx"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "editable",
-      "title": "Editable",
-      "description": "Inline editable field that switches between view and edit mode.",
-      "files": [
-        {
-          "path": "src/components/input/editable.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/input/editable.tsx"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "stat",
-      "title": "Stat",
-      "description": "Stat card with label, value and trend display.",
-      "registryDependencies": [
-        "skeleton",
-        "andre-hctulc/react-base/icon",
-        "andre-hctulc/react-base/use-ref-of"
-      ],
-      "files": [
-        {
-          "path": "src/components/stat/stat.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/stat/stat.tsx"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "label-mimic",
-      "title": "LabelMimic",
-      "description": "Span styled to look like a label — for non-input labeling contexts.",
-      "files": [
-        {
-          "path": "src/components/label/label-mimic.tsx",
-          "type": "registry:ui",
-          "target": "@components/rb/label/label-mimic.tsx"
+          "path": "src/components/collapse.tsx",
+          "type": "registry:ui"
         }
       ],
       "type": "registry:ui"

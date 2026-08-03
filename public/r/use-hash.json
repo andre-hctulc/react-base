@@ -5,10 +5,9 @@
   "description": "Reads and writes the URL hash.",
   "files": [
     {
-      "path": "src/hooks/navigation/use-hash.ts",
+      "path": "src/hooks/use-hash.ts",
       "content": "\"use client\";\n\nimport { useEffect, useState } from \"react\";\n\nexport function useHash(): string {\n    const [hash, setHash] = useState<string>(() => {\n        if (typeof window !== \"undefined\") {\n            return window.location.hash;\n        }\n        return \"\";\n    });\n\n    useEffect(() => {\n        const updateHash = () => {\n            setHash(window.location.hash);\n        };\n\n        window.addEventListener(\"hashchange\", updateHash);\n\n        return () => {\n            window.removeEventListener(\"hashchange\", updateHash);\n        };\n    }, []);\n\n    return hash;\n}\n",
-      "type": "registry:hook",
-      "target": "@hooks/rb/navigation/use-hash.ts"
+      "type": "registry:hook"
     }
   ],
   "type": "registry:hook"

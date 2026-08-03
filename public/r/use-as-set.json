@@ -5,10 +5,9 @@
   "description": "Memoises an array as a stable Set reference.",
   "files": [
     {
-      "path": "src/hooks/iterables/use-as-set.ts",
+      "path": "src/hooks/use-as-set.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useAsSet<T>(iterable: Iterable<T>): Set<T> {\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n    const set = React.useMemo(() => new Set(iterable), [iterable]);\n    return set;\n}\n",
-      "type": "registry:hook",
-      "target": "@hooks/rb/iterables/use-as-set.ts"
+      "type": "registry:hook"
     }
   ],
   "type": "registry:hook"

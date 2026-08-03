@@ -5,10 +5,9 @@
   "description": "Stateful array with push, pop, remove and other helpers.",
   "files": [
     {
-      "path": "src/hooks/iterables/use-array.ts",
+      "path": "src/hooks/use-array.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useArray<T = any>(source?: T[] | (() => T[]), resetOnSourceChange = false) {\n    const [array, setArray] = React.useState<T[]>(source || []);\n    const resetActive = React.useRef(false);\n\n    React.useEffect(() => {\n        if (!resetActive.current) {\n            resetActive.current = true;\n            return;\n        }\n\n        if (resetOnSourceChange) setArray(source || []);\n    }, [source]);\n\n    const push = React.useCallback((item: T, noDuplicates?: boolean) => {\n        setArray((arr) => {\n            if (noDuplicates && arr.includes(item)) return arr;\n            return [...arr, item];\n        });\n    }, []);\n\n    const filter = React.useCallback((callback: (item: T) => any) => {\n        setArray((arr) => arr.filter(callback));\n    }, []);\n\n    const update = React.useCallback((index: number, newItem: T) => {\n        setArray((arr) => [...arr.slice(0, index), newItem, ...arr.slice(index + 1, arr.length)]);\n    }, []);\n\n    const remove = React.useCallback((index: number | { item: T }) => {\n        setArray((arr) => {\n            if (typeof index === \"object\") return arr.filter((item) => item !== index.item);\n            else return [...arr.slice(0, index), ...arr.slice(index + 1, arr.length)];\n        });\n    }, []);\n\n    const pop = React.useCallback(() => {\n        const top = array[array.length - 1];\n        if (array.length) setArray(array.slice(0, array.length - 1));\n        else setArray([]);\n        return top;\n    }, [array]);\n\n    const toggle = React.useCallback((item: T) => {\n        setArray((arr) => {\n            if (arr.includes(item)) return arr.filter((i) => i !== item);\n            else return [...arr, item];\n        });\n    }, []);\n\n    return { array, set: setArray, push, filter, update, remove, pop, toggle };\n}\n",
-      "type": "registry:hook",
-      "target": "@hooks/rb/iterables/use-array.ts"
+      "type": "registry:hook"
     }
   ],
   "type": "registry:hook"

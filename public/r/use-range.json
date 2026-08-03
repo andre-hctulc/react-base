@@ -5,10 +5,9 @@
   "description": "Returns a memoised numeric range array.",
   "files": [
     {
-      "path": "src/hooks/iterables/use-range.ts",
+      "path": "src/hooks/use-range.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useRange<T = number>(length: number, map?: (index: number) => T): T[] {\n    const r = React.useMemo(() => Array.from({ length }, (_, i) => (map ? map(i) : i)), [length]);\n    return r as T[];\n}\n",
-      "type": "registry:hook",
-      "target": "@hooks/rb/iterables/use-range.ts"
+      "type": "registry:hook"
     }
   ],
   "type": "registry:hook"

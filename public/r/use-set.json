@@ -5,10 +5,9 @@
   "description": "Stateful Set with add, delete and clear helpers.",
   "files": [
     {
-      "path": "src/hooks/iterables/use-set.ts",
+      "path": "src/hooks/use-set.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nconst createSet = (source: Iterable<any> | (() => Iterable<any>)) => {\n    if (source instanceof Set) return source;\n\n    if (source) {\n        if (typeof source === \"function\") return new Set(source());\n        else return new Set(source);\n    } else return new Set();\n};\n\nexport function useSet<T = any>(source?: Iterable<T> | (() => Iterable<T>), resetOnSourceChange = false) {\n    const [set, setSet] = React.useState<Set<T>>(() => createSet(source || []));\n    const resetActive = React.useRef(false);\n\n    React.useEffect(() => {\n        if (!resetActive.current) {\n            resetActive.current = true;\n            return;\n        }\n\n        if (resetOnSourceChange) setSet(createSet(source || []));\n    }, [source]);\n\n    const add = React.useCallback((item: T) => {\n        setSet((set) => {\n            return new Set([...Array.from(set), item]);\n        });\n    }, []);\n\n    const del = React.useCallback((item: T) => {\n        setSet((set) => new Set(Array.from(set).filter((i) => i !== item)));\n    }, []);\n\n    const clear = React.useCallback(() => {\n        setSet(new Set());\n    }, []);\n\n    const has = React.useCallback(\n        (item: T) => {\n            return set.has(item);\n        },\n        [set]\n    );\n\n    return { set, add, del, clear, has };\n}\n",
-      "type": "registry:hook",
-      "target": "@hooks/rb/iterables/use-set.ts"
+      "type": "registry:hook"
     }
   ],
   "type": "registry:hook"

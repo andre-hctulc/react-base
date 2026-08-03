@@ -5,10 +5,9 @@
   "description": "Memoises an array as a stable Map reference.",
   "files": [
     {
-      "path": "src/hooks/iterables/use-as-map.ts",
-      "content": "\"use client\";\n\nimport React from \"react\";\nimport { useRefOf } from \"../others/use-ref-of.js\";\n\n/**\n * Use `map.mapKeys` or `map.mapEntries` to map over the keys or entries of the map.\n */\nexport function useAsMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): Map<K, V> {\n    const keyRef = useRefOf(key);\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n    const map = React.useMemo(() => {\n        return new Map(Array.from(iterable).map((value) => [keyRef.current(value), value] as [K, V]));\n    }, [iterable]);\n    return map;\n}\n\n/**\n * Use `map.mapKeys` or `map.mapEntries` to map over the keys or entries of the map.\n */\nexport function useAsArrayMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): Map<K, V[]> {\n    const keyRef = useRefOf(key);\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n    const map = React.useMemo(() => {\n        const map = new Map<K, V[]>();\n        for (const value of iterable) {\n            const k = keyRef.current(value);\n            if (!map.has(k)) map.set(k, []);\n            map.get(k)?.push(value);\n        }\n        return map;\n    }, [iterable]);\n    return map;\n}\n",
-      "type": "registry:hook",
-      "target": "@hooks/rb/iterables/use-as-map.ts"
+      "path": "src/hooks/use-as-map.ts",
+      "content": "\"use client\";\n\nimport React from \"react\";\nimport { useRefOf } from \"./use-ref-of.js\";\n\n/**\n * Use `map.mapKeys` or `map.mapEntries` to map over the keys or entries of the map.\n */\nexport function useAsMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): Map<K, V> {\n    const keyRef = useRefOf(key);\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n    const map = React.useMemo(() => {\n        return new Map(Array.from(iterable).map((value) => [keyRef.current(value), value] as [K, V]));\n    }, [iterable]);\n    return map;\n}\n\n/**\n * Use `map.mapKeys` or `map.mapEntries` to map over the keys or entries of the map.\n */\nexport function useAsArrayMap<K, V>(iterable: Iterable<V>, key: (value: V) => K): Map<K, V[]> {\n    const keyRef = useRefOf(key);\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n    const map = React.useMemo(() => {\n        const map = new Map<K, V[]>();\n        for (const value of iterable) {\n            const k = keyRef.current(value);\n            if (!map.has(k)) map.set(k, []);\n            map.get(k)?.push(value);\n        }\n        return map;\n    }, [iterable]);\n    return map;\n}\n",
+      "type": "registry:hook"
     }
   ],
   "type": "registry:hook"

@@ -1,14 +1,407 @@
 {
     "$schema": "https://ui.shadcn.com/schema/registry.json",
-    "include": [
-        "icons/registry.json",
-        "containers/registry.json",
-        "layout/registry.json",
-        "text/registry.json",
-        "transitions/registry.json",
-        "data-display/registry.json",
-        "input/registry.json",
-        "stat/registry.json",
-        "label/registry.json"
+    "items": [
+        {
+            "name": "flex",
+            "type": "registry:ui",
+            "title": "Flex",
+            "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
+            "dependencies": ["class-variance-authority"],
+            "files": [
+                {
+                    "path": "flex.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "toolbar",
+            "type": "registry:ui",
+            "title": "Toolbar",
+            "description": "Flex toolbar with spacing, padding, margin, scroll and alignment variants.",
+            "dependencies": ["class-variance-authority", "radix-ui"],
+            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
+            "files": [
+                {
+                    "path": "toolbar.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "center",
+            "type": "registry:ui",
+            "title": "Center",
+            "description": "Center, CenterH and CenterV flex utilities.",
+            "files": [
+                {
+                    "path": "center.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "spacer",
+            "type": "registry:ui",
+            "title": "Spacer",
+            "description": "Polymorphic flex gap container.",
+            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
+            "files": [
+                {
+                    "path": "spacer.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "dot",
+            "type": "registry:ui",
+            "title": "Dot",
+            "description": "Small colored status dot.",
+            "files": [
+                {
+                    "path": "dot.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "summary",
+            "type": "registry:ui",
+            "title": "Summary",
+            "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
+            "registryDependencies": [
+                "andre-hctulc/react-base/icon",
+                "andre-hctulc/react-base/clipboard-icon-button",
+                "andre-hctulc/react-base/use-as-set"
+            ],
+            "files": [
+                {
+                    "path": "summary.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "icon",
+            "type": "registry:ui",
+            "title": "Icon",
+            "description": "Polymorphic icon wrapper with size, color, inline and noShrink variants. Accepts LucideIcon FC, SVG element, or ReactNode.",
+            "dependencies": ["class-variance-authority", "lucide-react"],
+            "files": [
+                {
+                    "path": "icon.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "clipboard-icon-button",
+            "type": "registry:ui",
+            "title": "ClipboardIconButton",
+            "description": "Icon button that copies a value to the clipboard.",
+            "dependencies": ["lucide-react"],
+            "registryDependencies": ["button"],
+            "files": [
+                {
+                    "path": "clipboard-icon-button.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "use-js-form",
+            "type": "registry:hook",
+            "title": "useJsForm",
+            "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
+            "dependencies": ["dot-prop"],
+            "files": [
+                {
+                    "path": "js-form-types.ts",
+                    "type": "registry:lib"
+                },
+                {
+                    "path": "js-form-helpers.ts",
+                    "type": "registry:lib"
+                },
+                {
+                    "path": "js-form-context.ts",
+                    "type": "registry:lib"
+                }
+            ]
+        },
+        {
+            "name": "form-control",
+            "type": "registry:ui",
+            "title": "FormControl",
+            "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
+            "registryDependencies": ["field", "andre-hctulc/react-base/use-js-form"],
+            "files": [
+                {
+                    "path": "form-control.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "js-form",
+            "type": "registry:ui",
+            "title": "JSForm",
+            "description": "Form component powered by useJsForm — handles default values, validation and submission.",
+            "registryDependencies": [
+                "andre-hctulc/react-base/use-js-form",
+                "andre-hctulc/react-base/form-control"
+            ],
+            "files": [
+                {
+                    "path": "js-form.tsx",
+                    "type": "registry:ui"
+                },
+                {
+                    "path": "flex-form.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "editable",
+            "type": "registry:ui",
+            "title": "Editable",
+            "description": "Inline editable field that switches between view and edit mode.",
+            "files": [
+                {
+                    "path": "editable.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "label-mimic",
+            "type": "registry:ui",
+            "title": "LabelMimic",
+            "description": "Span styled to look like a label — for non-input labeling contexts.",
+            "files": [
+                {
+                    "path": "label-mimic.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "root",
+            "type": "registry:ui",
+            "title": "Root",
+            "description": "Flex root layout container with direction, overflow and background variants.",
+            "dependencies": ["class-variance-authority"],
+            "files": [
+                {
+                    "path": "root.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "overlay",
+            "type": "registry:ui",
+            "title": "Overlay",
+            "description": "Fixed or absolute overlay with blur/opacity background variants and optional portal.",
+            "dependencies": ["class-variance-authority"],
+            "files": [
+                {
+                    "path": "overlay.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "page",
+            "type": "registry:ui",
+            "title": "Page",
+            "description": "Page container with constrained width, flex and background variants.",
+            "dependencies": ["class-variance-authority"],
+            "files": [
+                {
+                    "path": "page.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "page-content",
+            "type": "registry:ui",
+            "title": "PageContent",
+            "description": "Main content area with padding, size and flex variants.",
+            "dependencies": ["class-variance-authority"],
+            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
+            "files": [
+                {
+                    "path": "page-content.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "page-header",
+            "type": "registry:ui",
+            "title": "PageHeader",
+            "description": "Page header with title, badges, actions slots, padding and margin variants.",
+            "dependencies": ["class-variance-authority"],
+            "registryDependencies": [
+                "andre-hctulc/react-base/title",
+                "andre-hctulc/react-base/variants-util"
+            ],
+            "files": [
+                {
+                    "path": "page-header.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "spinner-page",
+            "type": "registry:ui",
+            "title": "SpinnerPage",
+            "description": "Full-page spinner using Page and PageContent.",
+            "registryDependencies": [
+                "andre-hctulc/react-base/page",
+                "andre-hctulc/react-base/page-content",
+                "spinner"
+            ],
+            "files": [
+                {
+                    "path": "spinner-page.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "stat",
+            "type": "registry:ui",
+            "title": "Stat",
+            "description": "Stat card with label, value and trend display.",
+            "registryDependencies": [
+                "skeleton",
+                "andre-hctulc/react-base/icon",
+                "andre-hctulc/react-base/use-ref-of"
+            ],
+            "files": [
+                {
+                    "path": "stat.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "color-text",
+            "type": "registry:ui",
+            "title": "ColorText",
+            "description": "Polymorphic text with color, size, lineClamp and margin variants.",
+            "dependencies": ["class-variance-authority"],
+            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
+            "files": [
+                {
+                    "path": "color-text.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "title",
+            "type": "registry:ui",
+            "title": "Title",
+            "description": "Polymorphic heading with variant, bold, truncate and icon slot.",
+            "dependencies": ["class-variance-authority"],
+            "registryDependencies": ["andre-hctulc/react-base/icon", "andre-hctulc/react-base/variants-util"],
+            "files": [
+                {
+                    "path": "title.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "subtitle",
+            "type": "registry:ui",
+            "title": "Subtitle",
+            "description": "Subtitle / secondary text component.",
+            "registryDependencies": ["andre-hctulc/react-base/icon", "andre-hctulc/react-base/variants-util"],
+            "files": [
+                {
+                    "path": "subtitle.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "text-block",
+            "type": "registry:ui",
+            "title": "TextBlock",
+            "description": "Prose text block.",
+            "files": [
+                {
+                    "path": "text-block.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "typography",
+            "type": "registry:ui",
+            "title": "Typography",
+            "description": "Styled typography components (h1-h6, p, ul, etc.).",
+            "files": [
+                {
+                    "path": "typography.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "transition",
+            "type": "registry:ui",
+            "title": "Transition",
+            "description": "Headless CSS class-based enter/leave transition primitive.",
+            "registryDependencies": ["andre-hctulc/react-base/use-css-transition"],
+            "files": [
+                {
+                    "path": "transition.tsx",
+                    "type": "registry:ui"
+                },
+                {
+                    "path": "transition-context.ts",
+                    "type": "registry:lib"
+                },
+                {
+                    "path": "transition-child.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "fade",
+            "type": "registry:ui",
+            "title": "Fade",
+            "description": "CSS opacity fade enter/leave transition.",
+            "registryDependencies": ["andre-hctulc/react-base/transition"],
+            "files": [
+                {
+                    "path": "fade.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "collapse-transition",
+            "type": "registry:ui",
+            "title": "CollapseTransition",
+            "description": "CSS height collapse enter/leave transition.",
+            "registryDependencies": ["andre-hctulc/react-base/transition"],
+            "files": [
+                {
+                    "path": "collapse.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        }
     ]
 }
