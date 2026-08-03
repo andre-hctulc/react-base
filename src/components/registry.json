@@ -8,7 +8,6 @@
         "transitions/registry.json",
         "data-display/registry.json",
         "input/registry.json",
-        "dialog/registry.json",
         "stat/registry.json",
         "label/registry.json"
     ]

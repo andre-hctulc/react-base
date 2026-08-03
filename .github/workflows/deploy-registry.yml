@@ -5,6 +5,8 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Disabled — re-enable by removing the if: false condition from the deploy job
+
 permissions:
   contents: read
   pages: write
@@ -16,6 +18,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
