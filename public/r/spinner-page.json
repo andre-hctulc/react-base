@@ -5,7 +5,8 @@
   "description": "Full-page spinner using Page and PageContent.",
   "registryDependencies": [
     "andre-hctulc/react-base/page",
-    "andre-hctulc/react-base/page-content"
+    "andre-hctulc/react-base/page-content",
+    "spinner"
   ],
   "files": [
     {

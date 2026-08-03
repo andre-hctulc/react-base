@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "src/hooks/document/use-element-by-id.ts",
-      "content": "\"use client\";\n\nimport React from \"react\";\nimport type { Falsy } from \"@/types/index.js\";\n\nexport function useElementById(id: string | Falsy, deps?: React.DependencyList) {\n    const [element, setElement] = React.useState<HTMLElement | null>(null);\n\n    React.useEffect(() => {\n        if (id) {\n            setElement(document.getElementById(id));\n        }\n    }, [id, ...(deps || [])]);\n\n    return element;\n}\n",
+      "content": "\"use client\";\n\nimport React from \"react\";\n\ntype Falsy = false | 0 | \"\" | null | undefined;\n\nexport function useElementById(id: string | Falsy, deps?: React.DependencyList) {\n    const [element, setElement] = React.useState<HTMLElement | null>(null);\n\n    React.useEffect(() => {\n        if (id) {\n            setElement(document.getElementById(id));\n        }\n    }, [id, ...(deps || [])]);\n\n    return element;\n}\n",
       "type": "registry:hook"
     }
   ],

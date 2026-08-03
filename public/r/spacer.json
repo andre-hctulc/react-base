@@ -3,10 +3,13 @@
   "name": "spacer",
   "title": "Spacer",
   "description": "Polymorphic flex gap container.",
+  "registryDependencies": [
+    "andre-hctulc/react-base/variants-util"
+  ],
   "files": [
     {
       "path": "src/components/containers/spacer.tsx",
-      "content": "import { cn } from \"@/lib/cn.util.js\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { sz } from \"@/util/react/variants.util.js\";\nimport type { ElementType } from \"react\";\nimport type { RichAsProps } from \"@/types/index.js\";\n\nconst spacerVariants = cva(\"flex\", {\n    variants: {\n        variant: {\n            row: \"\",\n            col: \"flex-col\",\n        },\n        wrap: {\n            none: \"flex-nowrap\",\n            normal: \"flex-wrap\",\n            reverse: \"flex-wrap-reverse\",\n        },\n        gap: sz(\"gap\"),\n        rowGap: sz(\"row-gap\"),\n        colGap: sz(\"column-gap\"),\n    },\n    defaultVariants: { variant: \"row\", gap: \"md\" },\n});\n\nexport type SpacerProps<T extends ElementType = \"div\"> = RichAsProps<T> & VariantProps<typeof spacerVariants>;\n\nexport const Spacer = <T extends ElementType = \"div\">(props: SpacerProps<T>) => {\n    const { variant, wrap, gap, rowGap, colGap, className, as, ...restProps } = props as any;\n    const Comp: any = as || \"div\";\n    return (\n        <Comp\n            className={cn(spacerVariants({ variant, wrap, gap, rowGap, colGap }), className)}\n            {...restProps}\n        />\n    );\n};\n",
+      "content": "import { cn } from \"@/lib/cn.util.js\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { sz } from \"@/util/react/variants.util.js\";\nimport { type FC, type ComponentProps } from \"react\";\nimport { Slot } from \"radix-ui\";\n\nconst spacerVariants = cva(\"flex\", {\n    variants: {\n        variant: {\n            row: \"\",\n            col: \"flex-col\",\n        },\n        wrap: {\n            none: \"flex-nowrap\",\n            normal: \"flex-wrap\",\n            reverse: \"flex-wrap-reverse\",\n        },\n        gap: sz(\"gap\"),\n        rowGap: sz(\"row-gap\"),\n        colGap: sz(\"column-gap\"),\n    },\n    defaultVariants: { variant: \"row\", gap: \"md\" },\n});\n\nexport interface SpacerProps extends ComponentProps<\"div\">, VariantProps<typeof spacerVariants> {\n    asChild?: boolean;\n}\n\nexport const Spacer: FC<SpacerProps> = (props) => {\n    const { variant, wrap, gap, rowGap, colGap, className, asChild, ...restProps } = props;\n    const Comp: any = asChild ? Slot : \"div\";\n    return (\n        <Comp\n            className={cn(spacerVariants({ variant, wrap, gap, rowGap, colGap }), className)}\n            {...restProps}\n        />\n    );\n};\n",
       "type": "registry:ui"
     }
   ],

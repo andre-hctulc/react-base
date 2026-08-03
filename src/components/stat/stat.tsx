@@ -2,9 +2,9 @@
 
 import { cn } from "@/lib/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
-import { useMemo, type ComponentProps, type ElementType } from "react";
+import { useMemo, type FC, type ComponentProps, type ComponentType } from "react";
+import { Slot } from "radix-ui";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
-import type { LinkComponent, LinkProps, RichAsProps } from "@/types/index.js";
 import { Icon, type IconLike } from "@/components/icons/icon.js";
 import { Skeleton } from "@/ui/skeleton.js";
 
@@ -54,26 +54,22 @@ const statVariants = cva("bg-paper-2 rounded-lg", {
     },
     defaultVariants: { size: "md", border: true, fitWidth: true },
 });
-
-export type StatColor = NonNullable<VariantProps<typeof statVariants>["color"]>;
-export type StatSize = NonNullable<VariantProps<typeof statVariants>["size"]>;
-
-type StatProps<T extends ElementType = "div"> = RichAsProps<T> &
-    VariantProps<typeof statVariants> & {
-        valueParser?: (value: any) => string;
-        value: any;
-        description?: string;
-        descriptionProps?: ComponentProps<"p">;
-        textProps?: ComponentProps<"p">;
-        icon?: IconLike;
-        LinkComponent?: LinkComponent;
-        linkProps?: LinkProps;
-        href?: string;
-        skeletonProps?: ComponentProps<typeof Skeleton>;
-        unit?: string;
-        iconProps?: ComponentProps<typeof Icon>;
-        unitProps?: ComponentProps<"span">;
-    };
+interface StatProps extends Omit<ComponentProps<"div">, "color">, VariantProps<typeof statVariants> {
+    asChild?: boolean;
+    valueParser?: (value: any) => string;
+    value: any;
+    description?: string;
+    descriptionProps?: ComponentProps<"p">;
+    textProps?: ComponentProps<"p">;
+    icon?: IconLike;
+    LinkComponent?: ComponentType<ComponentProps<"a">>;
+    linkProps?: ComponentProps<"a">;
+    href?: string;
+    skeletonProps?: ComponentProps<typeof Skeleton>;
+    unit?: string;
+    iconProps?: ComponentProps<typeof Icon>;
+    unitProps?: ComponentProps<"span">;
+}
 
 /**
  * ### Props
@@ -85,7 +81,7 @@ type StatProps<T extends ElementType = "div"> = RichAsProps<T> &
  * - `href`
  * - `LinkComponent`
  */
-export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
+export const Stat: FC<StatProps> = (props) => {
     const {
         size,
         color,
@@ -103,7 +99,7 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
         children,
         href,
         LinkComponent,
-        as,
+        asChild,
         skeletonProps,
         unit,
         unitProps,
@@ -112,8 +108,8 @@ export const Stat = <T extends ElementType = "div">(props: StatProps<T>) => {
         ...rootProps
     } = props;
 
-    const Comp: any = as || "div";
-    const MainComp: any = as || (href ? LinkComponent || "a" : "div");
+    const Comp: any = asChild ? Slot : "div";
+    const MainComp: any = href ? LinkComponent || "a" : "div";
     const valueParserRef = useRefOf(valueParser);
     const val = useMemo(() => {
         return valueParserRef.current ? valueParserRef.current(value) : String(value);

@@ -7,6 +7,9 @@
             "title": "ColorText",
             "description": "Polymorphic text with color, size, lineClamp and margin variants.",
             "dependencies": ["class-variance-authority"],
+            "registryDependencies": [
+                "andre-hctulc/react-base/variants-util"
+            ],
             "files": [{ "path": "color-text.tsx", "type": "registry:ui" }]
         },
         {
@@ -15,7 +18,10 @@
             "title": "Title",
             "description": "Polymorphic heading with variant, bold, truncate and icon slot.",
             "dependencies": ["class-variance-authority"],
-            "registryDependencies": ["andre-hctulc/react-base/icon"],
+            "registryDependencies": [
+                "andre-hctulc/react-base/icon",
+                "andre-hctulc/react-base/variants-util"
+            ],
             "files": [{ "path": "title.tsx", "type": "registry:ui" }]
         },
         {
@@ -23,6 +29,10 @@
             "type": "registry:ui",
             "title": "Subtitle",
             "description": "Subtitle / secondary text component.",
+            "registryDependencies": [
+                "andre-hctulc/react-base/icon",
+                "andre-hctulc/react-base/variants-util"
+            ],
             "files": [{ "path": "subtitle.tsx", "type": "registry:ui" }]
         },
         {

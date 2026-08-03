@@ -1,8 +1,8 @@
-import { type ElementType } from "react";
+import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn.util.js";
 import { msz } from "@/util/react/variants.util.js";
-import type { RichAsProps } from "@/types/index.js";
+import { Slot } from "radix-ui";
 import { Icon, type IconLike, type IconProps } from "@/components/icons/icon.js";
 
 const subtitleVariants = cva("text-t-2", {
@@ -41,15 +41,13 @@ const subtitleVariants = cva("text-t-2", {
     defaultVariants: { variant: "h2", bold: false },
 });
 
-export type SubtitleProps<T extends ElementType = "h2"> = RichAsProps<T> &
-    VariantProps<typeof subtitleVariants> & {
-        icon?: IconLike;
-        iconProps?: IconProps;
-    };
+export interface SubtitleProps extends ComponentProps<"h2">, VariantProps<typeof subtitleVariants> {
+    asChild?: boolean;
+    icon?: IconLike;
+    iconProps?: IconProps;
+}
 
-export { subtitleVariants };
-
-export const Subtitle = <T extends ElementType = "h2">(props: SubtitleProps<T>) => {
+export const Subtitle: FC<SubtitleProps> = (props) => {
     const {
         variant,
         bold,
@@ -68,10 +66,10 @@ export const Subtitle = <T extends ElementType = "h2">(props: SubtitleProps<T>) 
         ms,
         className,
         children,
-        as,
+        asChild,
         ...restProps
-    } = props as any;
-    const Comp: any = as || variant;
+    } = props;
+    const Comp: any = asChild ? Slot : (variant as string);
 
     return (
         <Comp

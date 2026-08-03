@@ -31,6 +31,7 @@
             "title": "PageContent",
             "description": "Main content area with padding, size and flex variants.",
             "dependencies": ["class-variance-authority"],
+            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
             "files": [{ "path": "page-content.tsx", "type": "registry:ui" }]
         },
         {
@@ -39,7 +40,7 @@
             "title": "PageHeader",
             "description": "Page header with title, badges, actions slots, padding and margin variants.",
             "dependencies": ["class-variance-authority"],
-            "registryDependencies": ["andre-hctulc/react-base/title"],
+            "registryDependencies": ["andre-hctulc/react-base/title", "andre-hctulc/react-base/variants-util"],
             "files": [{ "path": "page-header.tsx", "type": "registry:ui" }]
         },
         {
@@ -47,7 +48,7 @@
             "type": "registry:ui",
             "title": "SpinnerPage",
             "description": "Full-page spinner using Page and PageContent.",
-            "registryDependencies": ["andre-hctulc/react-base/page", "andre-hctulc/react-base/page-content"],
+            "registryDependencies": ["andre-hctulc/react-base/page", "andre-hctulc/react-base/page-content", "spinner"],
             "files": [{ "path": "spinner-page.tsx", "type": "registry:ui" }]
         }
     ]

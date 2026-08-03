@@ -6,6 +6,9 @@
   "dependencies": [
     "class-variance-authority"
   ],
+  "registryDependencies": [
+    "andre-hctulc/react-base/variants-util"
+  ],
   "files": [
     {
       "path": "src/components/layout/page-content.tsx",

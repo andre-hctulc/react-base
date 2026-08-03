@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn.util.js";
-import type { RichAsProps } from "@/types/index.js";
-import { type FC, type ElementType } from "react";
+import { Slot } from "radix-ui";
+import { type FC, type ComponentProps } from "react";
 import { msz, sz } from "@/util/react/variants.util.js";
 
 const toolbarVariants = cva("flex min-w-0", {
@@ -62,10 +62,10 @@ const toolbarVariants = cva("flex min-w-0", {
     },
 });
 
-export type ToolbarProps<T extends ElementType = "div"> = RichAsProps<T> &
-    VariantProps<typeof toolbarVariants> & {
-        stopEventPropagation?: boolean;
-    };
+export interface ToolbarProps extends ComponentProps<"div">, VariantProps<typeof toolbarVariants> {
+    asChild?: boolean;
+    stopEventPropagation?: boolean;
+}
 
 /**
  * ### Props
@@ -73,6 +73,7 @@ export type ToolbarProps<T extends ElementType = "div"> = RichAsProps<T> &
  */
 export const Toolbar: FC<ToolbarProps> = (props) => {
     const {
+        asChild,
         direction,
         gap,
         rowGap,
@@ -104,11 +105,10 @@ export const Toolbar: FC<ToolbarProps> = (props) => {
         onClick,
         className,
         children,
-        as,
         ref,
         ...restProps
     } = props;
-    const Comp: any = as || "div";
+    const Comp: any = asChild ? Slot : "div";
 
     return (
         <Comp

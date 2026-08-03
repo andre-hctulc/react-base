@@ -52,8 +52,6 @@ const textBlockVariants = cva("", {
 
 export interface TextBlockProps extends ComponentProps<"p">, VariantProps<typeof textBlockVariants> {}
 
-export { textBlockVariants };
-
 export const TextBlock: FC<TextBlockProps> = ({
     whiteSpace,
     wordBreak,

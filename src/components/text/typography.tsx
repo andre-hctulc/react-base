@@ -1,7 +1,7 @@
-import { type ElementType } from "react";
+import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn.util.js";
-import type { RichAsProps } from "@/types/index.js";
+import { Slot } from "radix-ui";
 
 const typographyVariants = cva("", {
     variants: {
@@ -28,16 +28,16 @@ const typographyVariants = cva("", {
     },
 });
 
-export type TypographyProps<T extends ElementType = "p"> = RichAsProps<T> &
-    VariantProps<typeof typographyVariants>;
+export interface TypographyProps extends ComponentProps<"p">, VariantProps<typeof typographyVariants> {
+    asChild?: boolean;
+}
 
-export { typographyVariants };
 
 /** Text component for consistent typography styling. */
-export const Typography = <T extends ElementType = "p">(props: TypographyProps<T>) => {
-    const { textSize, center, underline, italic, lineHeight, className, children, as, ...restProps } =
+export const Typography: FC<TypographyProps> = (props) => {
+    const { textSize, center, underline, italic, lineHeight, className, children, asChild, ...restProps } =
         props as any;
-    const Comp: any = as || "p";
+    const Comp: any = asChild ? Slot : "p";
     return (
         <Comp
             className={cn(typographyVariants({ textSize, center, underline, italic, lineHeight }), className)}

@@ -7,7 +7,8 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "andre-hctulc/react-base/title"
+    "andre-hctulc/react-base/title",
+    "andre-hctulc/react-base/variants-util"
   ],
   "files": [
     {

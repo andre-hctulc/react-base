@@ -1,8 +1,8 @@
-import { type ElementType } from "react";
+import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn.util.js";
 import { msz } from "@/util/react/variants.util.js";
-import type { RichAsProps } from "@/types/index.js";
+import { Slot } from "radix-ui";
 
 const colorTextVariants = cva("", {
     variants: {
@@ -52,12 +52,12 @@ const colorTextVariants = cva("", {
     defaultVariants: { color: "info" },
 });
 
-export type ColorTextProps<T extends ElementType = "p"> = RichAsProps<T> &
-    VariantProps<typeof colorTextVariants>;
+export interface ColorTextProps
+    extends Omit<ComponentProps<"p">, "color">, VariantProps<typeof colorTextVariants> {
+    asChild?: boolean;
+}
 
-export { colorTextVariants };
-
-export const ColorText = <T extends ElementType = "p">(props: ColorTextProps<T>) => {
+export const ColorText: FC<ColorTextProps> = (props) => {
     const {
         color,
         textSize,
@@ -73,10 +73,10 @@ export const ColorText = <T extends ElementType = "p">(props: ColorTextProps<T>)
         ms,
         className,
         children,
-        as,
+        asChild,
         ...restProps
     } = props;
-    const Comp: any = as || "p";
+    const Comp: any = asChild ? Slot : "p";
     return (
         <Comp
             className={cn(
@@ -90,10 +90,6 @@ export const ColorText = <T extends ElementType = "p">(props: ColorTextProps<T>)
     );
 };
 
-export const SuccessText = <T extends ElementType = "p">(props: ColorTextProps<T>) => {
-    return <ColorText<T> color="success" {...props} />;
-};
+export const SuccessText: FC<ColorTextProps> = (props) => <ColorText color="success" {...props} />;
 
-export const ErrorText = <T extends ElementType = "p">(props: ColorTextProps<T>) => {
-    return <ColorText<T> color="error" {...props} />;
-};
+export const ErrorText: FC<ColorTextProps> = (props) => <ColorText color="error" {...props} />;

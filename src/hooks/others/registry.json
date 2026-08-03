@@ -9,13 +9,6 @@
             "files": [{ "path": "use-breakpoints.ts", "type": "registry:hook" }]
         },
         {
-            "name": "use-choices",
-            "type": "registry:hook",
-            "title": "useChoices",
-            "description": "Multi-select state management.",
-            "files": [{ "path": "use-choices.ts", "type": "registry:hook" }]
-        },
-        {
             "name": "use-context-x",
             "type": "registry:hook",
             "title": "useContextX",

@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import type { Falsy } from "@/types/index.js";
+
+type Falsy = false | 0 | "" | null | undefined;
 
 export function useElementById(id: string | Falsy, deps?: React.DependencyList) {
     const [element, setElement] = React.useState<HTMLElement | null>(null);

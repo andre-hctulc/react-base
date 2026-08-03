@@ -2,20 +2,20 @@
 
 import { useCallback, useMemo, useState, type CSSProperties, type ElementType, type Ref } from "react";
 import type { InputLikeProps } from "./types.js";
-import type { ASProps } from "@/types/index.js";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
 import { cn as twMerge } from "@/lib/cn.util.js";
+import { Slot } from "radix-ui";
 
 type InputListInputProps<V = string> = Pick<
     InputLikeProps<V>,
     "readOnly" | "disabled" | "name" | "defaultValue"
 >;
 
-export interface InputListProps<T = string, A extends ElementType = "div">
-    extends InputLikeProps<T[]>, ASProps<A> {
+export interface InputListProps<T = string, A extends ElementType = "div"> extends InputLikeProps<T[]> {
     className?: string;
     style?: CSSProperties;
     ref?: Ref<any>;
+    asChild?: boolean;
     /**
      * Passed to {@link renderInput} as default value for the input
      */
@@ -61,7 +61,7 @@ export const InputList = <T = string, A extends ElementType = "div">({
     renderValues,
     addIcon,
     style,
-    as,
+    asChild,
     onChange,
     value,
     reverse,
@@ -77,7 +77,7 @@ export const InputList = <T = string, A extends ElementType = "div">({
     const compareRef = useRefOf(compareValues || compare);
     const onChangeRef = useRefOf(onChange);
     const [values, setValues] = useState<T[]>(value || defaultValue || []);
-    const Comp = as || "div";
+    const Comp: any = asChild ? Slot : "div";
     const [candidate, setCandidate] = useState<T>();
     const change = (mutator: ((currentValues: T[]) => T[]) | T[]) => {
         setValues(mutator);

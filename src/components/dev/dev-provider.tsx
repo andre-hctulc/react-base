@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import type { ChildrenProps } from "@/types/index.js";
+import React, { type ReactNode } from "react";
 
 interface DevContext {
     /** @default process.env.NODE_ENV === "development" */
@@ -24,8 +23,9 @@ export function useDev() {
     return ctx;
 }
 
-interface DevProviderProps extends ChildrenProps {
+interface DevProviderProps {
     devMode?: boolean;
+    children?: ReactNode;
 }
 
 /**

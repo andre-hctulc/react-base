@@ -9,12 +9,13 @@ import {
     type FC,
     type ReactElement,
     type ReactNode,
+    type Ref,
 } from "react";
-import type { RefProps } from "@/types/index.js";
 import { useJSForm } from "./js-form-context.js";
 import { Field, FieldDescription, FieldError, FieldLabel, FieldTitle } from "@/ui/field.js";
 
-export type FormControlProps = RefProps<HTMLDivElement> & {
+export type FormControlProps = {
+    ref?: Ref<HTMLDivElement>;
     className?: string;
     style?: CSSProperties;
     /**

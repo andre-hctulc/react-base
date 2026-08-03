@@ -1,8 +1,8 @@
 import { cn } from "@/lib/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz } from "@/util/react/variants.util.js";
-import type { ElementType } from "react";
-import type { RichAsProps } from "@/types/index.js";
+import { type FC, type ComponentProps } from "react";
+import { Slot } from "radix-ui";
 
 const spacerVariants = cva("flex", {
     variants: {
@@ -22,11 +22,13 @@ const spacerVariants = cva("flex", {
     defaultVariants: { variant: "row", gap: "md" },
 });
 
-export type SpacerProps<T extends ElementType = "div"> = RichAsProps<T> & VariantProps<typeof spacerVariants>;
+export interface SpacerProps extends ComponentProps<"div">, VariantProps<typeof spacerVariants> {
+    asChild?: boolean;
+}
 
-export const Spacer = <T extends ElementType = "div">(props: SpacerProps<T>) => {
-    const { variant, wrap, gap, rowGap, colGap, className, as, ...restProps } = props as any;
-    const Comp: any = as || "div";
+export const Spacer: FC<SpacerProps> = (props) => {
+    const { variant, wrap, gap, rowGap, colGap, className, asChild, ...restProps } = props;
+    const Comp: any = asChild ? Slot : "div";
     return (
         <Comp
             className={cn(spacerVariants({ variant, wrap, gap, rowGap, colGap }), className)}

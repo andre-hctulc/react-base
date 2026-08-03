@@ -1,8 +1,8 @@
-import { type ElementType } from "react";
+import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn.util.js";
 import { msz } from "@/util/react/variants.util.js";
-import type { RichAsProps } from "@/types/index.js";
+import { Slot } from "radix-ui";
 import { Icon, type IconLike, type IconProps } from "@/components/icons/icon.js";
 
 const titleVariants = cva("", {
@@ -43,15 +43,13 @@ const titleVariants = cva("", {
     defaultVariants: { variant: "h1", bold: false },
 });
 
-export type TitleProps<T extends ElementType = "h1"> = RichAsProps<T> &
-    VariantProps<typeof titleVariants> & {
-        icon?: IconLike;
-        iconProps?: IconProps;
-    };
+export interface TitleProps extends ComponentProps<"h1">, VariantProps<typeof titleVariants> {
+    asChild?: boolean;
+    icon?: IconLike;
+    iconProps?: IconProps;
+}
 
-export { titleVariants };
-
-export const Title = <T extends ElementType = "h1">(props: TitleProps<T>) => {
+export const Title: FC<TitleProps> = (props) => {
     const {
         variant,
         bold,
@@ -71,10 +69,10 @@ export const Title = <T extends ElementType = "h1">(props: TitleProps<T>) => {
         ms,
         className,
         children,
-        as,
+        asChild,
         ...restProps
-    } = props as any;
-    const Comp: any = as || variant;
+    } = props;
+    const Comp: any = asChild ? Slot : (variant as string);
 
     return (
         <Comp

@@ -1,5 +1,4 @@
-import type { ComponentProps, CSSProperties, FC, ReactNode } from "react";
-import type { LinkComponent, LinkProps } from "@/types/index.js";
+import type { ComponentProps, ComponentType, CSSProperties, FC, ReactNode } from "react";
 import { Subtitle } from "@/components/text/subtitle.js";
 import { Icon } from "@/components/icons/icon.js";
 import { cn } from "@/lib/cn.util.js";
@@ -23,8 +22,8 @@ interface ComponentsProps {
     textProps?: ComponentProps<"p">;
     secondaryTextProps?: ComponentProps<"p">;
     iconProps?: ComponentProps<typeof Icon>;
-    LinkComponent?: LinkComponent;
-    linkProps?: LinkProps;
+    LinkComponent?: ComponentType<ComponentProps<"a">>;
+    linkProps?: ComponentProps<"a">;
 }
 
 export interface ChecklistItem extends ComponentsProps {

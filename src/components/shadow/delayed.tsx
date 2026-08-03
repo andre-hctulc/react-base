@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import type { ChildrenProps } from "@/types/index.js";
 
-interface DelayedProps extends ChildrenProps {
+interface DelayedProps {
     delay: number;
     in?: boolean;
+    children?: ReactNode;
     renderDelay?: ReactNode;
 }
 

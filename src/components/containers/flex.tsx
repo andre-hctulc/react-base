@@ -1,7 +1,7 @@
-import type { ElementType } from "react";
+import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn.util.js";
-import type { RichAsProps } from "@/types/index.js";
+import { Slot } from "radix-ui";
 
 const flexVariants = cva("flex", {
     variants: {
@@ -96,9 +96,11 @@ const flexVariants = cva("flex", {
     },
 });
 
-export type FlexProps<T extends ElementType = "div"> = RichAsProps<T> & VariantProps<typeof flexVariants>;
+export interface FlexProps extends ComponentProps<"div">, VariantProps<typeof flexVariants> {
+    asChild?: boolean;
+}
 
-export const Flex = <T extends ElementType = "div">(props: FlexProps<T>) => {
+export const Flex: FC<FlexProps> = (props) => {
     const {
         direction,
         alignItems,
@@ -114,10 +116,10 @@ export const Flex = <T extends ElementType = "div">(props: FlexProps<T>) => {
         minWidth,
         className,
         children,
-        as,
+        asChild,
         ...restProps
     } = props;
-    const Comp: any = as || "div";
+    const Comp: any = asChild ? Slot : "div";
 
     return (
         <Comp

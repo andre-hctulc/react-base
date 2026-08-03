@@ -6,6 +6,11 @@
             "type": "registry:ui",
             "title": "Stat",
             "description": "Stat card with label, value and trend display.",
+            "registryDependencies": [
+                "skeleton",
+                "andre-hctulc/react-base/icon",
+                "andre-hctulc/react-base/use-ref-of"
+            ],
             "files": [{ "path": "stat.tsx", "type": "registry:ui" }]
         }
     ]

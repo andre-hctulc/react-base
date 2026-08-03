@@ -5,7 +5,8 @@
   "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
   "registryDependencies": [
     "andre-hctulc/react-base/icon",
-    "andre-hctulc/react-base/clipboard-icon-button"
+    "andre-hctulc/react-base/clipboard-icon-button",
+    "andre-hctulc/react-base/use-as-set"
   ],
   "files": [
     {
