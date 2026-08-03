@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState, type CSSProperties, type ElementType, type Ref } from "react";
 import type { InputLikeProps } from "./types.js";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
-import { cn as twMerge } from "@/util/cn.util.js";
+import { cn as twMerge } from "@/lib/utils.js";
 import { Slot } from "radix-ui";
 
 type InputListInputProps<V = string> = Pick<

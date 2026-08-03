@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC, ReactNode, ComponentProps } from "react";
-import { cn } from "@/util/cn.util.js";
+import { cn } from "@/lib/utils.js";
 import { Icon } from "@/components/icons/icon.js";
 import { useAsSet } from "@/hooks/iterables/use-as-set.js";
 import { ClipboardIconButton } from "@/components/input/clipboard-icon-button.js";

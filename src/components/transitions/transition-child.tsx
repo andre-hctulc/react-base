@@ -5,7 +5,7 @@ import type { TransitionClasses, TransitionEvents } from "./transition.js";
 import { cloneElement, useContext } from "react";
 import { TransitionContext } from "./transition-context.js";
 import { useCssTransition } from "@/hooks/others/use-css-transition.js";
-import { cn as twMerge } from "@/util/cn.util.js";
+import { cn as twMerge } from "@/lib/utils.js";
 
 interface TransitionChildProps extends TransitionClasses, TransitionEvents {
     children: React.ReactElement | ((ref: React.RefObject<HTMLElement | null>) => React.ReactElement);

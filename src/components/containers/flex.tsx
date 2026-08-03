@@ -1,6 +1,6 @@
 import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/util/cn.util.js";
+import { cn } from "@/lib/utils.js";
 import { Slot } from "radix-ui";
 
 const flexVariants = cva("flex", {

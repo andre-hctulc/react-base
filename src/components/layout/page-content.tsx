@@ -1,7 +1,7 @@
 import { type FC, type ComponentProps } from "react";
-import { cn } from "@/util/cn.util.js";
+import { cn } from "@/lib/utils.js";
 import { cva, type VariantProps } from "class-variance-authority";
-import { sz } from "@/util/react/variants.util.js";
+import { sz } from "@/lib/react/variants.util.js";
 
 const pageContentVariants = cva("max-w-full box-border", {
     variants: {

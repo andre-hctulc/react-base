@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, type DragEventHandler, type FC, type ReactNode, type Ref } from "react";
-import { cn as twMerge } from "@/util/cn.util.js";
+import { cn as twMerge } from "@/lib/utils.js";
 
 export interface DraggableProps {
     children?: ReactNode;

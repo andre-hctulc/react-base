@@ -1,5 +1,5 @@
 import { type FC, type ComponentProps } from "react";
-import { cn } from "@/util/cn.util.js";
+import { cn } from "@/lib/utils.js";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const pageVariants = cva("box-border w-full min-h-0", {

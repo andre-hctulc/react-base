@@ -83,7 +83,7 @@
         }
     ],
     "include": [
-        "src/util/registry.json",
+        "src/lib/registry.json",
         "src/types/registry.json",
         "src/hooks/registry.json",
         "src/components/registry.json"

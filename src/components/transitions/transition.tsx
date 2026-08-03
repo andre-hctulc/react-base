@@ -10,7 +10,7 @@ import {
     Children,
 } from "react";
 import { TransitionChild } from "./transition-child.js";
-import { cn as twMerge } from "@/util/cn.util.js";
+import { cn as twMerge } from "@/lib/utils.js";
 import { TransitionContext } from "./transition-context.js";
 import { useCssTransition } from "@/hooks/others/use-css-transition.js";
 

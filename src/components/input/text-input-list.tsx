@@ -3,7 +3,7 @@
 import { useRef, useState, type ComponentProps, type FC, type Ref, type RefObject } from "react";
 import { InputList } from "./input-list.js";
 import type { InputLikeProps } from "./types.js";
-import { cn } from "@/util/cn.util.js";
+import { cn } from "@/lib/utils.js";
 import { LucidePlus, LucideX } from "lucide-react";
 import { Button } from "@/ui/button.js";
 
