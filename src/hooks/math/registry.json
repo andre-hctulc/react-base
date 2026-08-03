@@ -10,7 +10,7 @@
                 {
                     "path": "use-max.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/math/use-max.ts"
+                    "target": "@hooks/rb/math/use-max.ts"
                 }
             ]
         },
@@ -23,7 +23,7 @@
                 {
                     "path": "use-min.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/math/use-min.ts"
+                    "target": "@hooks/rb/math/use-min.ts"
                 }
             ]
         }

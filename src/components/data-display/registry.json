@@ -10,7 +10,7 @@
                 {
                     "path": "dot.tsx",
                     "type": "registry:ui",
-                    "target": "@components/data-display/dot.tsx"
+                    "target": "@components/rb/data-display/dot.tsx"
                 }
             ]
         },
@@ -28,7 +28,7 @@
                 {
                     "path": "summary.tsx",
                     "type": "registry:ui",
-                    "target": "@components/data-display/summary.tsx"
+                    "target": "@components/rb/data-display/summary.tsx"
                 }
             ]
         }

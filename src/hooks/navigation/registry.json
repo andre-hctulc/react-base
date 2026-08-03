@@ -10,7 +10,7 @@
                 {
                     "path": "use-hash.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/navigation/use-hash.ts"
+                    "target": "@hooks/rb/navigation/use-hash.ts"
                 }
             ]
         }

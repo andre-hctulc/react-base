@@ -10,7 +10,7 @@
                 {
                     "path": "use-blob-url.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/document/use-blob-url.ts"
+                    "target": "@hooks/rb/document/use-blob-url.ts"
                 }
             ]
         },
@@ -23,7 +23,7 @@
                 {
                     "path": "use-element-by-id.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/document/use-element-by-id.ts"
+                    "target": "@hooks/rb/document/use-element-by-id.ts"
                 }
             ]
         },
@@ -36,7 +36,7 @@
                 {
                     "path": "use-key-down-observer.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/document/use-key-down-observer.ts"
+                    "target": "@hooks/rb/document/use-key-down-observer.ts"
                 }
             ]
         },
@@ -49,7 +49,7 @@
                 {
                     "path": "use-resize-observer.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/document/use-resize-observer.ts"
+                    "target": "@hooks/rb/document/use-resize-observer.ts"
                 }
             ]
         },
@@ -62,7 +62,7 @@
                 {
                     "path": "use-screen-size.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/document/use-screen-size.ts"
+                    "target": "@hooks/rb/document/use-screen-size.ts"
                 }
             ]
         },
@@ -75,7 +75,7 @@
                 {
                     "path": "use-svg-url.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/document/use-svg-url.ts"
+                    "target": "@hooks/rb/document/use-svg-url.ts"
                 }
             ]
         },
@@ -88,7 +88,7 @@
                 {
                     "path": "use-window-event.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/document/use-window-event.ts"
+                    "target": "@hooks/rb/document/use-window-event.ts"
                 }
             ]
         }

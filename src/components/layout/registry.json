@@ -6,14 +6,12 @@
             "type": "registry:ui",
             "title": "Root",
             "description": "Flex root layout container with direction, overflow and background variants.",
-            "dependencies": [
-                "class-variance-authority"
-            ],
+            "dependencies": ["class-variance-authority"],
             "files": [
                 {
                     "path": "root.tsx",
                     "type": "registry:ui",
-                    "target": "@components/layout/root.tsx"
+                    "target": "@components/rb/layout/root.tsx"
                 }
             ]
         },
@@ -22,14 +20,12 @@
             "type": "registry:ui",
             "title": "Overlay",
             "description": "Fixed or absolute overlay with blur/opacity background variants and optional portal.",
-            "dependencies": [
-                "class-variance-authority"
-            ],
+            "dependencies": ["class-variance-authority"],
             "files": [
                 {
                     "path": "overlay.tsx",
                     "type": "registry:ui",
-                    "target": "@components/layout/overlay.tsx"
+                    "target": "@components/rb/layout/overlay.tsx"
                 }
             ]
         },
@@ -38,14 +34,12 @@
             "type": "registry:ui",
             "title": "Page",
             "description": "Page container with constrained width, flex and background variants.",
-            "dependencies": [
-                "class-variance-authority"
-            ],
+            "dependencies": ["class-variance-authority"],
             "files": [
                 {
                     "path": "page.tsx",
                     "type": "registry:ui",
-                    "target": "@components/layout/page.tsx"
+                    "target": "@components/rb/layout/page.tsx"
                 }
             ]
         },
@@ -54,17 +48,13 @@
             "type": "registry:ui",
             "title": "PageContent",
             "description": "Main content area with padding, size and flex variants.",
-            "dependencies": [
-                "class-variance-authority"
-            ],
-            "registryDependencies": [
-                "andre-hctulc/react-base/variants-util"
-            ],
+            "dependencies": ["class-variance-authority"],
+            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
             "files": [
                 {
                     "path": "page-content.tsx",
                     "type": "registry:ui",
-                    "target": "@components/layout/page-content.tsx"
+                    "target": "@components/rb/layout/page-content.tsx"
                 }
             ]
         },
@@ -73,9 +63,7 @@
             "type": "registry:ui",
             "title": "PageHeader",
             "description": "Page header with title, badges, actions slots, padding and margin variants.",
-            "dependencies": [
-                "class-variance-authority"
-            ],
+            "dependencies": ["class-variance-authority"],
             "registryDependencies": [
                 "andre-hctulc/react-base/title",
                 "andre-hctulc/react-base/variants-util"
@@ -84,7 +72,7 @@
                 {
                     "path": "page-header.tsx",
                     "type": "registry:ui",
-                    "target": "@components/layout/page-header.tsx"
+                    "target": "@components/rb/layout/page-header.tsx"
                 }
             ]
         },
@@ -102,7 +90,7 @@
                 {
                     "path": "spinner-page.tsx",
                     "type": "registry:ui",
-                    "target": "@components/layout/spinner-page.tsx"
+                    "target": "@components/rb/layout/spinner-page.tsx"
                 }
             ]
         }

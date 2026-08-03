@@ -10,7 +10,7 @@
                 {
                     "path": "use-breakpoints.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-breakpoints.ts"
+                    "target": "@hooks/rb/others/use-breakpoints.ts"
                 }
             ]
         },
@@ -23,7 +23,7 @@
                 {
                     "path": "use-context-x.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-context-x.ts"
+                    "target": "@hooks/rb/others/use-context-x.ts"
                 }
             ]
         },
@@ -36,7 +36,7 @@
                 {
                     "path": "use-css-transition.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-css-transition.ts"
+                    "target": "@hooks/rb/others/use-css-transition.ts"
                 }
             ]
         },
@@ -49,7 +49,7 @@
                 {
                     "path": "use-delayed-value.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-delayed-value.ts"
+                    "target": "@hooks/rb/others/use-delayed-value.ts"
                 }
             ]
         },
@@ -62,7 +62,7 @@
                 {
                     "path": "use-interval.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-interval.ts"
+                    "target": "@hooks/rb/others/use-interval.ts"
                 }
             ]
         },
@@ -75,7 +75,7 @@
                 {
                     "path": "use-is-hydrated.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-is-hydrated.ts"
+                    "target": "@hooks/rb/others/use-is-hydrated.ts"
                 }
             ]
         },
@@ -88,7 +88,7 @@
                 {
                     "path": "use-persistent-state.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-persistent-state.ts"
+                    "target": "@hooks/rb/others/use-persistent-state.ts"
                 }
             ]
         },
@@ -101,7 +101,7 @@
                 {
                     "path": "use-promise.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-promise.ts"
+                    "target": "@hooks/rb/others/use-promise.ts"
                 }
             ]
         },
@@ -114,7 +114,7 @@
                 {
                     "path": "use-ref-of.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-ref-of.ts"
+                    "target": "@hooks/rb/others/use-ref-of.ts"
                 }
             ]
         },
@@ -127,7 +127,7 @@
                 {
                     "path": "use-timeout.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/others/use-timeout.ts"
+                    "target": "@hooks/rb/others/use-timeout.ts"
                 }
             ]
         }

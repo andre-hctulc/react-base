@@ -6,14 +6,12 @@
             "type": "registry:ui",
             "title": "Flex",
             "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
-            "dependencies": [
-                "class-variance-authority"
-            ],
+            "dependencies": ["class-variance-authority"],
             "files": [
                 {
                     "path": "flex.tsx",
                     "type": "registry:ui",
-                    "target": "@components/containers/flex.tsx"
+                    "target": "@components/rb/containers/flex.tsx"
                 }
             ]
         },
@@ -22,18 +20,13 @@
             "type": "registry:ui",
             "title": "Toolbar",
             "description": "Flex toolbar with spacing, padding, margin, scroll and alignment variants.",
-            "dependencies": [
-                "class-variance-authority",
-                "radix-ui"
-            ],
-            "registryDependencies": [
-                "andre-hctulc/react-base/variants-util"
-            ],
+            "dependencies": ["class-variance-authority", "radix-ui"],
+            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
             "files": [
                 {
                     "path": "toolbar.tsx",
                     "type": "registry:ui",
-                    "target": "@components/containers/toolbar.tsx"
+                    "target": "@components/rb/containers/toolbar.tsx"
                 }
             ]
         },
@@ -46,7 +39,7 @@
                 {
                     "path": "center.tsx",
                     "type": "registry:ui",
-                    "target": "@components/containers/center.tsx"
+                    "target": "@components/rb/containers/center.tsx"
                 }
             ]
         },
@@ -55,14 +48,12 @@
             "type": "registry:ui",
             "title": "Spacer",
             "description": "Polymorphic flex gap container.",
-            "registryDependencies": [
-                "andre-hctulc/react-base/variants-util"
-            ],
+            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
             "files": [
                 {
                     "path": "spacer.tsx",
                     "type": "registry:ui",
-                    "target": "@components/containers/spacer.tsx"
+                    "target": "@components/rb/containers/spacer.tsx"
                 }
             ]
         }

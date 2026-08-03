@@ -15,7 +15,7 @@
                 {
                     "path": "stat.tsx",
                     "type": "registry:ui",
-                    "target": "@components/stat/stat.tsx"
+                    "target": "@components/rb/stat/stat.tsx"
                 }
             ]
         }

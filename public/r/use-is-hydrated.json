@@ -8,7 +8,7 @@
       "path": "src/hooks/others/use-is-hydrated.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\n/**\n * Checks if the component is hydrated.\n */\nexport function useIsHydrated() {\n    const [hydrated, setHydrated] = React.useState(false);\n    React.useEffect(() => {\n        setHydrated(true);\n    }, []);\n    return hydrated;\n}\n",
       "type": "registry:hook",
-      "target": "@hooks/others/use-is-hydrated.ts"
+      "target": "@hooks/rb/others/use-is-hydrated.ts"
     }
   ],
   "type": "registry:hook"

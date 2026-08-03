@@ -10,7 +10,7 @@
                 {
                     "path": "use-array.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-array.ts"
+                    "target": "@hooks/rb/iterables/use-array.ts"
                 }
             ]
         },
@@ -23,7 +23,7 @@
                 {
                     "path": "use-as-array.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-as-array.ts"
+                    "target": "@hooks/rb/iterables/use-as-array.ts"
                 }
             ]
         },
@@ -36,7 +36,7 @@
                 {
                     "path": "use-as-map.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-as-map.ts"
+                    "target": "@hooks/rb/iterables/use-as-map.ts"
                 }
             ]
         },
@@ -49,7 +49,7 @@
                 {
                     "path": "use-as-set.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-as-set.ts"
+                    "target": "@hooks/rb/iterables/use-as-set.ts"
                 }
             ]
         },
@@ -62,7 +62,7 @@
                 {
                     "path": "use-filter.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-filter.ts"
+                    "target": "@hooks/rb/iterables/use-filter.ts"
                 }
             ]
         },
@@ -75,7 +75,7 @@
                 {
                     "path": "use-map-array.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-map-array.ts"
+                    "target": "@hooks/rb/iterables/use-map-array.ts"
                 }
             ]
         },
@@ -88,7 +88,7 @@
                 {
                     "path": "use-map.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-map.ts"
+                    "target": "@hooks/rb/iterables/use-map.ts"
                 }
             ]
         },
@@ -101,7 +101,7 @@
                 {
                     "path": "use-range.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-range.ts"
+                    "target": "@hooks/rb/iterables/use-range.ts"
                 }
             ]
         },
@@ -114,7 +114,7 @@
                 {
                     "path": "use-set.ts",
                     "type": "registry:hook",
-                    "target": "@hooks/iterables/use-set.ts"
+                    "target": "@hooks/rb/iterables/use-set.ts"
                 }
             ]
         }

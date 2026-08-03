@@ -8,7 +8,7 @@
       "path": "src/hooks/math/use-max.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useMax(...values: number[]): number {\n    const m = React.useMemo(() => Math.max(...values), values);\n    return m;\n}\n",
       "type": "registry:hook",
-      "target": "@hooks/math/use-max.ts"
+      "target": "@hooks/rb/math/use-max.ts"
     }
   ],
   "type": "registry:hook"

@@ -37,7 +37,7 @@
         {
           "path": "src/hooks/document/use-blob-url.ts",
           "type": "registry:hook",
-          "target": "@hooks/document/use-blob-url.ts"
+          "target": "@hooks/rb/document/use-blob-url.ts"
         }
       ],
       "type": "registry:hook"
@@ -50,7 +50,7 @@
         {
           "path": "src/hooks/document/use-element-by-id.ts",
           "type": "registry:hook",
-          "target": "@hooks/document/use-element-by-id.ts"
+          "target": "@hooks/rb/document/use-element-by-id.ts"
         }
       ],
       "type": "registry:hook"
@@ -63,7 +63,7 @@
         {
           "path": "src/hooks/document/use-key-down-observer.ts",
           "type": "registry:hook",
-          "target": "@hooks/document/use-key-down-observer.ts"
+          "target": "@hooks/rb/document/use-key-down-observer.ts"
         }
       ],
       "type": "registry:hook"
@@ -76,7 +76,7 @@
         {
           "path": "src/hooks/document/use-resize-observer.ts",
           "type": "registry:hook",
-          "target": "@hooks/document/use-resize-observer.ts"
+          "target": "@hooks/rb/document/use-resize-observer.ts"
         }
       ],
       "type": "registry:hook"
@@ -89,7 +89,7 @@
         {
           "path": "src/hooks/document/use-screen-size.ts",
           "type": "registry:hook",
-          "target": "@hooks/document/use-screen-size.ts"
+          "target": "@hooks/rb/document/use-screen-size.ts"
         }
       ],
       "type": "registry:hook"
@@ -102,7 +102,7 @@
         {
           "path": "src/hooks/document/use-svg-url.ts",
           "type": "registry:hook",
-          "target": "@hooks/document/use-svg-url.ts"
+          "target": "@hooks/rb/document/use-svg-url.ts"
         }
       ],
       "type": "registry:hook"
@@ -115,7 +115,7 @@
         {
           "path": "src/hooks/document/use-window-event.ts",
           "type": "registry:hook",
-          "target": "@hooks/document/use-window-event.ts"
+          "target": "@hooks/rb/document/use-window-event.ts"
         }
       ],
       "type": "registry:hook"
@@ -128,7 +128,7 @@
         {
           "path": "src/hooks/iterables/use-array.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-array.ts"
+          "target": "@hooks/rb/iterables/use-array.ts"
         }
       ],
       "type": "registry:hook"
@@ -141,7 +141,7 @@
         {
           "path": "src/hooks/iterables/use-as-array.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-as-array.ts"
+          "target": "@hooks/rb/iterables/use-as-array.ts"
         }
       ],
       "type": "registry:hook"
@@ -154,7 +154,7 @@
         {
           "path": "src/hooks/iterables/use-as-map.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-as-map.ts"
+          "target": "@hooks/rb/iterables/use-as-map.ts"
         }
       ],
       "type": "registry:hook"
@@ -167,7 +167,7 @@
         {
           "path": "src/hooks/iterables/use-as-set.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-as-set.ts"
+          "target": "@hooks/rb/iterables/use-as-set.ts"
         }
       ],
       "type": "registry:hook"
@@ -180,7 +180,7 @@
         {
           "path": "src/hooks/iterables/use-filter.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-filter.ts"
+          "target": "@hooks/rb/iterables/use-filter.ts"
         }
       ],
       "type": "registry:hook"
@@ -193,7 +193,7 @@
         {
           "path": "src/hooks/iterables/use-map-array.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-map-array.ts"
+          "target": "@hooks/rb/iterables/use-map-array.ts"
         }
       ],
       "type": "registry:hook"
@@ -206,7 +206,7 @@
         {
           "path": "src/hooks/iterables/use-map.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-map.ts"
+          "target": "@hooks/rb/iterables/use-map.ts"
         }
       ],
       "type": "registry:hook"
@@ -219,7 +219,7 @@
         {
           "path": "src/hooks/iterables/use-range.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-range.ts"
+          "target": "@hooks/rb/iterables/use-range.ts"
         }
       ],
       "type": "registry:hook"
@@ -232,7 +232,7 @@
         {
           "path": "src/hooks/iterables/use-set.ts",
           "type": "registry:hook",
-          "target": "@hooks/iterables/use-set.ts"
+          "target": "@hooks/rb/iterables/use-set.ts"
         }
       ],
       "type": "registry:hook"
@@ -245,7 +245,7 @@
         {
           "path": "src/hooks/math/use-max.ts",
           "type": "registry:hook",
-          "target": "@hooks/math/use-max.ts"
+          "target": "@hooks/rb/math/use-max.ts"
         }
       ],
       "type": "registry:hook"
@@ -258,7 +258,7 @@
         {
           "path": "src/hooks/math/use-min.ts",
           "type": "registry:hook",
-          "target": "@hooks/math/use-min.ts"
+          "target": "@hooks/rb/math/use-min.ts"
         }
       ],
       "type": "registry:hook"
@@ -271,7 +271,7 @@
         {
           "path": "src/hooks/navigation/use-hash.ts",
           "type": "registry:hook",
-          "target": "@hooks/navigation/use-hash.ts"
+          "target": "@hooks/rb/navigation/use-hash.ts"
         }
       ],
       "type": "registry:hook"
@@ -284,7 +284,7 @@
         {
           "path": "src/hooks/others/use-breakpoints.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-breakpoints.ts"
+          "target": "@hooks/rb/others/use-breakpoints.ts"
         }
       ],
       "type": "registry:hook"
@@ -297,7 +297,7 @@
         {
           "path": "src/hooks/others/use-context-x.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-context-x.ts"
+          "target": "@hooks/rb/others/use-context-x.ts"
         }
       ],
       "type": "registry:hook"
@@ -310,7 +310,7 @@
         {
           "path": "src/hooks/others/use-css-transition.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-css-transition.ts"
+          "target": "@hooks/rb/others/use-css-transition.ts"
         }
       ],
       "type": "registry:hook"
@@ -323,7 +323,7 @@
         {
           "path": "src/hooks/others/use-delayed-value.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-delayed-value.ts"
+          "target": "@hooks/rb/others/use-delayed-value.ts"
         }
       ],
       "type": "registry:hook"
@@ -336,7 +336,7 @@
         {
           "path": "src/hooks/others/use-interval.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-interval.ts"
+          "target": "@hooks/rb/others/use-interval.ts"
         }
       ],
       "type": "registry:hook"
@@ -349,7 +349,7 @@
         {
           "path": "src/hooks/others/use-is-hydrated.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-is-hydrated.ts"
+          "target": "@hooks/rb/others/use-is-hydrated.ts"
         }
       ],
       "type": "registry:hook"
@@ -362,7 +362,7 @@
         {
           "path": "src/hooks/others/use-persistent-state.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-persistent-state.ts"
+          "target": "@hooks/rb/others/use-persistent-state.ts"
         }
       ],
       "type": "registry:hook"
@@ -375,7 +375,7 @@
         {
           "path": "src/hooks/others/use-promise.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-promise.ts"
+          "target": "@hooks/rb/others/use-promise.ts"
         }
       ],
       "type": "registry:hook"
@@ -388,7 +388,7 @@
         {
           "path": "src/hooks/others/use-ref-of.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-ref-of.ts"
+          "target": "@hooks/rb/others/use-ref-of.ts"
         }
       ],
       "type": "registry:hook"
@@ -401,7 +401,7 @@
         {
           "path": "src/hooks/others/use-timeout.ts",
           "type": "registry:hook",
-          "target": "@hooks/others/use-timeout.ts"
+          "target": "@hooks/rb/others/use-timeout.ts"
         }
       ],
       "type": "registry:hook"
@@ -418,7 +418,7 @@
         {
           "path": "src/components/icons/icon.tsx",
           "type": "registry:ui",
-          "target": "@components/icons/icon.tsx"
+          "target": "@components/rb/icons/icon.tsx"
         }
       ],
       "type": "registry:ui"
@@ -434,7 +434,7 @@
         {
           "path": "src/components/containers/flex.tsx",
           "type": "registry:ui",
-          "target": "@components/containers/flex.tsx"
+          "target": "@components/rb/containers/flex.tsx"
         }
       ],
       "type": "registry:ui"
@@ -454,7 +454,7 @@
         {
           "path": "src/components/containers/toolbar.tsx",
           "type": "registry:ui",
-          "target": "@components/containers/toolbar.tsx"
+          "target": "@components/rb/containers/toolbar.tsx"
         }
       ],
       "type": "registry:ui"
@@ -467,7 +467,7 @@
         {
           "path": "src/components/containers/center.tsx",
           "type": "registry:ui",
-          "target": "@components/containers/center.tsx"
+          "target": "@components/rb/containers/center.tsx"
         }
       ],
       "type": "registry:ui"
@@ -483,7 +483,7 @@
         {
           "path": "src/components/containers/spacer.tsx",
           "type": "registry:ui",
-          "target": "@components/containers/spacer.tsx"
+          "target": "@components/rb/containers/spacer.tsx"
         }
       ],
       "type": "registry:ui"
@@ -499,7 +499,7 @@
         {
           "path": "src/components/layout/root.tsx",
           "type": "registry:ui",
-          "target": "@components/layout/root.tsx"
+          "target": "@components/rb/layout/root.tsx"
         }
       ],
       "type": "registry:ui"
@@ -515,7 +515,7 @@
         {
           "path": "src/components/layout/overlay.tsx",
           "type": "registry:ui",
-          "target": "@components/layout/overlay.tsx"
+          "target": "@components/rb/layout/overlay.tsx"
         }
       ],
       "type": "registry:ui"
@@ -531,7 +531,7 @@
         {
           "path": "src/components/layout/page.tsx",
           "type": "registry:ui",
-          "target": "@components/layout/page.tsx"
+          "target": "@components/rb/layout/page.tsx"
         }
       ],
       "type": "registry:ui"
@@ -550,7 +550,7 @@
         {
           "path": "src/components/layout/page-content.tsx",
           "type": "registry:ui",
-          "target": "@components/layout/page-content.tsx"
+          "target": "@components/rb/layout/page-content.tsx"
         }
       ],
       "type": "registry:ui"
@@ -570,7 +570,7 @@
         {
           "path": "src/components/layout/page-header.tsx",
           "type": "registry:ui",
-          "target": "@components/layout/page-header.tsx"
+          "target": "@components/rb/layout/page-header.tsx"
         }
       ],
       "type": "registry:ui"
@@ -588,7 +588,7 @@
         {
           "path": "src/components/layout/spinner-page.tsx",
           "type": "registry:ui",
-          "target": "@components/layout/spinner-page.tsx"
+          "target": "@components/rb/layout/spinner-page.tsx"
         }
       ],
       "type": "registry:ui"
@@ -607,7 +607,7 @@
         {
           "path": "src/components/text/color-text.tsx",
           "type": "registry:ui",
-          "target": "@components/text/color-text.tsx"
+          "target": "@components/rb/text/color-text.tsx"
         }
       ],
       "type": "registry:ui"
@@ -627,7 +627,7 @@
         {
           "path": "src/components/text/title.tsx",
           "type": "registry:ui",
-          "target": "@components/text/title.tsx"
+          "target": "@components/rb/text/title.tsx"
         }
       ],
       "type": "registry:ui"
@@ -644,7 +644,7 @@
         {
           "path": "src/components/text/subtitle.tsx",
           "type": "registry:ui",
-          "target": "@components/text/subtitle.tsx"
+          "target": "@components/rb/text/subtitle.tsx"
         }
       ],
       "type": "registry:ui"
@@ -657,7 +657,7 @@
         {
           "path": "src/components/text/text-block.tsx",
           "type": "registry:ui",
-          "target": "@components/text/text-block.tsx"
+          "target": "@components/rb/text/text-block.tsx"
         }
       ],
       "type": "registry:ui"
@@ -670,7 +670,7 @@
         {
           "path": "src/components/text/typography.tsx",
           "type": "registry:ui",
-          "target": "@components/text/typography.tsx"
+          "target": "@components/rb/text/typography.tsx"
         }
       ],
       "type": "registry:ui"
@@ -686,17 +686,17 @@
         {
           "path": "src/components/transitions/transition.tsx",
           "type": "registry:ui",
-          "target": "@components/transitions/transition.tsx"
+          "target": "@components/rb/transitions/transition.tsx"
         },
         {
           "path": "src/components/transitions/transition-context.ts",
           "type": "registry:lib",
-          "target": "@components/transitions/transition-context.ts"
+          "target": "@components/rb/transitions/transition-context.ts"
         },
         {
           "path": "src/components/transitions/transition-child.tsx",
           "type": "registry:ui",
-          "target": "@components/transitions/transition-child.tsx"
+          "target": "@components/rb/transitions/transition-child.tsx"
         }
       ],
       "type": "registry:ui"
@@ -712,7 +712,7 @@
         {
           "path": "src/components/transitions/fade.tsx",
           "type": "registry:ui",
-          "target": "@components/transitions/fade.tsx"
+          "target": "@components/rb/transitions/fade.tsx"
         }
       ],
       "type": "registry:ui"
@@ -728,7 +728,7 @@
         {
           "path": "src/components/transitions/collapse.tsx",
           "type": "registry:ui",
-          "target": "@components/transitions/collapse.tsx"
+          "target": "@components/rb/transitions/collapse.tsx"
         }
       ],
       "type": "registry:ui"
@@ -741,7 +741,7 @@
         {
           "path": "src/components/data-display/dot.tsx",
           "type": "registry:ui",
-          "target": "@components/data-display/dot.tsx"
+          "target": "@components/rb/data-display/dot.tsx"
         }
       ],
       "type": "registry:ui"
@@ -759,7 +759,7 @@
         {
           "path": "src/components/data-display/summary.tsx",
           "type": "registry:ui",
-          "target": "@components/data-display/summary.tsx"
+          "target": "@components/rb/data-display/summary.tsx"
         }
       ],
       "type": "registry:ui"
@@ -778,7 +778,7 @@
         {
           "path": "src/components/input/clipboard-icon-button.tsx",
           "type": "registry:ui",
-          "target": "@components/input/clipboard-icon-button.tsx"
+          "target": "@components/rb/input/clipboard-icon-button.tsx"
         }
       ],
       "type": "registry:ui"
@@ -794,17 +794,17 @@
         {
           "path": "src/components/input/js-form-types.ts",
           "type": "registry:lib",
-          "target": "@components/input/js-form-types.ts"
+          "target": "@components/rb/input/js-form-types.ts"
         },
         {
           "path": "src/components/input/js-form-helpers.ts",
           "type": "registry:lib",
-          "target": "@components/input/js-form-helpers.ts"
+          "target": "@components/rb/input/js-form-helpers.ts"
         },
         {
           "path": "src/components/input/js-form-context.ts",
           "type": "registry:lib",
-          "target": "@components/input/js-form-context.ts"
+          "target": "@components/rb/input/js-form-context.ts"
         }
       ],
       "type": "registry:hook"
@@ -821,7 +821,7 @@
         {
           "path": "src/components/input/form-control.tsx",
           "type": "registry:ui",
-          "target": "@components/input/form-control.tsx"
+          "target": "@components/rb/input/form-control.tsx"
         }
       ],
       "type": "registry:ui"
@@ -838,12 +838,12 @@
         {
           "path": "src/components/input/js-form.tsx",
           "type": "registry:ui",
-          "target": "@components/input/js-form.tsx"
+          "target": "@components/rb/input/js-form.tsx"
         },
         {
           "path": "src/components/input/flex-form.tsx",
           "type": "registry:ui",
-          "target": "@components/input/flex-form.tsx"
+          "target": "@components/rb/input/flex-form.tsx"
         }
       ],
       "type": "registry:ui"
@@ -856,7 +856,7 @@
         {
           "path": "src/components/input/editable.tsx",
           "type": "registry:ui",
-          "target": "@components/input/editable.tsx"
+          "target": "@components/rb/input/editable.tsx"
         }
       ],
       "type": "registry:ui"
@@ -874,7 +874,7 @@
         {
           "path": "src/components/stat/stat.tsx",
           "type": "registry:ui",
-          "target": "@components/stat/stat.tsx"
+          "target": "@components/rb/stat/stat.tsx"
         }
       ],
       "type": "registry:ui"
@@ -887,7 +887,7 @@
         {
           "path": "src/components/label/label-mimic.tsx",
           "type": "registry:ui",
-          "target": "@components/label/label-mimic.tsx"
+          "target": "@components/rb/label/label-mimic.tsx"
         }
       ],
       "type": "registry:ui"

@@ -10,7 +10,7 @@
                 {
                     "path": "label-mimic.tsx",
                     "type": "registry:ui",
-                    "target": "@components/label/label-mimic.tsx"
+                    "target": "@components/rb/label/label-mimic.tsx"
                 }
             ]
         }

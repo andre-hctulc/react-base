@@ -6,15 +6,12 @@
             "type": "registry:ui",
             "title": "Icon",
             "description": "Polymorphic icon wrapper with size, color, inline and noShrink variants. Accepts LucideIcon FC, SVG element, or ReactNode.",
-            "dependencies": [
-                "class-variance-authority",
-                "lucide-react"
-            ],
+            "dependencies": ["class-variance-authority", "lucide-react"],
             "files": [
                 {
                     "path": "icon.tsx",
                     "type": "registry:ui",
-                    "target": "@components/icons/icon.tsx"
+                    "target": "@components/rb/icons/icon.tsx"
                 }
             ]
         }

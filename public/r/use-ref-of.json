@@ -8,7 +8,7 @@
       "path": "src/hooks/others/use-ref-of.ts",
       "content": "\"use client\";\n\nimport { useEffect, useRef, type RefObject } from \"react\";\n\n/**\n * Returns a ref that always points to the latest value\n */\nexport function useRefOf<T>(value: T): RefObject<T> {\n    const ref = useRef<T>(value);\n    useEffect(() => {\n        ref.current = value;\n    }, [value]);\n    // We cannot return the ref directly, because it would cause scope issues,\n    // which is why one would use this hook in the first place.\n    return ref;\n}\n",
       "type": "registry:hook",
-      "target": "@hooks/others/use-ref-of.ts"
+      "target": "@hooks/rb/others/use-ref-of.ts"
     }
   ],
   "type": "registry:hook"

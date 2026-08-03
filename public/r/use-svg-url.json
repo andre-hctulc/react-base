@@ -8,7 +8,7 @@
       "path": "src/hooks/document/use-svg-url.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useSvgUrl(svg: SVGElement | undefined | null) {\n    const [svgUrl, setSvgUrl] = React.useState<string | undefined>();\n\n    React.useEffect(() => {\n        if (!svg) return setSvgUrl(undefined);\n\n        const serializer = new XMLSerializer();\n\n        const xml = serializer.serializeToString(svg);\n        const blob = new Blob([xml], { type: \"image/svg+xml\" });\n        const url = URL.createObjectURL(blob);\n\n        setSvgUrl(url);\n\n        return () => {\n            URL.revokeObjectURL(url);\n        };\n    }, [svg]);\n\n    return { url: svgUrl, svg: svg || undefined };\n}\n",
       "type": "registry:hook",
-      "target": "@hooks/document/use-svg-url.ts"
+      "target": "@hooks/rb/document/use-svg-url.ts"
     }
   ],
   "type": "registry:hook"
