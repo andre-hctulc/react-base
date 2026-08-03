@@ -6,11 +6,25 @@
             "type": "registry:ui",
             "title": "Transition",
             "description": "Headless CSS class-based enter/leave transition primitive.",
-            "registryDependencies": ["andre-hctulc/react-base/use-css-transition"],
+            "registryDependencies": [
+                "andre-hctulc/react-base/use-css-transition"
+            ],
             "files": [
-                { "path": "transition.tsx", "type": "registry:ui" },
-                { "path": "transition-context.ts", "type": "registry:lib" },
-                { "path": "transition-child.tsx", "type": "registry:ui" }
+                {
+                    "path": "transition.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/transitions/transition.tsx"
+                },
+                {
+                    "path": "transition-context.ts",
+                    "type": "registry:lib",
+                    "target": "@components/transitions/transition-context.ts"
+                },
+                {
+                    "path": "transition-child.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/transitions/transition-child.tsx"
+                }
             ]
         },
         {
@@ -18,16 +32,32 @@
             "type": "registry:ui",
             "title": "Fade",
             "description": "CSS opacity fade enter/leave transition.",
-            "registryDependencies": ["andre-hctulc/react-base/transition"],
-            "files": [{ "path": "fade.tsx", "type": "registry:ui" }]
+            "registryDependencies": [
+                "andre-hctulc/react-base/transition"
+            ],
+            "files": [
+                {
+                    "path": "fade.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/transitions/fade.tsx"
+                }
+            ]
         },
         {
             "name": "collapse-transition",
             "type": "registry:ui",
             "title": "CollapseTransition",
             "description": "CSS height collapse enter/leave transition.",
-            "registryDependencies": ["andre-hctulc/react-base/transition"],
-            "files": [{ "path": "collapse.tsx", "type": "registry:ui" }]
+            "registryDependencies": [
+                "andre-hctulc/react-base/transition"
+            ],
+            "files": [
+                {
+                    "path": "collapse.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/transitions/collapse.tsx"
+                }
+            ]
         }
     ]
 }

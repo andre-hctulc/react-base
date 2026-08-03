@@ -6,20 +6,44 @@
             "type": "registry:ui",
             "title": "ClipboardIconButton",
             "description": "Icon button that copies a value to the clipboard.",
-            "dependencies": ["lucide-react"],
-            "registryDependencies": ["button"],
-            "files": [{ "path": "clipboard-icon-button.tsx", "type": "registry:ui" }]
+            "dependencies": [
+                "lucide-react"
+            ],
+            "registryDependencies": [
+                "button"
+            ],
+            "files": [
+                {
+                    "path": "clipboard-icon-button.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/input/clipboard-icon-button.tsx"
+                }
+            ]
         },
         {
             "name": "use-js-form",
             "type": "registry:hook",
             "title": "useJsForm",
             "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
-            "dependencies": ["dot-prop"],
+            "dependencies": [
+                "dot-prop"
+            ],
             "files": [
-                { "path": "js-form-types.ts", "type": "registry:lib" },
-                { "path": "js-form-helpers.ts", "type": "registry:lib" },
-                { "path": "js-form-context.ts", "type": "registry:lib" }
+                {
+                    "path": "js-form-types.ts",
+                    "type": "registry:lib",
+                    "target": "@components/input/js-form-types.ts"
+                },
+                {
+                    "path": "js-form-helpers.ts",
+                    "type": "registry:lib",
+                    "target": "@components/input/js-form-helpers.ts"
+                },
+                {
+                    "path": "js-form-context.ts",
+                    "type": "registry:lib",
+                    "target": "@components/input/js-form-context.ts"
+                }
             ]
         },
         {
@@ -27,8 +51,17 @@
             "type": "registry:ui",
             "title": "FormControl",
             "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
-            "registryDependencies": ["field", "andre-hctulc/react-base/use-js-form"],
-            "files": [{ "path": "form-control.tsx", "type": "registry:ui" }]
+            "registryDependencies": [
+                "field",
+                "andre-hctulc/react-base/use-js-form"
+            ],
+            "files": [
+                {
+                    "path": "form-control.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/input/form-control.tsx"
+                }
+            ]
         },
         {
             "name": "js-form",
@@ -40,8 +73,16 @@
                 "andre-hctulc/react-base/form-control"
             ],
             "files": [
-                { "path": "js-form.tsx", "type": "registry:ui" },
-                { "path": "flex-form.tsx", "type": "registry:ui" }
+                {
+                    "path": "js-form.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/input/js-form.tsx"
+                },
+                {
+                    "path": "flex-form.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/input/flex-form.tsx"
+                }
             ]
         },
         {
@@ -49,7 +90,13 @@
             "type": "registry:ui",
             "title": "Editable",
             "description": "Inline editable field that switches between view and edit mode.",
-            "files": [{ "path": "editable.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "editable.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/input/editable.tsx"
+                }
+            ]
         }
     ]
 }

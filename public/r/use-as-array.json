@@ -7,7 +7,8 @@
     {
       "path": "src/hooks/iterables/use-as-array.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useAsArray<T>(iterable: Iterable<T>) {\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n    const array = React.useMemo(() => Array.from(iterable), [iterable]);\n    return array;\n}\n",
-      "type": "registry:hook"
+      "type": "registry:hook",
+      "target": "@hooks/iterables/use-as-array.ts"
     }
   ],
   "type": "registry:hook"

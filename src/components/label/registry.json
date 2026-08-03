@@ -6,7 +6,13 @@
             "type": "registry:ui",
             "title": "LabelMimic",
             "description": "Span styled to look like a label — for non-input labeling contexts.",
-            "files": [{ "path": "label-mimic.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "label-mimic.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/label/label-mimic.tsx"
+                }
+            ]
         }
     ]
 }

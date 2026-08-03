@@ -6,7 +6,13 @@
             "type": "registry:ui",
             "title": "Dot",
             "description": "Small colored status dot.",
-            "files": [{ "path": "dot.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "dot.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/data-display/dot.tsx"
+                }
+            ]
         },
         {
             "name": "summary",
@@ -18,7 +24,13 @@
                 "andre-hctulc/react-base/clipboard-icon-button",
                 "andre-hctulc/react-base/use-as-set"
             ],
-            "files": [{ "path": "summary.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "summary.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/data-display/summary.tsx"
+                }
+            ]
         }
     ]
 }

@@ -7,7 +7,8 @@
     {
       "path": "src/hooks/math/use-min.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useMin(...values: number[]): number {\n    const m = React.useMemo(() => Math.min(...values), values);\n    return m;\n}\n",
-      "type": "registry:hook"
+      "type": "registry:hook",
+      "target": "@hooks/math/use-min.ts"
     }
   ],
   "type": "registry:hook"

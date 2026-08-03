@@ -6,23 +6,39 @@
             "type": "registry:ui",
             "title": "ColorText",
             "description": "Polymorphic text with color, size, lineClamp and margin variants.",
-            "dependencies": ["class-variance-authority"],
+            "dependencies": [
+                "class-variance-authority"
+            ],
             "registryDependencies": [
                 "andre-hctulc/react-base/variants-util"
             ],
-            "files": [{ "path": "color-text.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "color-text.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/text/color-text.tsx"
+                }
+            ]
         },
         {
             "name": "title",
             "type": "registry:ui",
             "title": "Title",
             "description": "Polymorphic heading with variant, bold, truncate and icon slot.",
-            "dependencies": ["class-variance-authority"],
+            "dependencies": [
+                "class-variance-authority"
+            ],
             "registryDependencies": [
                 "andre-hctulc/react-base/icon",
                 "andre-hctulc/react-base/variants-util"
             ],
-            "files": [{ "path": "title.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "title.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/text/title.tsx"
+                }
+            ]
         },
         {
             "name": "subtitle",
@@ -33,21 +49,39 @@
                 "andre-hctulc/react-base/icon",
                 "andre-hctulc/react-base/variants-util"
             ],
-            "files": [{ "path": "subtitle.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "subtitle.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/text/subtitle.tsx"
+                }
+            ]
         },
         {
             "name": "text-block",
             "type": "registry:ui",
             "title": "TextBlock",
             "description": "Prose text block.",
-            "files": [{ "path": "text-block.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "text-block.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/text/text-block.tsx"
+                }
+            ]
         },
         {
             "name": "typography",
             "type": "registry:ui",
             "title": "Typography",
             "description": "Styled typography components (h1-h6, p, ul, etc.).",
-            "files": [{ "path": "typography.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "typography.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/text/typography.tsx"
+                }
+            ]
         }
     ]
 }

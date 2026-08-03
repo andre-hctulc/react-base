@@ -10,7 +10,8 @@
       "files": [
         {
           "path": "src/lib/variants.util.ts",
-          "type": "registry:lib"
+          "type": "registry:lib",
+          "target": "@lib/variants.util.ts"
         }
       ],
       "type": "registry:lib"
@@ -22,7 +23,8 @@
       "files": [
         {
           "path": "src/lib/react.util.ts",
-          "type": "registry:lib"
+          "type": "registry:lib",
+          "target": "@lib/react.util.ts"
         }
       ],
       "type": "registry:lib"
@@ -34,7 +36,8 @@
       "files": [
         {
           "path": "src/hooks/document/use-blob-url.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/document/use-blob-url.ts"
         }
       ],
       "type": "registry:hook"
@@ -46,7 +49,8 @@
       "files": [
         {
           "path": "src/hooks/document/use-element-by-id.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/document/use-element-by-id.ts"
         }
       ],
       "type": "registry:hook"
@@ -58,7 +62,8 @@
       "files": [
         {
           "path": "src/hooks/document/use-key-down-observer.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/document/use-key-down-observer.ts"
         }
       ],
       "type": "registry:hook"
@@ -70,7 +75,8 @@
       "files": [
         {
           "path": "src/hooks/document/use-resize-observer.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/document/use-resize-observer.ts"
         }
       ],
       "type": "registry:hook"
@@ -82,7 +88,8 @@
       "files": [
         {
           "path": "src/hooks/document/use-screen-size.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/document/use-screen-size.ts"
         }
       ],
       "type": "registry:hook"
@@ -94,7 +101,8 @@
       "files": [
         {
           "path": "src/hooks/document/use-svg-url.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/document/use-svg-url.ts"
         }
       ],
       "type": "registry:hook"
@@ -106,7 +114,8 @@
       "files": [
         {
           "path": "src/hooks/document/use-window-event.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/document/use-window-event.ts"
         }
       ],
       "type": "registry:hook"
@@ -118,7 +127,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-array.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-array.ts"
         }
       ],
       "type": "registry:hook"
@@ -130,7 +140,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-as-array.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-as-array.ts"
         }
       ],
       "type": "registry:hook"
@@ -142,7 +153,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-as-map.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-as-map.ts"
         }
       ],
       "type": "registry:hook"
@@ -154,7 +166,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-as-set.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-as-set.ts"
         }
       ],
       "type": "registry:hook"
@@ -166,7 +179,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-filter.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-filter.ts"
         }
       ],
       "type": "registry:hook"
@@ -178,7 +192,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-map-array.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-map-array.ts"
         }
       ],
       "type": "registry:hook"
@@ -190,7 +205,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-map.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-map.ts"
         }
       ],
       "type": "registry:hook"
@@ -202,7 +218,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-range.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-range.ts"
         }
       ],
       "type": "registry:hook"
@@ -214,7 +231,8 @@
       "files": [
         {
           "path": "src/hooks/iterables/use-set.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/iterables/use-set.ts"
         }
       ],
       "type": "registry:hook"
@@ -226,7 +244,8 @@
       "files": [
         {
           "path": "src/hooks/math/use-max.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/math/use-max.ts"
         }
       ],
       "type": "registry:hook"
@@ -238,7 +257,8 @@
       "files": [
         {
           "path": "src/hooks/math/use-min.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/math/use-min.ts"
         }
       ],
       "type": "registry:hook"
@@ -250,7 +270,8 @@
       "files": [
         {
           "path": "src/hooks/navigation/use-hash.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/navigation/use-hash.ts"
         }
       ],
       "type": "registry:hook"
@@ -262,7 +283,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-breakpoints.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-breakpoints.ts"
         }
       ],
       "type": "registry:hook"
@@ -274,7 +296,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-context-x.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-context-x.ts"
         }
       ],
       "type": "registry:hook"
@@ -286,7 +309,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-css-transition.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-css-transition.ts"
         }
       ],
       "type": "registry:hook"
@@ -298,7 +322,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-delayed-value.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-delayed-value.ts"
         }
       ],
       "type": "registry:hook"
@@ -310,7 +335,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-interval.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-interval.ts"
         }
       ],
       "type": "registry:hook"
@@ -322,7 +348,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-is-hydrated.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-is-hydrated.ts"
         }
       ],
       "type": "registry:hook"
@@ -334,7 +361,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-persistent-state.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-persistent-state.ts"
         }
       ],
       "type": "registry:hook"
@@ -346,7 +374,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-promise.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-promise.ts"
         }
       ],
       "type": "registry:hook"
@@ -358,7 +387,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-ref-of.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-ref-of.ts"
         }
       ],
       "type": "registry:hook"
@@ -370,7 +400,8 @@
       "files": [
         {
           "path": "src/hooks/others/use-timeout.ts",
-          "type": "registry:hook"
+          "type": "registry:hook",
+          "target": "@hooks/others/use-timeout.ts"
         }
       ],
       "type": "registry:hook"
@@ -386,7 +417,8 @@
       "files": [
         {
           "path": "src/components/icons/icon.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/icons/icon.tsx"
         }
       ],
       "type": "registry:ui"
@@ -401,7 +433,8 @@
       "files": [
         {
           "path": "src/components/containers/flex.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/containers/flex.tsx"
         }
       ],
       "type": "registry:ui"
@@ -420,7 +453,8 @@
       "files": [
         {
           "path": "src/components/containers/toolbar.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/containers/toolbar.tsx"
         }
       ],
       "type": "registry:ui"
@@ -432,7 +466,8 @@
       "files": [
         {
           "path": "src/components/containers/center.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/containers/center.tsx"
         }
       ],
       "type": "registry:ui"
@@ -447,7 +482,8 @@
       "files": [
         {
           "path": "src/components/containers/spacer.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/containers/spacer.tsx"
         }
       ],
       "type": "registry:ui"
@@ -462,7 +498,8 @@
       "files": [
         {
           "path": "src/components/layout/root.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/layout/root.tsx"
         }
       ],
       "type": "registry:ui"
@@ -477,7 +514,8 @@
       "files": [
         {
           "path": "src/components/layout/overlay.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/layout/overlay.tsx"
         }
       ],
       "type": "registry:ui"
@@ -492,7 +530,8 @@
       "files": [
         {
           "path": "src/components/layout/page.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/layout/page.tsx"
         }
       ],
       "type": "registry:ui"
@@ -510,7 +549,8 @@
       "files": [
         {
           "path": "src/components/layout/page-content.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/layout/page-content.tsx"
         }
       ],
       "type": "registry:ui"
@@ -529,7 +569,8 @@
       "files": [
         {
           "path": "src/components/layout/page-header.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/layout/page-header.tsx"
         }
       ],
       "type": "registry:ui"
@@ -546,7 +587,8 @@
       "files": [
         {
           "path": "src/components/layout/spinner-page.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/layout/spinner-page.tsx"
         }
       ],
       "type": "registry:ui"
@@ -564,7 +606,8 @@
       "files": [
         {
           "path": "src/components/text/color-text.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/text/color-text.tsx"
         }
       ],
       "type": "registry:ui"
@@ -583,7 +626,8 @@
       "files": [
         {
           "path": "src/components/text/title.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/text/title.tsx"
         }
       ],
       "type": "registry:ui"
@@ -599,7 +643,8 @@
       "files": [
         {
           "path": "src/components/text/subtitle.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/text/subtitle.tsx"
         }
       ],
       "type": "registry:ui"
@@ -611,7 +656,8 @@
       "files": [
         {
           "path": "src/components/text/text-block.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/text/text-block.tsx"
         }
       ],
       "type": "registry:ui"
@@ -623,7 +669,8 @@
       "files": [
         {
           "path": "src/components/text/typography.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/text/typography.tsx"
         }
       ],
       "type": "registry:ui"
@@ -638,15 +685,18 @@
       "files": [
         {
           "path": "src/components/transitions/transition.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/transitions/transition.tsx"
         },
         {
           "path": "src/components/transitions/transition-context.ts",
-          "type": "registry:lib"
+          "type": "registry:lib",
+          "target": "@components/transitions/transition-context.ts"
         },
         {
           "path": "src/components/transitions/transition-child.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/transitions/transition-child.tsx"
         }
       ],
       "type": "registry:ui"
@@ -661,7 +711,8 @@
       "files": [
         {
           "path": "src/components/transitions/fade.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/transitions/fade.tsx"
         }
       ],
       "type": "registry:ui"
@@ -676,7 +727,8 @@
       "files": [
         {
           "path": "src/components/transitions/collapse.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/transitions/collapse.tsx"
         }
       ],
       "type": "registry:ui"
@@ -688,7 +740,8 @@
       "files": [
         {
           "path": "src/components/data-display/dot.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/data-display/dot.tsx"
         }
       ],
       "type": "registry:ui"
@@ -705,7 +758,8 @@
       "files": [
         {
           "path": "src/components/data-display/summary.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/data-display/summary.tsx"
         }
       ],
       "type": "registry:ui"
@@ -723,7 +777,8 @@
       "files": [
         {
           "path": "src/components/input/clipboard-icon-button.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/input/clipboard-icon-button.tsx"
         }
       ],
       "type": "registry:ui"
@@ -738,15 +793,18 @@
       "files": [
         {
           "path": "src/components/input/js-form-types.ts",
-          "type": "registry:lib"
+          "type": "registry:lib",
+          "target": "@components/input/js-form-types.ts"
         },
         {
           "path": "src/components/input/js-form-helpers.ts",
-          "type": "registry:lib"
+          "type": "registry:lib",
+          "target": "@components/input/js-form-helpers.ts"
         },
         {
           "path": "src/components/input/js-form-context.ts",
-          "type": "registry:lib"
+          "type": "registry:lib",
+          "target": "@components/input/js-form-context.ts"
         }
       ],
       "type": "registry:hook"
@@ -762,7 +820,8 @@
       "files": [
         {
           "path": "src/components/input/form-control.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/input/form-control.tsx"
         }
       ],
       "type": "registry:ui"
@@ -778,11 +837,13 @@
       "files": [
         {
           "path": "src/components/input/js-form.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/input/js-form.tsx"
         },
         {
           "path": "src/components/input/flex-form.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/input/flex-form.tsx"
         }
       ],
       "type": "registry:ui"
@@ -794,7 +855,8 @@
       "files": [
         {
           "path": "src/components/input/editable.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/input/editable.tsx"
         }
       ],
       "type": "registry:ui"
@@ -811,7 +873,8 @@
       "files": [
         {
           "path": "src/components/stat/stat.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/stat/stat.tsx"
         }
       ],
       "type": "registry:ui"
@@ -823,7 +886,8 @@
       "files": [
         {
           "path": "src/components/label/label-mimic.tsx",
-          "type": "registry:ui"
+          "type": "registry:ui",
+          "target": "@components/label/label-mimic.tsx"
         }
       ],
       "type": "registry:ui"

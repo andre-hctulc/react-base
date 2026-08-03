@@ -7,7 +7,8 @@
     {
       "path": "src/lib/variants.util.ts",
       "content": "/** Generates Tailwind size variants for a given prefix (xs→0.5 … 7xl→50, none→\"\") */\nexport function sz(prefix: string) {\n    return {\n        xs: `${prefix}-0.5`,\n        sm: `${prefix}-1`,\n        md: `${prefix}-2`,\n        lg: `${prefix}-4`,\n        xl: `${prefix}-8`,\n        \"2xl\": `${prefix}-12`,\n        \"3xl\": `${prefix}-16`,\n        \"4xl\": `${prefix}-24`,\n        \"5xl\": `${prefix}-32`,\n        \"6xl\": `${prefix}-40`,\n        \"7xl\": `${prefix}-50`,\n        none: \"\",\n    };\n}\n\n/** sz + an auto variant (e.g. \"m-auto\") */\nexport function msz(prefix: string) {\n    return { ...sz(prefix), auto: `${prefix}-auto` };\n}\n",
-      "type": "registry:lib"
+      "type": "registry:lib",
+      "target": "@lib/variants.util.ts"
     }
   ],
   "type": "registry:lib"

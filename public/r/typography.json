@@ -7,7 +7,8 @@
     {
       "path": "src/components/text/typography.tsx",
       "content": "import { type FC, type ComponentProps } from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils.js\";\nimport { Slot } from \"radix-ui\";\n\nconst typographyVariants = cva(\"\", {\n    variants: {\n        textSize: {\n            xs: \"text-xs\",\n            sm: \"text-sm\",\n            base: \"text-base\",\n            md: \"text-md\",\n            lg: \"text-lg\",\n            xl: \"text-xl\",\n            \"2xl\": \"text-2xl\",\n            \"3xl\": \"text-3xl\",\n        },\n        center: { true: \"text-center\" },\n        underline: { true: \"underline\" },\n        italic: { true: \"italic\" },\n        lineHeight: {\n            tight: \"leading-tight\",\n            snug: \"leading-snug\",\n            normal: \"leading-normal\",\n            relaxed: \"leading-relaxed\",\n            loose: \"leading-loose\",\n        },\n    },\n});\n\nexport interface TypographyProps extends ComponentProps<\"p\">, VariantProps<typeof typographyVariants> {\n    asChild?: boolean;\n}\n\n/** Text component for consistent typography styling. */\nexport const Typography: FC<TypographyProps> = (props) => {\n    const { textSize, center, underline, italic, lineHeight, className, children, asChild, ...restProps } =\n        props as any;\n    const Comp: any = asChild ? Slot : \"p\";\n    return (\n        <Comp\n            className={cn(typographyVariants({ textSize, center, underline, italic, lineHeight }), className)}\n            {...restProps}\n        >\n            {children}\n        </Comp>\n    );\n};\n",
-      "type": "registry:ui"
+      "type": "registry:ui",
+      "target": "@components/text/typography.tsx"
     }
   ],
   "type": "registry:ui"

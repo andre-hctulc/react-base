@@ -6,7 +6,13 @@
             "type": "registry:hook",
             "title": "useHash",
             "description": "Reads and writes the URL hash.",
-            "files": [{ "path": "use-hash.ts", "type": "registry:hook" }]
+            "files": [
+                {
+                    "path": "use-hash.ts",
+                    "type": "registry:hook",
+                    "target": "@hooks/navigation/use-hash.ts"
+                }
+            ]
         }
     ]
 }

@@ -11,7 +11,13 @@
                 "andre-hctulc/react-base/icon",
                 "andre-hctulc/react-base/use-ref-of"
             ],
-            "files": [{ "path": "stat.tsx", "type": "registry:ui" }]
+            "files": [
+                {
+                    "path": "stat.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/stat/stat.tsx"
+                }
+            ]
         }
     ]
 }

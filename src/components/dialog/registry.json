@@ -6,10 +6,21 @@
             "type": "registry:ui",
             "title": "ConfirmDialog",
             "description": "Accessible confirmation dialog with confirm/cancel callbacks.",
-            "registryDependencies": ["dialog", "button"],
+            "registryDependencies": [
+                "dialog",
+                "button"
+            ],
             "files": [
-                { "path": "confirm-dialog.tsx", "type": "registry:ui" },
-                { "path": "use-confirm-dialog.tsx", "type": "registry:hook" }
+                {
+                    "path": "confirm-dialog.tsx",
+                    "type": "registry:ui",
+                    "target": "@components/dialog/confirm-dialog.tsx"
+                },
+                {
+                    "path": "use-confirm-dialog.tsx",
+                    "type": "registry:hook",
+                    "target": "@components/dialog/use-confirm-dialog.tsx"
+                }
             ]
         }
     ]

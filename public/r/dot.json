@@ -7,7 +7,8 @@
     {
       "path": "src/components/data-display/dot.tsx",
       "content": "import { type ComponentProps, type FC } from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@/lib/utils.js\";\n\nconst dotVariants = cva(\"rounded-full shrink-0\", {\n    variants: {\n        color: {\n            blue: \"bg-blue-500\",\n            green: \"bg-green-500\",\n            gray: \"bg-gray-500\",\n            red: \"bg-red-500\",\n            yellow: \"bg-yellow-500\",\n            purple: \"bg-purple-500\",\n            pink: \"bg-pink-500\",\n            primary: \"bg-primary\",\n            secondary: \"bg-secondary\",\n            success: \"bg-success-500\",\n            warning: \"bg-warning-500\",\n            info: \"bg-info-500\",\n            destructive: \"bg-destructive\",\n        },\n        size: {\n            xs: \"size-1\",\n            sm: \"size-2\",\n            md: \"size-4\",\n            lg: \"size-6\",\n            xl: \"size-8\",\n            \"2xl\": \"size-10\",\n            \"3xl\": \"size-12\",\n            \"4xl\": \"size-16\",\n        },\n    },\n    defaultVariants: { color: \"gray\", size: \"md\" },\n});\n\nexport type DotColor = NonNullable<VariantProps<typeof dotVariants>[\"color\"]>;\nexport type DotSize = NonNullable<VariantProps<typeof dotVariants>[\"size\"]>;\n\nexport interface DotProps\n    extends Omit<ComponentProps<\"span\">, \"color\" | \"size\">, VariantProps<typeof dotVariants> {}\n\nexport { dotVariants };\n\nexport const Dot: FC<DotProps> = ({ color, size, className, ...props }) => (\n    <span className={cn(dotVariants({ color, size }), className)} {...props} />\n);\n",
-      "type": "registry:ui"
+      "type": "registry:ui",
+      "target": "@components/data-display/dot.tsx"
     }
   ],
   "type": "registry:ui"

@@ -7,7 +7,8 @@
     {
       "path": "src/components/label/label-mimic.tsx",
       "content": "import { type FC, type ComponentProps } from \"react\";\nimport { cn } from \"@/lib/utils.js\";\n\nexport interface LabelMimicProps extends Omit<ComponentProps<\"span\">, \"color\"> {\n    disabled?: boolean;\n    color?: \"success\" | \"failure\" | \"warning\" | \"info\" | \"default\";\n}\n\n/**\n * A label-styled `<span>` element.\n */\nexport const LabelMimic: FC<LabelMimicProps> = ({ disabled, color, className, children, ...props }) => (\n    <span\n        className={cn(\n            \"text-sm font-medium\",\n            disabled && \"opacity-50\",\n            color === \"success\" && \"text-success\",\n            color === \"failure\" && \"text-failure\",\n            color === \"warning\" && \"text-warning\",\n            color === \"info\" && \"text-info\",\n            className,\n        )}\n        {...props}\n    >\n        {children}\n    </span>\n);\n",
-      "type": "registry:ui"
+      "type": "registry:ui",
+      "target": "@components/label/label-mimic.tsx"
     }
   ],
   "type": "registry:ui"
