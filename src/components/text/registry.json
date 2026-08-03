@@ -10,22 +10,6 @@
             "files": [{ "path": "color-text.tsx", "type": "registry:ui" }]
         },
         {
-            "name": "error-text",
-            "type": "registry:ui",
-            "title": "ErrorText",
-            "description": "Error-colored text using ColorText.",
-            "registryDependencies": ["andre-hctulc/react-base/color-text"],
-            "files": [{ "path": "error-text.tsx", "type": "registry:ui" }]
-        },
-        {
-            "name": "success-text",
-            "type": "registry:ui",
-            "title": "SuccessText",
-            "description": "Success-colored text using ColorText.",
-            "registryDependencies": ["andre-hctulc/react-base/color-text"],
-            "files": [{ "path": "success-text.tsx", "type": "registry:ui" }]
-        },
-        {
             "name": "title",
             "type": "registry:ui",
             "title": "Title",

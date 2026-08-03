@@ -89,3 +89,11 @@ export const ColorText = <T extends ElementType = "p">(props: ColorTextProps<T>)
         </Comp>
     );
 };
+
+export const SuccessText = <T extends ElementType = "p">(props: ColorTextProps<T>) => {
+    return <ColorText<T> color="success" {...props} />;
+};
+
+export const ErrorText = <T extends ElementType = "p">(props: ColorTextProps<T>) => {
+    return <ColorText<T> color="error" {...props} />;
+};
