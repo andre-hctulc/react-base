@@ -2,9 +2,9 @@
 
 import type { FC, ReactNode, ComponentProps } from "react";
 import { cn } from "@/lib/utils.js";
-import { Icon } from "@/components/icon.js";
+import { Icon } from "./icon.js";
 import { useAsSet } from "@/hooks/use-as-set.js";
-import { ClipboardIconButton } from "@/components/clipboard-icon-button.js";
+import { ClipboardIconButton } from "./clipboard-icon-button.js";
 
 const isPlainObject = (val: unknown): val is Record<string, unknown> =>
     !!val &&

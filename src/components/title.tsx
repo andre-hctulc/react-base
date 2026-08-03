@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
 import { msz } from "@/lib/variants.util.js";
 import { Slot } from "radix-ui";
-import { Icon, type IconLike, type IconProps } from "@/components/icon.js";
+import { Icon, type IconLike, type IconProps } from "./icon.js";
 
 const titleVariants = cva("", {
     variants: {

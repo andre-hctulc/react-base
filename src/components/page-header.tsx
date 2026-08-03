@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz, msz } from "@/lib/variants.util.js";
-import { Title } from "@/components/title.js";
+import { Title } from "./title.js";
 import type { ComponentProps, ReactNode } from "react";
 
 const pageHeaderVariants = cva("w-full", {
