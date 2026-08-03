@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils.js";
 import { cva, type VariantProps } from "class-variance-authority";
-import { sz, msz } from "@/lib/react/variants.util.js";
+import { sz, msz } from "@/lib/variants.util.js";
 import { Title } from "@/components/text/title.js";
 import type { ComponentProps, ReactNode } from "react";
 

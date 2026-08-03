@@ -17,7 +17,7 @@ import { getProperty } from "dot-prop";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
 import { cn } from "@/lib/utils.js";
 import { cva, type VariantProps } from "class-variance-authority";
-import { sz } from "@/lib/react/variants.util.js";
+import { sz } from "@/lib/variants.util.js";
 
 const jsFormVariants = cva("", {
     variants: {

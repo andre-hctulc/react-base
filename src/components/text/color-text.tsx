@@ -1,7 +1,7 @@
 import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
-import { msz } from "@/lib/react/variants.util.js";
+import { msz } from "@/lib/variants.util.js";
 import { Slot } from "radix-ui";
 
 const colorTextVariants = cva("", {

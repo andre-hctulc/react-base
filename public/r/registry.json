@@ -9,7 +9,7 @@
       "description": "CVA size variant helpers: sz() and msz().",
       "files": [
         {
-          "path": "src/lib/react/variants.util.ts",
+          "path": "src/lib/variants.util.ts",
           "type": "registry:lib"
         }
       ],
@@ -21,7 +21,7 @@
       "description": "React utility helpers.",
       "files": [
         {
-          "path": "src/lib/react/react.util.ts",
+          "path": "src/lib/react.util.ts",
           "type": "registry:lib"
         }
       ],
