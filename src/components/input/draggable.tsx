@@ -1,14 +1,15 @@
 "use client";
 
-import React, { type FC, type Ref } from "react";
-import type { StyleProps } from "@/types/index.js";
-import { cn as twMerge } from "@/util/cn.js";
+import { type CSSProperties, type DragEventHandler, type FC, type ReactNode, type Ref } from "react";
+import { cn as twMerge } from "@/lib/cn.util.js";
 
-export interface DraggableProps extends StyleProps {
-    children?: React.ReactNode;
+export interface DraggableProps {
+    children?: ReactNode;
+    className?: string;
+    style?: CSSProperties;
     disabled?: boolean;
-    onDragStart?: React.DragEventHandler<HTMLDivElement>;
-    onDragEnd?: React.DragEventHandler<HTMLDivElement>;
+    onDragStart?: DragEventHandler<HTMLDivElement>;
+    onDragEnd?: DragEventHandler<HTMLDivElement>;
     ref?: Ref<HTMLDivElement>;
 }
 

@@ -1,8 +1,8 @@
-import type { FC, ReactNode } from "react";
-import type { LinkComponent, LinkProps, PropsOf, StyleProps } from "@/types/index.js";
+import type { ComponentProps, CSSProperties, FC, ReactNode } from "react";
+import type { LinkComponent, LinkProps } from "@/types/index.js";
 import { Subtitle } from "@/components/text/subtitle.js";
 import { Icon } from "@/components/icons/icon.js";
-import { cn } from "@/util/cn.js";
+import { cn } from "@/lib/cn.util.js";
 import { Check, X } from "lucide-react";
 
 function collapse<T extends Record<string, any>, K extends keyof T>(obj: T, key: K): T[K] {
@@ -18,16 +18,16 @@ const sizeMap = {
 
 type ChecklistSize = keyof typeof sizeMap;
 
-interface ComponentProps {
-    titleProps?: PropsOf<typeof Subtitle>;
-    textProps?: PropsOf<"p">;
-    secondaryTextProps?: PropsOf<"p">;
-    iconProps?: PropsOf<typeof Icon>;
+interface ComponentsProps {
+    titleProps?: ComponentProps<typeof Subtitle>;
+    textProps?: ComponentProps<"p">;
+    secondaryTextProps?: ComponentProps<"p">;
+    iconProps?: ComponentProps<typeof Icon>;
     LinkComponent?: LinkComponent;
     linkProps?: LinkProps;
 }
 
-export interface ChecklistItem extends ComponentProps {
+export interface ChecklistItem extends ComponentsProps {
     key: string;
     title?: ReactNode;
     text?: string;
@@ -38,14 +38,15 @@ export interface ChecklistItem extends ComponentProps {
     secondary?: boolean;
 }
 
-export type ChecklistProps = StyleProps &
-    ComponentProps & {
-        size?: ChecklistSize;
-        items: ChecklistItem[];
-        checkedIcon?: ReactNode;
-        uncheckedIcon?: ReactNode;
-        checked?: string | string[] | ((item: ChecklistItem) => boolean);
-    };
+export type ChecklistProps = ComponentsProps & {
+    className?: string;
+    style?: CSSProperties;
+    size?: ChecklistSize;
+    items: ChecklistItem[];
+    checkedIcon?: ReactNode;
+    uncheckedIcon?: ReactNode;
+    checked?: string | string[] | ((item: ChecklistItem) => boolean);
+};
 
 export const Checklist: FC<ChecklistProps> = ({
     size = "md",

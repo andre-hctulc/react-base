@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useMemo, useState, type ElementType, type Ref } from "react";
+import { useCallback, useMemo, useState, type CSSProperties, type ElementType, type Ref } from "react";
 import type { InputLikeProps } from "./types.js";
-import type { ASProps, StyleProps } from "@/types/index.js";
+import type { ASProps } from "@/types/index.js";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
-import { cn as twMerge } from "@/util/cn.js";
+import { cn as twMerge } from "@/lib/cn.util.js";
 
 type InputListInputProps<V = string> = Pick<
     InputLikeProps<V>,
@@ -12,7 +12,9 @@ type InputListInputProps<V = string> = Pick<
 >;
 
 export interface InputListProps<T = string, A extends ElementType = "div">
-    extends InputLikeProps<T[]>, StyleProps, ASProps<A> {
+    extends InputLikeProps<T[]>, ASProps<A> {
+    className?: string;
+    style?: CSSProperties;
     ref?: Ref<any>;
     /**
      * Passed to {@link renderInput} as default value for the input

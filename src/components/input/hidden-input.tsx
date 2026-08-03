@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
-import type { PropsOf } from "@/types/index.js";
+import { useEffect, useMemo, useRef, type ComponentProps } from "react";
 import type { JSForm } from "./js-form.js";
 import { useJSForm } from "./js-form-context.js";
 
-export interface HiddenInputProps<T = any> extends Omit<PropsOf<"input">, "type" | "value"> {
+export interface HiddenInputProps<T = any> extends Omit<ComponentProps<"input">, "type" | "value"> {
     value: T;
     /**
      * Disable JSON stringification/parsing for non primitives.

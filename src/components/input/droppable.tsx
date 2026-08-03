@@ -1,9 +1,8 @@
 "use client";
 
-import React, { type FC } from "react";
-import type { PropsOf } from "@/types/index.js";
+import React, { type ComponentProps, type FC } from "react";
 
-export interface DroppableProps extends PropsOf<"div"> {
+export interface DroppableProps extends ComponentProps<"div"> {
     disabled?: boolean;
 }
 

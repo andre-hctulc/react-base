@@ -1,8 +1,7 @@
-import { cn } from "@/util/cn.js";
+import { cn } from "@/lib/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz, msz } from "@/util/react/variants.util.js";
 import { Title } from "@/components/text/title.js";
-import type { PropsOf } from "@/types/index.js";
 import type { ComponentProps, ReactNode } from "react";
 
 const pageHeaderVariants = cva("w-full", {
@@ -30,7 +29,7 @@ const pageHeaderVariants = cva("w-full", {
 export type PageHeaderProps = Omit<ComponentProps<"div">, "title"> &
     VariantProps<typeof pageHeaderVariants> & {
         title?: ReactNode;
-        titleProps?: PropsOf<typeof Title>;
+        titleProps?: ComponentProps<typeof Title>;
         badges?: ReactNode;
         actions?: ReactNode;
         pre?: ReactNode;

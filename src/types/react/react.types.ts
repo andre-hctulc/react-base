@@ -1,38 +1,7 @@
-import type {
-    JSXElementConstructor,
-    ComponentProps,
-    CSSProperties,
-    ReactNode,
-    JSX,
-    Ref,
-    ElementType,
-} from "react";
+import type { ComponentProps, ReactNode, Ref, ElementType } from "react";
 import type { IconFC } from "@/components/index.js";
 
 // #### Props ####
-
-/**
- * Alias for react's {@link ComponentProps}
- */
-export type PropsOf<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> = ComponentProps<T>;
-
-export type PartialPropsOf<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>> = Partial<
-    PropsOf<T>
->;
-
-/**
- * Style and class name props.
- */
-export interface StyleProps {
-    /**
-     * Inline style
-     */
-    style?: CSSProperties;
-    /**
-     * CSS classes
-     */
-    className?: string;
-}
 
 export type ChildrenProps<T extends ReactNode = ReactNode> = {
     /**
@@ -67,7 +36,7 @@ export type RichAsProps<T extends ElementType> = ComponentProps<T> & {
 };
 // #### Components ####
 
-export type LinkProps = PropsOf<"a">;
+export type LinkProps = ComponentProps<"a">;
 
 export type LinkComponent = ElementType<LinkProps & { href: string }>;
 

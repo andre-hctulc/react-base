@@ -1,4 +1,4 @@
-import { cn } from "@/util/cn.js";
+import { cn } from "@/lib/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz } from "@/util/react/variants.util.js";
 import type { ElementType } from "react";

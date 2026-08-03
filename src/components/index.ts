@@ -11,4 +11,3 @@ export * from "./exotic/index.js";
 export * from "./navigation/index.js";
 export * from "./stat/index.js";
 export * from "./label/index.js";
-export * from "./dialog/index.js";

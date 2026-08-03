@@ -1,11 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type ComponentProps } from "react";
 import { Check, ClipboardList } from "lucide-react";
-import { Button, } from "@/components/cn/button.js";
-import type { PropsOf } from "@/types/index.js";
+import { Button } from "@/ui/button.js";
 
-export interface ClipboardIconButtonProps extends PropsOf<typeof Button> {
+export interface ClipboardIconButtonProps extends ComponentProps<typeof Button> {
     onCopySuccess?: () => void;
     valueToCopy: string;
     /**
@@ -27,6 +26,8 @@ export const ClipboardIconButton = ({
     return (
         <Button
             type="button"
+            variant="ghost"
+            size="icon"
             onClick={(e) => {
                 if (currentTimeout.current) clearTimeout(currentTimeout.current);
                 navigator.clipboard.writeText(valueToCopy).then(() => {

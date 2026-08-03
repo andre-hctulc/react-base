@@ -1,7 +1,6 @@
-import { type FC } from "react";
+import { type ComponentProps, type FC } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/util/cn.js";
-import type { PropsOf } from "@/types/index.js";
+import { cn } from "@/lib/cn.util.js";
 
 const textBlockVariants = cva("", {
     variants: {
@@ -51,7 +50,7 @@ const textBlockVariants = cva("", {
     defaultVariants: { overflow: "ellipsis", wrap: "pretty" },
 });
 
-export interface TextBlockProps extends PropsOf<"p">, VariantProps<typeof textBlockVariants> {}
+export interface TextBlockProps extends ComponentProps<"p">, VariantProps<typeof textBlockVariants> {}
 
 export { textBlockVariants };
 

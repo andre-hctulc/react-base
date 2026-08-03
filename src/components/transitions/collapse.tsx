@@ -1,10 +1,9 @@
-import type { FC } from "react";
-import type { PropsOf } from "@/types/index.js";
+import type { ComponentProps, FC } from "react";
 import Transition from "./transition.js";
 
 // ###### CollapseV ######
 
-interface CollapseVProps extends PropsOf<typeof Transition> {}
+interface CollapseVProps extends ComponentProps<typeof Transition> {}
 
 export const CollapseVScreen: FC<CollapseVProps> = (props) => {
     return (
@@ -106,7 +105,7 @@ export const CollapseV2000: FC<CollapseVProps> = (props) => {
 
 // ###### CollapseH ######
 
-export interface CollapseHProps extends PropsOf<typeof Transition> {}
+export interface CollapseHProps extends ComponentProps<typeof Transition> {}
 
 export const CollapseHScreen: FC<CollapseHProps> = (props) => {
     return (

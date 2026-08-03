@@ -1,5 +1,5 @@
 import { type FC, type ComponentProps } from "react";
-import { cn } from "@/util/cn.js";
+import { cn } from "@/lib/cn.util.js";
 
 export interface LabelMimicProps extends Omit<ComponentProps<"span">, "color"> {
     disabled?: boolean;

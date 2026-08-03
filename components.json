@@ -11,9 +11,9 @@
     },
     "aliases": {
         "components": "@/components",
-        "utils": "@/util/cn/cn.util.ts",
-        "ui": "@/components/cn",
-        "lib": "@/util",
+        "ui": "@/ui",
+        "lib": "@/lib",
+        "utils": "@/lib/cn.util",
         "hooks": "@/hooks",
         "types": "@/types"
     },

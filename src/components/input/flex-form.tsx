@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/util/cn.js";
+import { cn } from "@/lib/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz } from "@/util/react/variants.util.js";
-import type { PropsOf } from "@/types/index.js";
+import type { ComponentProps } from "react";
 
 const flexFormVariants = cva("flex", {
     variants: {
@@ -25,7 +25,7 @@ const flexFormVariants = cva("flex", {
     defaultVariants: { direction: "col", gap: "md" },
 });
 
-export type FlexFormProps = PropsOf<"form"> & VariantProps<typeof flexFormVariants>;
+export type FlexFormProps = ComponentProps<"form"> & VariantProps<typeof flexFormVariants>;
 
 /** Use `formEventToFormData` or `formEventToValues` to convert form event to values. */
 export const FlexForm: React.FC<FlexFormProps> = ({

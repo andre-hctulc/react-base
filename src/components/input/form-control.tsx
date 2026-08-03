@@ -1,39 +1,49 @@
 "use client";
 
-import { cloneElement, isValidElement, useId, type FC, type ReactElement, type ReactNode } from "react";
-import type { PartialPropsOf, RefProps, StyleProps } from "@/types/index.js";
+import {
+    cloneElement,
+    isValidElement,
+    useId,
+    type ComponentProps,
+    type CSSProperties,
+    type FC,
+    type ReactElement,
+    type ReactNode,
+} from "react";
+import type { RefProps } from "@/types/index.js";
 import { useJSForm } from "./js-form-context.js";
-import { Field, FieldDescription, FieldError, FieldLabel, FieldTitle } from "@/components/cn/field.js";
+import { Field, FieldDescription, FieldError, FieldLabel, FieldTitle } from "@/ui/field.js";
 
-export type FormControlProps = StyleProps &
-    RefProps<HTMLDivElement> & {
-        /**
-         * Default value of the input
-         */
-        name?: string;
-        children: ReactNode;
-        controlled?: boolean;
-        label?: string;
-        labelProps?: PartialPropsOf<typeof FieldLabel>;
-        errorText?: string;
-        helperText?: string;
-        helperTextProps?: PartialPropsOf<typeof FieldDescription>;
-        errorTextProps?: PartialPropsOf<typeof FieldError>;
-        labelWidth?: string | number;
-        /**
-         * Set to true, to prevent any error message from showing
-         */
-        noError?: boolean;
-        /**
-         * Indicates that the label is not labeling a valid input element (e.g. in combination with hidden inputs).
-         *
-         * In this case a span is used instead of a label element.
-         */
-        mimic?: boolean;
-        horizontal?: boolean;
-        requiredHint?: boolean;
-        title?: string;
-    };
+export type FormControlProps = RefProps<HTMLDivElement> & {
+    className?: string;
+    style?: CSSProperties;
+    /**
+     * Default value of the input
+     */
+    name?: string;
+    children: ReactNode;
+    controlled?: boolean;
+    label?: string;
+    labelProps?: Partial<ComponentProps<typeof FieldLabel>>;
+    errorText?: string;
+    helperText?: string;
+    helperTextProps?: Partial<ComponentProps<typeof FieldDescription>>;
+    errorTextProps?: Partial<ComponentProps<typeof FieldError>>;
+    labelWidth?: string | number;
+    /**
+     * Set to true, to prevent any error message from showing
+     */
+    noError?: boolean;
+    /**
+     * Indicates that the label is not labeling a valid input element (e.g. in combination with hidden inputs).
+     *
+     * In this case a span is used instead of a label element.
+     */
+    mimic?: boolean;
+    horizontal?: boolean;
+    requiredHint?: boolean;
+    title?: string;
+};
 
 /**
  * Wraps an input element with a label, error message and helper text.

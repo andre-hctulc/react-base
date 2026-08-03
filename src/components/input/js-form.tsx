@@ -1,13 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type Ref } from "react";
+import {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+    type ComponentProps,
+    type CSSProperties,
+    type Ref,
+} from "react";
 import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./js-form-types.js";
 import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
 import { createSnapshot } from "./js-form-helpers.js";
 import { getProperty } from "dot-prop";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
-import type { PropsOf, StyleProps } from "@/types/index.js";
-import { cn } from "@/util/cn.js";
+import { cn } from "@/lib/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz } from "@/util/react/variants.util.js";
 
@@ -28,8 +36,10 @@ const jsFormVariants = cva("", {
     },
 });
 
-export interface JSFormProps<T extends object = any> extends StyleProps, VariantProps<typeof jsFormVariants> {
+export interface JSFormProps<T extends object = any> extends VariantProps<typeof jsFormVariants> {
     id?: string;
+    className?: string;
+    style?: CSSProperties;
     children?: React.ReactNode;
     onSubmit?: (snapshot: JSFormSnapshot<T>) => void;
     onChange?: (snapshot: JSFormChange<T> & { changedField: { name: string; newValue: any } }) => void;
@@ -260,7 +270,7 @@ export const JSForm = <T extends object = any>(props: JSFormProps<T>) => {
         onContextChangeRef.current?.(ctx);
     }, [ctx]);
 
-    let formProps: PropsOf<"form"> = {};
+    let formProps: ComponentProps<"form"> = {};
 
     if (!nested) {
         formProps.onSubmit = handleSubmit;

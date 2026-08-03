@@ -1,8 +1,7 @@
 "use client";
 
 import type { FC, ReactNode, ComponentProps } from "react";
-import { cn } from "@/util/cn.js";
-import type { PropsOf } from "@/types/index.js";
+import { cn } from "@/lib/cn.util.js";
 import { Icon } from "@/components/icons/icon.js";
 import { useAsSet } from "@/hooks/iterables/use-as-set.js";
 import { ClipboardIconButton } from "@/components/input/clipboard-icon-button.js";
@@ -16,7 +15,7 @@ const isPlainObject = (val: unknown): val is Record<string, unknown> =>
 export interface FieldModel {
     label?: ReactNode;
     icon?: ReactNode;
-    iconProps?: PropsOf<typeof Icon>;
+    iconProps?: ComponentProps<typeof Icon>;
     renderValue?: (value: any) => ReactNode;
     canCopy?: boolean;
 }

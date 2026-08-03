@@ -1,23 +1,32 @@
 "use client";
 
-import type { PartialPropsOf, PropsOf, StyleProps } from "@/types/index.js";
 import { Droppable } from "./droppable.js";
 import type { InputLikeProps } from "./types.js";
-import { useEffect, useRef, useState, type FC, type ReactNode } from "react";
+import {
+    useEffect,
+    useRef,
+    useState,
+    type ComponentProps,
+    type CSSProperties,
+    type FC,
+    type ReactNode,
+} from "react";
 import { Icon } from "@/components/icons/icon.js";
-import { cn as twMerge } from "@/util/cn.js";
+import { cn as twMerge } from "@/lib/cn.util.js";
 
-export interface UploadZoneProps extends StyleProps, InputLikeProps<File[]> {
+export interface UploadZoneProps extends InputLikeProps<File[]> {
     children?: ReactNode;
+    className?: string;
+    style?: CSSProperties;
     secondaryText?: string;
     text?: string;
     multiple?: boolean;
     icon?: ReactNode;
     renderFiles?: ((files: File[]) => ReactNode) | "menu";
     accept?: string;
-    mainProps?: PropsOf<"div">;
-    iconProps?: PartialPropsOf<typeof Icon>;
-    textProps?: PropsOf<"p">;
+    mainProps?: ComponentProps<"div">;
+    iconProps?: Partial<ComponentProps<typeof Icon>>;
+    textProps?: Partial<ComponentProps<"p">>;
 }
 
 const fileId = (file: File) => file.webkitRelativePath || file.name;

@@ -1,6 +1,6 @@
 import { type ElementType } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/util/cn.js";
+import { cn } from "@/lib/cn.util.js";
 import { msz } from "@/util/react/variants.util.js";
 import type { RichAsProps } from "@/types/index.js";
 import { Icon, type IconLike, type IconProps } from "@/components/icons/icon.js";

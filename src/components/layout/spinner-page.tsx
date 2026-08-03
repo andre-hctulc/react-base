@@ -1,6 +1,6 @@
 import { PageContent } from "./page-content.js";
 import { Page, type PageProps } from "./page.js";
-import { Spinner } from "@/components/cn/spinner.js";
+import { Spinner } from "@/ui/spinner.js";
 
 const spinnerSizeMap = {
     xs: "size-3",

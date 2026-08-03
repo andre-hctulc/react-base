@@ -35,7 +35,10 @@
             "type": "registry:ui",
             "title": "JSForm",
             "description": "Form component powered by useJsForm — handles default values, validation and submission.",
-            "registryDependencies": ["andre-hctulc/react-base/use-js-form", "andre-hctulc/react-base/form-control"],
+            "registryDependencies": [
+                "andre-hctulc/react-base/use-js-form",
+                "andre-hctulc/react-base/form-control"
+            ],
             "files": [
                 { "path": "js-form.tsx", "type": "registry:ui" },
                 { "path": "flex-form.tsx", "type": "registry:ui" }

@@ -1,7 +1,7 @@
-import type { PropsOf } from "@/types/index.js";
+import type { ComponentProps } from "react";
 import Transition from "./transition.js";
 
-interface FadeProps extends PropsOf<typeof Transition> {}
+interface FadeProps extends ComponentProps<typeof Transition> {}
 
 export const Fade: React.FC<FadeProps> = (props) => {
     return (

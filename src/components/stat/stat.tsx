@@ -1,12 +1,12 @@
 "use client";
 
-import { cn } from "@/util/cn.js";
+import { cn } from "@/lib/cn.util.js";
 import { cva, type VariantProps } from "class-variance-authority";
-import { useMemo, type ElementType } from "react";
+import { useMemo, type ComponentProps, type ElementType } from "react";
 import { useRefOf } from "@/hooks/others/use-ref-of.js";
-import type { PropsOf, LinkComponent, LinkProps, RichAsProps } from "@/types/index.js";
+import type { LinkComponent, LinkProps, RichAsProps } from "@/types/index.js";
 import { Icon, type IconLike } from "@/components/icons/icon.js";
-import { Skeleton } from "@/components/cn/skeleton.js";
+import { Skeleton } from "@/ui/skeleton.js";
 
 const statVariants = cva("bg-paper-2 rounded-lg", {
     variants: {
@@ -63,16 +63,16 @@ type StatProps<T extends ElementType = "div"> = RichAsProps<T> &
         valueParser?: (value: any) => string;
         value: any;
         description?: string;
-        descriptionProps?: PropsOf<"p">;
-        textProps?: PropsOf<"p">;
+        descriptionProps?: ComponentProps<"p">;
+        textProps?: ComponentProps<"p">;
         icon?: IconLike;
         LinkComponent?: LinkComponent;
         linkProps?: LinkProps;
         href?: string;
-        skeletonProps?: PropsOf<typeof Skeleton>;
+        skeletonProps?: ComponentProps<typeof Skeleton>;
         unit?: string;
-        iconProps?: PropsOf<typeof Icon>;
-        unitProps?: PropsOf<"span">;
+        iconProps?: ComponentProps<typeof Icon>;
+        unitProps?: ComponentProps<"span">;
     };
 
 /**
