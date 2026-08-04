@@ -1,6 +1,4 @@
 {
     "$schema": "https://ui.shadcn.com/schema/registry.json",
-    "include": [
-        "react/registry.json"
-    ]
+    "include": []
 }

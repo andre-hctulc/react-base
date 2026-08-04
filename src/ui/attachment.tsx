@@ -2,7 +2,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
 
-import { cn } from "@/lib/cn.util";
+import { cn } from "@/lib/utils";
 import { Button } from "@/ui/button";
 
 const attachmentVariants = cva(

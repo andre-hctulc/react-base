@@ -5,8 +5,8 @@
   "description": "Observes element resize events via ResizeObserver.",
   "files": [
     {
-      "path": "src/hooks/document/use-resize-observer.ts",
-      "content": "\"use client\";\n\nimport { useEffect, type RefObject } from \"react\";\nimport { useRefOf } from \"@/hooks/others/index.js\";\n\nexport function useResizeObserver(\n    ref: RefObject<Element | null> | Element,\n    callback: (entry: ResizeObserverEntry) => void,\n) {\n    const element = \"current\" in ref ? ref.current : ref;\n    const callbackRef = useRefOf(callback);\n\n    useEffect(() => {\n        if (!element) return;\n\n        const observer = new ResizeObserver((entries) => {\n            if (entries[0]) {\n                callbackRef.current(entries[0]);\n            }\n        });\n\n        observer.observe(element);\n\n        return () => {\n            observer.disconnect();\n        };\n    }, [element]);\n}\n",
+      "path": "src/hooks/use-resize-observer.ts",
+      "content": "\"use client\";\n\nimport { useEffect, type RefObject } from \"react\";\nimport { useRefOf } from \"@/hooks/use-ref-of.js\";\n\nexport function useResizeObserver(\n    ref: RefObject<Element | null> | Element,\n    callback: (entry: ResizeObserverEntry) => void,\n) {\n    const element = \"current\" in ref ? ref.current : ref;\n    const callbackRef = useRefOf(callback);\n\n    useEffect(() => {\n        if (!element) return;\n\n        const observer = new ResizeObserver((entries) => {\n            if (entries[0]) {\n                callbackRef.current(entries[0]);\n            }\n        });\n\n        observer.observe(element);\n\n        return () => {\n            observer.disconnect();\n        };\n    }, [element]);\n}\n",
       "type": "registry:hook"
     }
   ],

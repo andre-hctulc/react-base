@@ -5,7 +5,7 @@
   "description": "Attaches and cleans up a window event listener.",
   "files": [
     {
-      "path": "src/hooks/document/use-window-event.ts",
+      "path": "src/hooks/use-window-event.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useWindowEvent<E extends keyof WindowEventMap>(\n    event: E,\n    listener: (this: Window, ev: WindowEventMap[E]) => void\n) {\n    const [active, setActive] = React.useState(true);\n    const savedListener = React.useRef(listener);\n\n    React.useEffect(() => {\n        if (!active) return;\n\n        const l = savedListener.current;\n\n        window.addEventListener(event, l);\n\n        return () => {\n            window.removeEventListener(event, l);\n        };\n    }, [active]);\n\n    const deactivateListener = () => {\n        setActive(false);\n    };\n\n    const activateListener = () => {\n        setActive(true);\n    };\n\n    return { deactivateListener, activateListener };\n}\n",
       "type": "registry:hook"
     }

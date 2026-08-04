@@ -5,7 +5,7 @@
   "description": "Declarative setTimeout with automatic cleanup.",
   "files": [
     {
-      "path": "src/hooks/others/use-timeout.ts",
+      "path": "src/hooks/use-timeout.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useTimeout(callback: () => void, delay: number) {\n    const savedCallback = React.useRef(callback);\n\n    React.useEffect(() => {\n        savedCallback.current = callback;\n    }, [callback]);\n\n    React.useEffect(() => {\n        const timeout = setTimeout(() => savedCallback.current(), delay);\n        return () => clearTimeout(timeout);\n    }, [delay]);\n}\n",
       "type": "registry:hook"
     }

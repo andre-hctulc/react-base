@@ -5,7 +5,7 @@
   "description": "Observes keydown events on document or a target element.",
   "files": [
     {
-      "path": "src/hooks/document/use-key-down-observer.ts",
+      "path": "src/hooks/use-key-down-observer.ts",
       "content": "\"use client\";\r\n\r\nimport React from \"react\";\r\n\r\nexport function useKeyDownObserver(observe?: Iterable<string>) {\r\n    const [keysPressed, setKeysPressed] = React.useState<Set<string>>(new Set());\r\n    const observeRef = React.useRef(observe);\r\n\r\n    React.useEffect(() => {\r\n        observeRef.current = observe;\r\n    }, [observe]);\r\n\r\n    React.useEffect(() => {\r\n        const observes = (key: string) => {\r\n            return !observeRef.current || new Set(observeRef.current).has(key);\r\n        };\r\n\r\n        const keyDownListener = (e: KeyboardEvent) => {\r\n            if (!observes(e.key)) return;\r\n            setKeysPressed(new Set([...Array.from(keysPressed), e.key]));\r\n        };\r\n\r\n        const keyUpListener = (e: KeyboardEvent) => {\r\n            if (!observes(e.key)) return;\r\n            const newSet = new Set(keysPressed);\r\n            newSet.delete(e.key);\r\n            setKeysPressed(newSet);\r\n        };\r\n\r\n        addEventListener(\"keydown\", keyDownListener);\r\n        addEventListener(\"keyup\", keyUpListener);\r\n\r\n        return () => {\r\n            removeEventListener(\"keydown\", keyDownListener);\r\n            removeEventListener(\"keyup\", keyUpListener);\r\n        };\r\n    }, []);\r\n\r\n    return keysPressed;\r\n}\r\n",
       "type": "registry:hook"
     }

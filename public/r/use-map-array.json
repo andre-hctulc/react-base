@@ -5,7 +5,7 @@
   "description": "Memoised array map.",
   "files": [
     {
-      "path": "src/hooks/iterables/use-map-array.ts",
+      "path": "src/hooks/use-map-array.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\n/**\n * Map an array based on a mapper function.\n * @param arr The array to map\n * @param mapper The mapper function\n * @param deps Additional dependencies\n * @param reactiveMapper Whether to remap when the mapper changes.\n */\nexport function useMapArray<T, S>(arr: T[], mapper: (item: T, index: number, arr: T[]) => S): S[] {\n    const mapped = React.useMemo(() => arr.map(mapper), [arr]);\n    return mapped;\n}\n",
       "type": "registry:hook"
     }

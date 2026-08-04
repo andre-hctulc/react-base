@@ -9,8 +9,9 @@
       "description": "CVA size variant helpers: sz() and msz().",
       "files": [
         {
-          "path": "src/util/react/variants.util.ts",
-          "type": "registry:lib"
+          "path": "src/lib/variants.util.ts",
+          "type": "registry:lib",
+          "target": "@lib/variants.util.ts"
         }
       ],
       "type": "registry:lib"
@@ -21,24 +22,9 @@
       "description": "React utility helpers.",
       "files": [
         {
-          "path": "src/util/react/react.util.ts",
-          "type": "registry:lib"
-        }
-      ],
-      "type": "registry:lib"
-    },
-    {
-      "name": "react-types",
-      "title": "React types",
-      "description": "Common React type utilities: PropsOf, PartialPropsOf, StyleProps, RefProps, RichAsProps.",
-      "files": [
-        {
-          "path": "src/types/react/react.types.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "src/types/react/index.ts",
-          "type": "registry:lib"
+          "path": "src/lib/react.util.ts",
+          "type": "registry:lib",
+          "target": "@lib/react.util.ts"
         }
       ],
       "type": "registry:lib"
@@ -49,7 +35,7 @@
       "description": "Creates an object URL from a Blob and revokes it on cleanup.",
       "files": [
         {
-          "path": "src/hooks/document/use-blob-url.ts",
+          "path": "src/hooks/use-blob-url.ts",
           "type": "registry:hook"
         }
       ],
@@ -61,7 +47,7 @@
       "description": "Reactively resolves a DOM element by id.",
       "files": [
         {
-          "path": "src/hooks/document/use-element-by-id.ts",
+          "path": "src/hooks/use-element-by-id.ts",
           "type": "registry:hook"
         }
       ],
@@ -73,7 +59,7 @@
       "description": "Observes keydown events on document or a target element.",
       "files": [
         {
-          "path": "src/hooks/document/use-key-down-observer.ts",
+          "path": "src/hooks/use-key-down-observer.ts",
           "type": "registry:hook"
         }
       ],
@@ -85,7 +71,7 @@
       "description": "Observes element resize events via ResizeObserver.",
       "files": [
         {
-          "path": "src/hooks/document/use-resize-observer.ts",
+          "path": "src/hooks/use-resize-observer.ts",
           "type": "registry:hook"
         }
       ],
@@ -97,7 +83,7 @@
       "description": "Returns the current window screen dimensions.",
       "files": [
         {
-          "path": "src/hooks/document/use-screen-size.ts",
+          "path": "src/hooks/use-screen-size.ts",
           "type": "registry:hook"
         }
       ],
@@ -109,7 +95,7 @@
       "description": "Creates an object URL from an SVG string.",
       "files": [
         {
-          "path": "src/hooks/document/use-svg-url.ts",
+          "path": "src/hooks/use-svg-url.ts",
           "type": "registry:hook"
         }
       ],
@@ -121,7 +107,7 @@
       "description": "Attaches and cleans up a window event listener.",
       "files": [
         {
-          "path": "src/hooks/document/use-window-event.ts",
+          "path": "src/hooks/use-window-event.ts",
           "type": "registry:hook"
         }
       ],
@@ -133,7 +119,7 @@
       "description": "Stateful array with push, pop, remove and other helpers.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-array.ts",
+          "path": "src/hooks/use-array.ts",
           "type": "registry:hook"
         }
       ],
@@ -145,7 +131,7 @@
       "description": "Memoises a value as a stable array reference.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-as-array.ts",
+          "path": "src/hooks/use-as-array.ts",
           "type": "registry:hook"
         }
       ],
@@ -157,7 +143,7 @@
       "description": "Memoises an array as a stable Map reference.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-as-map.ts",
+          "path": "src/hooks/use-as-map.ts",
           "type": "registry:hook"
         }
       ],
@@ -169,7 +155,7 @@
       "description": "Memoises an array as a stable Set reference.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-as-set.ts",
+          "path": "src/hooks/use-as-set.ts",
           "type": "registry:hook"
         }
       ],
@@ -181,7 +167,7 @@
       "description": "Memoised array filter.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-filter.ts",
+          "path": "src/hooks/use-filter.ts",
           "type": "registry:hook"
         }
       ],
@@ -193,7 +179,7 @@
       "description": "Memoised array map.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-map-array.ts",
+          "path": "src/hooks/use-map-array.ts",
           "type": "registry:hook"
         }
       ],
@@ -205,7 +191,7 @@
       "description": "Stateful Map with set, delete and clear helpers.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-map.ts",
+          "path": "src/hooks/use-map.ts",
           "type": "registry:hook"
         }
       ],
@@ -217,7 +203,7 @@
       "description": "Returns a memoised numeric range array.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-range.ts",
+          "path": "src/hooks/use-range.ts",
           "type": "registry:hook"
         }
       ],
@@ -229,7 +215,7 @@
       "description": "Stateful Set with add, delete and clear helpers.",
       "files": [
         {
-          "path": "src/hooks/iterables/use-set.ts",
+          "path": "src/hooks/use-set.ts",
           "type": "registry:hook"
         }
       ],
@@ -241,7 +227,7 @@
       "description": "Returns the maximum value from an array.",
       "files": [
         {
-          "path": "src/hooks/math/use-max.ts",
+          "path": "src/hooks/use-max.ts",
           "type": "registry:hook"
         }
       ],
@@ -253,7 +239,7 @@
       "description": "Returns the minimum value from an array.",
       "files": [
         {
-          "path": "src/hooks/math/use-min.ts",
+          "path": "src/hooks/use-min.ts",
           "type": "registry:hook"
         }
       ],
@@ -265,7 +251,7 @@
       "description": "Reads and writes the URL hash.",
       "files": [
         {
-          "path": "src/hooks/navigation/use-hash.ts",
+          "path": "src/hooks/use-hash.ts",
           "type": "registry:hook"
         }
       ],
@@ -277,19 +263,7 @@
       "description": "Returns the active Tailwind-style breakpoint.",
       "files": [
         {
-          "path": "src/hooks/others/use-breakpoints.ts",
-          "type": "registry:hook"
-        }
-      ],
-      "type": "registry:hook"
-    },
-    {
-      "name": "use-choices",
-      "title": "useChoices",
-      "description": "Multi-select state management.",
-      "files": [
-        {
-          "path": "src/hooks/others/use-choices.ts",
+          "path": "src/hooks/use-breakpoints.ts",
           "type": "registry:hook"
         }
       ],
@@ -301,7 +275,7 @@
       "description": "Typed context consumer that throws when used outside its provider.",
       "files": [
         {
-          "path": "src/hooks/others/use-context-x.ts",
+          "path": "src/hooks/use-context-x.ts",
           "type": "registry:hook"
         }
       ],
@@ -313,7 +287,7 @@
       "description": "Drives CSS class-based enter/leave transitions.",
       "files": [
         {
-          "path": "src/hooks/others/use-css-transition.ts",
+          "path": "src/hooks/use-css-transition.ts",
           "type": "registry:hook"
         }
       ],
@@ -325,7 +299,7 @@
       "description": "Returns a value that updates after a delay.",
       "files": [
         {
-          "path": "src/hooks/others/use-delayed-value.ts",
+          "path": "src/hooks/use-delayed-value.ts",
           "type": "registry:hook"
         }
       ],
@@ -337,7 +311,7 @@
       "description": "Declarative setInterval with automatic cleanup.",
       "files": [
         {
-          "path": "src/hooks/others/use-interval.ts",
+          "path": "src/hooks/use-interval.ts",
           "type": "registry:hook"
         }
       ],
@@ -349,7 +323,7 @@
       "description": "Returns true after the component has mounted (SSR-safe).",
       "files": [
         {
-          "path": "src/hooks/others/use-is-hydrated.ts",
+          "path": "src/hooks/use-is-hydrated.ts",
           "type": "registry:hook"
         }
       ],
@@ -361,7 +335,7 @@
       "description": "useState that syncs to localStorage.",
       "files": [
         {
-          "path": "src/hooks/others/use-persistent-state.ts",
+          "path": "src/hooks/use-persistent-state.ts",
           "type": "registry:hook"
         }
       ],
@@ -373,7 +347,7 @@
       "description": "Tracks loading/error/data state of a promise.",
       "files": [
         {
-          "path": "src/hooks/others/use-promise.ts",
+          "path": "src/hooks/use-promise.ts",
           "type": "registry:hook"
         }
       ],
@@ -385,7 +359,7 @@
       "description": "Keeps a ref in sync with the latest value of a variable.",
       "files": [
         {
-          "path": "src/hooks/others/use-ref-of.ts",
+          "path": "src/hooks/use-ref-of.ts",
           "type": "registry:hook"
         }
       ],
@@ -397,27 +371,11 @@
       "description": "Declarative setTimeout with automatic cleanup.",
       "files": [
         {
-          "path": "src/hooks/others/use-timeout.ts",
+          "path": "src/hooks/use-timeout.ts",
           "type": "registry:hook"
         }
       ],
       "type": "registry:hook"
-    },
-    {
-      "name": "icon",
-      "title": "Icon",
-      "description": "Polymorphic icon wrapper with size, color, inline and noShrink variants. Accepts LucideIcon FC, SVG element, or ReactNode.",
-      "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
-      ],
-      "files": [
-        {
-          "path": "src/components/icons/icon.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
     },
     {
       "name": "flex",
@@ -428,7 +386,7 @@
       ],
       "files": [
         {
-          "path": "src/components/containers/flex.tsx",
+          "path": "src/components/flex.tsx",
           "type": "registry:ui"
         }
       ],
@@ -439,11 +397,15 @@
       "title": "Toolbar",
       "description": "Flex toolbar with spacing, padding, margin, scroll and alignment variants.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "andre-hctulc/react-base/variants-util"
       ],
       "files": [
         {
-          "path": "src/components/containers/toolbar.tsx",
+          "path": "src/components/toolbar.tsx",
           "type": "registry:ui"
         }
       ],
@@ -455,7 +417,7 @@
       "description": "Center, CenterH and CenterV flex utilities.",
       "files": [
         {
-          "path": "src/components/containers/center.tsx",
+          "path": "src/components/center.tsx",
           "type": "registry:ui"
         }
       ],
@@ -465,255 +427,12 @@
       "name": "spacer",
       "title": "Spacer",
       "description": "Polymorphic flex gap container.",
-      "files": [
-        {
-          "path": "src/components/containers/spacer.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "root",
-      "title": "Root",
-      "description": "Flex root layout container with direction, overflow and background variants.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/layout/root.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "overlay",
-      "title": "Overlay",
-      "description": "Fixed or absolute overlay with blur/opacity background variants and optional portal.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/layout/overlay.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "page",
-      "title": "Page",
-      "description": "Page container with constrained width, flex and background variants.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/layout/page.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "page-content",
-      "title": "PageContent",
-      "description": "Main content area with padding, size and flex variants.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/layout/page-content.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "page-header",
-      "title": "PageHeader",
-      "description": "Page header with title, badges, actions slots, padding and margin variants.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
       "registryDependencies": [
-        "andre-hctulc/react-base/title"
+        "andre-hctulc/react-base/variants-util"
       ],
       "files": [
         {
-          "path": "src/components/layout/page-header.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "spinner-page",
-      "title": "SpinnerPage",
-      "description": "Full-page spinner using Page and PageContent.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/page",
-        "andre-hctulc/react-base/page-content"
-      ],
-      "files": [
-        {
-          "path": "src/components/layout/spinner-page.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "color-text",
-      "title": "ColorText",
-      "description": "Polymorphic text with color, size, lineClamp and margin variants.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/text/color-text.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "error-text",
-      "title": "ErrorText",
-      "description": "Error-colored text using ColorText.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/color-text"
-      ],
-      "files": [
-        {
-          "path": "src/components/text/error-text.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "success-text",
-      "title": "SuccessText",
-      "description": "Success-colored text using ColorText.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/color-text"
-      ],
-      "files": [
-        {
-          "path": "src/components/text/success-text.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "title",
-      "title": "Title",
-      "description": "Polymorphic heading with variant, bold, truncate and icon slot.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "registryDependencies": [
-        "andre-hctulc/react-base/icon"
-      ],
-      "files": [
-        {
-          "path": "src/components/text/title.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "subtitle",
-      "title": "Subtitle",
-      "description": "Subtitle / secondary text component.",
-      "files": [
-        {
-          "path": "src/components/text/subtitle.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "text-block",
-      "title": "TextBlock",
-      "description": "Prose text block.",
-      "files": [
-        {
-          "path": "src/components/text/text-block.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "typography",
-      "title": "Typography",
-      "description": "Styled typography components (h1-h6, p, ul, etc.).",
-      "files": [
-        {
-          "path": "src/components/text/typography.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "transition",
-      "title": "Transition",
-      "description": "Headless CSS class-based enter/leave transition primitive.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/use-css-transition"
-      ],
-      "files": [
-        {
-          "path": "src/components/transitions/transition.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "src/components/transitions/transition-context.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "src/components/transitions/transition-child.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "fade",
-      "title": "Fade",
-      "description": "CSS opacity fade enter/leave transition.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/transition"
-      ],
-      "files": [
-        {
-          "path": "src/components/transitions/fade.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "collapse-transition",
-      "title": "CollapseTransition",
-      "description": "CSS height collapse enter/leave transition.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/transition"
-      ],
-      "files": [
-        {
-          "path": "src/components/transitions/collapse.tsx",
+          "path": "src/components/spacer.tsx",
           "type": "registry:ui"
         }
       ],
@@ -725,7 +444,7 @@
       "description": "Small colored status dot.",
       "files": [
         {
-          "path": "src/components/data-display/dot.tsx",
+          "path": "src/components/dot.tsx",
           "type": "registry:ui"
         }
       ],
@@ -737,11 +456,28 @@
       "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
       "registryDependencies": [
         "andre-hctulc/react-base/icon",
-        "andre-hctulc/react-base/clipboard-icon-button"
+        "andre-hctulc/react-base/clipboard-icon-button",
+        "andre-hctulc/react-base/use-as-set"
       ],
       "files": [
         {
-          "path": "src/components/data-display/summary.tsx",
+          "path": "src/components/summary.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "icon",
+      "title": "Icon",
+      "description": "Polymorphic icon wrapper with size, color, inline and noShrink variants. Accepts LucideIcon FC, SVG element, or ReactNode.",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/icon.tsx",
           "type": "registry:ui"
         }
       ],
@@ -759,7 +495,7 @@
       ],
       "files": [
         {
-          "path": "src/components/input/clipboard-icon-button.tsx",
+          "path": "src/components/clipboard-icon-button.tsx",
           "type": "registry:ui"
         }
       ],
@@ -774,15 +510,15 @@
       ],
       "files": [
         {
-          "path": "src/components/input/js-form-types.ts",
+          "path": "src/components/js-form-types.ts",
           "type": "registry:lib"
         },
         {
-          "path": "src/components/input/js-form-helpers.ts",
+          "path": "src/components/js-form-helpers.ts",
           "type": "registry:lib"
         },
         {
-          "path": "src/components/input/js-form-context.ts",
+          "path": "src/components/js-form-context.ts",
           "type": "registry:lib"
         }
       ],
@@ -798,7 +534,7 @@
       ],
       "files": [
         {
-          "path": "src/components/input/form-control.tsx",
+          "path": "src/components/form-control.tsx",
           "type": "registry:ui"
         }
       ],
@@ -814,11 +550,11 @@
       ],
       "files": [
         {
-          "path": "src/components/input/js-form.tsx",
+          "path": "src/components/js-form.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "src/components/input/flex-form.tsx",
+          "path": "src/components/flex-form.tsx",
           "type": "registry:ui"
         }
       ],
@@ -830,39 +566,7 @@
       "description": "Inline editable field that switches between view and edit mode.",
       "files": [
         {
-          "path": "src/components/input/editable.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "confirm-dialog",
-      "title": "ConfirmDialog",
-      "description": "Accessible confirmation dialog with confirm/cancel callbacks.",
-      "registryDependencies": [
-        "dialog",
-        "button"
-      ],
-      "files": [
-        {
-          "path": "src/components/dialog/confirm-dialog.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "src/components/dialog/use-confirm-dialog.tsx",
-          "type": "registry:hook"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "stat",
-      "title": "Stat",
-      "description": "Stat card with label, value and trend display.",
-      "files": [
-        {
-          "path": "src/components/stat/stat.tsx",
+          "path": "src/components/editable.tsx",
           "type": "registry:ui"
         }
       ],
@@ -874,7 +578,253 @@
       "description": "Span styled to look like a label — for non-input labeling contexts.",
       "files": [
         {
-          "path": "src/components/label/label-mimic.tsx",
+          "path": "src/components/label-mimic.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "root",
+      "title": "Root",
+      "description": "Flex root layout container with direction, overflow and background variants.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "src/components/root.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "overlay",
+      "title": "Overlay",
+      "description": "Fixed or absolute overlay with blur/opacity background variants and optional portal.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "src/components/overlay.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "page",
+      "title": "Page",
+      "description": "Page container with constrained width, flex and background variants.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "src/components/page.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "page-content",
+      "title": "PageContent",
+      "description": "Main content area with padding, size and flex variants.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "andre-hctulc/react-base/variants-util"
+      ],
+      "files": [
+        {
+          "path": "src/components/page-content.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "page-header",
+      "title": "PageHeader",
+      "description": "Page header with title, badges, actions slots, padding and margin variants.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "andre-hctulc/react-base/title",
+        "andre-hctulc/react-base/variants-util"
+      ],
+      "files": [
+        {
+          "path": "src/components/page-header.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "spinner-page",
+      "title": "SpinnerPage",
+      "description": "Full-page spinner using Page and PageContent.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/page",
+        "andre-hctulc/react-base/page-content",
+        "spinner"
+      ],
+      "files": [
+        {
+          "path": "src/components/spinner-page.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "stat",
+      "title": "Stat",
+      "description": "Stat card with label, value and trend display.",
+      "registryDependencies": [
+        "skeleton",
+        "andre-hctulc/react-base/icon",
+        "andre-hctulc/react-base/use-ref-of"
+      ],
+      "files": [
+        {
+          "path": "src/components/stat.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "color-text",
+      "title": "ColorText",
+      "description": "Polymorphic text with color, size, lineClamp and margin variants.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "andre-hctulc/react-base/variants-util"
+      ],
+      "files": [
+        {
+          "path": "src/components/color-text.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "title",
+      "title": "Title",
+      "description": "Polymorphic heading with variant, bold, truncate and icon slot.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "andre-hctulc/react-base/icon",
+        "andre-hctulc/react-base/variants-util"
+      ],
+      "files": [
+        {
+          "path": "src/components/title.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "subtitle",
+      "title": "Subtitle",
+      "description": "Subtitle / secondary text component.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/icon",
+        "andre-hctulc/react-base/variants-util"
+      ],
+      "files": [
+        {
+          "path": "src/components/subtitle.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "text-block",
+      "title": "TextBlock",
+      "description": "Prose text block.",
+      "files": [
+        {
+          "path": "src/components/text-block.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "typography",
+      "title": "Typography",
+      "description": "Styled typography components (h1-h6, p, ul, etc.).",
+      "files": [
+        {
+          "path": "src/components/typography.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "transition",
+      "title": "Transition",
+      "description": "Headless CSS class-based enter/leave transition primitive.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/use-css-transition"
+      ],
+      "files": [
+        {
+          "path": "src/components/transition.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/components/transition-context.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/components/transition-child.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "fade",
+      "title": "Fade",
+      "description": "CSS opacity fade enter/leave transition.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/transition"
+      ],
+      "files": [
+        {
+          "path": "src/components/fade.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "collapse-transition",
+      "title": "CollapseTransition",
+      "description": "CSS height collapse enter/leave transition.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/transition"
+      ],
+      "files": [
+        {
+          "path": "src/components/collapse.tsx",
           "type": "registry:ui"
         }
       ],

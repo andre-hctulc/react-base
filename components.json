@@ -13,7 +13,7 @@
         "components": "@/components",
         "ui": "@/ui",
         "lib": "@/lib",
-        "utils": "@/lib/cn.util",
+        "utils": "@/lib/utils",
         "hooks": "@/hooks",
         "types": "@/types"
     },

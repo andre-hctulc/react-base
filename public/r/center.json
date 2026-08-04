@@ -5,8 +5,8 @@
   "description": "Center, CenterH and CenterV flex utilities.",
   "files": [
     {
-      "path": "src/components/containers/center.tsx",
-      "content": "import { cn } from \"@/util/cn.js\";\nimport { type ComponentProps, type FC } from \"react\";\n\nexport interface CenterProps extends ComponentProps<\"div\"> {}\n\n/** Centers children both horizontally and vertically. */\nexport const Center: FC<CenterProps> = ({ className, ref, ...props }) => (\n    <div ref={ref} className={cn(\"flex items-center justify-center\", className)} {...props} />\n);\n\n/** Centers children horizontally. */\nexport const CenterH: FC<CenterProps> = ({ className, ref, ...props }) => (\n    <div ref={ref} className={cn(\"flex justify-center\", className)} {...props} />\n);\n\n/** Centers children vertically. */\nexport const CenterV: FC<CenterProps> = ({ className, ref, ...props }) => (\n    <div ref={ref} className={cn(\"flex items-center\", className)} {...props} />\n);\n",
+      "path": "src/components/center.tsx",
+      "content": "import { cn } from \"@/lib/utils.js\";\nimport { type ComponentProps, type FC } from \"react\";\n\nexport interface CenterProps extends ComponentProps<\"div\"> {}\n\n/** Centers children both horizontally and vertically. */\nexport const Center: FC<CenterProps> = ({ className, ref, ...props }) => (\n    <div ref={ref} className={cn(\"flex items-center justify-center\", className)} {...props} />\n);\n\n/** Centers children horizontally. */\nexport const CenterH: FC<CenterProps> = ({ className, ref, ...props }) => (\n    <div ref={ref} className={cn(\"flex justify-center\", className)} {...props} />\n);\n\n/** Centers children vertically. */\nexport const CenterV: FC<CenterProps> = ({ className, ref, ...props }) => (\n    <div ref={ref} className={cn(\"flex items-center\", className)} {...props} />\n);\n",
       "type": "registry:ui"
     }
   ],

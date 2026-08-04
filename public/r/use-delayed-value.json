@@ -5,7 +5,7 @@
   "description": "Returns a value that updates after a delay.",
   "files": [
     {
-      "path": "src/hooks/others/use-delayed-value.ts",
+      "path": "src/hooks/use-delayed-value.ts",
       "content": "\"use client\";\n\nimport { useState, useEffect } from \"react\";\n\n/**\n * Delays value changes by `delay` milliseconds.\n * Interrupted changes are discarded.\n * @param value Delay in milliseconds\n */\nexport function useDelayedValue<T>(value: T, delay: number = 2000): T {\n    const [delayedValue, setDelayedValue] = useState<T>(value);\n\n    useEffect(() => {\n        const handler = setTimeout(() => {\n            setDelayedValue(value);\n        }, delay);\n\n        return () => clearTimeout(handler);\n    }, [value, delay]);\n\n    return delayedValue;\n}\n",
       "type": "registry:hook"
     }

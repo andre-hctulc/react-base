@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/cn.util";
+import { cn } from "@/lib/utils";
 import { Label } from "@/ui/label";
 import { Separator } from "@/ui/separator";
 

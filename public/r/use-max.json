@@ -5,7 +5,7 @@
   "description": "Returns the maximum value from an array.",
   "files": [
     {
-      "path": "src/hooks/math/use-max.ts",
+      "path": "src/hooks/use-max.ts",
       "content": "\"use client\";\n\nimport React from \"react\";\n\nexport function useMax(...values: number[]): number {\n    const m = React.useMemo(() => Math.max(...values), values);\n    return m;\n}\n",
       "type": "registry:hook"
     }
