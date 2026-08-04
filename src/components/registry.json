@@ -156,7 +156,16 @@
                 {
                     "path": "js-form.tsx",
                     "type": "registry:ui"
-                },
+                }
+            ]
+        },
+        {
+            "name": "flex-form",
+            "type": "registry:ui",
+            "title": "FlexForm",
+            "description": "Form with flex layout",
+            "registryDependencies": [],
+            "files": [
                 {
                     "path": "flex-form.tsx",
                     "type": "registry:ui"
