@@ -368,6 +368,19 @@
                     "type": "registry:ui"
                 }
             ]
+        },
+        {
+            "name": "labeled-separator",
+            "type": "registry:ui",
+            "title": "LabeledSeparator",
+            "description": "Separator with a centered label, e.g. an \"OR\" divider.",
+            "registryDependencies": ["separator"],
+            "files": [
+                {
+                    "path": "labeled-separator.tsx",
+                    "type": "registry:ui"
+                }
+            ]
         }
     ]
 }

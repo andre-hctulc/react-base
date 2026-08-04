@@ -789,6 +789,21 @@
       "type": "registry:ui"
     },
     {
+      "name": "labeled-separator",
+      "title": "LabeledSeparator",
+      "description": "Separator with a centered label, e.g. an \"OR\" divider.",
+      "registryDependencies": [
+        "separator"
+      ],
+      "files": [
+        {
+          "path": "src/components/labeled-separator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "theme",
       "title": "React Base Theme",
       "description": "Design tokens (CSS custom properties) for react-base components.",
