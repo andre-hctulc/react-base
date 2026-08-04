@@ -226,59 +226,16 @@
             "name": "page",
             "type": "registry:ui",
             "title": "Page",
-            "description": "Page container with constrained width, flex and background variants.",
-            "dependencies": ["class-variance-authority"],
-            "files": [
-                {
-                    "path": "page.tsx",
-                    "type": "registry:ui"
-                }
-            ]
-        },
-        {
-            "name": "page-content",
-            "type": "registry:ui",
-            "title": "PageContent",
-            "description": "Main content area with padding, size and flex variants.",
-            "dependencies": ["class-variance-authority"],
-            "registryDependencies": ["andre-hctulc/react-base/variants-util"],
-            "files": [
-                {
-                    "path": "page-content.tsx",
-                    "type": "registry:ui"
-                }
-            ]
-        },
-        {
-            "name": "page-header",
-            "type": "registry:ui",
-            "title": "PageHeader",
-            "description": "Page header with title, badges, actions slots, padding and margin variants.",
-            "dependencies": ["class-variance-authority"],
-            "registryDependencies": [
+            "description": "Page components with header, content and footer slots, padding and size variants.",
+            "dependencies": [
+                "class-variance-authority",
                 "andre-hctulc/react-base/title",
-                "andre-hctulc/react-base/variants-util"
-            ],
-            "files": [
-                {
-                    "path": "page-header.tsx",
-                    "type": "registry:ui"
-                }
-            ]
-        },
-        {
-            "name": "spinner-page",
-            "type": "registry:ui",
-            "title": "SpinnerPage",
-            "description": "Full-page spinner using Page and PageContent.",
-            "registryDependencies": [
-                "andre-hctulc/react-base/page",
-                "andre-hctulc/react-base/page-content",
+                "andre-hctulc/react-base/variants-util",
                 "spinner"
             ],
             "files": [
                 {
-                    "path": "spinner-page.tsx",
+                    "path": "page.tsx",
                     "type": "registry:ui"
                 }
             ]

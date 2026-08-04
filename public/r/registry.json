@@ -626,67 +626,16 @@
     {
       "name": "page",
       "title": "Page",
-      "description": "Page container with constrained width, flex and background variants.",
+      "description": "Page components with header, content and footer slots, padding and size variants.",
       "dependencies": [
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/page.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "page-content",
-      "title": "PageContent",
-      "description": "Main content area with padding, size and flex variants.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "registryDependencies": [
-        "andre-hctulc/react-base/variants-util"
-      ],
-      "files": [
-        {
-          "path": "src/components/page-content.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "page-header",
-      "title": "PageHeader",
-      "description": "Page header with title, badges, actions slots, padding and margin variants.",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "registryDependencies": [
+        "class-variance-authority",
         "andre-hctulc/react-base/title",
-        "andre-hctulc/react-base/variants-util"
-      ],
-      "files": [
-        {
-          "path": "src/components/page-header.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "spinner-page",
-      "title": "SpinnerPage",
-      "description": "Full-page spinner using Page and PageContent.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/page",
-        "andre-hctulc/react-base/page-content",
+        "andre-hctulc/react-base/variants-util",
         "spinner"
       ],
       "files": [
         {
-          "path": "src/components/spinner-page.tsx",
+          "path": "src/components/page.tsx",
           "type": "registry:ui"
         }
       ],
