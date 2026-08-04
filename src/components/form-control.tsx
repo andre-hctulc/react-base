@@ -12,7 +12,7 @@ import {
     type Ref,
 } from "react";
 import { useJSForm } from "./js-form-context.js";
-import { Field, FieldDescription, FieldError, FieldLabel, FieldTitle } from "@/ui/field.js";
+import { Field, FieldDescription, FieldError, FieldLabel, FieldTitle } from "@/components/ui/field.js";
 
 export type FormControlProps = {
     ref?: Ref<HTMLDivElement>;

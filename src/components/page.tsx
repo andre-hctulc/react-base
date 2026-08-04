@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz, msz } from "@/lib/variants.util.js";
 import { Title } from "./title.js";
-import { Spinner } from "@/ui/spinner.js";
+import { Spinner } from "@/components/ui/spinner.js";
 
 const pageVariants = cva("box-border w-full min-h-0", {
     variants: {
@@ -316,7 +316,6 @@ export const PageContent: FC<PageContentProps> = ({
         {children}
     </main>
 );
-
 
 const spinnerSizeMap = {
     xs: "size-3",

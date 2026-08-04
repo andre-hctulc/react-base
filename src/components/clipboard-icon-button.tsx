@@ -2,7 +2,7 @@
 
 import { useRef, useState, type ComponentProps } from "react";
 import { Check, ClipboardList } from "lucide-react";
-import { Button } from "@/ui/button.js";
+import { Button } from "@/components/ui/button.js";
 
 export interface ClipboardIconButtonProps extends ComponentProps<typeof Button> {
     onCopySuccess?: () => void;

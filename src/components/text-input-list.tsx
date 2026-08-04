@@ -5,7 +5,7 @@ import { InputList } from "./input-list.js";
 import type { InputLikeProps } from "./types.js";
 import { cn } from "@/lib/utils.js";
 import { LucidePlus, LucideX } from "lucide-react";
-import { Button } from "@/ui/button.js";
+import { Button } from "@/components/ui/button.js";
 
 const inputBaseClass =
     "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary focus:border-primary dark:border-gray-600 dark:bg-gray-700 dark:text-white";
