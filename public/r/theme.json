@@ -73,7 +73,12 @@
     }
   },
   "css": {
-    "@source inline(\"{p,px,py,pt,pr,pb,pl,ps,pe,m,mx,my,mt,mr,mb,ml,ms,me,gap,row-gap,column-gap,space-y,space-x}-{0.5,1,2,4,8,12,16,24,32,40,50}\")": {}
+    "@source inline(\"{p,px,py,pt,pr,pb,pl,ps,pe,m,mx,my,mt,mr,mb,ml,ms,me,gap,row-gap,column-gap,space-y,space-x}-{0.5,1,2,4,8,12,16,24,32,40,50}\")": {},
+    "@layer base": {
+      "button:not(:disabled), [role=\"button\"]:not([aria-disabled=\"true\"])": {
+        "cursor": "pointer"
+      }
+    }
   },
   "type": "registry:theme"
 }
