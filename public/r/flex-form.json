@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flex-form",
+  "title": "FlexForm",
+  "description": "Form with flex layout",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/flex-form.tsx",
+      "content": "\"use client\";\n\nimport { cn } from \"@/lib/utils.js\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { sz } from \"@/lib/variants.util.js\";\nimport type { ComponentProps } from \"react\";\n\nconst flexFormVariants = cva(\"flex\", {\n    variants: {\n        direction: {\n            row: \"flex-row\",\n            row_reverse: \"flex-row-reverse\",\n            col: \"flex-col\",\n            col_reverse: \"flex-col-reverse\",\n        },\n        wrap: {\n            none: \"flex-nowrap\",\n            normal: \"flex-wrap\",\n            reverse: \"flex-wrap-reverse\",\n        },\n        gap: sz(\"gap\"),\n        rowGap: sz(\"row-gap\"),\n        colGap: sz(\"column-gap\"),\n    },\n    defaultVariants: { direction: \"col\", gap: \"md\" },\n});\n\nexport type FlexFormProps = ComponentProps<\"form\"> & VariantProps<typeof flexFormVariants>;\n\n/** Use `formEventToFormData` or `formEventToValues` to convert form event to values. */\nexport const FlexForm: React.FC<FlexFormProps> = ({\n    direction,\n    wrap,\n    gap,\n    rowGap,\n    colGap,\n    className,\n    children,\n    ...restProps\n}) => (\n    <form\n        className={cn(flexFormVariants({ direction, wrap, gap, rowGap, colGap }), className)}\n        {...restProps}\n    >\n        {children}\n    </form>\n);\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
