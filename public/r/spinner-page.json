@@ -1,18 +1,15 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "spinner-page",
-  "title": "SpinnerPage",
-  "description": "Full-page spinner using Page and PageContent.",
-  "registryDependencies": [
-    "andre-hctulc/react-base/page",
-    "andre-hctulc/react-base/page-content"
-  ],
-  "files": [
-    {
-      "path": "src/components/layout/spinner-page.tsx",
-      "content": "import { PageContent } from \"./page-content.js\";\nimport { Page, type PageProps } from \"./page.js\";\nimport { Spinner } from \"@/components/cn/spinner.js\";\n\nconst spinnerSizeMap = {\n    xs: \"size-3\",\n    sm: \"size-4\",\n    md: \"size-6\",\n    lg: \"size-8\",\n    xl: \"size-10\",\n    \"2xl\": \"size-12\",\n    \"3xl\": \"size-14\",\n    \"4xl\": \"size-16\",\n    \"5xl\": \"size-20\",\n} as const;\n\ntype SpinnerSize = keyof typeof spinnerSizeMap;\n\nexport interface SpinnerPageProps extends Omit<PageProps, \"children\"> {\n    spinnerSize?: SpinnerSize;\n}\n\nexport const SpinnerPage: React.FC<SpinnerPageProps> = ({ spinnerSize, ...props }) => (\n    <Page {...props}>\n        <PageContent height=\"full\" flex=\"col\" className=\"items-center justify-center\">\n            <Spinner className={spinnerSizeMap[spinnerSize || \"2xl\"]} />\n        </PageContent>\n    </Page>\n);\n",
-      "type": "registry:ui"
-    }
-  ],
-  "type": "registry:ui"
+    "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+    "name": "spinner-page",
+    "title": "SpinnerPage",
+    "description": "Full-page spinner using Page and PageContent.",
+    "registryDependencies": ["andre-hctulc/react-base/page", "andre-hctulc/react-base/page-content"],
+    "files": [
+        {
+            "path": "src/components/layout/spinner-page.tsx",
+            "content": "import { PageContent } from \"./page-content.js\";\nimport { Page, type PageProps } from \"./page.js\";\nimport { Spinner } from \"@/cn/ui/spinner.js\";\n\nconst spinnerSizeMap = {\n    xs: \"size-3\",\n    sm: \"size-4\",\n    md: \"size-6\",\n    lg: \"size-8\",\n    xl: \"size-10\",\n    \"2xl\": \"size-12\",\n    \"3xl\": \"size-14\",\n    \"4xl\": \"size-16\",\n    \"5xl\": \"size-20\",\n} as const;\n\ntype SpinnerSize = keyof typeof spinnerSizeMap;\n\nexport interface SpinnerPageProps extends Omit<PageProps, \"children\"> {\n    spinnerSize?: SpinnerSize;\n}\n\nexport const SpinnerPage: React.FC<SpinnerPageProps> = ({ spinnerSize, ...props }) => (\n    <Page {...props}>\n        <PageContent height=\"full\" flex=\"col\" className=\"items-center justify-center\">\n            <Spinner className={spinnerSizeMap[spinnerSize || \"2xl\"]} />\n        </PageContent>\n    </Page>\n);\n",
+            "type": "registry:ui"
+        }
+    ],
+    "type": "registry:ui"
 }
