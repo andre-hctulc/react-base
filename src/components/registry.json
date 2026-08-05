@@ -434,6 +434,32 @@
                     "type": "registry:ui"
                 }
             ]
+        },
+        {
+            "name": "table-outline",
+            "type": "registry:ui",
+            "title": "TableOutline",
+            "description": "Table outline component.",
+            "files": [
+                {
+                    "path": "table-outline.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "data-table",
+            "type": "registry:ui",
+            "title": "DataTable",
+            "description": "Data table component.",
+            "registryDependencies": ["table", "empty"],
+            "dependencies": ["@tanstack/react-table"],
+            "files": [
+                {
+                    "path": "data-table.tsx",
+                    "type": "registry:ui"
+                }
+            ]
         }
     ]
 }

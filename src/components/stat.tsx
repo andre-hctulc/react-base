@@ -62,7 +62,7 @@ interface StatProps extends Omit<ComponentProps<"div">, "color">, VariantProps<t
     descriptionProps?: ComponentProps<"p">;
     textProps?: ComponentProps<"p">;
     icon?: IconLike;
-    LinkComponent?: ComponentType<ComponentProps<"a">>;
+    LinkComponent?: any;
     linkProps?: ComponentProps<"a">;
     href?: string;
     skeletonProps?: ComponentProps<typeof Skeleton>;

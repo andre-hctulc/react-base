@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table-outline",
+  "title": "TableOutline",
+  "description": "Table outline component.",
+  "files": [
+    {
+      "path": "src/components/table-outline.tsx",
+      "content": "import { cn } from \"@/lib/utils.js\";\nimport type { ComponentProps, FC } from \"react\";\n\ninterface TableOutlineProps extends ComponentProps<\"div\"> {\n    children: React.ReactNode;\n}\n\nexport const TableOutline: FC<TableOutlineProps> = ({ children, className, ...props }) => {\n    return (\n        <div className={cn(\"overflow-hidden rounded border\", className)} {...props}>\n            {children}\n        </div>\n    );\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

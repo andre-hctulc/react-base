@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button.js";
 import { Input } from "@/components/ui/input.js";
 
 export interface TextInputListProps {
+    id?: string;
     readOnly?: boolean;
     disabled?: boolean;
     name?: string;
@@ -38,6 +39,7 @@ export const TextInputList: FC<TextInputListProps> = ({
     className,
     ref,
     unique,
+    id,
 }) => {
     const Inp: any = textarea ? "textarea" : "input";
     const [newValue, setNewValue] = useState("");
@@ -45,6 +47,7 @@ export const TextInputList: FC<TextInputListProps> = ({
 
     return (
         <InputList<string>
+            id={id}
             unique={unique}
             className={cn("space-y-4", className)}
             ref={ref}

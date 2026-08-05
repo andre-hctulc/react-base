@@ -16,6 +16,7 @@ export interface ListInputProps<T = any> {
 }
 
 export interface InputListProps<T = string> {
+    id?: string;
     readOnly?: boolean;
     disabled?: boolean;
     name?: string;
@@ -81,6 +82,7 @@ export const InputList = <T = string,>({
     readOnly,
     defaultInputValue,
     compareValues,
+    id,
     ...inputProps
 }: InputListProps<T>) => {
     const sortRef = useRefOf(sort);
@@ -151,7 +153,7 @@ export const InputList = <T = string,>({
         });
 
     return (
-        <Comp className={twMerge("", className)} style={style}>
+        <Comp className={twMerge("", className)} style={style} id={id}>
             {reverse ? valuesEl : inpEl}
             {reverse ? inpEl : valuesEl}
         </Comp>

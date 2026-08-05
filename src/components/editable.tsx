@@ -3,6 +3,7 @@
 import React, { type ReactElement, type ReactNode } from "react";
 
 export interface EditInputProps<T = any> {
+    id?: string;
     name?: string;
     defaultValue?: T;
     value?: T;

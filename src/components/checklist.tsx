@@ -1,4 +1,4 @@
-import type { ComponentProps, ComponentType, CSSProperties, FC, ReactNode } from "react";
+import type { ComponentProps, CSSProperties, FC, ReactNode } from "react";
 import { Subtitle } from "./subtitle.js";
 import { Icon } from "./icon.js";
 import { cn } from "@/lib/utils.js";
@@ -22,7 +22,7 @@ interface ComponentsProps {
     textProps?: ComponentProps<"p">;
     secondaryTextProps?: ComponentProps<"p">;
     iconProps?: ComponentProps<typeof Icon>;
-    LinkComponent?: ComponentType<ComponentProps<"a">>;
+    LinkComponent?: any;
     linkProps?: ComponentProps<"a">;
 }
 
