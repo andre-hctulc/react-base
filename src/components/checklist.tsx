@@ -145,10 +145,10 @@ export const Checklist: FC<ChecklistProps> = ({
 
                 return (
                     <li key={item.key}>
-                        <Comp className="flex" {...p}>
+                        <Comp className="flex items-center" {...p}>
                             <div className="">
                                 <Icon
-                                    color={checked ? "success" : "error"}
+                                    color={checked ? "success" : "destructive"}
                                     size={iconSize}
                                     {...iconProps}
                                     {...item.iconProps}
@@ -173,8 +173,8 @@ export const Checklist: FC<ChecklistProps> = ({
                                         {...item.textProps}
                                         className={cn(
                                             textClasses,
-                                            item.disabled && "text-t-4 line-through",
-                                            item.secondary && "text-t-3",
+                                            item.disabled && "text-muted-foreground/70 line-through",
+                                            item.secondary && "text-muted-foreground",
                                             item.textProps?.className,
                                             textProps?.className,
                                         )}
@@ -187,7 +187,7 @@ export const Checklist: FC<ChecklistProps> = ({
                                         {...secondaryTextProps}
                                         {...item.secondaryTextProps}
                                         className={cn(
-                                            " text-t-2",
+                                            "text-muted-foreground",
                                             secTextClasses,
                                             secondaryTextProps?.className,
                                             item.secondaryTextProps?.className,

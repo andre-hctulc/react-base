@@ -9,26 +9,26 @@ import {
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type { ComponentProps, ReactNode } from "react";
-import { Empty, EmptyContent, EmptyDescription } from "@/components/ui/empty.js";
+import { Empty, EmptyHeader, EmptyDescription } from "@/components/ui/empty.js";
 import { cn } from "@/lib/utils";
 
 const defaultFeatures = tableFeatures({});
 
-interface DataTableProps<TData extends RowData> extends ComponentProps<"div"> {
+interface DTableProps<TData extends RowData> extends ComponentProps<"div"> {
     columns: ColumnDef<TableFeatures, TData, any>[];
     data: TData[];
     empty?: ReactNode;
     features?: TableFeatures;
 }
 
-export function DataTable<TData extends RowData>({
+export function DTable<TData extends RowData>({
     columns,
     data,
     empty,
     features,
     className,
     ...props
-}: DataTableProps<TData>) {
+}: DTableProps<TData>) {
     const table = useTable({
         features: features || defaultFeatures,
         columns,
@@ -68,11 +68,11 @@ export function DataTable<TData extends RowData>({
                             <TableCell colSpan={columns.length} className="flex items-center justify-center">
                                 {typeof empty === "string" || !empty ? (
                                     <Empty>
-                                        <EmptyContent>
+                                        <EmptyHeader>
                                             <EmptyDescription>
                                                 {empty || "No data available"}
                                             </EmptyDescription>
-                                        </EmptyContent>
+                                        </EmptyHeader>
                                     </Empty>
                                 ) : (
                                     empty

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dtable",
+  "title": "DTable",
+  "description": "Data table component.",
+  "dependencies": [
+    "@tanstack/react-table"
+  ],
+  "registryDependencies": [
+    "table",
+    "empty"
+  ],
+  "files": [
+    {
+      "path": "src/components/dtable.tsx",
+      "content": "\"use client\";\n\nimport {\n    type ColumnDef,\n    type RowData,\n    type TableFeatures,\n    tableFeatures,\n    useTable,\n} from \"@tanstack/react-table\";\nimport { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\";\nimport type { ComponentProps, ReactNode } from \"react\";\nimport { Empty, EmptyHeader, EmptyDescription } from \"@/components/ui/empty.js\";\nimport { cn } from \"@/lib/utils\";\n\nconst defaultFeatures = tableFeatures({});\n\ninterface DTableProps<TData extends RowData> extends ComponentProps<\"div\"> {\n    columns: ColumnDef<TableFeatures, TData, any>[];\n    data: TData[];\n    empty?: ReactNode;\n    features?: TableFeatures;\n}\n\nexport function DTable<TData extends RowData>({\n    columns,\n    data,\n    empty,\n    features,\n    className,\n    ...props\n}: DTableProps<TData>) {\n    const table = useTable({\n        features: features || defaultFeatures,\n        columns,\n        data,\n    });\n    const rowModel = table.getRowModel();\n\n    return (\n        <div className={cn(\"overflow-hidden rounded border\", className)} {...props}>\n            <Table>\n                <TableHeader>\n                    {table.getHeaderGroups().map((headerGroup) => (\n                        <TableRow key={headerGroup.id}>\n                            {headerGroup.headers.map((header) => {\n                                return (\n                                    <TableHead key={header.id}>\n                                        {header.isPlaceholder ? null : <table.FlexRender header={header} />}\n                                    </TableHead>\n                                );\n                            })}\n                        </TableRow>\n                    ))}\n                </TableHeader>\n                <TableBody>\n                    {rowModel.rows?.length ? (\n                        rowModel.rows.map((row) => (\n                            <TableRow key={row.id}>\n                                {row.getAllCells().map((cell) => (\n                                    <TableCell key={cell.id}>\n                                        <table.FlexRender cell={cell} />\n                                    </TableCell>\n                                ))}\n                            </TableRow>\n                        ))\n                    ) : (\n                        <TableRow>\n                            <TableCell colSpan={columns.length} className=\"flex items-center justify-center\">\n                                {typeof empty === \"string\" || !empty ? (\n                                    <Empty>\n                                        <EmptyHeader>\n                                            <EmptyDescription>\n                                                {empty || \"No data available\"}\n                                            </EmptyDescription>\n                                        </EmptyHeader>\n                                    </Empty>\n                                ) : (\n                                    empty\n                                )}\n                            </TableCell>\n                        </TableRow>\n                    )}\n                </TableBody>\n            </Table>\n        </div>\n    );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
