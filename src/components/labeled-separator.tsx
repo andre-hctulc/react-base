@@ -1,6 +1,6 @@
 import { type FC, type ReactNode, type ComponentProps } from "react";
 import { cn } from "@/lib/utils.js";
-import { Separator } from "./ui/separator.js";
+import { Separator } from "@/components/ui/separator.js";
 
 export interface LabeledSeparatorProps extends Omit<ComponentProps<"div">, "children"> {
     children?: ReactNode;

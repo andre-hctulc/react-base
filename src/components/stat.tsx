@@ -6,7 +6,7 @@ import { useMemo, type FC, type ComponentProps, type ComponentType } from "react
 import { Slot } from "radix-ui";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { Icon, type IconLike } from "./icon.js";
-import { Skeleton } from "./ui/skeleton.js";
+import { Skeleton } from "@/components/ui/skeleton.js";
 
 const statVariants = cva("bg-paper-2 rounded-lg", {
     variants: {

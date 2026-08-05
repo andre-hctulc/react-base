@@ -4,8 +4,8 @@ import { useRef, useState, type ComponentProps, type FC, type Ref, type RefObjec
 import { InputList } from "./input-list.js";
 import { cn } from "@/lib/utils.js";
 import { LucidePlus, LucideX } from "lucide-react";
-import { Button } from "./ui/button.js";
-import { Input } from "./ui/input.js";
+import { Button } from "@/components/ui/button.js";
+import { Input } from "@/components/ui/input.js";
 
 export interface TextInputListProps {
     readOnly?: boolean;
