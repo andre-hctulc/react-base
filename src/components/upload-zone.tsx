@@ -1,6 +1,6 @@
 "use client";
 
-import { Droppable } from "@/components/droppable.js";
+import { Droppable } from "./droppable.js";
 import {
     useEffect,
     useRef,
@@ -10,7 +10,7 @@ import {
     type FC,
     type ReactNode,
 } from "react";
-import { Icon } from "@/components/icon.js";
+import { Icon } from "./icon.js";
 import { cn as twMerge } from "@/lib/utils.js";
 
 export interface UploadZoneProps {

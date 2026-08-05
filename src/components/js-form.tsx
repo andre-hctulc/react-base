@@ -10,9 +10,9 @@ import {
     type CSSProperties,
     type Ref,
 } from "react";
-import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "@/components/js-form-types.js";
-import { type JSFormContext, JSFormCtx, useJSForm } from "@/components/js-form-context.js";
-import { createSnapshot } from "@/components/js-form-helpers.js";
+import type { JSFormValidation, JSFormChange, JSFormSnapshot, JSFormValidateData } from "./js-form-types.js";
+import { type JSFormContext, JSFormCtx, useJSForm } from "./js-form-context.js";
+import { createSnapshot } from "./js-form-helpers.js";
 import { getProperty } from "dot-prop";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { cn } from "@/lib/utils.js";

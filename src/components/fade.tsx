@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import Transition from "@/components/transition.js";
+import Transition from "./transition.js";
 
 interface FadeProps extends ComponentProps<typeof Transition> {}
 

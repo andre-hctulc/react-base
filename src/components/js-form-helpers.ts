@@ -1,11 +1,11 @@
 import { getProperty, setProperty } from "dot-prop";
-import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "@/components/js-form-types.js";
+import type { JSFormValidation, InputState, JSFormSnapshot, JSFormValidateData } from "./js-form-types.js";
 
 type InputElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
 function getAllFormElements(form: HTMLFormElement): InputElement[] {
     return Array.from(form.elements).filter((element) =>
-        ["INPUT", "TEXTAREA", "SELECT"].includes(element.tagName)
+        ["INPUT", "TEXTAREA", "SELECT"].includes(element.tagName),
     ) as InputElement[];
 }
 
@@ -106,7 +106,7 @@ type SnapshotInit = {
 
 export function createSnapshot(
     form: HTMLFormElement,
-    { validate, reportFormErrors, showErrors, onInvalid }: SnapshotInit
+    { validate, reportFormErrors, showErrors, onInvalid }: SnapshotInit,
 ) {
     let ok = true;
     const formData = new FormData(form);

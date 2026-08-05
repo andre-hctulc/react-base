@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "src/components/fade.tsx",
-      "content": "import type { ComponentProps } from \"react\";\nimport Transition from \"@/components/transition.js\";\n\ninterface FadeProps extends ComponentProps<typeof Transition> {}\n\nexport const Fade: React.FC<FadeProps> = (props) => {\n    return (\n        <Transition\n            enter=\"transition-opacity duration-300 ease-out\"\n            enterFrom=\"opacity-0\"\n            enterTo=\"opacity-100\"\n            leave=\"transition-opacity duration-300 ease-in\"\n            leaveFrom=\"opacity-100\"\n            leaveTo=\"opacity-0\"\n            {...props}\n        >\n            {props.children}\n        </Transition>\n    );\n};\n",
+      "content": "import type { ComponentProps } from \"react\";\nimport Transition from \"./transition.js\";\n\ninterface FadeProps extends ComponentProps<typeof Transition> {}\n\nexport const Fade: React.FC<FadeProps> = (props) => {\n    return (\n        <Transition\n            enter=\"transition-opacity duration-300 ease-out\"\n            enterFrom=\"opacity-0\"\n            enterTo=\"opacity-100\"\n            leave=\"transition-opacity duration-300 ease-in\"\n            leaveFrom=\"opacity-100\"\n            leaveTo=\"opacity-0\"\n            {...props}\n        >\n            {props.children}\n        </Transition>\n    );\n};\n",
       "type": "registry:ui"
     }
   ],

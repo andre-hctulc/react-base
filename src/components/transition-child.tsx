@@ -1,9 +1,9 @@
 "use client";
 
 import { Fragment } from "react/jsx-runtime";
-import type { TransitionClasses, TransitionEvents } from "@/components/transition.js";
+import type { TransitionClasses, TransitionEvents } from "./transition.js";
 import { cloneElement, useContext } from "react";
-import { TransitionContext } from "@/components/transition-context.js";
+import { TransitionContext } from "./transition-context.js";
 import { useCssTransition } from "@/hooks/use-css-transition.js";
 import { cn as twMerge } from "@/lib/utils.js";
 

@@ -1,5 +1,5 @@
 import type { ComponentProps, FC } from "react";
-import Transition from "@/components/transition.js";
+import Transition from "./transition.js";
 
 // ###### CollapseV ######
 

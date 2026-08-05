@@ -427,13 +427,13 @@
             "title": "Checklist",
             "description": "Checklist component.",
             "registryDependencies": ["andre-hctulc/react-base/icon", "andre-hctulc/react-base/subtitle"],
+            "dependencies": ["lucide-react"],
             "files": [
                 {
                     "path": "checklist.tsx",
                     "type": "registry:ui"
                 }
-            ],
-            "dependencies": ["lucide-react"]
+            ]
         }
     ]
 }

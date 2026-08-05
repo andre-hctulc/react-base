@@ -1,6 +1,6 @@
 import type { ComponentProps, FC } from "react";
-import { TableCell, TableRow } from "@/components/ui/table.js";
-import { Empty, EmptyDescription, EmptyHeader } from "@/components/ui/empty.js";
+import { TableCell, TableRow } from "./ui/table.js";
+import { Empty, EmptyDescription, EmptyHeader } from "./ui/empty.js";
 
 interface TablePlaceholderProps extends ComponentProps<typeof TableRow> {
     colSpan?: number;
