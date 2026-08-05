@@ -387,7 +387,7 @@
             "type": "registry:ui",
             "title": "TablePlaceholder",
             "description": "Placeholder for empty tables.",
-            "registryDependencies": ["table"],
+            "registryDependencies": ["table", "empty"],
             "files": [
                 {
                     "path": "table-placeholder.tsx",

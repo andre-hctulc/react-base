@@ -808,7 +808,8 @@
       "title": "TablePlaceholder",
       "description": "Placeholder for empty tables.",
       "registryDependencies": [
-        "table"
+        "table",
+        "empty"
       ],
       "files": [
         {
