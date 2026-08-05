@@ -412,7 +412,8 @@
             "type": "registry:ui",
             "title": "TextInputList",
             "description": "Text input list component.",
-            "registryDependencies": ["andre-hctulc/react-base/input-list", "button", "input", "lucide-react"],
+            "registryDependencies": ["andre-hctulc/react-base/input-list", "button", "input"],
+            "dependencies": ["lucide-react"],
             "files": [
                 {
                     "path": "text-input-list.tsx",
@@ -425,13 +426,14 @@
             "type": "registry:ui",
             "title": "Checklist",
             "description": "Checklist component.",
-            "registryDependencies": ["andre-hctulc/react-base/icon", "andre-hctulc/react-base/subtitle", "lucide-react"],
+            "registryDependencies": ["andre-hctulc/react-base/icon", "andre-hctulc/react-base/subtitle"],
             "files": [
                 {
                     "path": "checklist.tsx",
                     "type": "registry:ui"
                 }
-            ]
+            ],
+            "dependencies": ["lucide-react"]
         }
     ]
 }

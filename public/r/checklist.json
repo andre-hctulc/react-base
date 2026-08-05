@@ -3,10 +3,12 @@
   "name": "checklist",
   "title": "Checklist",
   "description": "Checklist component.",
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [
     "andre-hctulc/react-base/icon",
-    "andre-hctulc/react-base/subtitle",
-    "lucide-react"
+    "andre-hctulc/react-base/subtitle"
   ],
   "files": [
     {

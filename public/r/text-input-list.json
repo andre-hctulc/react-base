@@ -3,11 +3,13 @@
   "name": "text-input-list",
   "title": "TextInputList",
   "description": "Text input list component.",
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [
     "andre-hctulc/react-base/input-list",
     "button",
-    "input",
-    "lucide-react"
+    "input"
   ],
   "files": [
     {

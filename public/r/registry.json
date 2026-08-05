@@ -835,11 +835,13 @@
       "name": "text-input-list",
       "title": "TextInputList",
       "description": "Text input list component.",
+      "dependencies": [
+        "lucide-react"
+      ],
       "registryDependencies": [
         "andre-hctulc/react-base/input-list",
         "button",
-        "input",
-        "lucide-react"
+        "input"
       ],
       "files": [
         {
@@ -853,10 +855,12 @@
       "name": "checklist",
       "title": "Checklist",
       "description": "Checklist component.",
+      "dependencies": [
+        "lucide-react"
+      ],
       "registryDependencies": [
         "andre-hctulc/react-base/icon",
-        "andre-hctulc/react-base/subtitle",
-        "lucide-react"
+        "andre-hctulc/react-base/subtitle"
       ],
       "files": [
         {
