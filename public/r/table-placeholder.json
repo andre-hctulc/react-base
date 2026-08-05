@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table-placeholder",
+  "title": "TablePlaceholder",
+  "description": "Placeholder for empty tables.",
+  "registryDependencies": [
+    "table"
+  ],
+  "files": [
+    {
+      "path": "src/components/table-placeholder.tsx",
+      "content": "import type { ComponentProps } from \"react\";\nimport { TableCell, TableRow } from \"@/components/ui/table.js\";\n\ninterface TablePlaceholderProps extends ComponentProps<typeof TableRow> {\n    colSpan?: number;\n}\n\nexport function TablePlaceholder({ colSpan, ...props }: TablePlaceholderProps) {\n    return (\n        <TableRow {...props}>\n            <TableCell colSpan={colSpan ?? 1000} className=\"h-24 text-center italic text-muted-foreground\">\n                No data found\n            </TableCell>\n        </TableRow>\n    );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

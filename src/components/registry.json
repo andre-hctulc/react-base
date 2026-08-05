@@ -381,6 +381,19 @@
                     "type": "registry:ui"
                 }
             ]
+        },
+        {
+            "name": "table-placeholder",
+            "type": "registry:ui",
+            "title": "TablePlaceholder",
+            "description": "Placeholder for empty tables.",
+            "registryDependencies": ["table"],
+            "files": [
+                {
+                    "path": "table-placeholder.tsx",
+                    "type": "registry:ui"
+                }
+            ]
         }
     ]
 }

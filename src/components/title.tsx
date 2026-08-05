@@ -72,7 +72,7 @@ export const Title: FC<TitleProps> = (props) => {
         asChild,
         ...restProps
     } = props;
-    const Comp: any = asChild ? Slot : (variant as string);
+    const Comp: any = asChild ? Slot : variant || "h1";
 
     return (
         <Comp
