@@ -9,7 +9,7 @@ interface TablePlaceholderProps extends ComponentProps<typeof TableRow> {
 export const TablePlaceholder: FC<TablePlaceholderProps> = ({ colSpan, children, ...props }) => {
     return (
         <TableRow {...props}>
-            <TableCell colSpan={colSpan ?? 1000} className="flex flex-col justify-center items-center">
+            <TableCell colSpan={colSpan ?? 1000}>
                 {typeof children === "string" || !children ? (
                     <Empty>
                         <EmptyHeader>
