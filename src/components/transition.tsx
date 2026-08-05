@@ -9,9 +9,9 @@ import {
     type ElementType,
     Children,
 } from "react";
-import { TransitionChild } from "./transition-child.js";
+import { TransitionChild } from "@/components/transition-child.js";
 import { cn as twMerge } from "@/lib/utils.js";
-import { TransitionContext } from "./transition-context.js";
+import { TransitionContext } from "@/components/transition-context.js";
 import { useCssTransition } from "@/hooks/use-css-transition.js";
 
 export interface TransitionClasses {

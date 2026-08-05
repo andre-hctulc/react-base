@@ -1,7 +1,7 @@
 "use client";
 
 import React, { type FC } from "react";
-import { HiddenInput } from "./hidden-input.js";
+import { HiddenInput } from "@/components/hidden-input.js";
 
 interface CsrfInputProps {
     /**

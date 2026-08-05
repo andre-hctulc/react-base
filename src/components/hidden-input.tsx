@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, type ComponentProps } from "react";
-import type { JSForm } from "./js-form.js";
-import { useJSForm } from "./js-form-context.js";
+import type { JSForm } from "@/components/js-form.js";
+import { useJSForm } from "@/components/js-form-context.js";
 
 export interface HiddenInputProps<T = any> extends Omit<ComponentProps<"input">, "type" | "value"> {
     value: T;

@@ -1,5 +1,5 @@
 import type { ComponentProps, ComponentType, CSSProperties, FC, ReactNode } from "react";
-import { Subtitle } from "./subtitle.js";
+import { Subtitle } from "@/components/subtitle.js";
 import { Icon } from "./icon.js";
 import { cn } from "@/lib/utils.js";
 import { Check, X } from "lucide-react";

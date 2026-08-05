@@ -1,16 +1,20 @@
 "use client";
 
 import { useRef, useState, type ComponentProps, type FC, type Ref, type RefObject } from "react";
-import { InputList } from "./input-list.js";
-import type { InputLikeProps } from "./types.js";
+import { InputList } from "@/components/input-list.js";
 import { cn } from "@/lib/utils.js";
 import { LucidePlus, LucideX } from "lucide-react";
 import { Button } from "@/components/ui/button.js";
+import { Input } from "@/components/ui/input.js";
 
-const inputBaseClass =
-    "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-primary focus:border-primary dark:border-gray-600 dark:bg-gray-700 dark:text-white";
-
-export interface TextInputListProps extends InputLikeProps<string[]> {
+export interface TextInputListProps {
+    readOnly?: boolean;
+    disabled?: boolean;
+    name?: string;
+    defaultValue?: string[];
+    value?: string[];
+    required?: boolean;
+    onChange?: (params: { value: string[] }) => void;
     textarea?: boolean;
     listInputProps?: Partial<ComponentProps<"input"> | ComponentProps<"textarea">>;
     inputProps?: Partial<ComponentProps<"input"> | ComponentProps<"textarea">>;
@@ -73,7 +77,7 @@ export const TextInputList: FC<TextInputListProps> = ({
                                     addValue(newValue);
                                 }
                             }}
-                            className={cn(inputBaseClass, "grow", inputProps?.className)}
+                            className={cn("grow", inputProps?.className)}
                         />
                         <Button
                             disabled={disabled || readOnly || !newValue}
@@ -98,11 +102,11 @@ export const TextInputList: FC<TextInputListProps> = ({
                     <ul className="space-y-2">
                         {values.map((value, i) => (
                             <li className="flex gap-2" key={i}>
-                                <Inp
+                                <Input
                                     type={textarea ? undefined : "text"}
                                     {...(inputProps as any)}
                                     {...(listInputProps as any)}
-                                    className={cn(inputBaseClass, "grow", (listInputProps as any)?.className)}
+                                    className={cn("grow", (listInputProps as any)?.className)}
                                     name={name}
                                     value={value}
                                     onChange={(e: any) => {

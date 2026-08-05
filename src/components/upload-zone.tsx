@@ -1,7 +1,6 @@
 "use client";
 
-import { Droppable } from "./droppable.js";
-import type { InputLikeProps } from "./types.js";
+import { Droppable } from "@/components/droppable.js";
 import {
     useEffect,
     useRef,
@@ -11,10 +10,16 @@ import {
     type FC,
     type ReactNode,
 } from "react";
-import { Icon } from "./icon.js";
+import { Icon } from "@/components/icon.js";
 import { cn as twMerge } from "@/lib/utils.js";
 
-export interface UploadZoneProps extends InputLikeProps<File[]> {
+export interface UploadZoneProps {
+    value?: File[];
+    defaultValue?: File[];
+    onChange?: (params: { value: File[] }) => void;
+    disabled?: boolean;
+    readOnly?: boolean;
+    name?: string;
     children?: ReactNode;
     className?: string;
     style?: CSSProperties;

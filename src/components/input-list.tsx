@@ -1,17 +1,28 @@
 "use client";
 
 import { useCallback, useMemo, useState, type CSSProperties, type ElementType, type Ref } from "react";
-import type { InputLikeProps } from "./types.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { cn as twMerge } from "@/lib/utils.js";
 import { Slot } from "radix-ui";
 
-type InputListInputProps<V = string> = Pick<
-    InputLikeProps<V>,
-    "readOnly" | "disabled" | "name" | "defaultValue"
->;
+export interface ListInputProps<T = any> {
+    name?: string;
+    defaultValue?: T;
+    value?: T;
+    onChange?: (params: { value: any }) => void;
+    readOnly?: boolean;
+    disabled?: boolean;
+    required?: boolean;
+}
 
-export interface InputListProps<T = string, A extends ElementType = "div"> extends InputLikeProps<T[]> {
+export interface InputListProps<T = string> {
+    readOnly?: boolean;
+    disabled?: boolean;
+    name?: string;
+    defaultValue?: T[];
+    value?: T[];
+    required?: boolean;
+    onChange?: (params: { value: T[] }) => void;
     className?: string;
     style?: CSSProperties;
     ref?: Ref<any>;
@@ -30,16 +41,15 @@ export interface InputListProps<T = string, A extends ElementType = "div"> exten
          */
         candidate: (item: T) => void;
         values: T[];
-        inputProps: InputListInputProps<T>;
+        inputProps: ListInputProps<T>;
     }) => React.ReactNode;
     renderValues: (params: {
         values: T[];
         change: (newItems: ((items: T[]) => T[]) | T[]) => void;
         remove: (item: T) => void;
-        inputProps: InputListInputProps<T>;
+        inputProps: ListInputProps<T>;
     }) => React.ReactNode;
     addIcon?: React.ReactNode;
-    as?: any;
     reverse?: boolean;
     unique?: boolean;
     sort?: (a: T, b: T) => number;
@@ -55,7 +65,7 @@ const compare = (a: any, b: any) => a === b;
  * - `unique` - Only allow unique values
  * - `sort` - Sort function for the values
  */
-export const InputList = <T = string, A extends ElementType = "div">({
+export const InputList = <T = string,>({
     className,
     renderInput,
     renderValues,
@@ -72,7 +82,7 @@ export const InputList = <T = string, A extends ElementType = "div">({
     defaultInputValue,
     compareValues,
     ...inputProps
-}: InputListProps<T, A>) => {
+}: InputListProps<T>) => {
     const sortRef = useRefOf(sort);
     const compareRef = useRefOf(compareValues || compare);
     const onChangeRef = useRefOf(onChange);

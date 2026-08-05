@@ -394,6 +394,44 @@
                     "type": "registry:ui"
                 }
             ]
+        },
+        {
+            "name": "input-list",
+            "type": "registry:ui",
+            "title": "InputList",
+            "description": "Base input list component.",
+            "files": [
+                {
+                    "path": "input-list.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "text-input-list",
+            "type": "registry:ui",
+            "title": "TextInputList",
+            "description": "Text input list component.",
+            "registryDependencies": ["andre-hctulc/react-base/input-list", "button", "input", "lucide-react"],
+            "files": [
+                {
+                    "path": "text-input-list.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "checklist",
+            "type": "registry:ui",
+            "title": "Checklist",
+            "description": "Checklist component.",
+            "registryDependencies": ["andre-hctulc/react-base/icon", "andre-hctulc/react-base/subtitle", "lucide-react"],
+            "files": [
+                {
+                    "path": "checklist.tsx",
+                    "type": "registry:ui"
+                }
+            ]
         }
     ]
 }

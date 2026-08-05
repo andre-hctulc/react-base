@@ -820,6 +820,53 @@
       "type": "registry:ui"
     },
     {
+      "name": "input-list",
+      "title": "InputList",
+      "description": "Base input list component.",
+      "files": [
+        {
+          "path": "src/components/input-list.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "text-input-list",
+      "title": "TextInputList",
+      "description": "Text input list component.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/input-list",
+        "button",
+        "input",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/text-input-list.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "checklist",
+      "title": "Checklist",
+      "description": "Checklist component.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/icon",
+        "andre-hctulc/react-base/subtitle",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/checklist.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "theme",
       "title": "React Base Theme",
       "description": "Design tokens (CSS custom properties) for react-base components.",
