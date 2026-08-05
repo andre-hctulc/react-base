@@ -1,9 +1,7 @@
-"use client";
-
 import type { ComponentProps, FC, ReactNode } from "react";
 import { cn } from "@/lib/utils.js";
 
-export function defaultRenderDataSummaryValue(value: unknown): ReactNode {
+function defaultValueRender(key: string, value: unknown): ReactNode {
     if (value === null || value === undefined || value === "") {
         return <span className="text-muted-foreground italic">—</span>;
     }
@@ -18,7 +16,7 @@ export function defaultRenderDataSummaryValue(value: unknown): ReactNode {
     }
     if (typeof value === "object") {
         return (
-            <pre className="overflow-x-auto rounded bg-muted p-2 text-xs whitespace-pre-wrap wrap-break-word">
+            <pre className="max-h-64 overflow-auto rounded bg-muted p-2 text-xs whitespace-pre-wrap wrap-break-word">
                 {JSON.stringify(value, null, 2)}
             </pre>
         );
@@ -27,12 +25,29 @@ export function defaultRenderDataSummaryValue(value: unknown): ReactNode {
 }
 
 interface DataSummaryProps extends ComponentProps<"div"> {
-    data: Record<string, unknown>;
-    renderValue?: (value: unknown, key: string) => ReactNode;
+    data: object;
+    renderValue?: (key: string, value: unknown) => ReactNode;
+    includeKeys?: string[];
+    excludeKeys?: string[];
 }
 
-export const DataSummary: FC<DataSummaryProps> = ({ data, renderValue, className, ...props }) => {
-    const entries = Object.entries(data);
+export const DataSummary: FC<DataSummaryProps> = ({
+    data,
+    renderValue,
+    includeKeys,
+    excludeKeys,
+    className,
+    ...props
+}) => {
+    const entries = Object.entries(data).filter(([key]) => {
+        if (includeKeys) {
+            return includeKeys.includes(key);
+        }
+        if (excludeKeys) {
+            return !excludeKeys.includes(key);
+        }
+        return true;
+    });
 
     return (
         <div className={cn("text-sm", className)} {...props}>
@@ -44,7 +59,7 @@ export const DataSummary: FC<DataSummaryProps> = ({ data, renderValue, className
                     >
                         <dt className="text-muted-foreground sm:w-40 sm:shrink-0">{key}</dt>
                         <dd className="min-w-0 grow font-medium wrap-break-word">
-                            {renderValue ? renderValue(value, key) : defaultRenderDataSummaryValue(value)}
+                            {renderValue ? renderValue(key, value) : defaultValueRender(key, value)}
                         </dd>
                     </div>
                 ))}

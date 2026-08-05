@@ -412,7 +412,7 @@
             "type": "registry:ui",
             "title": "TextInputList",
             "description": "Text input list component.",
-            "registryDependencies": ["andre-hctulc/react-base/input-list", "button", "input"],
+            "registryDependencies": ["andre-hctulc/react-base/input-list", "button", "input", "textarea"],
             "dependencies": ["lucide-react"],
             "files": [
                 {

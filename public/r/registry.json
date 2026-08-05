@@ -841,7 +841,8 @@
       "registryDependencies": [
         "andre-hctulc/react-base/input-list",
         "button",
-        "input"
+        "input",
+        "textarea"
       ],
       "files": [
         {
