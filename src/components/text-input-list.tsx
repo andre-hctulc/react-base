@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type ComponentProps, type FC, type Ref, type RefObject } from "react";
-import { InputList } from "@/components/input-list.js";
+import { InputList } from "./input-list.js";
 import { cn } from "@/lib/utils.js";
 import { LucidePlus, LucideX } from "lucide-react";
 import { Button } from "@/components/ui/button.js";
@@ -91,6 +91,7 @@ export const TextInputList: FC<TextInputListProps> = ({
                             color="gray"
                             size="icon"
                             variant="ghost"
+                            type="button"
                         >
                             <LucidePlus />
                         </Button>
@@ -128,6 +129,7 @@ export const TextInputList: FC<TextInputListProps> = ({
                                         onClick={() => remove(value)}
                                         size="icon"
                                         variant="ghost"
+                                        type="button"
                                     >
                                         <LucideX />
                                     </Button>
