@@ -902,6 +902,25 @@
       "type": "registry:ui"
     },
     {
+      "name": "data-summary",
+      "title": "DataSummary",
+      "description": "Data summary component.",
+      "dependencies": [
+        "@tanstack/react-table"
+      ],
+      "registryDependencies": [
+        "table",
+        "empty"
+      ],
+      "files": [
+        {
+          "path": "src/components/data-summary.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "theme",
       "title": "React Base Theme",
       "description": "Design tokens (CSS custom properties) for react-base components.",

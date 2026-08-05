@@ -460,6 +460,20 @@
                     "type": "registry:ui"
                 }
             ]
+        },
+        {
+            "name": "data-summary",
+            "type": "registry:ui",
+            "title": "DataSummary",
+            "description": "Data summary component.",
+            "registryDependencies": ["table", "empty"],
+            "dependencies": ["@tanstack/react-table"],
+            "files": [
+                {
+                    "path": "data-summary.tsx",
+                    "type": "registry:ui"
+                }
+            ]
         }
     ]
 }
