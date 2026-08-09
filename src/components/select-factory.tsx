@@ -16,7 +16,8 @@ export interface SelectItem {
 }
 
 type SelectItemList = SelectItem[];
-type SelectItemGroupMap = { [groupLabel: string]: SelectItem[] };
+
+export type SelectItemGroupMap = { [groupLabel: string]: SelectItem[] };
 
 export type SelectItems = SelectItemList | SelectItemGroupMap;
 
