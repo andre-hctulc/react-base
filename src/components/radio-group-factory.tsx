@@ -8,6 +8,7 @@ export interface RadioGroupOption {
     name?: string;
     id?: string;
     description?: string;
+    disabled?: boolean;
 }
 
 interface RadioGroupFactoryProps extends ComponentProps<typeof RadioGroup> {
@@ -16,12 +17,25 @@ interface RadioGroupFactoryProps extends ComponentProps<typeof RadioGroup> {
      * Render choice cards instead of plain options
      */
     cards?: boolean;
+    readOnly?: boolean;
 }
 
-export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({ options, cards, ...props }) => {
+export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({
+    options,
+    cards,
+    readOnly,
+    onValueChange,
+    ...props
+}) => {
+    const radioGroupProps: ComponentProps<typeof RadioGroup> = {
+        ...props,
+        "aria-readonly": readOnly || undefined,
+        onValueChange: readOnly ? undefined : onValueChange,
+    };
+
     if (cards) {
         return (
-            <RadioGroup {...props}>
+            <RadioGroup {...radioGroupProps}>
                 {options.map((option) => {
                     const id = option.id || option.value;
                     return (
@@ -33,7 +47,11 @@ export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({ options, cards, 
                                         <FieldDescription>{option.description}</FieldDescription>
                                     )}
                                 </FieldContent>
-                                <RadioGroupItem value={option.value} id={id} />
+                                <RadioGroupItem
+                                    value={option.value}
+                                    id={id}
+                                    disabled={readOnly || option.disabled}
+                                />
                             </Field>
                         </FieldLabel>
                     );
@@ -43,12 +61,12 @@ export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({ options, cards, 
     }
 
     return (
-        <RadioGroup {...props}>
+        <RadioGroup {...radioGroupProps}>
             {options.map((option) => {
                 const id = option.id || option.value;
                 return (
-                    <Field orientation="horizontal">
-                        <RadioGroupItem value={option.value} id={id} />
+                    <Field key={option.value} orientation="horizontal">
+                        <RadioGroupItem value={option.value} id={id} disabled={readOnly || option.disabled} />
                         <FieldContent>
                             <FieldLabel htmlFor={id}>{option.title}</FieldLabel>
                             {option.description && <FieldDescription>{option.description}</FieldDescription>}
