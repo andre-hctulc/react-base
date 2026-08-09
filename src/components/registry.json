@@ -474,6 +474,19 @@
                     "type": "registry:ui"
                 }
             ]
+        },
+        {
+            "name": "radio-group-factory",
+            "type": "registry:ui",
+            "title": "RadioGroupFactory",
+            "description": "Radio group factory component.",
+            "registryDependencies": ["radio-group", "field"],
+            "files": [
+                {
+                    "path": "radio-group-factory.tsx",
+                    "type": "registry:ui"
+                }
+            ]
         }
     ]
 }
