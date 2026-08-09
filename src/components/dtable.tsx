@@ -65,7 +65,7 @@ export function DTable<TData extends RowData>({
                         ))
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={columns.length} className="flex items-center justify-center">
+                            <TableCell colSpan={columns.length}>
                                 {typeof empty === "string" || !empty ? (
                                     <Empty>
                                         <EmptyHeader>
