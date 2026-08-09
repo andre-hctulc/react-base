@@ -487,6 +487,19 @@
                     "type": "registry:ui"
                 }
             ]
+        },
+        {
+            "name": "select-factory",
+            "type": "registry:ui",
+            "title": "SelectFactory",
+            "description": "Select factory component.",
+            "registryDependencies": ["select", "field"],
+            "files": [
+                {
+                    "path": "select-factory.tsx",
+                    "type": "registry:ui"
+                }
+            ]
         }
     ]
 }
