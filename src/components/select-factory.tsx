@@ -10,21 +10,21 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-export interface SelectOption {
+export interface SelectItem {
     label: string;
     value: string;
 }
 
-type SelectOptionList = SelectOption[];
-type SelectOptionMap = { [title: string]: SelectOption[] };
+type SelectItemList = SelectItem[];
+type SelectItemGroupMap = { [groupLabel: string]: SelectItem[] };
 
-export type SelectOptions = SelectOptionList | SelectOptionMap;
+export type SelectItems = SelectItemList | SelectItemGroupMap;
 
 interface SelectFactoryProps extends ComponentProps<typeof Select> {
-    options: SelectOptions;
+    options: SelectItems;
 }
 
-export const RadioGroupFactory: FC<SelectFactoryProps> = ({ options, ...props }) => {
+export const SelectFactory: FC<SelectFactoryProps> = ({ options, ...props }) => {
     const optionsLength = Array.isArray(options) ? options.length : Object.keys(options).length;
 
     return (
