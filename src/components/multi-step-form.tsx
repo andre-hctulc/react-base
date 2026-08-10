@@ -185,6 +185,16 @@ export const MultiStepFormStep: FC<MultiStepFormStepProps> = ({ className, child
     );
 };
 
+export interface MultiStepFormTitleProps extends ComponentProps<"h2"> {}
+
+export const MultiStepFormTitle: FC<MultiStepFormTitleProps> = ({ className, children, ...props }) => {
+    return (
+        <h2 data-slot="multi-step-form-title" className={cn("text-lg font-semibold", className)} {...props}>
+            {children}
+        </h2>
+    );
+};
+
 export interface MultiStepFormProgressProps extends ComponentProps<typeof Progress> {}
 
 /**
