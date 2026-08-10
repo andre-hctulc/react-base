@@ -14,7 +14,7 @@
     },
     {
       "path": "src/components/transition-context.ts",
-      "content": "import { createContext } from \"react\";\n\ninterface TransitionContextType {\n    show: boolean;\n}\n\nexport const TransitionContext = createContext<TransitionContextType | null>(null);\n",
+      "content": "import { createContext } from \"react\";\n\ninterface TransitionContextValue {\n    show: boolean;\n}\n\nexport const TransitionContext = createContext<TransitionContextValue | null>(null);\n",
       "type": "registry:lib"
     },
     {

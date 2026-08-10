@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useRef, useState, type ReactNode } from "react";
 
-interface DevContext {
+interface DevContextValue {
     /** @default process.env.NODE_ENV === "development" */
     devMode: boolean;
     observe: Record<string, any>;
@@ -10,7 +10,7 @@ interface DevContext {
     setObservable: (key: string, value: any) => void;
 }
 
-const DevContext = createContext<DevContext>({
+const DevContext = createContext<DevContextValue>({
     devMode: process.env.NODE_ENV === "development",
     observe: {},
     setObservable: () => {

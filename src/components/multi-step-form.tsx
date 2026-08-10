@@ -39,12 +39,14 @@ interface MultiStepFormContextValue {
      * Advances to the next step, deferring to a registered step submit trigger if present.
      */
     requestAdvance: () => void;
+    data: Record<string, unknown>[];
+    updateData: (newData: Record<string, unknown>) => void;
 }
 
-const MultiStepFormCtx = createContext<MultiStepFormContextValue | null>(null);
+const MultiStepFormContext = createContext<MultiStepFormContextValue | null>(null);
 
 function useMultiStepForm(): MultiStepFormContextValue {
-    const ctx = useContext(MultiStepFormCtx);
+    const ctx = useContext(MultiStepFormContext);
     if (!ctx) {
         throw new Error("MultiStepForm compound components must be used within a MultiStepForm");
     }
@@ -62,11 +64,11 @@ export interface MultiStepFormProps extends ComponentProps<"div"> {
      */
     storage?: Storage;
     defaultStep?: number;
-    onStepChange?: (stepIndex: number) => void;
+    onStepChange?: (stepIndex: number, data: Record<string, unknown>[]) => void;
     /**
      * Called when {@link MultiStepFormNextButton} is triggered on the last step.
      */
-    onComplete?: () => void;
+    onComplete?: (data: Record<string, unknown>[]) => void;
     children: ReactNode;
 }
 
@@ -84,7 +86,23 @@ export const MultiStepForm: FC<MultiStepFormProps> = ({
     children,
     ...props
 }) => {
-    const [stepIndex, setStepIndex] = usePersistentState<number>(persistKey, defaultStep, storage);
+    const [stepIndex, setStepIndex] = usePersistentState<number>(
+        `${persistKey}-step-index`,
+        defaultStep,
+        storage,
+    );
+    const [data, setData] = usePersistentState<Record<string, unknown>[]>(`${persistKey}-data`, [], storage);
+
+    const updateData = useCallback(
+        (newData: Record<string, unknown>) => {
+            setData((prev) => {
+                const next = [...prev];
+                next[stepIndex] = newData;
+                return next;
+            });
+        },
+        [stepIndex, setData],
+    );
     const stepSubmitRef = useRef<(() => void) | null>(null);
 
     const totalSteps = useMemo(() => {
@@ -101,18 +119,18 @@ export const MultiStepForm: FC<MultiStepFormProps> = ({
         (index: number) => {
             const clamped = Math.min(Math.max(index, 0), Math.max(totalSteps - 1, 0));
             setStepIndex(clamped);
-            onStepChange?.(clamped);
+            onStepChange?.(clamped, data);
         },
-        [onStepChange, setStepIndex, totalSteps],
+        [onStepChange, setStepIndex, totalSteps, data],
     );
 
     const goNext = useCallback(() => {
         if (stepIndex >= totalSteps - 1) {
-            onComplete?.();
+            onComplete?.(data);
             return;
         }
         goTo(stepIndex + 1);
-    }, [goTo, onComplete, stepIndex, totalSteps]);
+    }, [goTo, onComplete, stepIndex, totalSteps, data]);
 
     const goBack = useCallback(() => {
         goTo(stepIndex - 1);
@@ -157,16 +175,29 @@ export const MultiStepForm: FC<MultiStepFormProps> = ({
             reset,
             registerStepSubmit,
             requestAdvance,
+            data,
+            updateData,
         }),
-        [goBack, goNext, goTo, registerStepSubmit, requestAdvance, reset, stepIndex, totalSteps],
+        [
+            goBack,
+            goNext,
+            goTo,
+            registerStepSubmit,
+            requestAdvance,
+            reset,
+            stepIndex,
+            totalSteps,
+            data,
+            updateData,
+        ],
     );
 
     return (
-        <MultiStepFormCtx.Provider value={contextValue}>
+        <MultiStepFormContext.Provider value={contextValue}>
             <div data-slot="multi-step-form" className={cn("flex flex-col gap-6", className)} {...props}>
                 {renderedChildren}
             </div>
-        </MultiStepFormCtx.Provider>
+        </MultiStepFormContext.Provider>
     );
 };
 
@@ -319,3 +350,10 @@ export const MultiStepFormSub: FC<MultiStepFormSubProps> = ({ children }) => {
 
     return cloneElement(children, { ref: formRef, onSubmit: handleSubmit });
 };
+
+export type MultiStepFormData = Pick<MultiStepFormContextValue, "data" | "updateData">;
+
+export function useMultiStepFormData(): MultiStepFormData {
+    const { data, updateData } = useMultiStepForm();
+    return { data, updateData };
+}

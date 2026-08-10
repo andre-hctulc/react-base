@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
-interface TransitionContextType {
+interface TransitionContextValue {
     show: boolean;
 }
 
-export const TransitionContext = createContext<TransitionContextType | null>(null);
+export const TransitionContext = createContext<TransitionContextValue | null>(null);
