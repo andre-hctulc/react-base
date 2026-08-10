@@ -110,27 +110,6 @@
             ]
         },
         {
-            "name": "use-js-form",
-            "type": "registry:hook",
-            "title": "useJsForm",
-            "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
-            "dependencies": ["dot-prop"],
-            "files": [
-                {
-                    "path": "js-form-types.ts",
-                    "type": "registry:lib"
-                },
-                {
-                    "path": "js-form-helpers.ts",
-                    "type": "registry:lib"
-                },
-                {
-                    "path": "js-form-context.ts",
-                    "type": "registry:lib"
-                }
-            ]
-        },
-        {
             "name": "form-control",
             "type": "registry:ui",
             "title": "FormControl",
@@ -139,35 +118,6 @@
             "files": [
                 {
                     "path": "form-control.tsx",
-                    "type": "registry:ui"
-                }
-            ]
-        },
-        {
-            "name": "js-form",
-            "type": "registry:ui",
-            "title": "JSForm",
-            "description": "Form component powered by useJsForm — handles default values, validation and submission.",
-            "registryDependencies": [
-                "andre-hctulc/react-base/use-js-form",
-                "andre-hctulc/react-base/form-control"
-            ],
-            "files": [
-                {
-                    "path": "js-form.tsx",
-                    "type": "registry:ui"
-                }
-            ]
-        },
-        {
-            "name": "flex-form",
-            "type": "registry:ui",
-            "title": "FlexForm",
-            "description": "Form with flex layout",
-            "registryDependencies": [],
-            "files": [
-                {
-                    "path": "flex-form.tsx",
                     "type": "registry:ui"
                 }
             ]
@@ -484,6 +434,19 @@
             "files": [
                 {
                     "path": "radio-group-factory.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "multi-step-form",
+            "type": "registry:ui",
+            "title": "MultiStepForm",
+            "description": "Compound multi-step form with back/forward navigation and step persistence across reloads.",
+            "registryDependencies": ["button", "progress", "andre-hctulc/react-base/use-persistent-state"],
+            "files": [
+                {
+                    "path": "multi-step-form.tsx",
                     "type": "registry:ui"
                 }
             ]

@@ -502,29 +502,6 @@
       "type": "registry:ui"
     },
     {
-      "name": "use-js-form",
-      "title": "useJsForm",
-      "description": "Lightweight uncontrolled/controlled form state manager (no schema dependency).",
-      "dependencies": [
-        "dot-prop"
-      ],
-      "files": [
-        {
-          "path": "src/components/js-form-types.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "src/components/js-form-helpers.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "src/components/js-form-context.ts",
-          "type": "registry:lib"
-        }
-      ],
-      "type": "registry:hook"
-    },
-    {
       "name": "form-control",
       "title": "FormControl",
       "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
@@ -535,35 +512,6 @@
       "files": [
         {
           "path": "src/components/form-control.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "js-form",
-      "title": "JSForm",
-      "description": "Form component powered by useJsForm — handles default values, validation and submission.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/use-js-form",
-        "andre-hctulc/react-base/form-control"
-      ],
-      "files": [
-        {
-          "path": "src/components/js-form.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "flex-form",
-      "title": "FlexForm",
-      "description": "Form with flex layout",
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "src/components/flex-form.tsx",
           "type": "registry:ui"
         }
       ],
@@ -932,6 +880,23 @@
       "files": [
         {
           "path": "src/components/radio-group-factory.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "multi-step-form",
+      "title": "MultiStepForm",
+      "description": "Compound multi-step form with back/forward navigation and step persistence across reloads.",
+      "registryDependencies": [
+        "button",
+        "progress",
+        "andre-hctulc/react-base/use-persistent-state"
+      ],
+      "files": [
+        {
+          "path": "src/components/multi-step-form.tsx",
           "type": "registry:ui"
         }
       ],

@@ -11,7 +11,6 @@ import {
     type ReactNode,
     type Ref,
 } from "react";
-import { useJSForm } from "./js-form-context.js";
 import { Field, FieldDescription, FieldError, FieldLabel, FieldTitle } from "@/components/ui/field.js";
 
 export type FormControlProps = {
@@ -72,7 +71,7 @@ export const FormControl: FC<FormControlProps> = (props) => {
         ...rootProps
     } = props;
 
-    const formCtx = useJSForm();
+    const formCtx: any = {};
     const _name = name !== undefined ? `${formCtx?.namesPrefix ?? ""}${name}` : undefined;
     const hasName = _name !== undefined;
     const isErr = !noError && hasName && formCtx?.inputs[_name]?.ok === false;

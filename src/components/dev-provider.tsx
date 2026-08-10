@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type ReactNode } from "react";
+import { createContext, useContext, useRef, useState, type ReactNode } from "react";
 
 interface DevContext {
     /** @default process.env.NODE_ENV === "development" */
@@ -10,16 +10,16 @@ interface DevContext {
     setObservable: (key: string, value: any) => void;
 }
 
-const DevContext = React.createContext<DevContext>({
+const DevContext = createContext<DevContext>({
     devMode: process.env.NODE_ENV === "development",
     observe: {},
     setObservable: () => {
-        throw new Error("`DevProvider` required");
+        throw new Error("DevProvider required");
     },
 });
 
 export function useDev() {
-    const ctx = React.useContext(DevContext);
+    const ctx = useContext(DevContext);
     return ctx;
 }
 
@@ -32,8 +32,8 @@ interface DevProviderProps {
  * The _devMode_ defaults to `process.env.NODE_ENV === "development"`, if not set
  */
 export default function DevProvider(props: DevProviderProps) {
-    const observeRef = React.useRef<Record<string, any>>({});
-    const [observe, setObserve] = React.useState<Record<string, any>>({});
+    const observeRef = useRef<Record<string, any>>({});
+    const [observe, setObserve] = useState<Record<string, any>>({});
 
     function setObservable(key: string, value: any) {
         observeRef.current[key] = value;
