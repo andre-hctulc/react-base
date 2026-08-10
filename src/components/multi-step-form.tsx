@@ -351,9 +351,19 @@ export const MultiStepFormSub: FC<MultiStepFormSubProps> = ({ children }) => {
     return cloneElement(children, { ref: formRef, onSubmit: handleSubmit });
 };
 
-export type MultiStepFormData = Pick<MultiStepFormContextValue, "data" | "updateData">;
+export type MultiStepFormData = Pick<MultiStepFormContextValue, "data" | "updateData" | "totalSteps">;
 
 export function useMultiStepFormData(): MultiStepFormData {
-    const { data, updateData } = useMultiStepForm();
-    return { data, updateData };
+    const { data, updateData, totalSteps } = useMultiStepForm();
+    return { data, updateData, totalSteps };
+}
+
+export type MultiStepFormNavigation = Pick<
+    MultiStepFormContextValue,
+    "stepIndex" | "isFirst" | "isLast" | "goNext" | "goBack" | "goTo" | "reset" | "totalSteps"
+>;
+
+export function useMultiStepFormNavigation(): MultiStepFormNavigation {
+    const { stepIndex, isFirst, isLast, goNext, goBack, goTo, reset, totalSteps } = useMultiStepForm();
+    return { stepIndex, isFirst, isLast, goNext, goBack, goTo, reset, totalSteps };
 }
