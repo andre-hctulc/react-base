@@ -23,10 +23,16 @@ type StorageRef = Storage | "sessionStorage" | "localStorage" | undefined;
  * Resolves the storage reference dynamically based on the provided storage parameter.
  * {@link StorageRef} can be a string reference, to prevent issues with passing storage instances from server to client components.
  */
-function getStorage(storage: StorageRef): Storage {
+function getStorage(storage: StorageRef): Storage | undefined {
     if (storage === "sessionStorage") {
+        if (typeof window === "undefined") {
+            return undefined;
+        }
         return sessionStorage;
     } else if (storage === "localStorage" || storage === undefined) {
+        if (typeof window === "undefined") {
+            return undefined;
+        }
         return localStorage;
     } else {
         return storage;
@@ -40,6 +46,9 @@ export function usePersistentState<T>(
 ): [T, Dispatch<SetStateAction<T>>] {
     const [state, setState] = useState<T>(() => {
         const store = getStorage(storage);
+        if (!store) {
+            return defaultValue;
+        }
         const storedValue = store.getItem(key);
         if (storedValue !== null) {
             return JSON.parse(storedValue);
@@ -50,6 +59,9 @@ export function usePersistentState<T>(
     // Update storage and dispatch custom event
     useEffect(() => {
         const store = getStorage(storage);
+        if (!store) {
+            return;
+        }
 
         if (state === undefined) {
             store.removeItem(key);
@@ -66,6 +78,9 @@ export function usePersistentState<T>(
 
     useEffect(() => {
         const store = getStorage(storage);
+        if (!store) {
+            return;
+        }
 
         const handleStorage = (event: StorageEvent) => {
             if (event.storageArea === store && event.key === key) {

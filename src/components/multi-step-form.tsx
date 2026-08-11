@@ -430,12 +430,30 @@ export interface MultiStepFormSubProps {
     children: ReactElement<ComponentProps<"form">, "form">;
 }
 
+function collectFormData(form: HTMLFormElement): MultiStepFormData {
+    const formData = new FormData(form);
+    const data: MultiStepFormData = {};
+    formData.forEach((value, key) => {
+        if (key in data) {
+            const existingValue = data[key];
+            if (Array.isArray(existingValue)) {
+                existingValue.push(value);
+            } else {
+                data[key] = [existingValue, value];
+            }
+        } else {
+            data[key] = value;
+        }
+    });
+    return data;
+}
+
 /**
  * Plugs a `<form>` into the current step: Next/Finish triggers the form's
  * native submit (gating on HTML5 validation) and advances once its `onSubmit` resolves.
  */
 export const MultiStepFormSub: FC<MultiStepFormSubProps> = ({ children }) => {
-    const { goNext, registerStepSubmit } = useMultiStepForm();
+    const { goNext, registerStepSubmit, updateData } = useMultiStepForm();
     const formRef = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
@@ -448,12 +466,15 @@ export const MultiStepFormSub: FC<MultiStepFormSubProps> = ({ children }) => {
     const handleSubmit = useCallback(
         async (e: SubmitEvent<HTMLFormElement>) => {
             e.preventDefault();
-            const result = await childOnSubmit?.(e);
-            if ((result as unknown) !== false) {
-                goNext();
-            }
+
+            childOnSubmit?.(e);
+
+            const newData = collectFormData(e.currentTarget);
+            updateData(newData);
+
+            goNext();
         },
-        [childOnSubmit, goNext],
+        [childOnSubmit, goNext, updateData],
     );
 
     return cloneElement(children, { ref: formRef, onSubmit: handleSubmit });
@@ -463,7 +484,9 @@ export type MultiStepFormDataView = Pick<
     MultiStepFormContextValue,
     "data" | "updateData" | "totalSteps" | "stepIndex"
 > & {
+    /** Current step data */
     stepData: MultiStepFormData;
+    /** Merged data from all steps */
     mergedData: MultiStepFormData;
 };
 
