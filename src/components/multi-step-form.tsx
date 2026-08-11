@@ -19,7 +19,7 @@ import {
 } from "react";
 import { Button } from "@/components/ui/button.js";
 import { Progress } from "@/components/ui/progress.js";
-import { ProgressDecorator } from "@/components/progress-decorator.js";
+import { ProgressDecorator } from "./progress-decorator.js";
 import { cn } from "@/lib/utils.js";
 import { usePersistentState } from "@/hooks/use-persistent-state.js";
 
