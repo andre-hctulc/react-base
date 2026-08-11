@@ -17,13 +17,30 @@ type LocalStorageChangeEvent = {
 
 const CUSTOM_EVENT_NAME = "use-persistent-state-storage-change";
 
+type StorageRef = Storage | "sessionStorage" | "localStorage" | undefined;
+
+/**
+ * Resolves the storage reference dynamically based on the provided storage parameter.
+ * {@link StorageRef} can be a string reference, to prevent issues with passing storage instances from server to client components.
+ */
+function getStorage(storage: StorageRef): Storage {
+    if (storage === "sessionStorage") {
+        return sessionStorage;
+    } else if (storage === "localStorage" || storage === undefined) {
+        return localStorage;
+    } else {
+        return storage;
+    }
+}
+
 export function usePersistentState<T>(
     key: string,
     defaultValue: T,
-    storage: Storage = localStorage,
+    storage?: StorageRef,
 ): [T, Dispatch<SetStateAction<T>>] {
     const [state, setState] = useState<T>(() => {
-        const storedValue = storage.getItem(key);
+        const store = getStorage(storage);
+        const storedValue = store.getItem(key);
         if (storedValue !== null) {
             return JSON.parse(storedValue);
         }
@@ -32,10 +49,12 @@ export function usePersistentState<T>(
 
     // Update storage and dispatch custom event
     useEffect(() => {
+        const store = getStorage(storage);
+
         if (state === undefined) {
-            storage.removeItem(key);
+            store.removeItem(key);
         } else {
-            storage.setItem(key, JSON.stringify(state));
+            store.setItem(key, JSON.stringify(state));
         }
 
         // Dispatch custom event to notify other same-tab listeners
@@ -46,8 +65,10 @@ export function usePersistentState<T>(
     }, [key, state, storage]);
 
     useEffect(() => {
+        const store = getStorage(storage);
+
         const handleStorage = (event: StorageEvent) => {
-            if (event.storageArea === storage && event.key === key) {
+            if (event.storageArea === store && event.key === key) {
                 setState(event.newValue ? JSON.parse(event.newValue) : defaultValue);
             }
         };

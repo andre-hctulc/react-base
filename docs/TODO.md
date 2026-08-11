@@ -1,5 +1,5 @@
 # TODO
 
--   px -> rm
--   use compound styling for some complex components
+- px -> rm
+- use compound styling for some complex components
 - aria attributes

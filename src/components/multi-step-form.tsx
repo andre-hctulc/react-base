@@ -67,10 +67,6 @@ export interface MultiStepFormProps extends ComponentProps<"div"> {
      * Key used to persist the current step index (survives page reloads).
      */
     persistKey: string;
-    /**
-     * Storage used to persist the current step index.
-     * @default localStorage
-     */
     storage?: Storage;
     defaultStep?: number;
     onStepChange?: (stepIndex: number, data: MultiStepFormData[]) => void;
@@ -234,13 +230,23 @@ export const MultiStepFormStep: FC<MultiStepFormStepProps> = ({ className, child
     );
 };
 
-export interface MultiStepFormTitleProps extends ComponentProps<"h2"> {}
+export interface MultiStepFormTitleProps extends ComponentProps<"h2"> {
+    /**
+     * Prevent rendering the title in the DOM. Still registers it as the step title for {@link MultiStepFormProgress}.
+     */
+    hidden?: boolean;
+}
 
 /**
  * Renders the step's title and registers it as {@link MultiStepFormContextValue.stepTitle},
  * used as the default label by {@link MultiStepFormProgress}.
  */
-export const MultiStepFormTitle: FC<MultiStepFormTitleProps> = ({ className, children, ...props }) => {
+export const MultiStepFormTitle: FC<MultiStepFormTitleProps> = ({
+    className,
+    children,
+    hidden,
+    ...props
+}) => {
     const { registerStepTitle } = useMultiStepForm();
 
     useEffect(() => {
@@ -249,7 +255,11 @@ export const MultiStepFormTitle: FC<MultiStepFormTitleProps> = ({ className, chi
     }, [children, registerStepTitle]);
 
     return (
-        <h2 data-slot="multi-step-form-title" className={cn("text-lg font-semibold", className)} {...props}>
+        <h2
+            data-slot="multi-step-form-title"
+            className={cn("text-lg font-semibold", hidden && "hidden", className)}
+            {...props}
+        >
             {children}
         </h2>
     );
@@ -305,12 +315,10 @@ export const MultiStepFormProgress: FC<MultiStepFormProgressProps> = ({
     ...props
 }) => {
     const { stepIndex, totalSteps, stepTitle } = useMultiStepForm();
-    const value = totalSteps > 0 ? ((stepIndex + 1) / totalSteps) * 100 : 0;
-    const vt = valueText === null ? undefined : (valueText ?? `${stepIndex + 1} / ${totalSteps}`);
-    const vl =
-        valueLabel === null
-            ? undefined
-            : (valueLabel ?? stepTitle ?? `Step ${stepIndex + 1} of ${totalSteps}`);
+    const progress = totalSteps > 0 ? ((stepIndex + 1) / totalSteps) * 100 : 0;
+    const vl = valueLabel === null ? undefined : (valueLabel ?? `Step ${stepIndex + 1} of ${totalSteps}`);
+    const vt =
+        valueText === null ? undefined : (valueText ?? (stepTitle || `${stepIndex + 1} / ${totalSteps}`));
 
     return (
         <ProgressDecorator
@@ -320,28 +328,31 @@ export const MultiStepFormProgress: FC<MultiStepFormProgressProps> = ({
             description={description}
             {...decoratorProps}
         >
-            <Progress value={value} className={className} {...props} />
+            <Progress value={progress} className={className} {...props} />
         </ProgressDecorator>
     );
 };
 
 export interface MultiStepFormFooterProps extends ComponentProps<"div"> {
     children?: ReactNode;
-    border?: boolean;
+    divider?: boolean;
+    sticky?: boolean;
 }
 
 export const MultiStepFormFooter: FC<MultiStepFormFooterProps> = ({
     className,
     children,
-    border,
+    divider,
+    sticky,
     ...props
 }) => {
     return (
         <div
             data-slot="multi-step-form-footer"
             className={cn(
-                "flex items-center justify-between gap-3 sticky bottom-0 z-1 bg-background py-3",
-                border && "border-t",
+                "flex items-center justify-between gap-3 py-5",
+                sticky && "sticky bottom-0 z-1 bg-background",
+                divider && "border-t mt-2",
                 className,
             )}
             {...props}

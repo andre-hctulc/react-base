@@ -20,10 +20,6 @@ export interface ProgressDecoratorProps extends Omit<ComponentProps<"div">, "chi
     children: ReactElement;
 }
 
-/**
- * Labels a `Progress` bar with a leading/trailing value and a description, wiring
- * `aria-labelledby`/`aria-describedby` onto the bar so screen readers announce them.
- */
 export const ProgressDecorator: FC<ProgressDecoratorProps> = ({
     valueLabel,
     value,
