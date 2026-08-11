@@ -39,27 +39,59 @@ function getStorage(storage: StorageRef): Storage | undefined {
     }
 }
 
+function readStoredValue<T>(store: Storage, key: string): T | undefined {
+    const storedValue = store.getItem(key);
+    if (storedValue === null) {
+        return undefined;
+    }
+
+    try {
+        return JSON.parse(storedValue) as T;
+    } catch {
+        return undefined;
+    }
+}
+
+function readStoredValueFromString<T>(storedValue: string | null, fallback: T): T {
+    if (storedValue === null) {
+        return fallback;
+    }
+
+    try {
+        return JSON.parse(storedValue) as T;
+    } catch {
+        return fallback;
+    }
+}
+
 export function usePersistentState<T>(
     key: string,
     defaultValue: T,
     storage?: StorageRef,
 ): [T, Dispatch<SetStateAction<T>>] {
-    const [state, setState] = useState<T>(() => {
+    const [state, setState] = useState<T>(defaultValue);
+    const [loadedKey, setLoadedKey] = useState<string | null>(null);
+
+    // Hydrate from storage after the initial render so SSR and client markup match.
+    useEffect(() => {
         const store = getStorage(storage);
         if (!store) {
-            return defaultValue;
+            setLoadedKey(key);
+            return;
         }
-        const storedValue = store.getItem(key);
-        if (storedValue !== null) {
-            return JSON.parse(storedValue);
+
+        const storedValue = readStoredValue<T>(store, key);
+        if (storedValue !== undefined) {
+            setState(storedValue);
         }
-        return defaultValue;
-    });
+
+        setLoadedKey(key);
+    }, [key, storage]);
 
     // Update storage and dispatch custom event
     useEffect(() => {
         const store = getStorage(storage);
-        if (!store) {
+        if (!store || loadedKey !== key) {
             return;
         }
 
@@ -74,17 +106,17 @@ export function usePersistentState<T>(
             detail: { key, newValue: state },
         });
         window.dispatchEvent(customEvent);
-    }, [key, state, storage]);
+    }, [key, state, storage, loadedKey]);
 
     useEffect(() => {
         const store = getStorage(storage);
-        if (!store) {
+        if (!store || loadedKey !== key) {
             return;
         }
 
         const handleStorage = (event: StorageEvent) => {
             if (event.storageArea === store && event.key === key) {
-                setState(event.newValue ? JSON.parse(event.newValue) : defaultValue);
+                setState(readStoredValueFromString<T>(event.newValue, defaultValue));
             }
         };
 
@@ -101,7 +133,7 @@ export function usePersistentState<T>(
             window.removeEventListener("storage", handleStorage);
             window.removeEventListener(CUSTOM_EVENT_NAME, handleCustomStorage as EventListener);
         };
-    }, [key, storage]);
+    }, [key, storage, loadedKey, defaultValue]);
 
     return [state, setState];
 }
