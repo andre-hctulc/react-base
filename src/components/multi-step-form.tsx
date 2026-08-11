@@ -22,7 +22,7 @@ import { Progress } from "@/components/ui/progress.js";
 import { ProgressDecorator } from "./progress-decorator.js";
 import { cn } from "@/lib/utils.js";
 import { usePersistentState } from "@/hooks/use-persistent-state.js";
-import { Spinner } from "./ui/spinner.js";
+import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 
 type MultiStepFormData = Record<string, unknown>;

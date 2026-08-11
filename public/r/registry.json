@@ -921,6 +921,7 @@
       "registryDependencies": [
         "button",
         "progress",
+        "spinner",
         "andre-hctulc/react-base/use-persistent-state",
         "andre-hctulc/react-base/progress-decorator"
       ],
