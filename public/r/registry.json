@@ -518,6 +518,32 @@
       "type": "registry:ui"
     },
     {
+      "name": "json-form",
+      "title": "JsonForm",
+      "description": "JSON Schema form powered by RJSF and AJV with shadcn-styled templates and widgets.",
+      "dependencies": [
+        "@rjsf/core",
+        "@rjsf/utils",
+        "@rjsf/validator-ajv8",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "field",
+        "input",
+        "textarea",
+        "alert"
+      ],
+      "files": [
+        {
+          "path": "src/components/json-form.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "editable",
       "title": "Editable",
       "description": "Inline editable field that switches between view and edit mode.",
