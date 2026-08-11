@@ -892,11 +892,27 @@
       "registryDependencies": [
         "button",
         "progress",
-        "andre-hctulc/react-base/use-persistent-state"
+        "andre-hctulc/react-base/use-persistent-state",
+        "andre-hctulc/react-base/progress-decorator"
       ],
       "files": [
         {
           "path": "src/components/multi-step-form.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "progress-decorator",
+      "title": "ProgressDecorator",
+      "description": "Progress bar with optional label and value display.",
+      "registryDependencies": [
+        "progress"
+      ],
+      "files": [
+        {
+          "path": "src/components/progress-decorator.tsx",
           "type": "registry:ui"
         }
       ],

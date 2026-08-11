@@ -10,6 +10,7 @@ import {
     useEffect,
     useMemo,
     useRef,
+    useState,
     type ComponentProps,
     type FC,
     type SubmitEvent,
@@ -18,6 +19,7 @@ import {
 } from "react";
 import { Button } from "@/components/ui/button.js";
 import { Progress } from "@/components/ui/progress.js";
+import { ProgressDecorator } from "@/components/progress-decorator.js";
 import { cn } from "@/lib/utils.js";
 import { usePersistentState } from "@/hooks/use-persistent-state.js";
 
@@ -41,6 +43,11 @@ interface MultiStepFormContextValue {
      * Advances to the next step, deferring to a registered step submit trigger if present.
      */
     requestAdvance: () => void;
+    /**
+     * The active step's title, set by {@link MultiStepFormTitle} when rendered within it.
+     */
+    stepTitle: ReactNode | null;
+    registerStepTitle: (title: ReactNode | null) => void;
     data: MultiStepFormData[];
     updateData: (newData: MultiStepFormData) => void;
 }
@@ -146,6 +153,11 @@ export const MultiStepForm: FC<MultiStepFormProps> = ({
         stepSubmitRef.current = trigger;
     }, []);
 
+    const [stepTitle, setStepTitle] = useState<ReactNode | null>(null);
+    const registerStepTitle = useCallback((title: ReactNode | null) => {
+        setStepTitle(title);
+    }, []);
+
     const requestAdvance = useCallback(() => {
         if (stepSubmitRef.current) {
             stepSubmitRef.current();
@@ -177,6 +189,8 @@ export const MultiStepForm: FC<MultiStepFormProps> = ({
             reset,
             registerStepSubmit,
             requestAdvance,
+            stepTitle,
+            registerStepTitle,
             data,
             updateData,
         }),
@@ -189,6 +203,8 @@ export const MultiStepForm: FC<MultiStepFormProps> = ({
             reset,
             stepIndex,
             totalSteps,
+            stepTitle,
+            registerStepTitle,
             data,
             updateData,
         ],
@@ -220,7 +236,18 @@ export const MultiStepFormStep: FC<MultiStepFormStepProps> = ({ className, child
 
 export interface MultiStepFormTitleProps extends ComponentProps<"h2"> {}
 
+/**
+ * Renders the step's title and registers it as {@link MultiStepFormContextValue.stepTitle},
+ * used as the default label by {@link MultiStepFormProgress}.
+ */
 export const MultiStepFormTitle: FC<MultiStepFormTitleProps> = ({ className, children, ...props }) => {
+    const { registerStepTitle } = useMultiStepForm();
+
+    useEffect(() => {
+        registerStepTitle(children);
+        return () => registerStepTitle(null);
+    }, [children, registerStepTitle]);
+
     return (
         <h2 data-slot="multi-step-form-title" className={cn("text-lg font-semibold", className)} {...props}>
             {children}
@@ -228,28 +255,93 @@ export const MultiStepFormTitle: FC<MultiStepFormTitleProps> = ({ className, chi
     );
 };
 
-export interface MultiStepFormProgressProps extends ComponentProps<typeof Progress> {}
+export interface MultiStepFormDescriptionProps extends ComponentProps<"p"> {}
 
 /**
- * Progress bar reflecting the current step out of the total step count.
+ * Renders the step's description.
  */
-export const MultiStepFormProgress: FC<MultiStepFormProgressProps> = ({ className, ...props }) => {
-    const { stepIndex, totalSteps } = useMultiStepForm();
-    const value = totalSteps > 0 ? ((stepIndex + 1) / totalSteps) * 100 : 0;
+export const MultiStepFormDescription: FC<MultiStepFormDescriptionProps> = ({
+    className,
+    children,
+    ...props
+}) => {
+    return (
+        <p
+            data-slot="multi-step-form-description"
+            className={cn("text-sm text-muted-foreground", className)}
+            {...props}
+        >
+            {children}
+        </p>
+    );
+};
 
-    return <Progress data-slot="multi-step-form-progress" value={value} className={className} {...props} />;
+export interface MultiStepFormProgressProps extends ComponentProps<typeof Progress> {
+    /**
+     * Overrides the default "Step X of Y" label. Pass `null` to hide it.
+     */
+    valueLabel?: ReactNode;
+    /**
+     * Overrides the default step label. Pass `null` to hide it.
+     */
+    valueText?: ReactNode;
+    description?: ReactNode;
+    decoratorProps?: Omit<
+        ComponentProps<typeof ProgressDecorator>,
+        "children" | "valueLabel" | "value" | "description"
+    >;
+}
+
+/**
+ * Progress bar reflecting the current step out of the total step count, labeled via
+ * {@link ProgressDecorator}.
+ */
+export const MultiStepFormProgress: FC<MultiStepFormProgressProps> = ({
+    className,
+    valueLabel,
+    valueText,
+    description,
+    decoratorProps,
+    ...props
+}) => {
+    const { stepIndex, totalSteps, stepTitle } = useMultiStepForm();
+    const value = totalSteps > 0 ? ((stepIndex + 1) / totalSteps) * 100 : 0;
+    const vt = valueText === null ? undefined : (valueText ?? `${stepIndex + 1} / ${totalSteps}`);
+    const vl =
+        valueLabel === null
+            ? undefined
+            : (valueLabel ?? stepTitle ?? `Step ${stepIndex + 1} of ${totalSteps}`);
+
+    return (
+        <ProgressDecorator
+            data-slot="multi-step-form-progress"
+            valueLabel={vl}
+            value={vt}
+            description={description}
+            {...decoratorProps}
+        >
+            <Progress value={value} className={className} {...props} />
+        </ProgressDecorator>
+    );
 };
 
 export interface MultiStepFormFooterProps extends ComponentProps<"div"> {
     children?: ReactNode;
+    border?: boolean;
 }
 
-export const MultiStepFormFooter: FC<MultiStepFormFooterProps> = ({ className, children, ...props }) => {
+export const MultiStepFormFooter: FC<MultiStepFormFooterProps> = ({
+    className,
+    children,
+    border,
+    ...props
+}) => {
     return (
         <div
             data-slot="multi-step-form-footer"
             className={cn(
-                "flex items-center justify-between gap-3 sticky bottom-0 z-1 bg-background",
+                "flex items-center justify-between gap-3 sticky bottom-0 z-1 bg-background py-3",
+                border && "border-t",
                 className,
             )}
             {...props}

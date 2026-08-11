@@ -443,10 +443,28 @@
             "type": "registry:ui",
             "title": "MultiStepForm",
             "description": "Compound multi-step form with back/forward navigation and step persistence across reloads.",
-            "registryDependencies": ["button", "progress", "andre-hctulc/react-base/use-persistent-state"],
+            "registryDependencies": [
+                "button",
+                "progress",
+                "andre-hctulc/react-base/use-persistent-state",
+                "andre-hctulc/react-base/progress-decorator"
+            ],
             "files": [
                 {
                     "path": "multi-step-form.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "progress-decorator",
+            "type": "registry:ui",
+            "title": "ProgressDecorator",
+            "description": "Progress bar with optional label and value display.",
+            "registryDependencies": ["progress"],
+            "files": [
+                {
+                    "path": "progress-decorator.tsx",
                     "type": "registry:ui"
                 }
             ]
