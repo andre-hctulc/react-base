@@ -22,6 +22,8 @@ import { Progress } from "@/components/ui/progress.js";
 import { ProgressDecorator } from "./progress-decorator.js";
 import { cn } from "@/lib/utils.js";
 import { usePersistentState } from "@/hooks/use-persistent-state.js";
+import { Spinner } from "./ui/spinner.js";
+import { useRefOf } from "@/hooks/use-ref-of.js";
 
 type MultiStepFormData = Record<string, unknown>;
 
@@ -120,22 +122,30 @@ export const MultiStepForm: FC<MultiStepFormProps> = ({
         return count;
     }, [children]);
 
+    const onStepChangeRef = useRefOf(onStepChange);
+
     const goTo = useCallback(
         (index: number) => {
             const clamped = Math.min(Math.max(index, 0), Math.max(totalSteps - 1, 0));
             setStepIndex(clamped);
-            onStepChange?.(clamped, data);
+            onStepChangeRef.current?.(clamped, data);
         },
-        [onStepChange, setStepIndex, totalSteps, data],
+        [setStepIndex, totalSteps, data],
     );
+
+    const onCompleteRef = useRefOf(onComplete);
+
+    useEffect(() => {
+        stepSubmitRef.current = null;
+    }, [stepIndex]);
 
     const goNext = useCallback(() => {
         if (stepIndex >= totalSteps - 1) {
-            onComplete?.(data, Object.assign({}, ...data));
+            onCompleteRef.current?.(data, Object.assign({}, ...data));
             return;
         }
         goTo(stepIndex + 1);
-    }, [goTo, onComplete, stepIndex, totalSteps, data]);
+    }, [goTo, stepIndex, totalSteps, data]);
 
     const goBack = useCallback(() => {
         goTo(stepIndex - 1);
@@ -396,12 +406,15 @@ export interface MultiStepFormNextButtonProps extends ComponentProps<typeof Butt
      * @default "Submit"
      */
     completeLabel?: ReactNode;
+    loading?: boolean;
 }
 
 export const MultiStepFormNextButton: FC<MultiStepFormNextButtonProps> = ({
     children,
     completeLabel = "Submit",
     onClick,
+    loading,
+    disabled,
     ...props
 }) => {
     const { isLast, requestAdvance } = useMultiStepForm();
@@ -414,8 +427,10 @@ export const MultiStepFormNextButton: FC<MultiStepFormNextButtonProps> = ({
                 onClick?.(e);
                 requestAdvance();
             }}
+            disabled={disabled || loading}
             {...props}
         >
+            {loading && <Spinner data-icon="inline-start" />}
             {children ?? (isLast ? completeLabel : "Next")}
         </Button>
     );
