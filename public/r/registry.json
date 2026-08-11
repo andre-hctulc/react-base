@@ -342,24 +342,27 @@
       "type": "registry:hook"
     },
     {
-      "name": "use-promise",
-      "title": "usePromise",
-      "description": "Tracks loading/error/data state of a promise.",
-      "files": [
-        {
-          "path": "src/hooks/use-promise.ts",
-          "type": "registry:hook"
-        }
-      ],
-      "type": "registry:hook"
-    },
-    {
       "name": "use-ref-of",
       "title": "useRefOf",
       "description": "Keeps a ref in sync with the latest value of a variable.",
       "files": [
         {
           "path": "src/hooks/use-ref-of.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "type": "registry:hook"
+    },
+    {
+      "name": "use-promise",
+      "title": "usePromise",
+      "description": "Tracks loading/error/data state of a promise.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/use-ref-of"
+      ],
+      "files": [
+        {
+          "path": "src/hooks/use-promise.ts",
           "type": "registry:hook"
         }
       ],

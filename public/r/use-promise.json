@@ -3,6 +3,9 @@
   "name": "use-promise",
   "title": "usePromise",
   "description": "Tracks loading/error/data state of a promise.",
+  "registryDependencies": [
+    "andre-hctulc/react-base/use-ref-of"
+  ],
   "files": [
     {
       "path": "src/hooks/use-promise.ts",

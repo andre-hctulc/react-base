@@ -314,18 +314,6 @@
             ]
         },
         {
-            "name": "use-promise",
-            "type": "registry:hook",
-            "title": "usePromise",
-            "description": "Tracks loading/error/data state of a promise.",
-            "files": [
-                {
-                    "path": "use-promise.ts",
-                    "type": "registry:hook"
-                }
-            ]
-        },
-        {
             "name": "use-ref-of",
             "type": "registry:hook",
             "title": "useRefOf",
@@ -333,6 +321,19 @@
             "files": [
                 {
                     "path": "use-ref-of.ts",
+                    "type": "registry:hook"
+                }
+            ]
+        },
+        {
+            "name": "use-promise",
+            "type": "registry:hook",
+            "title": "usePromise",
+            "description": "Tracks loading/error/data state of a promise.",
+            "registryDependencies": ["andre-hctulc/react-base/use-ref-of"],
+            "files": [
+                {
+                    "path": "use-promise.ts",
                     "type": "registry:hook"
                 }
             ]
