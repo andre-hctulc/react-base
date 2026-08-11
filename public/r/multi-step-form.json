@@ -8,6 +8,7 @@
     "progress",
     "spinner",
     "andre-hctulc/react-base/use-persistent-state",
+    "andre-hctulc/react-base/use-ref-of",
     "andre-hctulc/react-base/progress-decorator"
   ],
   "files": [
