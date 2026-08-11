@@ -23,14 +23,16 @@ export type SelectItems = SelectItemList | SelectItemGroupMap;
 
 interface SelectFactoryProps extends ComponentProps<typeof Select> {
     items: SelectItems;
+    id?: string;
+    triggerProps?: ComponentProps<typeof SelectTrigger>;
 }
 
-export const SelectFactory: FC<SelectFactoryProps> = ({ items, ...props }) => {
+export const SelectFactory: FC<SelectFactoryProps> = ({ items, id, triggerProps, ...props }) => {
     const len = Array.isArray(items) ? items.length : Object.keys(items).length;
 
     return (
         <Select {...props}>
-            <SelectTrigger className="w-full max-w-48">
+            <SelectTrigger id={id} {...triggerProps}>
                 <SelectValue />
             </SelectTrigger>
             <SelectContent>
