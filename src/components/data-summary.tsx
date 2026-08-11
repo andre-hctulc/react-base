@@ -71,8 +71,8 @@ export const DataSummary: FC<DataSummaryProps> = ({
                     >
                         <dt
                             className={cn(
-                                "text-muted-foreground min-w-0 whitespace-normal [overflow-wrap:anywhere]",
-                                "sm:shrink-0 sm:basis-[var(--data-summary-label-width)] sm:w-[var(--data-summary-label-width)]",
+                                "text-muted-foreground min-w-0 whitespace-normal wrap-anywhere",
+                                "sm:shrink-0 sm:basis-(--data-summary-label-width) sm:w-(--data-summary-label-width)",
                             )}
                             style={{ "--data-summary-label-width": resolvedLabelWidth } as CSSProperties}
                         >

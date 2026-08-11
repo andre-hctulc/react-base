@@ -165,12 +165,17 @@ export const MultiStepForm: FC<MultiStepFormProps> = ({
     }, []);
 
     const requestAdvance = useCallback(() => {
+        const isLast = stepIndex >= totalSteps - 1;
+
+        if (isLast || !stepSubmitRef.current) {
+            goNext();
+            return;
+        }
+
         if (stepSubmitRef.current) {
             stepSubmitRef.current();
-        } else {
-            goNext();
         }
-    }, [goNext]);
+    }, [goNext, stepIndex, totalSteps]);
 
     const renderedChildren = useMemo(() => {
         let index = -1;
