@@ -30,9 +30,11 @@ export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T,
     const successListener = useRefOf(listeners?.onSuccess);
 
     const promise = useCallback((newPromise: Promise<T>) => {
+        let discarded = false;
+
         currentPromise.current = newPromise;
 
-        if (!currentPromise) {
+        if (!currentPromise.current) {
             setData(undefined);
             setIsPending(false);
             setIsFinished(false);
@@ -47,6 +49,8 @@ export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T,
 
         newPromise
             .then((data) => {
+                if(discarded) return;
+
                 successListener.current?.(data);
                 if (currentPromise.current !== newPromise) return;
                 setIsPending(false);
@@ -55,6 +59,8 @@ export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T,
                 setError(undefined);
             })
             .catch((err) => {
+                if(discarded) return;
+
                 errorListener.current?.(err);
                 if (currentPromise.current !== newPromise) return;
                 setIsPending(false);
@@ -62,6 +68,10 @@ export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T,
                 setIsFinished(true);
                 setError(err);
             });
+
+        return () => {
+            discarded = true;
+        };
     }, []);
 
     return {
@@ -70,6 +80,6 @@ export function usePromise<T = any, E = unknown>(listeners?: PromiseListeners<T,
         isFinished,
         error,
         promise,
-        isSuccess: error !== undefined,
+        isSuccess: error === undefined,
     };
 }

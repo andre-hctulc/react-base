@@ -1,4 +1,4 @@
-import type { ComponentProps, FC, ReactNode } from "react";
+import type { ComponentProps, CSSProperties, FC, ReactNode } from "react";
 import { cn } from "@/lib/utils.js";
 
 function defaultValueRender(key: string, value: unknown): ReactNode {
@@ -29,6 +29,15 @@ interface DataSummaryProps extends ComponentProps<"div"> {
     renderValue?: (key: string, value: unknown) => ReactNode;
     includeKeys?: string[];
     excludeKeys?: string[];
+    /**
+     * Width of the first (label) column on `sm+` screens.
+     *
+     * - number values are treated as pixels
+     * - string values are used as-is (e.g. `"12rem"`, `"30%"`)
+     *
+     * @default "10rem"
+     */
+    labelWidth?: number | string;
 }
 
 export const DataSummary: FC<DataSummaryProps> = ({
@@ -36,9 +45,12 @@ export const DataSummary: FC<DataSummaryProps> = ({
     renderValue,
     includeKeys,
     excludeKeys,
+    labelWidth = "10rem",
     className,
     ...props
 }) => {
+    const resolvedLabelWidth = typeof labelWidth === "number" ? `${labelWidth}px` : labelWidth;
+
     const entries = Object.entries(data).filter(([key]) => {
         if (includeKeys) {
             return includeKeys.includes(key);
@@ -57,7 +69,15 @@ export const DataSummary: FC<DataSummaryProps> = ({
                         key={key}
                         className="flex flex-col gap-1 py-2 sm:flex-row sm:items-baseline sm:gap-4"
                     >
-                        <dt className="text-muted-foreground sm:w-40 sm:shrink-0">{key}</dt>
+                        <dt
+                            className={cn(
+                                "text-muted-foreground min-w-0 whitespace-normal [overflow-wrap:anywhere]",
+                                "sm:shrink-0 sm:basis-[var(--data-summary-label-width)] sm:w-[var(--data-summary-label-width)]",
+                            )}
+                            style={{ "--data-summary-label-width": resolvedLabelWidth } as CSSProperties}
+                        >
+                            {key}
+                        </dt>
                         <dd className="min-w-0 grow font-medium wrap-break-word">
                             {renderValue ? renderValue(key, value) : defaultValueRender(key, value)}
                         </dd>
