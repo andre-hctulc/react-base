@@ -6,6 +6,7 @@ import {
     type TableFeatures,
     tableFeatures,
     type TableOptions,
+    type TableState,
     useTable,
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -15,29 +16,37 @@ import { cn } from "@/lib/utils";
 
 const defaultFeatures = tableFeatures({});
 
-interface DTableProps<TData extends RowData> extends ComponentProps<"div"> {
-    columns: ColumnDef<TableFeatures, TData, any>[];
+interface DTableProps<
+    TData extends RowData,
+    TFeatures extends TableFeatures = TableFeatures,
+> extends ComponentProps<"div"> {
+    columns: ColumnDef<TFeatures, TData, any>[];
     data: TData[];
     empty?: ReactNode;
     features?: TableFeatures;
-    options?: TableOptions<TableFeatures, TData>;
+    options?: TableOptions<TFeatures, TData>;
+    selector?: (state: TableState<TFeatures>) => TableState<TFeatures>;
 }
 
-export function DTable<TData extends RowData>({
+export function DTable<TData extends RowData, TFeatures extends TableFeatures = TableFeatures>({
     columns,
     data,
     empty,
     features,
     className,
     options,
+    selector,
     ...props
-}: DTableProps<TData>) {
-    const table = useTable({
-        features: features || defaultFeatures,
-        columns,
-        data,
-        ...options,
-    });
+}: DTableProps<TData, TFeatures>) {
+    const table = useTable<TFeatures, TData>(
+        {
+            features: features || defaultFeatures,
+            columns,
+            data,
+            ...options,
+        } as TableOptions<TFeatures, TData>,
+        selector,
+    );
     const rowModel = table.getRowModel();
 
     return (
