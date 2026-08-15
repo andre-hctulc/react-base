@@ -5,6 +5,7 @@ import {
     type RowData,
     type TableFeatures,
     tableFeatures,
+    type TableOptions,
     useTable,
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -19,6 +20,7 @@ interface DTableProps<TData extends RowData> extends ComponentProps<"div"> {
     data: TData[];
     empty?: ReactNode;
     features?: TableFeatures;
+    options?: TableOptions<TableFeatures, TData>;
 }
 
 export function DTable<TData extends RowData>({
@@ -27,12 +29,14 @@ export function DTable<TData extends RowData>({
     empty,
     features,
     className,
+    options,
     ...props
 }: DTableProps<TData>) {
     const table = useTable({
         features: features || defaultFeatures,
         columns,
         data,
+        ...options,
     });
     const rowModel = table.getRowModel();
 
