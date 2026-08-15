@@ -416,7 +416,7 @@
             "type": "registry:ui",
             "title": "DTable",
             "description": "Data table component.",
-            "registryDependencies": ["table", "empty"],
+            "registryDependencies": ["table", "empty", "spinner"],
             "dependencies": ["@tanstack/react-table"],
             "files": [
                 {

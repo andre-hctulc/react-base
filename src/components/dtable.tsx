@@ -9,10 +9,11 @@ import {
     type TableState,
     useTable,
 } from "@tanstack/react-table";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.js";
 import type { ComponentProps, ReactNode } from "react";
 import { Empty, EmptyHeader, EmptyDescription } from "@/components/ui/empty.js";
 import { cn } from "@/lib/utils";
+import { Spinner } from "@/components/ui/spinner.js";
 
 const defaultFeatures = tableFeatures({});
 
@@ -21,12 +22,21 @@ export interface DTableProps<
     TFeatures extends TableFeatures = TableFeatures,
 > extends ComponentProps<"div"> {
     columns: ColumnDef<TFeatures, TData, any>[];
-    data: TData[];
-    empty?: ReactNode;
+    /**
+     * The data to be displayed in the table.
+     * If undefined, the table will show a loading state.
+     * If an empty array, it will show an empty state.
+     */
+    data: TData[] | undefined;
     features?: TableFeatures;
     options?: TableOptions<TFeatures, TData>;
     selector?: (state: TableState<TFeatures>) => TableState<TFeatures>;
+    /** Error content to be displayed in the table. */
     error?: ReactNode;
+    /** Empty state content to be displayed when there is no data. */
+    empty?: ReactNode;
+    /** Loading state content to be displayed when data is undefined. */
+    loading?: ReactNode;
 }
 
 export function DTable<TData extends RowData, TFeatures extends TableFeatures = TableFeatures>({
@@ -38,6 +48,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
     options,
     selector,
     error,
+    loading,
     ...props
 }: DTableProps<TData, TFeatures>) {
     const table = useTable<TFeatures, TData>(
@@ -72,7 +83,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
                         <TableRow>
                             <TableCell colSpan={columns.length}>{error}</TableCell>
                         </TableRow>
-                    ) : rowModel.rows?.length ? (
+                    ) : data?.length ? (
                         rowModel.rows.map((row) => (
                             <TableRow key={row.id}>
                                 {row.getAllCells().map((cell) => (
@@ -82,7 +93,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
                                 ))}
                             </TableRow>
                         ))
-                    ) : (
+                    ) : data ? (
                         <TableRow>
                             <TableCell colSpan={columns.length}>
                                 {typeof empty === "string" || !empty ? (
@@ -95,6 +106,16 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
                                     </Empty>
                                 ) : (
                                     empty
+                                )}
+                            </TableCell>
+                        </TableRow>
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={columns.length}>
+                                {loading || (
+                                    <Empty>
+                                        <Spinner />
+                                    </Empty>
                                 )}
                             </TableCell>
                         </TableRow>

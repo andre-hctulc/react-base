@@ -869,7 +869,8 @@
       ],
       "registryDependencies": [
         "table",
-        "empty"
+        "empty",
+        "spinner"
       ],
       "files": [
         {
