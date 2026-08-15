@@ -26,6 +26,7 @@ export interface DTableProps<
     features?: TableFeatures;
     options?: TableOptions<TFeatures, TData>;
     selector?: (state: TableState<TFeatures>) => TableState<TFeatures>;
+    error?: ReactNode;
 }
 
 export function DTable<TData extends RowData, TFeatures extends TableFeatures = TableFeatures>({
@@ -36,6 +37,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
     className,
     options,
     selector,
+    error,
     ...props
 }: DTableProps<TData, TFeatures>) {
     const table = useTable<TFeatures, TData>(
@@ -66,7 +68,11 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
                     ))}
                 </TableHeader>
                 <TableBody>
-                    {rowModel.rows?.length ? (
+                    {error ? (
+                        <TableRow>
+                            <TableCell colSpan={columns.length}>{error}</TableCell>
+                        </TableRow>
+                    ) : rowModel.rows?.length ? (
                         rowModel.rows.map((row) => (
                             <TableRow key={row.id}>
                                 {row.getAllCells().map((cell) => (
