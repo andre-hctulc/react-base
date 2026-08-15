@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 
 const defaultFeatures = tableFeatures({});
 
-interface DTableProps<
+export interface DTableProps<
     TData extends RowData,
     TFeatures extends TableFeatures = TableFeatures,
 > extends ComponentProps<"div"> {
