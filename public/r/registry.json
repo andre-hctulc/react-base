@@ -861,6 +861,25 @@
       "type": "registry:ui"
     },
     {
+      "name": "field-filter",
+      "title": "FieldFilter",
+      "description": "Advanced field filter with typed filter operators and a compact popover trigger.",
+      "registryDependencies": [
+        "button",
+        "input",
+        "textarea",
+        "field",
+        "popover"
+      ],
+      "files": [
+        {
+          "path": "src/components/field-filter.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "dtable",
       "title": "DTable",
       "description": "Data table component.",
@@ -870,7 +889,10 @@
       "registryDependencies": [
         "table",
         "empty",
-        "spinner"
+        "spinner",
+        "native-select",
+        "button",
+        "andre-hctulc/react-base/field-filter"
       ],
       "files": [
         {
