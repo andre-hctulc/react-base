@@ -121,8 +121,8 @@ function DTableFilters({ table }: DTableFiltersProps) {
     }
 
     return (
-        <div className="flex flex-row justify-between gap-3">
-            <div className="flex flex-wrap justify-end gap-3">
+        <div className="flex flex-row gap-3">
+            <div className="flex flex-wrap justify-end gap-3 grow">
                 {open &&
                     filterableColumns.map((column) => {
                         const label =
