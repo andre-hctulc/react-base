@@ -19,7 +19,7 @@ import { Spinner } from "@/components/ui/spinner.js";
 import { Button } from "@/components/ui/button.js";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select.js";
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { FieldFilter, type FieldFilterValueType } from "@/components/field-filter.js";
+import { FieldFilter, type FieldFilterValueType } from "./field-filter.js";
 
 const defaultFeatures = tableFeatures({});
 
