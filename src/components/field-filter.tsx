@@ -221,7 +221,7 @@ export const FieldFilter: FC<FieldFilterProps> = ({
                     <FieldSet>
                         <FieldLegend>{label ?? "Filter"}</FieldLegend>
                         <FieldDescription>Set the matching rule and value for this column.</FieldDescription>
-                        <FieldGroup className="gap-3">
+                        <FieldGroup>
                             {renderFieldCondition("equals", "Equals", {
                                 isIn: ["string", "float", "int", "date", "boolean"],
                             })}
