@@ -435,6 +435,7 @@
                 "spinner",
                 "native-select",
                 "button",
+                "toggle",
                 "andre-hctulc/react-base/field-filter"
             ],
             "dependencies": ["@tanstack/react-table"],

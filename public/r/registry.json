@@ -892,6 +892,7 @@
         "spinner",
         "native-select",
         "button",
+        "toggle",
         "andre-hctulc/react-base/field-filter"
       ],
       "files": [
