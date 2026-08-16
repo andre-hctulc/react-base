@@ -1,6 +1,9 @@
+"use client";
+
 import { Button } from "@/components/ui/button.js";
 import {
     Field,
+    FieldContent,
     FieldDescription,
     FieldGroup,
     FieldLabel,
@@ -8,8 +11,7 @@ import {
     FieldSet,
 } from "@/components/ui/field.js";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.js";
-import { cn } from "@/lib/utils.js";
-import { useId, useRef, type ComponentProps, type FC, type SubmitEvent } from "react";
+import { useId, useRef, type ChangeEvent, type ComponentProps, type FC, type SubmitEvent } from "react";
 import { Input } from "@/components/ui/input.js";
 import { Textarea } from "@/components/ui/textarea.js";
 
@@ -124,7 +126,7 @@ function shouldRender(type: FieldFilterValueType, conditions: RenderConditions):
     return true;
 }
 
-interface FieldFilterProps extends ComponentProps<"div"> {
+interface FieldFilterProps extends ComponentProps<typeof Popover> {
     label: string;
     type: FieldFilterValueType;
     value?: unknown;
@@ -135,6 +137,7 @@ interface FieldFilterProps extends ComponentProps<"div"> {
     onValueChange?: (nextValue: string) => void;
     /** Render text areas instead of input */
     long?: boolean;
+    className?: string;
 }
 
 export const FieldFilter: FC<FieldFilterProps> = ({
@@ -166,7 +169,7 @@ export const FieldFilter: FC<FieldFilterProps> = ({
         for (const [key, value] of data.entries()) {
             (filterData as any)[key] = value;
         }
-        
+
         onFilterChange?.(filterData);
     }
 
@@ -186,69 +189,70 @@ export const FieldFilter: FC<FieldFilterProps> = ({
         }
 
         return (
-            <Field key={fieldName}>
-                <FieldLabel htmlFor={`${formId}-${String(fieldName)}`}>{label}</FieldLabel>
-                <Inp
-                    id={`${formId}-${String(fieldName)}`}
-                    name={String(fieldName)}
-                    placeholder={inputPlaceholder}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                        onValueChange?.(event.target.value)
-                    }
-                    {...inpProps}
-                />
+            <Field key={fieldName} orientation="horizontal">
+                <FieldLabel htmlFor={`${formId}-${fieldName}`} className="w-32 shrink-0">
+                    {label}
+                </FieldLabel>
+                <FieldContent className="min-w-0 flex-1">
+                    <Inp
+                        id={`${formId}-${fieldName}`}
+                        name={String(fieldName)}
+                        placeholder={inputPlaceholder}
+                        className="w-full"
+                        onChange={(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                            onValueChange?.(event.target.value)
+                        }
+                        {...inpProps}
+                    />
+                </FieldContent>
             </Field>
         );
     };
 
     return (
-        <div className={cn("grid min-w-48 flex-1 gap-1.5 text-sm font-medium", className)} {...props}>
-            <Popover onOpenChange={handleOpenChange}>
-                <PopoverTrigger asChild>
-                    <Button type="button" variant="outline" size="sm">
-                        {label}
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80 p-4" align="start">
-                    <form onSubmit={handleSubmit} ref={formRef}>
-                        <FieldSet>
-                            <FieldLegend>{label ?? "Filter"}</FieldLegend>
-                            <FieldDescription>
-                                Set the matching rule and value for this column.
-                            </FieldDescription>
-                            <FieldGroup>
-                                {renderFieldCondition("equals", "Equals", {
-                                    isIn: ["string", "float", "int", "date", "boolean"],
-                                })}
-                                {renderFieldCondition("gt", "Greater than", {
-                                    isIn: ["float", "int", "date"],
-                                })}
-                                {renderFieldCondition("lt", "Less than", {
-                                    isIn: ["float", "int", "date"],
-                                })}
-                                {renderFieldCondition("gte", "Greater than or equal", {
-                                    isIn: ["float", "int", "date"],
-                                })}
-                                {renderFieldCondition("lte", "Less than or equal", {
-                                    isIn: ["float", "int", "date"],
-                                })}
-                                {renderFieldCondition("startsWith", "Starts with", {
-                                    isIn: ["string"],
-                                })}
-                                {renderFieldCondition("endsWith", "Ends with", {
-                                    isIn: ["string"],
-                                })}
-                                {renderFieldCondition("includes", "Includes", {
-                                    isIn: ["string"],
-                                })}
-                                {renderFieldCondition("regex", "Matches regex", {
-                                    isIn: ["string"],
-                                })}
-                            </FieldGroup>
-                        </FieldSet>
-                    </form>
-                </PopoverContent>
-            </Popover>
-        </div>
+        <Popover onOpenChange={handleOpenChange} {...props}>
+            <PopoverTrigger asChild>
+                <Button type="button" variant="outline" size="sm">
+                    {label}
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[420px] p-4" align="center" sideOffset={8}>
+                <form onSubmit={handleSubmit} ref={formRef}>
+                    <FieldSet>
+                        <FieldLegend>{label ?? "Filter"}</FieldLegend>
+                        <FieldDescription>Set the matching rule and value for this column.</FieldDescription>
+                        <FieldGroup className="gap-3">
+                            {renderFieldCondition("equals", "Equals", {
+                                isIn: ["string", "float", "int", "date", "boolean"],
+                            })}
+                            {renderFieldCondition("gt", "Greater than", {
+                                isIn: ["float", "int", "date"],
+                            })}
+                            {renderFieldCondition("lt", "Less than", {
+                                isIn: ["float", "int", "date"],
+                            })}
+                            {renderFieldCondition("gte", "Greater than or equal", {
+                                isIn: ["float", "int", "date"],
+                            })}
+                            {renderFieldCondition("lte", "Less than or equal", {
+                                isIn: ["float", "int", "date"],
+                            })}
+                            {renderFieldCondition("startsWith", "Starts with", {
+                                isIn: ["string"],
+                            })}
+                            {renderFieldCondition("endsWith", "Ends with", {
+                                isIn: ["string"],
+                            })}
+                            {renderFieldCondition("includes", "Includes", {
+                                isIn: ["string"],
+                            })}
+                            {renderFieldCondition("regex", "Matches regex", {
+                                isIn: ["string"],
+                            })}
+                        </FieldGroup>
+                    </FieldSet>
+                </form>
+            </PopoverContent>
+        </Popover>
     );
 };

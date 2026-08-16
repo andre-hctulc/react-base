@@ -50,11 +50,11 @@ export interface DTableProps<
 type AnyTable = ReactTable<any, any, any>;
 type AnyColumn = Column<any, any>;
 
-function DTableHeader<TData extends RowData, TFeatures extends TableFeatures>({
-    table,
-}: {
-    table: ReactTable<TFeatures, TData>;
-}) {
+interface DTableHeaderProps {
+    table: AnyTable;
+}
+
+function DTableHeader({ table }: DTableHeaderProps) {
     return (
         <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -111,7 +111,7 @@ function DTableFilters({ table }: DTableFiltersProps) {
     }
 
     return (
-        <div className="flex flex-wrap items-end gap-3">
+        <div className="flex flex-wrap justify-end gap-3">
             {filterableColumns.map((column) => {
                 const label =
                     typeof column.columnDef.header === "string" ? column.columnDef.header : column.id;
@@ -164,7 +164,7 @@ interface DTableFooterProps {
 }
 
 function DTableFooter({ table, dataLength, manualPagination, pageSizeOptions }: DTableFooterProps) {
-    const pagination = table.store.state.pagination;
+    const pagination = table.state.pagination;
     const hasPagination = !!pagination && !!table.previousPage && !!table.nextPage;
 
     if (!hasPagination) {
@@ -257,7 +257,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
             <DTableFilters table={interactiveTable} />
             <div className="overflow-hidden rounded border">
                 <Table>
-                    <DTableHeader table={table} />
+                    <DTableHeader table={interactiveTable} />
                     <TableBody>
                         {error ? (
                             <TableRow>
