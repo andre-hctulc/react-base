@@ -12,14 +12,22 @@ import {
     useTable,
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.js";
-import { useMemo, type ComponentProps, type ReactNode } from "react";
+import { useMemo, useState, type ComponentProps, type ReactNode } from "react";
 import { Empty, EmptyHeader, EmptyDescription } from "@/components/ui/empty.js";
 import { cn } from "@/lib/utils.js";
 import { Spinner } from "@/components/ui/spinner.js";
 import { Button } from "@/components/ui/button.js";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select.js";
-import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import {
+    ArrowDownIcon,
+    ArrowUpDownIcon,
+    ArrowUpIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    LucideFilter,
+} from "lucide-react";
 import { FieldFilter, type FieldFilterValueType } from "./field-filter.js";
+import { Toggle } from "@/components/ui/toggle.js";
 
 const defaultFeatures = tableFeatures({});
 
@@ -102,6 +110,8 @@ interface DTableFiltersProps {
 }
 
 function DTableFilters({ table }: DTableFiltersProps) {
+    const [open, setOpen] = useState(false);
+
     const filterableColumns = (table.getVisibleLeafColumns?.() ?? []).filter((column) =>
         column.getCanFilter?.(),
     );
@@ -111,47 +121,56 @@ function DTableFilters({ table }: DTableFiltersProps) {
     }
 
     return (
-        <div className="flex flex-wrap justify-end gap-3">
-            {filterableColumns.map((column) => {
-                const label =
-                    typeof column.columnDef.header === "string" ? column.columnDef.header : column.id;
-                const filterMode = ((column.columnDef as { meta?: { filterMode?: "simple" | "advanced" } })
-                    .meta?.filterMode ?? "simple") as "simple" | "advanced";
-                const filterValue = column.getFilterValue?.();
-                const filterState: { type: FieldFilterValueType; value: string } =
-                    typeof filterValue === "object" && filterValue !== null && "type" in filterValue
-                        ? {
-                              type: ((filterValue as { type?: string }).type ??
-                                  "string") as FieldFilterValueType,
-                              value: String((filterValue as { value?: string }).value ?? ""),
-                          }
-                        : {
-                              type: "string",
-                              value: filterValue == null ? "" : String(filterValue),
-                          };
+        <div className="flex flex-row justify-between gap-3">
+            <div className="flex flex-wrap justify-end gap-3">
+                {open &&
+                    filterableColumns.map((column) => {
+                        const label =
+                            typeof column.columnDef.header === "string" ? column.columnDef.header : column.id;
+                        const filterMode = ((
+                            column.columnDef as { meta?: { filterMode?: "simple" | "advanced" } }
+                        ).meta?.filterMode ?? "simple") as "simple" | "advanced";
+                        const filterValue = column.getFilterValue?.();
+                        const filterState: { type: FieldFilterValueType; value: string } =
+                            typeof filterValue === "object" && filterValue !== null && "type" in filterValue
+                                ? {
+                                      type: ((filterValue as { type?: string }).type ??
+                                          "string") as FieldFilterValueType,
+                                      value: String((filterValue as { value?: string }).value ?? ""),
+                                  }
+                                : {
+                                      type: "string",
+                                      value: filterValue == null ? "" : String(filterValue),
+                                  };
 
-                return (
-                    <FieldFilter
-                        key={column.id}
-                        label={label}
-                        type={filterState.type}
-                        value={filterState.value}
-                        showTypeSelector={filterMode === "advanced"}
-                        onTypeChange={(nextType: string) =>
-                            column.setFilterValue?.({
-                                type: nextType as FieldFilterValueType,
-                                value: filterState.value,
-                            })
-                        }
-                        onValueChange={(nextValue: string) =>
-                            column.setFilterValue?.({
-                                type: filterState.type,
-                                value: nextValue,
-                            })
-                        }
-                    />
-                );
-            })}
+                        return (
+                            <FieldFilter
+                                key={column.id}
+                                label={label}
+                                type={filterState.type}
+                                value={filterState.value}
+                                showTypeSelector={filterMode === "advanced"}
+                                onTypeChange={(nextType: string) =>
+                                    column.setFilterValue?.({
+                                        type: nextType as FieldFilterValueType,
+                                        value: filterState.value,
+                                    })
+                                }
+                                onValueChange={(nextValue: string) =>
+                                    column.setFilterValue?.({
+                                        type: filterState.type,
+                                        value: nextValue,
+                                    })
+                                }
+                            />
+                        );
+                    })}
+            </div>
+            <div>
+                <Toggle size="sm" onPressedChange={setOpen}>
+                    <LucideFilter />
+                </Toggle>
+            </div>
         </div>
     );
 }
