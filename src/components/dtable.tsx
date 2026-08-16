@@ -167,7 +167,7 @@ function DTableFilters({ table }: DTableFiltersProps) {
                     })}
             </div>
             <div>
-                <Toggle size="sm" onPressedChange={setOpen} variant="outline">
+                <Toggle size="sm" pressed={open} onPressedChange={setOpen} variant="outline">
                     <LucideFilter className="group-aria-pressed/toggle:fill-foreground" />
                 </Toggle>
             </div>
