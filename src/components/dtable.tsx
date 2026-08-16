@@ -10,7 +10,7 @@ import {
     useTable,
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table.js";
-import type { ComponentProps, ReactNode } from "react";
+import { useMemo, type ComponentProps, type ReactNode } from "react";
 import { Empty, EmptyHeader, EmptyDescription } from "@/components/ui/empty.js";
 import { cn } from "@/lib/utils";
 import { Spinner } from "@/components/ui/spinner.js";
@@ -51,11 +51,15 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
     loading,
     ...props
 }: DTableProps<TData, TFeatures>) {
+    const dataList = useMemo(() => {
+        if (!data) return [];
+        return data;
+    }, [data]);
     const table = useTable<TFeatures, TData>(
         {
             features: features || defaultFeatures,
             columns,
-            data,
+            data: dataList,
             ...options,
         } as TableOptions<TFeatures, TData>,
         selector,
@@ -83,7 +87,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
                         <TableRow>
                             <TableCell colSpan={columns.length}>{error}</TableCell>
                         </TableRow>
-                    ) : data?.length ? (
+                    ) : rowModel.rows.length ? (
                         rowModel.rows.map((row) => (
                             <TableRow key={row.id}>
                                 {row.getAllCells().map((cell) => (
@@ -114,7 +118,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
                             <TableCell colSpan={columns.length}>
                                 {loading || (
                                     <Empty>
-                                        <Spinner />
+                                        <Spinner className="size-8" />
                                     </Empty>
                                 )}
                             </TableCell>
