@@ -10,6 +10,7 @@
         "tc:watch": "tsc --watch --noEmit -p tsconfig.build.json",
         "prebuild": "rm -rf dist",
         "build": "npm run build:ts && npm run build:registry",
+        "prepack": "npm run build",
         "build:ts": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
         "lint": "npx eslint src",
         "demo": "npx serve -s ./demo-build -p 3065",
