@@ -13,9 +13,11 @@ import {
     useState,
     type ComponentProps,
     type FC,
+    type FormEvent,
     type SubmitEvent,
     type ReactElement,
     type ReactNode,
+    type ChangeEvent,
 } from "react";
 import { Button } from "@/components/ui/button.js";
 import { Progress } from "@/components/ui/progress.js";
@@ -444,8 +446,6 @@ export const MultiStepFormNextButton: FC<MultiStepFormNextButtonProps> = ({
 export interface MultiStepFormSubProps {
     /**
      * A single `<form>` element. Submitted whenever Next/Finish is pressed.
-     * Return `false` (or a Promise resolving to `false`) from its `onSubmit`
-     * to keep the wizard on the current step, e.g. after failed validation.
      */
     children: ReactElement<ComponentProps<"form">, "form">;
 }
@@ -482,6 +482,15 @@ export const MultiStepFormSub: FC<MultiStepFormSubProps> = ({ children }) => {
     }, [registerStepSubmit]);
 
     const childOnSubmit = children.props.onSubmit;
+    const childOnChange = children.props.onChange;
+
+    const handleChange = useCallback(
+        (e: ChangeEvent<HTMLFormElement>) => {
+            childOnChange?.(e);
+            updateData(collectFormData(e.currentTarget));
+        },
+        [childOnChange, updateData],
+    );
 
     const handleSubmit = useCallback(
         async (e: SubmitEvent<HTMLFormElement>) => {
@@ -497,7 +506,7 @@ export const MultiStepFormSub: FC<MultiStepFormSubProps> = ({ children }) => {
         [childOnSubmit, goNext, updateData],
     );
 
-    return cloneElement(children, { ref: formRef, onSubmit: handleSubmit });
+    return cloneElement(children, { ref: formRef, onChange: handleChange, onSubmit: handleSubmit });
 };
 
 export type MultiStepFormDataView = Pick<

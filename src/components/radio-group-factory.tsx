@@ -11,18 +11,20 @@ export interface RadioGroupOption {
     disabled?: boolean;
 }
 
+export type RadioGroupFactoryVariant = "cards" | "plain";
 interface RadioGroupFactoryProps extends ComponentProps<typeof RadioGroup> {
     options: RadioGroupOption[];
     /**
-     * Render choice cards instead of plain options
+     * Use "cards" variant to render options as cards with title and description.
+     * @default "plain"
      */
-    cards?: boolean;
+    variant?: RadioGroupFactoryVariant;
     readOnly?: boolean;
 }
 
 export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({
     options,
-    cards,
+    variant,
     readOnly,
     onValueChange,
     ...props
@@ -33,7 +35,7 @@ export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({
         onValueChange: readOnly ? undefined : onValueChange,
     };
 
-    if (cards) {
+    if (variant === "cards") {
         return (
             <RadioGroup {...radioGroupProps}>
                 {options.map((option) => {

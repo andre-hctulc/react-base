@@ -15,35 +15,35 @@ import {
     FieldSet,
 } from "@/components/ui/field.js";
 
-export interface FormFieldParams {
+export interface FieldParams {
     name?: string;
     label?: string;
     id?: string;
     description?: string;
     error?: string;
 }
-export type FormFieldInputProps = Pick<FormFieldParams, "name" | "id">;
+export type FieldInputProps = Pick<FieldParams, "name" | "id">;
 
-type FormFieldRenderer = (params: FormFieldParams) => ReactNode;
+type FieldRenderer = (params: FieldParams) => ReactNode;
 
-type FormFieldTemplateProps<S extends boolean> = (S extends true
+export type FieldTemplateProps<S extends boolean> = (S extends true
     ? Omit<ComponentProps<typeof FieldSet>, "children">
     : Omit<ComponentProps<typeof Field>, "children">) & {
-    children: FormFieldRenderer | ReactElement<FormFieldInputProps>;
-    params: FormFieldParams;
+    children: FieldRenderer | ReactElement<FieldInputProps>;
+    params: FieldParams;
     /** Render {@link FieldSet} instead of {@link Field} */
     asSet?: S;
     /** @default !asSet */
     injectInputProps?: boolean;
 };
 
-export function FormFieldTemplate<S extends boolean>({
+export function FieldTemplate<S extends boolean>({
     children,
     params,
     asSet,
     injectInputProps,
     ...fieldProps
-}: FormFieldTemplateProps<S>): ReactNode {
+}: FieldTemplateProps<S>): ReactNode {
     const childProps = isValidElement(children) ? children.props : {};
 
     const generatedId = useId();
@@ -51,14 +51,14 @@ export function FormFieldTemplate<S extends boolean>({
 
     const name = childProps.name ?? params.name ?? id;
 
-    const p: FormFieldParams = {
+    const p: FieldParams = {
         name,
         id,
         label: params.label ?? name,
         description: params.description,
         error: params.error,
     };
-    const inputProps: FormFieldInputProps = {
+    const inputProps: FieldInputProps = {
         name: p.name,
         id: p.id,
     };
