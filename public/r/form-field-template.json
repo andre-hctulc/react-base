@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form-field-template",
+  "title": "FormFieldTemplate",
+  "description": "Form field template that injects id/name props into child inputs and renders label, description, and error text.",
+  "registryDependencies": [
+    "field"
+  ],
+  "files": [
+    {
+      "path": "src/components/form-field-template.tsx",
+      "content": "import {\n    cloneElement,\n    isValidElement,\n    useId,\n    type ComponentProps,\n    type ReactElement,\n    type ReactNode,\n} from \"react\";\nimport {\n    Field,\n    FieldDescription,\n    FieldError,\n    FieldLabel,\n    FieldLegend,\n    FieldSet,\n} from \"@/components/ui/field.js\";\n\nexport interface FormFieldParams {\n    name?: string;\n    label?: string;\n    id?: string;\n    description?: string;\n    error?: string;\n}\nexport type FormFieldInputProps = Pick<FormFieldParams, \"name\" | \"id\">;\n\ntype FormFieldRenderer = (params: FormFieldParams) => ReactNode;\n\ntype FormFieldTemplateProps<S extends boolean> = (S extends true\n    ? Omit<ComponentProps<typeof FieldSet>, \"children\">\n    : Omit<ComponentProps<typeof Field>, \"children\">) & {\n    children: FormFieldRenderer | ReactElement<FormFieldInputProps>;\n    params: FormFieldParams;\n    /** Render {@link FieldSet} instead of {@link Field} */\n    asSet?: S;\n    /** @default !asSet */\n    injectInputProps?: boolean;\n};\n\nexport function FormFieldTemplate<S extends boolean>({\n    children,\n    params,\n    asSet,\n    injectInputProps,\n    ...fieldProps\n}: FormFieldTemplateProps<S>): ReactNode {\n    const childProps = isValidElement(children) ? children.props : {};\n\n    const generatedId = useId();\n    const id = childProps.id ?? params.id ?? generatedId;\n\n    const name = childProps.name ?? params.name ?? id;\n\n    const p: FormFieldParams = {\n        name,\n        id,\n        label: params.label ?? name,\n        description: params.description,\n        error: params.error,\n    };\n    const inputProps: FormFieldInputProps = {\n        name: p.name,\n        id: p.id,\n    };\n\n    if (asSet) {\n        return (\n            <FieldSet {...(fieldProps as ComponentProps<typeof FieldSet>)}>\n                {isValidElement(children) ? (\n                    <>\n                        {p.label && <FieldLegend variant=\"label\">{p.label}</FieldLegend>}\n                        {p.description && <FieldDescription>{p.description}</FieldDescription>}\n                        {cloneElement(children, { name })}\n                        {p.error && <FieldError>{p.error}</FieldError>}\n                    </>\n                ) : (\n                    children(p)\n                )}\n            </FieldSet>\n        );\n    }\n\n    return (\n        <Field {...(fieldProps as ComponentProps<typeof Field>)}>\n            {isValidElement(children) ? (\n                <>\n                    {p.label && <FieldLabel htmlFor={id}>{p.label}</FieldLabel>}\n                    {cloneElement(children, injectInputProps === false ? {} : inputProps)}\n                    {p.description && <FieldDescription>{p.description}</FieldDescription>}\n                    {p.error && <FieldError>{p.error}</FieldError>}\n                </>\n            ) : (\n                children(p)\n            )}\n        </Field>\n    );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

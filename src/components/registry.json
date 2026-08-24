@@ -123,6 +123,19 @@
             ]
         },
         {
+            "name": "form-field-template",
+            "type": "registry:ui",
+            "title": "FormFieldTemplate",
+            "description": "Form field template that injects id/name props into child inputs and renders label, description, and error text.",
+            "registryDependencies": ["field"],
+            "files": [
+                {
+                    "path": "form-field-template.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
             "name": "json-form",
             "type": "registry:ui",
             "title": "JsonForm",

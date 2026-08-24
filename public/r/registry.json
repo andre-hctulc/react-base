@@ -521,6 +521,21 @@
       "type": "registry:ui"
     },
     {
+      "name": "form-field-template",
+      "title": "FormFieldTemplate",
+      "description": "Form field template that injects id/name props into child inputs and renders label, description, and error text.",
+      "registryDependencies": [
+        "field"
+      ],
+      "files": [
+        {
+          "path": "src/components/form-field-template.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "json-form",
       "title": "JsonForm",
       "description": "JSON Schema form powered by RJSF and AJV with shadcn-styled templates and widgets.",
