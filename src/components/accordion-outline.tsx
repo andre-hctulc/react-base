@@ -1,6 +1,6 @@
 import type { ComponentProps, FC } from "react";
 import { cn } from "@/lib/utils.js";
-import { Accordion, AccordionItem } from "./ui/accordion.js";
+import { Accordion, AccordionItem } from "@/components/ui/accordion.js";
 
 export const AccordionOutline: FC<ComponentProps<typeof Accordion>> = ({ className, ...props }) => {
     return <Accordion className={cn("rounded-lg border", className)} {...props} />;

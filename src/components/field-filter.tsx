@@ -214,7 +214,7 @@ export const FieldFilter: FC<FieldFilterProps> = ({
             <PopoverTrigger render={<Button type="button" variant="outline" size="sm" />}>
                 {label}
             </PopoverTrigger>
-            <PopoverContent className="w-[420px] p-4" align="center" sideOffset={8}>
+            <PopoverContent className="w-105 p-4" align="center" sideOffset={8}>
                 <form onSubmit={handleSubmit} ref={formRef}>
                     <FieldSet>
                         <FieldLegend>{label ?? "Filter"}</FieldLegend>

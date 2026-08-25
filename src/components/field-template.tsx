@@ -21,10 +21,21 @@ export interface FieldParams {
     id?: string;
     description?: string;
     error?: string;
+    /** Controlled data of the current form */
+    formData?: FormData | Record<string, unknown>;
+    /** Default data of the current form */
+    defaultFormData?: FormData | Record<string, unknown>;
 }
-export type FieldInputProps = Pick<FieldParams, "name" | "id">;
 
-type FieldRenderer = (params: FieldParams) => ReactNode;
+interface ComputedFieldParams {
+    defaultValue?: any;
+    value?: any;
+}
+
+export type FieldInputProps = Pick<FieldParams, "name" | "id"> &
+    Pick<ComputedFieldParams, "defaultValue" | "value">;
+
+export type FieldRenderer = (params: FieldParams & ComputedFieldParams) => ReactNode;
 
 export type FieldTemplateProps<S extends boolean> = (S extends true
     ? Omit<ComponentProps<typeof FieldSet>, "children">
@@ -33,7 +44,7 @@ export type FieldTemplateProps<S extends boolean> = (S extends true
     params: FieldParams;
     /** Render {@link FieldSet} instead of {@link Field} */
     asSet?: S;
-    /** @default !asSet */
+    /** @default true */
     injectInputProps?: boolean;
 };
 
@@ -49,18 +60,38 @@ export function FieldTemplate<S extends boolean>({
     const generatedId = useId();
     const id = childProps.id ?? params.id ?? generatedId;
 
-    const name = childProps.name ?? params.name ?? id;
+    const name = childProps.name ?? params.name;
 
-    const p: FieldParams = {
+    const getFieldValueFromFormData = (
+        key: string | undefined,
+        formData: FormData | Record<string, unknown> | undefined,
+    ) => {
+        if (!key || !formData) {
+            return undefined;
+        }
+        if (formData instanceof FormData) {
+            return formData.get(key);
+        }
+        return formData[key];
+    };
+
+    const p: FieldParams & ComputedFieldParams = {
         name,
         id,
         label: params.label ?? name,
         description: params.description,
         error: params.error,
+        formData: params.formData,
+        defaultFormData: params.defaultFormData,
+        defaultValue: childProps.defaultValue ?? getFieldValueFromFormData(name, params.defaultFormData),
+        value: childProps.value ?? getFieldValueFromFormData(name, params.formData),
     };
+
     const inputProps: FieldInputProps = {
         name: p.name,
         id: p.id,
+        defaultValue: p.defaultValue,
+        value: p.value,
     };
 
     if (asSet) {
@@ -70,7 +101,7 @@ export function FieldTemplate<S extends boolean>({
                     <>
                         {p.label && <FieldLegend variant="label">{p.label}</FieldLegend>}
                         {p.description && <FieldDescription>{p.description}</FieldDescription>}
-                        {cloneElement(children, { name })}
+                        {cloneElement(children, injectInputProps === false ? {} : inputProps)}
                         {p.error && <FieldError>{p.error}</FieldError>}
                     </>
                 ) : (

@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils.js";
 import { usePersistentState } from "@/hooks/use-persistent-state.js";
 import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
-import { AccordionContent, AccordionTrigger } from "./ui/accordion.js";
+import { AccordionContent, AccordionTrigger } from "@/components/ui/accordion.js";
 import { AccordionItemOutline, AccordionOutline } from "./accordion-outline.js";
 import { DataSummary } from "./data-summary.js";
 
@@ -442,7 +442,7 @@ export const WizardFormDescription: FC<WizardFormDescriptionProps> = ({ classNam
     );
 };
 
-export interface WizardFormProgressProps extends ComponentProps<typeof Progress> {
+export interface WizardFormProgressProps extends Omit<ComponentProps<typeof Progress>, "value"> {
     /**
      * Overrides the default "Step X of Y" label. Pass `null` to hide it.
      */

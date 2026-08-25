@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "src/components/accordion-outline.tsx",
-      "content": "import type { ComponentProps, FC } from \"react\";\nimport { cn } from \"@/lib/utils.js\";\nimport { Accordion, AccordionItem } from \"./ui/accordion.js\";\n\nexport const AccordionOutline: FC<ComponentProps<typeof Accordion>> = ({ className, ...props }) => {\n    return <Accordion className={cn(\"rounded-lg border\", className)} {...props} />;\n};\n\nexport const AccordionItemOutline: FC<ComponentProps<typeof AccordionItem>> = ({ className, ...props }) => {\n    return <AccordionItem className={cn(\"border-b px-4 last:border-b-0\", className)} {...props} />;\n};\n",
+      "content": "import type { ComponentProps, FC } from \"react\";\nimport { cn } from \"@/lib/utils.js\";\nimport { Accordion, AccordionItem } from \"@/components/ui/accordion.js\";\n\nexport const AccordionOutline: FC<ComponentProps<typeof Accordion>> = ({ className, ...props }) => {\n    return <Accordion className={cn(\"rounded-lg border\", className)} {...props} />;\n};\n\nexport const AccordionItemOutline: FC<ComponentProps<typeof AccordionItem>> = ({ className, ...props }) => {\n    return <AccordionItem className={cn(\"border-b px-4 last:border-b-0\", className)} {...props} />;\n};\n",
       "type": "registry:ui"
     }
   ],
