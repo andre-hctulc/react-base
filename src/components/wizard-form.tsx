@@ -557,6 +557,7 @@ interface WizardFormSubmitButtonProps extends ComponentProps<typeof Button> {
      */
     completeLabel?: ReactNode;
     loading?: boolean;
+    nextLabel?: ReactNode;
 }
 
 export const WizardFormSubmitButton: FC<WizardFormSubmitButtonProps> = ({
@@ -566,6 +567,7 @@ export const WizardFormSubmitButton: FC<WizardFormSubmitButtonProps> = ({
     loading,
     disabled,
     className,
+    nextLabel,
     ...props
 }) => {
     const { isLast, requestAdvance, variant } = useWizardForm();
@@ -583,7 +585,12 @@ export const WizardFormSubmitButton: FC<WizardFormSubmitButtonProps> = ({
             {...props}
         >
             {loading && <Spinner data-icon="inline-start" />}
-            {children ?? (variant === "stacked" ? "Submit" : isLast ? completeLabel : "Next")}
+            {children ??
+                (variant === "stacked"
+                    ? (completeLabel ?? "Submit")
+                    : isLast
+                      ? (completeLabel ?? "Submit")
+                      : (nextLabel ?? "Next"))}
         </Button>
     );
 };
