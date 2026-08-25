@@ -474,8 +474,14 @@
             "type": "registry:ui",
             "title": "AccordionTitle",
             "description": "Accordion title component.",
-            "registryDependencies": ["accordion"],
             "files": [{ "path": "accordion-title.tsx", "type": "registry:ui" }]
+        },
+        {
+            "name": "accordion-static-header",
+            "type": "registry:ui",
+            "title": "AccordionStaticHeader",
+            "description": "Accordion static header component.",
+            "files": [{ "path": "accordion-static-header.tsx", "type": "registry:ui" }]
         },
         {
             "name": "wizard-form",
@@ -490,6 +496,7 @@
                 "andre-hctulc/react-base/use-ref-of",
                 "andre-hctulc/react-base/progress-decorator",
                 "andre-hctulc/react-base/accordion-outline",
+                "andre-hctulc/react-base/accordion-static-header",
                 "andre-hctulc/react-base/accordion-title",
                 "andre-hctulc/react-base/data-summary"
             ],

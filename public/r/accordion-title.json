@@ -3,13 +3,10 @@
   "name": "accordion-title",
   "title": "AccordionTitle",
   "description": "Accordion title component.",
-  "registryDependencies": [
-    "accordion"
-  ],
   "files": [
     {
       "path": "src/components/accordion-title.tsx",
-      "content": "import { cn } from \"@/lib/utils\";\nimport type { ComponentProps, FC } from \"react\";\n\ninterface AccordionTitleProps extends ComponentProps<\"div\"> {}\n\nexport const AccordionTitle: FC<AccordionTitleProps> = ({ className, children, ...props }) => {\n    return (\n        <div className={cn(\"flex flex-1 items-center justify-between py-2.5\", className)} {...props}>\n            <h3 className=\"text-sm font-medium\">{children}</h3>\n        </div>\n    );\n};\n",
+      "content": "import type { ComponentProps, FC } from \"react\";\n\ninterface AccordionTitleProps extends ComponentProps<\"div\"> {}\n\nexport const AccordionTitle: FC<AccordionTitleProps> = ({ className, children, ...props }) => {\n    return <h3 className=\"text-sm font-medium\">{children}</h3>;\n};\n",
       "type": "registry:ui"
     }
   ],

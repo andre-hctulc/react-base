@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion-static-header",
+  "title": "AccordionStaticHeader",
+  "description": "Accordion static header component.",
+  "files": [
+    {
+      "path": "src/components/accordion-static-header.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport type { ComponentProps, FC } from \"react\";\n\ninterface AccordionStaticHeaderProps extends ComponentProps<\"div\"> {}\n\nexport const AccordionStaticHeader: FC<AccordionStaticHeaderProps> = ({ className, children, ...props }) => {\n    return (\n        <div className={cn(\"flex flex-1 items-center justify-between py-2.5\", className)} {...props}>\n            {children}\n        </div>\n    );\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -24,10 +24,11 @@ import { ProgressDecorator } from "./progress-decorator.js";
 import { cn } from "@/lib/utils.js";
 import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
-import { AccordionContent, AccordionTrigger } from "@/components/ui/accordion.js";
-import { AccordionItemOutline, AccordionOutline } from "./accordion-outline.js";
+import { AccordionContent } from "@/components/ui/accordion.js";
+import { AccordionOutlineItem, AccordionOutline, AccordionOutlineTrigger } from "./accordion-outline.js";
 import { DataSummary } from "./data-summary.js";
 import { AccordionTitle } from "./accordion-title.js";
+import { AccordionStaticHeader } from "./accordion-static-header.js";
 
 type WizardFormData = Record<string, unknown>;
 
@@ -368,18 +369,18 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
             {stacked ? (
                 <div data-slot="wizard-form-step" className={className} {...props}>
                     <AccordionOutline defaultValue={[`step-${stepIndex ?? 0}`]}>
-                        <AccordionItemOutline value={`step-${stepIndex ?? 0}`}>
+                        <AccordionOutlineItem value={`step-${stepIndex ?? 0}`}>
                             {collapsible ? (
-                                <AccordionTrigger className="items-center">{title}</AccordionTrigger>
+                                <AccordionOutlineTrigger className="items-center">
+                                    {title}
+                                </AccordionOutlineTrigger>
                             ) : (
-                                <AccordionTitle>{title}</AccordionTitle>
+                                <AccordionStaticHeader>
+                                    <AccordionTitle>{title}</AccordionTitle>
+                                </AccordionStaticHeader>
                             )}
-                            {collapsible ? (
-                                <AccordionContent keepMounted>{bodyChildren}</AccordionContent>
-                            ) : (
-                                <AccordionContent>{bodyChildren}</AccordionContent>
-                            )}
-                        </AccordionItemOutline>
+                            <AccordionContent keepMounted>{bodyChildren}</AccordionContent>
+                        </AccordionOutlineItem>
                     </AccordionOutline>
                 </div>
             ) : (
@@ -755,8 +756,8 @@ export const CurrentWizardFormData: FC<CurrentWizardFormDataProps> = ({
             className={className}
             {...(props as any)}
         >
-            <AccordionItemOutline value="current-data">
-                <AccordionTrigger>{title}</AccordionTrigger>
+            <AccordionOutlineItem value="current-data">
+                <AccordionOutlineTrigger>{title}</AccordionOutlineTrigger>
                 <AccordionContent>
                     {Object.keys(displayData).length === 0 ? (
                         <p className="text-muted-foreground text-sm text-center">No completed data yet.</p>
@@ -769,7 +770,7 @@ export const CurrentWizardFormData: FC<CurrentWizardFormDataProps> = ({
                         />
                     )}
                 </AccordionContent>
-            </AccordionItemOutline>
+            </AccordionOutlineItem>
         </AccordionOutline>
     );
 };
