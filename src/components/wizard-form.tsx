@@ -22,7 +22,6 @@ import { Button } from "@/components/ui/button.js";
 import { Progress } from "@/components/ui/progress.js";
 import { ProgressDecorator } from "./progress-decorator.js";
 import { cn } from "@/lib/utils.js";
-import { usePersistentState } from "@/hooks/use-persistent-state.js";
 import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { AccordionContent, AccordionTrigger } from "@/components/ui/accordion.js";
@@ -82,48 +81,45 @@ function useWizardFormStepIndex(): number {
 }
 
 export interface WizardFormProps extends ComponentProps<"div"> {
-    /**
-     * Key used to persist the current step index (survives page reloads).
-     */
-    persistKey: string;
-    storage?: Storage;
-    defaultStep?: number;
+    /** Initial active step. Changes after mount are ignored. */
+    initialStep?: number;
+    /** Initial data for each step. Changes after mount are ignored. */
+    initialData?: WizardFormData[];
     variant?: WizardFormVariant;
     onStepChange?: (stepIndex: number, data: WizardFormData[]) => void;
     /**
      * Called when {@link WizardFormSubmitButton} is triggered on the last step.
      */
     onComplete?: (data: WizardFormData[], mergedData: WizardFormData) => void;
+    onDataChange?: (data: WizardFormData[], mergedData: WizardFormData) => void;
     children: ReactNode;
 }
 
 /**
- * Wizard form root. Manages the active step, persists it across reloads and
- * exposes navigation via context to {@link WizardFormStep} and the nav buttons.
+ * Wizard form root. Manages the active step and data in local React state.
  */
 export const WizardForm: FC<WizardFormProps> = ({
-    persistKey,
-    storage,
-    defaultStep = 0,
+    initialStep = 0,
+    initialData = [],
     variant = "wizard",
     onStepChange,
     onComplete,
+    onDataChange,
     className,
     children,
     ...props
 }) => {
-    const [stepIndex, setStepIndex] = usePersistentState<number>(
-        `${persistKey}-step-index`,
-        defaultStep,
-        storage,
-    );
-    const [data, setData] = usePersistentState<WizardFormData[]>(`${persistKey}-data`, [], storage);
+    const initialState = useRef({ stepIndex: initialStep, data: initialData });
+    const [stepIndex, setStepIndex] = useState(() => initialState.current.stepIndex);
+    const [data, setData] = useState(() => initialState.current.data);
+    const onDataChangeRef = useRefOf(onDataChange);
 
     const updateData = useCallback(
         (newData: WizardFormData, stepIndexOverride?: number) => {
             setData((prev) => {
                 const next = [...prev];
                 next[stepIndexOverride ?? stepIndex] = newData;
+                onDataChangeRef.current?.(next, Object.assign({}, ...next));
                 return next;
             });
         },
@@ -179,9 +175,11 @@ export const WizardForm: FC<WizardFormProps> = ({
     }, [goTo, stepIndex, variant]);
 
     const reset = useCallback(() => {
-        setData([]);
-        goTo(defaultStep, []);
-    }, [defaultStep, goTo, setData]);
+        const { data: initialData, stepIndex: initialStep } = initialState.current;
+        setData(initialData);
+        onDataChangeRef.current?.(initialData, Object.assign({}, ...initialData));
+        goTo(initialStep, initialData);
+    }, [goTo]);
 
     const registerStepSubmit = useCallback(
         (targetStepIndex: number, trigger: (() => WizardFormData | null) | null) => {

@@ -25,7 +25,6 @@ export const Default: Story = {
     render: () => {
         const baseForm = (
             <WizardForm
-                persistKey="storybook-wizard"
                 className="w-full max-w-xl"
                 onComplete={(data, mergedData) => alert(JSON.stringify({ data, mergedData }))}
             >
@@ -51,7 +50,7 @@ export const Default: Story = {
                         </WizardFormSub>
                     </WizardFormStep>
                 </WizardFormContent>
-                <WizardFormFooter >
+                <WizardFormFooter>
                     <WizardFormBackButton />
                     <WizardFormSubmitButton />
                 </WizardFormFooter>
@@ -61,7 +60,7 @@ export const Default: Story = {
             <div className="space-y-10 flex flex-col items-center">
                 {baseForm}
                 <LabeledSeparator className="w-full">Stacked</LabeledSeparator>
-                {cloneElement(baseForm, { variant: "stacked", persistKey: "storybook-wizard-stacked" })}
+                {cloneElement(baseForm, { variant: "stacked" })}
             </div>
         );
     },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 
 /*
 
@@ -68,12 +68,30 @@ export function usePersistentState<T>(
     key: string,
     defaultValue: T,
     storage?: StorageRef,
+    /**
+     * Read storage during the initial client render. Only use this for components
+     * that are never server-rendered, as it can otherwise cause a hydration mismatch.
+     */
+    immediate = false,
 ): [T, Dispatch<SetStateAction<T>>] {
-    const [state, setState] = useState<T>(defaultValue);
+    const initialKey = useRef(key);
+    const [state, setState] = useState<T>(() => {
+        if (!immediate) {
+            return defaultValue;
+        }
+
+        const store = getStorage(storage);
+        return store ? (readStoredValue<T>(store, key) ?? defaultValue) : defaultValue;
+    });
     const [loadedKey, setLoadedKey] = useState<string | null>(null);
 
     // Hydrate from storage after the initial render so SSR and client markup match.
     useEffect(() => {
+        if (immediate && initialKey.current === key) {
+            setLoadedKey(key);
+            return;
+        }
+
         const store = getStorage(storage);
         if (!store) {
             setLoadedKey(key);
@@ -86,7 +104,7 @@ export function usePersistentState<T>(
         }
 
         setLoadedKey(key);
-    }, [key, storage]);
+    }, [immediate, key, storage]);
 
     // Update storage and dispatch custom event
     useEffect(() => {
