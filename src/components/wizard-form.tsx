@@ -369,7 +369,7 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
                     <AccordionOutline defaultValue={[`step-${stepIndex ?? 0}`]}>
                         <AccordionItemOutline value={`step-${stepIndex ?? 0}`}>
                             {collapsible ? (
-                                <AccordionTrigger>{title}</AccordionTrigger>
+                                <AccordionTrigger className="items-center">{title}</AccordionTrigger>
                             ) : (
                                 <div className="flex flex-1 items-center justify-between py-4 font-medium">
                                     {title}
