@@ -361,7 +361,7 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
             hidden: false,
         })
     ) : (
-        <span className="text-base font-medium">Step {(stepIndex ?? 0) + 1}</span>
+        <span>Step {(stepIndex ?? 0) + 1}</span>
     );
 
     return (
@@ -371,12 +371,10 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
                     <AccordionOutline defaultValue={[`step-${stepIndex ?? 0}`]}>
                         <AccordionOutlineItem value={`step-${stepIndex ?? 0}`}>
                             {collapsible ? (
-                                <AccordionOutlineTrigger className="items-center">
-                                    {title}
-                                </AccordionOutlineTrigger>
+                                <AccordionOutlineTrigger>{title.props.children}</AccordionOutlineTrigger>
                             ) : (
                                 <AccordionStaticHeader>
-                                    <AccordionTitle>{title}</AccordionTitle>
+                                    <AccordionTitle>{title.props.children}</AccordionTitle>
                                 </AccordionStaticHeader>
                             )}
                             <AccordionContent keepMounted>{bodyChildren}</AccordionContent>
