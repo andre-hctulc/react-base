@@ -83,8 +83,8 @@ export function FieldTemplate<S extends boolean>({
         error: params.error,
         formData: params.formData,
         defaultFormData: params.defaultFormData,
-        defaultValue: childProps.defaultValue ?? getFieldValueFromFormData(name, params.defaultFormData),
-        value: childProps.value ?? getFieldValueFromFormData(name, params.formData),
+        defaultValue: getFieldValueFromFormData(name, params.defaultFormData) ?? childProps.defaultValue,
+        value: getFieldValueFromFormData(name, params.formData) ?? childProps.value,
     };
 
     const inputProps: FieldInputProps = {
