@@ -936,6 +936,21 @@
       "type": "registry:ui"
     },
     {
+      "name": "accordion-title",
+      "title": "AccordionTitle",
+      "description": "Accordion title component.",
+      "registryDependencies": [
+        "accordion"
+      ],
+      "files": [
+        {
+          "path": "src/components/accordion-title.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "wizard-form",
       "title": "WizardForm",
       "description": "Compound wizard form with back/forward navigation and step persistence across reloads.",
@@ -947,6 +962,7 @@
         "andre-hctulc/react-base/use-ref-of",
         "andre-hctulc/react-base/progress-decorator",
         "andre-hctulc/react-base/accordion-outline",
+        "andre-hctulc/react-base/accordion-title",
         "andre-hctulc/react-base/data-summary"
       ],
       "files": [

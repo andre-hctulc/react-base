@@ -27,6 +27,7 @@ import { useRefOf } from "@/hooks/use-ref-of.js";
 import { AccordionContent, AccordionTrigger } from "@/components/ui/accordion.js";
 import { AccordionItemOutline, AccordionOutline } from "./accordion-outline.js";
 import { DataSummary } from "./data-summary.js";
+import { AccordionTitle } from "./accordion-title.js";
 
 type WizardFormData = Record<string, unknown>;
 
@@ -371,9 +372,7 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
                             {collapsible ? (
                                 <AccordionTrigger className="items-center">{title}</AccordionTrigger>
                             ) : (
-                                <div className="flex flex-1 items-center justify-between py-4 font-medium">
-                                    {title}
-                                </div>
+                                <AccordionTitle>{title}</AccordionTitle>
                             )}
                             {collapsible ? (
                                 <AccordionContent keepMounted>{bodyChildren}</AccordionContent>
