@@ -211,10 +211,8 @@ export const FieldFilter: FC<FieldFilterProps> = ({
 
     return (
         <Popover onOpenChange={handleOpenChange} {...props}>
-            <PopoverTrigger asChild>
-                <Button type="button" variant="outline" size="sm">
-                    {label}
-                </Button>
+            <PopoverTrigger render={<Button type="button" variant="outline" size="sm" />}>
+                {label}
             </PopoverTrigger>
             <PopoverContent className="w-[420px] p-4" align="center" sideOffset={8}>
                 <form onSubmit={handleSubmit} ref={formRef}>

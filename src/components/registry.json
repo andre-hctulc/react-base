@@ -66,23 +66,6 @@
             ]
         },
         {
-            "name": "summary",
-            "type": "registry:ui",
-            "title": "Summary",
-            "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
-            "registryDependencies": [
-                "andre-hctulc/react-base/icon",
-                "andre-hctulc/react-base/clipboard-icon-button",
-                "andre-hctulc/react-base/use-as-set"
-            ],
-            "files": [
-                {
-                    "path": "summary.tsx",
-                    "type": "registry:ui"
-                }
-            ]
-        },
-        {
             "name": "icon",
             "type": "registry:ui",
             "title": "Icon",
@@ -105,19 +88,6 @@
             "files": [
                 {
                     "path": "clipboard-icon-button.tsx",
-                    "type": "registry:ui"
-                }
-            ]
-        },
-        {
-            "name": "form-control",
-            "type": "registry:ui",
-            "title": "FormControl",
-            "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
-            "registryDependencies": ["field", "andre-hctulc/react-base/use-js-form"],
-            "files": [
-                {
-                    "path": "form-control.tsx",
                     "type": "registry:ui"
                 }
             ]
@@ -425,6 +395,19 @@
             ]
         },
         {
+            "name": "accordion-outline",
+            "type": "registry:ui",
+            "title": "AccordionOutline",
+            "description": "Bordered Accordion and AccordionItem wrappers with consistent outline spacing.",
+            "registryDependencies": ["accordion"],
+            "files": [
+                {
+                    "path": "accordion-outline.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
             "name": "field-filter",
             "type": "registry:ui",
             "title": "FieldFilter",
@@ -487,21 +470,24 @@
             ]
         },
         {
-            "name": "multi-step-form",
+            "name": "wizard-form",
             "type": "registry:ui",
-            "title": "MultiStepForm",
-            "description": "Compound multi-step form with back/forward navigation and step persistence across reloads.",
+            "title": "WizardForm",
+            "description": "Compound wizard form with back/forward navigation and step persistence across reloads.",
             "registryDependencies": [
                 "button",
                 "progress",
                 "spinner",
+                "accordion",
                 "andre-hctulc/react-base/use-persistent-state",
                 "andre-hctulc/react-base/use-ref-of",
-                "andre-hctulc/react-base/progress-decorator"
+                "andre-hctulc/react-base/progress-decorator",
+                "andre-hctulc/react-base/accordion-outline",
+                "andre-hctulc/react-base/data-summary"
             ],
             "files": [
                 {
-                    "path": "multi-step-form.tsx",
+                    "path": "wizard-form.tsx",
                     "type": "registry:ui"
                 }
             ]

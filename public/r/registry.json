@@ -454,23 +454,6 @@
       "type": "registry:ui"
     },
     {
-      "name": "summary",
-      "title": "Summary",
-      "description": "Key-value table that recursively renders plain objects with label, icon and copy support.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/icon",
-        "andre-hctulc/react-base/clipboard-icon-button",
-        "andre-hctulc/react-base/use-as-set"
-      ],
-      "files": [
-        {
-          "path": "src/components/summary.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
       "name": "icon",
       "title": "Icon",
       "description": "Polymorphic icon wrapper with size, color, inline and noShrink variants. Accepts LucideIcon FC, SVG element, or ReactNode.",
@@ -499,22 +482,6 @@
       "files": [
         {
           "path": "src/components/clipboard-icon-button.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "form-control",
-      "title": "FormControl",
-      "description": "Accessible form field wrapper with label, helper text and validation error using shadcn Field components.",
-      "registryDependencies": [
-        "field",
-        "andre-hctulc/react-base/use-js-form"
-      ],
-      "files": [
-        {
-          "path": "src/components/form-control.tsx",
           "type": "registry:ui"
         }
       ],
@@ -876,6 +843,21 @@
       "type": "registry:ui"
     },
     {
+      "name": "accordion-outline",
+      "title": "AccordionOutline",
+      "description": "Bordered Accordion and AccordionItem wrappers with consistent outline spacing.",
+      "registryDependencies": [
+        "accordion"
+      ],
+      "files": [
+        {
+          "path": "src/components/accordion-outline.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "field-filter",
       "title": "FieldFilter",
       "description": "Advanced field filter with typed filter operators and a compact popover trigger.",
@@ -954,20 +936,23 @@
       "type": "registry:ui"
     },
     {
-      "name": "multi-step-form",
-      "title": "MultiStepForm",
-      "description": "Compound multi-step form with back/forward navigation and step persistence across reloads.",
+      "name": "wizard-form",
+      "title": "WizardForm",
+      "description": "Compound wizard form with back/forward navigation and step persistence across reloads.",
       "registryDependencies": [
         "button",
         "progress",
         "spinner",
+        "accordion",
         "andre-hctulc/react-base/use-persistent-state",
         "andre-hctulc/react-base/use-ref-of",
-        "andre-hctulc/react-base/progress-decorator"
+        "andre-hctulc/react-base/progress-decorator",
+        "andre-hctulc/react-base/accordion-outline",
+        "andre-hctulc/react-base/data-summary"
       ],
       "files": [
         {
-          "path": "src/components/multi-step-form.tsx",
+          "path": "src/components/wizard-form.tsx",
           "type": "registry:ui"
         }
       ],

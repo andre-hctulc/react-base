@@ -3,8 +3,8 @@
 *.code-workspace
 
 #### TS ####
-scripts
-src
+/scripts
+/src
 tsconfig.*
 .eslintrc.json
 
@@ -15,19 +15,24 @@ docs
 .DS_Store
 
 #### Storybook ####
+
 .storybook
 storybook-static
 *storybook.log
 postcss.config.js
+/stories
 
 #### Turborepo ####
 .turbo
 
 #### Test ####
-test
+/test
 vitest.*
 
 #### shadcn ####
 
 components.json
 postcss.config.js
+
+#### GitHub ####
+.github

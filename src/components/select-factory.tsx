@@ -21,7 +21,7 @@ export type SelectItemGroupMap = { [groupLabel: string]: SelectItem[] };
 
 export type SelectItems = SelectItemList | SelectItemGroupMap;
 
-interface SelectFactoryProps extends ComponentProps<typeof Select> {
+interface SelectFactoryProps extends Omit<ComponentProps<typeof Select>, "items"> {
     items: SelectItems;
     id?: string;
     triggerProps?: ComponentProps<typeof SelectTrigger>;

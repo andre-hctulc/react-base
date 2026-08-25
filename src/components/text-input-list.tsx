@@ -88,7 +88,6 @@ export const TextInputList: FC<TextInputListProps> = ({
                             onClick={() => {
                                 addValue(newValue);
                             }}
-                            color="gray"
                             size="icon"
                             variant="ghost"
                             type="button"
