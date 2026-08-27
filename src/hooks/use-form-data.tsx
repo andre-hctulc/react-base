@@ -28,7 +28,7 @@ export function useFormData<T extends object = Record<string, any>>({
     formRef,
     formDataParser,
     defaultFormData,
-}: UseFormDataOptions<T>): UseFormDataResult<T> {
+}: UseFormDataOptions<T> = {}): UseFormDataResult<T> {
     const innerFormRef = useRef<HTMLFormElement | null>(
         typeof formRef === "function" || !formRef || !("current" in formRef)
             ? null
