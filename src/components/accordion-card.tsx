@@ -50,7 +50,7 @@ export const AccordionCard: FC<AccordionCardProps> = ({
 
     return (
         <AccordionOutline
-            defaultValue={controlled ? undefined : defaultOpen ? [] : [value]}
+            defaultValue={controlled ? undefined : defaultOpen ? [value] : []}
             value={controlled ? (open ? [value] : []) : undefined}
             {...props}
         >
