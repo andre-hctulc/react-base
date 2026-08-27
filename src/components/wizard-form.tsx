@@ -369,6 +369,7 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
                     collapsible={collapsible}
                     data-slot="wizard-form-step"
                     className={className}
+                    keepMounted
                     {...props}
                 >
                     {bodyChildren}

@@ -20,9 +20,16 @@ export const AccordionOutlineTrigger: FC<ComponentProps<typeof AccordionTrigger>
 interface AccordionCardProps extends Omit<ComponentProps<typeof AccordionOutline>, "title"> {
     collapsible?: boolean;
     title?: ReactNode;
+    keepMounted?: boolean;
 }
 
-export const AccordionCard: FC<AccordionCardProps> = ({ children, collapsible, title, ...props }) => {
+export const AccordionCard: FC<AccordionCardProps> = ({
+    children,
+    collapsible,
+    title,
+    keepMounted,
+    ...props
+}) => {
     const value = "content";
     const hasHeader = !!title || collapsible;
 
@@ -38,7 +45,7 @@ export const AccordionCard: FC<AccordionCardProps> = ({ children, collapsible, t
                         </AccordionStaticHeader>
                     )
                 ) : null}
-                <AccordionContent keepMounted>{children}</AccordionContent>
+                <AccordionContent keepMounted={keepMounted}>{children}</AccordionContent>
             </AccordionOutlineItem>
         </AccordionOutline>
     );
