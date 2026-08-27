@@ -17,14 +17,13 @@ export const AccordionOutlineTrigger: FC<ComponentProps<typeof AccordionTrigger>
     return <AccordionTrigger className={cn("items-center", className)} {...props} />;
 };
 
-interface AccordionCardProps extends Omit<
-    ComponentProps<typeof AccordionOutline>,
-    "title" | "value" | "defaultValue"
-> {
+interface AccordionCardProps
+    extends
+        Omit<ComponentProps<typeof AccordionOutline>, "title" | "value" | "defaultValue">,
+        Pick<ComponentProps<typeof AccordionContent>, "keepMounted"> {
     /** @default true */
     collapsible?: boolean;
     title?: ReactNode;
-    keepMounted?: boolean;
     /**
      * Default open state
      * @default true
@@ -74,11 +73,14 @@ export const AccordionCard: FC<AccordionCardProps> = ({
 interface FormCardProps extends AccordionCardProps {}
 
 /**
- * {@link AccordionCard} that defaults the {@link AccordionCardProps.keepMounted} prop to true for use in forms.
+ * {@link AccordionCard} variant:
+ *
+ * Defaults the {@link AccordionCardProps.keepMounted} to true
+ * and {@link AccordionCardProps.collapsible} to false for use in forms.
  */
 export const FormCard: FC<FormCardProps> = ({ children, ...props }) => {
     return (
-        <AccordionCard keepMounted {...props}>
+        <AccordionCard collapsible={false} keepMounted {...props}>
             {children}
         </AccordionCard>
     );
