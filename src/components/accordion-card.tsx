@@ -47,7 +47,7 @@ export const AccordionCard: FC<AccordionCardProps> = ({
 }) => {
     const value = "content";
     const hasHeader = !!title || !!collapsible;
-    const controlled = typeof open === "boolean";
+    const controlled = typeof open !== "undefined";
 
     return (
         <AccordionOutline
