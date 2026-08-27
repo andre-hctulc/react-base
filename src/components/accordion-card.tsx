@@ -51,6 +51,19 @@ export const AccordionCard: FC<AccordionCardProps> = ({
     );
 };
 
+interface FormCardProps extends AccordionCardProps {}
+
+/**
+ * Accordion card that defaults the {@link AccordionCardProps.keepMounted} to true for use in forms.
+ */
+export const FormCard: FC<FormCardProps> = ({ children, ...props }) => {
+    return (
+        <AccordionCard keepMounted {...props}>
+            {children}
+        </AccordionCard>
+    );
+};
+
 interface AccordionTitleProps extends ComponentProps<"div"> {}
 
 export const AccordionTitle: FC<AccordionTitleProps> = ({ className, children, ...props }) => {

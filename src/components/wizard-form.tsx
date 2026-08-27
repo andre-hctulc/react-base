@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils.js";
 import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { DataSummary } from "./data-summary.js";
-import { AccordionCard } from "./accordion-card.js";
+import { AccordionCard, FormCard } from "./accordion-card.js";
 
 type WizardFormData = Record<string, unknown>;
 
@@ -364,16 +364,15 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
     return (
         <WizardFormStepContext.Provider value={stepIndex ?? 0}>
             {stacked ? (
-                <AccordionCard
+                <FormCard
                     title={title.props.children}
                     collapsible={collapsible}
                     data-slot="wizard-form-step"
                     className={className}
-                    keepMounted
                     {...props}
                 >
                     {bodyChildren}
-                </AccordionCard>
+                </FormCard>
             ) : (
                 <div data-slot="wizard-form-step" className={className} {...props}>
                     {children}
