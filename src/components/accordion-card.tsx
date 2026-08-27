@@ -21,7 +21,7 @@ interface AccordionCardProps extends Omit<
     ComponentProps<typeof AccordionOutline>,
     "title" | "value" | "defaultValue"
 > {
-    /** @default false */
+    /** @default true */
     collapsible?: boolean;
     title?: ReactNode;
     keepMounted?: boolean;
@@ -38,20 +38,20 @@ interface AccordionCardProps extends Omit<
 
 export const AccordionCard: FC<AccordionCardProps> = ({
     children,
-    collapsible,
+    collapsible = true,
     title,
     keepMounted,
     open,
-    defaultOpen,
+    defaultOpen = true,
     ...props
 }) => {
     const value = "content";
-    const hasHeader = !!title || !!collapsible;
+    const hasHeader = !!title || collapsible;
     const controlled = typeof open !== "undefined";
 
     return (
         <AccordionOutline
-            defaultValue={controlled ? undefined : defaultOpen === false ? [] : [value]}
+            defaultValue={controlled ? undefined : defaultOpen ? [] : [value]}
             value={controlled ? (open ? [value] : []) : undefined}
             {...props}
         >
