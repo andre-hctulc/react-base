@@ -330,6 +330,8 @@ export interface WizardFormStepProps extends ComponentProps<"div"> {
     children?: ReactNode;
     stepIndex?: number;
     collapsible?: boolean;
+    defaultOpen?: boolean;
+    open?: boolean;
 }
 
 /**
@@ -341,6 +343,8 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
     stepIndex,
     collapsible = false,
     defaultValue,
+    open,
+    defaultOpen,
     ...props
 }) => {
     const { variant } = useWizardForm();
@@ -365,6 +369,8 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
         <WizardFormStepContext.Provider value={stepIndex ?? 0}>
             {stacked ? (
                 <FormCard
+                    open={open}
+                    defaultOpen={defaultOpen}
                     title={title.props.children}
                     collapsible={collapsible}
                     data-slot="wizard-form-step"
