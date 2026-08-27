@@ -750,7 +750,7 @@ export const CurrentWizardFormData: FC<CurrentWizardFormDataProps> = ({
     }, [data, stepIndex, variant]);
 
     return (
-        <AccordionCard className={className} defaultOpen={false} {...props}>
+        <AccordionCard className={className} defaultOpen={false} title={title} {...props}>
             {Object.keys(displayData).length === 0 ? (
                 <p className="text-muted-foreground text-sm text-center">No completed data yet.</p>
             ) : (
