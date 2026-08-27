@@ -26,6 +26,7 @@ import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { DataSummary } from "./data-summary.js";
 import { AccordionCard, FormCard } from "./accordion-card.js";
+import { parseFormData } from "@/lib/form.util.js";
 
 type WizardFormData = Record<string, unknown>;
 
@@ -600,24 +601,6 @@ export interface WizardFormSubProps {
     children: ReactElement<ComponentProps<"form">, "form">;
 }
 
-function collectFormData(form: HTMLFormElement): WizardFormData {
-    const formData = new FormData(form);
-    const data: WizardFormData = {};
-    formData.forEach((value, key) => {
-        if (key in data) {
-            const existingValue = data[key];
-            if (Array.isArray(existingValue)) {
-                existingValue.push(value);
-            } else {
-                data[key] = [existingValue, value];
-            }
-        } else {
-            data[key] = value;
-        }
-    });
-    return data;
-}
-
 /**
  * Plugs a `<form>` into the current step: Next/Finish triggers the form's
  * native submit (gating on HTML5 validation) before persisting its data and advancing.
@@ -634,7 +617,7 @@ export const WizardFormSub: FC<WizardFormSubProps> = ({ children }) => {
                 return null;
             }
 
-            const formData = collectFormData(form);
+            const formData = parseFormData(form).parsedFormData;
             form.requestSubmit();
             return formData;
         });
@@ -659,14 +642,14 @@ export const WizardFormSub: FC<WizardFormSubProps> = ({ children }) => {
 
     useEffect(() => {
         if (formRef.current) {
-            updateData(collectFormData(formRef.current), stepIndex);
+            updateData(parseFormData(formRef.current).parsedFormData, stepIndex);
         }
     }, [stepIndex, updateData]);
 
     const handleChange = useCallback(
         (e: ChangeEvent<HTMLFormElement>) => {
             childOnChange.current?.(e);
-            updateData(collectFormData(e.currentTarget), stepIndex);
+            updateData(parseFormData(e.currentTarget).parsedFormData, stepIndex);
         },
         [stepIndex, updateData],
     );
@@ -677,7 +660,7 @@ export const WizardFormSub: FC<WizardFormSubProps> = ({ children }) => {
 
             childOnSubmit.current?.(e);
 
-            const newData = collectFormData(e.currentTarget);
+            const newData = parseFormData(e.currentTarget).parsedFormData;
             updateData(newData, stepIndex);
 
             if (variant === "wizard") {

@@ -6,12 +6,11 @@
     {
       "name": "variants-util",
       "title": "Variants utility",
-      "description": "CVA size variant helpers: sz() and msz().",
+      "description": "CVA variant helpers",
       "files": [
         {
           "path": "src/lib/variants.util.ts",
-          "type": "registry:lib",
-          "target": "@lib/variants.util.ts"
+          "type": "registry:lib"
         }
       ],
       "type": "registry:lib"
@@ -23,8 +22,19 @@
       "files": [
         {
           "path": "src/lib/react.util.ts",
-          "type": "registry:lib",
-          "target": "@lib/react.util.ts"
+          "type": "registry:lib"
+        }
+      ],
+      "type": "registry:lib"
+    },
+    {
+      "name": "form-util",
+      "title": "Form utilities",
+      "description": "Form utility helpers.",
+      "files": [
+        {
+          "path": "src/lib/form.util.ts",
+          "type": "registry:lib"
         }
       ],
       "type": "registry:lib"
@@ -282,18 +292,6 @@
       "type": "registry:hook"
     },
     {
-      "name": "use-css-transition",
-      "title": "useCssTransition",
-      "description": "Drives CSS class-based enter/leave transitions.",
-      "files": [
-        {
-          "path": "src/hooks/use-css-transition.ts",
-          "type": "registry:hook"
-        }
-      ],
-      "type": "registry:hook"
-    },
-    {
       "name": "use-delayed-value",
       "title": "useDelayedValue",
       "description": "Returns a value that updates after a delay.",
@@ -375,6 +373,22 @@
       "files": [
         {
           "path": "src/hooks/use-timeout.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "type": "registry:hook"
+    },
+    {
+      "name": "use-this-form-data",
+      "title": "useThisFormData",
+      "description": "Tracks form data for the current form and its children.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/use-ref-of",
+        "andre-hctulc/react-base/form-util"
+      ],
+      "files": [
+        {
+          "path": "src/hooks/use-this-form-data.tsx",
           "type": "registry:hook"
         }
       ],
@@ -695,59 +709,6 @@
       "type": "registry:ui"
     },
     {
-      "name": "transition",
-      "title": "Transition",
-      "description": "Headless CSS class-based enter/leave transition primitive.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/use-css-transition"
-      ],
-      "files": [
-        {
-          "path": "src/components/transition.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "src/components/transition-context.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "src/components/transition-child.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "fade",
-      "title": "Fade",
-      "description": "CSS opacity fade enter/leave transition.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/transition"
-      ],
-      "files": [
-        {
-          "path": "src/components/fade.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "collapse-transition",
-      "title": "CollapseTransition",
-      "description": "CSS height collapse enter/leave transition.",
-      "registryDependencies": [
-        "andre-hctulc/react-base/transition"
-      ],
-      "files": [
-        {
-          "path": "src/components/collapse.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
       "name": "labeled-separator",
       "title": "LabeledSeparator",
       "description": "Separator with a centered label, e.g. an \"OR\" divider.",
@@ -943,6 +904,7 @@
         "button",
         "progress",
         "spinner",
+        "andre-hctulc/react-base/form-util",
         "andre-hctulc/react-base/use-ref-of",
         "andre-hctulc/react-base/progress-decorator",
         "andre-hctulc/react-base/accordion-card",

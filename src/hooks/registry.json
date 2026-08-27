@@ -254,18 +254,6 @@
             ]
         },
         {
-            "name": "use-css-transition",
-            "type": "registry:hook",
-            "title": "useCssTransition",
-            "description": "Drives CSS class-based enter/leave transitions.",
-            "files": [
-                {
-                    "path": "use-css-transition.ts",
-                    "type": "registry:hook"
-                }
-            ]
-        },
-        {
             "name": "use-delayed-value",
             "type": "registry:hook",
             "title": "useDelayedValue",
@@ -346,6 +334,22 @@
             "files": [
                 {
                     "path": "use-timeout.ts",
+                    "type": "registry:hook"
+                }
+            ]
+        },
+        {
+            "name": "use-this-form-data",
+            "type": "registry:hook",
+            "title": "useThisFormData",
+            "description": "Tracks form data for the current form and its children.",
+            "registryDependencies": [
+                "andre-hctulc/react-base/use-ref-of",
+                "andre-hctulc/react-base/form-util"
+            ],
+            "files": [
+                {
+                    "path": "use-this-form-data.tsx",
                     "type": "registry:hook"
                 }
             ]
