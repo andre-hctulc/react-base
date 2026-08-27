@@ -75,7 +75,7 @@ interface FormCardProps extends AccordionCardProps {}
 /**
  * {@link AccordionCard} variant:
  *
- * Defaults the {@link AccordionCardProps.keepMounted} to true
+ * Defaults {@link AccordionCardProps.keepMounted} to true
  * and {@link AccordionCardProps.collapsible} to false for use in forms.
  */
 export const FormCard: FC<FormCardProps> = ({ children, ...props }) => {
