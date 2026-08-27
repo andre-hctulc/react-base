@@ -24,11 +24,8 @@ import { ProgressDecorator } from "./progress-decorator.js";
 import { cn } from "@/lib/utils.js";
 import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
-import { AccordionContent } from "@/components/ui/accordion.js";
-import { AccordionOutlineItem, AccordionOutline, AccordionOutlineTrigger } from "./accordion-outline.js";
 import { DataSummary } from "./data-summary.js";
-import { AccordionTitle } from "./accordion-title.js";
-import { AccordionStaticHeader } from "./accordion-static-header.js";
+import { AccordionCard } from "./accordion-card.js";
 
 type WizardFormData = Record<string, unknown>;
 
@@ -343,7 +340,7 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
     children,
     stepIndex,
     collapsible = false,
-    defaultValue: _defaultValue,
+    defaultValue,
     ...props
 }) => {
     const { variant } = useWizardForm();
@@ -367,20 +364,15 @@ export const WizardFormStep: FC<WizardFormStepProps> = ({
     return (
         <WizardFormStepContext.Provider value={stepIndex ?? 0}>
             {stacked ? (
-                <div data-slot="wizard-form-step" className={className} {...props}>
-                    <AccordionOutline defaultValue={[`step-${stepIndex ?? 0}`]}>
-                        <AccordionOutlineItem value={`step-${stepIndex ?? 0}`}>
-                            {collapsible ? (
-                                <AccordionOutlineTrigger>{title.props.children}</AccordionOutlineTrigger>
-                            ) : (
-                                <AccordionStaticHeader>
-                                    <AccordionTitle>{title.props.children}</AccordionTitle>
-                                </AccordionStaticHeader>
-                            )}
-                            <AccordionContent keepMounted>{bodyChildren}</AccordionContent>
-                        </AccordionOutlineItem>
-                    </AccordionOutline>
-                </div>
+                <AccordionCard
+                    title={title.props.children}
+                    collapsible={collapsible}
+                    data-slot="wizard-form-step"
+                    className={className}
+                    {...props}
+                >
+                    {bodyChildren}
+                </AccordionCard>
             ) : (
                 <div data-slot="wizard-form-step" className={className} {...props}>
                     {children}
@@ -725,11 +717,7 @@ export function useWizardFormNavigation(): WizardFormNavigation {
 
 export type CurrentWizardFormDataVariant = "all" | "inclusive" | "exclusive";
 
-export interface CurrentWizardFormDataProps extends Omit<
-    ComponentProps<typeof AccordionOutline>,
-    "title" | "type"
-> {
-    title?: ReactNode;
+export interface CurrentWizardFormDataProps extends ComponentProps<typeof AccordionCard> {
     defaultOpen?: boolean;
     variant?: CurrentWizardFormDataVariant;
     includeKeys?: string[];
@@ -756,26 +744,17 @@ export const CurrentWizardFormData: FC<CurrentWizardFormDataProps> = ({
     }, [data, stepIndex, variant]);
 
     return (
-        <AccordionOutline
-            defaultValue={defaultOpen ? "current-data" : undefined}
-            className={className}
-            {...(props as any)}
-        >
-            <AccordionOutlineItem value="current-data">
-                <AccordionOutlineTrigger>{title}</AccordionOutlineTrigger>
-                <AccordionContent>
-                    {Object.keys(displayData).length === 0 ? (
-                        <p className="text-muted-foreground text-sm text-center">No completed data yet.</p>
-                    ) : (
-                        <DataSummary
-                            data={displayData}
-                            includeKeys={includeKeys}
-                            excludeKeys={excludeKeys}
-                            labelWidth={labelWidth}
-                        />
-                    )}
-                </AccordionContent>
-            </AccordionOutlineItem>
-        </AccordionOutline>
+        <AccordionCard className={className} {...props}>
+            {Object.keys(displayData).length === 0 ? (
+                <p className="text-muted-foreground text-sm text-center">No completed data yet.</p>
+            ) : (
+                <DataSummary
+                    data={displayData}
+                    includeKeys={includeKeys}
+                    excludeKeys={excludeKeys}
+                    labelWidth={labelWidth}
+                />
+            )}
+        </AccordionCard>
     );
 };

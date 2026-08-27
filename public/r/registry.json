@@ -843,21 +843,6 @@
       "type": "registry:ui"
     },
     {
-      "name": "accordion-outline",
-      "title": "AccordionOutline",
-      "description": "Bordered Accordion and AccordionItem wrappers with consistent outline spacing.",
-      "registryDependencies": [
-        "accordion"
-      ],
-      "files": [
-        {
-          "path": "src/components/accordion-outline.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "type": "registry:ui"
-    },
-    {
       "name": "field-filter",
       "title": "FieldFilter",
       "description": "Advanced field filter with typed filter operators and a compact popover trigger.",
@@ -936,24 +921,15 @@
       "type": "registry:ui"
     },
     {
-      "name": "accordion-title",
-      "title": "AccordionTitle",
-      "description": "Accordion title component.",
-      "files": [
-        {
-          "path": "src/components/accordion-title.tsx",
-          "type": "registry:ui"
-        }
+      "name": "accordion-card",
+      "title": "AccordionCard",
+      "description": "Accordion card component.",
+      "registryDependencies": [
+        "accordion"
       ],
-      "type": "registry:ui"
-    },
-    {
-      "name": "accordion-static-header",
-      "title": "AccordionStaticHeader",
-      "description": "Accordion static header component.",
       "files": [
         {
-          "path": "src/components/accordion-static-header.tsx",
+          "path": "src/components/accordion-card.tsx",
           "type": "registry:ui"
         }
       ],
@@ -967,12 +943,9 @@
         "button",
         "progress",
         "spinner",
-        "accordion",
         "andre-hctulc/react-base/use-ref-of",
         "andre-hctulc/react-base/progress-decorator",
-        "andre-hctulc/react-base/accordion-outline",
-        "andre-hctulc/react-base/accordion-static-header",
-        "andre-hctulc/react-base/accordion-title",
+        "andre-hctulc/react-base/accordion-card",
         "andre-hctulc/react-base/data-summary"
       ],
       "files": [

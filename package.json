@@ -17,7 +17,6 @@
         "lint": "npx eslint src",
         "demo": "npx serve -s ./demo-build -p 3065",
         "demo:prepare": "node --loader ts-node/esm scripts/build-comp-demos.ts",
-        "create-safelist": "tsx scripts/safelist-gen.ts",
         "theme:css": "node scripts/build-registry-theme-css.mjs",
         "storybook": "pnpm theme:css && storybook dev -p 6006",
         "storybook:build": "pnpm theme:css && storybook build",

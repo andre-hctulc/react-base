@@ -395,19 +395,6 @@
             ]
         },
         {
-            "name": "accordion-outline",
-            "type": "registry:ui",
-            "title": "AccordionOutline",
-            "description": "Bordered Accordion and AccordionItem wrappers with consistent outline spacing.",
-            "registryDependencies": ["accordion"],
-            "files": [
-                {
-                    "path": "accordion-outline.tsx",
-                    "type": "registry:ui"
-                }
-            ]
-        },
-        {
             "name": "field-filter",
             "type": "registry:ui",
             "title": "FieldFilter",
@@ -470,18 +457,12 @@
             ]
         },
         {
-            "name": "accordion-title",
+            "name": "accordion-card",
             "type": "registry:ui",
-            "title": "AccordionTitle",
-            "description": "Accordion title component.",
-            "files": [{ "path": "accordion-title.tsx", "type": "registry:ui" }]
-        },
-        {
-            "name": "accordion-static-header",
-            "type": "registry:ui",
-            "title": "AccordionStaticHeader",
-            "description": "Accordion static header component.",
-            "files": [{ "path": "accordion-static-header.tsx", "type": "registry:ui" }]
+            "title": "AccordionCard",
+            "description": "Accordion card component.",
+            "files": [{ "path": "accordion-card.tsx", "type": "registry:ui" }],
+            "registryDependencies": ["accordion"]
         },
         {
             "name": "wizard-form",
@@ -492,12 +473,9 @@
                 "button",
                 "progress",
                 "spinner",
-                "accordion",
                 "andre-hctulc/react-base/use-ref-of",
                 "andre-hctulc/react-base/progress-decorator",
-                "andre-hctulc/react-base/accordion-outline",
-                "andre-hctulc/react-base/accordion-static-header",
-                "andre-hctulc/react-base/accordion-title",
+                "andre-hctulc/react-base/accordion-card",
                 "andre-hctulc/react-base/data-summary"
             ],
             "files": [
