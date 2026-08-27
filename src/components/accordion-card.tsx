@@ -55,15 +55,14 @@ export const AccordionCard: FC<AccordionCardProps> = ({
             {...props}
         >
             <AccordionOutlineItem value={value}>
-                {hasHeader ? (
-                    collapsible ? (
+                {hasHeader &&
+                    (collapsible ? (
                         <AccordionOutlineTrigger>{title}</AccordionOutlineTrigger>
                     ) : (
                         <AccordionStaticHeader>
                             <AccordionTitle>{title}</AccordionTitle>
                         </AccordionStaticHeader>
-                    )
-                ) : null}
+                    ))}
                 <AccordionContent keepMounted={keepMounted}>{children}</AccordionContent>
             </AccordionOutlineItem>
         </AccordionOutline>
@@ -78,9 +77,9 @@ interface FormCardProps extends AccordionCardProps {}
  * Defaults {@link AccordionCardProps.keepMounted} to true
  * and {@link AccordionCardProps.collapsible} to false for use in forms.
  */
-export const FormCard: FC<FormCardProps> = ({ children, ...props }) => {
+export const FormCard: FC<FormCardProps> = ({ children, collapsible = false, ...props }) => {
     return (
-        <AccordionCard collapsible={false} keepMounted {...props}>
+        <AccordionCard collapsible={collapsible} keepMounted {...props}>
             {children}
         </AccordionCard>
     );
