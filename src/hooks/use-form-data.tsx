@@ -10,25 +10,25 @@ function findForm(anchor: HTMLElement | null) {
     return current as HTMLFormElement | null;
 }
 
-export interface UseFormDataResult {
+export interface UseFormDataResult<T extends object = Record<string, any>> {
     formAnchor: ReactNode;
     formData: FormData;
-    parsedFormData: Record<string, any>;
+    parsedFormData: T;
 }
 
-type FormDataParser = (form: HTMLFormElement | FormData) => Record<string, any>;
+type FormDataParser<T extends object = Record<string, any>> = (form: HTMLFormElement | FormData) => T;
 
-export interface UseFormDataOptions {
+export interface UseFormDataOptions<T extends object = Record<string, any>> {
     formRef?: Ref<HTMLFormElement>;
-    formDataParser?: FormDataParser;
-    defaultFormData?: FormData | Record<string, any>;
+    formDataParser?: FormDataParser<T>;
+    defaultFormData?: FormData | T;
 }
 
-export function useFormData({
+export function useFormData<T extends object = Record<string, any>>({
     formRef,
     formDataParser,
     defaultFormData,
-}: UseFormDataOptions): UseFormDataResult {
+}: UseFormDataOptions<T>): UseFormDataResult<T> {
     const innerFormRef = useRef<HTMLFormElement | null>(
         typeof formRef === "function" || !formRef || !("current" in formRef)
             ? null
@@ -137,6 +137,6 @@ export function useFormData({
     return {
         formAnchor,
         formData: data.formData,
-        parsedFormData: data.parsedFormData,
+        parsedFormData: data.parsedFormData as T,
     };
 }
