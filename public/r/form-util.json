@@ -3,6 +3,9 @@
   "name": "form-util",
   "title": "Form utilities",
   "description": "Form utility helpers.",
+  "dependencies": [
+    "dot-prop"
+  ],
   "files": [
     {
       "path": "src/lib/form.util.ts",

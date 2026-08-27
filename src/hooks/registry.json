@@ -339,9 +339,9 @@
             ]
         },
         {
-            "name": "use-this-form-data",
+            "name": "use-form-data",
             "type": "registry:hook",
-            "title": "useThisFormData",
+            "title": "useFormData",
             "description": "Tracks form data for the current form and its children.",
             "registryDependencies": [
                 "andre-hctulc/react-base/use-ref-of",
@@ -349,7 +349,7 @@
             ],
             "files": [
                 {
-                    "path": "use-this-form-data.tsx",
+                    "path": "use-form-data.tsx",
                     "type": "registry:hook"
                 }
             ]

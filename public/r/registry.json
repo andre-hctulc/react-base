@@ -31,6 +31,9 @@
       "name": "form-util",
       "title": "Form utilities",
       "description": "Form utility helpers.",
+      "dependencies": [
+        "dot-prop"
+      ],
       "files": [
         {
           "path": "src/lib/form.util.ts",
@@ -379,8 +382,8 @@
       "type": "registry:hook"
     },
     {
-      "name": "use-this-form-data",
-      "title": "useThisFormData",
+      "name": "use-form-data",
+      "title": "useFormData",
       "description": "Tracks form data for the current form and its children.",
       "registryDependencies": [
         "andre-hctulc/react-base/use-ref-of",
@@ -388,7 +391,7 @@
       ],
       "files": [
         {
-          "path": "src/hooks/use-this-form-data.tsx",
+          "path": "src/hooks/use-form-data.tsx",
           "type": "registry:hook"
         }
       ],

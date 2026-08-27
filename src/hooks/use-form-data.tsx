@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode, type Ref } from "react";
-import { useRefOf } from "./use-ref-of.js";
+import { useRefOf } from "@/hooks/use-ref-of.js";
 import { formDataFromObject, parseFormData } from "@/lib/form.util.js";
 
 function findForm(anchor: HTMLElement | null) {
@@ -10,25 +10,25 @@ function findForm(anchor: HTMLElement | null) {
     return current as HTMLFormElement | null;
 }
 
-export interface UseThisFormDataResult {
-    anchor: ReactNode;
+export interface UseFormDataResult {
+    formAnchor: ReactNode;
     formData: FormData;
     parsedFormData: Record<string, any>;
 }
 
 type FormDataParser = (form: HTMLFormElement | FormData) => Record<string, any>;
 
-export interface UseThisFormDataOptions {
+export interface UseFormDataOptions {
     formRef?: Ref<HTMLFormElement>;
     formDataParser?: FormDataParser;
     defaultFormData?: FormData | Record<string, any>;
 }
 
-export function useThisFormData({
+export function useFormData({
     formRef,
     formDataParser,
     defaultFormData,
-}: UseThisFormDataOptions): UseThisFormDataResult {
+}: UseFormDataOptions): UseFormDataResult {
     const innerFormRef = useRef<HTMLFormElement | null>(
         typeof formRef === "function" || !formRef || !("current" in formRef)
             ? null
@@ -36,6 +36,19 @@ export function useThisFormData({
     );
     const anchorRef = useRef<HTMLDivElement | null>(null);
     const parserRef = useRefOf(formDataParser);
+
+    const setFormRef = (node: HTMLFormElement | null) => {
+        innerFormRef.current = node;
+
+        if (typeof formRef === "function") {
+            formRef(node);
+            return;
+        }
+
+        if (formRef && "current" in formRef) {
+            formRef.current = node;
+        }
+    };
 
     const toFormState = (source: HTMLFormElement | FormData | Record<string, any>) => {
         if (source instanceof HTMLFormElement) {
@@ -90,10 +103,7 @@ export function useThisFormData({
         const resolvedForm = innerFormRef.current ?? (anchorRef.current ? findForm(anchorRef.current) : null);
 
         if (resolvedForm) {
-            innerFormRef.current = resolvedForm;
-            if (typeof formRef !== "function" && formRef && "current" in formRef) {
-                formRef.current = resolvedForm;
-            }
+            setFormRef(resolvedForm);
         }
 
         const form = resolvedForm ?? innerFormRef.current;
@@ -122,10 +132,10 @@ export function useThisFormData({
         setData(toFormState(defaultFormData));
     }, [defaultFormData, formDataParser]);
 
-    const anchor = <div className="hidden" ref={anchorRef} />;
+    const formAnchor = <div className="hidden" ref={anchorRef} />;
 
     return {
-        anchor,
+        formAnchor,
         formData: data.formData,
         parsedFormData: data.parsedFormData,
     };
