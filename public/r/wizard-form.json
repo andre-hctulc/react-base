@@ -3,11 +3,13 @@
   "name": "wizard-form",
   "title": "WizardForm",
   "description": "Compound wizard form with back/forward navigation and step persistence across reloads.",
+  "dependencies": [
+    "@dre44/form-data-parser"
+  ],
   "registryDependencies": [
     "button",
     "progress",
     "spinner",
-    "andre-hctulc/react-base/form-util",
     "andre-hctulc/react-base/use-ref-of",
     "andre-hctulc/react-base/progress-decorator",
     "andre-hctulc/react-base/accordion-card",
