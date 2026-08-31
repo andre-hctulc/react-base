@@ -22,8 +22,8 @@ importers:
         specifier: ^3.2.6
         version: 3.2.7(react@19.2.8)(storybook@10.5.10(@types/react@19.2.18)(react@19.2.8))
       '@dre44/form-data-parser':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.4.0
+        version: 0.4.0
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.6
@@ -373,8 +373,8 @@ packages:
   '@dotenvx/primitives@0.8.0':
     resolution: {integrity: sha512-VYJy0uhFm9zTJ1TxBaW/pA8bjbOM/OttaNMwZ1RHG4JKyRG7DhSdiqD1ipQoAyoD22olUtxbP78W9xY3Wd11bg==}
 
-  '@dre44/form-data-parser@0.2.0':
-    resolution: {integrity: sha512-wNBFUe1e0owa6iOkJ+Vo6/O6LbtszhziQ/PDw4tezfNH2gsmxHkek7jksLeBVDgsLx2yP+uSiV8Inxi2JDUjRw==}
+  '@dre44/form-data-parser@0.4.0':
+    resolution: {integrity: sha512-npRmCXjGG7rMmWQ0ukTBRTWkNI1XsrVMLCSFXzr/iGR3JYc48RRrMxXw28S/KFRAVJs4UUNaB+/NrakptFINsQ==}
 
   '@emnapi/core@1.11.0':
     resolution: {integrity: sha512-l9Oo58x0HOP5znGzVhYW9U3e5wVuA4LAZU2AGezTmkhO1CgQRFDhDg4nneHsu/t3WniXg9QrG2nIXL/ZS8ln8Q==}
@@ -5101,7 +5101,7 @@ snapshots:
 
   '@dotenvx/primitives@0.8.0': {}
 
-  '@dre44/form-data-parser@0.2.0':
+  '@dre44/form-data-parser@0.4.0':
     dependencies:
       dot-prop: 10.2.0
 
