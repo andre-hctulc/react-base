@@ -24,19 +24,6 @@
                     "type": "registry:lib"
                 }
             ]
-        },
-        {
-            "name": "form-util",
-            "type": "registry:lib",
-            "title": "Form utilities",
-            "description": "Form utility helpers.",
-            "dependencies": ["dot-prop"],
-            "files": [
-                {
-                    "path": "form.util.ts",
-                    "type": "registry:lib"
-                }
-            ]
         }
     ]
 }

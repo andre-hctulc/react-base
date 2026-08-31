@@ -26,7 +26,7 @@ import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { DataSummary } from "./data-summary.js";
 import { AccordionCard, FormCard } from "./accordion-card.js";
-import { parseFormData } from "@/lib/form.util.js";
+import { parseFormData, type ParseFormDataOptions } from "@dre44/form-data-parser";
 
 type WizardFormData = Record<string, unknown>;
 
@@ -59,6 +59,7 @@ interface WizardFormContextValue {
     registerStepTitle: (title: ReactNode | null) => void;
     data: WizardFormData[];
     updateData: (newData: WizardFormData, stepIndexOverride?: number) => void;
+    parseFormDataOptions: ParseFormDataOptions | undefined;
 }
 
 const WizardFormContext = createContext<WizardFormContextValue | null>(null);
@@ -93,6 +94,7 @@ export interface WizardFormProps extends ComponentProps<"div"> {
     onComplete?: (data: WizardFormData[], mergedData: WizardFormData) => void;
     onDataChange?: (data: WizardFormData[], mergedData: WizardFormData) => void;
     children: ReactNode;
+    parseFormDataOptions?: ParseFormDataOptions;
 }
 
 /**
@@ -107,6 +109,7 @@ export const WizardForm: FC<WizardFormProps> = ({
     onDataChange,
     className,
     children,
+    parseFormDataOptions,
     ...props
 }) => {
     const initialState = useRef({ stepIndex: initialStep, data: initialData });
@@ -250,6 +253,7 @@ export const WizardForm: FC<WizardFormProps> = ({
             registerStepTitle,
             data,
             updateData,
+            parseFormDataOptions,
         }),
         [
             goBack,
@@ -606,7 +610,7 @@ export interface WizardFormSubProps {
  * native submit (gating on HTML5 validation) before persisting its data and advancing.
  */
 export const WizardFormSub: FC<WizardFormSubProps> = ({ children }) => {
-    const { data, goNext, registerStepSubmit, updateData, variant } = useWizardForm();
+    const { data, goNext, registerStepSubmit, updateData, variant, parseFormDataOptions } = useWizardForm();
     const stepIndex = useWizardFormStepIndex();
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -617,7 +621,7 @@ export const WizardFormSub: FC<WizardFormSubProps> = ({ children }) => {
                 return null;
             }
 
-            const formData = parseFormData(form).parsedFormData;
+            const formData = parseFormData(form, parseFormDataOptions).parsedFormData;
             form.requestSubmit();
             return formData;
         });
@@ -642,14 +646,14 @@ export const WizardFormSub: FC<WizardFormSubProps> = ({ children }) => {
 
     useEffect(() => {
         if (formRef.current) {
-            updateData(parseFormData(formRef.current).parsedFormData, stepIndex);
+            updateData(parseFormData(formRef.current, parseFormDataOptions).parsedFormData, stepIndex);
         }
     }, [stepIndex, updateData]);
 
     const handleChange = useCallback(
         (e: ChangeEvent<HTMLFormElement>) => {
             childOnChange.current?.(e);
-            updateData(parseFormData(e.currentTarget).parsedFormData, stepIndex);
+            updateData(parseFormData(e.currentTarget, parseFormDataOptions).parsedFormData, stepIndex);
         },
         [stepIndex, updateData],
     );
@@ -660,7 +664,7 @@ export const WizardFormSub: FC<WizardFormSubProps> = ({ children }) => {
 
             childOnSubmit.current?.(e);
 
-            const newData = parseFormData(e.currentTarget).parsedFormData;
+            const newData = parseFormData(e.currentTarget, parseFormDataOptions).parsedFormData;
             updateData(newData, stepIndex);
 
             if (variant === "wizard") {

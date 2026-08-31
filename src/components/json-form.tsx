@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input.js";
 import { Textarea } from "@/components/ui/textarea.js";
 import { cn } from "@/lib/utils.js";
 import { ChevronDown, ChevronUp, Copy, LucideInfo, Plus, Trash2 } from "lucide-react";
-import type { FocusEvent, ReactNode, Ref } from "react";
+import { Children, Fragment, type FocusEvent, type ReactNode, type Ref } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert.js";
 
 export type JsonFormRef<
@@ -58,6 +58,13 @@ export interface JsonFormProps<
     ref?: Ref<JsonFormRef<T, S, F>>;
 }
 
+const isEmpty = (node: ReactNode) => {
+    if (node === null || node === undefined) return true;
+    if (typeof node === "string" && node.trim() === "") return true;
+    if (Array.isArray(node)) return node.every(isEmpty);
+    return Children.toArray(node).every(isEmpty);
+};
+
 function FieldTemplate({
     id,
     classNames,
@@ -73,6 +80,7 @@ function FieldTemplate({
     hidden,
     disabled,
     rawErrors,
+    rawHelp,
 }: FieldTemplateProps) {
     if (hidden) return <div className="hidden">{children}</div>;
 
@@ -91,7 +99,7 @@ function FieldTemplate({
             )}
             {children}
             {description && <FieldDescription>{description}</FieldDescription>}
-            {help && (
+            {help && !isEmpty(help) && (
                 <Alert>
                     <LucideInfo />
                     <AlertDescription>{help}</AlertDescription>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode, type Ref } from "react";
 import { useRefOf } from "@/hooks/use-ref-of.js";
-import { formDataFromObject, parseFormData } from "@/lib/form.util.js";
+import { formDataFromObject, parseFormData, type ParseFormDataOptions } from "@dre44/form-data-parser";
 
 function findForm(anchor: HTMLElement | null) {
     let current = anchor;
@@ -22,12 +22,14 @@ export interface UseFormDataOptions<T extends object = Record<string, any>> {
     formRef?: Ref<HTMLFormElement>;
     formDataParser?: FormDataParser<T>;
     defaultFormData?: FormData | T;
+    parseFormDataOptions?: ParseFormDataOptions;
 }
 
 export function useFormData<T extends object = Record<string, any>>({
     formRef,
     formDataParser,
     defaultFormData,
+    parseFormDataOptions,
 }: UseFormDataOptions<T> = {}): UseFormDataResult<T> {
     const innerFormRef = useRef<HTMLFormElement | null>(
         typeof formRef === "function" || !formRef || !("current" in formRef)
@@ -52,7 +54,7 @@ export function useFormData<T extends object = Record<string, any>>({
 
     const toFormState = (source: HTMLFormElement | FormData | Record<string, any>) => {
         if (source instanceof HTMLFormElement) {
-            const result = parseFormData(source);
+            const result = parseFormData(source, parseFormDataOptions);
             return {
                 formData: result.formData,
                 parsedFormData: parserRef.current ? parserRef.current(source) : result.parsedFormData,
@@ -60,15 +62,15 @@ export function useFormData<T extends object = Record<string, any>>({
         }
 
         if (source instanceof FormData) {
-            const result = parseFormData(source);
+            const result = parseFormData(source, parseFormDataOptions);
             return {
                 formData: result.formData,
                 parsedFormData: parserRef.current ? parserRef.current(source) : result.parsedFormData,
             };
         }
 
-        const formData = formDataFromObject(source);
-        const result = parseFormData(formData);
+        const formData = formDataFromObject(source, parseFormDataOptions);
+        const result = parseFormData(formData, parseFormDataOptions);
         return {
             formData: result.formData,
             parsedFormData: parserRef.current ? parserRef.current(formData) : result.parsedFormData,

@@ -28,21 +28,6 @@
       "type": "registry:lib"
     },
     {
-      "name": "form-util",
-      "title": "Form utilities",
-      "description": "Form utility helpers.",
-      "dependencies": [
-        "dot-prop"
-      ],
-      "files": [
-        {
-          "path": "src/lib/form.util.ts",
-          "type": "registry:lib"
-        }
-      ],
-      "type": "registry:lib"
-    },
-    {
       "name": "use-blob-url",
       "title": "useBlobUrl",
       "description": "Creates an object URL from a Blob and revokes it on cleanup.",
@@ -385,9 +370,11 @@
       "name": "use-form-data",
       "title": "useFormData",
       "description": "Tracks form data for the current form and its children.",
+      "dependencies": [
+        "@dre44/form-data-parser"
+      ],
       "registryDependencies": [
-        "andre-hctulc/react-base/use-ref-of",
-        "andre-hctulc/react-base/form-util"
+        "andre-hctulc/react-base/use-ref-of"
       ],
       "files": [
         {
