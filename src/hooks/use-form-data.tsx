@@ -120,9 +120,17 @@ export function useFormData<T extends object = Record<string, any>>({
         resolvedForm.addEventListener("input", handleChange);
         resolvedForm.addEventListener("change", handleChange);
 
+        const observer = new MutationObserver(handleChange);
+        observer.observe(resolvedForm, {
+            attributes: true,
+            attributeFilter: ["value"],
+            subtree: true,
+        });
+
         return () => {
             resolvedForm.removeEventListener("input", handleChange);
             resolvedForm.removeEventListener("change", handleChange);
+            observer.disconnect();
         };
     }, [anchor, formRef, formDataParser, parseFormDataOptions]);
 
