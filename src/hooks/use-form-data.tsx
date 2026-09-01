@@ -36,7 +36,7 @@ export function useFormData<T extends object = Record<string, any>>({
             ? null
             : (formRef.current ?? null),
     );
-    const anchorRef = useRef<HTMLDivElement | null>(null);
+    const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
     const parserRef = useRefOf(formDataParser);
 
     const setFormRef = (node: HTMLFormElement | null) => {
@@ -102,29 +102,29 @@ export function useFormData<T extends object = Record<string, any>>({
             innerFormRef.current = formRef.current ?? innerFormRef.current;
         }
 
-        const resolvedForm = innerFormRef.current ?? (anchorRef.current ? findForm(anchorRef.current) : null);
+        const resolvedForm = anchor ? findForm(anchor) : innerFormRef.current;
 
         if (resolvedForm) {
             setFormRef(resolvedForm);
         }
 
-        const form = resolvedForm ?? innerFormRef.current;
-        if (!form) {
+        if (!resolvedForm) {
             return;
         }
 
         const handleChange = () => {
-            syncDataFrom(form);
+            syncDataFrom(resolvedForm);
         };
 
-        form.addEventListener("input", handleChange);
-        form.addEventListener("change", handleChange);
+        syncDataFrom(resolvedForm);
+        resolvedForm.addEventListener("input", handleChange);
+        resolvedForm.addEventListener("change", handleChange);
 
         return () => {
-            form.removeEventListener("input", handleChange);
-            form.removeEventListener("change", handleChange);
+            resolvedForm.removeEventListener("input", handleChange);
+            resolvedForm.removeEventListener("change", handleChange);
         };
-    }, [formRef, formDataParser]);
+    }, [anchor, formRef, formDataParser, parseFormDataOptions]);
 
     useEffect(() => {
         if (!defaultFormData) {
@@ -134,7 +134,7 @@ export function useFormData<T extends object = Record<string, any>>({
         setData(toFormState(defaultFormData));
     }, [defaultFormData, formDataParser]);
 
-    const formAnchor = <div className="hidden" ref={anchorRef} />;
+    const formAnchor = <div className="hidden" ref={setAnchor} />;
 
     return {
         formAnchor,

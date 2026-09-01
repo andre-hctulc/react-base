@@ -28,7 +28,7 @@ interface SelectFactoryProps extends Omit<ComponentProps<typeof Select>, "items"
 }
 
 export const SelectFactory: FC<SelectFactoryProps> = ({ items, id, triggerProps, ...props }) => {
-    const len = Array.isArray(items) ? items.length : Object.keys(items).length;
+    const groupsCount = Array.isArray(items) ? items.length : Object.keys(items).length;
     const itemsArray = Array.isArray(items) ? items : Object.values(items).flat();
 
     return (
@@ -47,7 +47,7 @@ export const SelectFactory: FC<SelectFactoryProps> = ({ items, id, triggerProps,
                     </SelectGroup>
                 ) : (
                     Object.entries(items).map(([groupLabel, groupOptions]) => {
-                        const isLast = Object.keys(items).indexOf(groupLabel) === len - 1;
+                        const isLast = Object.keys(items).indexOf(groupLabel) === groupsCount - 1;
                         return (
                             <Fragment key={groupLabel}>
                                 {!isLast && <SelectSeparator />}
