@@ -29,9 +29,10 @@ interface SelectFactoryProps extends Omit<ComponentProps<typeof Select>, "items"
 
 export const SelectFactory: FC<SelectFactoryProps> = ({ items, id, triggerProps, ...props }) => {
     const len = Array.isArray(items) ? items.length : Object.keys(items).length;
+    const itemsArray = Array.isArray(items) ? items : Object.values(items).flat();
 
     return (
-        <Select {...props}>
+        <Select {...props} items={itemsArray}>
             <SelectTrigger id={id} {...triggerProps}>
                 <SelectValue />
             </SelectTrigger>
