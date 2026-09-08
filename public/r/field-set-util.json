@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field-set-util",
+  "title": "Field Set utility",
+  "description": "Field set helpers.",
+  "files": [
+    {
+      "path": "src/lib/field-set.util.ts",
+      "content": "export interface FieldSetParams<F extends object = Record<string, any>> {\n    include?: Iterable<keyof F>;\n    exclude?: Iterable<keyof F>;\n    namePrefix?: string;\n}\n\nexport interface FieldSetUtil<F extends object = Record<string, any>> {\n    shouldRender: (key: keyof F) => boolean;\n    getName: (key: keyof F) => string;\n}\n\nexport function createFieldSetUtil<F extends object = Record<string, any>>(\n    params: FieldSetParams<F> = {},\n): FieldSetUtil<F> {\n    const { include, exclude, namePrefix } = params;\n\n    const includeSet = include ? new Set(include) : null;\n    const excludeSet = exclude ? new Set(exclude) : null;\n\n    const shouldRender = (key: keyof F) => {\n        if (includeSet && !includeSet.has(key)) {\n            return false;\n        }\n        if (excludeSet && excludeSet.has(key)) {\n            return false;\n        }\n        return true;\n    };\n\n    const getName = (key: keyof F) => `${namePrefix ?? \"\"}${String(key)}`;\n\n    return { shouldRender, getName };\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}
