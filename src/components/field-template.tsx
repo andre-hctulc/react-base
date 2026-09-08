@@ -21,10 +21,8 @@ export interface FieldParams {
     id?: string;
     description?: string;
     error?: string;
-    /** Controlled data of the current form */
-    formData?: FormData | Record<string, unknown>;
-    /** Default data of the current form */
-    defaultFormData?: FormData | Record<string, unknown>;
+    defaultValue?: any;
+    value?: any;
 }
 
 interface ComputedFieldParams {
@@ -62,29 +60,14 @@ export function FieldTemplate<S extends boolean>({
 
     const name = childProps.name ?? params.name;
 
-    const getFieldValueFromFormData = (
-        key: string | undefined,
-        formData: FormData | Record<string, unknown> | undefined,
-    ) => {
-        if (!key || !formData) {
-            return undefined;
-        }
-        if (formData instanceof FormData) {
-            return formData.get(key);
-        }
-        return formData[key];
-    };
-
     const p: FieldParams & ComputedFieldParams = {
         name,
         id,
         label: params.label ?? name,
         description: params.description,
         error: params.error,
-        formData: params.formData,
-        defaultFormData: params.defaultFormData,
-        defaultValue: getFieldValueFromFormData(name, params.defaultFormData) ?? childProps.defaultValue,
-        value: getFieldValueFromFormData(name, params.formData) ?? childProps.value,
+        defaultValue: params.defaultValue ?? childProps.defaultValue,
+        value: params.value ?? childProps.value,
     };
 
     const inputProps: FieldInputProps = {
@@ -93,6 +76,12 @@ export function FieldTemplate<S extends boolean>({
         defaultValue: p.defaultValue,
         value: p.value,
     };
+    // remove undefined values from inputProps
+    for (const [key, value] of Object.entries(inputProps)) {
+        if (value === undefined) {
+            delete inputProps[key as keyof FieldInputProps];
+        }
+    }
 
     if (asSet) {
         return (

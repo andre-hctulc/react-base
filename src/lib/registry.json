@@ -24,18 +24,6 @@
                     "type": "registry:lib"
                 }
             ]
-        },
-        {
-            "name": "field-set-util",
-            "type": "registry:lib",
-            "title": "Field Set utility",
-            "description": "Field set helpers.",
-            "files": [
-                {
-                    "path": "field-set.util.ts",
-                    "type": "registry:lib"
-                }
-            ]
         }
     ]
 }
