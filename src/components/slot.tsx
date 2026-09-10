@@ -1,11 +1,21 @@
-import type { ComponentProps, JSX, JSXElementConstructor } from "react";
+import {
+    cloneElement,
+    isValidElement,
+    type ComponentProps,
+    type ElementType,
+    type ReactElement,
+} from "react";
 
-export type SlotProps<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> = any> =
-    ComponentProps<T> & {
-        children: T;
-    };
+export type SlotProps<T extends ElementType = ElementType> = ComponentProps<T> & {
+    children: ReactElement;
+};
 
-export const Slot = <T extends JSXElementConstructor<any>>(props: SlotProps<T>) => {
+export const Slot = <T extends ElementType = ElementType>(props: SlotProps<T>) => {
     const { children, ...restProps } = props;
-    return <children.type {...restProps}>{children.props.children}</children.type>;
+    
+    if (!isValidElement(children)) {
+        throw new Error("Slot requires exactly one valid React element child.");
+    }
+
+    return cloneElement(children, restProps);
 };
