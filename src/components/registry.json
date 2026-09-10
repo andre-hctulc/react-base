@@ -31,7 +31,7 @@
             "type": "registry:ui",
             "title": "Toolbar",
             "description": "Flex toolbar with spacing, padding, margin, scroll and alignment variants.",
-            "dependencies": ["class-variance-authority", "radix-ui"],
+            "dependencies": ["class-variance-authority"],
             "registryDependencies": ["andre-hctulc/react-base/variants-util", "andre-hctulc/react-base/slot"],
             "files": [
                 {
