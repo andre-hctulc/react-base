@@ -2,7 +2,7 @@ import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
 import { msz } from "@/lib/variants.util.js";
-import { Slot } from "radix-ui";
+import { Slot } from "./slot.js";
 
 const colorTextVariants = cva("", {
     variants: {
@@ -76,7 +76,7 @@ export const ColorText: FC<ColorTextProps> = (props) => {
         asChild,
         ...restProps
     } = props;
-    const Comp: any = asChild ? Slot : "p";
+    const Comp = asChild ? Slot : "p";
     return (
         <Comp
             className={cn(

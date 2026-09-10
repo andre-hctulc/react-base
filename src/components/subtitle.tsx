@@ -2,8 +2,8 @@ import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
 import { msz } from "@/lib/variants.util.js";
-import { Slot } from "radix-ui";
 import { Icon, type IconLike, type IconProps } from "./icon.js";
+import { Slot } from "./slot.js";
 
 const subtitleVariants = cva("text-t-2", {
     variants: {

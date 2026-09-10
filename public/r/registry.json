@@ -385,11 +385,24 @@
       "type": "registry:hook"
     },
     {
+      "name": "slot",
+      "title": "Slot",
+      "description": "Slot component for polymorphic rendering.",
+      "files": [
+        {
+          "path": "src/components/slot.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "flex",
       "title": "Flex",
       "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
       "dependencies": [
-        "class-variance-authority"
+        "class-variance-authority",
+        "andre-hctulc/react-base/slot"
       ],
       "files": [
         {
@@ -408,7 +421,8 @@
         "radix-ui"
       ],
       "registryDependencies": [
-        "andre-hctulc/react-base/variants-util"
+        "andre-hctulc/react-base/variants-util",
+        "andre-hctulc/react-base/slot"
       ],
       "files": [
         {
@@ -435,7 +449,8 @@
       "title": "Spacer",
       "description": "Polymorphic flex gap container.",
       "registryDependencies": [
-        "andre-hctulc/react-base/variants-util"
+        "andre-hctulc/react-base/variants-util",
+        "andre-hctulc/react-base/slot"
       ],
       "files": [
         {
@@ -611,7 +626,8 @@
       "registryDependencies": [
         "skeleton",
         "andre-hctulc/react-base/icon",
-        "andre-hctulc/react-base/use-ref-of"
+        "andre-hctulc/react-base/use-ref-of",
+        "andre-hctulc/react-base/slot"
       ],
       "files": [
         {
@@ -629,7 +645,8 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "andre-hctulc/react-base/variants-util"
+        "andre-hctulc/react-base/variants-util",
+        "andre-hctulc/react-base/slot"
       ],
       "files": [
         {
@@ -648,7 +665,8 @@
       ],
       "registryDependencies": [
         "andre-hctulc/react-base/icon",
-        "andre-hctulc/react-base/variants-util"
+        "andre-hctulc/react-base/variants-util",
+        "andre-hctulc/react-base/slot"
       ],
       "files": [
         {
@@ -664,7 +682,8 @@
       "description": "Subtitle / secondary text component.",
       "registryDependencies": [
         "andre-hctulc/react-base/icon",
-        "andre-hctulc/react-base/variants-util"
+        "andre-hctulc/react-base/variants-util",
+        "andre-hctulc/react-base/slot"
       ],
       "files": [
         {
@@ -690,6 +709,9 @@
       "name": "typography",
       "title": "Typography",
       "description": "Styled typography components (h1-h6, p, ul, etc.).",
+      "registryDependencies": [
+        "andre-hctulc/react-base/slot"
+      ],
       "files": [
         {
           "path": "src/components/typography.tsx",
@@ -733,6 +755,9 @@
       "name": "input-list",
       "title": "InputList",
       "description": "Base input list component.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/slot"
+      ],
       "files": [
         {
           "path": "src/components/input-list.tsx",

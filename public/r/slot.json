@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slot",
+  "title": "Slot",
+  "description": "Slot component for polymorphic rendering.",
+  "files": [
+    {
+      "path": "src/components/slot.tsx",
+      "content": "import type { ComponentProps, JSX, JSXElementConstructor } from \"react\";\n\nexport type SlotProps<T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any> = any> =\n    ComponentProps<T> & {\n        children: T;\n    };\n\nexport const Slot = <T extends JSXElementConstructor<any>>(props: SlotProps<T>) => {\n    const { children, ...restProps } = props;\n    return <children.type {...restProps}>{children.props.children}</children.type>;\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

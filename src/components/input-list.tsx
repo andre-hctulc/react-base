@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState, type CSSProperties, type ElementType, type Ref } from "react";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { cn as twMerge } from "@/lib/utils.js";
-import { Slot } from "radix-ui";
+import { Slot } from "./slot.js";
 
 export interface ListInputProps<T = any> {
     name?: string;

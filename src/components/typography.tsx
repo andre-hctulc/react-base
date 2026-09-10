@@ -1,7 +1,7 @@
 import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
-import { Slot } from "radix-ui";
+import { Slot } from "./slot.js";
 
 const typographyVariants = cva("", {
     variants: {

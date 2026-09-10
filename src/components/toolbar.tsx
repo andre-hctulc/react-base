@@ -1,8 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
-import { Slot } from "radix-ui";
 import { type FC, type ComponentProps } from "react";
 import { msz, sz } from "@/lib/variants.util.js";
+import { Slot } from "./slot.js";
 
 const toolbarVariants = cva("flex min-w-0", {
     variants: {
