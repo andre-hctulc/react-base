@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "src/components/slot.tsx",
-      "content": "import {\n    cloneElement,\n    isValidElement,\n    type ComponentProps,\n    type ElementType,\n    type ReactElement,\n} from \"react\";\n\nexport type SlotProps<T extends ElementType = ElementType> = ComponentProps<T> & {\n    children: ReactElement<ComponentProps<T>>;\n};\n\nexport const Slot = <T extends ElementType = ElementType>(props: SlotProps<T>) => {\n    const { children, ...restProps } = props;\n\n    if (!isValidElement(children)) {\n        throw new Error(\"Slot requires exactly one valid React element child.\");\n    }\n\n    return cloneElement(children, restProps);\n};\n",
+      "content": "import { cloneElement, isValidElement, type ComponentProps, type ElementType, type ReactNode } from \"react\";\n\nexport type SlotProps<T extends ElementType = ElementType> = Partial<ComponentProps<T>> & {\n    children: ReactNode;\n};\n\nexport const Slot = <T extends ElementType = ElementType>(props: SlotProps<T>) => {\n    const { children, ...restProps } = props;\n\n    if (!isValidElement(children)) {\n        return children;\n    }\n\n    return cloneElement(children, restProps as any);\n};\n",
       "type": "registry:ui"
     }
   ],

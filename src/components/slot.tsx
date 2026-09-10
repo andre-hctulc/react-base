@@ -1,21 +1,15 @@
-import {
-    cloneElement,
-    isValidElement,
-    type ComponentProps,
-    type ElementType,
-    type ReactElement,
-} from "react";
+import { cloneElement, isValidElement, type ComponentProps, type ElementType, type ReactNode } from "react";
 
-export type SlotProps<T extends ElementType = ElementType> = ComponentProps<T> & {
-    children: ReactElement<ComponentProps<T>>;
+export type SlotProps<T extends ElementType = ElementType> = Partial<ComponentProps<T>> & {
+    children: ReactNode;
 };
 
 export const Slot = <T extends ElementType = ElementType>(props: SlotProps<T>) => {
     const { children, ...restProps } = props;
 
     if (!isValidElement(children)) {
-        throw new Error("Slot requires exactly one valid React element child.");
+        return children;
     }
 
-    return cloneElement(children, restProps);
+    return cloneElement(children, restProps as any);
 };
