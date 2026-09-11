@@ -118,6 +118,20 @@
             ]
         },
         {
+            "name": "form-context",
+            "type": "registry:ui",
+            "title": "FormContext",
+            "description": "Provides form context for managing form state and field utilities.",
+            "registryDependencies": ["andre-hctulc/react-base/field-template"],
+            "dependencies": ["@dre44/form-data-parser"],
+            "files": [
+                {
+                    "path": "form-context.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
             "name": "json-form",
             "type": "registry:ui",
             "title": "JsonForm",

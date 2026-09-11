@@ -521,6 +521,24 @@
       "type": "registry:ui"
     },
     {
+      "name": "form-context",
+      "title": "FormContext",
+      "description": "Provides form context for managing form state and field utilities.",
+      "dependencies": [
+        "@dre44/form-data-parser"
+      ],
+      "registryDependencies": [
+        "andre-hctulc/react-base/field-template"
+      ],
+      "files": [
+        {
+          "path": "src/components/form-context.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "json-form",
       "title": "JsonForm",
       "description": "JSON Schema form powered by RJSF and AJV with shadcn-styled templates and widgets.",
