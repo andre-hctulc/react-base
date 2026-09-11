@@ -6,7 +6,9 @@ import { FieldTemplate, type FieldParams } from "./field-template.js";
 
 type FormUtil = ReturnType<typeof createFieldSetUtil>;
 
-type FormOptions = Omit<FieldSetParams, "fieldName" | "formValues" | "defaultFormValues">;
+export type FormOptions = Omit<FieldSetParams, "fieldName" | "formValues" | "defaultFormValues"> & {
+    plain?: boolean;
+};
 
 export interface FormContext<V extends object = Record<string, unknown>> extends FormUtil {
     defaultFormValues: V | undefined;
@@ -50,7 +52,7 @@ export interface FieldInfo {
 }
 
 export function useField(fieldName?: string): FieldInfo {
-    const { getFieldDefaultValue, getFieldName, getFieldValue, isFieldIncluded } = useFormContext();
+    const { getFieldDefaultValue, getFieldName, getFieldValue, isFieldIncluded, options } = useFormContext();
     const info = useMemo<FieldInfo>(() => {
         return {
             params: {
@@ -67,6 +69,7 @@ export function useField(fieldName?: string): FieldInfo {
 type FieldTemplateCtxProps = ComponentProps<typeof FieldTemplate<false>> & {};
 
 export const FieldTemplateCtx: FC<FieldTemplateCtxProps> = ({ params, ...props }) => {
+    const { options } = useFormContext();
     const { params: ctxParams, isIncluded } = useField(params.name);
 
     if (!isIncluded) {
@@ -76,6 +79,10 @@ export const FieldTemplateCtx: FC<FieldTemplateCtxProps> = ({ params, ...props }
     const mergedParams = { ...ctxParams };
     for (const [pName, pValue] of Object.entries(params)) {
         if (pValue !== undefined) mergedParams[pName as keyof FieldParams] = pValue;
+    }
+
+    if (options.plain) {
+        delete mergedParams.description;
     }
 
     return <FieldTemplate {...props} params={mergedParams} />;
