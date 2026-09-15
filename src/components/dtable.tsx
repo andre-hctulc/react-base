@@ -42,7 +42,7 @@ export const dtableFeatures = tableFeatures({
 
 export type DTableFeatures = typeof dtableFeatures;
 
-export interface DTableProps<TData extends RowData> extends ComponentProps<"div"> {
+export interface DTableProps<TData extends RowData = any> extends ComponentProps<"div"> {
     columns: ColumnDef<DTableFeatures, TData, any>[];
     /**
      * The data to be displayed in the table.
@@ -62,11 +62,11 @@ export interface DTableProps<TData extends RowData> extends ComponentProps<"div"
     pageSizeOptions?: number[];
 }
 
-interface DTableHeaderProps<TData extends RowData> {
+interface DTableHeaderProps<TData extends RowData = any> {
     table: ReactTable<DTableFeatures, TData>;
 }
 
-function DTableHeader<TData extends RowData>({ table }: DTableHeaderProps<TData>) {
+function DTableHeader<TData extends RowData = any>({ table }: DTableHeaderProps<TData>) {
     return (
         <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -109,11 +109,11 @@ function DTableHeader<TData extends RowData>({ table }: DTableHeaderProps<TData>
     );
 }
 
-interface DTableFiltersProps<TData extends RowData> {
+interface DTableFiltersProps<TData extends RowData = any> {
     table: ReactTable<DTableFeatures, TData>;
 }
 
-function DTableFilters<TData extends RowData>({ table }: DTableFiltersProps<TData>) {
+function DTableFilters<TData extends RowData = any>({ table }: DTableFiltersProps<TData>) {
     const [open, setOpen] = useState(false);
 
     const filterableColumns = (table.getVisibleLeafColumns?.() ?? []).filter((column) =>
@@ -179,14 +179,14 @@ function DTableFilters<TData extends RowData>({ table }: DTableFiltersProps<TDat
     );
 }
 
-interface DTableFooterProps<TData extends RowData> {
+interface DTableFooterProps<TData extends RowData = any> {
     table: ReactTable<DTableFeatures, TData>;
     dataLength: number;
     manualPagination?: boolean;
     pageSizeOptions: number[];
 }
 
-function DTableFooter<TData extends RowData>({
+function DTableFooter<TData extends RowData = any>({
     table,
     dataLength,
     manualPagination,
@@ -250,7 +250,7 @@ function DTableFooter<TData extends RowData>({
     );
 }
 
-export function DTable<TData extends RowData>({
+export function DTable<TData extends RowData = any>({
     columns,
     data,
     empty,
