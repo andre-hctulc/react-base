@@ -1,11 +1,14 @@
 "use client";
 
 import {
-    type Column,
     type ColumnDef,
+    columnFilteringFeature,
+    columnSizingFeature,
+    columnVisibilityFeature,
     type ReactTable,
+    rowPaginationFeature,
     type RowData,
-    type TableFeatures,
+    rowSortingFeature,
     tableFeatures,
     type TableOptions,
     type TableState,
@@ -29,22 +32,26 @@ import {
 import { FieldFilter, type FieldFilterValueType } from "./field-filter.js";
 import { Toggle } from "@/components/ui/toggle.js";
 
-const defaultFeatures = tableFeatures({});
+export const dtableFeatures = tableFeatures({
+    columnFilteringFeature,
+    columnSizingFeature,
+    columnVisibilityFeature,
+    rowPaginationFeature,
+    rowSortingFeature,
+});
 
-export interface DTableProps<
-    TData extends RowData,
-    TFeatures extends TableFeatures = TableFeatures,
-> extends ComponentProps<"div"> {
-    columns: ColumnDef<TFeatures, TData, any>[];
+export type DTableFeatures = typeof dtableFeatures;
+
+export interface DTableProps<TData extends RowData> extends ComponentProps<"div"> {
+    columns: ColumnDef<DTableFeatures, TData, any>[];
     /**
      * The data to be displayed in the table.
      * If undefined, the table will show a loading state.
      * If an empty array, it will show an empty state.
      */
     data: TData[] | undefined;
-    features?: TableFeatures;
-    options?: TableOptions<TFeatures, TData>;
-    selector?: (state: TableState<TFeatures>) => TableState<TFeatures>;
+    options?: TableOptions<DTableFeatures, TData>;
+    selector?: (state: TableState<DTableFeatures>) => TableState<DTableFeatures>;
     /** Error content to be displayed in the table. */
     error?: ReactNode;
     /** Empty state content to be displayed when there is no data. */
@@ -55,27 +62,24 @@ export interface DTableProps<
     pageSizeOptions?: number[];
 }
 
-type AnyTable = ReactTable<any, any, any>;
-type AnyColumn = Column<any, any>;
-
-interface DTableHeaderProps {
-    table: AnyTable;
+interface DTableHeaderProps<TData extends RowData> {
+    table: ReactTable<DTableFeatures, TData>;
 }
 
-function DTableHeader({ table }: DTableHeaderProps) {
+function DTableHeader<TData extends RowData>({ table }: DTableHeaderProps<TData>) {
     return (
         <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
-                        const column: AnyColumn = header.column as AnyColumn;
+                        const column = header.column;
                         const headerContent = <table.FlexRender header={header} />;
                         const canSort =
                             typeof header.column.columnDef.header === "string" && column.getCanSort?.();
                         const sortDirection = column.getIsSorted?.();
 
                         return (
-                            <TableHead key={header.id}>
+                            <TableHead key={header.id} style={{ width: header.getSize() }}>
                                 {header.isPlaceholder ? null : canSort ? (
                                     <Button
                                         type="button"
@@ -105,11 +109,11 @@ function DTableHeader({ table }: DTableHeaderProps) {
     );
 }
 
-interface DTableFiltersProps {
-    table: AnyTable;
+interface DTableFiltersProps<TData extends RowData> {
+    table: ReactTable<DTableFeatures, TData>;
 }
 
-function DTableFilters({ table }: DTableFiltersProps) {
+function DTableFilters<TData extends RowData>({ table }: DTableFiltersProps<TData>) {
     const [open, setOpen] = useState(false);
 
     const filterableColumns = (table.getVisibleLeafColumns?.() ?? []).filter((column) =>
@@ -175,14 +179,19 @@ function DTableFilters({ table }: DTableFiltersProps) {
     );
 }
 
-interface DTableFooterProps {
-    table: AnyTable;
+interface DTableFooterProps<TData extends RowData> {
+    table: ReactTable<DTableFeatures, TData>;
     dataLength: number;
     manualPagination?: boolean;
     pageSizeOptions: number[];
 }
 
-function DTableFooter({ table, dataLength, manualPagination, pageSizeOptions }: DTableFooterProps) {
+function DTableFooter<TData extends RowData>({
+    table,
+    dataLength,
+    manualPagination,
+    pageSizeOptions,
+}: DTableFooterProps<TData>) {
     const pagination = table.state.pagination;
     const hasPagination = !!pagination && !!table.previousPage && !!table.nextPage;
 
@@ -241,11 +250,10 @@ function DTableFooter({ table, dataLength, manualPagination, pageSizeOptions }: 
     );
 }
 
-export function DTable<TData extends RowData, TFeatures extends TableFeatures = TableFeatures>({
+export function DTable<TData extends RowData>({
     columns,
     data,
     empty,
-    features,
     className,
     options,
     selector,
@@ -253,30 +261,29 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
     loading,
     pageSizeOptions = [10, 20, 50],
     ...props
-}: DTableProps<TData, TFeatures>) {
+}: DTableProps<TData>) {
     const dataList = useMemo(() => {
         if (!data) return [];
         return data;
     }, [data]);
-    const table = useTable<TFeatures, TData>(
+    const table = useTable<DTableFeatures, TData>(
         {
-            features: features || defaultFeatures,
+            features: dtableFeatures,
             columns,
             data: dataList,
             ...options,
-        } as TableOptions<TFeatures, TData>,
+        },
         selector,
     );
     const rowModel = table.getRowModel();
-    const interactiveTable = table as unknown as AnyTable;
     const manualPagination = (table.options as { manualPagination?: boolean }).manualPagination;
 
     return (
         <div className={cn("space-y-3", className)} {...props}>
-            <DTableFilters table={interactiveTable} />
+            <DTableFilters table={table} />
             <div className="overflow-hidden rounded border">
-                <Table>
-                    <DTableHeader table={interactiveTable} />
+                <Table style={{ width: table.getTotalSize() }}>
+                    <DTableHeader table={table} />
                     <TableBody>
                         {error ? (
                             <TableRow>
@@ -286,7 +293,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
                             rowModel.rows.map((row) => (
                                 <TableRow key={row.id}>
                                     {row.getAllCells().map((cell) => (
-                                        <TableCell key={cell.id}>
+                                        <TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
                                             <table.FlexRender cell={cell} />
                                         </TableCell>
                                     ))}
@@ -323,7 +330,7 @@ export function DTable<TData extends RowData, TFeatures extends TableFeatures = 
                 </Table>
             </div>
             <DTableFooter
-                table={interactiveTable}
+                table={table}
                 dataLength={dataList.length}
                 manualPagination={manualPagination}
                 pageSizeOptions={pageSizeOptions}

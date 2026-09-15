@@ -12,7 +12,7 @@ const dotVariants = cva("rounded-full shrink-0", {
             yellow: "bg-yellow-500",
             purple: "bg-purple-500",
             pink: "bg-pink-500",
-            primary: "bg-primary-500",
+            primary: "bg-primary",
             secondary: "bg-secondary-500",
             success: "bg-success-500",
             warning: "bg-warning-500",
