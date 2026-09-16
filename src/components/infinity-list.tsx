@@ -12,7 +12,7 @@ import {
     type UIEvent,
     type WheelEventHandler,
 } from "react";
-import { Spinner } from "./ui/spinner.js";
+import { Spinner } from "@/components/ui/spinner.js";
 import { cn } from "@/lib/utils.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { useScrollObserver } from "@/hooks/use-scroll-observer.js";
