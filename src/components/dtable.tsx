@@ -44,6 +44,7 @@ export type DTableFeatures = typeof dtableFeatures;
 
 export interface DTableProps<TData extends RowData = any> extends ComponentProps<"div"> {
     columns: ColumnDef<DTableFeatures, TData, any>[];
+    features?: DTableFeatures;
     /**
      * The data to be displayed in the table.
      * If undefined, the table will show a loading state.
@@ -259,6 +260,7 @@ export function DTable<TData extends RowData = any>({
     selector,
     error,
     loading,
+    features,
     pageSizeOptions = [10, 20, 50],
     ...props
 }: DTableProps<TData>) {
@@ -268,7 +270,7 @@ export function DTable<TData extends RowData = any>({
     }, [data]);
     const table = useTable<DTableFeatures, TData>(
         {
-            features: dtableFeatures,
+            features: features ?? dtableFeatures,
             columns,
             data: dataList,
             ...options,
