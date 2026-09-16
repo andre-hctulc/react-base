@@ -340,6 +340,21 @@
       "type": "registry:hook"
     },
     {
+      "name": "use-scroll-observer",
+      "title": "useScrollObserver",
+      "description": "Observes scroll threshold entry at the start and end of an element.",
+      "registryDependencies": [
+        "andre-hctulc/react-base/use-ref-of"
+      ],
+      "files": [
+        {
+          "path": "src/hooks/use-scroll-observer.ts",
+          "type": "registry:hook"
+        }
+      ],
+      "type": "registry:hook"
+    },
+    {
       "name": "use-promise",
       "title": "usePromise",
       "description": "Tracks loading/error/data state of a promise.",
@@ -873,6 +888,23 @@
       "files": [
         {
           "path": "src/components/dtable.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
+      "name": "infinity-list",
+      "title": "InfinityList",
+      "description": "Scrollable list with controlled or loader-driven infinite pagination and optional item retention.",
+      "registryDependencies": [
+        "spinner",
+        "andre-hctulc/react-base/use-ref-of",
+        "andre-hctulc/react-base/use-scroll-observer"
+      ],
+      "files": [
+        {
+          "path": "src/components/infinity-list.tsx",
           "type": "registry:ui"
         }
       ],

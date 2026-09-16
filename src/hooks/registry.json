@@ -314,6 +314,19 @@
             ]
         },
         {
+            "name": "use-scroll-observer",
+            "type": "registry:hook",
+            "title": "useScrollObserver",
+            "description": "Observes scroll threshold entry at the start and end of an element.",
+            "registryDependencies": ["andre-hctulc/react-base/use-ref-of"],
+            "files": [
+                {
+                    "path": "use-scroll-observer.ts",
+                    "type": "registry:hook"
+                }
+            ]
+        },
+        {
             "name": "use-promise",
             "type": "registry:hook",
             "title": "usePromise",

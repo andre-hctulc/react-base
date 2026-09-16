@@ -420,6 +420,23 @@
             ]
         },
         {
+            "name": "infinity-list",
+            "type": "registry:ui",
+            "title": "InfinityList",
+            "description": "Scrollable list with controlled or loader-driven infinite pagination and optional item retention.",
+            "registryDependencies": [
+                "spinner",
+                "andre-hctulc/react-base/use-ref-of",
+                "andre-hctulc/react-base/use-scroll-observer"
+            ],
+            "files": [
+                {
+                    "path": "infinity-list.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
             "name": "data-summary",
             "type": "registry:ui",
             "title": "DataSummary",
