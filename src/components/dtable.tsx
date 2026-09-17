@@ -283,8 +283,8 @@ export function DTable<TData extends RowData = any>({
     return (
         <div className={cn("space-y-3", className)} {...props}>
             <DTableFilters table={table} />
-            <div className="overflow-hidden rounded border">
-                <Table style={{ width: table.getTotalSize() }}>
+            <div className="overflow-auto rounded border">
+                <Table>
                     <DTableHeader table={table} />
                     <TableBody>
                         {error ? (
