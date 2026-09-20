@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState, type FC } from "react";
 import { InfinityList } from "../src/components/infinity-list.js";
+import { cn } from "@/lib/utils.js";
 
 const meta = {
     title: "Components/Infinity List",
@@ -28,9 +29,11 @@ const ItemList: FC<ItemListProps> = ({ items }) => {
 interface PageLoaderProps {
     tail?: number;
     slow?: boolean;
+    noHeight?: boolean;
+    className?: string;
 }
 
-const PageLoader: FC<PageLoaderProps> = ({ tail, slow }) => {
+const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className }) => {
     const allItems = Array.from({ length: 24 }, (_, index) => index);
     const initialPageIndex = tail === undefined ? 0 : 3;
     const loader = (pageIndex: number, pageSize: number) => {
@@ -46,7 +49,11 @@ const PageLoader: FC<PageLoaderProps> = ({ tail, slow }) => {
 
     return (
         <InfinityList
-            className="h-64 max-w-md overflow-y-auto rounded-md border bg-muted/30"
+            className={cn(
+                " max-w-md overflow-y-auto rounded-md border bg-muted/30",
+                noHeight ? "" : "h-64",
+                className,
+            )}
             defaultItems={allItems.slice(initialPageIndex * 3, (initialPageIndex + 1) * 3)}
             initialPageIndex={initialPageIndex}
             tail={tail}
@@ -98,6 +105,10 @@ function ControlledExample() {
 
 export const AutomaticLoading: Story = {
     render: () => <PageLoader />,
+};
+
+export const NoHeight: Story = {
+    render: () => <PageLoader noHeight className="max-h-150 overflow-x-hidden" />,
 };
 
 export const RetainedTail: Story = {

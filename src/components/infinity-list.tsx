@@ -372,7 +372,7 @@ export function InfinityList<TData = any>({
             {children(allItems)}
             {!!loadError &&
                 (error === undefined || typeof error === "string" ? (
-                    <ItemRoot {...(errorProps as object)}>
+                    <ItemRoot {...(errorProps as object)} className={cn("py-3", errorProps?.className)}>
                         <p className="text-sm text-center text-destructive">
                             {error ?? "Failed to load items"}
                         </p>
