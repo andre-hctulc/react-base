@@ -246,7 +246,14 @@ export type InfinityListProps<TData = any> = {
     spinnerProps?: ComponentProps<typeof Spinner>;
     error?: ReactNode;
     errorProps?: ComponentProps<"div"> | ComponentProps<"li">;
-    maxHeight?: string;
+    /**
+     * The maximum height of the list container.
+     * 
+     * A max height is always set to prevent the list from growing indefinitely.
+     * 
+     * @default 4000px
+     */
+    maxHeight?: string | number;
 } & Omit<HTMLProps<HTMLElement>, "children" | "as" | "onScroll" | "onWheel">;
 
 const MAX_HEIGHT = "4000px";
