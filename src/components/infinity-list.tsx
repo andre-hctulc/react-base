@@ -244,16 +244,22 @@ export type InfinityListProps<TData = any> = {
     onError?: (error: unknown) => void;
     loadingProps?: ComponentProps<"div"> | ComponentProps<"li">;
     spinnerProps?: ComponentProps<typeof Spinner>;
+    /** */
     error?: ReactNode;
     errorProps?: ComponentProps<"div"> | ComponentProps<"li">;
     /**
      * The maximum height of the list container.
-     * 
+     *
      * A max height is always set to prevent the list from growing indefinitely.
-     * 
+     *
      * @default 4000px
      */
     maxHeight?: string | number;
+    /**
+     * The content to display when the list is empty.
+     */
+    empty?: ReactNode;
+    emptyProps?: ComponentProps<"div"> | ComponentProps<"li">;
 } & Omit<HTMLProps<HTMLElement>, "children" | "as" | "onScroll" | "onWheel">;
 
 const MAX_HEIGHT = "4000px";
@@ -280,6 +286,8 @@ export function InfinityList<TData = any>({
     errorProps,
     maxHeight,
     style,
+    empty,
+    emptyProps,
     ...props
 }: InfinityListProps<TData>) {
     const Root = (as ?? "div") as "div";
@@ -384,16 +392,22 @@ export function InfinityList<TData = any>({
             {...(props as ComponentProps<"div">)}
         >
             {children(allItems)}
-            {!!loadError &&
-                (error === undefined || typeof error === "string" ? (
-                    <ItemRoot {...(errorProps as object)} className={cn("py-3", errorProps?.className)}>
+            {!!loadError && (
+                <ItemRoot {...(errorProps as object)} className={cn("py-3", errorProps?.className)}>
+                    {error === undefined || typeof error === "string" ? (
                         <p className="text-sm text-center text-destructive">
                             {error ?? "Failed to load items"}
                         </p>
-                    </ItemRoot>
-                ) : (
-                    error
-                ))}
+                    ) : (
+                        error
+                    )}
+                </ItemRoot>
+            )}
+            {allItems.length === 0 && !isLoading && !loadError && !!empty && (
+                <ItemRoot {...(emptyProps as object)} className={cn("py-3", emptyProps?.className)}>
+                    {empty}
+                </ItemRoot>
+            )}
             {(loading || isLoading) && hasMore && !loadError && (
                 <ItemRoot
                     {...(loadingProps as object)}
