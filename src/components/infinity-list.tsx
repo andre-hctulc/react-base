@@ -246,7 +246,10 @@ export type InfinityListProps<TData = any> = {
     spinnerProps?: ComponentProps<typeof Spinner>;
     error?: ReactNode;
     errorProps?: ComponentProps<"div"> | ComponentProps<"li">;
+    maxHeight?: string;
 } & Omit<HTMLProps<HTMLElement>, "children" | "as" | "onScroll" | "onWheel">;
+
+const MAX_HEIGHT = "4000px";
 
 export function InfinityList<TData = any>({
     className,
@@ -268,6 +271,8 @@ export function InfinityList<TData = any>({
     spinnerProps,
     error,
     errorProps,
+    maxHeight,
+    style,
     ...props
 }: InfinityListProps<TData>) {
     const Root = (as ?? "div") as "div";
@@ -367,6 +372,8 @@ export function InfinityList<TData = any>({
                     handleWheel(event);
                 }
             }}
+            // Always set max height to prevent the list from growing indefinitely
+            style={{ ...style, maxHeight: maxHeight ?? MAX_HEIGHT }}
             {...(props as ComponentProps<"div">)}
         >
             {children(allItems)}
