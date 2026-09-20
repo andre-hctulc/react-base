@@ -244,6 +244,8 @@ export type InfinityListProps<TData = any> = {
     onError?: (error: unknown) => void;
     loadingProps?: ComponentProps<"div"> | ComponentProps<"li">;
     spinnerProps?: ComponentProps<typeof Spinner>;
+    error?: ReactNode;
+    errorProps?: ComponentProps<"div"> | ComponentProps<"li">;
 } & Omit<HTMLProps<HTMLElement>, "children" | "as" | "onScroll" | "onWheel">;
 
 export function InfinityList<TData = any>({
@@ -264,6 +266,8 @@ export function InfinityList<TData = any>({
     onError,
     loadingProps,
     spinnerProps,
+    error,
+    errorProps,
     ...props
 }: InfinityListProps<TData>) {
     const Root = (as ?? "div") as "div";
@@ -276,7 +280,7 @@ export function InfinityList<TData = any>({
     const {
         hasMore,
         hasPrevious,
-        error,
+        error: loadError,
         isLoading,
         items: uncontrolledItems,
         loadMore,
@@ -311,10 +315,10 @@ export function InfinityList<TData = any>({
     });
 
     useEffect(() => {
-        if (error !== undefined) {
-            onErrorRef.current?.(error);
+        if (loadError !== undefined) {
+            onErrorRef.current?.(loadError);
         }
-    }, [error]);
+    }, [loadError]);
 
     useEffect(() => {
         const root = rootRef.current;
@@ -322,7 +326,7 @@ export function InfinityList<TData = any>({
             !root ||
             isLoading ||
             loading ||
-            (!isControlled && (!hasMore || error !== undefined)) ||
+            (!isControlled && (!hasMore || loadError !== undefined)) ||
             (tail !== undefined && allItems.length >= tail * (pageSize ?? (defaultItems?.length || 20))) ||
             root.scrollHeight > root.clientHeight
         ) {
@@ -334,7 +338,7 @@ export function InfinityList<TData = any>({
         } else {
             void loadMore();
         }
-    }, [allItems, error, hasMore, isControlled, isLoading, loadMore, loading, tail]);
+    }, [allItems, loadError, hasMore, isControlled, isLoading, loadMore, loading, tail]);
 
     useLayoutEffect(() => {
         const root = rootRef.current;
@@ -366,7 +370,17 @@ export function InfinityList<TData = any>({
             {...(props as ComponentProps<"div">)}
         >
             {children(allItems)}
-            {(loading || isLoading) && hasMore && (
+            {!!loadError &&
+                (error === undefined || typeof error === "string" ? (
+                    <ItemRoot {...(errorProps as object)}>
+                        <p className="text-sm text-center text-destructive">
+                            {error ?? "Failed to load items"}
+                        </p>
+                    </ItemRoot>
+                ) : (
+                    error
+                ))}
+            {(loading || isLoading) && hasMore && !loadError && (
                 <ItemRoot
                     {...(loadingProps as object)}
                     className={cn("flex flex-col items-center justify-center py-3", loadingProps?.className)}
