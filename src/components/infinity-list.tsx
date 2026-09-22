@@ -61,7 +61,8 @@ export function useInfinityList<TData = any>({
     );
     const [error, setError] = useState<unknown>();
     const [isLoading, setIsLoading] = useState(false);
-    const canLoadInitialPage = defaultItems === undefined || initialItems.length >= pageSize;
+    const canLoadInitialPage =
+        defaultItems === undefined || defaultItems.length === 0 || initialItems.length >= pageSize;
     const [hasMore, setHasMore] = useState(canLoadInitialPage);
     const [hasPrevious, setHasPrevious] = useState(initialPageIndex > 0);
 

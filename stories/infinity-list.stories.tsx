@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState, type FC } from "react";
-import { InfinityList } from "../src/components/infinity-list.js";
+import { InfinityList, type InfinityListLoader } from "../src/components/infinity-list.js";
 import { cn } from "@/lib/utils.js";
 
 const meta = {
@@ -30,19 +30,32 @@ interface PageLoaderProps {
     tail?: number;
     slow?: boolean;
     noHeight?: boolean;
+    defaultItems?: boolean;
     className?: string;
+    throwError?: boolean;
 }
 
-const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className }) => {
+const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className, throwError, defaultItems }) => {
     const allItems = Array.from({ length: 24 }, (_, index) => index);
     const initialPageIndex = tail === undefined ? 0 : 3;
-    const loader = (pageIndex: number, pageSize: number) => {
+    const loader: InfinityListLoader = (pageIndex, pageSize, currentItems, abortSignal) => {
+        const error = new Error("Unable to load more items");
         if (slow) {
-            return new Promise<number[]>((resolve) => {
+            return new Promise<number[]>((resolve, reject) => {
+                if (abortSignal.aborted) {
+                    throw new Error("Loading aborted");
+                }
                 setTimeout(() => {
+                    if (throwError) {
+                        reject(error);
+                        return;
+                    }
                     resolve(allItems.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
                 }, 1000);
             });
+        }
+        if (throwError) {
+            return Promise.reject(error);
         }
         return Promise.resolve(allItems.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
     };
@@ -54,7 +67,9 @@ const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className }) =>
                 noHeight ? "" : "h-64",
                 className,
             )}
-            defaultItems={allItems.slice(initialPageIndex * 3, (initialPageIndex + 1) * 3)}
+            defaultItems={
+                defaultItems ? allItems.slice(initialPageIndex * 3, (initialPageIndex + 1) * 3) : []
+            }
             initialPageIndex={initialPageIndex}
             tail={tail}
             triggerOffset={tail === undefined ? undefined : 0}
@@ -123,6 +138,10 @@ export const Controlled: Story = {
     render: () => <ControlledExample />,
 };
 
-export const Loading: Story = {
-    render: () => <PageLoader slow />,
+export const SlowLoader: Story = {
+    render: () => <PageLoader slow noHeight />,
+};
+
+export const SlowLoaderError: Story = {
+    render: () => <PageLoader slow throwError noHeight />,
 };
