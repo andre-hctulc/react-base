@@ -62,7 +62,7 @@ const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className, thro
     return (
         <InfinityList
             className={cn(
-                " max-w-md overflow-y-auto rounded-md border bg-muted/30",
+                "max-w-md overflow-y-auto rounded-md border bg-muted/30",
                 noHeight ? "" : "h-64",
                 className,
             )}

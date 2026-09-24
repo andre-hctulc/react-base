@@ -272,8 +272,6 @@ export type InfinityListProps<TData = any> = {
     emptyProps?: ComponentProps<"div"> | ComponentProps<"li">;
 } & Omit<HTMLProps<HTMLElement>, "children" | "as" | "onScroll" | "onWheel">;
 
-const MAX_HEIGHT = "4000px";
-
 export function InfinityList<TData = any>({
     className,
     children,
@@ -293,7 +291,6 @@ export function InfinityList<TData = any>({
     spinnerProps,
     error,
     errorProps,
-    maxHeight,
     style,
     empty,
     emptyProps,
@@ -400,7 +397,7 @@ export function InfinityList<TData = any>({
                     ref.current = element;
                 }
             }}
-            className={className}
+            className={cn("overflow-y-auto max-h-1000", className)}
             onScroll={handleScroll}
             onWheel={(event) => {
                 onWheel?.(event);
@@ -408,8 +405,6 @@ export function InfinityList<TData = any>({
                     handleWheel(event);
                 }
             }}
-            // Always set max height to prevent the list from growing indefinitely
-            style={{ ...style, maxHeight: maxHeight ?? MAX_HEIGHT }}
             {...(props as ComponentProps<"div">)}
         >
             {preChildren}
