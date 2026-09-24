@@ -37,7 +37,6 @@ interface PageLoaderProps {
 
 const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className, throwError, defaultItems }) => {
     const allItems = Array.from({ length: 24 }, (_, index) => index);
-    const initialPageIndex = tail === undefined ? 0 : 3;
     const loader: InfinityListLoader = (pageIndex, pageSize, currentItems, abortSignal) => {
         const error = new Error("Unable to load more items");
         if (slow) {
@@ -67,10 +66,6 @@ const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className, thro
                 noHeight ? "" : "h-64",
                 className,
             )}
-            defaultItems={
-                defaultItems ? allItems.slice(initialPageIndex * 3, (initialPageIndex + 1) * 3) : []
-            }
-            initialPageIndex={initialPageIndex}
             tail={tail}
             triggerOffset={tail === undefined ? undefined : 0}
             previousTriggerOffset={tail === undefined ? undefined : 0}
@@ -139,7 +134,7 @@ export const Controlled: Story = {
 };
 
 export const SlowLoader: Story = {
-    render: () => <PageLoader slow noHeight />,
+    render: () => <PageLoader slow />,
 };
 
 export const SlowLoaderError: Story = {
