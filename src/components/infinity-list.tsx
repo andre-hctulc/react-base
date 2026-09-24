@@ -25,9 +25,8 @@ export type InfinityListLoader<TData = any> = (
 ) => TData[] | Promise<TData[]>;
 
 export interface UseInfinityListOptions<TData = any> {
-    defaultItems?: TData[];
-    initialPageIndex?: number;
-    pageSize?: number;
+    initialPageIndex: number;
+    pageSize: number;
     tail?: number;
     loader?: InfinityListLoader<TData>;
 }
@@ -50,40 +49,31 @@ export interface UseInfinityListResult<TData = any> {
 export function useInfinityList<TData = any>({
     tail,
     loader,
-    defaultItems,
-    initialPageIndex = 0,
-    pageSize = defaultItems?.length || 20,
+    initialPageIndex,
+    pageSize,
 }: UseInfinityListOptions<TData>): UseInfinityListResult<TData> {
-    const initialItems = defaultItems ?? [];
-    const initialTailLength = tail === undefined ? Infinity : Math.max(0, tail) * pageSize;
-    const [allItems, setAllItems] = useState<TData[]>(
-        initialTailLength === Infinity ? initialItems : initialItems.slice(-initialTailLength),
-    );
+    const [allItems, setAllItems] = useState<TData[]>([]);
     const [error, setError] = useState<unknown>();
     const [isLoading, setIsLoading] = useState(false);
-    const canLoadInitialPage =
-        defaultItems === undefined || defaultItems.length === 0 || initialItems.length >= pageSize;
-    const [hasMore, setHasMore] = useState(canLoadInitialPage);
+    const [hasMore, setHasMore] = useState(true);
     const [hasPrevious, setHasPrevious] = useState(initialPageIndex > 0);
 
     const abortController = useRef<AbortController | null>(null);
     const isLoadingRef = useRef(false);
-    const hasMoreRef = useRef(canLoadInitialPage);
+    const hasMoreRef = useRef(true);
     const hasPreviousRef = useRef(initialPageIndex > 0);
     const firstPageIndexRef = useRef(initialPageIndex);
     const lastPageIndexRef = useRef(initialPageIndex);
     const allItemsRef = useRef(allItems);
     const loaderRef = useRefOf(loader);
-    const pageSizeRef = useRefOf(pageSize);
     const tailRef = useRefOf(tail);
 
     const appendItems = useCallback((newItems: TData[]) => {
-        const tailLength =
-            tailRef.current === undefined ? Infinity : Math.max(0, tailRef.current) * pageSizeRef.current;
+        const tailLength = tailRef.current === undefined ? Infinity : Math.max(0, tailRef.current) * pageSize;
         const retainedItems = tailLength === Infinity ? newItems : newItems.slice(-tailLength);
         const removedItems = newItems.length - retainedItems.length;
         if (removedItems) {
-            firstPageIndexRef.current += Math.ceil(removedItems / pageSizeRef.current);
+            firstPageIndexRef.current += Math.ceil(removedItems / pageSize);
             if (firstPageIndexRef.current > 0) {
                 hasPreviousRef.current = true;
                 setHasPrevious(true);
@@ -94,13 +84,12 @@ export function useInfinityList<TData = any>({
     }, []);
 
     const prependItems = useCallback((newItems: TData[]) => {
-        const tailLength =
-            tailRef.current === undefined ? Infinity : Math.max(0, tailRef.current) * pageSizeRef.current;
+        const tailLength = tailRef.current === undefined ? Infinity : Math.max(0, tailRef.current) * pageSize;
         const retainedItems = tailLength === Infinity ? newItems : newItems.slice(0, tailLength);
         const removedItems = newItems.length - retainedItems.length;
         if (removedItems) {
             lastPageIndexRef.current =
-                firstPageIndexRef.current + Math.ceil(retainedItems.length / pageSizeRef.current) - 1;
+                firstPageIndexRef.current + Math.ceil(retainedItems.length / pageSize) - 1;
             hasMoreRef.current = true;
             setHasMore(true);
         }
@@ -113,13 +102,24 @@ export function useInfinityList<TData = any>({
             return;
         }
         setAllItems((currentItems) => {
-            const retainedItems = currentItems.slice(-Math.max(0, tail) * pageSizeRef.current);
+            const retainedItems = currentItems.slice(-Math.max(0, tail) * pageSize);
             allItemsRef.current = retainedItems;
             return retainedItems;
         });
     }, [tail]);
 
-    useEffect(() => () => abortController.current?.abort(), []);
+    useEffect(
+        () => () => {
+            const currentAbortController = abortController.current;
+            currentAbortController?.abort();
+            if (abortController.current === currentAbortController) {
+                abortController.current = null;
+                isLoadingRef.current = false;
+                setIsLoading(false);
+            }
+        },
+        [],
+    );
 
     const loadMore = useCallback(async (): Promise<LoadResult<TData>> => {
         if (!loaderRef.current || isLoadingRef.current || !hasMoreRef.current) {
@@ -138,14 +138,14 @@ export function useInfinityList<TData = any>({
             const pageIndex = lastPageIndexRef.current + 1;
             newItems = await loaderRef.current(
                 pageIndex,
-                pageSizeRef.current,
+                pageSize,
                 allItemsRef.current,
                 currentAbortController.signal,
             );
             if (currentAbortController.signal.aborted) {
                 return { err: undefined, data: null };
             }
-            if (newItems.length < pageSizeRef.current) {
+            if (newItems.length < pageSize) {
                 hasMoreRef.current = false;
                 setHasMore(false);
             }
@@ -158,7 +158,8 @@ export function useInfinityList<TData = any>({
 
             return { err: error, data: null };
         } finally {
-            if (!currentAbortController.signal.aborted) {
+            if (abortController.current === currentAbortController) {
+                abortController.current = null;
                 isLoadingRef.current = false;
                 setIsLoading(false);
             }
@@ -184,14 +185,14 @@ export function useInfinityList<TData = any>({
             const pageIndex = firstPageIndexRef.current - 1;
             newItems = await loaderRef.current(
                 pageIndex,
-                pageSizeRef.current,
+                pageSize,
                 allItemsRef.current,
                 currentAbortController.signal,
             );
             if (currentAbortController.signal.aborted) {
                 return { err: undefined, data: null };
             }
-            if (newItems.length < pageSizeRef.current || pageIndex === 0) {
+            if (newItems.length < pageSize || pageIndex === 0) {
                 hasPreviousRef.current = false;
                 setHasPrevious(false);
             }
@@ -204,7 +205,8 @@ export function useInfinityList<TData = any>({
 
             return { err: error, data: null };
         } finally {
-            if (!currentAbortController.signal.aborted) {
+            if (abortController.current === currentAbortController) {
+                abortController.current = null;
                 isLoadingRef.current = false;
                 setIsLoading(false);
             }
@@ -217,17 +219,24 @@ export function useInfinityList<TData = any>({
 }
 
 export type InfinityListProps<TData = any> = {
+    /**
+     * Controlled items
+     */
     items?: TData[];
-    defaultItems?: TData[];
     initialPageIndex?: number;
+    /**
+     * @default 10
+     */
     pageSize?: number;
     /**
      * Maximum number of pages to keep in the list.
      * @default Infinity
      */
     tail?: number;
+    preChildren?: ReactNode;
+    postChildren?: ReactNode;
     children: (items: TData[]) => ReactNode;
-    as?: "ul" | "ol";
+    as?: "ul" | "ol" | "div";
     onTrigger?: (e: UIEvent<HTMLElement> | undefined, currentOffset: number) => void;
     onWheel?: WheelEventHandler<HTMLElement>;
     loader?: InfinityListLoader<TData>;
@@ -269,9 +278,8 @@ export function InfinityList<TData = any>({
     className,
     children,
     items,
-    defaultItems,
     initialPageIndex,
-    pageSize,
+    pageSize = 10,
     tail,
     as,
     triggerOffset = 100,
@@ -289,11 +297,15 @@ export function InfinityList<TData = any>({
     style,
     empty,
     emptyProps,
+    preChildren,
+    postChildren,
+    ref,
     ...props
 }: InfinityListProps<TData>) {
     const Root = (as ?? "div") as "div";
     const isList = as === "ul" || as === "ol";
     const ItemRoot = isList ? "li" : "div";
+    const rootRef = useRef<HTMLElement | null>(null);
 
     const previousScrollHeightRef = useRef<number | undefined>(undefined);
     const previousScrollTopRef = useRef<number | undefined>(undefined);
@@ -306,16 +318,11 @@ export function InfinityList<TData = any>({
         items: uncontrolledItems,
         loadMore,
         loadPrevious,
-    } = useInfinityList({ defaultItems, initialPageIndex, pageSize, tail, loader });
+    } = useInfinityList({ initialPageIndex: initialPageIndex ?? 0, pageSize, tail, loader });
     const isControlled = items !== undefined;
     const allItems = items ?? uncontrolledItems;
     const onErrorRef = useRefOf(onError);
-    const {
-        elementRef: rootRef,
-        handleScroll,
-        handleWheel,
-        refresh,
-    } = useScrollObserver({
+    const { handleScroll, handleWheel } = useScrollObserver({
         endOffset: triggerOffset,
         startOffset: previousTriggerOffset,
         onReachEnd: ({ currentOffset, element, event }) => {
@@ -343,17 +350,20 @@ export function InfinityList<TData = any>({
 
     useEffect(() => {
         const root = rootRef.current;
+
         if (
             !root ||
             isLoading ||
             loading ||
             (!isControlled && (!hasMore || loadError !== undefined)) ||
-            (tail !== undefined && allItems.length >= tail * (pageSize ?? (defaultItems?.length || 20))) ||
+            (tail !== undefined && allItems.length >= tail * pageSize) ||
             root.scrollHeight > root.clientHeight
         ) {
             return;
         }
+
         const currentOffset = root.scrollHeight - root.scrollTop - root.clientHeight;
+
         if (isControlled) {
             onTriggerRef.current?.(undefined, currentOffset);
         } else {
@@ -363,22 +373,32 @@ export function InfinityList<TData = any>({
 
     useLayoutEffect(() => {
         const root = rootRef.current;
+
         const previousScrollHeight = previousScrollHeightRef.current;
         const previousScrollTop = previousScrollTopRef.current;
+
         if (!root || previousScrollHeight === undefined || previousScrollTop === undefined) {
             return;
         }
+
         const restoredScrollTop = previousScrollTop + root.scrollHeight - previousScrollHeight;
+
         root.scrollTop = Math.max(restoredScrollTop, previousTriggerOffset + 1);
         previousScrollHeightRef.current = undefined;
         previousScrollTopRef.current = undefined;
-        refresh();
     }, [allItems]);
+
+    const isEmpty = allItems.length === 0 && preChildren == null && postChildren == null;
 
     return (
         <Root
             ref={(element) => {
                 rootRef.current = element;
+                if (typeof ref === "function") {
+                    ref(element);
+                } else if (ref) {
+                    ref.current = element;
+                }
             }}
             className={className}
             onScroll={handleScroll}
@@ -392,7 +412,9 @@ export function InfinityList<TData = any>({
             style={{ ...style, maxHeight: maxHeight ?? MAX_HEIGHT }}
             {...(props as ComponentProps<"div">)}
         >
+            {preChildren}
             {children(allItems)}
+            {postChildren}
             {!!loadError && (
                 <ItemRoot {...(errorProps as object)} className={cn("py-3", errorProps?.className)}>
                     {error === undefined || typeof error === "string" ? (
@@ -404,7 +426,7 @@ export function InfinityList<TData = any>({
                     )}
                 </ItemRoot>
             )}
-            {allItems.length === 0 && !isLoading && !loadError && !!empty && (
+            {isEmpty && !isLoading && !loadError && !!empty && (
                 <ItemRoot {...(emptyProps as object)} className={cn("py-3", emptyProps?.className)}>
                     {empty}
                 </ItemRoot>

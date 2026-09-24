@@ -27,24 +27,31 @@ export interface ScrollObserverMetrics {
 export interface UseScrollObserverOptions {
     onReachEnd?: (event: ScrollObserverEvent) => void;
     onReachStart?: (event: ScrollObserverEvent) => void;
+    /**
+     * The offset (px) from the bottom of the container at which to trigger the end reach.
+     * @default 0
+     */
     endOffset?: number;
+    /**
+     * The offset (px) from the top of the container at which to trigger the start reach.
+     * @default 0
+     */
     startOffset?: number;
 }
 
 export interface ScrollObserver {
-    elementRef: RefObject<HTMLElement | null>;
-    getMetrics: (element: HTMLElement) => ScrollObserverMetrics;
     handleScroll: UIEventHandler<HTMLElement>;
     handleWheel: WheelEventHandler<HTMLElement>;
-    /**
-     * Refreshes the scroll observer and returns the current scroll metrics if the element is available.
-     * 
-     * It
-     * - Recalculates the current scroll metrics.
-     * - Updates the active state for start and end reach.
-     * - Invokes the corresponding callbacks if the start or end is reached.
-     */
-    refresh: () => ScrollObserverMetrics | undefined;
+    getMetrics: (element: HTMLElement) => ScrollObserverMetrics;
+    // /**
+    //  * Refreshes the scroll observer and returns the current scroll metrics if the element is available.
+    //  *
+    //  * It
+    //  * - Recalculates the current scroll metrics.
+    //  * - Updates the active state for start and end reach.
+    //  * - Invokes the corresponding callbacks if the start or end is reached.
+    //  */
+    // refresh: () => ScrollObserverMetrics | undefined;
 }
 
 export function useScrollObserver({
@@ -53,7 +60,6 @@ export function useScrollObserver({
     endOffset = 0,
     startOffset = 0,
 }: UseScrollObserverOptions): ScrollObserver {
-    const elementRef = useRef<HTMLElement | null>(null);
     const isEndActiveRef = useRef(false);
     const isStartActiveRef = useRef(false);
     const onReachEndRef = useRefOf(onReachEnd);
@@ -113,10 +119,5 @@ export function useScrollObserver({
         [observe],
     );
 
-    const refresh = useCallback(
-        () => (elementRef.current ? observe(elementRef.current) : undefined),
-        [observe],
-    );
-
-    return { elementRef, getMetrics, handleScroll, handleWheel, refresh };
+    return { handleScroll, handleWheel, getMetrics };
 }
