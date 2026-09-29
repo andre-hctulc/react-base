@@ -61,6 +61,7 @@ export function useInfinityList<TData = any>({
     const [hasMore, setHasMore] = useState(true);
     const defaultCacheId = useId();
     const onErrorRef = useRefOf(onError);
+    const currentAbortController = useRef<AbortController | null>(null);
 
     const { data, error, isLoading, isValidating, setSize } = useSwrInfinite<
         TData[],
@@ -74,11 +75,17 @@ export function useInfinityList<TData = any>({
             return [cacheId ?? defaultCacheId, pageIndex];
         },
         async ([_, pageIndex]): Promise<TData[]> => {
+            if (currentAbortController.current) {
+                currentAbortController.current.abort();
+            }
+
             const currentLoader = loaderRef.current;
             if (!currentLoader) {
                 return [];
             }
+            
             const abortController = new AbortController();
+            currentAbortController.current = abortController;
 
             return await currentLoader(pageIndex, pageSize, itemsRef.current, abortController.signal);
         },
