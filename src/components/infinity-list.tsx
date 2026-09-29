@@ -4,6 +4,7 @@ import {
     useCallback,
     useEffect,
     useLayoutEffect,
+    useId,
     useRef,
     useState,
     type ComponentProps,
@@ -16,6 +17,7 @@ import { Spinner } from "@/components/ui/spinner.js";
 import { cn } from "@/lib/utils.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { useScrollObserver } from "@/hooks/use-scroll-observer.js";
+import useSwrInfinite, { type SWRInfiniteConfiguration } from "swr/infinite";
 
 export type InfinityListLoader<TData = any> = (
     pageIndex: number,
@@ -24,198 +26,104 @@ export type InfinityListLoader<TData = any> = (
     abortSignal: AbortSignal,
 ) => TData[] | Promise<TData[]>;
 
+export interface LoadResult<TData = any> {
+    err: unknown;
+    /** Page data */
+    data: TData[] | null;
+}
+
 export interface UseInfinityListOptions<TData = any> {
     initialPageIndex: number;
     pageSize: number;
-    tail?: number;
     loader?: InfinityListLoader<TData>;
-}
-
-export interface LoadResult<TData = any> {
-    err: unknown;
-    data: TData[] | null;
+    onError?: (error: unknown, key: string) => void;
+    swrOptions?: SWRInfiniteConfiguration<TData[], unknown>;
+    cacheId?: string;
 }
 
 export interface UseInfinityListResult<TData = any> {
     error: unknown;
     hasMore: boolean;
-    hasPrevious: boolean;
     isLoading: boolean;
     items: TData[];
     loadMore: () => Promise<LoadResult<TData>>;
-    loadPrevious: () => Promise<LoadResult<TData>>;
 }
 
 export function useInfinityList<TData = any>({
-    tail,
     loader,
     initialPageIndex,
     pageSize,
+    onError,
+    swrOptions,
+    cacheId,
 }: UseInfinityListOptions<TData>): UseInfinityListResult<TData> {
-    const [allItems, setAllItems] = useState<TData[]>([]);
-    const [error, setError] = useState<unknown>();
-    const [isLoading, setIsLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(true);
-    const [hasPrevious, setHasPrevious] = useState(initialPageIndex > 0);
-
-    const abortController = useRef<AbortController | null>(null);
-    const isLoadingRef = useRef(false);
-    const hasMoreRef = useRef(true);
-    const hasPreviousRef = useRef(initialPageIndex > 0);
-    const firstPageIndexRef = useRef(initialPageIndex);
-    const lastPageIndexRef = useRef(initialPageIndex);
-    const allItemsRef = useRef(allItems);
     const loaderRef = useRefOf(loader);
-    const tailRef = useRefOf(tail);
+    const [hasMore, setHasMore] = useState(true);
+    const defaultCacheId = useId();
+    const onErrorRef = useRefOf(onError);
 
-    const appendItems = useCallback((newItems: TData[]) => {
-        const tailLength = tailRef.current === undefined ? Infinity : Math.max(0, tailRef.current) * pageSize;
-        const retainedItems = tailLength === Infinity ? newItems : newItems.slice(-tailLength);
-        const removedItems = newItems.length - retainedItems.length;
-        if (removedItems) {
-            firstPageIndexRef.current += Math.ceil(removedItems / pageSize);
-            if (firstPageIndexRef.current > 0) {
-                hasPreviousRef.current = true;
-                setHasPrevious(true);
+    const { data, error, isLoading, isValidating, setSize } = useSwrInfinite<
+        TData[],
+        unknown,
+        (index: number, previousData: TData[] | null) => [string, number] | null
+    >(
+        (pageIndex, previousPageData) => {
+            if (previousPageData && previousPageData.length < pageSize) {
+                return null;
             }
-        }
-        allItemsRef.current = retainedItems;
-        setAllItems(retainedItems);
-    }, []);
-
-    const prependItems = useCallback((newItems: TData[]) => {
-        const tailLength = tailRef.current === undefined ? Infinity : Math.max(0, tailRef.current) * pageSize;
-        const retainedItems = tailLength === Infinity ? newItems : newItems.slice(0, tailLength);
-        const removedItems = newItems.length - retainedItems.length;
-        if (removedItems) {
-            lastPageIndexRef.current =
-                firstPageIndexRef.current + Math.ceil(retainedItems.length / pageSize) - 1;
-            hasMoreRef.current = true;
-            setHasMore(true);
-        }
-        allItemsRef.current = retainedItems;
-        setAllItems(retainedItems);
-    }, []);
-
-    useEffect(() => {
-        if (tail === undefined) {
-            return;
-        }
-        setAllItems((currentItems) => {
-            const retainedItems = currentItems.slice(-Math.max(0, tail) * pageSize);
-            allItemsRef.current = retainedItems;
-            return retainedItems;
-        });
-    }, [tail]);
-
-    useEffect(
-        () => () => {
-            const currentAbortController = abortController.current;
-            currentAbortController?.abort();
-            if (abortController.current === currentAbortController) {
-                abortController.current = null;
-                isLoadingRef.current = false;
-                setIsLoading(false);
-            }
+            return [cacheId ?? defaultCacheId, pageIndex];
         },
-        [],
+        async ([_, pageIndex]): Promise<TData[]> => {
+            const currentLoader = loaderRef.current;
+            if (!currentLoader) {
+                return [];
+            }
+            const abortController = new AbortController();
+
+            return await currentLoader(pageIndex, pageSize, itemsRef.current, abortController.signal);
+        },
+        {
+            ...swrOptions,
+            initialSize: initialPageIndex + 1,
+            onError: (error, key, config) => {
+                swrOptions?.onError?.(error, key, config);
+                onErrorRef.current?.(error, key);
+            },
+        },
     );
 
+    const lodeMoreActive = useRef(false);
+    const loading = isLoading || isValidating;
+
+    const items = data?.flat() ?? [];
+    const itemsRef = useRefOf(items);
+
     const loadMore = useCallback(async (): Promise<LoadResult<TData>> => {
-        if (!loaderRef.current || isLoadingRef.current || !hasMoreRef.current) {
+        if (lodeMoreActive.current || isValidating || !hasMore || !loaderRef.current) {
             return { err: undefined, data: null };
         }
-
-        const currentAbortController = new AbortController();
-        abortController.current = currentAbortController;
-        isLoadingRef.current = true;
-        setError(undefined);
-        setIsLoading(true);
-
-        let newItems: TData[] | null = null;
-
+        lodeMoreActive.current = true;
         try {
-            const pageIndex = lastPageIndexRef.current + 1;
-            newItems = await loaderRef.current(
-                pageIndex,
-                pageSize,
-                allItemsRef.current,
-                currentAbortController.signal,
-            );
-            if (currentAbortController.signal.aborted) {
-                return { err: undefined, data: null };
-            }
-            if (newItems.length < pageSize) {
-                hasMoreRef.current = false;
-                setHasMore(false);
-            }
-            lastPageIndexRef.current = pageIndex;
-            appendItems([...allItemsRef.current, ...newItems]);
+            const nextPages = await setSize((currentSize) => currentSize + 1);
+            const newHasMore = nextPages?.length
+                ? nextPages[nextPages.length - 1]?.length === pageSize
+                : false;
+            setHasMore(newHasMore);
+            return { err: undefined, data: nextPages?.at(-1) ?? null };
         } catch (error) {
-            if (!currentAbortController.signal.aborted) {
-                setError(error);
-            }
-
             return { err: error, data: null };
         } finally {
-            if (abortController.current === currentAbortController) {
-                abortController.current = null;
-                isLoadingRef.current = false;
-                setIsLoading(false);
-            }
+            lodeMoreActive.current = false;
         }
+    }, [hasMore, isValidating, loaderRef, setSize]);
 
-        return { err: undefined, data: newItems };
-    }, [appendItems]);
-
-    const loadPrevious = useCallback(async (): Promise<LoadResult<TData>> => {
-        if (!loaderRef.current || isLoadingRef.current || !hasPreviousRef.current) {
-            return { err: undefined, data: null };
-        }
-
-        const currentAbortController = new AbortController();
-        abortController.current = currentAbortController;
-        isLoadingRef.current = true;
-        setError(undefined);
-        setIsLoading(true);
-
-        let newItems: TData[] | null = null;
-
-        try {
-            const pageIndex = firstPageIndexRef.current - 1;
-            newItems = await loaderRef.current(
-                pageIndex,
-                pageSize,
-                allItemsRef.current,
-                currentAbortController.signal,
-            );
-            if (currentAbortController.signal.aborted) {
-                return { err: undefined, data: null };
-            }
-            if (newItems.length < pageSize || pageIndex === 0) {
-                hasPreviousRef.current = false;
-                setHasPrevious(false);
-            }
-            firstPageIndexRef.current = pageIndex;
-            prependItems([...newItems, ...allItemsRef.current]);
-        } catch (error) {
-            if (!currentAbortController.signal.aborted) {
-                setError(error);
-            }
-
-            return { err: error, data: null };
-        } finally {
-            if (abortController.current === currentAbortController) {
-                abortController.current = null;
-                isLoadingRef.current = false;
-                setIsLoading(false);
-            }
-        }
-
-        return { err: undefined, data: newItems };
-    }, [prependItems]);
-
-    return { error, hasMore, hasPrevious, isLoading, items: allItems, loadMore, loadPrevious };
+    return {
+        error,
+        hasMore,
+        isLoading: loading,
+        items: items,
+        loadMore,
+    };
 }
 
 export type InfinityListProps<TData = any> = {
@@ -228,11 +136,6 @@ export type InfinityListProps<TData = any> = {
      * @default 10
      */
     pageSize?: number;
-    /**
-     * Maximum number of pages to keep in the list.
-     * @default Infinity
-     */
-    tail?: number;
     preChildren?: ReactNode;
     postChildren?: ReactNode;
     children: (items: TData[]) => ReactNode;
@@ -251,7 +154,7 @@ export type InfinityListProps<TData = any> = {
      */
     previousTriggerOffset?: number;
     loading?: boolean;
-    onError?: (error: unknown) => void;
+    onError?: (error: unknown, key: string) => void;
     loadingProps?: ComponentProps<"div"> | ComponentProps<"li">;
     spinnerProps?: ComponentProps<typeof Spinner>;
     /** */
@@ -270,6 +173,9 @@ export type InfinityListProps<TData = any> = {
      */
     empty?: ReactNode;
     emptyProps?: ComponentProps<"div"> | ComponentProps<"li">;
+    swrOptions?: SWRInfiniteConfiguration<TData[], unknown>;
+    /** Used for cache partitioning */
+    cacheId?: string;
 } & Omit<HTMLProps<HTMLElement>, "children" | "as" | "onScroll" | "onWheel">;
 
 export function InfinityList<TData = any>({
@@ -278,7 +184,6 @@ export function InfinityList<TData = any>({
     items,
     initialPageIndex,
     pageSize = 10,
-    tail,
     as,
     triggerOffset = 100,
     previousTriggerOffset = 100,
@@ -297,6 +202,8 @@ export function InfinityList<TData = any>({
     preChildren,
     postChildren,
     ref,
+    swrOptions,
+    cacheId,
     ...props
 }: InfinityListProps<TData>) {
     const Root = (as ?? "div") as "div";
@@ -309,16 +216,13 @@ export function InfinityList<TData = any>({
     const onTriggerRef = useRefOf(onTrigger);
     const {
         hasMore,
-        hasPrevious,
         error: loadError,
         isLoading,
         items: uncontrolledItems,
         loadMore,
-        loadPrevious,
-    } = useInfinityList({ initialPageIndex: initialPageIndex ?? 0, pageSize, tail, loader });
+    } = useInfinityList({ initialPageIndex: initialPageIndex ?? 0, pageSize, loader, onError, cacheId });
     const isControlled = items !== undefined;
     const allItems = items ?? uncontrolledItems;
-    const onErrorRef = useRefOf(onError);
     const { handleScroll, handleWheel } = useScrollObserver({
         endOffset: triggerOffset,
         startOffset: previousTriggerOffset,
@@ -331,19 +235,9 @@ export function InfinityList<TData = any>({
             onTriggerRef.current?.(event, currentOffset);
         },
         onReachStart: ({ element }) => {
-            if (!isControlled && hasPrevious) {
-                previousScrollHeightRef.current = element.scrollHeight;
-                previousScrollTopRef.current = element.scrollTop;
-                void loadPrevious();
-            }
+            // TODO
         },
     });
-
-    useEffect(() => {
-        if (loadError !== undefined) {
-            onErrorRef.current?.(loadError);
-        }
-    }, [loadError]);
 
     useEffect(() => {
         const root = rootRef.current;
@@ -353,7 +247,6 @@ export function InfinityList<TData = any>({
             isLoading ||
             loading ||
             (!isControlled && (!hasMore || loadError !== undefined)) ||
-            (tail !== undefined && allItems.length >= tail * pageSize) ||
             root.scrollHeight > root.clientHeight
         ) {
             return;
@@ -366,7 +259,7 @@ export function InfinityList<TData = any>({
         } else {
             void loadMore();
         }
-    }, [allItems, loadError, hasMore, isControlled, isLoading, loadMore, loading, tail]);
+    }, [allItems, loadError, hasMore, isControlled, isLoading, loadMore, loading]);
 
     useLayoutEffect(() => {
         const root = rootRef.current;

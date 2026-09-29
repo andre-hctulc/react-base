@@ -897,6 +897,9 @@
       "name": "infinity-list",
       "title": "InfinityList",
       "description": "Scrollable list with controlled or loader-driven infinite pagination and optional item retention.",
+      "dependencies": [
+        "swr"
+      ],
       "registryDependencies": [
         "spinner",
         "andre-hctulc/react-base/use-ref-of",

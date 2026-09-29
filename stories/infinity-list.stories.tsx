@@ -27,7 +27,6 @@ const ItemList: FC<ItemListProps> = ({ items }) => {
 };
 
 interface PageLoaderProps {
-    tail?: number;
     slow?: boolean;
     noHeight?: boolean;
     defaultItems?: boolean;
@@ -35,7 +34,7 @@ interface PageLoaderProps {
     throwError?: boolean;
 }
 
-const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className, throwError, defaultItems }) => {
+const PageLoader: FC<PageLoaderProps> = ({ slow, noHeight, className, throwError, defaultItems }) => {
     const allItems = Array.from({ length: 24 }, (_, index) => index);
     const loader: InfinityListLoader = (pageIndex, pageSize, currentItems, abortSignal) => {
         const error = new Error("Unable to load more items");
@@ -61,14 +60,7 @@ const PageLoader: FC<PageLoaderProps> = ({ tail, slow, noHeight, className, thro
 
     return (
         <InfinityList
-            className={cn(
-                "max-w-md overflow-y-auto rounded-md border bg-muted/30",
-                noHeight ? "" : "h-64",
-                className,
-            )}
-            tail={tail}
-            triggerOffset={tail === undefined ? undefined : 0}
-            previousTriggerOffset={tail === undefined ? undefined : 0}
+            className={cn("max-w-md rounded-md border bg-muted/30", noHeight ? "" : "h-64", className)}
             pageSize={3}
             loader={loader}
         >
@@ -119,10 +111,6 @@ export const AutomaticLoading: Story = {
 
 export const NoHeight: Story = {
     render: () => <PageLoader noHeight className="max-h-150 overflow-x-hidden" />,
-};
-
-export const RetainedTail: Story = {
-    render: () => <PageLoader tail={2} />,
 };
 
 export const LoaderError: Story = {
