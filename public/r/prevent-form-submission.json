@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "src/components/prevent-form-submission.tsx",
-      "content": "import { cn } from \"@/lib/utils.js\";\nimport { useId, type ComponentProps, type FC } from \"react\";\n\nexport interface PreventFormSubmissionProps extends Omit<ComponentProps<\"input\">, \"value\" | \"defaultValue\"> {}\n\nexport const PreventFormSubmission: FC<PreventFormSubmissionProps> = ({ className, ...props }) => {\n    const id = useId();\n    return <input name={id} {...props} required defaultValue=\"\" className={cn(\"sr-only\", className)} />;\n};\n",
+      "content": "import { cn } from \"@/lib/utils.js\";\nimport { useId, type ComponentProps, type FC } from \"react\";\n\nexport interface PreventFormSubmissionProps extends Omit<ComponentProps<\"input\">, \"value\" | \"defaultValue\"> {}\n\nexport const PreventFormSubmission: FC<PreventFormSubmissionProps> = ({ className, ...props }) => {\n    const id = useId();\n    return (\n        <input\n            name={id}\n            {...props}\n            required\n            defaultValue=\"\"\n            className={cn(\"sr-only select-none\", className)}\n        />\n    );\n};\n",
       "type": "registry:ui"
     }
   ],

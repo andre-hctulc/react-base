@@ -5,5 +5,13 @@ export interface PreventFormSubmissionProps extends Omit<ComponentProps<"input">
 
 export const PreventFormSubmission: FC<PreventFormSubmissionProps> = ({ className, ...props }) => {
     const id = useId();
-    return <input name={id} {...props} required defaultValue="" className={cn("sr-only", className)} />;
+    return (
+        <input
+            name={id}
+            {...props}
+            required
+            defaultValue=""
+            className={cn("sr-only select-none", className)}
+        />
+    );
 };
