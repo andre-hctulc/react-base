@@ -412,12 +412,12 @@
       "type": "registry:ui"
     },
     {
-      "name": "prevent-submission",
-      "title": "PreventSubmission",
+      "name": "prevent-form-submission",
+      "title": "PreventFormSubmission",
       "description": "Hidden input to prevent form submission.",
       "files": [
         {
-          "path": "src/components/prevent-submission.tsx",
+          "path": "src/components/prevent-form-submission.tsx",
           "type": "registry:ui"
         }
       ],

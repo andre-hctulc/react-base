@@ -14,13 +14,13 @@
             ]
         },
         {
-            "name": "prevent-submission",
+            "name": "prevent-form-submission",
             "type": "registry:ui",
-            "title": "PreventSubmission",
+            "title": "PreventFormSubmission",
             "description": "Hidden input to prevent form submission.",
             "files": [
                 {
-                    "path": "prevent-submission.tsx",
+                    "path": "prevent-form-submission.tsx",
                     "type": "registry:ui"
                 }
             ]
