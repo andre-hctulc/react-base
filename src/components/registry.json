@@ -14,6 +14,18 @@
             ]
         },
         {
+            "name": "prevent-submission",
+            "type": "registry:ui",
+            "title": "PreventSubmission",
+            "description": "Hidden input to prevent form submission.",
+            "files": [
+                {
+                    "path": "prevent-submission.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
             "name": "flex",
             "type": "registry:ui",
             "title": "Flex",

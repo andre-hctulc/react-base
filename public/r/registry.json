@@ -412,6 +412,18 @@
       "type": "registry:ui"
     },
     {
+      "name": "prevent-submission",
+      "title": "PreventSubmission",
+      "description": "Hidden input to prevent form submission.",
+      "files": [
+        {
+          "path": "src/components/prevent-submission.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "flex",
       "title": "Flex",
       "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
