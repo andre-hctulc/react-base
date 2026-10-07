@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "src/hooks/use-is-hydrated.ts",
-      "content": "\"use client\";\n\nimport React from \"react\";\n\n/**\n * Checks if the component is hydrated.\n */\nexport function useIsHydrated() {\n    const [hydrated, setHydrated] = React.useState(false);\n    React.useEffect(() => {\n        setHydrated(true);\n    }, []);\n    return hydrated;\n}\n",
+      "content": "\"use client\";\n\nimport { useEffect, useRef, useState } from \"react\";\n\nexport function useIsHydrated() {\n    const [hydrated, setHydrated] = useState(false);\n    useEffect(() => {\n        setHydrated(true);\n    }, []);\n    return hydrated;\n}\n\nexport function useAfterHydration<T>(callback: () => T): T | undefined {\n    const hydrated = useIsHydrated();\n    const [result, setResult] = useState<T | undefined>(undefined);\n    const callbackRef = useRef(callback);\n\n    useEffect(() => {\n        callbackRef.current = callback;\n    }, [callback]);\n\n    useEffect(() => {\n        if (hydrated) {\n            setResult(() => callbackRef.current());\n        }\n    }, [hydrated]);\n\n    return result;\n}\n",
       "type": "registry:hook"
     }
   ],

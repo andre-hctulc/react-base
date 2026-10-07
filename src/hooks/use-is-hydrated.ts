@@ -1,14 +1,29 @@
 "use client";
 
-import React from "react";
+import { useEffect, useRef, useState } from "react";
 
-/**
- * Checks if the component is hydrated.
- */
 export function useIsHydrated() {
-    const [hydrated, setHydrated] = React.useState(false);
-    React.useEffect(() => {
+    const [hydrated, setHydrated] = useState(false);
+    useEffect(() => {
         setHydrated(true);
     }, []);
     return hydrated;
+}
+
+export function useAfterHydration<T>(callback: () => T): T | undefined {
+    const hydrated = useIsHydrated();
+    const [result, setResult] = useState<T | undefined>(undefined);
+    const callbackRef = useRef(callback);
+
+    useEffect(() => {
+        callbackRef.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+        if (hydrated) {
+            setResult(() => callbackRef.current());
+        }
+    }, [hydrated]);
+
+    return result;
 }
