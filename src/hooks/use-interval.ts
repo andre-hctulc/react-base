@@ -1,18 +1,18 @@
 "use client";
 
-import React from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * @param active Defaults tot true
  */
 export function useInterval(callback: () => void, delay: number, active?: boolean) {
-    const savedCallback = React.useRef(callback);
+    const savedCallback = useRef(callback);
 
-    React.useEffect(() => {
+    useEffect(() => {
         savedCallback.current = callback;
     }, [callback]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (active === false) return;
         const interval = setInterval(() => savedCallback.current(), delay);
         return () => clearInterval(interval);

@@ -20,7 +20,7 @@ export const AccordionOutlineTrigger: FC<ComponentProps<typeof AccordionTrigger>
 interface AccordionCardProps
     extends
         Omit<ComponentProps<typeof AccordionOutline>, "title" | "value" | "defaultValue">,
-        Pick<ComponentProps<typeof AccordionContent>, "keepMounted"> {
+        Partial<Pick<ComponentProps<typeof AccordionContent>, "keepMounted">> {
     /** @default true */
     collapsible?: boolean;
     title?: ReactNode;
@@ -63,7 +63,7 @@ export const AccordionCard: FC<AccordionCardProps> = ({
                             <AccordionTitle>{title}</AccordionTitle>
                         </AccordionStaticHeader>
                     ))}
-                <AccordionContent keepMounted={keepMounted}>{children}</AccordionContent>
+                <AccordionContent keepMounted={!!keepMounted}>{children}</AccordionContent>
             </AccordionOutlineItem>
         </AccordionOutline>
     );

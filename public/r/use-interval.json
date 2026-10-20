@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "src/hooks/use-interval.ts",
-      "content": "\"use client\";\n\nimport React from \"react\";\n\n/**\n * @param active Defaults tot true\n */\nexport function useInterval(callback: () => void, delay: number, active?: boolean) {\n    const savedCallback = React.useRef(callback);\n\n    React.useEffect(() => {\n        savedCallback.current = callback;\n    }, [callback]);\n\n    React.useEffect(() => {\n        if (active === false) return;\n        const interval = setInterval(() => savedCallback.current(), delay);\n        return () => clearInterval(interval);\n    }, [delay, active]);\n}\n",
+      "content": "\"use client\";\n\nimport { useEffect, useRef } from \"react\";\n\n/**\n * @param active Defaults tot true\n */\nexport function useInterval(callback: () => void, delay: number, active?: boolean) {\n    const savedCallback = useRef(callback);\n\n    useEffect(() => {\n        savedCallback.current = callback;\n    }, [callback]);\n\n    useEffect(() => {\n        if (active === false) return;\n        const interval = setInterval(() => savedCallback.current(), delay);\n        return () => clearInterval(interval);\n    }, [delay, active]);\n}\n",
       "type": "registry:hook"
     }
   ],

@@ -58,7 +58,7 @@ export const Bubble: FC<BubbleProps> = ({
                 bubbles: true,
                 cancelable,
                 composed,
-            }
+            },
         );
 
         // Mark the event as bubbling
@@ -66,8 +66,9 @@ export const Bubble: FC<BubbleProps> = ({
 
         const target: EventTarget | undefined = eventTarget || ev?.target?.parentElement;
 
-        if (typeof target?.dispatchEvent === "function")
+        if (typeof target?.dispatchEvent === "function") {
             setTimeout(() => target.dispatchEvent(customEvent), bubbleTimeout);
+        }
 
         onBubble?.(customEvent);
     };
