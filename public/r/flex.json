@@ -4,7 +4,9 @@
   "title": "Flex",
   "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
   "dependencies": [
-    "class-variance-authority",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
     "andre-hctulc/react-base/render"
   ],
   "files": [

@@ -30,7 +30,8 @@
             "type": "registry:ui",
             "title": "Flex",
             "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
-            "dependencies": ["class-variance-authority", "andre-hctulc/react-base/render"],
+            "dependencies": ["class-variance-authority"],
+            "registryDependencies": ["andre-hctulc/react-base/render"],
             "files": [
                 {
                     "path": "flex.tsx",
