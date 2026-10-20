@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type ComponentProps, type FC } from "react";
+import { type ComponentProps, type DragEvent, type FC } from "react";
 
 export interface DroppableProps extends ComponentProps<"div"> {
     disabled?: boolean;
@@ -19,24 +19,24 @@ export const Droppable: FC<DroppableProps> = ({
     children,
     ...props
 }) => {
-    function handleDrop(e: React.DragEvent<HTMLDivElement>) {
+    function handleDrop(e: DragEvent<HTMLDivElement>) {
         if (disabled) return;
         e.preventDefault();
         onDrop?.(e);
     }
 
-    function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
+    function handleDragOver(e: DragEvent<HTMLDivElement>) {
         if (disabled) return;
         e.preventDefault();
         onDragOver?.(e);
     }
 
-    function handleDragEnter(e: React.DragEvent<HTMLDivElement>) {
+    function handleDragEnter(e: DragEvent<HTMLDivElement>) {
         if (disabled) return;
         onDragEnter?.(e);
     }
 
-    function handleDragLeave(e: React.DragEvent<HTMLDivElement>) {
+    function handleDragLeave(e: DragEvent<HTMLDivElement>) {
         if (disabled) return;
         onDragLeave?.(e);
     }

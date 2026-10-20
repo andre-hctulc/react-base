@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
 import { msz } from "@/lib/variants.util.js";
 import { Icon, type IconLike, type IconProps } from "./icon.js";
-import { Slot } from "./slot.js";
+import { Render, type RenderProps } from "./render.js";
 
 const subtitleVariants = cva("text-t-2", {
     variants: {
@@ -41,51 +41,65 @@ const subtitleVariants = cva("text-t-2", {
     defaultVariants: { variant: "h2", bold: false },
 });
 
-export interface SubtitleProps extends ComponentProps<"h2">, VariantProps<typeof subtitleVariants> {
-    asChild?: boolean;
+export interface SubtitleProps
+    extends ComponentProps<"h2">, VariantProps<typeof subtitleVariants>, RenderProps {
     icon?: IconLike;
     iconProps?: IconProps;
 }
 
-export const Subtitle: FC<SubtitleProps> = (props) => {
-    const {
-        variant,
-        bold,
-        underline,
-        icon,
-        iconProps,
-        lineClamp,
-        m,
-        mx,
-        my,
-        mt,
-        mr,
-        mb,
-        ml,
-        me,
-        ms,
-        className,
-        children,
-        asChild,
-        ...restProps
-    } = props;
-    const Comp: any = asChild ? Slot : (variant as string);
-
+export const Subtitle: FC<SubtitleProps> = ({
+    variant,
+    bold,
+    underline,
+    icon,
+    iconProps,
+    lineClamp,
+    m,
+    mx,
+    my,
+    mt,
+    mr,
+    mb,
+    ml,
+    me,
+    ms,
+    className,
+    children,
+    render,
+    ...props
+}) => {
+    const H = variant ?? "h2";
     return (
-        <Comp
-            className={cn(
-                subtitleVariants({ variant, bold, underline, lineClamp, m, mx, my, mt, mr, mb, ml, me, ms }),
-                icon && "flex items-center",
-                className,
-            )}
-            {...restProps}
-        >
-            {icon && (
-                <Icon noShrink inline {...iconProps} className={cn("mr-2", iconProps?.className)}>
-                    {icon}
-                </Icon>
-            )}
-            {children}
-        </Comp>
+        <Render render={render}>
+            <H
+                className={cn(
+                    subtitleVariants({
+                        variant,
+                        bold,
+                        underline,
+                        lineClamp,
+                        m,
+                        mx,
+                        my,
+                        mt,
+                        mr,
+                        mb,
+                        ml,
+                        me,
+                        ms,
+                    }),
+                    icon && "flex items-center",
+                    className,
+                )}
+                {...props}
+            >
+                {icon && (
+                    <Icon noShrink inline {...iconProps} className={cn("mr-2", iconProps?.className)}>
+                        {icon}
+                    </Icon>
+                )}
+                {children}
+            </H>
+        </Render>
     );
 };

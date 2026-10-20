@@ -1,8 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
-import { type FC, type ComponentProps } from "react";
+import { type FC, type ComponentProps, type MouseEvent } from "react";
 import { msz, sz } from "@/lib/variants.util.js";
-import { Slot } from "./slot.js";
+import { Render, type RenderProps } from "./render.js";
 
 const toolbarVariants = cva("flex min-w-0", {
     variants: {
@@ -62,8 +62,8 @@ const toolbarVariants = cva("flex min-w-0", {
     },
 });
 
-export interface ToolbarProps extends ComponentProps<"div">, VariantProps<typeof toolbarVariants> {
-    asChild?: boolean;
+export interface ToolbarProps
+    extends ComponentProps<"div">, VariantProps<typeof toolbarVariants>, RenderProps {
     stopEventPropagation?: boolean;
 }
 
@@ -71,91 +71,90 @@ export interface ToolbarProps extends ComponentProps<"div">, VariantProps<typeof
  * ### Props
  * - `stopEventPropagation`
  */
-export const Toolbar: FC<ToolbarProps> = (props) => {
-    const {
-        asChild,
-        direction,
-        gap,
-        rowGap,
-        colGap,
-        p,
-        px,
-        py,
-        pt,
-        pr,
-        pb,
-        pl,
-        alignItems,
-        justifyContent,
-        grow,
-        noShrink,
-        wrap,
-        scroll,
-        scrollY,
-        scrollX,
-        m,
-        mx,
-        my,
-        mt,
-        mr,
-        mb,
-        ml,
-        mlAuto,
-        stopEventPropagation,
-        onClick,
-        className,
-        children,
-        ref,
-        ...restProps
-    } = props;
-    const Comp: any = asChild ? Slot : "div";
-
+export const Toolbar: FC<ToolbarProps> = ({
+    direction,
+    gap,
+    rowGap,
+    colGap,
+    p,
+    px,
+    py,
+    pt,
+    pr,
+    pb,
+    pl,
+    alignItems,
+    justifyContent,
+    grow,
+    noShrink,
+    wrap,
+    scroll,
+    scrollY,
+    scrollX,
+    m,
+    mx,
+    my,
+    mt,
+    mr,
+    mb,
+    ml,
+    mlAuto,
+    stopEventPropagation,
+    onClick,
+    className,
+    children,
+    ref,
+    render,
+    ...props
+}) => {
     return (
-        <Comp
-            className={cn(
-                toolbarVariants({
-                    direction,
-                    gap,
-                    rowGap,
-                    colGap,
-                    p,
-                    px,
-                    py,
-                    pt,
-                    pr,
-                    pb,
-                    pl,
-                    alignItems,
-                    justifyContent,
-                    grow,
-                    noShrink,
-                    wrap,
-                    scroll,
-                    scrollY,
-                    scrollX,
-                    m,
-                    mx,
-                    my,
-                    mt,
-                    mr,
-                    mb,
-                    ml,
-                    mlAuto,
-                }),
-                className,
-            )}
-            ref={ref}
-            onClick={
-                stopEventPropagation
-                    ? (e: React.MouseEvent<any>) => {
-                          e.stopPropagation();
-                          onClick?.(e);
-                      }
-                    : onClick
-            }
-            {...restProps}
-        >
-            {children}
-        </Comp>
+        <Render render={render}>
+            <div
+                className={cn(
+                    toolbarVariants({
+                        direction,
+                        gap,
+                        rowGap,
+                        colGap,
+                        p,
+                        px,
+                        py,
+                        pt,
+                        pr,
+                        pb,
+                        pl,
+                        alignItems,
+                        justifyContent,
+                        grow,
+                        noShrink,
+                        wrap,
+                        scroll,
+                        scrollY,
+                        scrollX,
+                        m,
+                        mx,
+                        my,
+                        mt,
+                        mr,
+                        mb,
+                        ml,
+                        mlAuto,
+                    }),
+                    className,
+                )}
+                ref={ref}
+                onClick={
+                    stopEventPropagation
+                        ? (e: MouseEvent<any>) => {
+                              e.stopPropagation();
+                              onClick?.(e);
+                          }
+                        : onClick
+                }
+                {...props}
+            >
+                {children}
+            </div>
+        </Render>
     );
 };

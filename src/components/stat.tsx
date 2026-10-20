@@ -6,7 +6,7 @@ import { useMemo, type FC, type ComponentProps, type ComponentType } from "react
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { Icon, type IconLike } from "./icon.js";
 import { Skeleton } from "@/components/ui/skeleton.js";
-import { Slot } from "./slot.js";
+import { Render, type RenderProps } from "./render.js";
 
 const statVariants = cva("bg-paper-2 rounded-lg", {
     variants: {
@@ -54,8 +54,8 @@ const statVariants = cva("bg-paper-2 rounded-lg", {
     },
     defaultVariants: { size: "md", border: true, fitWidth: true },
 });
-interface StatProps extends Omit<ComponentProps<"div">, "color">, VariantProps<typeof statVariants> {
-    asChild?: boolean;
+interface StatProps
+    extends Omit<ComponentProps<"div">, "color">, VariantProps<typeof statVariants>, RenderProps {
     valueParser?: (value: any) => string;
     value: any;
     description?: string;
@@ -81,34 +81,31 @@ interface StatProps extends Omit<ComponentProps<"div">, "color">, VariantProps<t
  * - `href`
  * - `LinkComponent`
  */
-export const Stat: FC<StatProps> = (props) => {
-    const {
-        size,
-        color,
-        shadow,
-        border,
-        fitWidth,
-        fitHeight,
-        valueParser,
-        value,
-        description,
-        descriptionProps,
-        textProps,
-        icon,
-        linkProps,
-        children,
-        href,
-        LinkComponent,
-        asChild,
-        skeletonProps,
-        unit,
-        unitProps,
-        iconProps,
-        className,
-        ...rootProps
-    } = props;
-
-    const Comp: any = asChild ? Slot : "div";
+export const Stat: FC<StatProps> = ({
+    size,
+    color,
+    shadow,
+    border,
+    fitWidth,
+    fitHeight,
+    valueParser,
+    value,
+    description,
+    descriptionProps,
+    textProps,
+    icon,
+    linkProps,
+    children,
+    href,
+    LinkComponent,
+    skeletonProps,
+    unit,
+    unitProps,
+    iconProps,
+    className,
+    render,
+    ...props
+}) => {
     const MainComp: any = href ? LinkComponent || "a" : "div";
     const valueParserRef = useRefOf(valueParser);
     const val = useMemo(() => {
@@ -124,36 +121,42 @@ export const Stat: FC<StatProps> = (props) => {
     }
 
     return (
-        <Comp
-            className={cn(statVariants({ size, color, shadow, border, fitWidth, fitHeight }), className)}
-            {...rootProps}
-        >
-            <MainComp {...mainProps} className={cn("font-medium text-[1em]", textProps?.className)}>
-                {icon && (
-                    <Icon
-                        color={isDefaultColor ? "neutral" : "inherit"}
-                        inline
-                        {...iconProps}
-                        className={cn("mr-2", iconProps?.className)}
+        <Render render={render}>
+            <MainComp
+                className={cn(statVariants({ size, color, shadow, border, fitWidth, fitHeight }), className)}
+                {...props}
+            >
+                <MainComp {...mainProps} className={cn("font-medium text-[1em]", textProps?.className)}>
+                    {icon && (
+                        <Icon
+                            color={isDefaultColor ? "neutral" : "inherit"}
+                            inline
+                            {...iconProps}
+                            className={cn("mr-2", iconProps?.className)}
+                        >
+                            {icon}
+                        </Icon>
+                    )}
+                    {unit && (
+                        <span {...unitProps} className={cn("ml-1 text-[1.2em]", unitProps?.className)}>
+                            {unit}
+                        </span>
+                    )}
+                </MainComp>
+                {description && (
+                    <p
+                        {...descriptionProps}
+                        className={cn(
+                            "text-[0.9em]",
+                            isDefaultColor && "text-t-2",
+                            descriptionProps?.className,
+                        )}
                     >
-                        {icon}
-                    </Icon>
+                        {description}
+                    </p>
                 )}
-                {unit && (
-                    <span {...unitProps} className={cn("ml-1 text-[1.2em]", unitProps?.className)}>
-                        {unit}
-                    </span>
-                )}
+                {children}
             </MainComp>
-            {description && (
-                <p
-                    {...descriptionProps}
-                    className={cn("text-[0.9em]", isDefaultColor && "text-t-2", descriptionProps?.className)}
-                >
-                    {description}
-                </p>
-            )}
-            {children}
-        </Comp>
+        </Render>
     );
 };

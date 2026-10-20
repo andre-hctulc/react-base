@@ -2,13 +2,13 @@
     "$schema": "https://ui.shadcn.com/schema/registry.json",
     "items": [
         {
-            "name": "slot",
+            "name": "render",
             "type": "registry:ui",
-            "title": "Slot",
-            "description": "Slot component for polymorphic rendering.",
+            "title": "Render",
+            "description": "Render component for polymorphic rendering.",
             "files": [
                 {
-                    "path": "slot.tsx",
+                    "path": "render.tsx",
                     "type": "registry:ui"
                 }
             ]
@@ -30,7 +30,7 @@
             "type": "registry:ui",
             "title": "Flex",
             "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
-            "dependencies": ["class-variance-authority", "andre-hctulc/react-base/slot"],
+            "dependencies": ["class-variance-authority", "andre-hctulc/react-base/render"],
             "files": [
                 {
                     "path": "flex.tsx",
@@ -44,7 +44,10 @@
             "title": "Toolbar",
             "description": "Flex toolbar with spacing, padding, margin, scroll and alignment variants.",
             "dependencies": ["class-variance-authority"],
-            "registryDependencies": ["andre-hctulc/react-base/variants-util", "andre-hctulc/react-base/slot"],
+            "registryDependencies": [
+                "andre-hctulc/react-base/variants-util",
+                "andre-hctulc/react-base/render"
+            ],
             "files": [
                 {
                     "path": "toolbar.tsx",
@@ -69,7 +72,10 @@
             "type": "registry:ui",
             "title": "Spacer",
             "description": "Polymorphic flex gap container.",
-            "registryDependencies": ["andre-hctulc/react-base/variants-util", "andre-hctulc/react-base/slot"],
+            "registryDependencies": [
+                "andre-hctulc/react-base/variants-util",
+                "andre-hctulc/react-base/render"
+            ],
             "files": [
                 {
                     "path": "spacer.tsx",
@@ -234,7 +240,7 @@
                 "skeleton",
                 "andre-hctulc/react-base/icon",
                 "andre-hctulc/react-base/use-ref-of",
-                "andre-hctulc/react-base/slot"
+                "andre-hctulc/react-base/render"
             ],
             "files": [
                 {
@@ -249,7 +255,10 @@
             "title": "ColorText",
             "description": "Polymorphic text with color, size, lineClamp and margin variants.",
             "dependencies": ["class-variance-authority"],
-            "registryDependencies": ["andre-hctulc/react-base/variants-util", "andre-hctulc/react-base/slot"],
+            "registryDependencies": [
+                "andre-hctulc/react-base/variants-util",
+                "andre-hctulc/react-base/render"
+            ],
             "files": [
                 {
                     "path": "color-text.tsx",
@@ -266,7 +275,7 @@
             "registryDependencies": [
                 "andre-hctulc/react-base/icon",
                 "andre-hctulc/react-base/variants-util",
-                "andre-hctulc/react-base/slot"
+                "andre-hctulc/react-base/render"
             ],
             "files": [
                 {
@@ -283,7 +292,7 @@
             "registryDependencies": [
                 "andre-hctulc/react-base/icon",
                 "andre-hctulc/react-base/variants-util",
-                "andre-hctulc/react-base/slot"
+                "andre-hctulc/react-base/render"
             ],
             "files": [
                 {
@@ -309,7 +318,7 @@
             "type": "registry:ui",
             "title": "Typography",
             "description": "Styled typography components (h1-h6, p, ul, etc.).",
-            "registryDependencies": ["andre-hctulc/react-base/slot"],
+            "registryDependencies": ["andre-hctulc/react-base/render"],
             "files": [
                 {
                     "path": "typography.tsx",
@@ -348,7 +357,7 @@
             "type": "registry:ui",
             "title": "InputList",
             "description": "Base input list component.",
-            "registryDependencies": ["andre-hctulc/react-base/slot"],
+            "registryDependencies": ["andre-hctulc/react-base/render"],
             "files": [
                 {
                     "path": "input-list.tsx",
@@ -482,7 +491,7 @@
             "title": "AccordionCard",
             "description": "Accordion card component.",
             "files": [{ "path": "accordion-card.tsx", "type": "registry:ui" }],
-            "registryDependencies": ["accordion"]
+            "registryDependencies": ["accordion", "andre-hctulc/react-base/render"]
         },
         {
             "name": "wizard-form",

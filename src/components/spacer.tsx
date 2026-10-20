@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils.js";
 import { cva, type VariantProps } from "class-variance-authority";
 import { sz } from "@/lib/variants.util.js";
 import { type FC, type ComponentProps } from "react";
-import { Slot } from "./slot.js";
+import { Render, type RenderProps } from "./render.js";
 
 const spacerVariants = cva("flex", {
     variants: {
@@ -22,17 +22,25 @@ const spacerVariants = cva("flex", {
     defaultVariants: { variant: "row", gap: "md" },
 });
 
-export interface SpacerProps extends ComponentProps<"div">, VariantProps<typeof spacerVariants> {
-    asChild?: boolean;
-}
+export interface SpacerProps
+    extends ComponentProps<"div">, VariantProps<typeof spacerVariants>, RenderProps {}
 
-export const Spacer: FC<SpacerProps> = (props) => {
-    const { variant, wrap, gap, rowGap, colGap, className, asChild, ...restProps } = props;
-    const Comp: any = asChild ? Slot : "div";
+export const Spacer: FC<SpacerProps> = ({
+    variant,
+    wrap,
+    gap,
+    rowGap,
+    colGap,
+    className,
+    render,
+    ...props
+}) => {
     return (
-        <Comp
-            className={cn(spacerVariants({ variant, wrap, gap, rowGap, colGap }), className)}
-            {...restProps}
-        />
+        <Render render={render}>
+            <div
+                className={cn(spacerVariants({ variant, wrap, gap, rowGap, colGap }), className)}
+                {...props}
+            />
+        </Render>
     );
 };

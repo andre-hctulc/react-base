@@ -400,12 +400,12 @@
       "type": "registry:hook"
     },
     {
-      "name": "slot",
-      "title": "Slot",
-      "description": "Slot component for polymorphic rendering.",
+      "name": "render",
+      "title": "Render",
+      "description": "Render component for polymorphic rendering.",
       "files": [
         {
-          "path": "src/components/slot.tsx",
+          "path": "src/components/render.tsx",
           "type": "registry:ui"
         }
       ],
@@ -429,7 +429,7 @@
       "description": "Polymorphic flex container with direction, alignment, gap and size variants.",
       "dependencies": [
         "class-variance-authority",
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -448,7 +448,7 @@
       ],
       "registryDependencies": [
         "andre-hctulc/react-base/variants-util",
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -476,7 +476,7 @@
       "description": "Polymorphic flex gap container.",
       "registryDependencies": [
         "andre-hctulc/react-base/variants-util",
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -671,7 +671,7 @@
         "skeleton",
         "andre-hctulc/react-base/icon",
         "andre-hctulc/react-base/use-ref-of",
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -690,7 +690,7 @@
       ],
       "registryDependencies": [
         "andre-hctulc/react-base/variants-util",
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -710,7 +710,7 @@
       "registryDependencies": [
         "andre-hctulc/react-base/icon",
         "andre-hctulc/react-base/variants-util",
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -727,7 +727,7 @@
       "registryDependencies": [
         "andre-hctulc/react-base/icon",
         "andre-hctulc/react-base/variants-util",
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -754,7 +754,7 @@
       "title": "Typography",
       "description": "Styled typography components (h1-h6, p, ul, etc.).",
       "registryDependencies": [
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -800,7 +800,7 @@
       "title": "InputList",
       "description": "Base input list component.",
       "registryDependencies": [
-        "andre-hctulc/react-base/slot"
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {
@@ -965,7 +965,8 @@
       "title": "AccordionCard",
       "description": "Accordion card component.",
       "registryDependencies": [
-        "accordion"
+        "accordion",
+        "andre-hctulc/react-base/render"
       ],
       "files": [
         {

@@ -1,7 +1,7 @@
 import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
-import { Slot } from "./slot";
+import { Render, type RenderProps } from "./render.js";
 
 const flexVariants = cva("flex", {
     variants: {
@@ -96,54 +96,51 @@ const flexVariants = cva("flex", {
     },
 });
 
-export interface FlexProps extends ComponentProps<"div">, VariantProps<typeof flexVariants> {
-    asChild?: boolean;
-}
+export interface FlexProps extends ComponentProps<"div">, VariantProps<typeof flexVariants>, RenderProps {}
 
-export const Flex: FC<FlexProps> = (props) => {
-    const {
-        direction,
-        alignItems,
-        justifyContent,
-        wrap,
-        grow,
-        noShrink,
-        height,
-        maxHeight,
-        minHeight,
-        width,
-        maxWidth,
-        minWidth,
-        className,
-        children,
-        asChild,
-        ...restProps
-    } = props;
-    const Comp: any = asChild ? Slot : "div";
-
+export const Flex: FC<FlexProps> = ({
+    direction,
+    alignItems,
+    justifyContent,
+    wrap,
+    grow,
+    noShrink,
+    height,
+    maxHeight,
+    minHeight,
+    width,
+    maxWidth,
+    minWidth,
+    className,
+    children,
+    render,
+    ...props
+}) => {
     return (
-        <Comp
-            className={cn(
-                flexVariants({
-                    direction,
-                    alignItems,
-                    justifyContent,
-                    wrap,
-                    grow,
-                    noShrink,
-                    height,
-                    maxHeight,
-                    minHeight,
-                    width,
-                    maxWidth,
-                    minWidth,
-                }),
-                className,
-            )}
-            {...restProps}
-        >
-            {children}
-        </Comp>
+        <Render render={render}>
+            <div
+                className={cn(
+                    flexVariants({
+                        direction,
+                        alignItems,
+                        justifyContent,
+                        wrap,
+                        grow,
+                        noShrink,
+                        height,
+                        maxHeight,
+                        minHeight,
+                        width,
+                        maxWidth,
+                        minWidth,
+                    }),
+                    className,
+                )}
+                {...props}
+            >
+                {children}
+            </div>
+        </Render>
     );
 };
 

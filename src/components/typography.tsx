@@ -1,7 +1,7 @@
 import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
-import { Slot } from "./slot.js";
+import { Render, type RenderProps } from "./render.js";
 
 const typographyVariants = cva("", {
     variants: {
@@ -28,21 +28,32 @@ const typographyVariants = cva("", {
     },
 });
 
-export interface TypographyProps extends ComponentProps<"p">, VariantProps<typeof typographyVariants> {
-    asChild?: boolean;
-}
+export interface TypographyProps
+    extends ComponentProps<"p">, VariantProps<typeof typographyVariants>, RenderProps {}
 
 /** Text component for consistent typography styling. */
-export const Typography: FC<TypographyProps> = (props) => {
-    const { textSize, center, underline, italic, lineHeight, className, children, asChild, ...restProps } =
-        props as any;
-    const Comp: any = asChild ? Slot : "p";
+export const Typography: FC<TypographyProps> = ({
+    textSize,
+    center,
+    underline,
+    italic,
+    lineHeight,
+    className,
+    children,
+    render,
+    ...props
+}) => {
     return (
-        <Comp
-            className={cn(typographyVariants({ textSize, center, underline, italic, lineHeight }), className)}
-            {...restProps}
-        >
-            {children}
-        </Comp>
+        <Render render={render}>
+            <p
+                className={cn(
+                    typographyVariants({ textSize, center, underline, italic, lineHeight }),
+                    className,
+                )}
+                {...props}
+            >
+                {children}
+            </p>
+        </Render>
     );
 };

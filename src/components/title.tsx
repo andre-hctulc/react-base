@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
 import { msz } from "@/lib/variants.util.js";
 import { Icon, type IconLike, type IconProps } from "./icon.js";
-import { Slot } from "./slot.js";
+import { Render, type RenderProps } from "./render.js";
 
 const titleVariants = cva("", {
     variants: {
@@ -43,67 +43,67 @@ const titleVariants = cva("", {
     defaultVariants: { variant: "h1", bold: false },
 });
 
-export interface TitleProps extends ComponentProps<"h1">, VariantProps<typeof titleVariants> {
-    asChild?: boolean;
+export interface TitleProps extends ComponentProps<"h1">, VariantProps<typeof titleVariants>, RenderProps {
     icon?: IconLike;
     iconProps?: IconProps;
 }
 
-export const Title: FC<TitleProps> = (props) => {
-    const {
-        variant,
-        bold,
-        underline,
-        truncate,
-        icon,
-        iconProps,
-        lineClamp,
-        m,
-        mx,
-        my,
-        mt,
-        mr,
-        mb,
-        ml,
-        me,
-        ms,
-        className,
-        children,
-        asChild,
-        ...restProps
-    } = props;
-    const Comp: any = asChild ? Slot : variant || "h1";
+export const Title: FC<TitleProps> = ({
+    variant,
+    bold,
+    underline,
+    truncate,
+    icon,
+    iconProps,
+    lineClamp,
+    m,
+    mx,
+    my,
+    mt,
+    mr,
+    mb,
+    ml,
+    me,
+    ms,
+    className,
+    children,
+    render,
+    ...props
+}) => {
+    const H = variant || "h1";
 
     return (
-        <Comp
-            className={cn(
-                titleVariants({
-                    variant,
-                    bold,
-                    underline,
-                    truncate,
-                    lineClamp,
-                    m,
-                    mx,
-                    my,
-                    mt,
-                    mr,
-                    mb,
-                    ml,
-                    me,
-                    ms,
-                }),
-                icon && "flex items-center",
-                className,
-            )}
-            {...restProps}
-        >
-            {icon && (
-                <Icon noShrink inline {...iconProps} className={cn("mr-2.5", iconProps?.className)}>
-                    {icon}
-                </Icon>
-            )}
-            {children}
-        </Comp>
+        <Render render={render}>
+            <H
+                className={cn(
+                    titleVariants({
+                        variant,
+                        bold,
+                        underline,
+                        truncate,
+                        lineClamp,
+                        m,
+                        mx,
+                        my,
+                        mt,
+                        mr,
+                        mb,
+                        ml,
+                        me,
+                        ms,
+                    }),
+                    icon && "flex items-center",
+                    className,
+                )}
+                {...props}
+            >
+                {icon && (
+                    <Icon noShrink inline {...iconProps} className={cn("mr-2.5", iconProps?.className)}>
+                        {icon}
+                    </Icon>
+                )}
+                {children}
+            </H>
+        </Render>
     );
 };

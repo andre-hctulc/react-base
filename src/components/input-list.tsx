@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState, type CSSProperties, type ElementType, type Ref } from "react";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { cn as twMerge } from "@/lib/utils.js";
-import { Slot } from "./slot.js";
+import { Render, type RenderProps } from "./render.js";
 
 export interface ListInputProps<T = any> {
     name?: string;
@@ -15,7 +15,7 @@ export interface ListInputProps<T = any> {
     required?: boolean;
 }
 
-export interface InputListProps<T = string> {
+export interface InputListProps<T = string> extends RenderProps {
     id?: string;
     readOnly?: boolean;
     disabled?: boolean;
@@ -27,7 +27,6 @@ export interface InputListProps<T = string> {
     className?: string;
     style?: CSSProperties;
     ref?: Ref<any>;
-    asChild?: boolean;
     /**
      * Passed to {@link renderInput} as default value for the input
      */
@@ -72,7 +71,6 @@ export const InputList = <T = string,>({
     renderValues,
     addIcon,
     style,
-    asChild,
     onChange,
     value,
     reverse,
@@ -83,13 +81,13 @@ export const InputList = <T = string,>({
     defaultInputValue,
     compareValues,
     id,
+    render,
     ...inputProps
 }: InputListProps<T>) => {
     const sortRef = useRefOf(sort);
     const compareRef = useRefOf(compareValues || compare);
     const onChangeRef = useRefOf(onChange);
     const [values, setValues] = useState<T[]>(value || defaultValue || []);
-    const Comp: any = asChild ? Slot : "div";
     const [candidate, setCandidate] = useState<T>();
     const change = (mutator: ((currentValues: T[]) => T[]) | T[]) => {
         setValues(mutator);
@@ -153,9 +151,11 @@ export const InputList = <T = string,>({
         });
 
     return (
-        <Comp className={twMerge("", className)} style={style} id={id}>
-            {reverse ? valuesEl : inpEl}
-            {reverse ? inpEl : valuesEl}
-        </Comp>
+        <Render render={render}>
+            <div className={twMerge("", className)} style={style} id={id}>
+                {reverse ? valuesEl : inpEl}
+                {reverse ? inpEl : valuesEl}
+            </div>
+        </Render>
     );
 };

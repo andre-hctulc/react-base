@@ -2,7 +2,7 @@ import { type FC, type ComponentProps } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils.js";
 import { msz } from "@/lib/variants.util.js";
-import { Slot } from "./slot.js";
+import { Render, type RenderProps } from "./render.js";
 
 const colorTextVariants = cva("", {
     variants: {
@@ -53,40 +53,38 @@ const colorTextVariants = cva("", {
 });
 
 export interface ColorTextProps
-    extends Omit<ComponentProps<"p">, "color">, VariantProps<typeof colorTextVariants> {
-    asChild?: boolean;
-}
+    extends Omit<ComponentProps<"p">, "color">, VariantProps<typeof colorTextVariants>, RenderProps {}
 
-export const ColorText: FC<ColorTextProps> = (props) => {
-    const {
-        color,
-        textSize,
-        lineClamp,
-        m,
-        mx,
-        my,
-        mt,
-        mr,
-        mb,
-        ml,
-        me,
-        ms,
-        className,
-        children,
-        asChild,
-        ...restProps
-    } = props;
-    const Comp = asChild ? Slot : "p";
+export const ColorText: FC<ColorTextProps> = ({
+    color,
+    textSize,
+    lineClamp,
+    m,
+    mx,
+    my,
+    mt,
+    mr,
+    mb,
+    ml,
+    me,
+    ms,
+    className,
+    children,
+    render,
+    ...props
+}) => {
     return (
-        <Comp
-            className={cn(
-                colorTextVariants({ color, textSize, lineClamp, m, mx, my, mt, mr, mb, ml, me, ms }),
-                className,
-            )}
-            {...restProps}
-        >
-            {children}
-        </Comp>
+        <Render render={render}>
+            <p
+                className={cn(
+                    colorTextVariants({ color, textSize, lineClamp, m, mx, my, mt, mr, mb, ml, me, ms }),
+                    className,
+                )}
+                {...props}
+            >
+                {children}
+            </p>
+        </Render>
     );
 };
 

@@ -1,6 +1,7 @@
 import { type ComponentProps, type FC, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion.js";
+import { Render, type RenderProps, type RenderProp } from "./render.js";
 
 export const AccordionOutline: FC<ComponentProps<typeof Accordion>> = ({ className, ...props }) => {
     return <Accordion className={cn("rounded-lg border", className)} {...props} />;
@@ -33,6 +34,8 @@ interface AccordionCardProps
      * Controlled open state
      */
     open?: boolean;
+    renderTrigger?: RenderProp;
+    renderContent?: RenderProp;
 }
 
 export const AccordionCard: FC<AccordionCardProps> = ({
@@ -42,6 +45,8 @@ export const AccordionCard: FC<AccordionCardProps> = ({
     keepMounted,
     open,
     defaultOpen = true,
+    renderTrigger,
+    renderContent,
     ...props
 }) => {
     const value = "content";
@@ -57,36 +62,19 @@ export const AccordionCard: FC<AccordionCardProps> = ({
             <AccordionOutlineItem value={value}>
                 {hasHeader &&
                     (collapsible ? (
-                        <AccordionOutlineTrigger>{title}</AccordionOutlineTrigger>
+                        <AccordionOutlineTrigger render={renderTrigger}>{title}</AccordionOutlineTrigger>
                     ) : (
                         <AccordionStaticHeader>
-                            <AccordionTitle>{title}</AccordionTitle>
+                            <Render render={renderTrigger}>
+                                <AccordionTitle>{title}</AccordionTitle>
+                            </Render>
                         </AccordionStaticHeader>
                     ))}
-                <AccordionContent keepMounted={!!keepMounted}>{children}</AccordionContent>
+                <AccordionContent render={renderContent} keepMounted={!!keepMounted}>
+                    {children}
+                </AccordionContent>
             </AccordionOutlineItem>
         </AccordionOutline>
-    );
-};
-
-interface FormCardProps extends AccordionCardProps {}
-
-/**
- * {@link AccordionCard} variant:
- *
- * Defaults {@link AccordionCardProps.keepMounted} to true
- * and {@link AccordionCardProps.collapsible} to false for use in forms.
- */
-export const FormCard: FC<FormCardProps> = ({
-    children,
-    collapsible = false,
-    keepMounted = true,
-    ...props
-}) => {
-    return (
-        <AccordionCard collapsible={collapsible} keepMounted={keepMounted} {...props}>
-            {children}
-        </AccordionCard>
     );
 };
 
@@ -96,12 +84,47 @@ export const AccordionTitle: FC<AccordionTitleProps> = ({ className, children, .
     return <h3 className="text-sm font-medium">{children}</h3>;
 };
 
-interface AccordionStaticHeaderProps extends ComponentProps<"div"> {}
+interface AccordionStaticHeaderProps extends ComponentProps<"div">, RenderProps {}
 
-export const AccordionStaticHeader: FC<AccordionStaticHeaderProps> = ({ className, children, ...props }) => {
+export const AccordionStaticHeader: FC<AccordionStaticHeaderProps> = ({
+    className,
+    children,
+    render,
+    ...props
+}) => {
     return (
-        <div className={cn("flex flex-1 items-center justify-between py-2.5", className)} {...props}>
+        <Render render={render}>
+            <div className={cn("flex flex-1 items-center justify-between py-2.5", className)} {...props}>
+                {children}
+            </div>
+        </Render>
+    );
+};
+
+interface FormCardProps extends AccordionCardProps {}
+
+/**
+ * {@link AccordionCard} variant:
+ *
+ * Renders the accordion card as a form fieldset with a legend as the trigger.
+ * Defaults {@link AccordionCardProps.keepMounted} to true
+ * and {@link AccordionCardProps.collapsible} to false for form compatibility.
+ */
+export const FormCard: FC<FormCardProps> = ({
+    children,
+    collapsible = false,
+    keepMounted = true,
+    ...props
+}) => {
+    return (
+        <AccordionCard
+            collapsible={collapsible}
+            keepMounted={keepMounted}
+            render={<fieldset />}
+            renderTrigger={<legend />}
+            {...props}
+        >
             {children}
-        </div>
+        </AccordionCard>
     );
 };
