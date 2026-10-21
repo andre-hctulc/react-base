@@ -188,7 +188,6 @@ export function InputMap<T = string>({
             >
                 <LucidePlus />
             </Button>
-            {duplicate && <span role="alert">This key already exists.</span>}
         </div>
     );
 

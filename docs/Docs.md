@@ -1,5 +1,32 @@
 # react-base
 
+## List inputs
+
+`InputList<T>` owns item rows and add/remove controls, just as `InputMap` does.
+`renderInput` renders only the value input and receives `index`, `candidate`
+(whether this is the new-item input), and `inputProps`. Spread the field props
+onto your input and adapt its change event to `onChange({ value })`.
+
+This replaces the previous `renderValues` callback and renderer-owned controls.
+`TextInputList` supplies text inputs or textareas through this same callback;
+`inputProps` customizes its draft input and `listInputProps` customizes existing
+inputs.
+
+Use `defaultValue` for uncontrolled state or `value` with `onChange` for controlled
+state. Every add, edit, and removal notifies `onChange({ value })`. Removing an item
+uses its index, so equal values can be removed individually. Existing inputs retain
+the supplied `name`; the draft is unnamed and excluded from form submission.
+
+The new-item input appears first by default; `reverse` places it last. `readOnly`
+hides add/remove controls and blocks changes; `disabled` disables controls and
+blocks changes. Enter adds an item; in textareas, Ctrl/Cmd+Enter adds an item and
+plain Enter inserts a newline. An undefined draft cannot be added; other values,
+including `0`, `false`, and empty strings, are valid candidates.
+
+`unique` replaces matching entries when adding, using `compareValues` (strict
+equality by default). `sort` sorts displayed items without mutating supplied arrays
+and sorts the emitted list when adding.
+
 ## Map inputs
 
 `InputMap<T>` edits a `Record<string, T>` with built-in key inputs and add/remove

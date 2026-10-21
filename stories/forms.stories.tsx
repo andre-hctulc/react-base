@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 import { FieldFilter } from "../src/components/field-filter.js";
 import { FieldTemplate } from "../src/components/field-template.js";
@@ -18,47 +19,18 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 function InputListExample() {
-    const [candidate, setCandidate] = useState("");
-
     return (
         <InputList
             defaultValue={["platform@example.com"]}
             unique
             className="max-w-md space-y-3"
-            renderInput={({ add }) => (
-                <div className="flex gap-2">
-                    <input
-                        className="h-9 grow rounded-md border bg-background px-3 text-sm"
-                        value={candidate}
-                        onChange={(event) => setCandidate(event.target.value)}
-                        placeholder="Add email"
-                    />
-                    <button
-                        className="rounded-md bg-primary px-3 text-sm text-primary-foreground"
-                        type="button"
-                        onClick={() => {
-                            add(candidate);
-                            setCandidate("");
-                        }}
-                    >
-                        Add
-                    </button>
-                </div>
-            )}
-            renderValues={({ values, remove }) => (
-                <ul className="space-y-2">
-                    {values.map((value) => (
-                        <li
-                            key={value}
-                            className="flex items-center justify-between rounded-md border px-3 py-2 text-sm"
-                        >
-                            {value}
-                            <button className="text-destructive" type="button" onClick={() => remove(value)}>
-                                Remove
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+            renderInput={({ inputProps: { onChange, ...inputProps } }) => (
+                <Input
+                    {...inputProps}
+                    value={inputProps.value ?? ""}
+                    onChange={(event) => onChange({ value: event.target.value })}
+                    placeholder="Add email"
+                />
             )}
         />
     );
@@ -71,6 +43,37 @@ export const Lists: Story = {
             <TextInputList defaultValue={["Monthly review"]} placeholder="Add task" unique />
         </div>
     ),
+};
+
+function ControlledListExample() {
+    const [value, setValue] = useState(["Repeated", "Repeated"]);
+
+    return (
+        <TextInputList
+            name="tasks"
+            value={value}
+            onChange={({ value }) => setValue(value)}
+            placeholder="New task"
+        />
+    );
+}
+
+export const ListControls: Story = {
+    render: () => <ControlledListExample />,
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        await userEvent.click(canvas.getByRole("button", { name: "Remove item 1" }));
+        await expect(canvas.getAllByRole("listitem")).toHaveLength(1);
+        await expect(canvas.getByRole("textbox", { name: "Item 1" })).toHaveValue("Repeated");
+        await userEvent.clear(canvas.getByRole("textbox", { name: "Item 1" }));
+        await userEvent.type(canvas.getByRole("textbox", { name: "Item 1" }), "Edited");
+        await expect(canvas.getByRole("textbox", { name: "Item 1" })).toHaveValue("Edited");
+        await userEvent.type(canvas.getByRole("textbox", { name: "New task" }), "Added{Enter}");
+        await expect(canvas.getAllByRole("listitem")).toHaveLength(2);
+        await expect(canvas.getByRole("textbox", { name: "Item 2" })).toHaveValue("Added");
+        await expect(canvas.getByRole("textbox", { name: "New task" })).toHaveValue("");
+        await expect(canvas.getByRole("textbox", { name: "New task" })).toHaveFocus();
+    },
 };
 
 function ControlledMapExample() {

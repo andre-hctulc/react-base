@@ -357,8 +357,9 @@
             "name": "input-list",
             "type": "registry:ui",
             "title": "InputList",
-            "description": "Base input list component.",
-            "registryDependencies": ["andre-hctulc/react-base/render"],
+            "description": "List editor with built-in add/remove controls and user-rendered value inputs.",
+            "dependencies": ["lucide-react"],
+            "registryDependencies": ["andre-hctulc/react-base/render", "andre-hctulc/react-base/use-ref-of", "button"],
             "files": [
                 {
                     "path": "input-list.tsx",
@@ -371,8 +372,7 @@
             "type": "registry:ui",
             "title": "TextInputList",
             "description": "Text input list component.",
-            "registryDependencies": ["andre-hctulc/react-base/input-list", "button", "input", "textarea"],
-            "dependencies": ["lucide-react"],
+            "registryDependencies": ["andre-hctulc/react-base/input-list", "input", "textarea"],
             "files": [
                 {
                     "path": "text-input-list.tsx",
