@@ -1,7 +1,15 @@
 "use client";
 
 import { createFieldSetUtil, type FieldSetParams } from "@dre44/form-data-parser";
-import { createContext, useContext, useMemo, type ComponentProps, type FC, type ReactNode } from "react";
+import {
+    cloneElement,
+    createContext,
+    isValidElement,
+    useContext,
+    type ComponentProps,
+    type FC,
+    type ReactNode,
+} from "react";
 import { FieldTemplate, type FieldParams } from "./field-template.js";
 
 type FormUtil = ReturnType<typeof createFieldSetUtil>;
@@ -52,23 +60,21 @@ export interface FieldInfo {
 }
 
 export function useField(fieldName?: string): FieldInfo {
-    const { getFieldDefaultValue, getFieldName, getFieldValue, isFieldIncluded, options } = useFormContext();
-    const info = useMemo<FieldInfo>(() => {
-        return {
-            params: {
-                name: getFieldName(fieldName),
-                value: getFieldValue(fieldName),
-                defaultValue: getFieldDefaultValue(fieldName),
-            },
-            isIncluded: isFieldIncluded(fieldName),
-        };
-    }, [fieldName]);
-    return info;
+    const { getFieldDefaultValue, getFieldName, getFieldValue, isFieldIncluded } = useFormContext();
+    return {
+        params: {
+            name: getFieldName(fieldName),
+            value: getFieldValue(fieldName),
+            defaultValue: getFieldDefaultValue(fieldName),
+        },
+        isIncluded: isFieldIncluded(fieldName),
+    };
 }
 
 type FieldTemplateCtxProps = ComponentProps<typeof FieldTemplate<false>> & {};
 
-export const FieldTemplateCtx: FC<FieldTemplateCtxProps> = ({ params, ...props }) => {
+/** Resolves params.name through the context prefix, including injected child input names. */
+export const FieldTemplateCtx: FC<FieldTemplateCtxProps> = ({ params, children, ...props }) => {
     const { options } = useFormContext();
     const { params: ctxParams, isIncluded } = useField(params.name);
 
@@ -78,12 +84,20 @@ export const FieldTemplateCtx: FC<FieldTemplateCtxProps> = ({ params, ...props }
 
     const mergedParams = { ...ctxParams };
     for (const [pName, pValue] of Object.entries(params)) {
-        if (pValue !== undefined) mergedParams[pName as keyof FieldParams] = pValue;
+        if (pName !== "name" && pValue !== undefined) {
+            mergedParams[pName as keyof FieldParams] = pValue;
+        }
     }
 
     if (options.plain) {
         delete mergedParams.description;
     }
 
-    return <FieldTemplate {...props} params={mergedParams} />;
+    return (
+        <FieldTemplate {...props} params={mergedParams}>
+            {isValidElement(children) && props.injectInputProps !== false
+                ? cloneElement(children, { name: mergedParams.name })
+                : children}
+        </FieldTemplate>
+    );
 };
