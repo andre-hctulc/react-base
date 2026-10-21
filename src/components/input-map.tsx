@@ -104,7 +104,14 @@ export function InputMap<T = string>({
         if (name === undefined) {
             return undefined;
         }
-        const pre = name.endsWith(".") ? name : `${name}.`;
+        let pre: string;
+        if (name === "." || name === "") {
+            pre = "";
+        } else if (name.endsWith(".")) {
+            pre = name;
+        } else {
+            pre = `${name}.`;
+        }
         return `${pre}${key}`;
     };
     const valuesEl = Object.entries(values).length > 0 && (
