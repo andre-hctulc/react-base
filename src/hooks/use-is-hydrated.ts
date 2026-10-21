@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type DependencyList } from "react";
 
 export function useIsHydrated() {
     const [hydrated, setHydrated] = useState(false);
@@ -10,7 +10,7 @@ export function useIsHydrated() {
     return hydrated;
 }
 
-export function useAfterHydration<T>(callback: () => T): T | undefined {
+export function useAfterHydration<T>(callback: () => T, deps?: DependencyList): T | undefined {
     const hydrated = useIsHydrated();
     const [result, setResult] = useState<T | undefined>(undefined);
     const callbackRef = useRef(callback);
@@ -23,7 +23,7 @@ export function useAfterHydration<T>(callback: () => T): T | undefined {
         if (hydrated) {
             setResult(() => callbackRef.current());
         }
-    }, [hydrated]);
+    }, [hydrated, ...(deps ?? [])]);
 
     return result;
 }

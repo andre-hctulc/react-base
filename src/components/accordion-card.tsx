@@ -36,6 +36,7 @@ interface AccordionCardProps
     open?: boolean;
     renderTrigger?: RenderProp;
     renderContent?: RenderProp;
+    triggerProps?: ComponentProps<typeof AccordionOutlineTrigger>;
 }
 
 export const AccordionCard: FC<AccordionCardProps> = ({
@@ -47,6 +48,7 @@ export const AccordionCard: FC<AccordionCardProps> = ({
     defaultOpen = true,
     renderTrigger,
     renderContent,
+    triggerProps,
     ...props
 }) => {
     const value = "content";
@@ -62,7 +64,9 @@ export const AccordionCard: FC<AccordionCardProps> = ({
             <AccordionOutlineItem value={value}>
                 {hasHeader &&
                     (collapsible ? (
-                        <AccordionOutlineTrigger render={renderTrigger}>{title}</AccordionOutlineTrigger>
+                        <AccordionOutlineTrigger render={renderTrigger} {...triggerProps}>
+                            {title}
+                        </AccordionOutlineTrigger>
                     ) : (
                         <AccordionStaticHeader>
                             <Render render={renderTrigger}>
@@ -123,6 +127,7 @@ export const FormCard: FC<FormCardProps> = ({
             render={<fieldset />}
             renderTrigger={<legend />}
             {...props}
+            triggerProps={{ nativeButton: false, ...props.triggerProps }}
         >
             {children}
         </AccordionCard>
