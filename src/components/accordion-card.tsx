@@ -127,7 +127,7 @@ export const FormCard: FC<FormCardProps> = ({
             render={<fieldset />}
             renderTrigger={<legend />}
             {...props}
-            triggerProps={{ nativeButton: false, ...props.triggerProps }}
+            triggerProps={{ nativeButton: false, className: "cursor-pointer", ...props.triggerProps }}
         >
             {children}
         </AccordionCard>

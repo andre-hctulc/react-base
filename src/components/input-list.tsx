@@ -50,6 +50,7 @@ export interface InputListProps<T = string> extends RenderProps {
         inputProps: ListInputProps<T>;
     }) => React.ReactNode;
     addIcon?: React.ReactNode;
+    /** Render the new-item input after the existing values. @default false */
     reverse?: boolean;
     unique?: boolean;
     sort?: (a: T, b: T) => number;
@@ -60,12 +61,12 @@ const compare = (a: any, b: any) => a === b;
 
 /**
  * ### Props
- * - `reverse`- Render the input at the top
+ * - `reverse` - Render the new-item input after the existing values. Default is `false`
  * - `compareValues` - Function to compare values. Default is `===`
  * - `unique` - Only allow unique values
  * - `sort` - Sort function for the values
  */
-export const InputList = <T = string,>({
+export function InputList<T = string>({
     className,
     renderInput,
     renderValues,
@@ -73,7 +74,7 @@ export const InputList = <T = string,>({
     style,
     onChange,
     value,
-    reverse,
+    reverse = false,
     unique,
     sort,
     defaultValue,
@@ -83,7 +84,7 @@ export const InputList = <T = string,>({
     id,
     render,
     ...inputProps
-}: InputListProps<T>) => {
+}: InputListProps<T>) {
     const sortRef = useRefOf(sort);
     const compareRef = useRefOf(compareValues || compare);
     const onChangeRef = useRefOf(onChange);
@@ -158,4 +159,4 @@ export const InputList = <T = string,>({
             </div>
         </Render>
     );
-};
+}

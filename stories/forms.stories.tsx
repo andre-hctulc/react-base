@@ -7,6 +7,7 @@ import { JsonForm } from "../src/components/json-form.js";
 import { RadioGroupFactory } from "../src/components/radio-group-factory.js";
 import { SelectFactory } from "../src/components/select-factory.js";
 import { TextInputList } from "../src/components/text-input-list.js";
+import { TextInputMap } from "../src/components/text-input-map.js";
 import { Input } from "../src/components/ui/input.js";
 
 const meta = {
@@ -68,6 +69,46 @@ export const Lists: Story = {
         <div className="grid max-w-2xl gap-8 md:grid-cols-2">
             <InputListExample />
             <TextInputList defaultValue={["Monthly review"]} placeholder="Add task" unique />
+        </div>
+    ),
+};
+
+function ControlledMapExample() {
+    const [value, setValue] = useState<Record<string, string>>({ language: "en" });
+
+    return (
+        <TextInputMap
+            id="controlled-map"
+            name="settings"
+            value={value}
+            onChange={({ value }) => setValue(value)}
+            keyPlaceholder="Setting"
+            placeholder="Value"
+        />
+    );
+}
+
+export const Maps: Story = {
+    render: () => (
+        <div className="grid max-w-3xl gap-8">
+            <ControlledMapExample />
+            <TextInputMap
+                id="multiline-map"
+                name="notes"
+                textarea
+                defaultValue={{ summary: "Monthly review" }}
+                keyPlaceholder="Note"
+                placeholder="Content"
+            />
+        </div>
+    ),
+};
+
+export const ReadOnlyAndDisabledMaps: Story = {
+    render: () => (
+        <div className="grid max-w-3xl gap-8">
+            <TextInputMap id="readonly-map" readOnly defaultValue={{ language: "en" }} />
+            <TextInputMap id="disabled-map" disabled defaultValue={{ language: "en" }} />
         </div>
     ),
 };

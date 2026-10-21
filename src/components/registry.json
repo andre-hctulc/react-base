@@ -381,6 +381,38 @@
             ]
         },
         {
+            "name": "input-map",
+            "type": "registry:ui",
+            "title": "InputMap",
+            "description": "Map editor with built-in key inputs and user-rendered value inputs.",
+            "dependencies": ["lucide-react"],
+            "registryDependencies": [
+                "button",
+                "input",
+                "andre-hctulc/react-base/render",
+                "andre-hctulc/react-base/use-ref-of"
+            ],
+            "files": [
+                {
+                    "path": "input-map.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
+            "name": "text-input-map",
+            "type": "registry:ui",
+            "title": "TextInputMap",
+            "description": "Text key/value editor with input or textarea values.",
+            "registryDependencies": ["andre-hctulc/react-base/input-map", "input", "textarea"],
+            "files": [
+                {
+                    "path": "text-input-map.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
             "name": "checklist",
             "type": "registry:ui",
             "title": "Checklist",

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "text-input-map",
+  "title": "TextInputMap",
+  "description": "Text key/value editor with input or textarea values.",
+  "registryDependencies": [
+    "andre-hctulc/react-base/input-map",
+    "input",
+    "textarea"
+  ],
+  "files": [
+    {
+      "path": "src/components/text-input-map.tsx",
+      "content": "\"use client\";\n\nimport { type ComponentProps } from \"react\";\nimport { cn } from \"@/lib/utils.js\";\nimport { Input } from \"@/components/ui/input.js\";\nimport { Textarea } from \"@/components/ui/textarea.js\";\nimport { InputMap, type InputMapProps } from \"./input-map.js\";\n\ninterface TextInputMapBaseProps extends Omit<InputMapProps<string>, \"renderInput\" | \"defaultInputValue\"> {\n    placeholder?: string;\n}\n\nexport type TextInputMapProps = TextInputMapBaseProps &\n    (\n        | {\n              textarea?: false;\n              inputProps?: ComponentProps<typeof Input>;\n              listInputProps?: ComponentProps<typeof Input>;\n          }\n        | {\n              textarea: true;\n              inputProps?: ComponentProps<typeof Textarea>;\n              listInputProps?: ComponentProps<typeof Textarea>;\n          }\n    );\n\n/** Text value inputs for InputMap's built-in key/value rows. */\nexport function TextInputMap(props: TextInputMapProps) {\n    const { textarea, inputProps, listInputProps, placeholder = \"Value\", ...mapProps } = props;\n\n    return (\n        <InputMap<string>\n            {...mapProps}\n            renderInput={({ key, candidate, inputProps: { onChange, ...valueProps } }) => {\n                const commonProps = {\n                    ...valueProps,\n                    value: valueProps.value ?? \"\",\n                    placeholder,\n                    \"aria-label\": candidate ? placeholder : `Value for ${key}`,\n                };\n\n                if (props.textarea) {\n                    const fieldProps = candidate ? props.inputProps : props.listInputProps;\n                    return (\n                        <Textarea\n                            {...fieldProps}\n                            {...commonProps}\n                            aria-label={fieldProps?.[\"aria-label\"] ?? commonProps[\"aria-label\"]}\n                            className={cn(\"grow\", fieldProps?.className)}\n                            onChange={(event) => {\n                                fieldProps?.onChange?.(event);\n                                if (!event.defaultPrevented) onChange({ value: event.target.value });\n                            }}\n                        />\n                    );\n                }\n\n                const fieldProps = candidate ? props.inputProps : props.listInputProps;\n                return (\n                    <Input\n                        type=\"text\"\n                        {...fieldProps}\n                        {...commonProps}\n                        aria-label={fieldProps?.[\"aria-label\"] ?? commonProps[\"aria-label\"]}\n                        className={cn(\"grow\", fieldProps?.className)}\n                        onChange={(event) => {\n                            fieldProps?.onChange?.(event);\n                            if (!event.defaultPrevented) onChange({ value: event.target.value });\n                        }}\n                    />\n                );\n            }}\n        />\n    );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
