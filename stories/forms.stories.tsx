@@ -159,6 +159,36 @@ export const FilteringAndFieldTemplate: Story = {
     ),
 };
 
+export const HorizontalFieldTemplate: Story = {
+    render: () => (
+        <FieldTemplate
+            className="max-w-xl"
+            orientation="horizontal"
+            params={{
+                name: "email",
+                label: "Email",
+                description: "Used for account notifications.",
+                error: "Enter a valid email address.",
+            }}
+        >
+            <Input type="email" />
+        </FieldTemplate>
+    ),
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        const label = canvas.getByText("Email");
+        const input = canvas.getByRole("textbox", { name: "Email" });
+        const field = input.closest('[data-slot="field"]')!;
+        const content = field.querySelector('[data-slot="field-content"]')!;
+
+        await expect(field).toHaveAttribute("data-orientation", "horizontal");
+        await expect(label.parentElement).toBe(field);
+        await expect(content).toContainElement(input);
+        await expect(content).toHaveTextContent("Used for account notifications.");
+        await expect(content).toHaveTextContent("Enter a valid email address.");
+    },
+};
+
 function ContextFieldInfo() {
     const { params } = useField("project");
     return <output aria-label="Context field">{JSON.stringify(params)}</output>;
