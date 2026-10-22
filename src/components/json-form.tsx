@@ -206,7 +206,7 @@ function WrapIfAdditionalTemplate({
 
 function TitleFieldTemplate({ title, id, required, optionalDataControl }: TitleFieldProps) {
     return (
-        <div className="mt-4 flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-2">
             <h3 id={id} className="text-base font-semibold">
                 {title} {required && <span className="text-destructive">*</span>}
             </h3>
