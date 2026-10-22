@@ -180,8 +180,8 @@ importers:
         specifier: ^3.2.6
         version: 3.2.7(react@19.2.8)(storybook@10.6.0(@types/react@19.2.18)(react@19.2.8))
       '@dre44/form-data-parser':
-        specifier: ^0.19.0
-        version: 0.19.0
+        specifier: ^0.24.0
+        version: 0.24.0
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.7(supports-color@7.2.0)
@@ -537,8 +537,8 @@ packages:
   '@dotenvx/primitives@0.8.0':
     resolution: {integrity: sha512-VYJy0uhFm9zTJ1TxBaW/pA8bjbOM/OttaNMwZ1RHG4JKyRG7DhSdiqD1ipQoAyoD22olUtxbP78W9xY3Wd11bg==}
 
-  '@dre44/form-data-parser@0.19.0':
-    resolution: {integrity: sha512-jcAisfyMawaedWvt/mu1NZlC8KabLBpF2k5oJODFqqelajszGsQrEBxFCBC+dE0oUH6rFEdYXnw5EAEKvqZ6FQ==}
+  '@dre44/form-data-parser@0.24.0':
+    resolution: {integrity: sha512-sEnh2QNNOMxbOHfjb6cXWJpNnESllG8Zz838JIY7LOsI5iYWXlW/r02NrfgocGczkoi7khUaN7MK8+xfJEx+XQ==}
 
   '@emnapi/core@1.11.0':
     resolution: {integrity: sha512-l9Oo58x0HOP5znGzVhYW9U3e5wVuA4LAZU2AGezTmkhO1CgQRFDhDg4nneHsu/t3WniXg9QrG2nIXL/ZS8ln8Q==}
@@ -4730,7 +4730,7 @@ snapshots:
 
   '@dotenvx/primitives@0.8.0': {}
 
-  '@dre44/form-data-parser@0.19.0':
+  '@dre44/form-data-parser@0.24.0':
     dependencies:
       dot-prop: 10.2.0
 

@@ -583,7 +583,8 @@
         "field",
         "input",
         "textarea",
-        "alert"
+        "alert",
+        "dropdown-menu"
       ],
       "files": [
         {

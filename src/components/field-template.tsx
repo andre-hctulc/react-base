@@ -46,6 +46,8 @@ export type FieldTemplateProps<S extends boolean> = (S extends true
     injectInputProps?: boolean;
 };
 
+// BUG change layout based on orientation. For horizontal on may use FieldContent (https://ui.shadcn.com/docs/components/base/checkbox)
+
 export function FieldTemplate<S extends boolean>({
     children,
     params,
