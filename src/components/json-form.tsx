@@ -242,7 +242,7 @@ function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
         <DefaultArrayFieldTemplate
             {...props}
             className={cn(
-                "flex flex-col gap-5 [&>.array-item-list]:flex [&>.array-item-list]:flex-col [&>.array-item-list]:gap-2",
+                "flex flex-col gap-2 [&>.array-item-list]:flex [&>.array-item-list]:flex-col [&>.array-item-list]:gap-2",
                 props.className,
             )}
         />
