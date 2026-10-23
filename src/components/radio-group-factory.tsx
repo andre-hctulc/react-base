@@ -26,6 +26,7 @@ export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({
     options,
     variant,
     readOnly,
+    disabled,
     onValueChange,
     ...props
 }) => {
@@ -52,7 +53,8 @@ export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({
                                 <RadioGroupItem
                                     value={option.value}
                                     id={id}
-                                    disabled={readOnly || option.disabled}
+                                    disabled={disabled || option.disabled}
+                                    readOnly={readOnly}
                                 />
                             </Field>
                         </FieldLabel>
@@ -68,7 +70,12 @@ export const RadioGroupFactory: FC<RadioGroupFactoryProps> = ({
                 const id = option.id || option.value;
                 return (
                     <Field key={option.value} orientation="horizontal">
-                        <RadioGroupItem value={option.value} id={id} disabled={readOnly || option.disabled} />
+                        <RadioGroupItem
+                            value={option.value}
+                            id={id}
+                            disabled={disabled || option.disabled}
+                            readOnly={readOnly}
+                        />
                         <FieldContent>
                             <FieldLabel htmlFor={id}>{option.title}</FieldLabel>
                             {option.description && <FieldDescription>{option.description}</FieldDescription>}
