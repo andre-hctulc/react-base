@@ -46,6 +46,63 @@ export const Lists: Story = {
     ),
 };
 
+export const DraftInputPlacement: Story = {
+    render: () => (
+        <div className="grid max-w-xl gap-8">
+            {[undefined, false].map((reverse) => (
+                <div key={String(reverse)} className="grid gap-4">
+                    <TextInputList
+                        aria-label={`List ${reverse === false ? "top" : "bottom"}`}
+                        role="group"
+                        reverse={reverse}
+                        defaultValue={["Existing item"]}
+                        placeholder="New item"
+                    />
+                    <TextInputMap
+                        aria-label={`Map ${reverse === false ? "top" : "bottom"}`}
+                        role="group"
+                        reverse={reverse}
+                        defaultValue={{ language: "en" }}
+                        keyPlaceholder="New key"
+                        placeholder="New value"
+                    />
+                </div>
+            ))}
+        </div>
+    ),
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        for (const position of ["top", "bottom"]) {
+            for (const type of ["List", "Map"]) {
+                const group = within(canvas.getByRole("group", { name: `${type} ${position}` }));
+                const existing = group.getByRole("textbox", {
+                    name: type === "List" ? "Item 1" : "Value for language",
+                });
+                const draft = group.getByRole("textbox", {
+                    name: type === "List" ? "New item" : "New value",
+                });
+                const [first, second] = position === "bottom" ? [existing, draft] : [draft, existing];
+                await expect(first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING)
+                    .toBeTruthy();
+                if (type === "Map") {
+                    await userEvent.type(group.getByRole("textbox", { name: "New key" }), "timezone");
+                }
+                await userEvent.type(draft, "Added{Enter}");
+                await expect(group.getAllByRole("listitem")).toHaveLength(2);
+                await expect(group.getByRole("textbox", {
+                    name: type === "List" ? "Item 2" : "Value for timezone",
+                })).toHaveValue("Added");
+                const nextDraft = group.getByRole("textbox", {
+                    name: type === "List" ? "New item" : "New value",
+                });
+                await expect(nextDraft).toHaveValue("");
+                await expect(type === "List" ? nextDraft : group.getByRole("textbox", { name: "New key" }))
+                    .toHaveFocus();
+            }
+        }
+    },
+};
+
 function ControlledListExample() {
     const [value, setValue] = useState(["Repeated", "Repeated"]);
 

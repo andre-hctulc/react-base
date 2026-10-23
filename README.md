@@ -1,5 +1,11 @@
 # react-base
 
+## Input lists and maps
+
+`InputList` and `InputMap` render the new-entry inputs after existing items by
+default. This also applies to `TextInputList` and `TextInputMap`. Set
+`reverse={false}` to keep the new-entry inputs above existing items.
+
 ## JSON form
 
 `JsonForm` renders JSON Schema forms with RJSF and AJV. Use `defaultValue` for

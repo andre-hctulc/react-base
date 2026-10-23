@@ -37,7 +37,7 @@ export interface InputMapProps<T = string>
     defaultInputValue?: T;
     keyPlaceholder?: string;
     keyInputProps?: Omit<ComponentProps<typeof Input>, "ref">;
-    /** Render the new-item input after the existing values. @default false */
+    /** Render the new-item input after the existing values. Set false to place it first. @default true */
     reverse?: boolean;
     /** Render only the value input; key inputs and row controls are provided by InputMap. */
     renderInput: (params: { key: string; candidate: boolean; inputProps: MapInputProps<T> }) => ReactNode;
@@ -52,7 +52,7 @@ export function InputMap<T = string>({
     readOnly,
     disabled,
     required,
-    reverse = false,
+    reverse = true,
     keyPlaceholder = "Key",
     keyInputProps,
     renderInput,

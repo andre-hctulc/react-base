@@ -42,7 +42,7 @@ export interface InputListProps<T = string>
         inputProps: ListInputProps<T>;
     }) => ReactNode;
     addIcon?: ReactNode;
-    /** Render the new-item input after the existing values. @default false */
+    /** Render the new-item input after the existing values. Set false to place it first. @default true */
     reverse?: boolean;
     unique?: boolean;
     sort?: (a: T, b: T) => number;
@@ -58,7 +58,7 @@ export function InputList<T = string>({
     readOnly,
     disabled,
     required,
-    reverse = false,
+    reverse = true,
     unique,
     sort,
     compareValues = (a, b) => a === b,
