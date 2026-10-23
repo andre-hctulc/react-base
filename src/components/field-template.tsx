@@ -24,6 +24,8 @@ export interface FieldParams {
     error?: string;
     defaultValue?: any;
     value?: any;
+    readOnly?: boolean;
+    disabled?: boolean;
 }
 
 interface ComputedFieldParams {
@@ -31,8 +33,7 @@ interface ComputedFieldParams {
     value?: any;
 }
 
-export type FieldInputProps = Pick<FieldParams, "name" | "id"> &
-    Pick<ComputedFieldParams, "defaultValue" | "value">;
+export type FieldInputProps = Omit<FieldParams, "label" | "error" | "description">;
 
 export type FieldRenderer = (params: FieldParams & ComputedFieldParams) => ReactNode;
 
@@ -67,8 +68,10 @@ export function FieldTemplate<S extends boolean>({
         label: params.label ?? name,
         description: params.description,
         error: params.error,
-        defaultValue: params.defaultValue ?? childProps.defaultValue,
-        value: params.value ?? childProps.value,
+        defaultValue: childProps.defaultValue ?? params.defaultValue,
+        value: childProps.value ?? params.value,
+        readOnly: childProps.readOnly ?? params.readOnly,
+        disabled: childProps.disabled ?? params.disabled,
     };
 
     const inputProps: FieldInputProps = {
@@ -76,6 +79,8 @@ export function FieldTemplate<S extends boolean>({
         id: p.id,
         defaultValue: p.defaultValue,
         value: p.value,
+        readOnly: p.readOnly,
+        disabled: p.disabled,
     };
     // remove undefined values from inputProps
     for (const [key, value] of Object.entries(inputProps)) {
@@ -83,8 +88,8 @@ export function FieldTemplate<S extends boolean>({
             delete inputProps[key as keyof FieldInputProps];
         }
     }
-    const isHorizontal =
-        !asSet && "orientation" in fieldProps && fieldProps.orientation === "horizontal";
+    
+    const isHorizontal = !asSet && "orientation" in fieldProps && fieldProps.orientation === "horizontal";
 
     if (asSet) {
         return (

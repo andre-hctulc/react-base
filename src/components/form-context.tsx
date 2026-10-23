@@ -16,6 +16,7 @@ type FormUtil = ReturnType<typeof createFieldSetUtil>;
 
 export type FormOptions = Omit<FieldSetParams, "fieldName" | "formValues" | "defaultFormValues"> & {
     plain?: boolean;
+    readOnly?: boolean;
 };
 
 export interface FormContext<V extends object = Record<string, unknown>> extends FormUtil {
@@ -50,10 +51,14 @@ export function FormContextProvider<V extends object = Record<string, unknown>>(
     defaultFormValues,
 }: FormContextProviderProps<V>) {
     const util = createFieldSetUtil({ ...options, defaultFormValues, formValues });
-    const context: FormContext<any> = { ...util, formValues, defaultFormValues, options: options ?? {} };
+    const context: FormContext<any> = {
+        ...util,
+        formValues,
+        defaultFormValues,
+        options: options ?? {},
+    };
     return <FormContextValue.Provider value={context}>{children}</FormContextValue.Provider>;
 }
-
 export interface FieldInfo {
     params: FieldParams;
     isIncluded: boolean;

@@ -450,10 +450,12 @@ function widgetValue(props: WidgetProps, emptyValue: unknown) {
 
 function widgetFocusHandlers(props: WidgetProps) {
     return {
-        onBlur: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            props.onBlur(props.id, event.currentTarget.value),
-        onFocus: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            props.onFocus(props.id, event.currentTarget.value),
+        onBlur: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            props.onBlur(props.id, event.currentTarget.value);
+        },
+        onFocus: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            props.onFocus(props.id, event.currentTarget.value);
+        },
     };
 }
 
