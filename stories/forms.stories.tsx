@@ -82,22 +82,26 @@ export const DraftInputPlacement: Story = {
                     name: type === "List" ? "New item" : "New value",
                 });
                 const [first, second] = position === "bottom" ? [existing, draft] : [draft, existing];
-                await expect(first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING)
-                    .toBeTruthy();
+                await expect(
+                    first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING,
+                ).toBeTruthy();
                 if (type === "Map") {
                     await userEvent.type(group.getByRole("textbox", { name: "New key" }), "timezone");
                 }
                 await userEvent.type(draft, "Added{Enter}");
                 await expect(group.getAllByRole("listitem")).toHaveLength(2);
-                await expect(group.getByRole("textbox", {
-                    name: type === "List" ? "Item 2" : "Value for timezone",
-                })).toHaveValue("Added");
+                await expect(
+                    group.getByRole("textbox", {
+                        name: type === "List" ? "Item 2" : "Value for timezone",
+                    }),
+                ).toHaveValue("Added");
                 const nextDraft = group.getByRole("textbox", {
                     name: type === "List" ? "New item" : "New value",
                 });
                 await expect(nextDraft).toHaveValue("");
-                await expect(type === "List" ? nextDraft : group.getByRole("textbox", { name: "New key" }))
-                    .toHaveFocus();
+                await expect(
+                    type === "List" ? nextDraft : group.getByRole("textbox", { name: "New key" }),
+                ).toHaveFocus();
             }
         }
     },
@@ -277,16 +281,11 @@ function ContextFieldsExample() {
                         <input aria-label="Rendered project" name={name} value={value} readOnly />
                     )}
                 </FieldTemplateCtx>
-                <FieldTemplateCtx
-                    params={{ name: "project", label: "Explicit value", value: "Override" }}
-                >
+                <FieldTemplateCtx params={{ name: "project", label: "Explicit value", value: "Override" }}>
                     <Input readOnly />
                 </FieldTemplateCtx>
                 <FieldTemplateCtx params={{ name: "hidden", label: "Hidden field" }}>
                     <Input />
-                </FieldTemplateCtx>
-                <FieldTemplateCtx params={{ name: "project" }} injectInputProps={false}>
-                    <Input aria-label="Unmodified input" name="custom" defaultValue="Child" />
                 </FieldTemplateCtx>
             </FormContextProvider>
             <FieldTemplate params={{ name: "template", label: "Standalone input" }}>
@@ -321,9 +320,15 @@ export const ContextFields: Story = {
         await checkContext("team.", "Updated", "New default");
         await expect(canvas.queryByRole("textbox", { name: "Hidden field" })).not.toBeInTheDocument();
         await expect(canvas.queryByText("Project description")).not.toBeInTheDocument();
-        await expect(canvas.getByRole("textbox", { name: "Unmodified input" })).toHaveAttribute("name", "custom");
+        await expect(canvas.getByRole("textbox", { name: "Unmodified input" })).toHaveAttribute(
+            "name",
+            "custom",
+        );
         await expect(canvas.getByRole("textbox", { name: "Unmodified input" })).toHaveValue("Child");
-        await expect(canvas.getByRole("textbox", { name: "Standalone input" })).toHaveAttribute("name", "standalone");
+        await expect(canvas.getByRole("textbox", { name: "Standalone input" })).toHaveAttribute(
+            "name",
+            "standalone",
+        );
     },
 };
 
