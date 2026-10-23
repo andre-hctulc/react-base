@@ -44,15 +44,12 @@ export type FieldTemplateProps<S extends boolean> = (S extends true
     params: FieldParams;
     /** Render {@link FieldSet} instead of {@link Field} */
     asSet?: S;
-    /** @default true */
-    injectInputProps?: boolean;
 };
 
 export function FieldTemplate<S extends boolean>({
     children,
     params,
     asSet,
-    injectInputProps,
     ...fieldProps
 }: FieldTemplateProps<S>): ReactNode {
     const childProps = isValidElement(children) ? children.props : {};
@@ -88,7 +85,7 @@ export function FieldTemplate<S extends boolean>({
             delete inputProps[key as keyof FieldInputProps];
         }
     }
-    
+
     const isHorizontal = !asSet && "orientation" in fieldProps && fieldProps.orientation === "horizontal";
 
     if (asSet) {
@@ -98,7 +95,7 @@ export function FieldTemplate<S extends boolean>({
                     <>
                         {p.label && <FieldLegend variant="label">{p.label}</FieldLegend>}
                         {p.description && <FieldDescription>{p.description}</FieldDescription>}
-                        {cloneElement(children, injectInputProps === false ? {} : inputProps)}
+                        {cloneElement(children, inputProps)}
                         {p.error && <FieldError>{p.error}</FieldError>}
                     </>
                 ) : (
@@ -115,7 +112,7 @@ export function FieldTemplate<S extends boolean>({
                     <>
                         {p.label && <FieldLabel htmlFor={id}>{p.label}</FieldLabel>}
                         <FieldContent>
-                            {cloneElement(children, injectInputProps === false ? {} : inputProps)}
+                            {cloneElement(children, inputProps)}
                             {p.description && <FieldDescription>{p.description}</FieldDescription>}
                             {p.error && <FieldError>{p.error}</FieldError>}
                         </FieldContent>
@@ -123,7 +120,7 @@ export function FieldTemplate<S extends boolean>({
                 ) : (
                     <>
                         {p.label && <FieldLabel htmlFor={id}>{p.label}</FieldLabel>}
-                        {cloneElement(children, injectInputProps === false ? {} : inputProps)}
+                        {cloneElement(children, inputProps)}
                         {p.description && <FieldDescription>{p.description}</FieldDescription>}
                         {p.error && <FieldError>{p.error}</FieldError>}
                     </>

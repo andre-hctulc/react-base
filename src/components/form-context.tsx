@@ -17,6 +17,7 @@ type FormUtil = ReturnType<typeof createFieldSetUtil>;
 export type FormOptions = Omit<FieldSetParams, "fieldName" | "formValues" | "defaultFormValues"> & {
     plain?: boolean;
     readOnly?: boolean;
+    disabled?: boolean;
 };
 
 export interface FormContext<V extends object = Record<string, unknown>> extends FormUtil {
@@ -65,12 +66,14 @@ export interface FieldInfo {
 }
 
 export function useField(fieldName?: string): FieldInfo {
-    const { getFieldDefaultValue, getFieldName, getFieldValue, isFieldIncluded } = useFormContext();
+    const { getFieldDefaultValue, getFieldName, getFieldValue, isFieldIncluded, options } = useFormContext();
     return {
         params: {
             name: getFieldName(fieldName),
             value: getFieldValue(fieldName),
             defaultValue: getFieldDefaultValue(fieldName),
+            readOnly: Boolean(options?.readOnly),
+            disabled: Boolean(options?.disabled),
         },
         isIncluded: isFieldIncluded(fieldName),
     };
@@ -100,9 +103,7 @@ export const FieldTemplateCtx: FC<FieldTemplateCtxProps> = ({ params, children, 
 
     return (
         <FieldTemplate {...props} params={mergedParams}>
-            {isValidElement(children) && props.injectInputProps !== false
-                ? cloneElement(children, { name: mergedParams.name })
-                : children}
+            {isValidElement(children) ? cloneElement(children, { name: mergedParams.name }) : children}
         </FieldTemplate>
     );
 };
