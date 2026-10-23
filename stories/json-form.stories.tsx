@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 import { JsonForm, type JsonFormProps } from "../src/components/json-form.js";
+import { workspaceProfileSchema } from "./json-form.schema.js";
 
 const meta = {
     title: "Components/JsonForm",
@@ -27,6 +28,70 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const NestedFields: Story = {
+    args: {
+        className: "max-w-2xl",
+        schema: workspaceProfileSchema,
+        defaultValue: {
+            workspaceName: "Platform",
+            owner: {
+                name: "Ada Lovelace",
+                email: "ada@example.com",
+                address: {
+                    street: "12 Example Street",
+                    city: "London",
+                    postalCode: "SW1A 1AA",
+                },
+            },
+            office: {
+                city: "London",
+                country: "United Kingdom",
+            },
+            teamMembers: [
+                { name: "Grace Hopper", email: "grace@example.com" },
+                { name: "Katherine Johnson", email: "katherine@example.com" },
+            ],
+            notificationsEnabled: true,
+        },
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        await expect(canvas.getByRole("textbox", { name: /^Workspace name/ })).toHaveValue("Platform");
+        await expect(canvas.getByRole("textbox", { name: "Full name" })).toHaveValue("Ada Lovelace");
+        for (const city of canvas.getAllByRole("textbox", { name: "City" })) {
+            await expect(city).toHaveValue("London");
+        }
+        for (const email of canvas.getAllByRole("textbox", { name: "Email" })) {
+            await expect(email).toHaveAttribute("type", "email");
+            await expect(email).toHaveAttribute("data-slot", "input");
+        }
+        for (const id of ["root_owner", "root_owner_address"]) {
+            const nestedObject = canvasElement.querySelector(`#${id}`)!;
+            await expect(nestedObject).toHaveClass("border-l", "pl-3");
+            const style = getComputedStyle(nestedObject);
+            await expect(style.borderLeftWidth).toBe("1px");
+            await expect(style.borderRightWidth).toBe("0px");
+            await expect(style.paddingLeft).toBe("12px");
+            await expect(style.backgroundColor).toBe("rgba(0, 0, 0, 0)");
+        }
+        await expect(canvas.queryByRole("heading", { name: "Team members-1 *" })).not.toBeInTheDocument();
+        await expect(canvas.queryByRole("heading", { name: "Team members-2 *" })).not.toBeInTheDocument();
+        const memberNames = canvas.getAllByRole("textbox", { name: "Name" });
+        await expect(memberNames).toHaveLength(2);
+        await expect(memberNames[0]).toHaveValue("Grace Hopper");
+        await expect(memberNames[1]).toHaveValue("Katherine Johnson");
+        const memberItems = canvasElement.querySelectorAll(
+            "#root_teamMembers > .array-item-list > .rjsf-array-item",
+        );
+        await expect(getComputedStyle(memberItems[0]).borderTopWidth).toBe("0px");
+        const secondMemberStyle = getComputedStyle(memberItems[1]);
+        await expect(secondMemberStyle.borderTopWidth).toBe("1px");
+        await expect(secondMemberStyle.paddingTop).toBe("16px");
+        await expect(secondMemberStyle.marginTop).toBe("8px");
+        await expect(canvas.getByRole("checkbox", { name: "Enable email notifications" })).toBeChecked();
+    },
+};
 
 function StatefulForm(props: JsonFormProps) {
     const [value, setValue] = useState(props.defaultValue);
@@ -109,6 +174,13 @@ export const AdditionalProperties: Story = {
         await expect(languageKey).toHaveAttribute("placeholder", "Property name");
         await expect(languageKey.labels?.[0]).toHaveClass("sr-only");
         await expect(languageValue).toHaveAttribute("placeholder", "Value");
+        const page = within(canvasElement.ownerDocument.body);
+        for (const name of ["Remove item", "Add item"]) {
+            const button = canvas.getByRole("button", { name });
+            await userEvent.hover(button);
+            await expect(await page.findByRole("tooltip")).toHaveTextContent(name);
+            await userEvent.unhover(button);
+        }
         await userEvent.click(canvas.getByRole("button", { name: "Add item" }));
         const key = canvas.getByRole("textbox", { name: "newKey Key" });
         await userEvent.clear(key);
@@ -164,9 +236,12 @@ export const ObjectSpacing: Story = {
         const canvas = within(canvasElement);
         const field = (name: string) =>
             canvas.getByRole("textbox", { name }).closest('[data-slot="field"]')!;
+        const object = canvasElement.querySelector(".rjsf-field-object fieldset")!;
+        const objectGap = parseFloat(getComputedStyle(object).rowGap);
         const array = canvasElement.querySelector(".rjsf-field-array fieldset")!;
-        const gap = parseFloat(getComputedStyle(array).rowGap);
-        await expect(gap).toBeGreaterThan(0);
+        const arrayGap = parseFloat(getComputedStyle(array).rowGap);
+        await expect(objectGap).toBeGreaterThan(0);
+        await expect(arrayGap).toBeGreaterThan(0);
         const arrayItems = array.querySelector(".array-item-list")!;
         await expect(parseFloat(getComputedStyle(arrayItems).rowGap)).toBe(8);
         for (const [first, second] of [
@@ -175,20 +250,20 @@ export const ObjectSpacing: Story = {
             [field("language Key").parentElement!, field("timezone Key").parentElement!],
         ]) {
             const actualGap = second.getBoundingClientRect().top - first.getBoundingClientRect().bottom;
-            await expect(actualGap).toBeCloseTo(gap, 1);
+            await expect(actualGap).toBeCloseTo(objectGap, 1);
         }
         const propertyAdd = canvasElement.querySelector(".rjsf-object-property-expand")!;
         const arrayAdd = within(array).getByRole("button", { name: "Add item" });
         await expect(field("Name").compareDocumentPosition(propertyAdd) & Node.DOCUMENT_POSITION_FOLLOWING)
             .toBeTruthy();
-        for (const [button, last] of [
-            [propertyAdd, field("timezone Key").parentElement!],
-            [arrayAdd, arrayAdd.previousElementSibling!],
+        for (const [button, last, expectedGap] of [
+            [propertyAdd, field("timezone Key").parentElement!, objectGap],
+            [arrayAdd, arrayAdd.previousElementSibling!, arrayGap],
         ]) {
             await expect(last.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING)
                 .toBeTruthy();
             await expect(button.getBoundingClientRect().top - last.getBoundingClientRect().bottom)
-                .toBeCloseTo(gap, 1);
+                .toBeCloseTo(expectedGap, 1);
             await expect(getComputedStyle(button).marginTop).toBe("0px");
         }
     },
@@ -233,6 +308,10 @@ export const ArrayControls: Story = {
         for (const label of itemLabels) {
             await expect(label).toHaveClass("sr-only");
         }
+        const actions = canvas.getAllByRole("button", { name: "Item actions" })[0];
+        await userEvent.hover(actions);
+        await expect(await page.findByRole("tooltip")).toHaveTextContent("Item actions");
+        await userEvent.unhover(actions);
         await runItemAction("Copy item");
         await expect(canvas.getByRole("status", { name: "Form data" })).toHaveTextContent(
             '["First","First","Second"]',

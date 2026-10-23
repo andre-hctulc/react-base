@@ -14,6 +14,8 @@ Declared and additional object properties use the same vertical spacing as
 array items, including inside nested objects.
 Add-property and add-item controls appear below their properties or items,
 using the normal field gap without extra button margins.
+Icon-only action buttons and array item menu triggers show tooltips describing
+their actions.
 
 Run `pnpm storybook` and open **Components / JsonForm** for dedicated examples and
 interaction checks. Run the focused browser regression suite with:

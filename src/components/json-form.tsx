@@ -5,10 +5,12 @@ import {
     ADDITIONAL_PROPERTY_FLAG,
     ariaDescribedByIds,
     getTemplate,
+    getSchemaType,
     getSubmitButtonOptions,
     getUiOptions,
     helpId,
     schemaRequiresTrueValue,
+    titleId,
     TranslatableString,
     type ArrayFieldItemTemplateProps,
     type ArrayFieldTemplateProps,
@@ -33,6 +35,7 @@ import { Checkbox } from "@/components/ui/checkbox.js";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field.js";
 import { Input } from "@/components/ui/input.js";
 import { Textarea } from "@/components/ui/textarea.js";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip.js";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -45,6 +48,7 @@ import { createContext, useContext, type FocusEvent, type ReactNode, type Ref } 
 import { Alert, AlertDescription } from "@/components/ui/alert.js";
 
 const JsonFormFieldPlaceholderContext = createContext<string | undefined>(undefined);
+const ArrayItemTitleContext = createContext<string | undefined>(undefined);
 
 export type JsonFormRef<
     T = any,
@@ -205,6 +209,9 @@ function WrapIfAdditionalTemplate({
 }
 
 function TitleFieldTemplate({ title, id, required, optionalDataControl }: TitleFieldProps) {
+    const arrayItemTitleId = useContext(ArrayItemTitleContext);
+    if (id === arrayItemTitleId) return null;
+
     return (
         <div className="flex items-center justify-between gap-2">
             <h3 id={id} className="text-base font-semibold">
@@ -234,7 +241,14 @@ const DefaultObjectFieldTemplate = getDefaultRegistry().templates.ObjectFieldTem
 const DefaultArrayFieldTemplate = getDefaultRegistry().templates.ArrayFieldTemplate;
 
 function ObjectFieldTemplate(props: ObjectFieldTemplateProps) {
-    return <DefaultObjectFieldTemplate {...props} className={cn("flex flex-col gap-5", props.className)} />;
+    const isNested = props.fieldPathId.path.length > 0;
+
+    return (
+        <DefaultObjectFieldTemplate
+            {...props}
+            className={cn("flex flex-col gap-5", isNested && "border-l border-border pl-3", props.className)}
+        />
+    );
 }
 
 function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
@@ -254,6 +268,7 @@ function ArrayFieldItemTemplate({
     className,
     hasToolbar,
     buttonsProps,
+    schema,
 }: ArrayFieldItemTemplateProps) {
     const {
         hasCopy,
@@ -268,21 +283,39 @@ function ArrayFieldItemTemplate({
         readonly,
     } = buttonsProps;
     const isActionDisabled = disabled || readonly;
+    const itemTitleId = titleId(buttonsProps.fieldPathId);
 
     return (
-        <div className={cn("flex gap-1", className)}>
-            <div className="grow">{children}</div>
+        <div
+            className={cn(
+                "flex gap-1",
+                getSchemaType(schema) === "object" &&
+                    "mt-2 border-t border-border pt-4 first:mt-0 first:border-t-0 first:pt-0",
+                className,
+            )}
+        >
+            <ArrayItemTitleContext.Provider value={itemTitleId}>
+                <div className="min-w-0 grow">{children}</div>
+            </ArrayItemTitleContext.Provider>
             {hasToolbar && (
                 <DropdownMenu>
-                    <DropdownMenuTrigger
-                        aria-label="Item actions"
-                        disabled={isActionDisabled}
-                        render={<Button variant="ghost" size="icon-sm" />}
-                        className="mt-0.5"
-                    >
-                        <MoreHorizontalIcon />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <Tooltip>
+                        <TooltipTrigger
+                            aria-label="Item actions"
+                            disabled={isActionDisabled}
+                            render={
+                                <DropdownMenuTrigger
+                                    disabled={isActionDisabled}
+                                    render={<Button variant="ghost" size="icon-sm" />}
+                                />
+                            }
+                            className="mt-0.5"
+                        >
+                            <MoreHorizontalIcon />
+                        </TooltipTrigger>
+                        <TooltipContent role="tooltip">Item actions</TooltipContent>
+                    </Tooltip>
+                    <DropdownMenuContent align="end" className="w-40">
                         {hasCopy && (
                             <DropdownMenuItem disabled={isActionDisabled} onClick={onCopyItem}>
                                 <Copy />
@@ -336,20 +369,27 @@ function FormIconButton({
     id,
 }: FormIconButtonProps) {
     return (
-        <Button
-            id={id}
-            aria-label={label}
-            title={label}
-            className={className}
-            disabled={disabled}
-            onClick={onClick}
-            size="icon-sm"
-            style={style}
-            type={type ?? "button"}
-            variant={destructive ? "destructive" : "outline"}
-        >
-            {children}
-        </Button>
+        <Tooltip>
+            <TooltipTrigger
+                id={id}
+                aria-label={label}
+                className={className}
+                disabled={disabled}
+                onClick={onClick}
+                style={style}
+                type={type ?? "button"}
+                render={
+                    <Button
+                        disabled={disabled}
+                        size="icon-sm"
+                        variant={destructive ? "destructive" : "outline"}
+                    />
+                }
+            >
+                {children}
+            </TooltipTrigger>
+            <TooltipContent role="tooltip">{label}</TooltipContent>
+        </Tooltip>
     );
 }
 
@@ -424,6 +464,7 @@ function TextWidget(props: WidgetProps) {
         <Input
             id={props.id}
             name={props.htmlName ?? props.name}
+            type={props.schema.format === "email" ? "email" : "text"}
             value={widgetValue(props, "")}
             required={props.required}
             disabled={props.disabled}
@@ -516,7 +557,7 @@ const templates = {
     },
 };
 
-const widgets = { TextWidget, TextareaWidget, CheckboxWidget };
+const widgets = { TextWidget, TextareaWidget, CheckboxWidget, EmailWidget: TextWidget };
 
 /** A shadcn-styled JSON Schema form powered by RJSF and AJV. */
 export function JsonForm<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>({
@@ -553,7 +594,9 @@ export function JsonForm<T = any, S extends StrictRJSFSchema = RJSFSchema, F ext
             widgets={widgets as FormProps<T, S, F>["widgets"]}
             {...formProps}
         >
-            {children === undefined ? undefined : <FieldGroup>{children}</FieldGroup>}
+            <TooltipProvider>
+                {children === undefined ? undefined : <FieldGroup>{children}</FieldGroup>}
+            </TooltipProvider>
         </RjsfForm>
     );
 }

@@ -584,7 +584,8 @@
         "input",
         "textarea",
         "alert",
-        "dropdown-menu"
+        "dropdown-menu",
+        "tooltip"
       ],
       "files": [
         {
