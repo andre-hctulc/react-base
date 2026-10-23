@@ -112,8 +112,16 @@ export function useFormData<T extends object = Record<string, any>>({
             return;
         }
 
+        let syncTimeout: any;
         const handleChange = () => {
-            syncDataFrom(resolvedForm);
+            if (syncTimeout !== undefined) {
+                return;
+            }
+            // Let React process controlled input changes before reading the form.
+            syncTimeout = setTimeout(() => {
+                syncTimeout = undefined;
+                syncDataFrom(resolvedForm);
+            }, 0);
         };
 
         syncDataFrom(resolvedForm);
@@ -128,6 +136,7 @@ export function useFormData<T extends object = Record<string, any>>({
         });
 
         return () => {
+            if (syncTimeout) clearTimeout(syncTimeout);
             resolvedForm.removeEventListener("input", handleChange);
             resolvedForm.removeEventListener("change", handleChange);
             observer.disconnect();
