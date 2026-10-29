@@ -31,10 +31,8 @@ export interface LoadMoreListProps<TData = unknown> extends Omit<
     onError?: (error: unknown, key: string) => void;
     spinnerProps?: ComponentProps<typeof Spinner>;
     error?: ReactNode;
-    errorProps?: ComponentProps<"div"> | ComponentProps<"li">;
     /** Content displayed when the list is empty. */
     empty?: ReactNode;
-    emptyProps?: ComponentProps<"div"> | ComponentProps<"li">;
     swrOptions?: SWRInfiniteConfiguration<TData[], unknown>;
     /** Used for cache partitioning. */
     cacheId?: string;
@@ -61,9 +59,7 @@ export function LoadMoreList<TData = unknown>({
     onError,
     spinnerProps,
     error,
-    errorProps,
     empty,
-    emptyProps,
     preChildren,
     postChildren,
     swrOptions,
@@ -94,11 +90,7 @@ export function LoadMoreList<TData = unknown>({
         (index: number, previousData: TData[] | null) => [string, number] | null
     >(
         (pageIndex, previousPageData) => {
-            if (
-                isControlled ||
-                !loader ||
-                (previousPageData && previousPageData.length < pageSize)
-            ) {
+            if (isControlled || !loader || (previousPageData && previousPageData.length < pageSize)) {
                 return null;
             }
             return [cacheId ?? defaultCacheId, pageIndex];
@@ -146,7 +138,7 @@ export function LoadMoreList<TData = unknown>({
             {children(allItems)}
             {postChildren}
             {failed && (
-                <ItemRoot {...(errorProps as object)} className={cn("py-3", errorProps?.className)}>
+                <ItemRoot className={cn("py-3")}>
                     {error === undefined || typeof error === "string" ? (
                         <p role="alert" className="text-sm text-center text-destructive">
                             {error ?? "Failed to load items"}
@@ -156,11 +148,7 @@ export function LoadMoreList<TData = unknown>({
                     )}
                 </ItemRoot>
             )}
-            {isEmpty && !busy && !failed && !!empty && (
-                <ItemRoot {...(emptyProps as object)} className={cn("py-3", emptyProps?.className)}>
-                    {empty}
-                </ItemRoot>
-            )}
+            {isEmpty && !busy && !failed && !!empty && <ItemRoot>{empty}</ItemRoot>}
             {(canLoadMore || busy) && !failed && (
                 <ItemRoot
                     {...(buttonContainerProps as object)}

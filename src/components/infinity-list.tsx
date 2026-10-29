@@ -155,7 +155,6 @@ export type InfinityListProps<TData = any> = {
     spinnerProps?: ComponentProps<typeof Spinner>;
     /** */
     error?: ReactNode;
-    errorProps?: ComponentProps<"div"> | ComponentProps<"li">;
     /**
      * The maximum height of the list container.
      *
@@ -168,7 +167,6 @@ export type InfinityListProps<TData = any> = {
      * The content to display when the list is empty.
      */
     empty?: ReactNode;
-    emptyProps?: ComponentProps<"div"> | ComponentProps<"li">;
     swrOptions?: SWRInfiniteConfiguration<TData[], unknown>;
     /** Used for cache partitioning */
     cacheId?: string;
@@ -191,10 +189,8 @@ export function InfinityList<TData = any>({
     loadingProps,
     spinnerProps,
     error,
-    errorProps,
     style,
     empty,
-    emptyProps,
     preChildren,
     postChildren,
     ref,
@@ -300,7 +296,7 @@ export function InfinityList<TData = any>({
             {children(allItems)}
             {postChildren}
             {!!loadError && (
-                <ItemRoot {...(errorProps as object)} className={cn("py-3", errorProps?.className)}>
+                <ItemRoot className={cn("py-3")}>
                     {error === undefined || typeof error === "string" ? (
                         <p className="text-sm text-center text-destructive">
                             {error ?? "Failed to load items"}
@@ -310,11 +306,7 @@ export function InfinityList<TData = any>({
                     )}
                 </ItemRoot>
             )}
-            {isEmpty && !isLoading && !loadError && !!empty && (
-                <ItemRoot {...(emptyProps as object)} className={cn("py-3", emptyProps?.className)}>
-                    {empty}
-                </ItemRoot>
-            )}
+            {isEmpty && !isLoading && !loadError && !!empty && <ItemRoot>{empty}</ItemRoot>}
             {(loading || isLoading) && hasMore && !loadError && (
                 <ItemRoot
                     {...(loadingProps as object)}
