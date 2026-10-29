@@ -6,7 +6,6 @@ import {
     useLayoutEffect,
     useId,
     useRef,
-    useState,
     type ComponentProps,
     type HTMLProps,
     type ReactNode,
@@ -58,7 +57,6 @@ export function useInfinityList<TData = any>({
     cacheId,
 }: UseInfinityListOptions<TData>): UseInfinityListResult<TData> {
     const loaderRef = useRefOf(loader);
-    const [hasMore, setHasMore] = useState(true);
     const defaultCacheId = useId();
     const onErrorRef = useRefOf(onError);
 
@@ -98,6 +96,7 @@ export function useInfinityList<TData = any>({
 
     const items = data?.flat() ?? [];
     const itemsRef = useRefOf(items);
+    const hasMore = !data?.length || data[data.length - 1].length === pageSize;
 
     const loadMore = useCallback(async (): Promise<LoadResult<TData>> => {
         if (lodeMoreActive.current || isValidating || !hasMore || !loaderRef.current) {
@@ -106,10 +105,6 @@ export function useInfinityList<TData = any>({
         lodeMoreActive.current = true;
         try {
             const nextPages = await setSize((currentSize) => currentSize + 1);
-            const newHasMore = nextPages?.length
-                ? nextPages[nextPages.length - 1]?.length === pageSize
-                : false;
-            setHasMore(newHasMore);
             return { err: undefined, data: nextPages?.at(-1) ?? null };
         } catch (error) {
             return { err: error, data: null };

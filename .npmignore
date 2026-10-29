@@ -1,38 +1,25 @@
-#### VS Code ####
+# VSCode
 .vscode
 *.code-workspace
-
-#### TS ####
 /scripts
 /src
 tsconfig.*
 .eslintrc.json
-
-#### docs ####
-docs
-
-#### os ####
+/docs
 .DS_Store
-
-#### Storybook ####
-
+# Storybook
 .storybook
 storybook-static
 *storybook.log
 postcss.config.js
 /stories
-
 #### Turborepo ####
 .turbo
-
-#### Test ####
+# Test
 /test
 vitest.*
-
-#### shadcn ####
-
+# shadcn
 components.json
 postcss.config.js
-
-#### GitHub ####
+# GitHub
 .github

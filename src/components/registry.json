@@ -474,6 +474,23 @@
             ]
         },
         {
+            "name": "load-more-list",
+            "type": "registry:ui",
+            "title": "LoadMoreList",
+            "description": "Controlled or loader-driven paginated list with an explicit load more button instead of scroll triggers.",
+            "registryDependencies": [
+                "button",
+                "spinner",
+                "andre-hctulc/react-base/infinity-list"
+            ],
+            "files": [
+                {
+                    "path": "load-more-list.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
             "name": "infinity-list",
             "type": "registry:ui",
             "title": "InfinityList",
