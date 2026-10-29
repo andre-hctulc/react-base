@@ -1,10 +1,10 @@
 "use client";
 
-import { type ComponentProps, type HTMLProps, type ReactNode } from "react";
-import type { SWRInfiniteConfiguration } from "swr/infinite";
+import { useId, useRef, type ComponentProps, type HTMLProps, type ReactNode } from "react";
+import useSwrInfinite, { type SWRInfiniteConfiguration } from "swr/infinite";
 import { Button } from "@/components/ui/button.js";
 import { Spinner } from "@/components/ui/spinner.js";
-import { useInfinityList } from "@/components/infinity-list.js";
+import { useRefOf } from "@/hooks/use-ref-of.js";
 import { cn } from "@/lib/utils.js";
 
 export interface LoadMoreListProps<TData = unknown> extends Omit<
@@ -78,25 +78,67 @@ export function LoadMoreList<TData = unknown>({
     const Root = (as ?? "div") as "div";
     const ItemRoot = as === "ul" || as === "ol" ? "li" : "div";
     const isControlled = items !== undefined;
+    const defaultCacheId = useId();
+    const loaderRef = useRefOf(loader);
+    const onErrorRef = useRefOf(onError);
+    const loadMoreActive = useRef(false);
     const {
-        hasMore,
+        data,
         error: loadError,
         isLoading,
-        items: uncontrolledItems,
-        loadMore,
-    } = useInfinityList({
-        initialPageIndex,
-        pageSize,
-        loader: isControlled ? undefined : loader,
-        onError,
-        swrOptions,
-        cacheId,
-    });
-    const allItems = items ?? uncontrolledItems;
-    const busy = Boolean(loading || (!isControlled && isLoading));
+        isValidating,
+        setSize,
+    } = useSwrInfinite<
+        TData[],
+        unknown,
+        (index: number, previousData: TData[] | null) => [string, number] | null
+    >(
+        (pageIndex, previousPageData) => {
+            if (
+                isControlled ||
+                !loader ||
+                (previousPageData && previousPageData.length < pageSize)
+            ) {
+                return null;
+            }
+            return [cacheId ?? defaultCacheId, pageIndex];
+        },
+        async ([_, pageIndex]): Promise<TData[]> => {
+            const currentLoader = loaderRef.current;
+            if (!currentLoader) {
+                throw new Error("LoadMoreList requires a loader to fetch items");
+            }
+            const abortController = new AbortController();
+            return await currentLoader(pageIndex, pageSize, itemsRef.current, abortController.signal);
+        },
+        {
+            ...swrOptions,
+            initialSize: initialPageIndex + 1,
+            onError: (error, key, config) => {
+                swrOptions?.onError?.(error, key, config);
+                onErrorRef.current?.(error, key);
+            },
+        },
+    );
+    const allItems = items ?? data?.flat() ?? [];
+    const itemsRef = useRefOf(allItems);
+    const hasMore = !data?.length || data[data.length - 1].length === pageSize;
+    const busy = Boolean(loading || (!isControlled && (isLoading || isValidating)));
     const failed = !isControlled && loadError !== undefined;
     const canLoadMore = isControlled ? controlledHasMore : hasMore;
     const isEmpty = allItems.length === 0 && preChildren == null && postChildren == null;
+
+    async function loadMore() {
+        if (loadMoreActive.current || busy || !canLoadMore || !loader) {
+            return;
+        }
+        loadMoreActive.current = true;
+        try {
+            await setSize((currentSize) => currentSize + 1);
+        } finally {
+            loadMoreActive.current = false;
+        }
+    }
 
     return (
         <Root {...(props as ComponentProps<"div">)} className={className} aria-busy={busy}>
@@ -135,7 +177,7 @@ export function LoadMoreList<TData = unknown>({
                             buttonProps?.disabled ||
                             (isControlled ? !onLoadMore : !loader)
                         }
-                        onClick={(event) => {
+                        onClick={async (event) => {
                             buttonProps?.onClick?.(event);
                             if (event.defaultPrevented) {
                                 return;
@@ -143,7 +185,7 @@ export function LoadMoreList<TData = unknown>({
                             if (isControlled) {
                                 onLoadMore?.();
                             } else {
-                                void loadMore();
+                                await loadMore();
                             }
                         }}
                     >
