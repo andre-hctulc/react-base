@@ -23,7 +23,7 @@ export type InfinityListLoader<TData = any> = (
     pageSize: number,
     currentItems: TData[],
     abortSignal: AbortSignal,
-) => TData[] | Promise<TData[]>;
+) => Awaited<TData>[] | Promise<TData[]>;
 
 export interface LoadResult<TData = any> {
     err: unknown;

@@ -7,6 +7,13 @@ import { Spinner } from "@/components/ui/spinner.js";
 import { useRefOf } from "@/hooks/use-ref-of.js";
 import { cn } from "@/lib/utils.js";
 
+export type LoadMoreLoader<TData> = (
+    pageIndex: number,
+    pageSize: number,
+    currentItems: TData[],
+    abortSignal: AbortSignal,
+) => Awaited<TData>[] | Promise<TData[]>;
+
 export interface LoadMoreListProps<TData = unknown> extends Omit<
     HTMLProps<HTMLElement>,
     "children" | "as" | "onScroll" | "onWheel" | "onError"
@@ -21,12 +28,7 @@ export interface LoadMoreListProps<TData = unknown> extends Omit<
     postChildren?: ReactNode;
     children: (items: TData[]) => ReactNode;
     as?: "ul" | "ol" | "div";
-    loader?: (
-        pageIndex: number,
-        pageSize: number,
-        currentItems: TData[],
-        abortSignal: AbortSignal,
-    ) => TData[] | Promise<TData[]>;
+    loader?: LoadMoreLoader<TData>;
     loading?: boolean;
     onError?: (error: unknown, key: string) => void;
     spinnerProps?: ComponentProps<typeof Spinner>;

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-text",
+  "title": "EmptyText",
+  "description": "Empty state with optional icon and title.",
+  "registryDependencies": [
+    "empty"
+  ],
+  "files": [
+    {
+      "path": "src/components/empty-text.tsx",
+      "content": "import type { ComponentProps, FC, ReactNode } from \"react\";\nimport { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty.js\";\n\ninterface EmptyTextProps extends Omit<ComponentProps<typeof Empty>, \"title\"> {\n    title?: ReactNode;\n    icon?: ReactNode;\n}\n\nexport const EmptyText: FC<EmptyTextProps> = ({ title, children, icon, ...props }) => {\n    return (\n        <Empty {...props}>\n            <EmptyHeader>\n                {icon && <EmptyMedia variant=\"icon\">{icon}</EmptyMedia>}\n                {title && <EmptyTitle>{title}</EmptyTitle>}\n                <EmptyDescription>{children}</EmptyDescription>\n            </EmptyHeader>\n        </Empty>\n    );\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
