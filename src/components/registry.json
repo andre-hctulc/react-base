@@ -2,6 +2,19 @@
     "$schema": "https://ui.shadcn.com/schema/registry.json",
     "items": [
         {
+            "name": "menu",
+            "type": "registry:ui",
+            "title": "Menu",
+            "description": "Inline action menu with keyboard navigation.",
+            "dependencies": ["@base-ui/react"],
+            "files": [
+                {
+                    "path": "menu.tsx",
+                    "type": "registry:ui"
+                }
+            ]
+        },
+        {
             "name": "render",
             "type": "registry:ui",
             "title": "Render",

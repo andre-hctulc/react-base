@@ -4,6 +4,7 @@ import { Dev } from "../src/components/dev.js";
 import DevProvider from "../src/components/dev-provider.js";
 import { Editable, EditEffect } from "../src/components/editable.js";
 import { Input } from "../src/components/ui/input.js";
+import { Menu, MenuGroup, MenuItem, MenuLabel, MenuLink, MenuSeparator, MenuShortcut } from "../src/components/menu.js";
 
 const meta = { title: "Components/Compound" } satisfies Meta;
 export default meta;
@@ -38,5 +39,24 @@ export const EditingAndDevelopment: Story = {
                 <Dev highlight>Development-only content</Dev>
             </DevProvider>
         </div>
+    ),
+};
+
+export const InlineMenu: Story = {
+    render: () => (
+        <Menu aria-label="Document actions" className="w-56 border">
+            <MenuGroup aria-labelledby="document-menu-label">
+                <MenuLabel id="document-menu-label">Document</MenuLabel>
+                <MenuItem onClick={() => window.alert("Saved")}>
+                    Save <MenuShortcut>⌘S</MenuShortcut>
+                </MenuItem>
+                <MenuLink href="#details">Details</MenuLink>
+                <MenuItem disabled>Move</MenuItem>
+            </MenuGroup>
+            <MenuSeparator />
+            <MenuItem variant="destructive" onClick={() => window.alert("Deleted")}>
+                Delete
+            </MenuItem>
+        </Menu>
     ),
 };

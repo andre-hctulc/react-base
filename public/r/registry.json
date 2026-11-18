@@ -400,6 +400,21 @@
       "type": "registry:hook"
     },
     {
+      "name": "menu",
+      "title": "Menu",
+      "description": "Inline action menu with keyboard navigation.",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "files": [
+        {
+          "path": "src/components/menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "render",
       "title": "Render",
       "description": "Render component for polymorphic rendering.",
