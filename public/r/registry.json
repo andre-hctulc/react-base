@@ -402,9 +402,10 @@
     {
       "name": "menu",
       "title": "Menu",
-      "description": "Inline action menu with keyboard navigation.",
+      "description": "Inline action menu with keyboard navigation and collapsible submenus.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "lucide-react"
       ],
       "files": [
         {

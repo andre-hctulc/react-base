@@ -438,3 +438,21 @@ export const Widgets: Story = {
         );
     },
 };
+
+export const SchemaForm: Story = {
+    render: () => (
+        <JsonForm
+            className="max-w-lg"
+            submitButton
+            defaultValue={{ name: "FDC Platform", notifications: true }}
+            schema={{
+                type: "object",
+                required: ["name"],
+                properties: {
+                    name: { type: "string", title: "Workspace name" },
+                    notifications: { type: "boolean", title: "Email notifications" },
+                },
+            }}
+        />
+    ),
+};

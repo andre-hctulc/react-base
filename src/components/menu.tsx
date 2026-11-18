@@ -1,7 +1,10 @@
 "use client";
 
 import * as React from "react";
+import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
+import { useDirection } from "@base-ui/react/direction-provider";
 import { Toolbar as ToolbarPrimitive } from "@base-ui/react/toolbar";
+import { ChevronRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils.js";
 
 const itemClasses =
@@ -101,6 +104,95 @@ function MenuSeparator({ className, ...props }: ToolbarPrimitive.Separator.Props
     );
 }
 
+const SubmenuContext = React.createContext<React.RefObject<HTMLButtonElement | null> | null>(null);
+
+function SubmenuRoot({ children, ...props }: CollapsiblePrimitive.Root.Props) {
+    const triggerRef = React.useRef<HTMLButtonElement>(null);
+
+    return (
+        <SubmenuContext.Provider value={triggerRef}>
+            <CollapsiblePrimitive.Root data-slot="menu-submenu" role="none" {...props}>
+                {children}
+            </CollapsiblePrimitive.Root>
+        </SubmenuContext.Provider>
+    );
+}
+
+function SubmenuTrigger({
+    className,
+    children,
+    onKeyDown,
+    ...props
+}: Omit<CollapsiblePrimitive.Trigger.Props, "render">) {
+    const triggerRef = React.useContext(SubmenuContext);
+    const direction = useDirection();
+
+    return (
+        <CollapsiblePrimitive.Trigger
+            data-slot="menu-submenu-trigger"
+            role="menuitem"
+            render={<ToolbarPrimitive.Button ref={triggerRef} />}
+            className={(state) =>
+                cn(itemClasses, typeof className === "function" ? className(state) : className)
+            }
+            onKeyDown={(event) => {
+                onKeyDown?.(event);
+                if (event.defaultPrevented || event.currentTarget.getAttribute("aria-disabled") === "true") return;
+                const expanded = event.currentTarget.getAttribute("aria-expanded") === "true";
+                const openKey = direction === "rtl" ? "ArrowLeft" : "ArrowRight";
+                const closeKey = direction === "rtl" ? "ArrowRight" : "ArrowLeft";
+                if ((event.key === openKey && !expanded) || (event.key === closeKey && expanded)) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.currentTarget.click();
+                }
+            }}
+            {...props}
+        >
+            {children}
+            <ChevronRightIcon
+                aria-hidden="true"
+                className="ms-auto transition-transform rtl:-scale-x-100 group-aria-expanded/menu-item:rotate-90"
+            />
+        </CollapsiblePrimitive.Trigger>
+    );
+}
+
+function SubmenuContent({
+    className,
+    onKeyDown,
+    ...props
+}: Omit<CollapsiblePrimitive.Panel.Props, "keepMounted" | "hiddenUntilFound">) {
+    const triggerRef = React.useContext(SubmenuContext);
+    const direction = useDirection();
+
+    return (
+        <CollapsiblePrimitive.Panel
+            data-slot="menu-submenu-content"
+            role="group"
+            className={(state) =>
+                cn("ms-3 border-s border-border ps-2", typeof className === "function" ? className(state) : className)
+            }
+            onKeyDown={(event) => {
+                onKeyDown?.(event);
+                const trigger = triggerRef?.current;
+                if (
+                    !event.defaultPrevented &&
+                    event.key === (direction === "rtl" ? "ArrowRight" : "ArrowLeft") &&
+                    trigger?.getAttribute("aria-expanded") === "true" &&
+                    trigger.getAttribute("aria-disabled") !== "true"
+                ) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    trigger.focus();
+                    trigger.click();
+                }
+            }}
+            {...props}
+        />
+    );
+}
+
 function MenuShortcut({ className, ...props }: React.ComponentProps<"span">) {
     return (
         <span
@@ -111,4 +203,15 @@ function MenuShortcut({ className, ...props }: React.ComponentProps<"span">) {
     );
 }
 
-export { Menu, MenuGroup, MenuLabel, MenuItem, MenuLink, MenuSeparator, MenuShortcut };
+export {
+    Menu,
+    MenuGroup,
+    MenuLabel,
+    MenuItem,
+    MenuLink,
+    MenuSeparator,
+    SubmenuRoot,
+    SubmenuTrigger,
+    SubmenuContent,
+    MenuShortcut,
+};
