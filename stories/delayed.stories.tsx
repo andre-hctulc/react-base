@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import { Delayed } from "../src/components/delayed.js";
 
 const meta = { title: "Components/Delayed" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function DelayedExample() {
+const DelayedExample: FC = () => {
     const [visible, setVisible] = useState(false);
 
     return (
@@ -26,7 +26,7 @@ function DelayedExample() {
             </Delayed>
         </div>
     );
-}
+};
 
 export const DelayedContent: Story = {
     render: () => <DelayedExample />,

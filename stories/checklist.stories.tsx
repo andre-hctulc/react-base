@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Checklist } from "../src/components/checklist.js";
 
@@ -5,8 +6,8 @@ const meta = { title: "Components/Checklist" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ChecklistExample: Story = {
-    render: () => (
+const ChecklistExampleExample: FC = () => {
+    return (
         <Checklist
             checked={["profile", "security"]}
             items={[
@@ -15,5 +16,9 @@ export const ChecklistExample: Story = {
                 { key: "billing", title: "Billing", text: "Add a payment method", secondary: true },
             ]}
         />
-    ),
+    );
+};
+
+export const ChecklistExample: Story = {
+    render: () => <ChecklistExampleExample />,
 };

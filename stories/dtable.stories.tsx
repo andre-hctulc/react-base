@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DTable } from "../src/components/dtable.js";
 
@@ -5,8 +6,8 @@ const meta = { title: "Components/Dtable" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const DataTable: Story = {
-    render: () => (
+const DataTableExample: FC = () => {
+    return (
         <DTable
             columns={
                 [
@@ -19,5 +20,9 @@ export const DataTable: Story = {
                 { name: "Access review", status: "In progress" },
             ]}
         />
-    ),
+    );
+};
+
+export const DataTable: Story = {
+    render: () => <DataTableExample />,
 };

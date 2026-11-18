@@ -28,3 +28,4 @@ project.
 - Ensure proper state management and avoid unnecessary re-renders.
 - Follow best practices for handling side effects in React components.
 - Keep the shadcn registry.json files in sync with the actual components
+- Always use parenthesized function bodies for functional components

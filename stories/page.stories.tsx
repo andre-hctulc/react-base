@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { LabeledSeparator } from "../src/components/labeled-separator.js";
 import { Page, PageContent, PageHeader } from "../src/components/page.js";
@@ -8,8 +9,8 @@ type Story = StoryObj<typeof meta>;
 
 const boxClassName = "rounded-md border bg-muted px-3 py-2 text-sm";
 
-export const PageStructure: Story = {
-    render: () => (
+const PageStructureExample: FC = () => {
+    return (
         <Page className="overflow-hidden rounded-lg border">
             <PageHeader title="Account settings" actions={<span className={boxClassName}>Save</span>} />
             <LabeledSeparator>Profile</LabeledSeparator>
@@ -19,5 +20,9 @@ export const PageStructure: Story = {
                 </p>
             </PageContent>
         </Page>
-    ),
+    );
+};
+
+export const PageStructure: Story = {
+    render: () => <PageStructureExample />,
 };

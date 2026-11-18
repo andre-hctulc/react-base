@@ -69,7 +69,7 @@ const PageLoader: FC<PageLoaderProps> = ({ slow, noHeight, className, throwError
     );
 };
 
-function ErrorExample() {
+const ErrorExample: FC = () => {
     const [error, setError] = useState<string>();
 
     return (
@@ -84,9 +84,9 @@ function ErrorExample() {
             {error && <p className="text-sm text-destructive">{error}</p>}
         </div>
     );
-}
+};
 
-function ControlledExample() {
+const ControlledExample: FC = () => {
     const [items, setItems] = useState([0, 1, 2, 3, 4]);
 
     return (
@@ -103,14 +103,18 @@ function ControlledExample() {
             {(currentItems) => <ItemList items={currentItems} />}
         </InfinityList>
     );
-}
+};
 
 export const AutomaticLoading: Story = {
     render: () => <PageLoader />,
 };
 
+const NoHeightExample: FC = () => {
+    return <PageLoader noHeight className="max-h-150 overflow-x-hidden" />;
+};
+
 export const NoHeight: Story = {
-    render: () => <PageLoader noHeight className="max-h-150 overflow-x-hidden" />,
+    render: () => <NoHeightExample />,
 };
 
 export const LoaderError: Story = {
@@ -121,10 +125,18 @@ export const Controlled: Story = {
     render: () => <ControlledExample />,
 };
 
+const SlowLoaderExample: FC = () => {
+    return <PageLoader slow />;
+};
+
 export const SlowLoader: Story = {
-    render: () => <PageLoader slow />,
+    render: () => <SlowLoaderExample />,
+};
+
+const SlowLoaderErrorExample: FC = () => {
+    return <PageLoader slow throwError noHeight />;
 };
 
 export const SlowLoaderError: Story = {
-    render: () => <PageLoader slow throwError noHeight />,
+    render: () => <SlowLoaderErrorExample />,
 };

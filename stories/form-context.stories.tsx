@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import { Input } from "../src/components/ui/input.js";
 import { expect, userEvent, within } from "@storybook/test";
 import { FieldTemplateCtx, FormContextProvider, useField } from "../src/components/form-context.js";
@@ -9,12 +9,12 @@ const meta = { title: "Components/FormContext" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function ContextFieldInfo() {
+const ContextFieldInfo: FC = () => {
     const { params } = useField("project");
     return <output aria-label="Context field">{JSON.stringify(params)}</output>;
-}
+};
 
-function ContextFieldsExample() {
+const ContextFieldsExample: FC = () => {
     const [updated, setUpdated] = useState(false);
     const namePrefix = updated ? "team." : "workspace.";
     return (
@@ -52,7 +52,7 @@ function ContextFieldsExample() {
             </FieldTemplate>
         </div>
     );
-}
+};
 
 export const ContextFields: Story = {
     render: () => <ContextFieldsExample />,

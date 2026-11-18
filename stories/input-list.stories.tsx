@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "../src/components/ui/input.js";
 import { InputList } from "../src/components/input-list.js";
@@ -6,7 +7,7 @@ const meta = { title: "Components/InputList" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function InputListExample() {
+const InputListExample: FC = () => {
     return (
         <InputList
             defaultValue={["platform@example.com"]}
@@ -22,6 +23,6 @@ function InputListExample() {
             )}
         />
     );
-}
+};
 
 export const Default: Story = { render: () => <InputListExample /> };

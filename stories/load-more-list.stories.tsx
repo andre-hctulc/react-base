@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import { LoadMoreList, type LoadMoreListProps } from "../src/components/load-more-list.js";
 
 const meta = {
@@ -31,16 +31,20 @@ function renderItems(items: number[]) {
     ));
 }
 
-export const Default: Story = {
-    render: () => (
+const DefaultExample: FC = () => {
+    return (
         <LoadMoreList as="ul" className="max-w-md space-y-2" pageSize={3} loader={loader}>
             {renderItems}
         </LoadMoreList>
-    ),
+    );
 };
 
-export const SlowLoader: Story = {
-    render: () => (
+export const Default: Story = {
+    render: () => <DefaultExample />,
+};
+
+const SlowLoaderExample: FC = () => {
+    return (
         <LoadMoreList
             as="ul"
             className="max-w-md space-y-2"
@@ -52,27 +56,39 @@ export const SlowLoader: Story = {
         >
             {renderItems}
         </LoadMoreList>
-    ),
+    );
 };
 
-export const ShortFirstPage: Story = {
-    render: () => (
+export const SlowLoader: Story = {
+    render: () => <SlowLoaderExample />,
+};
+
+const ShortFirstPageExample: FC = () => {
+    return (
         <LoadMoreList as="ul" pageSize={10} loader={loader}>
             {renderItems}
         </LoadMoreList>
-    ),
+    );
 };
 
-export const Empty: Story = {
-    render: () => (
+export const ShortFirstPage: Story = {
+    render: () => <ShortFirstPageExample />,
+};
+
+const EmptyExample: FC = () => {
+    return (
         <LoadMoreList<number> loader={() => []} empty="No items found">
             {() => null}
         </LoadMoreList>
-    ),
+    );
 };
 
-export const LoaderError: Story = {
-    render: () => (
+export const Empty: Story = {
+    render: () => <EmptyExample />,
+};
+
+const LoaderErrorExample: FC = () => {
+    return (
         <LoadMoreList<number>
             loader={() => Promise.reject(new Error("Unable to load items"))}
             error="Unable to load items"
@@ -80,10 +96,14 @@ export const LoaderError: Story = {
         >
             {() => null}
         </LoadMoreList>
-    ),
+    );
 };
 
-function ControlledExample() {
+export const LoaderError: Story = {
+    render: () => <LoaderErrorExample />,
+};
+
+const ControlledExample: FC = () => {
     const [items, setItems] = useState(allItems.slice(0, 3));
 
     return (
@@ -98,7 +118,7 @@ function ControlledExample() {
             {renderItems}
         </LoadMoreList>
     );
-}
+};
 
 export const Controlled: Story = {
     render: () => <ControlledExample />,

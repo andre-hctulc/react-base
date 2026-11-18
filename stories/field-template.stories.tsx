@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "../src/components/ui/input.js";
 import { expect, within } from "@storybook/test";
@@ -7,14 +8,20 @@ const meta = { title: "Components/FieldTemplate" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-    render: () => <FieldTemplate params={{ name: "project", label: "Project name", description: "Shown to workspace members." }}>
-        <Input defaultValue="FDC Platform" />
-    </FieldTemplate>,
+const DefaultExample: FC = () => {
+    return (
+        <FieldTemplate params={{ name: "project", label: "Project name", description: "Shown to workspace members." }}>
+            <Input defaultValue="FDC Platform" />
+        </FieldTemplate>
+    );
 };
 
-export const HorizontalFieldTemplate: Story = {
-    render: () => (
+export const Default: Story = {
+    render: () => <DefaultExample />,
+};
+
+const HorizontalFieldTemplateExample: FC = () => {
+    return (
         <FieldTemplate
             className="max-w-xl"
             orientation="horizontal"
@@ -27,7 +34,11 @@ export const HorizontalFieldTemplate: Story = {
         >
             <Input type="email" />
         </FieldTemplate>
-    ),
+    );
+};
+
+export const HorizontalFieldTemplate: Story = {
+    render: () => <HorizontalFieldTemplateExample />,
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
         const label = canvas.getByText("Email");

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import { expect, userEvent, within } from "@storybook/test";
 import { TextInputList } from "../src/components/text-input-list.js";
 
@@ -7,7 +7,7 @@ const meta = { title: "Components/TextInputList" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function ControlledListExample() {
+const ControlledListExample: FC = () => {
     const [value, setValue] = useState(["Repeated", "Repeated"]);
 
     return (
@@ -18,21 +18,29 @@ function ControlledListExample() {
             placeholder="New task"
         />
     );
-}
-
-export const Default: Story = {
-    render: () => <TextInputList defaultValue={["Monthly review"]} placeholder="Add task" unique />,
 };
 
-export const DraftInputPlacement: Story = {
-    render: () => (
+const DefaultExample: FC = () => {
+    return <TextInputList defaultValue={["Monthly review"]} placeholder="Add task" unique />;
+};
+
+export const Default: Story = {
+    render: () => <DefaultExample />,
+};
+
+const DraftInputPlacementExample: FC = () => {
+    return (
         <div className="grid max-w-xl gap-4">
             {[undefined, false].map((reverse) => (
                 <TextInputList key={String(reverse)} aria-label={`List ${reverse === false ? "top" : "bottom"}`}
                     role="group" reverse={reverse} defaultValue={["Existing item"]} placeholder="New item" />
             ))}
         </div>
-    ),
+    );
+};
+
+export const DraftInputPlacement: Story = {
+    render: () => <DraftInputPlacementExample />,
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
         for (const position of ["top", "bottom"]) {

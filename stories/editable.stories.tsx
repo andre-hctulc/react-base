@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import { Editable, EditEffect } from "../src/components/editable.js";
 import { Input } from "../src/components/ui/input.js";
 
@@ -7,7 +7,7 @@ const meta = { title: "Components/Editable" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function EditableExample() {
+const EditableExample: FC = () => {
     const [editMode, setEditMode] = useState(false);
     return (
         <div className="space-y-3">
@@ -26,6 +26,6 @@ function EditableExample() {
             </Editable>
         </div>
     );
-}
+};
 
 export const Default: Story = { render: () => <EditableExample /> };

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DirectionProvider } from "@base-ui/react/direction-provider";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import {
     Menu, MenuGroup, MenuItem, MenuLabel, MenuLink, MenuSeparator, MenuShortcut,
     SubmenuRoot, SubmenuTrigger, SubmenuContent,
@@ -10,8 +10,8 @@ const meta = { title: "Components/Menu" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const InlineMenu: Story = {
-    render: () => (
+const InlineMenuExample: FC = () => {
+    return (
         <Menu aria-label="Document actions" className="w-56 border">
             <MenuGroup aria-labelledby="document-menu-label">
                 <MenuLabel id="document-menu-label">Document</MenuLabel>
@@ -40,10 +40,14 @@ export const InlineMenu: Story = {
                 Delete
             </MenuItem>
         </Menu>
-    ),
+    );
+};
+
+export const InlineMenu: Story = {
+    render: () => <InlineMenuExample />,
 }; 
 
-function ControlledSubmenuExample() {
+const ControlledSubmenuExample: FC = () => {
     const [open, setOpen] = useState(true);
     return (
         <Menu aria-label="Controlled menu" className="w-56 border">
@@ -61,14 +65,14 @@ function ControlledSubmenuExample() {
             </SubmenuRoot>
         </Menu>
     );
-}
+};
 
 export const ControlledSubmenus: Story = {
     render: () => <ControlledSubmenuExample />,
 };
 
-export const RightToLeft: Story = {
-    render: () => (
+const RightToLeftExample: FC = () => {
+    return (
         <DirectionProvider direction="rtl">
             <Menu dir="rtl" aria-label="Right-to-left menu" className="w-56 border">
                 <SubmenuRoot>
@@ -79,5 +83,9 @@ export const RightToLeft: Story = {
                 </SubmenuRoot>
             </Menu>
         </DirectionProvider>
-    ),
+    );
+};
+
+export const RightToLeft: Story = {
+    render: () => <RightToLeftExample />,
 };

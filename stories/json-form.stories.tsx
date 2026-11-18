@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import { JsonForm, type JsonFormProps } from "../src/components/json-form.js";
 import { workspaceProfileSchema } from "./json-form.schema.js";
 
@@ -93,7 +93,7 @@ export const NestedFields: Story = {
     },
 };
 
-function StatefulForm(props: JsonFormProps) {
+const StatefulForm: FC<JsonFormProps> = (props) => {
     const [value, setValue] = useState(props.defaultValue);
     return (
         <div className="max-w-xl space-y-4">
@@ -103,7 +103,7 @@ function StatefulForm(props: JsonFormProps) {
             </pre>
         </div>
     );
-}
+};
 
 export const NoHelp: Story = {
     args: { defaultValue: { name: "Ada" } },
@@ -439,8 +439,8 @@ export const Widgets: Story = {
     },
 };
 
-export const SchemaForm: Story = {
-    render: () => (
+const SchemaFormExample: FC = () => {
+    return (
         <JsonForm
             className="max-w-lg"
             submitButton
@@ -454,5 +454,9 @@ export const SchemaForm: Story = {
                 },
             }}
         />
-    ),
+    );
+};
+
+export const SchemaForm: Story = {
+    render: () => <SchemaFormExample />,
 };

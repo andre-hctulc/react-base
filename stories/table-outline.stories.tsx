@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { TableOutline } from "../src/components/table-outline.js";
 
@@ -5,8 +6,8 @@ const meta = { title: "Components/TableOutline" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TableFrame: Story = {
-    render: () => (
+const TableFrameExample: FC = () => {
+    return (
         <TableOutline>
             <table className="w-full text-sm">
                 <thead>
@@ -23,5 +24,9 @@ export const TableFrame: Story = {
                 </tbody>
             </table>
         </TableOutline>
-    ),
+    );
+};
+
+export const TableFrame: Story = {
+    render: () => <TableFrameExample />,
 };

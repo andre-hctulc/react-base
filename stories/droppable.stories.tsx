@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { useState, type FC } from "react";
 import { Draggable } from "../src/components/draggable.js";
 import { Droppable } from "../src/components/droppable.js";
 
@@ -7,7 +7,7 @@ const meta = { title: "Components/Droppable" } satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-function DragAndDropExample() {
+const DragAndDropExample: FC = () => {
     const [dropped, setDropped] = useState(false);
 
     return (
@@ -23,7 +23,7 @@ function DragAndDropExample() {
             </Droppable>
         </div>
     );
-}
+};
 
 export const DragAndDrop: Story = {
     render: () => <DragAndDropExample />,
