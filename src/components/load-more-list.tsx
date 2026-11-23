@@ -121,6 +121,7 @@ export function LoadMoreList<TData = unknown>({
     const failed = !isControlled && loadError !== undefined;
     const canLoadMore = isControlled ? controlledHasMore : hasMore;
     const isEmpty = allItems.length === 0 && preChildren == null && postChildren == null;
+    const isInitialLoading = busy && (isControlled ? items.length === 0 : data === undefined);
 
     async function loadMore() {
         if (loadMoreActive.current || busy || !canLoadMore || !loader) {
@@ -151,7 +152,12 @@ export function LoadMoreList<TData = unknown>({
                 </ItemRoot>
             )}
             {isEmpty && !busy && !failed && !!empty && <ItemRoot>{empty}</ItemRoot>}
-            {(canLoadMore || busy) && !failed && (
+            {isInitialLoading && !failed && (
+                <ItemRoot className="flex flex-col items-center justify-center py-3">
+                    <Spinner {...spinnerProps} className={cn("size-5", spinnerProps?.className)} />
+                </ItemRoot>
+            )}
+            {canLoadMore && !isInitialLoading && !failed && (
                 <ItemRoot
                     {...(buttonContainerProps as object)}
                     className={cn("flex items-center justify-center py-2", buttonContainerProps?.className)}

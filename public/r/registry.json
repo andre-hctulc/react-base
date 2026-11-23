@@ -815,6 +815,22 @@
       "type": "registry:ui"
     },
     {
+      "name": "empty-spinner",
+      "title": "EmptySpinner",
+      "description": "Empty state with a spinner and optional content.",
+      "registryDependencies": [
+        "empty",
+        "spinner"
+      ],
+      "files": [
+        {
+          "path": "src/components/empty-spinner.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "type": "registry:ui"
+    },
+    {
       "name": "table-placeholder",
       "title": "TablePlaceholder",
       "description": "Placeholder for empty tables.",

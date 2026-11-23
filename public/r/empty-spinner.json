@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-spinner",
+  "title": "EmptySpinner",
+  "description": "Empty state with a spinner and optional content.",
+  "registryDependencies": [
+    "empty",
+    "spinner"
+  ],
+  "files": [
+    {
+      "path": "src/components/empty-spinner.tsx",
+      "content": "import type { ComponentProps, FC } from \"react\";\nimport { Empty } from \"@/components/ui/empty.js\";\nimport { Spinner } from \"@/components/ui/spinner.js\";\nimport { cn } from \"@/lib/utils\";\n\ninterface EmptyTextProps extends Omit<ComponentProps<typeof Empty>, \"title\"> {\n    spinnerProps?: ComponentProps<typeof Spinner>;\n}\n\nexport const EmptySpinner: FC<EmptyTextProps> = ({ children, spinnerProps, ...props }) => {\n    return (\n        <Empty {...props}>\n            <Spinner {...spinnerProps} className={cn(\"size-6\", spinnerProps?.className)} />\n            {children}\n        </Empty>\n    );\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

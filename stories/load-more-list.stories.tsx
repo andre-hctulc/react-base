@@ -8,7 +8,7 @@ const meta = {
         docs: {
             description: {
                 component:
-                    "Loads the first page automatically, then loads more only when the button is clicked. " +
+                    "Shows a spinner while loading the first page, then loads more only when the button is clicked. " +
                     "Use loader for SWR pagination, or items, hasMore, loading and onLoadMore for controlled data. " +
                     "Customize the action with loadMoreLabel, buttonProps and buttonContainerProps.",
             },
