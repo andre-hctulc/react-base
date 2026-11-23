@@ -301,24 +301,22 @@ function ArrayFieldItemTemplate({
             </ArrayItemTitleContext.Provider>
             {hasToolbar && (
                 <DropdownMenu>
-                    <TooltipProvider delay={TOOLTIP_DELAY} timeout={0}>
-                        <Tooltip>
-                            <TooltipTrigger
-                                aria-label="Item actions"
-                                disabled={isActionDisabled}
-                                render={
-                                    <DropdownMenuTrigger
-                                        disabled={isActionDisabled}
-                                        render={<Button variant="ghost" size="icon-sm" />}
-                                    />
-                                }
-                                className="mt-0.5"
-                            >
-                                <MoreHorizontalIcon />
-                            </TooltipTrigger>
-                            <TooltipContent role="tooltip">Item actions</TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger
+                            aria-label="Item actions"
+                            disabled={isActionDisabled}
+                            render={
+                                <DropdownMenuTrigger
+                                    disabled={isActionDisabled}
+                                    render={<Button variant="ghost" size="icon-sm" />}
+                                />
+                            }
+                            className="mt-0.5"
+                        >
+                            <MoreHorizontalIcon />
+                        </TooltipTrigger>
+                        <TooltipContent role="tooltip">Item actions</TooltipContent>
+                    </Tooltip>
                     <DropdownMenuContent align="end" className="w-40">
                         {hasCopy && (
                             <DropdownMenuItem disabled={isActionDisabled} onClick={onCopyItem}>
@@ -373,29 +371,27 @@ function FormIconButton({
     id,
 }: FormIconButtonProps) {
     return (
-        <TooltipProvider delay={TOOLTIP_DELAY} timeout={0}>
-            <Tooltip>
-                <TooltipTrigger
-                    id={id}
-                    aria-label={label}
-                    className={className}
-                    disabled={disabled}
-                    onClick={onClick}
-                    style={style}
-                    type={type ?? "button"}
-                    render={
-                        <Button
-                            disabled={disabled}
-                            size="icon-sm"
-                            variant={destructive ? "destructive" : "outline"}
-                        />
-                    }
-                >
-                    {children}
-                </TooltipTrigger>
-                <TooltipContent role="tooltip">{label}</TooltipContent>
-            </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+            <TooltipTrigger
+                id={id}
+                aria-label={label}
+                className={className}
+                disabled={disabled}
+                onClick={onClick}
+                style={style}
+                type={type ?? "button"}
+                render={
+                    <Button
+                        disabled={disabled}
+                        size="icon-sm"
+                        variant={destructive ? "destructive" : "outline"}
+                    />
+                }
+            >
+                {children}
+            </TooltipTrigger>
+            <TooltipContent role="tooltip">{label}</TooltipContent>
+        </Tooltip>
     );
 }
 
@@ -589,22 +585,22 @@ export function JsonForm<T = any, S extends StrictRJSFSchema = RJSFSchema, F ext
     } as UiSchema<T, S, F>;
 
     return (
-        <RjsfForm<T, S, F>
-            ref={ref}
-            schema={schema || ({} as S)}
-            validator={validator as FormProps<T, S, F>["validator"]}
-            className={cn("", className)}
-            formData={value}
-            initialFormData={value === undefined ? defaultValue : undefined}
-            uiSchema={mergedUiSchema}
-            readonly={readOnly}
-            templates={templates as FormProps<T, S, F>["templates"]}
-            widgets={widgets as FormProps<T, S, F>["widgets"]}
-            {...formProps}
-        >
-            <TooltipProvider delay={TOOLTIP_DELAY} timeout={0}>
-                {children === undefined ? undefined : <FieldGroup>{children}</FieldGroup>}
-            </TooltipProvider>
-        </RjsfForm>
+        <TooltipProvider delay={TOOLTIP_DELAY} timeout={0}>
+            <RjsfForm<T, S, F>
+                ref={ref}
+                schema={schema || ({} as S)}
+                validator={validator as FormProps<T, S, F>["validator"]}
+                className={cn("", className)}
+                formData={value}
+                initialFormData={value === undefined ? defaultValue : undefined}
+                uiSchema={mergedUiSchema}
+                readonly={readOnly}
+                templates={templates as FormProps<T, S, F>["templates"]}
+                widgets={widgets as FormProps<T, S, F>["widgets"]}
+                {...formProps}
+            >
+                <>{children === undefined ? undefined : <FieldGroup>{children}</FieldGroup>}</>
+            </RjsfForm>
+        </TooltipProvider>
     );
 }

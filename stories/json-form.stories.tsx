@@ -112,6 +112,8 @@ export const TooltipDelay: Story = {
         await expect(page.queryByRole("tooltip", { name: "Item actions" })).not.toBeInTheDocument();
         await page.findByRole("tooltip", { name: "Item actions" });
 
+        await userEvent.unhover(canvas.getByRole("button", { name: "Item actions" }));
+        await new Promise((resolve) => setTimeout(resolve, 200));
         await userEvent.hover(canvas.getByRole("button", { name: "Add item" }));
         await new Promise((resolve) => setTimeout(resolve, 100));
         await expect(page.queryByRole("tooltip", { name: "Add item" })).not.toBeInTheDocument();
