@@ -47,6 +47,8 @@ import { ChevronDown, ChevronUp, Copy, LucideInfo, MoreHorizontalIcon, Plus, Tra
 import { createContext, useContext, type FocusEvent, type ReactNode, type Ref } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert.js";
 
+const TOOLTIP_DELAY = 500;
+
 const JsonFormFieldPlaceholderContext = createContext<string | undefined>(undefined);
 const ArrayItemTitleContext = createContext<string | undefined>(undefined);
 
@@ -299,22 +301,24 @@ function ArrayFieldItemTemplate({
             </ArrayItemTitleContext.Provider>
             {hasToolbar && (
                 <DropdownMenu>
-                    <Tooltip>
-                        <TooltipTrigger
-                            aria-label="Item actions"
-                            disabled={isActionDisabled}
-                            render={
-                                <DropdownMenuTrigger
-                                    disabled={isActionDisabled}
-                                    render={<Button variant="ghost" size="icon-sm" />}
-                                />
-                            }
-                            className="mt-0.5"
-                        >
-                            <MoreHorizontalIcon />
-                        </TooltipTrigger>
-                        <TooltipContent role="tooltip">Item actions</TooltipContent>
-                    </Tooltip>
+                    <TooltipProvider delay={TOOLTIP_DELAY} timeout={0}>
+                        <Tooltip>
+                            <TooltipTrigger
+                                aria-label="Item actions"
+                                disabled={isActionDisabled}
+                                render={
+                                    <DropdownMenuTrigger
+                                        disabled={isActionDisabled}
+                                        render={<Button variant="ghost" size="icon-sm" />}
+                                    />
+                                }
+                                className="mt-0.5"
+                            >
+                                <MoreHorizontalIcon />
+                            </TooltipTrigger>
+                            <TooltipContent role="tooltip">Item actions</TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                     <DropdownMenuContent align="end" className="w-40">
                         {hasCopy && (
                             <DropdownMenuItem disabled={isActionDisabled} onClick={onCopyItem}>
@@ -369,27 +373,29 @@ function FormIconButton({
     id,
 }: FormIconButtonProps) {
     return (
-        <Tooltip>
-            <TooltipTrigger
-                id={id}
-                aria-label={label}
-                className={className}
-                disabled={disabled}
-                onClick={onClick}
-                style={style}
-                type={type ?? "button"}
-                render={
-                    <Button
-                        disabled={disabled}
-                        size="icon-sm"
-                        variant={destructive ? "destructive" : "outline"}
-                    />
-                }
-            >
-                {children}
-            </TooltipTrigger>
-            <TooltipContent role="tooltip">{label}</TooltipContent>
-        </Tooltip>
+        <TooltipProvider delay={TOOLTIP_DELAY} timeout={0}>
+            <Tooltip>
+                <TooltipTrigger
+                    id={id}
+                    aria-label={label}
+                    className={className}
+                    disabled={disabled}
+                    onClick={onClick}
+                    style={style}
+                    type={type ?? "button"}
+                    render={
+                        <Button
+                            disabled={disabled}
+                            size="icon-sm"
+                            variant={destructive ? "destructive" : "outline"}
+                        />
+                    }
+                >
+                    {children}
+                </TooltipTrigger>
+                <TooltipContent role="tooltip">{label}</TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     );
 }
 
@@ -596,7 +602,7 @@ export function JsonForm<T = any, S extends StrictRJSFSchema = RJSFSchema, F ext
             widgets={widgets as FormProps<T, S, F>["widgets"]}
             {...formProps}
         >
-            <TooltipProvider>
+            <TooltipProvider delay={TOOLTIP_DELAY} timeout={0}>
                 {children === undefined ? undefined : <FieldGroup>{children}</FieldGroup>}
             </TooltipProvider>
         </RjsfForm>

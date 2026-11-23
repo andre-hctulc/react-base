@@ -93,6 +93,32 @@ export const NestedFields: Story = {
     },
 };
 
+export const TooltipDelay: Story = {
+    args: {
+        schema: {
+            type: "object",
+            properties: {
+                items: { type: "array", items: { type: "string" } },
+            },
+        },
+        defaultValue: { items: ["One"] },
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        const page = within(document.body);
+
+        await userEvent.hover(canvas.getByRole("button", { name: "Item actions" }));
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        await expect(page.queryByRole("tooltip", { name: "Item actions" })).not.toBeInTheDocument();
+        await page.findByRole("tooltip", { name: "Item actions" });
+
+        await userEvent.hover(canvas.getByRole("button", { name: "Add item" }));
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        await expect(page.queryByRole("tooltip", { name: "Add item" })).not.toBeInTheDocument();
+        await page.findByRole("tooltip", { name: "Add item" });
+    },
+};
+
 const StatefulForm: FC<JsonFormProps> = (props) => {
     const [value, setValue] = useState(props.defaultValue);
     return (
